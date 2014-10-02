@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.andengine.opengl.view.RenderSurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.glevel.dungeonhero.views.CustomTextView
+        android:id="@+id/bigLabel"
+        style="@style/SplashScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/deployment_phase"
+        android:visibility="gone" />
+
+    <com.glevel.dungeonhero.views.CustomButton
+        android:id="@+id/finishDeployment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:text="@string/start" />
+    private static final Typeface font = FONTS.main;
+
+    <LinearLayout
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="3dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="3dp">
+
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:id="@+id/tutorialInstructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/placeholder" />
+
+        <com.glevel.dungeonhero.views.CustomButton
+            android:id="@+id/nextButton"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="1dp"
+            android:text="@string/next" />
+    </LinearLayout>
+
+</RelativeLayout>

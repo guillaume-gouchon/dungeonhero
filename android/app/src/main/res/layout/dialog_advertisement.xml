@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_custom_alert_dialog"
+    android:orientation="vertical"
+    android:padding="15dp" >
+
+    <com.glevel.dungeonhero.views.CustomTextView
+        android:id="@+id/title"
+        style="@style/AboutDialogText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/advertisement"
+        android:textColorHighlight="@color/advertisement_link_highlight"
+        android:textColorLink="@color/advertisement_link"
+        android:textSize="26sp" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/advertisement" />
+
+</RelativeLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_id">265142328250</string>
+    <string name="achievement_skillful_general">CgkIurfb3dsHEAIQAQ</string>
+    <string name="achievement_tanks_terror">CgkIurfb3dsHEAIQAg</string>
+    <string name="achievement_careful_tactician">CgkIurfb3dsHEAIQAw</string>
+    <string name="achievement_brilliant_tactician">CgkIurfb3dsHEAIQBA</string>
+    <string name="achievement_hero_maker">CgkIurfb3dsHEAIQBQ</string>
+
+</resources>

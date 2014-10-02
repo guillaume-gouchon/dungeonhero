@@ -1,0 +1,173 @@
+<resources>
+
+    <string name="app_name">Dungeon Hero</string>
+    <string name="app_publisher">G-Level</string>
+    <string name="id">id</string>
+    <string name="placeholder">placeholder</string>
+    <string name="viewholder">viewholder</string>
+    <string name="cancel">Cancel</string>
+    <string name="coming_soon">Coming soon&#8230;</string>
+
+    <!-- Contact -->
+    <string name="mail_address">guillaume.gouchon@gmail.com</string>
+    <string name="contact_title">Question about </string>
+    <string name="contact_support_via">Contact support via&#8230;</string>
+    <string name="no_mail_client">There are no email clients installed on your device&#8230;</string>
+
+    <!-- Rate Dialog -->
+    <string name="rate_dont_want">No, thanks</string>
+    <string name="rate_later">Later</string>
+    <string name="rate_now">Rate it now !</string>
+    <string name="rate_title">Rate the app ?</string>
+    <string name="rate_message">If you enjoy playing %s, please take a moment to rate it.\n\nThanks for your support !</string>
+
+    <!-- About Dialog -->
+    <string name="about_title">About Dungeon Hero</string>
+    <string name="about_credits">Game and Music by <a href="http://gouchon.com">Guillaume Gouchon</a>.</string>
+    <string name="about_contact"><a href="mailto:guillaume.gouchon@gmail.com">Contact me</a> if you have any issue or question.</string>
+    <string name="about_other_sources">The game is using AndEngine by Nicolas Gramlich.\nVarious icons by <a href="http://game-icons.net">game-icons.net</a>.
+        \nBackground art by Q_x.</string>
+    <string name="about_version">Version : 1.0.0</string>
+
+    <!-- Google Game Services Integration -->
+    <string name="gamehelper_sign_in_failed">Failed to sign in. Please check your network connection and try again.</string>
+    <string name="gamehelper_app_misconfigured">The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.</string>
+    <string name="gamehelper_license_failed">License check failed.</string>
+    <string name="gamehelper_unknown_error">Unknown error.</string>
+
+    <!-- Share app -->
+    <string name="share_subject">Check out %s on Android !</string>
+    <string name="share_message">This game is cool, you can get it on Google Play !\nhttps://play.google.com/store/apps/details?id=%s</string>
+
+    <!-- Home Screen -->
+    <string name="play">Play</string>
+    <string name="settings">Options</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="back">Back</string>
+    <string name="ask_tutorial">It is recommanded to do the tutorial in order to know how to play !\nWould you like to do it now ?</string>
+    <string name="advertisement">If you like Strategy Games,\ntry out my cool game <a href="https://play.google.com/store/apps/details?id=com.giggs.apps.chaos">Warlords Online</a> !</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="achievements">Trophees</string>
+
+    <!-- Settings -->
+    <string name="music_volume">Music / Sound</string>
+    <string name="music_off">Off</string>
+    <string name="music_on">On</string>
+    <string name="about">About Dungeon Hero</string>
+    <string name="rate_app">Rate the app</string>
+    <string name="share">Share</string>
+
+    <!-- Campaign Chooser -->
+    <string name="new_campaign">New Campaign</string>
+    <string name="load_campaign">Load Campaign</string>
+    <string name="no_saved_campaigns">No saved games yet&#8230;</string>
+
+    <!-- Battle Chooser -->
+    <string name="choose_army">Choose your side</string>
+    <string name="choose_map">Pick a map</string>
+    <string name="more_maps_coming_soon">More coming soon !</string>
+
+    <!-- Army Builder -->
+    <string name="hire_troops">Hire your troops</string>
+    <string name="requisition_points">Requisition Points :</string>
+    <string name="your_army">Your Squad</string>
+    <string name="available_troops">Available Troops</string>
+    <string name="start_battle">Start Battle !</string>
+    <string name="no_troops">Hire some troops before !</string>
+    <string name="confirm_battle_message">You have some requisition points left, continue to battlefield ?</string>
+    <string name="no_slots_left">No more unit slot left&#8230;\nSell one of your unit !</string>
+    <string name="not_enough_requisition">You do not have enough requisition points to hire this unit !</string>
+    <string name="buy">Hire</string>
+    <string name="sell">Sell</string>
+    <string name="confirm_transaction">%1$s %2$s\nfor %3$s requisition points ?</string>
+    <string name="unit_image">Unit image</string>
+    <string name="frags_number">Frags : %1$s</string>
+    <string name="points">%1$s pts</string>
+    <string name="ap">AP</string>
+    <string name="at">AT</string>
+
+    <!-- Game -->
+    <string name="loading_game">Loading</string>
+    <string name="loading_dots">. . .</string>
+    <string name="game_paused">Pause</string>
+    <string name="surrender">Surrender</string>
+    <string name="confirm_surrender_message">Are you sure you want\nto surrender ?</string>
+    <string name="resume_game">Resume Game</string>
+    <string name="save_exit">Exit</string>
+    <string name="deployment_phase">Deployment Phase</string>
+    <string name="start">Deployment Done</string>
+    <string name="go">Go !</string>
+    <string name="victory">Victory !</string>
+    <string name="defeat">Defeat&#8230;</string>
+
+    <!-- Battle Report -->
+    <string name="battle_report">Battle Report</string>
+    <string name="leave_report">Leave Report</string>
+    <string name="enemy_army">Enemy\'s Army</string>
+
+    <!-- Campaign Screen -->
+    <string name="objective_points">Objective Points : %1$s / %2$s</string>
+    <string name="game_menu">Game Menu</string>
+    <string name="help">Help</string>
+    <string name="skip">Skip</string>
+
+    <!-- Tutorial -->
+    <string name="next">Next</string>
+    <string name="tutorial0"><u>Welcome to this tutorial !</u>\n\nWWII is a heavy tactical real-time strategy game. We\'ll see here how to lead your troops to victory.</string>
+    <string name="tutorial1"><u>How to win ?</u>\n\nThere are 2 ways to win a game in WWII : either you <u>destroy</u> the whole army of your opponent or you can win by <u>conquering</u> all the Strategic Points of the map.\nThese are randomly placed in players\' deployment zones when the battle starts.</string>
+    <string name="tutorial2"><u>Navigate through the map</u>\n\n You can navigate through the map by sweeping the screen with one finger; you can zoom in/ zoom out by pinching the screen.</string>
+    <string name="tutorial3"><u>Command your units</u>\n\nYou can give 4 different orders to your units :\nMove, Fire, Ambush and Defend orders.</string>
+    <string name="tutorial4"><u>Move orders</u>\n\n<u>Touch and Drag</u> a unit to another location on the battlefield to give a <u>Move Order</u>.\nWhile dragging the unit, you\'ll see a Shield icon appearing if the Move Order destination gives any sort of protection.</string>
+    <string name="tutorial5"><u>Fire orders</u>\n\nIf you target an enemy unit while giving an order to a unit, the order line will go from green to red, if the unit can shoot on the target, or black if there is no line of sight to reach the target.\nThe distance label color will also be updated based on the chance to hit the target :\nBlack = no chance, Green = best chances.</string>
+    <string name="tutorial6"><u>Defend / Ambush orders</u>\n\nWhen the battle starts all your soldiers are given <u>Ambush orders</u> and your vehicles <u>Defend orders</u>. \nTo give a Ambush order, just tap on a unit previously selected. If you tap on it again it will switch to a Defend order.\nWhile having Ambush orders, your units will be harder to localize, and will stay ambush until enemy units are close enough. With a Defend order, a unit will shoot at any enemy unit it sees.</string>
+    <string name="tutorial7"><u>Units information</u>\n\nLet\'s now have a look at a selected unit information layout !\nFirst line contains the name (the color displays the health of the unit, from green = healthy, to red = dead), the experience (no medal = recruit, 1 medal = veteran, 2 medals = elite) and the hauts-faits counter.\nThen, you have the weapons with their anti-personal and anti-tank efficiencies and the amount of ammo left.\nLast line contains the current action of the unit.</string>
+    <string name="tutorial8"><u>Units behaviours</u>\n\nIn WWII, the units are behaving like real human beings. Units under fire will hide themselves and will sometimes not be able to react. Less-experienced units will panic more than experienced ones. Before shooting, a unit will have to aim, and reload its weapon if needed. Units will adjust their firing speed depending on the amount of ammo left.</string>
+    <string name="tutorial9"><u>Vehicles and tanks</u>\n\nVehicles and tanks are powerful but expensive and less maneuverable units. Keep in mind that sides and rear of vehicles are more vulnerable. On short distance, vehicles can reverse. Watch out your troops, vehicles can run over soldiers. Vehicles can fire with their secondary weapon while moving.</string>
+    <string name="tutorial10"><u>Terrains</u>\n\nUsing the terrain covers is one of the keys to success.\nBushes do not block line of sights but provide light protections.\nTrees, fields and houses block line of sights and are giving medium to high covers to your soldiers.</string>
+    <string name="tutorial11"><u>Well done !</u>\n\nThis tutorial is now finished.\nTry to seek and destroy the 2 enemy riflemen on the map.\nGood luck !</string>
+
+    <!-- Armies -->
+    <string name="german_army">Germany</string>
+    <string name="usa_army">USA</string>
+
+    <!-- Weapons -->
+    <string name="grenade">Hand Grenade</string>
+    <string name="cannon75">Cannon 75mm</string>
+    <string name="garandM1">Garand M1</string>
+    <string name="thompson">Thompson</string>
+    <string name="browningM2">Browning M2</string>
+    <string name="mortar50">Mortar 50mm</string>
+    <string name="bazookaM1A">Bazooka</string>
+    <string name="mauser">Mauser G98</string>
+    <string name="mp40">MP 40</string>
+    <string name="mg42">MG 42</string>
+    <string name="mortar81">Mortar 81mm</string>
+    <string name="panzerschreck">Panzerschreck</string>
+    <string name="panzerfaust">Panzerfaust</string>
+    <string name="pak43">Pak43 88mm</string>
+
+    <!-- Units -->
+    <string name="rifleman">Rifleman</string>
+    <string name="scout">Scout</string>
+    <string name="hmg">Heavy MG</string>
+    <string name="mortar">Mortar</string>
+    <string name="at_cannon">Anti-tank Cannon</string>
+    <string name="bazooka">Bazooka</string>
+    <string name="shermanM4A1">Sherman M4A1</string>
+    <string name="panzeriv">Panzer IV F2</string>
+
+    <!-- Campaigns -->
+    <string name="market_garden">Market Garden</string>
+    <string name="market_garden_intro_1">Operation Market-Garden
+        \nAfter the successes encountered in the Normandy Breakout from July through August 1944, it was believed that the German Army was a beaten foe and in retreat.
+        \nAs such, British General Montgomery lay forth a brazen plan to capture key bridges that would be required conquests for the final push into Germany, perhaps ending the war in Europe by Christmas of 1944.
+        \nMontgomery relayed his plan and, following acceptance by Supreme Allied Commander in Europe - US General Dwight Eisenhower - put the plan into action.
+        \nOn September 17th - just seven days after the official approval, Operation Market Garden was set in motion&#8230;</string>
+
+    <!-- Battles -->
+    <string name="battle_arnhem_streets">Arnhem Streets</string>
+    <string name="battle_oosterbeek">Oosterbeek</string>
+    <string name="battle_nimegue">Nijmegen</string>
+
+</resources>

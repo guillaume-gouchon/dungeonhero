@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/storms"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_village"
+        android:tint="#cc000000" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                style="@style/SettingsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/app_name"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mainButtonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.glevel.dungeonhero.views.CustomButton
+                android:id="@+id/playButton"
+                style="@style/HomeScreenButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:text="@string/play" />
+
+            <com.glevel.dungeonhero.views.CustomButton
+                android:id="@+id/tutorialButton"
+                style="@style/HomeScreenButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:text="@string/tutorial" />
+
+            <com.glevel.dungeonhero.views.CustomButton
+                android:id="@+id/settingsButton"
+                style="@style/HomeScreenButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settingsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:focusable="false"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.glevel.dungeonhero.views.CustomButton
+                    android:id="@+id/aboutButton"
+                    style="@style/SettingsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="@string/about" />
+
+                <com.glevel.dungeonhero.views.CustomButton
+                    android:id="@+id/rateButton"
+                    style="@style/SettingsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="@string/rate_app" />
+
+                <com.glevel.dungeonhero.views.CustomButton
+                    android:id="@+id/shareButton"
+                    style="@style/SettingsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="@string/share" />
+            </LinearLayout>
+
+            <com.glevel.dungeonhero.views.CustomTitle
+                style="@style/SettingsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/music_volume" />
+
+            <RadioGroup
+                android:id="@+id/musicVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <com.glevel.dungeonhero.views.CustomRadioButton
+                    android:id="@+id/musicOff"
+                    style="@style/RadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/music_off" />
+
+                <com.glevel.dungeonhero.views.CustomRadioButton
+                    android:id="@+id/musicOn"
+                    style="@style/RadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/music_on" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <com.glevel.dungeonhero.views.CustomButton
+            android:id="@+id/backButton"
+            style="@style/BackButton"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:text="@string/back"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/loginLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:layout_alignParentRight="true">
+
+            <!-- sign-in button -->
+
+            <com.glevel.dungeonhero.views.CustomButton
+                android:id="@+id/sign_in_button"
+                style="@style/SmallHomeScreenButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login" />
+
+            <com.glevel.dungeonhero.views.CustomButton
+                android:id="@+id/sign_out_button"
+                style="@style/SmallHomeScreenButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:text="@string/logout"
+                android:visibility="gone" />
+
+            <com.glevel.dungeonhero.views.CustomButton
+                android:id="@+id/achievementsButton"
+                style="@style/SmallHomeScreenButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/achievements"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

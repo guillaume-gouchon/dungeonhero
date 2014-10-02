@@ -1,0 +1,163 @@
+<resources>
+
+    <!--<string name="app_name">WWII : Market Garden</string>-->
+    <!--<string name="app_publisher">G-Level</string>-->
+    <!--<string name="id">id</string>-->
+    <!--<string name="placeholder">placeholder</string>-->
+    <!--<string name="viewholder">viewholder</string>-->
+    <!--<string name="cancel">Annuler</string>-->
+    <!--<string name="coming_soon">Bientôt disponible !</string>-->
+
+    <!--<string name="mail_address">guillaume.gouchon@gmail.com</string>-->
+    <!--<string name="contact_title">Question à propos de </string>-->
+    <!--<string name="contact_support_via">Contacter le support technique via&#8230;</string>-->
+    <!--<string name="no_mail_client">Vous n\'avez aucune application de mail&#8230;</string>-->
+
+    <!--<string name="rate_dont_want">Non</string>-->
+    <!--<string name="rate_later">Me le rappeler plus tard</string>-->
+    <!--<string name="rate_now">Noter l\'application maintenant !</string>-->
+    <!--<string name="rate_title">Donner une note à l\'application ?</string>-->
+    <!--<string name="rate_message">Si vous aimez jouer à %s, merci de prendre un moment pour noter l\'application.\nMerci de votre soutien !</string>-->
+
+    <!--<string name="about_title">A propos de WWII</string>-->
+    <!--<string name="about_credits">Un jeu de <a href="http://www.linkedin.com/profile/view?id=144913212">Guillaume Gouchon</a>.</string>-->
+    <!--<string name="about_blog">Jetez un coup d\'oeil à <a href="http://glevelapps.blogspot.co.uk">mon Blog</a> !</string>-->
+    <!--<string name="about_contact"><a href="mailto:guillaume.gouchon@gmail.com">Contactez moi</a> si vous rencontrez un problème ou si vous avez une question particulière.</string>-->
+    <!--<string name="about_other_sources">L\'application utilise le moteur AndEngine réalisé par Nicolas Gramlich.\nIcônes divers par <a href="http://game-icons.net">Game-Icons</a>.-->
+    <!--\nRessources historiques tirées des Archives Nationales.</string>-->
+
+    <!--<string name="gamehelper_sign_in_failed">Erreur lors du  login. Veuillez vérifier votre connexion Internet et réessayer.</string>-->
+    <!--<string name="gamehelper_app_misconfigured">L\'application est mal configurée.</string>-->
+    <!--<string name="gamehelper_license_failed">Erreur lors de la vérification de license</string>-->
+    <!--<string name="gamehelper_unknown_error">Erreur inconnue</string>-->
+
+    <!--<string name="share_subject">Jette un oeil à %s sur Android !</string>-->
+    <!--<string name="share_message">Ce jeu est sympa, tu peux le télécharger gratuitement sur Google Play !\nhttps://play.google.com/store/apps/details?id=%s</string>-->
+
+    <!--<string name="play">Jouer</string>-->
+    <!--<string name="multiplayer">Multijoueurs</string>-->
+    <!--<string name="settings">Options</string>-->
+    <!--<string name="tutorial">Tutoriel</string>-->
+    <!--<string name="campaign">Campagne</string>-->
+    <!--<string name="battle_mode">Mode Bataille</string>-->
+    <!--<string name="back">Retour</string>-->
+    <!--<string name="resume_saved_battle">Vous avez une bataille non terminée située à %s, voulez-vous la continuer ?\nCelle-ci sera perdue si vous recommencez une partie.</string>-->
+    <!--<string name="ask_tutorial">Pour les nouveaux joueurs, il est recommandé de faire le didacticiel !\nVoulez-vous le faire maintenant ?</string>-->
+    <!--<string name="share">Partager</string>-->
+    <!--<string name="support">Support</string>-->
+    <!--<string name="advertisement">Si vous aimez les jeux de stratégie,\nessayez mon super jeu <a href="https://play.google.com/store/apps/details?id=com.giggs.apps.chaos">Warlords Online</a> !</string>-->
+    <!--<string name="login">G+ Login</string>-->
+    <!--<string name="logout">Logout</string>-->
+    <!--<string name="achievements">Trophées</string>-->
+
+    <!--<string name="music_volume">Musique / Son</string>-->
+    <!--<string name="music_off">Off</string>-->
+    <!--<string name="music_on">On</string>-->
+    <!--<string name="difficulty">Difficulté</string>-->
+    <!--<string name="about">A propos de WWII</string>-->
+    <!--<string name="easy">Facile</string>-->
+    <!--<string name="medium">Moyen</string>-->
+    <!--<string name="difficult">Difficile</string>-->
+    <!--<string name="rate_app">Noter l\'application</string>-->
+
+    <!--<string name="new_campaign">Nouvelle campagne</string>-->
+    <!--<string name="load_campaign">Charger une campagne</string>-->
+    <!--<string name="no_saved_campaigns">Aucune partie enregistrée&#8230;</string>-->
+
+    <!--<string name="choose_army">Choisissez votre camp</string>-->
+    <!--<string name="choose_map">Choisissez une carte</string>-->
+    <!--<string name="more_maps_coming_soon">Plus de cartes bientôt disponibles !</string>-->
+
+    <!--<string name="hire_troops">Recrutez vos troupes</string>-->
+    <!--<string name="requisition_points">Points de réquisition :</string>-->
+    <!--<string name="your_army">Votre escouade</string>-->
+    <!--<string name="available_troops">Troupes disponibles</string>-->
+    <!--<string name="start_battle">Démarrer la partie !</string>-->
+    <!--<string name="no_troops">Recrutez des troupes avant de lancer la partie !</string>-->
+    <!--<string name="confirm_battle_message">Vous avez encore quelques points de réquisition à dépenser, lancer quand même la partie ?</string>-->
+    <!--<string name="no_slots_left">Plus de places disponibles dans votre escouade&#8230;\nVendez une de vos unités !</string>-->
+    <!--<string name="not_enough_requisition">Vous n\'avez pas assez de points de réquisition pour recruter cette unité !</string>-->
+    <!--<string name="buy">Recruter</string>-->
+    <!--<string name="sell">Vendre</string>-->
+    <!--<string name="confirm_transaction">%1$s %2$s\npour %3$s points de réquisition ?</string>-->
+    <!--<string name="unit_image">Image de l\'unité</string>-->
+    <!--<string name="frags_number">Frags : %1$s</string>-->
+    <!--<string name="points">%1$s pts</string>-->
+    <!--<string name="ap">AP</string>-->
+    <!--<string name="at">AT</string>-->
+
+    <!--<string name="loading_game">Chargement</string>-->
+    <!--<string name="loading_dots">. . .</string>-->
+    <!--<string name="game_paused">Pause</string>-->
+    <!--<string name="surrender">Abandonner</string>-->
+    <!--<string name="confirm_surrender_message">Etes-vous sûr de vouloir abandonner la partie ?</string>-->
+    <!--<string name="resume_game">Retour au jeu</string>-->
+    <!--<string name="save_exit">Quitter</string>-->
+    <!--<string name="deployment_phase">Phase de déploiement</string>-->
+    <!--<string name="start">Finir le déploiement</string>-->
+    <!--<string name="go">Go !</string>-->
+    <!--<string name="victory">Victoire !</string>-->
+    <!--<string name="defeat">Défaite&#8230;</string>-->
+
+    <!--<string name="battle_report">Rapport de bataille</string>-->
+    <!--<string name="leave_report">Quitter le debriefing</string>-->
+    <!--<string name="enemy_army">Armée ennemie</string>-->
+
+    <!--<string name="objective_points">Points stratégiques : %1$s / %2$s</string>-->
+    <!--<string name="game_menu">Menu de jeu</string>-->
+    <!--<string name="help">Aide</string>-->
+    <!--<string name="skip">Passer</string>-->
+
+    <!--<string name="next">Suivant</string>-->
+    <!--<string name="tutorial0"><u>Bienvenue au tutoriel !</u>\n\nWWII est un jeu de stratégie en temps réel hautement tactique. Nous allons voir ici comment mener vos troupes à la victoire.</string>-->
+    <!--<string name="tutorial1"><u>Comment gagner ?</u>\n\nIl y a deux façons de gagner dans WWII : vous pouvez soit <u>détruire</u> entièrement l\'armée ennemie, soit <u>conquérir</u> tous les points stratégiques de la carte.\nCeux-ci sont placés aléatoirement dans les zones de déploiement des joueurs au début de partie.</string>-->
+    <!--<string name="tutorial2"><u>Se déplacer dans la carte</u>\n\nFaites glisser l\'écran pour naviguer dans la carte; vous pouvez zoomer/dézoomer en pinçant l\'écran avec deux doigts.</string>-->
+    <!--<string name="tutorial3"><u>Commander ses troupes</u>\n\nVous pouvez donner 4 types d\'ordre différents à vos unités :\ndes ordres de Déplacement, d\'Attaque, d\'Embuscade et de Défense.</string>-->
+    <!--<string name="tutorial4"><u>Ordres de Mouvement</u>\n\n<u>Faites glisser</u> une unité à un autre endroit du champs de bataille pour donner un <u>ordre de mouvement</u>.\nDurant le choix de la destination, vous verrez un icone de bouclier apparaitre si le terrain à cet endroit offre un couvert à votre unité.</string>-->
+    <!--<string name="tutorial5"><u>Ordres d\'Attaque</u>\n\nSi vous visez une unité ennemie, la ligne d\'ordre passera de la couleur verte à rouge, si l\'unité peut faire feu sur la cible, ou noire si la ligne de vue jusqu\'à la cible est bouchée.\nDe plus, la couleur du label de distance changera selon les chances de l\'unité d\'atteindre sa cible :\nNoir = aucune chance, Vert = meilleures chances.</string>-->
+    <!--<string name="tutorial6"><u>Ordres de Defense et d\'Embuscade</u>\n\nQuand la bataille commence, des <u>ordres d\'Embuscade</u> sont de base assignés à vos soldats, et des <u>ordres de Défense</u> à vos véhicules.\nPour donner un ordre d\'Embuscade, touchez juste une unité sélectionnée précédemment. Si vous la touchez une nouvelle fois, son ordre d\'Embuscade se changera en ordre de Défense.\nVos unités en embuscade sont plus dures à localiser, et resteront cachées jusqu\'à ce qu\'une unité ennemie soit assez proche. Avec un ordre de défense, une unité attaquera tout ennemi à portée.</string>-->
+    <!--<string name="tutorial7"><u>Détails des unités</u>\n\nJetons maintenant un oeil à l\'écran de détails des unités sélectionnées !\nLa première ligne contient le nom (la couleur montre le niveau de santé de l\'unité, de vert = en pleine santé, à rouge = décédée), le niveau d\'expérience (aucune = bleu, 1 médaille = vétéran, 2 médailles = unité d\'élite) et le compteur de hauts-faits.\nEnsuite, vous avez la liste des armes de l\'unité contenant leur efficacités anti-personnel et antichar et les quantités de munitions restantes.\nLa dernière ligne contient l\'action actuelle de l\'unité.</string>-->
+    <!--<string name="tutorial8"><u>Comportements des unités</u>\n\nDans WWII, vos troupes vont se comporter comme de véritables êtres-humains. Les unités subissant des tirs se cachent, et sont parfois incapables de réagir. Les unités les moins experimentées paniquent plus vite que les unités chevronnées. Avant de tirer, une unité doit viser, et elle doit recharger son arme au besoin. Les unités ajustent leur cadence de tir selon leur quantité de munitions restante.</string>-->
+    <!--<string name="tutorial9"><u>Vehicules et tanks</u>\n\nLes tanks et véhicules sont de puissantes pièces maitresses mais sont plus chères et moins agiles qu\'un soldat. Gardez en tête que les cotés et notamment l\'arrière des véhicules sont plus vulnérables car moins blindés. Les véhicules peuvent faire marche arrière sur les courtes distances. Faites attention à vos troupes car les véhicules peuvent écraser les soldats. Enfin, les véhicules peuvent tirer avec leur arme secondaire pendant leurs déplacements.</string>-->
+    <!--<string name="tutorial10"><u>Types de terrain</u>\n\nUtiliser les couverts qu\'offrent le terrain est un point primordial.\nLes buissons ne bloquent pas les lignes de vue mais offrent un léger couvert.\nLes arbres, les champs et les maisons bloquent les lignes de vue et offrent des couverts moyens et importants à vos soldats.</string>-->
+    <!--<string name="tutorial11"><u>Done !</u>\n\nLe tutoriel est maintenant terminé.\nEssayez de trouver et de détruire les deux fusiliers ennemis sur la carte.\nBonne chance !</string>-->
+
+    <!--<string name="german_army">Allemagne</string>-->
+    <!--<string name="usa_army">USA</string>-->
+
+    <!--<string name="grenade">Grenade</string>-->
+    <!--<string name="cannon75">Canon 75mm</string>-->
+    <!--<string name="garandM1">Garand M1</string>-->
+    <!--<string name="thompson">Thompson</string>-->
+    <!--<string name="browningM2">Browning M2</string>-->
+    <!--<string name="mortar50">Mortier 50mm</string>-->
+    <!--<string name="bazookaM1A">Bazooka</string>-->
+    <!--<string name="mauser">Mauser G98</string>-->
+    <!--<string name="mp40">MP 40</string>-->
+    <!--<string name="mg42">MG 42</string>-->
+    <!--<string name="mortar81">Mortier 81mm</string>-->
+    <!--<string name="panzerschreck">Panzerschreck</string>-->
+    <!--<string name="panzerfaust">Panzerfaust</string>-->
+    <!--<string name="pak43">Pak43 88mm</string>-->
+
+    <!--<string name="rifleman">Fusilier</string>-->
+    <!--<string name="scout">Eclaireur</string>-->
+    <!--<string name="hmg">Mitrailleuse lourde</string>-->
+    <!--<string name="mortar">Mortier</string>-->
+    <!--<string name="at_cannon">Canon antichar</string>-->
+    <!--<string name="bazooka">Bazooka</string>-->
+    <!--<string name="shermanM4A1">Sherman M4A1</string>-->
+    <!--<string name="panzeriv">Panzer IV F2</string>-->
+
+    <!--<string name="market_garden">Market Garden</string>-->
+    <!--<string name="market_garden_intro_1">Operation Market Garden-->
+    <!--\nAfter the successes encountered in the Normandy Breakout from July through August 1944, it was believed that the German Army was a beaten foe and in retreat.-->
+    <!--\nAs such, British General Montgomery lay forth a brazen plan to capture key bridges that would be required conquests for the final push into Germany, perhaps ending the war in Europe by Christmas of 1944.-->
+    <!--\nMontgomery relayed his plan and, following acceptance by Supreme Allied Commander in Europe - US General Dwight Eisenhower - put the plan into action.-->
+    <!--\nOn September 17th - just seven days after the official approval, Operation Market Garden was set in motion&#8230;</string>-->
+
+    <!--<string name="battle_arnhem_streets">Rues d\'Arnhem</string>-->
+    <!--<string name="battle_oosterbeek">Oosterbeek</string>-->
+    <!--<string name="battle_nimegue">Nijmegen</string>-->
+
+</resources>
