@@ -107,17 +107,21 @@ public class ApplicationUtils {
         }
     }
 
-    public static void showToast(Context context, int textResourceId, int duration) {
+    public static void showToast(Context context, String text, int duration) {
         // setup custom toast view
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast, null);
-        TextView text = (TextView) layout.findViewById(R.id.text);
-        text.setText(textResourceId);
+        TextView tv = (TextView) layout.findViewById(R.id.text);
+        tv.setText(text);
 
         Toast toast = new Toast(context);
         toast.setDuration(duration);
         toast.setView(layout);
         toast.show();
+    }
+
+    public static void showToast(Context context, int textResourceId, int duration) {
+        showToast(context, context.getString(textResourceId), duration);
     }
 
     public static void openDialogFragment(FragmentActivity activity, DialogFragment dialog, Bundle bundle) {

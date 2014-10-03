@@ -12,6 +12,8 @@ import java.util.Map;
 
 public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
+    private static final String DB_FILENAME = "db.sql";
+
     private Context mContext;
     private Map<String, Repository<DatabaseResource>> mRepositories;
 
@@ -31,12 +33,12 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        executeSQLFile(db, "db.sql");
+        executeSQLFile(db, DB_FILENAME);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        executeSQLFile(db, "db.sql");
+        executeSQLFile(db, DB_FILENAME);
     }
 
     /**

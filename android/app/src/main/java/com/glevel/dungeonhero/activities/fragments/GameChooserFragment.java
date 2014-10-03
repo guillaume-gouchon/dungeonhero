@@ -9,23 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.GameActivity;
-import com.glevel.dungeonhero.activities.adapters.CampaignListAdapter;
-import com.glevel.dungeonhero.game.data.CampaignsData.Campaigns;
-import com.glevel.dungeonhero.game.models.Campaign;
-import com.glevel.dungeonhero.utils.database.DatabaseHelper;
+import com.glevel.dungeonhero.activities.NewGameActivity;
+import com.glevel.dungeonhero.activities.adapters.GamesListAdapter;
+import com.glevel.dungeonhero.models.Game;
 
 import java.util.List;
 
 public class GameChooserFragment extends DialogFragment {
 
-    public static final String PARENT_CURSOR_COLUMN_ID = "_id", PARENT_CURSOR_COLUMN_TITLE = "title";
-    public static final int NEW_CAMPAIGN_CATEGORY_ID = 0, LOAD_CAMPAIGN_CATEGORY_ID = 1;
-    private ExpandableListView mCampaignListView;
-    private CampaignListAdapter mAdapter;
-    private DatabaseHelper mDbHelper;
-    private List<Campaign> mSavedCampaignList;
+    public static final int NEW_GAME_CATEGORY_ID = 0, LOAD_GAME_CATEGORY_ID = 1;
+
+    private ExpandableListView mGamesListView;
+    private GamesListAdapter mAdapter;
+    private MyDatabase mDbHelper;
+    private List<com.glevel.dungeonhero.models.Game> mSavedGamesList;
+
 
     /**
      * Callbacks
@@ -34,10 +35,10 @@ public class GameChooserFragment extends DialogFragment {
         @Override
         public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) {
             if (view.isEnabled()) {
-                if (groupPosition == NEW_CAMPAIGN_CATEGORY_ID) {
-                    loadCampaign(new Campaign(Campaigns.values()[childPosition]));
+                if (groupPosition == NEW_GAME_CATEGORY_ID) {
+                    launchGame(new Game());
                 } else {
-                    loadCampaign(mSavedCampaignList.get(childPosition));
+                    launchGame(mSavedGamesList.get(childPosition));
                 }
             }
             return false;
@@ -49,7 +50,7 @@ public class GameChooserFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_TITLE, 0); // remove title from dialog fragment
 
-//        mDbHelper = new DatabaseHelDialogFragmentper(getActivity());
+        mDbHelper = new MyDatabase(getActivity());
     }
 
     @Override
@@ -66,10 +67,10 @@ public class GameChooserFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        mSavedCampaignList = mDbHelper.getCampaignDao().get(null, null, null, null);
-        mAdapter = new CampaignListAdapter(getActivity(), mSavedCampaignList, new int[]{R.string.new_campaign,
-                R.string.load_campaign});
-        mCampaignListView.setAdapter(mAdapter);
+        mSavedGamesList = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
+        mAdapter = new GamesListAdapter(getActivity(), mSavedGamesList, new int[]{R.string.new_game,
+                R.string.load_game});
+        mGamesListView.setAdapter(mAdapter);
 
         // the most dirty hack on earth in order to expand all the groups (buggy
         // when called at the same time (!))
@@ -77,7 +78,7 @@ public class GameChooserFragment extends DialogFragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mCampaignListView.expandGroup(0);
+                mGamesListView.expandGroup(0);
             }
         }, 100);
 
@@ -85,21 +86,21 @@ public class GameChooserFragment extends DialogFragment {
         handler2.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mCampaignListView.expandGroup(1);
+                mGamesListView.expandGroup(1);
             }
         }, 200);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.campaign_chooser_fragment, container, false);
+        View layout = inflater.inflate(R.layout.game_chooser_fragment, container, false);
 
         // expandable friends list view
-        mCampaignListView = (ExpandableListView) layout.findViewById(R.id.campaignList);
-        mCampaignListView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
-        mCampaignListView.setOnChildClickListener(mOnItemClickedListener);
+        mGamesListView = (ExpandableListView) layout.findViewById(R.id.gamesList);
+        mGamesListView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
+        mGamesListView.setOnChildClickListener(mOnItemClickedListener);
         // disable group collapsing
-        mCampaignListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        mGamesListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 // do nothing
@@ -107,7 +108,7 @@ public class GameChooserFragment extends DialogFragment {
             }
         });
         // remove group icons
-        mCampaignListView.setGroupIndicator(null);
+        mGamesListView.setGroupIndicator(null);
 
         return layout;
     }
@@ -120,31 +121,22 @@ public class GameChooserFragment extends DialogFragment {
         mAdapter = null;
     }
 
-    private void loadCampaign(Campaign campaign) {
-//        List<Battle> lstSavedBattleForCampaign = mDbHelper.getGamDao().get(GameDao.CAMPAIGN_ID + "=?",
-//                new String[]{"" + campaign.getCampaignId()}, null, null);
+    private void launchGame(Game game) {
         Intent intent;
-        Bundle args = new Bundle();
-//        if (lstSavedBattleForCampaign.size() > 0) {
-        // load saved battle
-        intent = new Intent(getActivity(), GameActivity.class);
-//            args.putLong("game_id", lstSavedBattleForCampaign.get(0).getId());
-//        } else {
-//            if (campaign.getId() == 0L) {
-//                // if new campaign
-//                // init player
-//                campaign.setPlayer(new Player(campaign.getArmy()));
-//                // save it to the database
-////                long id = mDbHelper.getCampaignDao().save(campaign);
-////                campaign.setId(id);
-//            }
-//            // go to campaign screen
-////            intent = new Intent(getActivity(), CampaignActivity.class);
-//            args.putLong("campaign_id", campaign.getId());
-//        }
-//        intent.putExtras(args);
-//        startActivity(intent);
-//        getActivity().finish();
+
+        if (game.isNew()) {
+            // go to new game screen
+            intent = new Intent(getActivity(), NewGameActivity.class);
+        } else {
+            // go to game screen
+            intent = new Intent(getActivity(), Game.class);
+            Bundle args = new Bundle();
+            args.putLong(GameActivity.EXTRA_GAME_ID, game.getId());
+            intent.putExtras(args);
+        }
+
+        startActivity(intent);
+        getActivity().finish();
     }
 
 }

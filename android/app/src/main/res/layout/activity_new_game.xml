@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/storms"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_village"
+        android:tint="#cc000000" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <com.glevel.dungeonhero.views.CustomCarousel
+            android:id="@+id/heroes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            custom:nbColumns="2" />
+
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:id="@+id/chooseHeroMessage"
+            style="@style/AnimatedMessage"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_hero_message" />
+
+    </RelativeLayout>
+
+</FrameLayout>

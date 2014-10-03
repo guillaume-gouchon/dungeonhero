@@ -7,7 +7,7 @@
     android:padding="5dp" >
 
     <ExpandableListView
-        android:id="@+id/campaignList"
+        android:id="@+id/gamesList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:childDivider="@color/link_pressed"

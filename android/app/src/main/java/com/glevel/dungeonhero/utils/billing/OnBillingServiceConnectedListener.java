@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.billing;
+package com.glevel.dungeonhero.utils.billing;
 
 public interface OnBillingServiceConnectedListener {
 

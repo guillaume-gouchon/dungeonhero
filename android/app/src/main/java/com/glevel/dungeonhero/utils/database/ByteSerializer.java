@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.utils;
+package com.glevel.dungeonhero.utils.database;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class ObjectConverter {
+public class ByteSerializer {
 
     /**
      * Gets an object from a byte array.
@@ -15,11 +16,11 @@ public class ObjectConverter {
      * @param blob
      * @return
      */
-    public static Object getObjectFromByte(byte[] blob) {
+    public static Serializable getObjectFromByte(byte[] blob) {
         try {
             ByteArrayInputStream bais = new ByteArrayInputStream(blob);
             ObjectInputStream in = new ObjectInputStream(bais);
-            Object o = (Object) in.readObject();
+            Serializable o = (Serializable) in.readObject();
             in.close();
             return o;
         } catch (IOException ex) {
@@ -38,13 +39,13 @@ public class ObjectConverter {
      * @param object
      * @return
      */
-    public static ByteArrayOutputStream toByte(Object object) {
+    public static byte[] toByteArray(Serializable object) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             ObjectOutput out = new ObjectOutputStream(baos);
             out.writeObject(object);
             out.close();
-            return baos;
+            return baos.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {

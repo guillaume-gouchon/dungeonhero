@@ -58,34 +58,13 @@
     <string name="rate_app">Rate the app</string>
     <string name="share">Share</string>
 
-    <!-- Campaign Chooser -->
-    <string name="new_campaign">New Campaign</string>
-    <string name="load_campaign">Load Campaign</string>
-    <string name="no_saved_campaigns">No saved games yet&#8230;</string>
+    <!-- Games Chooser -->
+    <string name="new_game">New Game</string>
+    <string name="load_game">Load Game</string>
+    <string name="no_saved_games">No saved games yet&#8230;</string>
 
-    <!-- Battle Chooser -->
-    <string name="choose_army">Choose your side</string>
-    <string name="choose_map">Pick a map</string>
-    <string name="more_maps_coming_soon">More coming soon !</string>
-
-    <!-- Army Builder -->
-    <string name="hire_troops">Hire your troops</string>
-    <string name="requisition_points">Requisition Points :</string>
-    <string name="your_army">Your Squad</string>
-    <string name="available_troops">Available Troops</string>
-    <string name="start_battle">Start Battle !</string>
-    <string name="no_troops">Hire some troops before !</string>
-    <string name="confirm_battle_message">You have some requisition points left, continue to battlefield ?</string>
-    <string name="no_slots_left">No more unit slot left&#8230;\nSell one of your unit !</string>
-    <string name="not_enough_requisition">You do not have enough requisition points to hire this unit !</string>
-    <string name="buy">Hire</string>
-    <string name="sell">Sell</string>
-    <string name="confirm_transaction">%1$s %2$s\nfor %3$s requisition points ?</string>
-    <string name="unit_image">Unit image</string>
-    <string name="frags_number">Frags : %1$s</string>
-    <string name="points">%1$s pts</string>
-    <string name="ap">AP</string>
-    <string name="at">AT</string>
+    <!-- New Game -->
+    <string name="choose_hero_message">Choose a Hero</string>
 
     <!-- Game -->
     <string name="loading_game">Loading</string>
@@ -100,11 +79,6 @@
     <string name="go">Go !</string>
     <string name="victory">Victory !</string>
     <string name="defeat">Defeat&#8230;</string>
-
-    <!-- Battle Report -->
-    <string name="battle_report">Battle Report</string>
-    <string name="leave_report">Leave Report</string>
-    <string name="enemy_army">Enemy\'s Army</string>
 
     <!-- Campaign Screen -->
     <string name="objective_points">Objective Points : %1$s / %2$s</string>

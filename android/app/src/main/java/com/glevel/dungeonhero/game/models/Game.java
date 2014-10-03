@@ -7,7 +7,7 @@ import com.glevel.dungeonhero.game.data.ArmiesData;
 import com.glevel.dungeonhero.game.data.CampaignsData.Campaigns;
 import com.glevel.dungeonhero.game.data.OperationsData;
 
-public class Campaign {
+public class Game {
 
     private final int campaignId;
     private final ArmiesData army;
@@ -18,7 +18,7 @@ public class Campaign {
     private List<Operation> operations;
     private Player player;
 
-    public Campaign(Campaigns campaignsData) {
+    public Game(Campaigns campaignsData) {
         this.campaignId = campaignsData.getId();
         this.name = campaignsData.getName();
         this.nbOperationsToSucceed = campaignsData.getNbOperationsToSucceed();

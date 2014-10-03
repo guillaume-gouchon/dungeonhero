@@ -1,7 +1,5 @@
 package com.glevel.dungeonhero.activities.adapters;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
@@ -13,28 +11,29 @@ import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
-import com.glevel.dungeonhero.game.data.CampaignsData.Campaigns;
-import com.glevel.dungeonhero.game.models.Campaign;
+import com.glevel.dungeonhero.models.Game;
 
-public class CampaignListAdapter extends BaseExpandableListAdapter {
+import java.util.List;
+
+public class GamesListAdapter extends BaseExpandableListAdapter {
 
     private final LayoutInflater mInflater;
-    private List<Campaign> mSavedCampaigns;
+    private List<Game> mSavedGames;
     private int[] mHeaderLabels;
 
-    public CampaignListAdapter(FragmentActivity activity, List<Campaign> savedCampaigns, int[] headerLabels) {
-        mSavedCampaigns = savedCampaigns;
+    public GamesListAdapter(FragmentActivity activity, List<Game> savedCampaigns, int[] headerLabels) {
+        mSavedGames = savedCampaigns;
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mHeaderLabels = headerLabels;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        if (groupPosition == GameChooserFragment.NEW_CAMPAIGN_CATEGORY_ID) {
-            return new Campaign(Campaigns.values()[childPosition]);
-        } else if (groupPosition == GameChooserFragment.LOAD_CAMPAIGN_CATEGORY_ID
-                && childPosition < mSavedCampaigns.size()) {
-            return mSavedCampaigns.get(childPosition);
+        if (groupPosition == GameChooserFragment.NEW_GAME_CATEGORY_ID) {
+            return new Game();
+        } else if (groupPosition == GameChooserFragment.LOAD_GAME_CATEGORY_ID
+                && childPosition < mSavedGames.size()) {
+            return mSavedGames.get(childPosition);
         }
         return null;
     }
@@ -45,38 +44,36 @@ public class CampaignListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView,
-            ViewGroup parent) {
-
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.campaign_list_child, null);
+            convertView = mInflater.inflate(R.layout.game_list_child, null);
         }
 
-        TextView campaignTitle = (TextView) convertView.findViewById(R.id.text);
+        TextView title = (TextView) convertView.findViewById(R.id.text);
 
         Object child = getChild(groupPosition, childPosition);
         if (getChild(groupPosition, childPosition) == null) {
             // if empty view
             convertView.setEnabled(false);
-            campaignTitle.setText(R.string.no_saved_campaigns);
-            campaignTitle.setBackgroundColor(Color.BLACK);
-            campaignTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            title.setText(R.string.no_saved_games);
+            title.setBackgroundColor(Color.BLACK);
+            title.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
             convertView.setEnabled(true);
-            Campaign campaign = (Campaign) child;
-            campaignTitle.setText(campaign.getName());
-            campaignTitle.setCompoundDrawablesWithIntrinsicBounds(campaign.getArmy().getFlagImage(), 0, 0, 0);
+            Game game = (Game) child;
+            // TODO
+//            title.setText(game.getName());
+//            title.setCompoundDrawablesWithIntrinsicBounds(game.getArmy().getFlagImage(), 0, 0, 0);
         }
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        if (groupPosition == GameChooserFragment.NEW_CAMPAIGN_CATEGORY_ID) {
-            return Campaigns.values().length;
+        if (groupPosition == GameChooserFragment.NEW_GAME_CATEGORY_ID) {
+            return 1;
         } else {
-            // return 1 if empty (used for the empty view)
-            return Math.max(1, mSavedCampaigns.size());
+            return Math.max(1, mSavedGames.size());
         }
     }
 
@@ -98,7 +95,7 @@ public class CampaignListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.campaign_list_header, null);
+            convertView = mInflater.inflate(R.layout.games_list_header, null);
         }
 
         // set header title

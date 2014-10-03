@@ -13,7 +13,10 @@ public class Repository<T extends DatabaseResource> implements IRepository<T> {
 
     protected DatabaseHelper dataBaseHelper;
 
-    public Repository(DatabaseHelper dataBaseHelper) {
+    private String tableName;
+
+    public Repository(DatabaseHelper dataBaseHelper, String tableName) {
+        this.tableName = tableName;
         this.dataBaseHelper = dataBaseHelper;
     }
 
@@ -28,7 +31,7 @@ public class Repository<T extends DatabaseResource> implements IRepository<T> {
     @Override
     public List<T> get(String selection, String[] selectionArgs, String orderBy, String limit) {
         this.openDatabase();
-        Cursor cursor = mDatabase.query(T.TABLE_NAME, null, selection, selectionArgs, null, null, orderBy, limit);
+        Cursor cursor = mDatabase.query(tableName, null, selection, selectionArgs, null, null, orderBy, limit);
         return convertCursorToObjectList(cursor);
     }
 
@@ -52,9 +55,9 @@ public class Repository<T extends DatabaseResource> implements IRepository<T> {
         this.openDatabase();
         if (entity.getId() > 0) {
             rowId = entity.getId();
-            mDatabase.update(T.TABLE_NAME, getContentValues(entity), T.COLUMN_ID + "=" + entity.getId(), null);
+            mDatabase.update(tableName, getContentValues(entity), T.COLUMN_ID + "=" + entity.getId(), null);
         } else {
-            rowId = mDatabase.insert(T.TABLE_NAME, null, getContentValues(entity));
+            rowId = mDatabase.insert(tableName, null, getContentValues(entity));
         }
         this.closeDatabase();
         return rowId;
@@ -63,7 +66,7 @@ public class Repository<T extends DatabaseResource> implements IRepository<T> {
     @Override
     public void delete(String selection, String[] selectionArgs) {
         this.openDatabase();
-        mDatabase.delete(T.TABLE_NAME, selection, selectionArgs);
+        mDatabase.delete(tableName, selection, selectionArgs);
         this.closeDatabase();
     }
 

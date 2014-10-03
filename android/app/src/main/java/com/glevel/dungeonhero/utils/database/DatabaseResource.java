@@ -8,10 +8,9 @@ import android.database.Cursor;
  */
 public abstract class DatabaseResource {
 
-    protected static final String TABLE_NAME = "";
-    protected static final String COLUMN_ID = "_id";
+    public static final String COLUMN_ID = "_id";
 
-    private long id;
+    protected long id;
 
     public long getId() {
         return id;
@@ -26,5 +25,9 @@ public abstract class DatabaseResource {
     }
 
     public abstract ContentValues getContentValues();
+
+    public boolean isNew() {
+        return id == 0L;
+    }
 
 }

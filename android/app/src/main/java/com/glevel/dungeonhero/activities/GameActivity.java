@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.activities;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -40,7 +39,6 @@ import com.glevel.dungeonhero.game.models.units.Cannon;
 import com.glevel.dungeonhero.game.models.units.Soldier;
 import com.glevel.dungeonhero.game.models.units.Tank;
 import com.glevel.dungeonhero.game.models.units.categories.Unit;
-import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 
 import org.andengine.engine.camera.ZoomCamera;
@@ -64,13 +62,14 @@ import org.andengine.extension.tmx.util.exception.TMXLoadException;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
-import org.andengine.ui.IGameInterface;
 import org.andengine.util.color.Color;
 import org.andengine.util.debug.Debug;
 
 import java.util.List;
 
 public class GameActivity extends CustomLayoutGameActivity implements OnNewSpriteToDraw, OnNewSoundToPlay {
+
+    public static final String EXTRA_GAME_ID = "game_id";
 
     private DatabaseHelper mDbHelper;
     protected SharedPreferences mSharedPrefs;

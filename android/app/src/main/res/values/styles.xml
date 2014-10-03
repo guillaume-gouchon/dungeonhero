@@ -26,7 +26,7 @@
     <!-- HOME SCREEN -->
     <style name="Button">
         <item name="android:background">@drawable/bg_btn</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">12dp</item>
     </style>
@@ -66,8 +66,8 @@
 
     <style name="SettingsLabel">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:shadowColor">@android:color/black</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:shadowColor">@color/black</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">1</item>
@@ -83,14 +83,11 @@
     </style>
 
     <!-- NEW GAME-->
-    <style name="BattleChooserTitle">
+    <style name="AnimatedMessage">
         <item name="android:gravity">center</item>
-    </style>
-
-    <style name="MapTitle" parent="@style/SettingsLabel">
-        <item name="android:textSize">20sp</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:textSize">40sp</item>
     </style>
 
     <!-- DIALOGS -->

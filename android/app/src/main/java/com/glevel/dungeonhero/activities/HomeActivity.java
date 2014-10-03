@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
 import com.glevel.dungeonhero.game.GameUtils;
 import com.glevel.dungeonhero.game.GameUtils.MusicState;
 import com.glevel.dungeonhero.models.Game;
@@ -147,7 +148,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
     private void onPlayButtonClicked() {
         List<Game> lstGames = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
         if (lstGames.size() > 0) {
-            showGameChooserDialog(lstGames);
+            ApplicationUtils.openDialogFragment(this, new GameChooserFragment(), null);
         } else {
             goToNewGameActivity();
         }
@@ -319,11 +320,6 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
     private void hideSettings() {
         mSettingsLayout.setVisibility(View.GONE);
         mSettingsLayout.startAnimation(mFadeOutAnimation);
-    }
-
-    private void showGameChooserDialog(List<Game> lstGames) {
-        // ask user if he wants to resume a saved game
-        // TODO
     }
 
     private void showTutorialDialog() {

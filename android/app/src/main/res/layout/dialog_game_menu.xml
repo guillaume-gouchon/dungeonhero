@@ -23,14 +23,6 @@
         android:text="@string/resume_game" />
 
     <com.glevel.dungeonhero.views.CustomButton
-        android:id="@+id/surrenderButton"
-        style="@style/HomeScreenButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/surrender" />
-
-    <com.glevel.dungeonhero.views.CustomButton
         android:id="@+id/exitButton"
         style="@style/HomeScreenButton"
         android:layout_width="wrap_content"

@@ -89,10 +89,10 @@ public class SplashActivity extends MyActivity {
         // create text views for each letter of the title
         String appPublisher = getString(R.string.app_publisher);
         for (int n = 0; n < appPublisher.length(); n++) {
-            char c = appPublisher.charAt(n);
+            char letter = appPublisher.charAt(n);
             TextView letterTV = new TextView(this);
             letterTV.setTextAppearance(this, R.style.SplashScreenTitle);
-            letterTV.setText("" + c);
+            letterTV.setText("" + letter);
             letterTV.setVisibility(View.GONE);
             letterTV.setTypeface(FONTS.splash);
             mTitleLayout.addView(letterTV);

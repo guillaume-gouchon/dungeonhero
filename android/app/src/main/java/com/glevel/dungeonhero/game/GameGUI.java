@@ -11,19 +11,13 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
-import com.glevel.dungeonhero.game.models.units.Soldier;
-import com.glevel.dungeonhero.game.models.units.categories.Unit;
-import com.glevel.dungeonhero.game.models.units.categories.Unit.Experience;
-import com.glevel.dungeonhero.game.models.weapons.categories.Weapon;
 import com.glevel.dungeonhero.utils.MusicManager;
-import com.glevel.dungeonhero.views.CustomAlertDialog;
 
 public class GameGUI {
 
@@ -85,26 +79,6 @@ public class GameGUI {
         mGameMenuDialog.setContentView(R.layout.dialog_game_menu);
         mGameMenuDialog.setCancelable(true);
         Animation menuButtonAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.bottom_in);
-        // surrender button
-        mGameMenuDialog.findViewById(R.id.surrenderButton).setAnimation(menuButtonAnimation);
-        mGameMenuDialog.findViewById(R.id.surrenderButton).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicManager.playSound(mGameActivity.getApplicationContext(), R.raw.button_sound);
-                Dialog confirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(R.string.confirm_surrender_message),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                MusicManager.playSound(mGameActivity.getApplicationContext(), R.raw.button_sound);
-                                if (which == R.id.okButton) {
-                                    mGameActivity.endGame(mGameActivity.battle.getEnemyPlayer(mGameActivity.battle.getMe()), true);
-                                }
-                                dialog.dismiss();
-                            }
-                        });
-                confirmDialog.show();
-            }
-        });
         // resume game button
         mGameMenuDialog.findViewById(R.id.resumeGameButton).setAnimation(menuButtonAnimation);
         mGameMenuDialog.findViewById(R.id.resumeGameButton).setOnClickListener(new OnClickListener() {
@@ -196,7 +170,7 @@ public class GameGUI {
 //                // hide enemies info
 //                updateUnitInfoVisibility(unit.getArmy() == mGameActivity.battle.getMe().getArmy());
 
-                // name
+        // name
 //                if (unit instanceof Soldier) {
 //                    // display real name
 //                    ((TextView) mSelectedUnitLayout.findViewById(R.id.unitName)).setText(((Soldier) unit).getRealName());
