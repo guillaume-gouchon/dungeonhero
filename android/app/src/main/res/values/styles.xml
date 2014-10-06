@@ -82,14 +82,6 @@
         <item name="android:textColorLink">@color/link</item>
     </style>
 
-    <!-- NEW GAME-->
-    <style name="AnimatedMessage">
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:padding">20dp</item>
-        <item name="android:textSize">40sp</item>
-    </style>
-
     <!-- DIALOGS -->
     <style name="FullScreenDialog" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
@@ -112,11 +104,38 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <!-- INTRO -->
-    <style name="IntroductionText" parent="@style/SettingsLabel">
-        <item name="android:textSize">26sp</item>
+    <!-- NEW GAME-->
+    <style name="AnimatedMessage">
+        <item name="android:padding">20dp</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="HeroTitle">
+        <item name="android:textSize">22sp</item>
+        <item name="android:padding">6dp</item>
+    </style>
+
+    <style name="HeroDescription">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="HeroStat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:drawablePadding">6dp</item>
+    </style>
+
+    <!-- STORY -->
+    <style name="StoryText">
+        <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">0dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">8</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">8</item>
     </style>
 
     <!-- IN GAME -->

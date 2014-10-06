@@ -10,7 +10,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.util.Log;
 
 import com.android.vending.billing.IInAppBillingService;
 
@@ -48,7 +47,9 @@ public class InAppBillingHelper {
                 callback.onBillingServiceConnected();
             }
         };
-        mActivity.bindService(new Intent(SERVICE_INTENT), mServiceConnection, Context.BIND_AUTO_CREATE);
+        Intent serviceIntent = new Intent(SERVICE_INTENT);
+        serviceIntent.setPackage("com.android.vending");
+        mActivity.bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
     public void doIOwn(List<? extends InAppProduct> inAppProducts) {

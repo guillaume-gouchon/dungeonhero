@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.activities.adapters;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
@@ -12,7 +13,6 @@ import com.glevel.dungeonhero.views.CustomCarousel;
 import java.util.List;
 
 public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
-
 
     public HeroesAdapter(Context context, int layoutResource, List<Hero> dataList, View.OnClickListener itemClickedListener) {
         super(context, layoutResource, dataList, itemClickedListener);
@@ -25,10 +25,15 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
 
         Hero hero = mDataList.get(position);
 
-        TextView heroName = (TextView) layout.findViewById(R.id.heroName);
-        heroName.setText(hero.getClass().getName());
-
-        // TODO
+        ((TextView) layout.findViewById(R.id.name)).setText(hero.getName());
+        ((ImageView) layout.findViewById(R.id.image)).setImageResource(hero.getImage());
+        ((TextView) layout.findViewById(R.id.description)).setText(hero.getDescription());
+        ((TextView) layout.findViewById(R.id.strength)).setText("" + hero.getStrength());
+        ((TextView) layout.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());
+        ((TextView) layout.findViewById(R.id.spirit)).setText("" + hero.getSpirit());
+        ((TextView) layout.findViewById(R.id.hp)).setText("" + hero.getHp());
+        ((TextView) layout.findViewById(R.id.attack)).setText("" + hero.getAttack());
+        ((TextView) layout.findViewById(R.id.block)).setText("" + hero.getBlock());
 
         return layout;
     }

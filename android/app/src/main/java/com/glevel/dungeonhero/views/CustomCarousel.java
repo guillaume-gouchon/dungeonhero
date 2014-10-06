@@ -34,10 +34,6 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
     private ViewGroup mPagination;
     private View[] mPaginationDots;
 
-    public CustomCarousel(Context context) {
-        this(context, null);
-    }
-
     public CustomCarousel(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -52,6 +48,7 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomCarousel);
         mNbColumns = a.getInt(R.styleable.CustomCarousel_nbColumns, DEFAULT_NB_COLUMNS);
+        a.recycle();
     }
 
     public void setAdapter(Adapter adapter) {

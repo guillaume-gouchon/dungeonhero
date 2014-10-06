@@ -8,13 +8,13 @@
     <color name="bg_btn_edge">#66000000</color>
     <color name="bg_btn_edge_pressed">#99000000</color>
     <color name="bg_btn_center">#ee000000</color>
-    <color name="bg_btn_pressed_center">#aaD10000</color>
+    <color name="bg_btn_pressed_center">#aabbbbbb</color>
 
-    <color name="link">#aaD10000</color>
-    <color name="link_pressed">#88D10000</color>
+    <color name="link">#aabbbbbb</color>
+    <color name="link_pressed">#aa999999</color>
 
     <color name="requisitionPoints">#EDEA39</color>
-    <color name="grey">#D4CDCD</color>
+    <color name="grey">#aabbbbbb</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#D10000</color>
     <color name="black">#000000</color>

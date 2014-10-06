@@ -11,7 +11,7 @@ import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.HeroesAdapter;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
-import com.glevel.dungeonhero.game.data.GameData;
+import com.glevel.dungeonhero.factories.HeroFactory;
 import com.glevel.dungeonhero.models.characters.heroes.Hero;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
@@ -26,7 +26,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
     private ImageView mStormsBg;
     private Runnable mStormEffect;
     private InAppBillingHelper mInAppBillingHelper;
-    private List<Hero> mHeroes;
+    private List<Hero> mLstHeroes;
 
 
     /**
@@ -37,14 +37,15 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
         public void onClick(View v) {
             MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
             int position = Integer.parseInt("" + v.getTag(R.string.id));
-
-            // TODO
-
-            if (false) {
-                mInAppBillingHelper.purchaseItem(mHeroes.get(position));
+            Hero selectedHero = mLstHeroes.get(position);
+            if (selectedHero.isAvailable()) {
+                Bundle bundle = new Bundle();
+//                bundle.putSerializable("hero", selectedHero);
+                // TODO : launch game activity and pass hero id
+                ApplicationUtils.openDialogFragment(NewGameActivity.this, new StoryFragment(), null);
+            } else {
+                mInAppBillingHelper.purchaseItem(mLstHeroes.get(position));
             }
-
-            ApplicationUtils.openDialogFragment(NewGameActivity.this, new StoryFragment(), null);
         }
     };
 
@@ -52,7 +53,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mHeroes = GameData.getHeroes();
+        mLstHeroes = HeroFactory.getHeroes();
 
         setContentView(R.layout.activity_new_game);
         setupUI();
@@ -65,7 +66,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
 
         // init carousel
         CustomCarousel heroesCarousel = (CustomCarousel) findViewById(R.id.heroes);
-        CustomCarousel.Adapter heroesAdapter = new HeroesAdapter(getApplicationContext(), R.layout.hero_chooser_item, mHeroes, mOnHeroSelectedListener);
+        CustomCarousel.Adapter heroesAdapter = new HeroesAdapter(getApplicationContext(), R.layout.hero_chooser_item, mLstHeroes, mOnHeroSelectedListener);
         heroesCarousel.setAdapter(heroesAdapter);
 
         // start message animation
@@ -98,7 +99,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
 
     @Override
     public void onBillingServiceConnected() {
-        mInAppBillingHelper.doIOwn(mHeroes);
+        mInAppBillingHelper.doIOwn(mLstHeroes);
     }
 
 }

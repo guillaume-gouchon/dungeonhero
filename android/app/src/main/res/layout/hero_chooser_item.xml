@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,19 +9,111 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_margin="10dp"
-        android:background="@drawable/bg_horizontal_chooser"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="15dp"
+        android:background="@drawable/bg_horizontal_chooser">
 
-        <com.glevel.dungeonhero.views.CustomTextView
-            android:id="@+id/heroName"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="12dp"
+                android:layout_alignParentTop="true" />
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                style="@style/HeroTitle"
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/image" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_toRightOf="@+id/image">
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    style="@style/HeroDescription"
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left" />
+            </ScrollView>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center" />
+            android:orientation="horizontal">
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:drawableLeft="@drawable/ic_elite"
+                style="@style/HeroStat"
+                android:id="@+id/strength"
+                custom:textHint="@string/strength"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:drawableLeft="@drawable/ic_elite"
+                style="@style/HeroStat"
+                android:id="@+id/dexterity"
+                custom:textHint="@string/dexterity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:drawableLeft="@drawable/ic_elite"
+                style="@style/HeroStat"
+                android:id="@+id/spirit"
+                custom:textHint="@string/spirit"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:drawableLeft="@drawable/ic_elite"
+                style="@style/HeroStat"
+                android:id="@+id/hp"
+                custom:textHint="@string/hp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:drawableLeft="@drawable/ic_elite"
+                style="@style/HeroStat"
+                android:id="@+id/attack"
+                android:layout_weight="1"
+                custom:textHint="@string/attack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:drawableLeft="@drawable/ic_elite"
+                style="@style/HeroStat"
+                android:id="@+id/block"
+                android:layout_weight="1"
+                custom:textHint="@string/block"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>

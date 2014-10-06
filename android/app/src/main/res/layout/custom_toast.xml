@@ -3,15 +3,15 @@
     android:id="@+id/rootLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/black"
+    android:background="@drawable/bg_horizontal_chooser"
     android:orientation="horizontal"
-    android:padding="5dp" >
+    android:padding="5dp">
 
     <com.glevel.dungeonhero.views.CustomTextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/green" />
+        android:textColor="@color/white" />
 
 </LinearLayout>

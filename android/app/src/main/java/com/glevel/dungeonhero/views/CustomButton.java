@@ -20,7 +20,7 @@ public class CustomButton extends Button {
 
     private void initCustomButton() {
         setTypeface(FONTS.main);
-        
+
         // disable button default sound when clicked
         setSoundEffectsEnabled(false);
     }

@@ -46,7 +46,7 @@ public class GamesListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.game_list_child, null);
+            convertView = mInflater.inflate(R.layout.game_chooser_list_child, null);
         }
 
         TextView title = (TextView) convertView.findViewById(R.id.text);
@@ -95,7 +95,7 @@ public class GamesListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.games_list_header, null);
+            convertView = mInflater.inflate(R.layout.game_chooser_list_header, null);
         }
 
         // set header title

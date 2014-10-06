@@ -66,6 +66,18 @@
     <!-- New Game -->
     <string name="choose_hero_message">Choose a Hero</string>
 
+    <!-- Story -->
+    <string name="skip">Skip</string>
+    <string name="replay">Replay</string>
+
+    <!-- Characteristics -->
+    <string name="hp">Health Points</string>
+    <string name="strength">Strength : used to deal damage, hold heavy charges</string>
+    <string name="dexterity">Dexterity : used to dodge, react, aim</string>
+    <string name="spirit">Spirit : used to react, deduce, focus</string>
+    <string name="attack">The ability to hit an enemy</string>
+    <string name="block">The ability to block an enemy\'s attack</string>
+
     <!-- Game -->
     <string name="loading_game">Loading</string>
     <string name="loading_dots">. . .</string>
@@ -80,11 +92,8 @@
     <string name="victory">Victory !</string>
     <string name="defeat">Defeat&#8230;</string>
 
-    <!-- Campaign Screen -->
-    <string name="objective_points">Objective Points : %1$s / %2$s</string>
     <string name="game_menu">Game Menu</string>
     <string name="help">Help</string>
-    <string name="skip">Skip</string>
 
     <!-- Tutorial -->
     <string name="next">Next</string>
