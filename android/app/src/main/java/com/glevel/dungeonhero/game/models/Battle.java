@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.glevel.dungeonhero.game.AI;
-import com.glevel.dungeonhero.game.GameUtils;
-import com.glevel.dungeonhero.game.GameUtils.DifficultyLevel;
+import com.glevel.dungeonhero.game.GameConstants;
+import com.glevel.dungeonhero.game.GameConstants.DifficultyLevel;
 import com.glevel.dungeonhero.game.data.ArmiesData;
 import com.glevel.dungeonhero.game.data.BattlesData;
-import com.glevel.dungeonhero.game.interfaces.OnNewSoundToPlay;
-import com.glevel.dungeonhero.game.interfaces.OnNewSpriteToDraw;
+import com.glevel.dungeonhero.game.base.interfaces.OnNewSoundToPlay;
+import com.glevel.dungeonhero.game.base.interfaces.OnNewSpriteToDraw;
 import com.glevel.dungeonhero.game.logic.MapLogic;
 import com.glevel.dungeonhero.game.models.map.Map;
 import com.glevel.dungeonhero.game.models.orders.MoveOrder;
@@ -279,13 +279,13 @@ public class Battle implements Serializable {
 		if (gameCounter > 999) {
 			gameCounter = 0;
 		}
-		if (gameCounter % GameUtils.UPDATE_VISION_FREQUENCY == 0) {
+		if (gameCounter % GameConstants.UPDATE_VISION_FREQUENCY == 0) {
 			updateVisibility();
 		}
 
 		// update AI orders depending on difficulty level
 		if (gameCounter
-				% (GameUtils.AI_FREQUENCY * (difficultyLevel.ordinal() + 1)) == 0) {
+				% (GameConstants.AI_FREQUENCY * (difficultyLevel.ordinal() + 1)) == 0) {
 			AI.updateAI(this);
 		}
 
@@ -302,22 +302,22 @@ public class Battle implements Serializable {
 				}
 			}
 			// check victory conditions
-			if (gameCounter % GameUtils.CHECK_VICTORY_FREQUENCY == 0
+			if (gameCounter % GameConstants.CHECK_VICTORY_FREQUENCY == 0
 					&& player.checkIfPlayerWon(this)) {
 				return player;
 			}
 		}
 
 		// play random atmoshpere sounds
-		if (gameCounter % GameUtils.ATMO_SOUND_FREQUENCY == 0) {
+		if (gameCounter % GameConstants.ATMO_SOUND_FREQUENCY == 0) {
 			if (Math.random() < 0.2) {
-				String atmoSound = GameUtils.ATMO_SOUNDS[(int) Math.round(Math
-						.random() * (GameUtils.ATMO_SOUNDS.length - 1))];
+				String atmoSound = GameConstants.ATMO_SOUNDS[(int) Math.round(Math
+						.random() * (GameConstants.ATMO_SOUNDS.length - 1))];
 				getOnNewSoundToPlay()
-						.playSound(
-								atmoSound,
-								(float) (Math.random() * map.getWidth() * GameUtils.PIXEL_BY_TILE),
-								(float) (Math.random() * map.getHeight() * GameUtils.PIXEL_BY_TILE));
+						.playGeolocalizedSound(
+                                atmoSound,
+                                (float) (Math.random() * map.getWidth() * GameConstants.PIXEL_BY_TILE),
+                                (float) (Math.random() * map.getHeight() * GameConstants.PIXEL_BY_TILE));
 			}
 		}
 

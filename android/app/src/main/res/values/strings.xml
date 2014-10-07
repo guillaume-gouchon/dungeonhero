@@ -71,12 +71,17 @@
     <string name="replay">Replay</string>
 
     <!-- Characteristics -->
-    <string name="hp">Health Points</string>
+    <string name="hp">Health points</string>
     <string name="strength">Strength : used to deal damage, hold heavy charges</string>
     <string name="dexterity">Dexterity : used to dodge, react, aim</string>
     <string name="spirit">Spirit : used to react, deduce, focus</string>
     <string name="attack">The ability to hit an enemy</string>
     <string name="block">The ability to block an enemy\'s attack</string>
+
+    <!-- Game Over -->
+    <string name="retry">Retry !</string>
+    <string name="exit">Exit</string>
+    <string name="game_over_title">Game Over</string>
 
     <!-- Game -->
     <string name="loading_game">Loading</string>

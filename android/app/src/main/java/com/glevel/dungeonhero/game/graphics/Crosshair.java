@@ -5,7 +5,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
-import com.glevel.dungeonhero.game.GameUtils;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.models.Battle;
 import com.glevel.dungeonhero.game.models.units.categories.Unit;
 import com.glevel.dungeonhero.game.models.weapons.categories.Weapon;
@@ -60,7 +60,7 @@ public class Crosshair extends CenteredSprite {
     }
 
     public void updateDistanceLabel(int distance, Battle battle, Unit unit, Unit target) {
-        mDistanceText.setText(distance / GameUtils.PIXEL_BY_METER + "m");
+        mDistanceText.setText(distance / GameConstants.PIXEL_BY_METER + "m");
         if (target == null) {
             // move color
             mDistanceText.setColor(Color.WHITE);

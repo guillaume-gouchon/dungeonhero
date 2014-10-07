@@ -47,8 +47,8 @@ public abstract class UnitSprite extends CenteredSprite {
 			if (mIsSelected && mIsGrabbed) {
 				mInputManager.updateOrderLine(this, pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
 			}
-			mInputManager.setLastX(pSceneTouchEvent.getMotionEvent().getX());
-			mInputManager.setLastY(pSceneTouchEvent.getMotionEvent().getY());
+			mInputManager.setmLastX(pSceneTouchEvent.getMotionEvent().getX());
+			mInputManager.setmLastY(pSceneTouchEvent.getMotionEvent().getY());
 			break;
 		case TouchEvent.ACTION_UP:
 			if (mIsGrabbed) {
@@ -75,9 +75,6 @@ public abstract class UnitSprite extends CenteredSprite {
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
 		super.onManagedUpdate(pSecondsElapsed);
-		if (mIsGrabbed) {
-			mInputManager.checkAutoScrolling();
-		}
 	}
 
 	public GameElement getGameElement() {

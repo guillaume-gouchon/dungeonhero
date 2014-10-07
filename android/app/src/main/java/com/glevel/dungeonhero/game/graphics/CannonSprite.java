@@ -4,7 +4,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import com.glevel.dungeonhero.game.GraphicsFactory;
+import com.glevel.dungeonhero.game.GraphicsManager;
 import com.glevel.dungeonhero.game.InputManager;
 import com.glevel.dungeonhero.game.models.GameElement;
 import com.glevel.dungeonhero.game.models.orders.HideOrder;
@@ -26,13 +26,13 @@ public class CannonSprite extends UnitSprite {
 	}
 
 	private void addHideSprite() {
-		hideSprite = new HideSprite(GraphicsFactory.mGfxMap.get("hide.png"), getVertexBufferObjectManager());
+		hideSprite = new HideSprite(GraphicsManager.sGfxMap.get("hide.png"), getVertexBufferObjectManager());
 		hideSprite.setVisible(false);
 		attachChild(hideSprite);
 	}
 
 	private void addMuzzleFlashSprite() {
-		mainWeaponMuzzle = new Sprite(42, -52, GraphicsFactory.mGfxMap.get("muzzle_flash.png"),
+		mainWeaponMuzzle = new Sprite(42, -52, GraphicsManager.sGfxMap.get("muzzle_flash.png"),
 				getVertexBufferObjectManager());
 		mainWeaponMuzzle.setVisible(false);
 		attachChild(mainWeaponMuzzle);

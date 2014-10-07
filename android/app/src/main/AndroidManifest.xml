@@ -52,6 +52,9 @@
         <activity
             android:name=".activities.TutorialActivity"
             android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activities.GameOverActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

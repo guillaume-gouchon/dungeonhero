@@ -5,7 +5,7 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.game.GraphicsFactory;
+import com.glevel.dungeonhero.game.GraphicsManager;
 import com.glevel.dungeonhero.game.InputManager;
 import com.glevel.dungeonhero.game.models.GameElement;
 import com.glevel.dungeonhero.game.models.orders.DefendOrder;
@@ -38,13 +38,13 @@ public class SoldierSprite extends UnitSprite {
 	}
 
 	private void addHideSprite() {
-		hideSprite = new HideSprite(GraphicsFactory.mGfxMap.get("hide.png"), getVertexBufferObjectManager());
+		hideSprite = new HideSprite(GraphicsManager.sGfxMap.get("hide.png"), getVertexBufferObjectManager());
 		hideSprite.setVisible(false);
 		attachChild(hideSprite);
 	}
 
 	private void addMuzzleFlashSprite() {
-		mainWeaponMuzzle = new Sprite(xMuzzleFlash, yMuzzleFlash, GraphicsFactory.mGfxMap.get("muzzle_flash.png"),
+		mainWeaponMuzzle = new Sprite(xMuzzleFlash, yMuzzleFlash, GraphicsManager.sGfxMap.get("muzzle_flash.png"),
 				getVertexBufferObjectManager());
 		mainWeaponMuzzle.setVisible(false);
 		attachChild(mainWeaponMuzzle);

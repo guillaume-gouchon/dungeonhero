@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.utils.database.ByteSerializer;
 import com.glevel.dungeonhero.utils.database.DatabaseResource;
 
@@ -12,6 +13,14 @@ import com.glevel.dungeonhero.utils.database.DatabaseResource;
 public class Game extends DatabaseResource {
 
     public static final String TABLE_NAME = "game";
+
+    public void setOnNewSprite(GameActivity gameActivity) {
+        
+    }
+
+    public void setOnNewSoundToPlay(GameActivity gameActivity) {
+
+    }
 
     private enum Columns {
         BOOK("book"), CHAPTER("chapter"), PLAYER("player"), DUNGEON("dungeon");

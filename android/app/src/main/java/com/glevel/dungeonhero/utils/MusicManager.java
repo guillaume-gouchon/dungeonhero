@@ -13,8 +13,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.game.GameUtils;
-import com.glevel.dungeonhero.game.GameUtils.MusicState;
+import com.glevel.dungeonhero.game.GameConstants;
+import com.glevel.dungeonhero.game.GameConstants.MusicState;
 
 public class MusicManager {
 	private static final String TAG = "MusicManager";
@@ -42,7 +42,7 @@ public class MusicManager {
 	public static void start(Context context, Music music) {
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		if (sharedPrefs.getInt(GameUtils.GAME_PREFS_KEY_MUSIC_VOLUME,
+		if (sharedPrefs.getInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME,
 				MusicState.on.ordinal()) == MusicState.on.ordinal()) {
 			start(context, music, false);
 		}
@@ -125,7 +125,7 @@ public class MusicManager {
 	public static void playSound(Context context, int sound) {
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		if (sharedPrefs.getInt(GameUtils.GAME_PREFS_KEY_MUSIC_VOLUME,
+		if (sharedPrefs.getInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME,
 				MusicState.off.ordinal()) == MusicState.on.ordinal()) {
 			MediaPlayer mp = MediaPlayer.create(context, sound);
 			mp.start();

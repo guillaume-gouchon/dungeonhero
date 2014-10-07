@@ -1,111 +1,94 @@
 package com.glevel.dungeonhero.game;
 
-import java.util.HashMap;
+import android.content.Context;
+import android.util.Log;
+
+import com.glevel.dungeonhero.game.logic.MapLogic;
+import com.glevel.dungeonhero.models.Game;
 
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.glevel.dungeonhero.game.logic.MapLogic;
-import com.glevel.dungeonhero.game.models.Battle;
-import com.glevel.dungeonhero.game.models.Player;
-import com.glevel.dungeonhero.game.models.units.categories.Unit;
-import com.glevel.dungeonhero.game.models.weapons.categories.Weapon;
+import java.util.HashMap;
 
 public class SoundEffectManager {
 
-	public static HashMap<String, Sound> mMfxMap = new HashMap<String, Sound>();
+    private static final String TAG = "SoundManager";
+    private static final String ASSETS_PATH = "sfx/";
+    private static final String SOUNDS_EXTENSION = ".ogg";
+    private static final int EARS_DISTANCE = 100;// in pixels
+    private static final int SILENCE_DISTANCE = 3200;// in pixels
 
-	private static final int EARS_DISTANCE = 100;// in pixels
-	private static final int SILENCE_DISTANCE = 3200;// in pixels
+    public static HashMap<String, Sound> sMfxMap = new HashMap<String, Sound>();
 
-	private Context mContext;
+    private Context mContext;
+    private boolean mSoundEnabled;
+    private Camera mCamera;
+    private Engine mEngine;
 
-	private boolean soundEnabled;
-	private Camera mCamera;
-	private Engine mEngine;
+    public SoundEffectManager(Context context, int soundState) {
+        mContext = context;
+        mSoundEnabled = soundState == GameConstants.MusicState.on.ordinal();
+    }
 
-	public SoundEffectManager(Context context, int soundState) {
-		this.mContext = context;
-		this.soundEnabled = soundState == GameUtils.MusicState.on.ordinal();
-	}
+    public void init(Game game, Engine engine) {
+        mEngine = engine;
+        sMfxMap = new HashMap<String, Sound>();
 
-	public void init(Battle battle, Engine engine) {
-		this.mEngine = engine;
-		mMfxMap = new HashMap<String, Sound>();
+        SoundFactory.setAssetBasePath(ASSETS_PATH);
 
-		SoundFactory.setAssetBasePath("mfx/");
+        // TODO load all sounds from game
+    }
 
-		// load all weapons sounds
-		for (Player player : battle.getPlayers()) {
-			for (Unit unit : player.getUnits()) {
-				for (Weapon weapon : unit.getWeapons()) {
-					loadMfxFromAssets(weapon.getSound());
-				}
-			}
-		}
 
-		// load atmosphere sound effects
-		for (String atmoSound : GameUtils.ATMO_SOUNDS) {
-			loadMfxFromAssets(atmoSound);
-		}
+    public void playGeoSound(String soundName, float x, float y) {
+        playSound(soundName, false, -1, -1);
+    }
 
-		// load all other sound effects
-		loadMfxFromAssets("explosion");
-		loadMfxFromAssets("death");
-		loadMfxFromAssets("clonk");
-		// loadMfxFromAssets("need_support");
-		// loadMfxFromAssets("incoming");
-	}
+    public void playSound(String soundName, boolean isLooped) {
+        playSound(soundName, isLooped, -1, -1);
+    }
 
-	private void loadMfxFromAssets(String soundName) {
-		if (mMfxMap.get(soundName) == null) {
-			try {
-				Sound mSound = SoundFactory.createSoundFromAsset(mEngine.getSoundManager(), mContext, soundName + ".ogg");
-				mMfxMap.put(soundName, mSound);
-			} catch (Exception e) {
-				Log.w("SoundManager", e);
-			}
-		}
-	}
+    private void loadMfxFromAssets(String soundName) {
+        if (sMfxMap.get(soundName) == null) {
+            try {
+                Sound mSound = SoundFactory.createSoundFromAsset(mEngine.getSoundManager(), mContext, soundName + SOUNDS_EXTENSION);
+                sMfxMap.put(soundName, mSound);
+            } catch (Exception e) {
+                Log.w(TAG, e);
+            }
+        }
+    }
 
-	public void playSound(String soundName, float x, float y) {
-		if (soundEnabled) {
-			Sound sound = mMfxMap.get(soundName);
-			if (sound != null) {
-				// modify volume based on the distance from the sound to the
-				// camera
-				sound.setVolume(getVolumeFromSoundPosition(x, y, true));
-				sound.play();
-			}
-		}
-	}
+    private void playSound(String soundName, boolean isLooped, float x, float y) {
+        if (mSoundEnabled) {
+            Sound sound = sMfxMap.get(soundName);
+            if (sound != null) {
+                sound.setLooping(isLooped);
 
-	public void playBackgroundSound(String soundName) {
-		if (soundEnabled) {
-			Sound sound = mMfxMap.get(soundName);
-			if (sound != null) {
-				sound.setLooping(true);
-				sound.play();
-			}
-		}
-	}
+                if (x >= 0 && y >= 0) {
+                    // modify volume based on the distance from the sound to the camera
+                    sound.setVolume(getVolumeFromSoundPosition(x, y));
+                }
 
-	private float getVolumeFromSoundPosition(float x, float y, boolean isLeftEar) {
-		float distance = MapLogic.getDistanceBetween(x, y, mCamera.getCenterX() + (isLeftEar ? -1 : 1) * EARS_DISTANCE, mCamera.getCenterY());
-		return Math.max(0.0f, 1.0f - distance / SILENCE_DISTANCE);
-	}
+                sound.play();
+            }
+        }
+    }
 
-	public void onPause() {
-		mMfxMap = new HashMap<String, Sound>();
-	}
+    private float getVolumeFromSoundPosition(float x, float y) {
+        float distance = MapLogic.getDistanceBetween(x, y, mCamera.getCenterX() + EARS_DISTANCE, mCamera.getCenterY());
+        return Math.max(0.0f, 1.0f - distance / SILENCE_DISTANCE);
+    }
 
-	public void setCamera(Camera camera) {
-		this.mCamera = camera;
-	}
+    public void onPause() {
+        sMfxMap = new HashMap<String, Sound>();
+    }
+
+    public void setCamera(Camera camera) {
+        this.mCamera = camera;
+    }
 
 }

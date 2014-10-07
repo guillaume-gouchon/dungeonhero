@@ -55,31 +55,37 @@
             android:orientation="horizontal">
 
             <com.glevel.dungeonhero.views.HintTextView
-                android:drawableLeft="@drawable/ic_elite"
-                style="@style/HeroStat"
                 android:id="@+id/strength"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_strength"
                 custom:textHint="@string/strength"
+                custom:linkTextColorToDrawable="true"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/strength" />
 
             <com.glevel.dungeonhero.views.HintTextView
-                android:drawableLeft="@drawable/ic_elite"
-                style="@style/HeroStat"
                 android:id="@+id/dexterity"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_dexterity"
+                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/dexterity"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/dexterity" />
 
             <com.glevel.dungeonhero.views.HintTextView
-                android:drawableLeft="@drawable/ic_elite"
-                style="@style/HeroStat"
                 android:id="@+id/spirit"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_spirit"
+                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/spirit"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/spirit" />
         </LinearLayout>
 
         <LinearLayout
@@ -88,31 +94,37 @@
             android:orientation="horizontal">
 
             <com.glevel.dungeonhero.views.HintTextView
-                android:drawableLeft="@drawable/ic_elite"
-                style="@style/HeroStat"
                 android:id="@+id/hp"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_health"
+                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/hp"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/hp" />
 
             <com.glevel.dungeonhero.views.HintTextView
-                android:drawableLeft="@drawable/ic_elite"
-                style="@style/HeroStat"
                 android:id="@+id/attack"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_attack"
+                custom:linkTextColorToDrawable="true"
                 android:layout_weight="1"
                 custom:textHint="@string/attack"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/attack" />
 
             <com.glevel.dungeonhero.views.HintTextView
-                android:drawableLeft="@drawable/ic_elite"
-                style="@style/HeroStat"
                 android:id="@+id/block"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_block"
+                custom:linkTextColorToDrawable="true"
                 android:layout_weight="1"
                 custom:textHint="@string/block"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/block" />
         </LinearLayout>
 
     </LinearLayout>

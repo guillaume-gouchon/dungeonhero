@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="15" height="15" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16">
+  <image source="../tileset.png" width="336" height="104"/>
+  <terraintypes>
+   <terrain name="walls" tile="-1"/>
+   <terrain name="interior walls" tile="-1"/>
+   <terrain name="water" tile="-1"/>
+   <terrain name="island" tile="-1"/>
+   <terrain name="ground" tile="-1"/>
+   <terrain name="wall top" tile="-1"/>
+  </terraintypes>
+  <tile id="0" terrain="0,0,0,4"/>
+  <tile id="1" terrain="0,0,4,4"/>
+  <tile id="2" terrain="0,0,4,4"/>
+  <tile id="3" terrain="0,0,4,4"/>
+  <tile id="4" terrain="0,0,4,0"/>
+  <tile id="5" terrain="0,0,0,1"/>
+  <tile id="6" terrain="0,0,1,1"/>
+  <tile id="7" terrain="0,0,1,0"/>
+  <tile id="12" terrain=",,,2"/>
+  <tile id="13" terrain=",,2,2"/>
+  <tile id="14" terrain=",,2,"/>
+  <tile id="15" terrain="2,2,2,3"/>
+  <tile id="16" terrain="2,2,3,2"/>
+  <tile id="21" terrain="0,4,0,4"/>
+  <tile id="22" terrain="4,4,4,4"/>
+  <tile id="23" terrain="4,4,4,4"/>
+  <tile id="24" terrain="4,4,4,4"/>
+  <tile id="25" terrain="4,0,4,0"/>
+  <tile id="26" terrain="0,1,0,1"/>
+  <tile id="28" terrain="1,0,1,0"/>
+  <tile id="33" terrain=",2,,2"/>
+  <tile id="34" terrain="2,2,2,2"/>
+  <tile id="35" terrain="2,,2,"/>
+  <tile id="36" terrain="2,3,2,2"/>
+  <tile id="37" terrain="3,2,2,2"/>
+  <tile id="42" terrain="0,4,0,4"/>
+  <tile id="43" terrain="4,4,4,4"/>
+  <tile id="44" terrain="4,4,4,4"/>
+  <tile id="45" terrain="4,4,4,4"/>
+  <tile id="46" terrain="4,0,4,0"/>
+  <tile id="47" terrain="0,1,0,0"/>
+  <tile id="48" terrain="1,1,0,0"/>
+  <tile id="49" terrain="1,0,0,0"/>
+  <tile id="54" terrain=",2,,"/>
+  <tile id="55" terrain="2,2,,"/>
+  <tile id="56" terrain="2,,,"/>
+  <tile id="63" terrain="0,4,0,4"/>
+  <tile id="64" terrain="4,4,4,4"/>
+  <tile id="65" terrain="4,4,4,4"/>
+  <tile id="66" terrain="4,4,4,4"/>
+  <tile id="67" terrain="4,0,4,0"/>
+  <tile id="68" terrain=",5,,"/>
+  <tile id="69" terrain="5,5,5,"/>
+  <tile id="70" terrain="5,5,,5"/>
+  <tile id="84" terrain="0,4,0,0"/>
+  <tile id="85" terrain="4,4,0,0"/>
+  <tile id="86" terrain="4,4,0,0"/>
+  <tile id="87" terrain="4,4,0,0"/>
+  <tile id="88" terrain="4,0,0,0"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="15" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA9VSQQ7AIAjzF8ofxKN38f9/mkvapDF6XnZoxiiUwtZTSv2niIW6YMAbZ8QDMOT23gK8nKM2i0YgVy69TTBFxzHTwe29nEGePh069GXbnvSouzbEEzVTPBS8U4O1GRx3C3AO7nSrIdom+nxW1MSht4o3zmLMfLvMVf2QXW3Ln+6s9+R9qUFdfuOv/+MHjElgM4QDAAA=
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="15" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgoAywATE7CZgDSa8sEAcCcRAa9sQiFghVj6y3gEg3FmDRCwNZROiHqTcEYiMi7YQBA6g+mD9IAeToQQcguzkIqkIFbAwIN8sSUIsOZKH60snUm47EJjd+YWFOLEaOU/R0RwyGgXQyMAgAACFOECeEAwAA
+  </data>
+ </layer>
+</map>

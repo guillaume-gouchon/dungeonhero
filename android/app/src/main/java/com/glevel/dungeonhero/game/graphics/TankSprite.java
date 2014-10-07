@@ -5,7 +5,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import com.glevel.dungeonhero.game.GraphicsFactory;
+import com.glevel.dungeonhero.game.GraphicsManager;
 import com.glevel.dungeonhero.game.InputManager;
 import com.glevel.dungeonhero.game.models.GameElement;
 import com.glevel.dungeonhero.game.models.weapons.categories.DeflectionWeapon;
@@ -32,14 +32,14 @@ public class TankSprite extends UnitSprite {
 	}
 
 	private void addTurretSprite() {
-		turretSprite = new CenteredSprite(0, 0, GraphicsFactory.mGfxMap.get(getGameElement().getSpriteName().replace(
+		turretSprite = new CenteredSprite(0, 0, GraphicsManager.sGfxMap.get(getGameElement().getSpriteName().replace(
 				".png", "")
 				+ "_turret.png"), getVertexBufferObjectManager());
 		attachChild(turretSprite);
 	}
 
 	private void addVehicleSmokeSprite() {
-		moveSmoke = new AnimatedSprite(30, 92, GraphicsFactory.mGfxMap.get("tank_move_smoke.png"),
+		moveSmoke = new AnimatedSprite(30, 92, GraphicsManager.sGfxMap.get("tank_move_smoke.png"),
 				getVertexBufferObjectManager());
 		moveSmoke.setScale(1.0f, 0.8f);
 		moveSmoke.setRotation(180);
@@ -48,13 +48,13 @@ public class TankSprite extends UnitSprite {
 	}
 
 	private void addMuzzleFlashSprites() {
-		secondaryWeaponMuzzle = new Sprite(76, -5, GraphicsFactory.mGfxMap.get("muzzle_flash.png"),
+		secondaryWeaponMuzzle = new Sprite(76, -5, GraphicsManager.sGfxMap.get("muzzle_flash.png"),
 				getVertexBufferObjectManager());
 		secondaryWeaponMuzzle.setScale(0.8f);
 		secondaryWeaponMuzzle.setVisible(false);
 		attachChild(secondaryWeaponMuzzle);
 
-		mainWeaponMuzzle = new Sprite(62, -61, GraphicsFactory.mGfxMap.get("muzzle_flash.png"),
+		mainWeaponMuzzle = new Sprite(62, -61, GraphicsManager.sGfxMap.get("muzzle_flash.png"),
 				getVertexBufferObjectManager());
 		if (getGameElement().getSpriteName().equals("shermanM4A1.png")) {
 			mainWeaponMuzzle.setPosition(65, -65);

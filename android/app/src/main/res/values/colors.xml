@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="main_color">#D10000</color>
-
     <color name="bg_home">#55000000</color>
 
     <color name="bg_btn_edge">#66000000</color>
@@ -13,15 +10,22 @@
     <color name="link">#aabbbbbb</color>
     <color name="link_pressed">#aa999999</color>
 
+    <color name="strength">#BAB175</color>
+    <color name="dexterity">#BAB175</color>
+    <color name="spirit">#BAB175</color>
+    <color name="hp">#C76969</color>
+    <color name="attack">#77A867</color>
+    <color name="block">#758FBA</color>
+
     <color name="requisitionPoints">#EDEA39</color>
     <color name="grey">#aabbbbbb</color>
     <color name="white">#FFFFFF</color>
-    <color name="red">#D10000</color>
+    <color name="red">#D10000</color>2\
     <color name="black">#000000</color>
     <color name="orange">#FF9F38</color>
     <color name="yellow">#EDEA39</color>
     <color name="green">#84dd38</color>
-    <color name="recruit">#6BB3D6</color>
+    <color name="blue">#6BB3D6</color>
     <color name="veteran">#ffffff</color>
     <color name="elite">#999999</color>
     <color name="yellow_bullet">#D9B904</color>

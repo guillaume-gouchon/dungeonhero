@@ -3,7 +3,7 @@ package com.glevel.dungeonhero.game.models.units.categories;
 import java.util.List;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.game.GameUtils;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.data.ArmiesData;
 import com.glevel.dungeonhero.game.logic.MapLogic;
 import com.glevel.dungeonhero.game.logic.pathfinding.MovingElement;
@@ -178,7 +178,7 @@ public abstract class Unit extends GameElement implements MovingElement {
 
 	public int getRealSellPrice(boolean isSelling) {
 		if (isSelling) {
-			return (int) (getPrice() * GameUtils.SELL_PRICE_FACTOR);
+			return (int) (getPrice() * GameConstants.SELL_PRICE_FACTOR);
 		} else {
 			return getPrice();
 		}
@@ -327,7 +327,7 @@ public abstract class Unit extends GameElement implements MovingElement {
 				currentAction = Action.FIRING;
 
 				if (weapon.getAimCounter() == weapon.getCadence()) {
-					battle.getOnNewSoundToPlay().playSound(weapon.getSound(), sprite.getX(), sprite.getY());
+					battle.getOnNewSoundToPlay().playGeolocalizedSound(weapon.getSound(), sprite.getX(), sprite.getY());
 				}
 
 				if (!(weapon instanceof Knife)) {
@@ -380,7 +380,7 @@ public abstract class Unit extends GameElement implements MovingElement {
 
 	public Weapon getBestWeapon(Battle battle, Unit target) {
 		if (this instanceof Soldier && target instanceof Soldier
-				&& MapLogic.getDistanceBetween(this, target) < CLOSE_COMBAT_MAX_DISTANCE * GameUtils.PIXEL_BY_METER) {
+				&& MapLogic.getDistanceBetween(this, target) < CLOSE_COMBAT_MAX_DISTANCE * GameConstants.PIXEL_BY_METER) {
 			// close combat !
 			return new Knife();
 		}
@@ -436,7 +436,7 @@ public abstract class Unit extends GameElement implements MovingElement {
 			if (Math.random() * 10 + getExperience().ordinal() < panic) {
 				// the unit is under fire
 				// if (Math.random() < 0.1) {
-				// battle.getOnNewSoundToPlay().playSound("need_support",
+				// mBattle.getOnNewSoundToPlay().playGeolocalizedSound("need_support",
 				// sprite.getX(), sprite.getY());
 				// }
 				hide(battle);
@@ -474,7 +474,7 @@ public abstract class Unit extends GameElement implements MovingElement {
 			// ambush !
 			for (Unit u : battle.getEnemies(this)) {
 				if (!u.isDead() && MapLogic.canSee(battle.getMap(), this, u) && getBestWeapon(battle, u) != null
-						&& MapLogic.getDistanceBetween(this, u) < START_AMBUSH_DISTANCE * GameUtils.PIXEL_BY_METER) {
+						&& MapLogic.getDistanceBetween(this, u) < START_AMBUSH_DISTANCE * GameConstants.PIXEL_BY_METER) {
 					setOrder(new FireOrder(u));
 					return;
 				}
@@ -501,7 +501,7 @@ public abstract class Unit extends GameElement implements MovingElement {
 		if (order == null || order instanceof DefendOrder || order instanceof MoveOrder && Math.random() < 0.3) {
 			if (MapLogic.canSee(battle.getMap(), this, shooter) && getBestWeapon(battle, shooter) != null) {
 				setOrder(new FireOrder(shooter));
-				// battle.getOnNewSoundToPlay().playSound("incoming",
+				// mBattle.getOnNewSoundToPlay().playGeolocalizedSound("incoming",
 				// sprite.getX(), sprite.getY());
 			}
 		}
@@ -539,12 +539,12 @@ public abstract class Unit extends GameElement implements MovingElement {
 			// smoke
 			battle.getOnNewSprite().drawAnimatedSprite(getSprite().getX(), getSprite().getY() - 70, "smoke.png", 120,
 					2.0f, -1, false, sprite.getZIndex() + 1);
-			battle.getOnNewSoundToPlay().playSound("explosion", sprite.getX(), sprite.getY());
+			battle.getOnNewSoundToPlay().playGeolocalizedSound("explosion", sprite.getX(), sprite.getY());
 		} else if (this instanceof Soldier) {
 			// blood
 			battle.getOnNewSprite().drawAnimatedSprite(getSprite().getX(), getSprite().getY(), "blood.png", 120, 0.6f,
 					0, false, sprite.getZIndex() + 1);
-			battle.getOnNewSoundToPlay().playSound("death", sprite.getX(), sprite.getY());
+			battle.getOnNewSoundToPlay().playGeolocalizedSound("death", sprite.getX(), sprite.getY());
 		}
 
 	}

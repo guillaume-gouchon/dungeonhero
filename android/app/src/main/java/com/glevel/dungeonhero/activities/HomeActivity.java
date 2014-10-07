@@ -23,8 +23,8 @@ import android.widget.TextView;
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
-import com.glevel.dungeonhero.game.GameUtils;
-import com.glevel.dungeonhero.game.GameUtils.MusicState;
+import com.glevel.dungeonhero.game.GameConstants;
+import com.glevel.dungeonhero.game.GameConstants.MusicState;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
@@ -97,7 +97,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
             switch (v.getId()) {
                 case R.id.playButton:
                     MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                    if (mSharedPrefs.getInt(GameUtils.TUTORIAL_DONE, 0) == 0) {
+                    if (mSharedPrefs.getInt(GameConstants.TUTORIAL_DONE, 0) == 0) {
                         showTutorialDialog();
                     } else {
                         onPlayButtonClicked();
@@ -200,7 +200,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         // volume radio buttons
         RadioGroup radioMusicVolume = (RadioGroup) findViewById(R.id.musicVolume);
         // update radio buttons states according to the music preference
-        int musicVolume = mSharedPrefs.getInt(GameUtils.GAME_PREFS_KEY_MUSIC_VOLUME, MusicState.on.ordinal());
+        int musicVolume = mSharedPrefs.getInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, MusicState.on.ordinal());
         ((RadioButton) radioMusicVolume.getChildAt(musicVolume)).setChecked(true);
         radioMusicVolume.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -217,7 +217,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
 
                         break;
                 }
-                editor.putInt(GameUtils.GAME_PREFS_KEY_MUSIC_VOLUME, newMusicState.ordinal());
+                editor.putInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, newMusicState.ordinal());
                 editor.commit();
                 if (newMusicState == MusicState.on) {
                     MusicManager.start(HomeActivity.this, Music.MUSIC_MENU);
@@ -340,7 +340,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
             }
         });
         dialog.show();
-        mSharedPrefs.edit().putInt(GameUtils.TUTORIAL_DONE, 1).commit();
+        mSharedPrefs.edit().putInt(GameConstants.TUTORIAL_DONE, 1).commit();
     }
 
     private void goToTutorial() {

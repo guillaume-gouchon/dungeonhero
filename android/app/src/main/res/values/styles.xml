@@ -5,6 +5,7 @@
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -108,6 +109,10 @@
     <style name="AnimatedMessage">
         <item name="android:padding">20dp</item>
         <item name="android:textSize">40sp</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">8</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">8</item>
     </style>
 
     <style name="HeroTitle">
@@ -120,9 +125,11 @@
     </style>
 
     <style name="HeroStat">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:padding">8dp</item>
-        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+
     </style>
 
     <!-- STORY -->
@@ -136,6 +143,16 @@
         <item name="android:shadowDx">8</item>
         <item name="android:shadowDy">4</item>
         <item name="android:shadowRadius">8</item>
+    </style>
+
+    <style name="GameOverTitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">50sp</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">4</item>
     </style>
 
     <!-- IN GAME -->

@@ -3,7 +3,7 @@ package com.glevel.dungeonhero.game.graphics;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.ColorUtils;
 
-import com.glevel.dungeonhero.game.GraphicsFactory;
+import com.glevel.dungeonhero.game.GraphicsManager;
 import com.glevel.dungeonhero.game.data.ArmiesData;
 
 public class ObjectiveSprite extends CenteredSprite {
@@ -17,7 +17,7 @@ public class ObjectiveSprite extends CenteredSprite {
     private boolean mIsGrowing = true;
 
     public ObjectiveSprite(float x, float y, ArmiesData owner, VertexBufferObjectManager vertexBufferObjectManager) {
-        super(0, 0, GraphicsFactory.mGfxMap.get("objective.png"), vertexBufferObjectManager);
+        super(0, 0, GraphicsManager.sGfxMap.get("objective.png"), vertexBufferObjectManager);
         setPosition(x, y);
         setScale(INITIAL_SCALE);
         setZIndex(2);

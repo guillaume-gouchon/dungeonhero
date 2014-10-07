@@ -6,7 +6,7 @@ import java.util.List;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.tmx.TMXTile;
 
-import com.glevel.dungeonhero.game.GameUtils;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.models.GameElement;
 import com.glevel.dungeonhero.game.models.map.Map;
 import com.glevel.dungeonhero.game.models.map.Tile;
@@ -42,7 +42,7 @@ public class MapLogic {
 
         // hiding soldiers are more difficult to see
         if (g2 instanceof Soldier && !g2.isVisible()
-                && getDistanceBetween(g1, g2) > 2 * MINIMAL_DISTANCE_VISIBLE * GameUtils.PIXEL_BY_METER) {
+                && getDistanceBetween(g1, g2) > 2 * MINIMAL_DISTANCE_VISIBLE * GameConstants.PIXEL_BY_METER) {
             Unit unit = (Unit) g2;
             if (unit.getCurrentAction() == Action.HIDING && unit.getTilePosition() != null
                     && unit.getTilePosition().getTerrain() != null && Math.random() < 0.9f) {
@@ -62,11 +62,11 @@ public class MapLogic {
 
         List<TerrainType> lstTerrain = new ArrayList<TerrainType>();
 
-        if (getDistanceBetween(g1, destinationX, destinationY) <= MINIMAL_DISTANCE_VISIBLE * GameUtils.PIXEL_BY_METER) {
+        if (getDistanceBetween(g1, destinationX, destinationY) <= MINIMAL_DISTANCE_VISIBLE * GameConstants.PIXEL_BY_METER) {
             return true;
         }
 
-        int stepInPixels = RAYCASTER_STEP * GameUtils.PIXEL_BY_METER;
+        int stepInPixels = RAYCASTER_STEP * GameConstants.PIXEL_BY_METER;
 
         int n = 0;
 
@@ -96,7 +96,7 @@ public class MapLogic {
 
                 if (g2 instanceof Soldier && t.getContent() != null && t.getContent() != g1
                         && t.getContent() instanceof Vehicle
-                        && Math.sqrt(dx * dx + dy * dy) > GameUtils.PIXEL_BY_METER * 1) {
+                        && Math.sqrt(dx * dx + dy * dy) > GameConstants.PIXEL_BY_METER * 1) {
                     // target is a soldier and is hidden behind a vehicle
                     return false;
                 }
@@ -107,8 +107,8 @@ public class MapLogic {
                     lstTerrain.add(t.getTerrain());
                     if (lstTerrain.size() > 3) {
                         return false;
-                    } else if ((getDistanceBetween(g1, x, y) > GameUtils.PIXEL_BY_METER * 3 || Math.sqrt(dx * dx + dy
-                            * dy) > GameUtils.PIXEL_BY_METER * 3)
+                    } else if ((getDistanceBetween(g1, x, y) > GameConstants.PIXEL_BY_METER * 3 || Math.sqrt(dx * dx + dy
+                            * dy) > GameConstants.PIXEL_BY_METER * 3)
                             && lstTerrain.size() > 1) {
                         // target is behind an obstacle
                         return false;
@@ -136,11 +136,11 @@ public class MapLogic {
 
         List<TerrainType> lstTerrain = new ArrayList<TerrainType>();
 
-        if (getDistanceBetween(g1, destinationX, destinationY) <= MINIMAL_DISTANCE_VISIBLE * GameUtils.PIXEL_BY_METER) {
+        if (getDistanceBetween(g1, destinationX, destinationY) <= MINIMAL_DISTANCE_VISIBLE * GameConstants.PIXEL_BY_METER) {
             return true;
         }
 
-        int stepInPixels = RAYCASTER_STEP * GameUtils.PIXEL_BY_METER;
+        int stepInPixels = RAYCASTER_STEP * GameConstants.PIXEL_BY_METER;
 
         int n = 0;
 
@@ -165,7 +165,7 @@ public class MapLogic {
                 Tile t = map.getTiles()[tmxTile.getTileRow()][tmxTile.getTileColumn()];
 
                 if (t.getContent() != null && t.getContent() != g1 && t.getContent() instanceof Vehicle
-                        && Math.sqrt(dx * dx + dy * dy) > GameUtils.PIXEL_BY_METER * 1) {
+                        && Math.sqrt(dx * dx + dy * dy) > GameConstants.PIXEL_BY_METER * 1) {
                     // target is hidden behind a vehicle
                     return false;
                 }
@@ -176,8 +176,8 @@ public class MapLogic {
                     lstTerrain.add(t.getTerrain());
                     if (lstTerrain.size() > 3) {
                         return false;
-                    } else if ((getDistanceBetween(g1, x, y) > GameUtils.PIXEL_BY_METER * 3 || Math.sqrt(dx * dx + dy
-                            * dy) > GameUtils.PIXEL_BY_METER * 3)
+                    } else if ((getDistanceBetween(g1, x, y) > GameConstants.PIXEL_BY_METER * 3 || Math.sqrt(dx * dx + dy
+                            * dy) > GameConstants.PIXEL_BY_METER * 3)
                             && lstTerrain.size() > 1) {
                         // target is behind an obstacle
                         return false;

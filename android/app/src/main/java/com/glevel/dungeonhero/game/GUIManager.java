@@ -8,51 +8,33 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
+import com.glevel.dungeonhero.game.base.CustomGameActivity;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.utils.MusicManager;
 
-public class GameGUI {
+public class GUIManager {
 
-    private GameActivity mGameActivity;
+    private CustomGameActivity mGameActivity;
     private Dialog mLoadingScreen, mGameMenuDialog;
     private TextView mBigLabel;
     private Animation mBigLabelAnimation;
-    private Button mFinishDeploymentButton;
     private ViewGroup mSelectedUnitLayout;
 
-    public boolean showConfirm = true;
-
-    public GameGUI(GameActivity activity) {
+    public GUIManager(CustomGameActivity activity) {
         this.mGameActivity = activity;
     }
-
-    private OnClickListener onFinishDeploymentClicked = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            MusicManager.playSound(mGameActivity.getApplicationContext(), R.raw.button_sound);
-            hideDeploymentButton();
-            mGameActivity.startGame();
-        }
-    };
 
     public void initGUI() {
         // setup selected unit layout
 //        mSelectedUnitLayout = (ViewGroup) mGameActivity.findViewById(R.id.selectedUnit);
         mSelectedUnitLayout.setVisibility(View.GONE);
 
-        // setup finish deployment button
-        mFinishDeploymentButton = (Button) mGameActivity.findViewById(R.id.finishDeployment);
-        mFinishDeploymentButton.setOnClickListener(onFinishDeploymentClicked);
-
-        // setup big label
+        // setup big label TV
         mBigLabelAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.big_label_in_game);
         mBigLabel = (TextView) mGameActivity.findViewById(R.id.bigLabel);
     }
@@ -79,6 +61,7 @@ public class GameGUI {
         mGameMenuDialog.setContentView(R.layout.dialog_game_menu);
         mGameMenuDialog.setCancelable(true);
         Animation menuButtonAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.bottom_in);
+
         // resume game button
         mGameMenuDialog.findViewById(R.id.resumeGameButton).setAnimation(menuButtonAnimation);
         mGameMenuDialog.findViewById(R.id.resumeGameButton).setOnClickListener(new OnClickListener() {
@@ -88,6 +71,7 @@ public class GameGUI {
                 mGameMenuDialog.dismiss();
             }
         });
+
         // exit button
         mGameMenuDialog.findViewById(R.id.exitButton).setAnimation(menuButtonAnimation);
         mGameMenuDialog.findViewById(R.id.exitButton).setOnClickListener(new OnClickListener() {
@@ -117,33 +101,6 @@ public class GameGUI {
         }
     }
 
-    public void displayVictoryLabel(final boolean isVictory) {
-        // show battle report when big label animation is over
-        mBigLabelAnimation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mGameActivity.goToReport(isVictory);
-            }
-        });
-
-        // show victory / defeat big label
-        if (isVictory) {
-            // victory
-            displayBigLabel(mGameActivity.getString(R.string.victory), R.color.green);
-        } else {
-            // defeat
-            displayBigLabel(mGameActivity.getString(R.string.defeat), R.color.red);
-        }
-    }
-
     public void showLoadingScreen() {
         // setup loading screen
         mLoadingScreen = new Dialog(mGameActivity, R.style.FullScreenDialog);
@@ -168,7 +125,7 @@ public class GameGUI {
 //                Unit unit = (Unit) selectedElement.getGameElement();
 //
 //                // hide enemies info
-//                updateUnitInfoVisibility(unit.getArmy() == mGameActivity.battle.getMe().getArmy());
+//                updateUnitInfoVisibility(unit.getArmy() == mGameActivity.mBattle.getMe().getArmy());
 
         // name
 //                if (unit instanceof Soldier) {
@@ -221,23 +178,6 @@ public class GameGUI {
 //                mSelectedUnitLayout.setVisibility(View.VISIBLE);
 //            }
 //        });
-    }
-
-    private void updateUnitInfoVisibility(boolean isAlly) {
-        int visibility = isAlly ? View.VISIBLE : View.GONE;
-//        ((ImageView) mSelectedUnitLayout.findViewById(R.id.unitExperience)).setVisibility(visibility);
-//        ((TextView) mSelectedUnitLayout.findViewById(R.id.unitMainWeaponAmmo)).setVisibility(visibility);
-//        ((TextView) mSelectedUnitLayout.findViewById(R.id.unitSecondaryWeaponAmmo)).setVisibility(visibility);
-//        ((TextView) mSelectedUnitLayout.findViewById(R.id.unitFrags)).setVisibility(visibility);
-    }
-
-    public void hideDeploymentButton() {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mFinishDeploymentButton.setVisibility(View.GONE);
-            }
-        });
     }
 
 }

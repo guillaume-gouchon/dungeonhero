@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 import org.andengine.util.color.Color;
 
-import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.game.GameUtils;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.andengine.custom.CustomColors;
 import com.glevel.dungeonhero.game.logic.MapLogic;
 import com.glevel.dungeonhero.game.models.Battle;
@@ -215,11 +214,11 @@ public abstract class Weapon implements Serializable {
 	}
 
 	protected static int distanceToRangeCategory(float distance) {
-		if (distance < 25 * GameUtils.PIXEL_BY_METER) {
+		if (distance < 25 * GameConstants.PIXEL_BY_METER) {
 			return 0;
-		} else if (distance < 50 * GameUtils.PIXEL_BY_METER) {
+		} else if (distance < 50 * GameConstants.PIXEL_BY_METER) {
 			return 1;
-		} else if (distance < 75 * GameUtils.PIXEL_BY_METER) {
+		} else if (distance < 75 * GameConstants.PIXEL_BY_METER) {
 			return 2;
 		} else {
 			return 3;
@@ -234,7 +233,7 @@ public abstract class Weapon implements Serializable {
 		} else if (ammoAmount <= 0) {
 			// out of ammo
 			return false;
-		} else if (MapLogic.getDistanceBetween(shooter, target) > range * GameUtils.PIXEL_BY_METER) {
+		} else if (MapLogic.getDistanceBetween(shooter, target) > range * GameConstants.PIXEL_BY_METER) {
 			// out of range
 			return false;
 		} else if (!canSeeTarget && !(this instanceof IndirectWeapon)) {

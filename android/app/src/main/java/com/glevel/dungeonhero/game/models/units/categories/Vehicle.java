@@ -3,7 +3,7 @@ package com.glevel.dungeonhero.game.models.units.categories;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.glevel.dungeonhero.game.GameUtils;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.data.ArmiesData;
 import com.glevel.dungeonhero.game.graphics.TankSprite;
 import com.glevel.dungeonhero.game.logic.MapLogic;
@@ -35,7 +35,7 @@ public abstract class Vehicle extends Unit {
 	private static final float ELITE_PRICE_MODIFIER = 1.5f;
 
 	// movement
-	private static final int REVERSE_THRESHOLD = 20 * GameUtils.PIXEL_BY_METER;// in
+	private static final int REVERSE_THRESHOLD = 20 * GameConstants.PIXEL_BY_METER;// in
 																				// meters
 	private static final float REVERSE_SPEED = 0.5f;
 	private static final float ROTATION_SPEED = 0.6f;
@@ -395,7 +395,7 @@ public abstract class Vehicle extends Unit {
 					currentAction = Action.FIRING;
 
 					if (weapon.getAimCounter() == weapon.getCadence()) {
-						battle.getOnNewSoundToPlay().playSound(weapon.getSound(), sprite.getX(), sprite.getY());
+						battle.getOnNewSoundToPlay().playGeolocalizedSound(weapon.getSound(), sprite.getX(), sprite.getY());
 					}
 
 					// add muzzle flash sprite
@@ -456,7 +456,7 @@ public abstract class Vehicle extends Unit {
 
 		realTilesPosition = new ArrayList<Tile>();
 		List<Tile> adjacentTiles = MapLogic.getAdjacentTiles(battle.getMap(), getTilePosition(),
-				(int) Math.ceil(VEHICLE_RADIUS_SIZE * GameUtils.PIXEL_BY_METER / GameUtils.PIXEL_BY_TILE), true);
+				(int) Math.ceil(VEHICLE_RADIUS_SIZE * GameConstants.PIXEL_BY_METER / GameConstants.PIXEL_BY_TILE), true);
 		for (Tile t : adjacentTiles) {
 			// run over soldiers
 			if (battle.getPhase() == Phase.combat && t.getContent() instanceof Soldier) {
@@ -472,7 +472,7 @@ public abstract class Vehicle extends Unit {
 	@Override
 	public boolean canBeDeployedThere(Battle battle, Tile tile) {
 		List<Tile> adjacentTiles = MapLogic.getAdjacentTiles(battle.getMap(), tile,
-				(int) Math.ceil(VEHICLE_RADIUS_SIZE * GameUtils.PIXEL_BY_METER / GameUtils.PIXEL_BY_TILE), true);
+				(int) Math.ceil(VEHICLE_RADIUS_SIZE * GameConstants.PIXEL_BY_METER / GameConstants.PIXEL_BY_TILE), true);
 		for (Tile t : adjacentTiles) {
 			if (t.getContent() != null && t.getContent() != this) {
 				return false;

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.andengine.util.color.Color;
 
-import com.glevel.dungeonhero.game.GameUtils;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.andengine.custom.CustomColors;
 import com.glevel.dungeonhero.game.logic.MapLogic;
 import com.glevel.dungeonhero.game.models.Battle;
@@ -39,7 +39,7 @@ public abstract class DeflectionWeapon extends Weapon {
         float distance = MapLogic.getDistanceBetween(shooter, target);
 
         // deflection depends on distance and experience of the shooter
-        int deflection = (int) (Math.random() * (getMaxDeflection(shooter, distance)) * GameUtils.PIXEL_BY_METER);
+        int deflection = (int) (Math.random() * (getMaxDeflection(shooter, distance)) * GameConstants.PIXEL_BY_METER);
         double angle = Math.random() * 360;
 
         // calculate impact position
@@ -48,14 +48,14 @@ public abstract class DeflectionWeapon extends Weapon {
 
         // draw explosion sprite
         battle.getOnNewSprite().drawAnimatedSprite(impactPosition[0], impactPosition[1], "explosion.png", 40,
-                3 * explosionSize * GameUtils.PIXEL_BY_METER / 64.0f, 0, true, 100);
-        battle.getOnNewSoundToPlay().playSound("explosion", impactPosition[0], impactPosition[1]);
+                3 * explosionSize * GameConstants.PIXEL_BY_METER / 64.0f, 0, true, 100);
+        battle.getOnNewSoundToPlay().playGeolocalizedSound("explosion", impactPosition[0], impactPosition[1]);
 
         // get all the units in the explosion
         Tile centerTile = MapLogic.getTileAtCoordinates(battle.getMap(), impactPosition[0], impactPosition[1]);
         if (centerTile != null) {
-            int explosionSizeInTiles = (int) Math.ceil(explosionSize * GameUtils.PIXEL_BY_METER
-                    / GameUtils.PIXEL_BY_TILE);
+            int explosionSizeInTiles = (int) Math.ceil(explosionSize * GameConstants.PIXEL_BY_METER
+                    / GameConstants.PIXEL_BY_TILE);
             List<Tile> adjacentTiles = MapLogic.getAdjacentTiles(battle.getMap(), centerTile, explosionSizeInTiles,
                     true);
             adjacentTiles.add(centerTile);
@@ -98,7 +98,7 @@ public abstract class DeflectionWeapon extends Weapon {
                     }
 
                     if (unit instanceof Vehicle && !unit.isDead()) {
-                        battle.getOnNewSoundToPlay().playSound("clonk", unit.getSprite().getX(),
+                        battle.getOnNewSoundToPlay().playGeolocalizedSound("clonk", unit.getSprite().getX(),
                                 unit.getSprite().getY());
                     }
                 }
