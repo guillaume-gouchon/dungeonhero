@@ -33,8 +33,7 @@ public class GraphicsManager {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(ASSETS_PATH);
 
         // TODO load all game elements graphics
-//        loadGfxFromAssets(128, 128, "selection.png");
-//        loadTiledGfxFromAssets(256, 256, 4, 4, "explosion.png");
+        loadTiledGfxFromAssets(227, 400, 3, 4, game.getHero().getSpriteName());
     }
 
     private void loadGfxFromAssets(int textureWidth, int textureHeight, String spriteName) {

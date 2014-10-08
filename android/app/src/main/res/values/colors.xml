@@ -6,6 +6,7 @@
     <color name="bg_btn_edge_pressed">#99000000</color>
     <color name="bg_btn_center">#ee000000</color>
     <color name="bg_btn_pressed_center">#aabbbbbb</color>
+    <color name="bg_btn_disabled">#33000000</color>
 
     <color name="link">#aabbbbbb</color>
     <color name="link_pressed">#aa999999</color>

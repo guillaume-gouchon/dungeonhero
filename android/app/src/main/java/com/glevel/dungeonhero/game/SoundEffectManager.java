@@ -3,7 +3,7 @@ package com.glevel.dungeonhero.game;
 import android.content.Context;
 import android.util.Log;
 
-import com.glevel.dungeonhero.game.logic.MapLogic;
+import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 import com.glevel.dungeonhero.models.Game;
 
 import org.andengine.audio.sound.Sound;
@@ -30,7 +30,7 @@ public class SoundEffectManager {
 
     public SoundEffectManager(Context context, int soundState) {
         mContext = context;
-        mSoundEnabled = soundState == GameConstants.MusicState.on.ordinal();
+        mSoundEnabled = soundState == GameConstants.MusicStates.ON.ordinal();
     }
 
     public void init(Game game, Engine engine) {
@@ -69,7 +69,7 @@ public class SoundEffectManager {
                 sound.setLooping(isLooped);
 
                 if (x >= 0 && y >= 0) {
-                    // modify volume based on the distance from the sound to the camera
+                    // modify volume based ON the distance from the sound to the camera
                     sound.setVolume(getVolumeFromSoundPosition(x, y));
                 }
 
@@ -79,7 +79,7 @@ public class SoundEffectManager {
     }
 
     private float getVolumeFromSoundPosition(float x, float y) {
-        float distance = MapLogic.getDistanceBetween(x, y, mCamera.getCenterX() + EARS_DISTANCE, mCamera.getCenterY());
+        float distance = MathUtils.getDistanceBetween(x, y, mCamera.getCenterX() + EARS_DISTANCE, mCamera.getCenterY());
         return Math.max(0.0f, 1.0f - distance / SILENCE_DISTANCE);
     }
 

@@ -16,7 +16,7 @@ import com.glevel.dungeonhero.utils.ApplicationUtils;
 import java.util.List;
 
 /**
- * Created by guillaume on 10/3/14.
+ * Created by guillaume ON 10/3/14.
  */
 public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChangeListener {
 
@@ -136,7 +136,7 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
             View layout = mInflater.inflate(mLayoutResource, null);
             layout.setOnClickListener(mOnClickListener);
 
-            // remove default sound effect on click
+            // remove default sound effect ON click
             layout.setSoundEffectsEnabled(false);
 
             container.addView(layout);

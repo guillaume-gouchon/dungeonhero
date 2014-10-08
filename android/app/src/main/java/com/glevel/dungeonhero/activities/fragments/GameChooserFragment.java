@@ -12,7 +12,6 @@ import android.widget.ExpandableListView;
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.GameActivity;
-import com.glevel.dungeonhero.activities.NewGameActivity;
 import com.glevel.dungeonhero.activities.adapters.GamesListAdapter;
 import com.glevel.dungeonhero.models.Game;
 
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class GameChooserFragment extends DialogFragment {
 
-    public static final int NEW_GAME_CATEGORY_ID = 0, LOAD_GAME_CATEGORY_ID = 1;
+    public static final int LOAD_GAME_CATEGORY_ID = 1;
 
     private ExpandableListView mGamesListView;
     private GamesListAdapter mAdapter;
@@ -35,11 +34,7 @@ public class GameChooserFragment extends DialogFragment {
         @Override
         public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) {
             if (view.isEnabled()) {
-                if (groupPosition == NEW_GAME_CATEGORY_ID) {
-                    launchGame(new Game());
-                } else {
-                    launchGame(mSavedGamesList.get(childPosition));
-                }
+                launchGame(mSavedGamesList.get(childPosition));
             }
             return false;
         }
@@ -60,7 +55,7 @@ public class GameChooserFragment extends DialogFragment {
         if (getDialog() == null)
             return;
 
-        // set the animations to use on showing and hiding the dialog
+        // set the animations to use ON showing and hiding the dialog
         getDialog().getWindow().setWindowAnimations(R.style.DialogAnimation);
     }
 
@@ -68,11 +63,10 @@ public class GameChooserFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         mSavedGamesList = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
-        mAdapter = new GamesListAdapter(getActivity(), mSavedGamesList, new int[]{R.string.new_game,
-                R.string.load_game});
+        mAdapter = new GamesListAdapter(getActivity(), mSavedGamesList, new int[]{R.string.load_game});
         mGamesListView.setAdapter(mAdapter);
 
-        // the most dirty hack on earth in order to expand all the groups (buggy
+        // the most dirty hack ON earth in order to expand all the groups (buggy
         // when called at the same time (!))
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -81,9 +75,7 @@ public class GameChooserFragment extends DialogFragment {
                 mGamesListView.expandGroup(0);
             }
         }, 100);
-
-        final Handler handler2 = new Handler();
-        handler2.postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mGamesListView.expandGroup(1);
@@ -122,19 +114,8 @@ public class GameChooserFragment extends DialogFragment {
     }
 
     private void launchGame(Game game) {
-        Intent intent;
-
-        if (game.isNew()) {
-            // go to new game screen
-            intent = new Intent(getActivity(), NewGameActivity.class);
-        } else {
-            // go to game screen
-            intent = new Intent(getActivity(), Game.class);
-            Bundle args = new Bundle();
-            args.putLong(GameActivity.EXTRA_GAME_ID, game.getId());
-            intent.putExtras(args);
-        }
-
+        Intent intent = new Intent(getActivity(), Game.class);
+        intent.putExtra(GameActivity.EXTRA_GAME_ID, game.getId());
         startActivity(intent);
         getActivity().finish();
     }

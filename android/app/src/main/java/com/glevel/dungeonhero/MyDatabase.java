@@ -7,11 +7,11 @@ import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 import com.glevel.dungeonhero.utils.database.Repository;
 
 /**
- * Created by guillaume on 10/2/14.
+ * Created by guillaume ON 10/2/14.
  */
 public class MyDatabase extends DatabaseHelper {
 
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 5;
     private static final String DB_NAME = "dungeon_hero";
 
     public enum Repositories {

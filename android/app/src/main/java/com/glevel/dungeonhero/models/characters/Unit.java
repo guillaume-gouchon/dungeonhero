@@ -1,19 +1,22 @@
 package com.glevel.dungeonhero.models.characters;
 
+import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
+import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by guillaume on 10/2/14.
+ * Created by guillaume ON 10/2/14.
  */
-public abstract class Unit {
+public abstract class Unit extends GameElement implements MovingElement<Tile>, Serializable {
 
     // Images
     private final int image;
-    private final String spriteName;
 
     // Characteristics
     private int hp;
@@ -30,10 +33,9 @@ public abstract class Unit {
     private int currentBlock;
 
     // RP
-    private final int name;
     private final int description;
 
-    // Ownings
+    // Possessions
     private int coins;
     private List<Item> items;
 
@@ -41,9 +43,9 @@ public abstract class Unit {
     private List<PassiveSkill> passive;
     private List<ActiveSkill> active;
 
-    public Unit(int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins, List<Item> items, List<PassiveSkill> passive, List<ActiveSkill> active) {
+    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins, List<Item> items, List<PassiveSkill> passive, List<ActiveSkill> active) {
+        super(name, spriteName, rank);
         this.image = image;
-        this.spriteName = spriteName;
         this.hp = hp;
         this.currentHP = currentHP;
         this.strength = strength;
@@ -53,7 +55,6 @@ public abstract class Unit {
         this.currentAttack = currentAttack;
         this.block = block;
         this.currentBlock = currentBlock;
-        this.name = name;
         this.description = description;
         this.coins = coins;
         this.items = items;
@@ -63,10 +64,6 @@ public abstract class Unit {
 
     public int getImage() {
         return image;
-    }
-
-    public String getSpriteName() {
-        return spriteName;
     }
 
     public int getHp() {
@@ -141,10 +138,6 @@ public abstract class Unit {
         this.currentBlock = currentBlock;
     }
 
-    public int getName() {
-        return name;
-    }
-
     public int getDescription() {
         return description;
     }
@@ -180,4 +173,10 @@ public abstract class Unit {
     public void setActive(List<ActiveSkill> active) {
         this.active = active;
     }
+
+    @Override
+    public boolean canMoveIn(Tile tile) {
+        return tile.getContent() == null && (tile.getTerrain() == null || !tile.getTerrain().isBlocking());
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.activities;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -24,19 +23,17 @@ import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
 import com.glevel.dungeonhero.game.GameConstants;
-import com.glevel.dungeonhero.game.GameConstants.MusicState;
-import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.utils.MusicManager.Music;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
-import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
 import java.util.List;
 
 public class HomeActivity extends BaseGameActivity implements OnClickListener {
+
 
     private static enum ScreenState {
         HOME, SOLO, SETTINGS
@@ -47,10 +44,11 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
     private SharedPreferences mSharedPrefs;
     private ScreenState mScreenState = ScreenState.HOME;
     private DatabaseHelper mDbHelper;
+    private List mLstGames;
 
     private Animation mMainButtonAnimationRightIn, mMainButtonAnimationRightOut, mMainButtonAnimationLeftIn, mMainButtonAnimationLeftOut;
     private Animation mFadeOutAnimation, mFadeInAnimation;
-    private Button mPlayButton, mSettingsButton, mTutorialButton, mShareButton;
+    private Button mNewGameButton, mSettingsButton, mLoadGameButton, mShareButton;
     private ViewGroup mSettingsLayout;
     private View mBackButton, mAppNameView;
     private Dialog mAboutDialog = null;
@@ -66,14 +64,16 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         setContentView(R.layout.activity_home);
 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mDbHelper = new MyDatabase(getApplicationContext());
+
         setupUI();
 
         ApplicationUtils.showRateDialogIfNeeded(this);
         ApplicationUtils.showAdvertisementIfNeeded(this);
 
-        showMainHomeButtons();
+        mLstGames = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
 
-        mDbHelper = new MyDatabase(getApplicationContext());
+        showMainHomeButtons();
     }
 
     @Override
@@ -95,17 +95,14 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
     public void onClick(View v) {
         if (v.isShown()) {
             switch (v.getId()) {
-                case R.id.playButton:
+                case R.id.newGameButton:
                     MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                    if (mSharedPrefs.getInt(GameConstants.TUTORIAL_DONE, 0) == 0) {
-                        showTutorialDialog();
-                    } else {
-                        onPlayButtonClicked();
-                    }
+                    startActivity(new Intent(this, NewGameActivity.class));
+                    finish();
                     break;
-                case R.id.tutorialButton:
+                case R.id.loadGameButton:
                     MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                    goToTutorial();
+                    ApplicationUtils.openDialogFragment(this, new GameChooserFragment(), null);
                     break;
                 case R.id.settingsButton:
                     MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
@@ -145,15 +142,6 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         }
     }
 
-    private void onPlayButtonClicked() {
-        List<Game> lstGames = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
-        if (lstGames.size() > 0) {
-            ApplicationUtils.openDialogFragment(this, new GameChooserFragment(), null);
-        } else {
-            goToNewGameActivity();
-        }
-    }
-
     @Override
     public void onBackPressed() {
         switch (mScreenState) {
@@ -183,14 +171,14 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         mFadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out);
         mFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
 
-        mPlayButton = (Button) findViewById(R.id.playButton);
-        mPlayButton.setOnClickListener(this);
+        mNewGameButton = (Button) findViewById(R.id.newGameButton);
+        mNewGameButton.setOnClickListener(this);
+
+        mLoadGameButton = (Button) findViewById(R.id.loadGameButton);
+        mLoadGameButton.setOnClickListener(this);
 
         mSettingsButton = (Button) findViewById(R.id.settingsButton);
         mSettingsButton.setOnClickListener(this);
-
-        mTutorialButton = (Button) findViewById(R.id.tutorialButton);
-        mTutorialButton.setOnClickListener(this);
 
         mBackButton = (Button) findViewById(R.id.backButton);
         mBackButton.setOnClickListener(this);
@@ -200,26 +188,26 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         // volume radio buttons
         RadioGroup radioMusicVolume = (RadioGroup) findViewById(R.id.musicVolume);
         // update radio buttons states according to the music preference
-        int musicVolume = mSharedPrefs.getInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, MusicState.on.ordinal());
+        int musicVolume = mSharedPrefs.getInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, GameConstants.MusicStates.ON.ordinal());
         ((RadioButton) radioMusicVolume.getChildAt(musicVolume)).setChecked(true);
         radioMusicVolume.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // enable / disable sound in preferences
-                MusicState newMusicState = null;
+                GameConstants.MusicStates newMusicState = null;
                 Editor editor = mSharedPrefs.edit();
                 switch (checkedId) {
                     case R.id.musicOff:
-                        newMusicState = MusicState.off;
+                        newMusicState = GameConstants.MusicStates.OFF;
                         break;
                     case R.id.musicOn:
-                        newMusicState = MusicState.on;
+                        newMusicState = GameConstants.MusicStates.ON;
 
                         break;
                 }
                 editor.putInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, newMusicState.ordinal());
                 editor.commit();
-                if (newMusicState == MusicState.on) {
+                if (newMusicState == GameConstants.MusicStates.ON) {
                     MusicManager.start(HomeActivity.this, Music.MUSIC_MENU);
                 } else {
                     MusicManager.release();
@@ -236,11 +224,6 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.achievementsButton).setOnClickListener(this);
-    }
-
-    private void goToNewGameActivity() {
-        startActivity(new Intent(this, NewGameActivity.class));
-        finish();
     }
 
     private void openAboutDialog() {
@@ -285,9 +268,10 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         mAppNameView.setVisibility(View.VISIBLE);
         mLoginLayout.startAnimation(mFadeInAnimation);
         mLoginLayout.setVisibility(View.VISIBLE);
-        showButton(mPlayButton, true);
-        showButton(mTutorialButton, false);
+        showButton(mNewGameButton, true);
+        showButton(mLoadGameButton, false);
         showButton(mSettingsButton, true);
+        mLoadGameButton.setEnabled(mLstGames.size() > 0);
     }
 
     private void hideMainHomeButtons() {
@@ -297,8 +281,8 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         mLoginLayout.setVisibility(View.GONE);
         mBackButton.setVisibility(View.VISIBLE);
         mBackButton.startAnimation(mFadeInAnimation);
-        hideButton(mPlayButton, true);
-        hideButton(mTutorialButton, false);
+        hideButton(mNewGameButton, true);
+        hideButton(mLoadGameButton, false);
         hideButton(mSettingsButton, true);
     }
 
@@ -320,33 +304,6 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
     private void hideSettings() {
         mSettingsLayout.setVisibility(View.GONE);
         mSettingsLayout.startAnimation(mFadeOutAnimation);
-    }
-
-    private void showTutorialDialog() {
-        // ask user if he wants to do the tutorial as he is a noob
-        Dialog dialog = new CustomAlertDialog(this, R.style.Dialog, getString(R.string.ask_tutorial), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-
-                if (which == R.id.okButton) {
-                    // go to tutorial
-                    dialog.dismiss();
-                    goToTutorial();
-                } else {
-                    dialog.dismiss();
-                    onPlayButtonClicked();
-                }
-            }
-        });
-        dialog.show();
-        mSharedPrefs.edit().putInt(GameConstants.TUTORIAL_DONE, 1).commit();
-    }
-
-    private void goToTutorial() {
-        Intent intent = new Intent(HomeActivity.this, TutorialActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override

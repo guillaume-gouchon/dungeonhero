@@ -467,7 +467,7 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             } else {
                 Debug.w(ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.LANDSCAPE_SENSOR
-                        + " is not supported on this device. Falling back to "
+                        + " is not supported ON this device. Falling back to "
                         + ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.LANDSCAPE_FIXED);
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
@@ -480,7 +480,7 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
             } else {
                 Debug.w(ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.PORTRAIT_SENSOR
-                        + " is not supported on this device. Falling back to "
+                        + " is not supported ON this device. Falling back to "
                         + ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.PORTRAIT_FIXED);
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }

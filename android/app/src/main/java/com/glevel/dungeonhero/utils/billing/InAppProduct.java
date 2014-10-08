@@ -1,7 +1,7 @@
 package com.glevel.dungeonhero.utils.billing;
 
 /**
- * Created by guillaume on 10/3/14.
+ * Created by guillaume ON 10/3/14.
  */
 public interface InAppProduct {
 

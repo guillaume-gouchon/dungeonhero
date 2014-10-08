@@ -98,7 +98,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     /**
      * The Activity we are bound to. We need to keep a reference to the Activity
      * because some games methods require an Activity (a Context won't do). We
-     * are careful not to leak these references: we release them on onStop().
+     * are careful not to leak these references: we release them ON onStop().
      */
     Activity mActivity = null;
 
@@ -135,7 +135,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     // What clients were requested? (bit flags)
     int mRequestedClients = CLIENT_NONE;
 
-    // Whether to automatically try to sign in on onStart(). We only set this
+    // Whether to automatically try to sign in ON onStart(). We only set this
     // to true when the sign-in process fails or the user explicitly signs out.
     // We set it back to false when the user initiates the sign in process.
     boolean mConnectOnStart = true;
@@ -183,7 +183,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     // Listener
     GameHelperListener mListener = null;
 
-    // Should we start the flow to sign the user in automatically on startup? If
+    // Should we start the flow to sign the user in automatically ON startup? If
     // so, up to
     // how many times in the life of the application?
     static final int DEFAULT_MAX_SIGN_IN_ATTEMPTS = 3;
@@ -205,13 +205,13 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     }
 
     /**
-     * Sets the maximum number of automatic sign-in attempts to be made on
+     * Sets the maximum number of automatic sign-in attempts to be made ON
      * application startup. This maximum is over the lifetime of the application
      * (it is stored in a SharedPreferences file). So, for example, if you
-     * specify 2, then it means that the user will be prompted to sign in on app
+     * specify 2, then it means that the user will be prompted to sign in ON app
      * startup the first time and, if they cancel, a second time the next time
      * the app starts, and, if they cancel that one, never again. Set to 0 if
-     * you do not want the user to be prompted to sign in on application
+     * you do not want the user to be prompted to sign in ON application
      * startup.
      */
     public void setMaxAutoSignInAttempts(int max) {
@@ -268,7 +268,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     /**
      * Creates a GoogleApiClient.Builder for use with @link{#setup}. Normally,
      * you do not have to do this; use this method only if you need to make
-     * nonstandard setup (e.g. adding extra scopes for other APIs) on the
+     * nonstandard setup (e.g. adding extra scopes for other APIs) ON the
      * GoogleApiClient.Builder before calling @link{#setup}.
      */
     public GoogleApiClient.Builder createApiClientBuilder() {
@@ -307,7 +307,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     }
 
     /**
-     * Performs setup on this GameHelper object. Call this from the onCreate()
+     * Performs setup ON this GameHelper object. Call this from the onCreate()
      * method of your Activity. This will create the clients and do a few other
      * initialization tasks. Next, call @link{#onStart} from the onStart()
      * method of your Activity.
@@ -393,7 +393,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         if (mConnectOnStart) {
             if (mGoogleApiClient.isConnected()) {
                 Log.w(TAG,
-                        "GameHelper: client was already connected on onStart()");
+                        "GameHelper: client was already connected ON onStart()");
             } else {
                 debugLog("Connecting client.");
                 mConnecting = true;
@@ -555,7 +555,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         // for Plus, "signing out" means clearing the default account and
         // then disconnecting
         if (0 != (mRequestedClients & CLIENT_PLUS)) {
-            debugLog("Clearing default account on PlusClient.");
+            debugLog("Clearing default account ON PlusClient.");
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
         }
 
@@ -651,7 +651,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
 
     /**
      * Starts a user-initiated sign-in flow. This should be called when the user
-     * clicks on a "Sign In" button. As a result, authentication/consent dialogs
+     * clicks ON a "Sign In" button. As a result, authentication/consent dialogs
      * may show up. At the end of the process, the GameHelperListener's
      * onSignInSucceeded() or onSignInFailed() methods will be called.
      */
@@ -671,7 +671,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             logWarn("beginUserInitiatedSignIn() called when already connecting. "
                     + "Be patient! You can only call this method after you get an "
                     + "onSignInSucceeded() or onSignInFailed() callback. Suggestion: disable "
-                    + "the sign-in button on startup and also when it's clicked, and re-enable "
+                    + "the sign-in button ON startup and also when it's clicked, and re-enable "
                     + "when you get the callback.");
             // ignore call (listener will get a callback when the connection
             // process finishes)
@@ -907,7 +907,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     }
 
     /**
-     * Give up on signing in due to an error. Shows the appropriate error
+     * Give up ON signing in due to an error. Shows the appropriate error
      * message to the user, using a standard error dialog as appropriate to the
      * cause of the error. That dialog will indicate to the user how the problem
      * can be solved (for example, re-enable Google Play Services, upgrade to a
@@ -1077,7 +1077,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     }
 
     // Not recommended for general use. This method forces the
-    // "connect on start" flag
+    // "connect ON start" flag
     // to a given state. This may be useful when using GameHelper in a
     // non-standard
     // sign-in flow.

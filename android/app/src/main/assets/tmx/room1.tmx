@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="15" height="15" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="15" height="15" tilewidth="16" tileheight="16" backgroundcolor="#ffffff">
  <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16">
-  <image source="../tileset.png" width="336" height="104"/>
-  <terraintypes>
-   <terrain name="walls" tile="-1"/>
-   <terrain name="interior walls" tile="-1"/>
-   <terrain name="water" tile="-1"/>
-   <terrain name="island" tile="-1"/>
-   <terrain name="ground" tile="-1"/>
-   <terrain name="wall top" tile="-1"/>
-  </terraintypes>
+  <image source="tileset.png" width="336" height="112"/>
   <tile id="0" terrain="0,0,0,4"/>
   <tile id="1" terrain="0,0,4,4"/>
   <tile id="2" terrain="0,0,4,4"/>
@@ -54,20 +46,30 @@
   <tile id="68" terrain=",5,,"/>
   <tile id="69" terrain="5,5,5,"/>
   <tile id="70" terrain="5,5,,5"/>
+  <tile id="72">
+   <properties>
+    <property name="door" value="0"/>
+   </properties>
+  </tile>
   <tile id="84" terrain="0,4,0,0"/>
   <tile id="85" terrain="4,4,0,0"/>
   <tile id="86" terrain="4,4,0,0"/>
   <tile id="87" terrain="4,4,0,0"/>
   <tile id="88" terrain="4,0,0,0"/>
+  <tile id="111">
+   <properties>
+    <property name="deco" value="1"/>
+   </properties>
+  </tile>
  </tileset>
- <layer name="Tile Layer 1" width="15" height="15">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA9VSQQ7AIAjzF8ofxKN38f9/mkvapDF6XnZoxiiUwtZTSv2niIW6YMAbZ8QDMOT23gK8nKM2i0YgVy69TTBFxzHTwe29nEGePh069GXbnvSouzbEEzVTPBS8U4O1GRx3C3AO7nSrIdom+nxW1MSht4o3zmLMfLvMVf2QXW3Ln+6s9+R9qUFdfuOv/+MHjElgM4QDAAA=
+ <layer name="ground" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzVUkEOwCAI8xfKH8Q/iO/y73NJmzRGz8sOzRiFUthmSmn+FLFQFwx444y4A4bc3luAl3PUZtEI5MqltwmG6DhmOri9lzPI06dDh75s25MeddeGeKBmiIeCd2qwNoPjbgHOwZ1u1UXbRJ/Pipo49FbxxlmMmW+Xuaofsqtt+dOd9Z68LzWoy2/89X/8AMpLSgM=
   </data>
  </layer>
- <layer name="Tile Layer 2" width="15" height="15">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgoAywATE7CZgDSa8sEAcCcRAa9sQiFghVj6y3gEg3FmDRCwNZROiHqTcEYiMi7YQBA6g+mD9IAeToQQcguzkIqkIFbAwIN8sSUIsOZKH60snUm47EJjd+YWFOLEaOU/R0RwyGgXQyMAgAACFOECeEAwAA
+ <layer name="objects" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJyrZWBgqKUAswExOwmYA0mvLBAHYcGeOMRl0fQWEOnGAix6SfEjTL0hEBuRqNcAqg/mB1L0kqMHHRuihTmxcQpzMzlhBdKXTqbedCrELyzMicXIcYot3RHCML3pZGCQPgCBPlY/
   </data>
  </layer>
 </map>

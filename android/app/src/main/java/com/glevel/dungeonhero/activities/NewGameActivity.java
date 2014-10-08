@@ -10,9 +10,8 @@ import android.widget.ImageView;
 import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.HeroesAdapter;
-import com.glevel.dungeonhero.activities.fragments.StoryFragment;
-import com.glevel.dungeonhero.factories.HeroFactory;
-import com.glevel.dungeonhero.models.characters.heroes.Hero;
+import com.glevel.dungeonhero.data.HeroFactory;
+import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.utils.billing.InAppBillingHelper;
@@ -39,12 +38,12 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
             int position = Integer.parseInt("" + v.getTag(R.string.id));
             Hero selectedHero = mLstHeroes.get(position);
             if (selectedHero.isAvailable()) {
-                Bundle bundle = new Bundle();
-//                bundle.putSerializable("hero", selectedHero);
-                // TODO : launch game activity and pass hero id
-                ApplicationUtils.openDialogFragment(NewGameActivity.this, new StoryFragment(), null);
+                Intent intent = new Intent(NewGameActivity.this, BookChooserActivity.class);
+                intent.putExtra(Hero.class.getName(), selectedHero);
+                startActivity(intent);
+                finish();
             } else {
-                mInAppBillingHelper.purchaseItem(mLstHeroes.get(position));
+                mInAppBillingHelper.purchaseItem(selectedHero);
             }
         }
     };

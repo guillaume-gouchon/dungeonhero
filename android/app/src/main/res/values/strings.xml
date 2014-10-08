@@ -40,9 +40,9 @@
     <string name="share_message">This game is cool, you can get it on Google Play !\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <!-- Home Screen -->
-    <string name="play">Play</string>
+    <string name="new_game">New Game</string>
+    <string name="load_game">Load Game</string>
     <string name="settings">Options</string>
-    <string name="tutorial">Tutorial</string>
     <string name="back">Back</string>
     <string name="ask_tutorial">It is recommanded to do the tutorial in order to know how to play !\nWould you like to do it now ?</string>
     <string name="advertisement">If you like Strategy Games,\ntry out my cool game <a href="https://play.google.com/store/apps/details?id=com.giggs.apps.chaos">Warlords Online</a> !</string>
@@ -58,13 +58,11 @@
     <string name="rate_app">Rate the app</string>
     <string name="share">Share</string>
 
-    <!-- Games Chooser -->
-    <string name="new_game">New Game</string>
-    <string name="load_game">Load Game</string>
-    <string name="no_saved_games">No saved games yet&#8230;</string>
-
     <!-- New Game -->
     <string name="choose_hero_message">Choose a Hero</string>
+
+    <!-- Book Chooser -->
+    <string name="choose_book_message">Join an adventure</string>
 
     <!-- Story -->
     <string name="skip">Skip</string>
@@ -115,47 +113,8 @@
     <string name="tutorial10"><u>Terrains</u>\n\nUsing the terrain covers is one of the keys to success.\nBushes do not block line of sights but provide light protections.\nTrees, fields and houses block line of sights and are giving medium to high covers to your soldiers.</string>
     <string name="tutorial11"><u>Well done !</u>\n\nThis tutorial is now finished.\nTry to seek and destroy the 2 enemy riflemen on the map.\nGood luck !</string>
 
-    <!-- Armies -->
-    <string name="german_army">Germany</string>
-    <string name="usa_army">USA</string>
+    <!-- Books -->
+    <string name="tutorial">Tutorial</string>
 
-    <!-- Weapons -->
-    <string name="grenade">Hand Grenade</string>
-    <string name="cannon75">Cannon 75mm</string>
-    <string name="garandM1">Garand M1</string>
-    <string name="thompson">Thompson</string>
-    <string name="browningM2">Browning M2</string>
-    <string name="mortar50">Mortar 50mm</string>
-    <string name="bazookaM1A">Bazooka</string>
-    <string name="mauser">Mauser G98</string>
-    <string name="mp40">MP 40</string>
-    <string name="mg42">MG 42</string>
-    <string name="mortar81">Mortar 81mm</string>
-    <string name="panzerschreck">Panzerschreck</string>
-    <string name="panzerfaust">Panzerfaust</string>
-    <string name="pak43">Pak43 88mm</string>
-
-    <!-- Units -->
-    <string name="rifleman">Rifleman</string>
-    <string name="scout">Scout</string>
-    <string name="hmg">Heavy MG</string>
-    <string name="mortar">Mortar</string>
-    <string name="at_cannon">Anti-tank Cannon</string>
-    <string name="bazooka">Bazooka</string>
-    <string name="shermanM4A1">Sherman M4A1</string>
-    <string name="panzeriv">Panzer IV F2</string>
-
-    <!-- Campaigns -->
-    <string name="market_garden">Market Garden</string>
-    <string name="market_garden_intro_1">Operation Market-Garden
-        \nAfter the successes encountered in the Normandy Breakout from July through August 1944, it was believed that the German Army was a beaten foe and in retreat.
-        \nAs such, British General Montgomery lay forth a brazen plan to capture key bridges that would be required conquests for the final push into Germany, perhaps ending the war in Europe by Christmas of 1944.
-        \nMontgomery relayed his plan and, following acceptance by Supreme Allied Commander in Europe - US General Dwight Eisenhower - put the plan into action.
-        \nOn September 17th - just seven days after the official approval, Operation Market Garden was set in motion&#8230;</string>
-
-    <!-- Battles -->
-    <string name="battle_arnhem_streets">Arnhem Streets</string>
-    <string name="battle_oosterbeek">Oosterbeek</string>
-    <string name="battle_nimegue">Nijmegen</string>
 
 </resources>

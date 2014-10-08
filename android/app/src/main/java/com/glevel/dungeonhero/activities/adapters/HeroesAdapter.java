@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.models.characters.heroes.Hero;
+import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.views.CustomCarousel;
 
 import java.util.List;
@@ -37,6 +37,5 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
 
         return layout;
     }
-
 
 }

@@ -43,20 +43,20 @@
             android:orientation="vertical">
 
             <com.glevel.dungeonhero.views.CustomButton
-                android:id="@+id/playButton"
+                android:id="@+id/newGameButton"
                 style="@style/HomeScreenButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="@string/play" />
+                android:text="@string/new_game" />
 
             <com.glevel.dungeonhero.views.CustomButton
-                android:id="@+id/tutorialButton"
+                android:id="@+id/loadGameButton"
                 style="@style/HomeScreenButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="@string/tutorial" />
+                android:text="@string/load_game" />
 
             <com.glevel.dungeonhero.views.CustomButton
                 android:id="@+id/settingsButton"

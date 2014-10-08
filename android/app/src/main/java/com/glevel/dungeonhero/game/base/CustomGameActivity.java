@@ -16,7 +16,7 @@ import com.glevel.dungeonhero.game.andengine.custom.CustomLayoutGameActivity;
 import com.glevel.dungeonhero.game.andengine.custom.CustomZoomCamera;
 import com.glevel.dungeonhero.game.base.interfaces.OnNewSoundToPlay;
 import com.glevel.dungeonhero.game.base.interfaces.OnNewSpriteToDraw;
-import com.glevel.dungeonhero.game.graphics.CenteredSprite;
+import com.glevel.dungeonhero.game.andengine.custom.CenteredSprite;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 
@@ -51,9 +51,8 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
 
     @Override
     public EngineOptions onCreateEngineOptions() {
-        this.mCamera = new CustomZoomCamera(0, 0, GameConstants.CAMERA_WIDTH, GameConstants.CAMERA_HEIGHT);
-        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED,
-                new FillResolutionPolicy(), mCamera);
+        this.mCamera = new CustomZoomCamera(0, 0, GameConstants.CAMERA_WIDTH, GameConstants.CAMERA_HEIGHT, GameConstants.CAMERA_ZOOM_MIN, GameConstants.CAMERA_ZOOM_MAX);
+        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), mCamera);
         engineOptions.getAudioOptions().setNeedsSound(true);
         return engineOptions;
     }
@@ -77,8 +76,8 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
         // init GUI
         mGUIManager = new GUIManager(this);
-        mGUIManager.showLoadingScreen();
         mGUIManager.initGUI();
+        mGUIManager.showLoadingScreen();
 
         // init game element factory
         mGraphicsManager = new GraphicsManager(this, getVertexBufferObjectManager(), getTextureManager());
@@ -86,7 +85,7 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
 
         // init sound manager
         mSoundEffectManager = new SoundEffectManager(this, mSharedPrefs.getInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME,
-                GameConstants.MusicState.on.ordinal()));
+                GameConstants.MusicStates.ON.ordinal()));
         mSoundEffectManager.init(mGame, mEngine);
 
         // load font

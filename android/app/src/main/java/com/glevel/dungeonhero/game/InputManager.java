@@ -88,7 +88,7 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
     }
 
     /**
-     * Click on map
+     * Click ON map
      */
     @Override
     public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {

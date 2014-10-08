@@ -38,7 +38,7 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
         if (getDialog() == null)
             return;
 
-        // set the animations to use on showing and hiding the dialog
+        // set the animations to use ON showing and hiding the dialog
         getDialog().getWindow().setWindowAnimations(R.style.DialogAnimation);
     }
 
@@ -49,7 +49,7 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
         mStormsBg = (ImageView) layout.findViewById(R.id.storms);
 
         // TODO
-        String story = "Il était une fois une petite fille de village, la plus jolie qu'on eût su voir.\nCette bonne femme lui fit faire un petit chaperon rouge, qui lui seyait si bien que partout on l'appelait le petit Chaperon rouge.\n" +
+        String story = "Il était une fois une petite fille de village, la plus jolie qu'ON eût su voir.\nCette bonne femme lui fit faire un petit chaperon rouge, qui lui seyait si bien que partout ON l'appelait le petit Chaperon rouge.\n" +
                 "Un jour sa mère, ayant cuit et fait des galettes, lui dit : « Va voir comme se porte ta mère-grand. »\nLe petit Chaperon rouge partit aussitôt pour aller chez sa mère-grand, qui demeurait dans un autre village.\n En passant dans un bois elle rencontra compère le loup, qui eut bien envie de la manger ; mais il n'osa, à cause de quelques bûcherons qui étaient dans la forêt. »";
         String[] storyLines = story.split("\n");
 
@@ -96,7 +96,7 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
         }
     }
 
-    private void startAnimation() {
+    protected void startAnimation() {
         mCurrentLine = 0;
 
         // reset animations

@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 /**
- * Created by guillaume on 10/2/14.
+ * Created by guillaume ON 10/2/14.
  */
 public abstract class DatabaseResource {
 

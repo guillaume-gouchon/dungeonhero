@@ -15,7 +15,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by btco on 2/10/14.
+ * Created by btco ON 2/10/14.
  */
 class GameHelperUtils {
     public static final int R_UNKNOWN_ERROR = 0;
