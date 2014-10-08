@@ -10,8 +10,7 @@ import java.util.Stack;
 
 public class AStar<N extends Node> {
 
-    public List<N> search(N[][] nodes, N source, N target, boolean allowDiagonalMoves, MovingElement movingElement,
-            int limit) {
+    public List<N> search(N[][] nodes, N source, N target, boolean allowDiagonalMoves, MovingElement movingElement, int limit) {
         // setup graph
         Graph<N> graph = new Graph<N>(nodes);
 
@@ -59,7 +58,7 @@ public class AStar<N extends Node> {
             }
         }
 
-        // after found the target, start to populate the path
+        // after the target is reached, start to populate the path
         if (goal != null) {
             Stack<N> stack = new Stack<N>();
             List<N> list = new ArrayList<N>();

@@ -2,7 +2,6 @@ package com.glevel.dungeonhero.game.models.map;
 
 import com.glevel.dungeonhero.game.logic.pathfinding.Node;
 import com.glevel.dungeonhero.game.models.GameElement;
-import com.glevel.dungeonhero.game.models.ObjectivePoint;
 
 import org.andengine.extension.tmx.TMXProperties;
 import org.andengine.extension.tmx.TMXTile;
@@ -14,25 +13,6 @@ public class Tile extends TMXTile implements Node {
     private GameElement content = null;
     private GroundType ground = GroundType.grass;
     private TerrainType terrain = null;
-    private ObjectivePoint objective = null;
-
-    public static enum GroundType {
-        grass, concrete, water, mud
-    }
-
-    public static enum TerrainType {
-        house(true), field(true), wall(true), bush(false), tree(true);
-
-        private final boolean isBlockingVision;
-
-        private TerrainType(boolean isBlockingVision) {
-            this.isBlockingVision = isBlockingVision;
-        }
-
-        public boolean isBlockingVision() {
-            return isBlockingVision;
-        }
-    }
 
     /**
      * Constructor from a .tmx tile map
@@ -114,12 +94,23 @@ public class Tile extends TMXTile implements Node {
         return getTileRow();
     }
 
-    public ObjectivePoint getObjective() {
-        return objective;
+    public static enum GroundType {
+        grass, concrete, water, mud
     }
 
-    public void setObjective(ObjectivePoint objective) {
-        this.objective = objective;
+
+    public static enum TerrainType {
+        house(true), field(true), wall(true), bush(false), tree(true);
+
+        private final boolean isBlockingVision;
+
+        private TerrainType(boolean isBlockingVision) {
+            this.isBlockingVision = isBlockingVision;
+        }
+
+        public boolean isBlockingVision() {
+            return isBlockingVision;
+        }
     }
 
 }

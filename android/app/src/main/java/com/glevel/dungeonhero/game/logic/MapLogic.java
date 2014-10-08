@@ -1,25 +1,16 @@
 package com.glevel.dungeonhero.game.logic;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.game.models.map.Map;
+import com.glevel.dungeonhero.game.models.map.Tile;
 
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.tmx.TMXTile;
 
-import com.glevel.dungeonhero.game.GameConstants;
-import com.glevel.dungeonhero.game.models.GameElement;
-import com.glevel.dungeonhero.game.models.map.Map;
-import com.glevel.dungeonhero.game.models.map.Tile;
-import com.glevel.dungeonhero.game.models.map.Tile.TerrainType;
-import com.glevel.dungeonhero.game.models.units.Soldier;
-import com.glevel.dungeonhero.game.models.units.categories.Unit;
-import com.glevel.dungeonhero.game.models.units.categories.Unit.Action;
-import com.glevel.dungeonhero.game.models.units.categories.Vehicle;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapLogic {
-
-    private static final int RAYCASTER_STEP = 2;// in meters
-    private static final int MINIMAL_DISTANCE_VISIBLE = 10;// in meters
 
     public static float getDistanceBetween(float x1, float y1, float x2, float y2) {
         return (float) Math.sqrt((Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)));
@@ -38,171 +29,14 @@ public class MapLogic {
         return getDistanceBetween(g1.getSprite().getX(), g1.getSprite().getY(), x, y);
     }
 
-    public static boolean canSee(Map map, GameElement g1, GameElement g2) {
-
-        // hiding soldiers are more difficult to see
-        if (g2 instanceof Soldier && !g2.isVisible()
-                && getDistanceBetween(g1, g2) > 2 * MINIMAL_DISTANCE_VISIBLE * GameConstants.PIXEL_BY_METER) {
-            Unit unit = (Unit) g2;
-            if (unit.getCurrentAction() == Action.HIDING && unit.getTilePosition() != null
-                    && unit.getTilePosition().getTerrain() != null && Math.random() < 0.9f) {
-                return false;
-            }
-        }
-
-        float destinationX = g2.getSprite().getX();
-        float destinationY = g2.getSprite().getY();
-
-        float dx = destinationX - g1.getSprite().getX();
-        float dy = destinationY - g1.getSprite().getY();
-        double angle = Math.atan(dy / dx);
-        boolean hasArrived = false;
-
-        float x = g1.getSprite().getX(), y = g1.getSprite().getY();
-
-        List<TerrainType> lstTerrain = new ArrayList<TerrainType>();
-
-        if (getDistanceBetween(g1, destinationX, destinationY) <= MINIMAL_DISTANCE_VISIBLE * GameConstants.PIXEL_BY_METER) {
-            return true;
-        }
-
-        int stepInPixels = RAYCASTER_STEP * GameConstants.PIXEL_BY_METER;
-
-        int n = 0;
-
-        while (!hasArrived) {
-            if (n > 30) {
-                return false;
-            }
-            // go one step further
-            if (dx > 0) {
-                x += stepInPixels * Math.cos(angle);
-                y += stepInPixels * Math.sin(angle);
-            } else {
-                x += -stepInPixels * Math.cos(angle);
-                y += stepInPixels * Math.sin(angle + Math.PI);
-            }
-
-            dx = destinationX - x;
-            dy = destinationY - y;
-
-            TMXTile tmxTile = map.getTmxLayer().getTMXTileAt(x, y);
-            if (tmxTile != null) {
-                Tile t = map.getTiles()[tmxTile.getTileRow()][tmxTile.getTileColumn()];
-
-                if (t.getContent() != null && t.getContent() == g2) {
-                    return true;
-                }
-
-                if (g2 instanceof Soldier && t.getContent() != null && t.getContent() != g1
-                        && t.getContent() instanceof Vehicle
-                        && Math.sqrt(dx * dx + dy * dy) > GameConstants.PIXEL_BY_METER * 1) {
-                    // target is a soldier and is hidden behind a vehicle
-                    return false;
-                }
-
-                // lists the different different obstacles
-                if ((t.getTerrain() == null || t.getTerrain().isBlockingVision())
-                        && (lstTerrain.size() == 0 || t.getTerrain() != lstTerrain.get(lstTerrain.size() - 1))) {
-                    lstTerrain.add(t.getTerrain());
-                    if (lstTerrain.size() > 3) {
-                        return false;
-                    } else if ((getDistanceBetween(g1, x, y) > GameConstants.PIXEL_BY_METER * 3 || Math.sqrt(dx * dx + dy
-                            * dy) > GameConstants.PIXEL_BY_METER * 3)
-                            && lstTerrain.size() > 1) {
-                        // target is behind an obstacle
-                        return false;
-                    }
-                }
-            }
-
-            if (Math.sqrt(dx * dx + dy * dy) <= stepInPixels) {
-                break;
-            }
-
-            n++;
-        }
-
-        return true;
-    }
-
-    public static boolean canSee(Map map, GameElement g1, float destinationX, float destinationY) {
-        float dx = destinationX - g1.getSprite().getX();
-        float dy = destinationY - g1.getSprite().getY();
-        double angle = Math.atan(dy / dx);
-        boolean hasArrived = false;
-
-        float x = g1.getSprite().getX(), y = g1.getSprite().getY();
-
-        List<TerrainType> lstTerrain = new ArrayList<TerrainType>();
-
-        if (getDistanceBetween(g1, destinationX, destinationY) <= MINIMAL_DISTANCE_VISIBLE * GameConstants.PIXEL_BY_METER) {
-            return true;
-        }
-
-        int stepInPixels = RAYCASTER_STEP * GameConstants.PIXEL_BY_METER;
-
-        int n = 0;
-
-        while (!hasArrived) {
-            if (n > 30) {
-                return false;
-            }
-            // go one step further
-            if (dx > 0) {
-                x += stepInPixels * Math.cos(angle);
-                y += stepInPixels * Math.sin(angle);
-            } else {
-                x += -stepInPixels * Math.cos(angle);
-                y += stepInPixels * Math.sin(angle + Math.PI);
-            }
-
-            dx = destinationX - x;
-            dy = destinationY - y;
-
-            TMXTile tmxTile = map.getTmxLayer().getTMXTileAt(x, y);
-            if (tmxTile != null) {
-                Tile t = map.getTiles()[tmxTile.getTileRow()][tmxTile.getTileColumn()];
-
-                if (t.getContent() != null && t.getContent() != g1 && t.getContent() instanceof Vehicle
-                        && Math.sqrt(dx * dx + dy * dy) > GameConstants.PIXEL_BY_METER * 1) {
-                    // target is hidden behind a vehicle
-                    return false;
-                }
-
-                // lists the different different obstacles
-                if ((t.getTerrain() == null || t.getTerrain().isBlockingVision())
-                        && (lstTerrain.size() == 0 || t.getTerrain() != lstTerrain.get(lstTerrain.size() - 1))) {
-                    lstTerrain.add(t.getTerrain());
-                    if (lstTerrain.size() > 3) {
-                        return false;
-                    } else if ((getDistanceBetween(g1, x, y) > GameConstants.PIXEL_BY_METER * 3 || Math.sqrt(dx * dx + dy
-                            * dy) > GameConstants.PIXEL_BY_METER * 3)
-                            && lstTerrain.size() > 1) {
-                        // target is behind an obstacle
-                        return false;
-                    }
-                }
-            }
-
-            if (Math.sqrt(dx * dx + dy * dy) <= stepInPixels) {
-                break;
-            }
-
-            n++;
-        }
-
-        return true;
-    }
-
     public static float[] getCoordinatesAfterTranslation(float xPosition, float yPosition, float distance,
-            double angle, boolean isXPositive) {
+                                                         double angle, boolean isXPositive) {
         if (isXPositive) {
-            return new float[] { (float) (xPosition + distance * Math.cos(angle)),
-                    (float) (yPosition + distance * Math.sin(angle)) };
+            return new float[]{(float) (xPosition + distance * Math.cos(angle)),
+                    (float) (yPosition + distance * Math.sin(angle))};
         } else {
-            return new float[] { (float) (xPosition - distance * Math.cos(angle)),
-                    (float) (yPosition + distance * Math.sin(angle + Math.PI)) };
+            return new float[]{(float) (xPosition - distance * Math.cos(angle)),
+                    (float) (yPosition + distance * Math.sin(angle + Math.PI))};
         }
     }
 
