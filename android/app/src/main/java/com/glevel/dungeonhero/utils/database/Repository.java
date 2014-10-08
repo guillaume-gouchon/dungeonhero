@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository<T extends DatabaseResource> implements IRepository<T> {
+public abstract class Repository<T extends DatabaseResource> implements IRepository<T> {
 
     protected SQLiteDatabase mDatabase;
 
@@ -88,11 +88,6 @@ public class Repository<T extends DatabaseResource> implements IRepository<T> {
         c.close();
         closeDatabase();
         return list;
-    }
-
-    @Override
-    public T convertCursorRowToObject(Cursor c) {
-        return (T) T.fromCursor(c);
     }
 
 }

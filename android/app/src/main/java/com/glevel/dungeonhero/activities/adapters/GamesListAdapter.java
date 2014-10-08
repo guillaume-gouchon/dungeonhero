@@ -5,94 +5,42 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
 import com.glevel.dungeonhero.models.Game;
 
 import java.util.List;
 
-public class GamesListAdapter extends BaseExpandableListAdapter {
+public class GamesListAdapter extends ArrayAdapter<Game> {
 
     private final LayoutInflater mInflater;
     private List<Game> mSavedGames;
-    private int[] mHeaderLabels;
 
-    public GamesListAdapter(FragmentActivity activity, List<Game> savedCampaigns, int[] headerLabels) {
+    public GamesListAdapter(FragmentActivity activity, List<Game> savedCampaigns) {
+        super(activity, R.layout.game_chooser_list_item);
         mSavedGames = savedCampaigns;
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mHeaderLabels = headerLabels;
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        if (groupPosition == GameChooserFragment.LOAD_GAME_CATEGORY_ID && childPosition < mSavedGames.size()) {
-            return mSavedGames.get(childPosition);
-        }
-        return null;
+    public int getCount() {
+        return mSavedGames.size();
     }
 
     @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
-    }
-
-    @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.game_chooser_list_child, null);
+            convertView = mInflater.inflate(R.layout.game_chooser_list_item, null);
         }
 
-        Game game = (Game) getChild(groupPosition, childPosition);
+        Game game = mSavedGames.get(position);
 
         TextView title = (TextView) convertView.findViewById(R.id.text);
         title.setText(game.getHero().getName());
         title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(), 0, 0, 0);
         return convertView;
-    }
-
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        if (groupPosition == GameChooserFragment.LOAD_GAME_CATEGORY_ID) {
-            return Math.max(1, mSavedGames.size());
-        }
-        return 0;
-    }
-
-    @Override
-    public Object getGroup(int groupPosition) {
-        return mHeaderLabels[groupPosition];
-    }
-
-    @Override
-    public int getGroupCount() {
-        return mHeaderLabels.length;
-    }
-
-    @Override
-    public long getGroupId(int groupPosition) {
-        return groupPosition;
-    }
-
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.game_chooser_list_child, null);
-        }
-        convertView.setVisibility(View.GONE);
-        return convertView;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
     }
 
 }

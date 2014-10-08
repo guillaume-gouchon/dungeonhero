@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/black"
     android:orientation="horizontal"
-    android:padding="8dp" >
+    android:padding="5dp">
 
     <com.glevel.dungeonhero.views.CustomTextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_radio_btn"
         android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/placeholder" />
+        android:padding="15dp"
+        android:background="@drawable/bg_horizontal_chooser"
+        android:text="@string/placeholder"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -1,13 +1,14 @@
 package com.glevel.dungeonhero.activities.fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
@@ -19,26 +20,19 @@ import java.util.List;
 
 public class GameChooserFragment extends DialogFragment {
 
-    public static final int LOAD_GAME_CATEGORY_ID = 1;
-
-    private ExpandableListView mGamesListView;
-    private GamesListAdapter mAdapter;
-    private MyDatabase mDbHelper;
-    private List<com.glevel.dungeonhero.models.Game> mSavedGamesList;
-
-
     /**
      * Callbacks
      */
-    private final ExpandableListView.OnChildClickListener mOnItemClickedListener = new ExpandableListView.OnChildClickListener() {
+    private final ListView.OnItemClickListener mOnItemClickedListener = new ListView.OnItemClickListener() {
         @Override
-        public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) {
-            if (view.isEnabled()) {
-                launchGame(mSavedGamesList.get(childPosition));
-            }
-            return false;
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            launchGame(mSavedGamesList.get(position));
         }
     };
+    private ListView mGamesListView;
+    private GamesListAdapter mAdapter;
+    private MyDatabase mDbHelper;
+    private List<com.glevel.dungeonhero.models.Game> mSavedGamesList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,30 +51,15 @@ public class GameChooserFragment extends DialogFragment {
 
         // set the animations to use ON showing and hiding the dialog
         getDialog().getWindow().setWindowAnimations(R.style.DialogAnimation);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mSavedGamesList = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
-        mAdapter = new GamesListAdapter(getActivity(), mSavedGamesList, new int[]{R.string.load_game});
+        mAdapter = new GamesListAdapter(getActivity(), mSavedGamesList);
         mGamesListView.setAdapter(mAdapter);
-
-        // the most dirty hack ON earth in order to expand all the groups (buggy
-        // when called at the same time (!))
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mGamesListView.expandGroup(0);
-            }
-        }, 100);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mGamesListView.expandGroup(1);
-            }
-        }, 200);
     }
 
     @Override
@@ -88,19 +67,8 @@ public class GameChooserFragment extends DialogFragment {
         View layout = inflater.inflate(R.layout.game_chooser_fragment, container, false);
 
         // expandable friends list view
-        mGamesListView = (ExpandableListView) layout.findViewById(R.id.gamesList);
-        mGamesListView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
-        mGamesListView.setOnChildClickListener(mOnItemClickedListener);
-        // disable group collapsing
-        mGamesListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                // do nothing
-                return true;
-            }
-        });
-        // remove group icons
-        mGamesListView.setGroupIndicator(null);
+        mGamesListView = (ListView) layout.findViewById(R.id.gamesList);
+        mGamesListView.setOnItemClickListener(mOnItemClickedListener);
 
         return layout;
     }

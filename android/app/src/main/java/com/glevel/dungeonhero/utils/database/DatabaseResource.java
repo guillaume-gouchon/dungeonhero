@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.utils.database;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 
 /**
  * Created by guillaume ON 10/2/14.
@@ -18,10 +17,6 @@ public abstract class DatabaseResource {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public static DatabaseResource fromCursor(Cursor cursor) {
-        return null;
     }
 
     public abstract ContentValues getContentValues();

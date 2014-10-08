@@ -18,28 +18,6 @@ import java.io.Serializable;
 public class Game extends DatabaseResource implements Serializable {
 
     public static final String TABLE_NAME = "game";
-
-    public void setOnNewSprite(CustomGameActivity gameActivity) {
-    }
-
-    public void setOnNewSoundToPlay(CustomGameActivity gameActivity) {
-    }
-
-    private enum Columns {
-        BOOK_ID("book_id"), CHAPTER("chapter"), HERO("hero"), DUNGEON("dungeon"), BOOKS_DONE("books_done");
-
-        private final String columnName;
-
-        private Columns(String columnName) {
-            this.columnName = columnName;
-        }
-
-        @Override
-        public String toString() {
-            return columnName;
-        }
-    }
-
     private Book book;
     private int[] booksDone;
     private Chapter chapter;
@@ -57,20 +35,6 @@ public class Game extends DatabaseResource implements Serializable {
         this.dungeon = chapter.getDungeon();
     }
 
-    @Override
-    public ContentValues getContentValues() {
-        ContentValues content = new ContentValues(Columns.values().length + 1);
-        if (id > 0) {
-            content.put(Game.COLUMN_ID, id);
-        }
-        content.put(Columns.BOOK_ID.toString(), book.getBookId());
-        content.put(Columns.CHAPTER.toString(), ByteSerializer.toByteArray(chapter));
-        content.put(Columns.HERO.toString(), ByteSerializer.toByteArray(hero));
-        content.put(Columns.DUNGEON.toString(), ByteSerializer.toByteArray(dungeon));
-        content.put(Columns.BOOKS_DONE.toString(), ByteSerializer.toByteArray(booksDone));
-        return content;
-    }
-
     public static Game fromCursor(Cursor cursor) {
         Game game = new Game();
         game.setId(cursor.getLong(0));
@@ -83,6 +47,26 @@ public class Game extends DatabaseResource implements Serializable {
         game.setDungeon((Dungeon) ByteSerializer.getObjectFromByte(cursor.getBlob(4)));
         game.setBooksDone((int[]) ByteSerializer.getObjectFromByte(cursor.getBlob(5)));
         return game;
+    }
+
+    public void setOnNewSprite(CustomGameActivity gameActivity) {
+    }
+
+    public void setOnNewSoundToPlay(CustomGameActivity gameActivity) {
+    }
+
+    @Override
+    public ContentValues getContentValues() {
+        ContentValues content = new ContentValues(Columns.values().length + 1);
+        if (id > 0) {
+            content.put(Game.COLUMN_ID, id);
+        }
+        content.put(Columns.BOOK_ID.toString(), book.getBookId());
+        content.put(Columns.CHAPTER.toString(), ByteSerializer.toByteArray(chapter));
+        content.put(Columns.HERO.toString(), ByteSerializer.toByteArray(hero));
+        content.put(Columns.DUNGEON.toString(), ByteSerializer.toByteArray(dungeon));
+        content.put(Columns.BOOKS_DONE.toString(), ByteSerializer.toByteArray(booksDone));
+        return content;
     }
 
     public int[] getBooksDone() {
@@ -123,6 +107,21 @@ public class Game extends DatabaseResource implements Serializable {
 
     public void setDungeon(Dungeon dungeon) {
         this.dungeon = dungeon;
+    }
+
+    private enum Columns {
+        BOOK_ID("book_id"), CHAPTER("chapter"), HERO("hero"), DUNGEON("dungeon"), BOOKS_DONE("books_done");
+
+        private final String columnName;
+
+        private Columns(String columnName) {
+            this.columnName = columnName;
+        }
+
+        @Override
+        public String toString() {
+            return columnName;
+        }
     }
 
 }

@@ -4,16 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp" >
+    android:padding="20dp">
 
-    <ExpandableListView
+    <ListView
         android:id="@+id/gamesList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:childDivider="@color/link_pressed"
-        android:dividerHeight="1dp"
-        android:listSelector="@null"
-        android:overScrollMode="never" >
-    </ExpandableListView>
+        android:dividerHeight="0dp"
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="false"
+        android:divider="@android:color/transparent"
+        android:listSelector="@android:color/transparent"
+        android:overScrollMode="never"></ListView>
 
 </LinearLayout>

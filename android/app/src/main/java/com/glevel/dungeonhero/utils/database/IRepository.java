@@ -19,8 +19,8 @@ public interface IRepository<T> {
 
     public List<T> convertCursorToObjectList(Cursor c);
 
-    public T convertCursorRowToObject(Cursor c);
-
     public ContentValues getContentValues(T entity);
+
+    public T convertCursorRowToObject(Cursor cursor);
 
 }

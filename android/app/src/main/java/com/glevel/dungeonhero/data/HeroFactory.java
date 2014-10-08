@@ -22,7 +22,7 @@ public class HeroFactory {
     }
 
     public static Hero buildWarrior() {
-        return new Hero(Ranks.ME, R.drawable.barbare, "barbare.png", 12, 12, 12, 10, 7, 10, 10, 8, 8, R.string.app_name, R.string.choose_hero_message, 10, null, null, null, null, 0, 1);
+        return new Hero(Ranks.ME, R.drawable.ic_coin, "barbare.png", 12, 12, 12, 10, 7, 10, 10, 8, 8, R.string.app_name, R.string.choose_hero_message, 10, null, null, null, null, 0, 1);
     }
 
 }
