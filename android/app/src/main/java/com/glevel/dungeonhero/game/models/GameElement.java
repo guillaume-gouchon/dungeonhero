@@ -1,9 +1,9 @@
 package com.glevel.dungeonhero.game.models;
 
+import com.glevel.dungeonhero.game.graphics.GameElementSprite;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.util.color.Color;
 
 import java.io.Serializable;
@@ -16,7 +16,7 @@ public abstract class GameElement implements Serializable {
     private final String spriteName;
     private Ranks rank;
     private transient Tile tilePosition;
-    private transient Sprite sprite;
+    private transient GameElementSprite sprite;
 
     public GameElement(int name, String spriteName, Ranks rank) {
         this.name = name;
@@ -24,11 +24,11 @@ public abstract class GameElement implements Serializable {
         this.rank = rank;
     }
 
-    public Sprite getSprite() {
+    public GameElementSprite getSprite() {
         return sprite;
     }
 
-    public void setSprite(Sprite sprite) {
+    public void setSprite(GameElementSprite sprite) {
         this.sprite = sprite;
     }
 
@@ -59,9 +59,9 @@ public abstract class GameElement implements Serializable {
             case ENEMY:
                 return new Color(1.0f, 0.0f, 0.0f, 0.7f);
             case ALLY:
-                return new Color(1.0f, 1.0f, 1.0f, 0.7f);
+                return new Color(0.0f, 1.0f, 0.0f, 0.7f);
             default:
-                return new Color(1.0f, 1.0f, 0.0f, 0.7f);
+                return new Color(1.0f, 1.0f, 1.0f, 0.7f);
         }
     }
 

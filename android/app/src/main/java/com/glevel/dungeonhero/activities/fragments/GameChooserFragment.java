@@ -65,8 +65,7 @@ public class GameChooserFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.game_chooser_fragment, container, false);
-
-        // expandable friends list view
+        
         mGamesListView = (ListView) layout.findViewById(R.id.gamesList);
         mGamesListView.setOnItemClickListener(mOnItemClickedListener);
 
@@ -82,7 +81,7 @@ public class GameChooserFragment extends DialogFragment {
     }
 
     private void launchGame(Game game) {
-        Intent intent = new Intent(getActivity(), Game.class);
+        Intent intent = new Intent(getActivity(), GameActivity.class);
         intent.putExtra(GameActivity.EXTRA_GAME_ID, game.getId());
         startActivity(intent);
         getActivity().finish();

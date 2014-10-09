@@ -1,7 +1,5 @@
 package com.glevel.dungeonhero.models.dungeons;
 
-import android.util.Log;
-
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.models.GameElement;
@@ -17,9 +15,16 @@ import java.io.Serializable;
 public class Tile extends TMXTile implements Node, Serializable {
 
     private GameElement content = null;
-    private GroundTypes ground = GroundTypes.DUNGEON_FLOOR;
+    private GroundTypes ground = null;
     private TerrainTypes terrain = null;
     private transient TMXTileProperty property;
+
+    public int getAction() {
+        return action;
+    }
+
+    private int action = 0;
+
 
     /**
      * Constructor from a .tmx tile map
@@ -35,13 +40,11 @@ public class Tile extends TMXTile implements Node, Serializable {
         if (lstProperties != null) {
             for (TMXTileProperty prop : lstProperties) {
                 // setup ground type
-                if (prop.getName().equals(GroundTypes.GRASS.name().toLowerCase())) {
-                    ground = GroundTypes.GRASS;
-                } else if (prop.getName().equals(GroundTypes.WATER.name().toLowerCase())) {
-                    ground = GroundTypes.WATER;
+                if (prop.getName().equals(GroundTypes.DUNGEON_FLOOR.name())) {
+                    ground = GroundTypes.DUNGEON_FLOOR;
                 }
 
-                if (prop.getName().equals(TerrainTypes.DOOR.name().toLowerCase())) {
+                if (prop.getName().equals(TerrainTypes.DOOR.name())) {
                     property = prop;
                     terrain = TerrainTypes.DOOR;
                 }
@@ -88,12 +91,27 @@ public class Tile extends TMXTile implements Node, Serializable {
         return getTileRow();
     }
 
+    @Override
+    public int getTileX() {
+        return (int) ((getTileColumn() + 0.5) * getTileWidth());
+    }
+
+    @Override
+    public int getTileY() {
+        return (int) ((getTileRow() + 0.5) * getTileHeight());
+    }
+
     public void setProperty(TMXTileProperty property) {
         this.property = property;
     }
 
     public TMXTileProperty getProperty() {
         return property;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
+
     }
 
 }

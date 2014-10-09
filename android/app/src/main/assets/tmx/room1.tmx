@@ -16,9 +16,21 @@
   <tile id="15" terrain="2,2,2,3"/>
   <tile id="16" terrain="2,2,3,2"/>
   <tile id="21" terrain="0,4,0,4"/>
-  <tile id="22" terrain="4,4,4,4"/>
-  <tile id="23" terrain="4,4,4,4"/>
-  <tile id="24" terrain="4,4,4,4"/>
+  <tile id="22">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
   <tile id="25" terrain="4,0,4,0"/>
   <tile id="26" terrain="0,1,0,1"/>
   <tile id="28" terrain="1,0,1,0"/>
@@ -28,9 +40,21 @@
   <tile id="36" terrain="2,3,2,2"/>
   <tile id="37" terrain="3,2,2,2"/>
   <tile id="42" terrain="0,4,0,4"/>
-  <tile id="43" terrain="4,4,4,4"/>
-  <tile id="44" terrain="4,4,4,4"/>
-  <tile id="45" terrain="4,4,4,4"/>
+  <tile id="43">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
+  <tile id="44">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
+  <tile id="45">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
   <tile id="46" terrain="4,0,4,0"/>
   <tile id="47" terrain="0,1,0,0"/>
   <tile id="48" terrain="1,1,0,0"/>
@@ -39,16 +63,38 @@
   <tile id="55" terrain="2,2,,"/>
   <tile id="56" terrain="2,,,"/>
   <tile id="63" terrain="0,4,0,4"/>
-  <tile id="64" terrain="4,4,4,4"/>
-  <tile id="65" terrain="4,4,4,4"/>
-  <tile id="66" terrain="4,4,4,4"/>
+  <tile id="64">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
+  <tile id="66">
+   <properties>
+    <property name="DUNGEON_FLOOR" value="1"/>
+   </properties>
+  </tile>
   <tile id="67" terrain="4,0,4,0"/>
   <tile id="68" terrain=",5,,"/>
   <tile id="69" terrain="5,5,5,"/>
   <tile id="70" terrain="5,5,,5"/>
+  <tile id="71">
+   <properties>
+    <property name="DOOR" value="0"/>
+   </properties>
+  </tile>
   <tile id="72">
    <properties>
-    <property name="door" value="0"/>
+    <property name="DOOR" value="0"/>
+   </properties>
+  </tile>
+  <tile id="73">
+   <properties>
+    <property name="DOOR" value="0"/>
    </properties>
   </tile>
   <tile id="84" terrain="0,4,0,0"/>
@@ -59,12 +105,12 @@
  </tileset>
  <layer name="ground" width="15" height="15">
   <data encoding="base64" compression="zlib">
-   eJzVkd0JwCAMhLuFuoNxh8b9d2oL38Eh9rk0cBhz8fLjcfzX8ka/0cDjF/wTNGKrVfBwQW4xjSRWX94OwzSdoGbAraYa4tVnoKO+2jKnevRZB/4kZ1oPlbtMuQVOsyVcwO12dZq2Zqt2dnJy87Zbb6olX/HxUtf102ZtS3y3Z9+n9isN6eqPv7YLxvET0A==
+   eJzVkMENBCEMA+mC0EOgB0IJ238vx0kTyUJo//uwAMc2hqeU8nwUsVE3DPz3vtHkvNDdvANtR1vhjJzE6U3fZO+SE6zO/OY1Zp016LmYZ4/0NOEbOhfeyTK4Sqa+20WXHbvohvzn2bmiXZJtAhf+9C40A0x5Z9A377/dm7rAOyXj7Z+/hB8buznS
   </data>
  </layer>
  <layer name="objects" width="15" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYKAMsAExOwmYA0mvLBAHYcGeOMRl0fQGk4CpodcNiI1I1GsAxO5IfiBFLzl60LEbNMxJ0cOG5GZywgqkL41MvWkUxhEDNMwNScBGSHqxpTtCGAbSyMAgAADNZTax
+   eJwLZmBgCKYAswExOwmYA0mvLBAHYcGeOMRl0fSS4k5q6HUDYiMS9RoAsTuSH0jRS44edOyGFubExinMzeSEFUhfGpl606gQv6AwNyQBI8cptnRHCMP0ppGBQfoA7MRAvg==
   </data>
  </layer>
 </map>

@@ -14,30 +14,27 @@ import android.widget.TextView;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.HomeActivity;
 import com.glevel.dungeonhero.game.base.CustomGameActivity;
-import com.glevel.dungeonhero.game.graphics.GameElementSprite;
+import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.utils.MusicManager;
+import com.glevel.dungeonhero.views.LifeBar;
 
 public class GUIManager {
 
     private CustomGameActivity mGameActivity;
+
     private Dialog mLoadingScreen, mGameMenuDialog;
     private TextView mBigLabel;
     private Animation mBigLabelAnimation;
-    private ViewGroup mSelectedElementLayout;
+    private ViewGroup mSelectedElementLayout, mActiveCharacter;
 
     public GUIManager(CustomGameActivity activity) {
         this.mGameActivity = activity;
     }
 
     public void initGUI() {
-        // setup selected element layout
         mSelectedElementLayout = (ViewGroup) mGameActivity.findViewById(R.id.selectedElement);
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mSelectedElementLayout.setVisibility(View.GONE);
-            }
-        });
+        mActiveCharacter = (ViewGroup) mGameActivity.findViewById(R.id.activeCharacter);
 
         // setup big label TV
         mBigLabelAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.big_label_in_game);
@@ -92,12 +89,14 @@ public class GUIManager {
                 mGameActivity.finish();
             }
         });
+
         mGameMenuDialog.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 mGameActivity.resumeGame();
             }
         });
+
         mGameMenuDialog.show();
         menuButtonAnimation.start();
     }
@@ -120,6 +119,7 @@ public class GUIManager {
                 mLoadingScreen.setContentView(R.layout.dialog_game_loading);
                 mLoadingScreen.setCancelable(false);
                 mLoadingScreen.setCanceledOnTouchOutside(false);
+
                 // animate loading dots
                 Animation loadingDotsAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.loading_dots);
                 ((TextView) mLoadingScreen.findViewById(R.id.loadingDots)).startAnimation(loadingDotsAnimation);
@@ -129,71 +129,48 @@ public class GUIManager {
         });
     }
 
-    public void updateSelectedElementLayout(final GameElementSprite selectedElement) {
-//        mGameActivity.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (selectedElement == null || !(selectedElement.getGameElement() instanceof Unit)) {
-//                    mSelectedElementLayout.setVisibility(View.GONE);
-//                    return;
-//                }
-//
-//                Unit unit = (Unit) selectedElement.getGameElement();
-//
-//                // hide enemies info
-//                updateUnitInfoVisibility(unit.getArmy() == mGameActivity.mBattle.getMe().getArmy());
+    public void showGameElementInfo(final GameElement gameElement) {
+        mGameActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-        // name
-//                if (unit instanceof Soldier) {
-//                    // display real name
-//                    ((TextView) mSelectedElementLayout.findViewById(R.id.unitName)).setText(((Soldier) unit).getRealName());
-//                } else {
-//                    ((TextView) mSelectedElementLayout.findViewById(R.id.unitName)).setText(unit.getName());
-//                }
-//
-//                // health
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitName)).setTextColor(mGameActivity.getResources().getColor(unit.getHealth().getColor()));
-//
-//                // experience
-//                if (unit.getExperience() != Experience.RECRUIT) {
-//                    ((ImageView) mSelectedElementLayout.findViewById(R.id.unitExperience)).setImageResource(unit.getExperience().getImage());
-//                    ((ImageView) mSelectedElementLayout.findViewById(R.id.unitExperience)).setVisibility(View.VISIBLE);
-//                } else {
-//                    ((ImageView) mSelectedElementLayout.findViewById(R.id.unitExperience)).setVisibility(View.INVISIBLE);
-//                }
-//
-//                // weapons
-//                // main weapon
-//                Weapon mainWeapon = unit.getWeapons().get(0);
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitMainWeaponName)).setText(mainWeapon.getName());
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitMainWeaponName)).setCompoundDrawablesWithIntrinsicBounds(mainWeapon.getImage(), 0, 0, 0);
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitMainWeaponAP)).setBackgroundResource(mainWeapon.getAPColorEfficiency());
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitMainWeaponAT)).setBackgroundResource(mainWeapon.getATColorEfficiency());
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitMainWeaponAmmo)).setText("" + mainWeapon.getAmmoAmount());
-//
-//                // secondary weapon
-//                if (unit.getWeapons().size() > 1) {
-//                    ((ViewGroup) mSelectedElementLayout.findViewById(R.id.unitSecondaryWeapon)).setVisibility(View.VISIBLE);
-//                    Weapon secondaryWeapon = unit.getWeapons().get(1);
-//                    ((TextView) mSelectedElementLayout.findViewById(R.id.unitSecondaryWeaponName)).setText(secondaryWeapon.getName());
-//                    ((TextView) mSelectedElementLayout.findViewById(R.id.unitSecondaryWeaponName)).setCompoundDrawablesWithIntrinsicBounds(
-//                            secondaryWeapon.getImage(), 0, 0, 0);
-//                    ((TextView) mSelectedElementLayout.findViewById(R.id.unitSecondaryWeaponAP)).setBackgroundResource(secondaryWeapon.getAPColorEfficiency());
-//                    ((TextView) mSelectedElementLayout.findViewById(R.id.unitSecondaryWeaponAT)).setBackgroundResource(secondaryWeapon.getATColorEfficiency());
-//                    ((TextView) mSelectedElementLayout.findViewById(R.id.unitSecondaryWeaponAmmo)).setText("" + secondaryWeapon.getAmmoAmount());
-//                } else {
-//                    ((ViewGroup) mSelectedElementLayout.findViewById(R.id.unitSecondaryWeapon)).setVisibility(View.GONE);
-//                }
-//                // frags
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitFrags)).setText("" + unit.getFrags());
-//
-//                // current action
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitAction)).setText(unit.getCurrentAction().name());
-//                ((TextView) mSelectedElementLayout.findViewById(R.id.unitAction)).setVisibility(unit.isDead() ? View.GONE : View.VISIBLE);
-//
-//                mSelectedElementLayout.setVisibility(View.VISIBLE);
-//            }
-//        });
+                TextView nameTV = (TextView) mSelectedElementLayout.findViewById(R.id.name);
+                LifeBar lifeBar = (LifeBar) mSelectedElementLayout.findViewById(R.id.life);
+
+                nameTV.setText(gameElement.getName());
+
+                if (gameElement instanceof Unit) {
+                    Unit unit = (Unit) gameElement;
+                    nameTV.setCompoundDrawablesWithIntrinsicBounds(unit.getImage(), 0, 0, 0);
+
+                    lifeBar.updateLife(unit.getCurrentHP() / unit.getHp());
+                    lifeBar.setVisibility(View.VISIBLE);
+                } else {
+                    nameTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    lifeBar.setVisibility(View.GONE);
+                }
+
+                mSelectedElementLayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void hideGameElementInfo() {
+        mGameActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mSelectedElementLayout.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void updateActiveHeroLayout() {
+        mGameActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mSelectedElementLayout.setVisibility(View.GONE);
+            }
+        });
     }
 
 }

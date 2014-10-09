@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.models.dungeons;
 
+import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.data.dungeon.Rooms;
 import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 
@@ -33,9 +34,11 @@ public class Room implements Serializable {
 
         // add ground tiles
         TMXLayer groundLayer = tiledMap.getTMXLayers().get(0);
+        Tile tile;
         for (TMXTile[] tmxTiles : groundLayer.getTMXTiles()) {
             for (TMXTile tmxTile : tmxTiles) {
-                tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = new Tile(tmxTile, tiledMap);
+                tile = new Tile(tmxTile, tiledMap);
+                tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = tile;
             }
         }
 
@@ -48,7 +51,7 @@ public class Room implements Serializable {
                     if (tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] == null) {
                         tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = objectTile;
                     }
-                    Tile tile = tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()];
+                    tile = tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()];
                     tile.setTerrain(objectTile.getTerrain());
 
                     // add properties
@@ -56,6 +59,7 @@ public class Room implements Serializable {
                         tile.setProperty(objectTile.getProperty());
 
                         if (tile.getTerrain() == TerrainTypes.DOOR) {
+                            tile.setGround(GroundTypes.DUNGEON_FLOOR);
                             doors.put(Directions.values()[Integer.parseInt(tile.getProperty().getValue())], tile);
                         }
                     }

@@ -12,11 +12,12 @@ import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.GraphicsManager;
 import com.glevel.dungeonhero.game.InputManager;
 import com.glevel.dungeonhero.game.SoundEffectManager;
+import com.glevel.dungeonhero.game.andengine.custom.CenteredSprite;
 import com.glevel.dungeonhero.game.andengine.custom.CustomLayoutGameActivity;
 import com.glevel.dungeonhero.game.andengine.custom.CustomZoomCamera;
 import com.glevel.dungeonhero.game.base.interfaces.OnNewSoundToPlay;
 import com.glevel.dungeonhero.game.base.interfaces.OnNewSpriteToDraw;
-import com.glevel.dungeonhero.game.andengine.custom.CenteredSprite;
+import com.glevel.dungeonhero.game.base.interfaces.OnUserActionDetected;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 
@@ -27,13 +28,14 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.shape.Shape;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.util.color.Color;
 
-public abstract class CustomGameActivity extends CustomLayoutGameActivity implements OnNewSpriteToDraw, OnNewSoundToPlay {
+public abstract class CustomGameActivity extends CustomLayoutGameActivity implements OnNewSpriteToDraw, OnNewSoundToPlay, OnUserActionDetected {
 
     protected DatabaseHelper mDbHelper;
     protected SharedPreferences mSharedPrefs;
@@ -114,7 +116,7 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
         mScene = new Scene();
         mScene.setOnAreaTouchTraversalFrontToBack();
         mScene.setBackground(new Background(0, 0, 0));
-        mInputManager = new InputManager(this, mCamera);
+        mInputManager = new InputManager(this, mCamera, this);
         mScene.setOnSceneTouchListener(mInputManager);
         mScene.setTouchAreaBindingOnActionDownEnabled(true);
     }
@@ -158,11 +160,18 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
         mEngine.start();
     }
 
-    public void addElementToScene(Sprite sprite, boolean isClickable) {
+    public void addElementToScene(Shape shape, boolean isClickable) {
         if (isClickable) {
-            mScene.registerTouchArea(sprite);
+            mScene.registerTouchArea(shape);
         }
-        mScene.attachChild(sprite);
+        mScene.attachChild(shape);
+    }
+
+    public void removeElement(Shape shape, boolean isClickable) {
+        if (isClickable) {
+            mScene.unregisterTouchArea(shape);
+        }
+        mScene.detachChild(shape);
     }
 
     public void endGame() {

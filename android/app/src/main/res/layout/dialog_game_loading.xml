@@ -3,37 +3,27 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black" >
+    android:background="@android:color/black">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
-        <com.glevel.dungeonhero.views.CustomTextView
-            style="@style/SettingsLabel"
+        <com.glevel.dungeonhero.views.CustomTitle
+            style="@style/LoadingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/loading_game" />
 
-        <com.glevel.dungeonhero.views.CustomTextView
-            style="@style/SettingsLabel"
+        <com.glevel.dungeonhero.views.CustomTitle
+            style="@style/LoadingTitle"
             android:id="@+id/loadingDots"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:text="@string/loading_dots" />
     </LinearLayout>
-
-    <com.glevel.dungeonhero.views.CustomTextView
-        android:id="@+id/quote"
-        style="@style/SettingsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/loading_game"
-        android:visibility="gone" />
 
 </RelativeLayout>

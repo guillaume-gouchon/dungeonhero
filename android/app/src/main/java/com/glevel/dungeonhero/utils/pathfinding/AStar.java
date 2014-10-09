@@ -10,7 +10,7 @@ import java.util.Stack;
 
 public class AStar<N extends Node> {
 
-    public List<N> search(N[][] nodes, N source, N target, boolean allowDiagonalMoves, MovingElement movingElement, int limit) {
+    public List<N> search(N[][] nodes, N source, N target, boolean allowDiagonalMoves, MovingElement movingElement) {
         // prepare sets
         Map<String, AStarNode<N>> openSet = new HashMap<String, AStarNode<N>>();
         PriorityQueue<AStarNode<N>> pQueue = new PriorityQueue<AStarNode<N>>(20, new AStarNodeComparator<N>());
@@ -25,7 +25,7 @@ public class AStar<N extends Node> {
         while (openSet.size() > 0) {
             AStarNode<N> testedNode = pQueue.poll();
             openSet.remove(testedNode.getId());
-            if (testedNode.getId().equals(target.getId()) || openSet.size() > limit) {
+            if (testedNode.getId().equals(target.getId())) {
                 goal = testedNode;
                 break;
             } else {

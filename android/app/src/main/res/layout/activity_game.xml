@@ -18,8 +18,23 @@
         android:visibility="gone" />
 
     <RelativeLayout
-        android:id="@+id/selectedElement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></RelativeLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <include
+            android:id="@+id/activeCharacter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/in_game_active_hero" />
+
+        <include
+            android:id="@+id/selectedElement"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/in_game_selected_element" />
+    </RelativeLayout>
 
 </RelativeLayout>

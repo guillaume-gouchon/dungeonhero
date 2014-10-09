@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.game.graphics;
 
+import com.glevel.dungeonhero.game.base.interfaces.OnUserActionDetected;
 import com.glevel.dungeonhero.game.models.GameElement;
 import com.glevel.dungeonhero.models.dungeons.Directions;
 
@@ -10,18 +11,24 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class UnitSprite extends GameElementSprite {
 
-    public UnitSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager) {
-        super(gameElement, vertexBufferObjectManager);
+    private static final int ANIMATION_DURATION = 300;
+    private static final int NB_ANIMATIONS = 3;
+
+    public UnitSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager, OnUserActionDetected userActionListener) {
+        super(gameElement, vertexBufferObjectManager, userActionListener);
         setScale(0.25f);
         stand();
     }
 
     public void walk(Directions direction) {
-        animate(new long[]{300, 300, 300}, direction.ordinal() * 3, direction.ordinal() * 3 + 2, true);
+        stopAnimation();
+        animate(new long[]{ANIMATION_DURATION, ANIMATION_DURATION, ANIMATION_DURATION, ANIMATION_DURATION},
+                new int[]{direction.ordinal() * NB_ANIMATIONS, direction.ordinal() * NB_ANIMATIONS + 1, direction.ordinal() * NB_ANIMATIONS, direction.ordinal() * NB_ANIMATIONS + 2},
+                true);
     }
 
     public void stand() {
-        animate(new long[]{300, 300, 300}, Directions.SOUTH.ordinal() * 3, Directions.SOUTH.ordinal() * 3 + 2, true);
+        walk(Directions.SOUTH);
     }
 
 }

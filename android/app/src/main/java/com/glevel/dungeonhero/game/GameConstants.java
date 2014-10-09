@@ -19,4 +19,7 @@ public class GameConstants {
     public static final float CAMERA_ZOOM_MIN = 3.5f, CAMERA_ZOOM_MAX = 3.5f;
 
     public static final int PIXEL_BY_TILE = 16;
+
+    public static final float GAME_LOOP_FREQUENCY = 60;
+
 }

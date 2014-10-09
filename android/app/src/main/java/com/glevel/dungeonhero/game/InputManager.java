@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
+import com.glevel.dungeonhero.game.base.interfaces.OnUserActionDetected;
+import com.glevel.dungeonhero.game.models.GameElement;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 import org.andengine.engine.camera.ZoomCamera;
@@ -16,26 +18,33 @@ import org.andengine.input.touch.detector.ScrollDetector;
 import org.andengine.input.touch.detector.ScrollDetector.IScrollDetectorListener;
 import org.andengine.input.touch.detector.SurfaceScrollDetector;
 
-public class InputManager implements IOnSceneTouchListener, IScrollDetectorListener, IPinchZoomDetectorListener {
+public class InputManager implements IOnSceneTouchListener, IScrollDetectorListener, IPinchZoomDetectorListener, OnUserActionDetected {
 
     private static final int AUTO_SCROLLING_EDGE_DISTANCE_THRESHOLD = 40;// in pixels
     private static final int AUTO_SCROLLING_SPEED = 5;// in pixels
 
-    private ZoomCamera mCamera;
-    private SurfaceScrollDetector mScrollDetector;
-    private float mPinchZoomStartedCameraZoomFactor;
-    private PinchZoomDetector mPinchZoomDetector;
-    private boolean mIsDragged = false;
+    private final ZoomCamera mCamera;
+    private final OnUserActionDetected mUserActionListener;
+    private final SurfaceScrollDetector mScrollDetector;
+    private final PinchZoomDetector mPinchZoomDetector;
     private final Point mScreenDimensions;
+
+    private float mPinchZoomStartedCameraZoomFactor;
+    private boolean mIsDragged = false;
 
     private float mLastX;
     private float mLastY;
 
-    public InputManager(Activity activity, ZoomCamera camera) {
+    private GameElement mSelectedElement;
+
+    private boolean mIsEnabled = true;
+
+    public InputManager(Activity activity, ZoomCamera camera, OnUserActionDetected userActionListener) {
         mCamera = camera;
         mScrollDetector = new SurfaceScrollDetector(this);
         mPinchZoomDetector = new PinchZoomDetector(this);
         mScreenDimensions = ApplicationUtils.getScreenDimensions(activity);
+        mUserActionListener = userActionListener;
     }
 
     public void setLastX(float lastX) {
@@ -53,6 +62,7 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
     public void onScrollStarted(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY) {
         final float zoomFactor = mCamera.getZoomFactor();
         mCamera.offsetCenter(-pDistanceX / zoomFactor, -pDistanceY / zoomFactor);
+        mIsDragged = true;
     }
 
     @Override
@@ -72,35 +82,34 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
      */
     @Override
     public void onPinchZoomStarted(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent) {
-        this.mPinchZoomStartedCameraZoomFactor = this.mCamera.getZoomFactor();
+        mPinchZoomStartedCameraZoomFactor = mCamera.getZoomFactor();
     }
 
     @Override
-    public void onPinchZoom(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent,
-                            final float pZoomFactor) {
-        this.mCamera.setZoomFactor(this.mPinchZoomStartedCameraZoomFactor * pZoomFactor);
+    public void onPinchZoom(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent, final float pZoomFactor) {
+        mCamera.setZoomFactor(mPinchZoomStartedCameraZoomFactor * pZoomFactor);
     }
 
     @Override
-    public void onPinchZoomFinished(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent,
-                                    final float pZoomFactor) {
-        this.mCamera.setZoomFactor(this.mPinchZoomStartedCameraZoomFactor * pZoomFactor);
+    public void onPinchZoomFinished(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent, final float pZoomFactor) {
+        mCamera.setZoomFactor(mPinchZoomStartedCameraZoomFactor * pZoomFactor);
     }
 
     /**
-     * Click ON map
+     * Touch on map
      */
     @Override
     public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
-        this.mPinchZoomDetector.onTouchEvent(pSceneTouchEvent);
+        mPinchZoomDetector.onTouchEvent(pSceneTouchEvent);
 
-        if (this.mPinchZoomDetector.isZooming()) {
-            this.mScrollDetector.setEnabled(false);
+        if (mPinchZoomDetector.isZooming()) {
+            mScrollDetector.setEnabled(false);
         } else {
             if (pSceneTouchEvent.isActionDown()) {
-                this.mScrollDetector.setEnabled(true);
+                mScrollDetector.setEnabled(true);
             }
-            this.mScrollDetector.onTouchEvent(pSceneTouchEvent);
+            mScrollDetector.onTouchEvent(pSceneTouchEvent);
+
 
             switch (pSceneTouchEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -108,16 +117,15 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
                     mLastX = pSceneTouchEvent.getX();
                     mLastY = pSceneTouchEvent.getY();
                     break;
-                case MotionEvent.ACTION_MOVE:
-                    break;
                 case MotionEvent.ACTION_UP:
                     if (!mIsDragged) {
-                        // simple tap
+                        onTouch(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
                     }
                     mIsDragged = false;
                     break;
             }
         }
+
         return true;
     }
 
@@ -135,6 +143,46 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
             py = 1;
         }
         mCamera.offsetCenter(px * AUTO_SCROLLING_SPEED / mCamera.getZoomFactor(), py * AUTO_SCROLLING_SPEED / mCamera.getZoomFactor());
+    }
+
+    public GameElement getSelectedElement() {
+        return mSelectedElement;
+    }
+
+    private void unSelectAll() {
+        if (mSelectedElement != null) {
+            onElementUnselected();
+        }
+    }
+
+    public boolean isEnabled() {
+        return mIsEnabled;
+    }
+
+    public void setEnabled(boolean isEnabled) {
+        this.mIsEnabled = isEnabled;
+    }
+
+    @Override
+    public void onElementSelected(GameElement gameElement) {
+        if (mIsEnabled) {
+            unSelectAll();
+            mSelectedElement = gameElement;
+            mUserActionListener.onElementSelected(gameElement);
+        }
+    }
+
+    @Override
+    public void onElementUnselected() {
+        mSelectedElement = null;
+        mUserActionListener.onElementUnselected();
+    }
+
+    @Override
+    public void onTouch(float x, float y) {
+        if (mIsEnabled) {
+            mUserActionListener.onTouch(x, y);
+        }
     }
 
 }
