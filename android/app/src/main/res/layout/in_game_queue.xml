@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/activeCharacter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/in_game_queue_item" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:alpha="0.8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/nextCharacter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/in_game_queue_item" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:alpha="0.6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/nextnextCharacter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/in_game_queue_item" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -105,7 +105,7 @@
  </tileset>
  <layer name="ground" width="15" height="15">
   <data encoding="base64" compression="zlib">
-   eJzVkMENBCEMA+mC0EOgB0IJ238vx0kTyUJo//uwAMc2hqeU8nwUsVE3DPz3vtHkvNDdvANtR1vhjJzE6U3fZO+SE6zO/OY1Zp016LmYZ4/0NOEbOhfeyTK4Sqa+20WXHbvohvzn2bmiXZJtAhf+9C40A0x5Z9A377/dm7rAOyXj7Z+/hB8buznS
+   eJzVkMENQyEMQ9mCsENgB8IIf/9dSqUXyUKo6rE9WIBjG8NTSnl+DP1LXWzUDQPvvW80OS90N+9A29FWOCMncXrTN9m75ASrM795jVlnDXou5tkjPU34hs6Fd7IMrpKp73bRZccuuiH/eXauaJdkm8CFP70LzQBT3hn0zftv96Yu8E7J+PTP/4QXrAw5rA==
   </data>
  </layer>
  <layer name="objects" width="15" height="15">

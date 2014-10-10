@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 public class Chapter implements Serializable {
 
+    private static final long serialVersionUID = 1484748281734643544L;
+
     private final int name;
     private final int introText, outroText;
     private final transient Dungeon dungeon;

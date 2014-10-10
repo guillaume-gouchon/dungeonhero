@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.game;
+package com.glevel.dungeonhero.game.base;
 
 import android.content.Context;
 
@@ -34,8 +34,11 @@ public class GraphicsManager {
 
         // TODO load all game elements graphics
         loadTiledGfxFromAssets(210, 400, 3, 4, game.getHero().getSpriteName());
+        loadTiledGfxFromAssets(210, 400, 3, 4, "goblin.png");
 
         loadGfxFromAssets(64, 64, "selection.png");
+        loadTiledGfxFromAssets(21, 20, 3, 1, "light.png");
+        loadTiledGfxFromAssets(34, 20, 2, 1, "chest.png");
     }
 
     private void loadGfxFromAssets(int textureWidth, int textureHeight, String spriteName) {

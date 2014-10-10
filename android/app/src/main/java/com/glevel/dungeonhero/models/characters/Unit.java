@@ -1,11 +1,14 @@
 package com.glevel.dungeonhero.models.characters;
 
-import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.game.graphics.UnitSprite;
+import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
+
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +17,8 @@ import java.util.List;
  * Created by guillaume ON 10/2/14.
  */
 public abstract class Unit extends GameElement implements MovingElement<Tile>, Serializable {
+
+    private static final long serialVersionUID = 1683650465351973413L;
 
     // Images
     private final int image;
@@ -180,7 +185,16 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int getMovement() {
-        return 6;
+        return 4;
+    }
+
+    @Override
+    public void createSprite(VertexBufferObjectManager vertexBufferObjectManager) {
+        sprite = new UnitSprite(this, vertexBufferObjectManager);
+    }
+
+    public float getLifeRatio() {
+        return (float) currentHP / (float) hp;
     }
 
 }

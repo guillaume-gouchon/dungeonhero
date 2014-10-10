@@ -1,6 +1,6 @@
 package com.glevel.dungeonhero.utils.pathfinding;
 
-import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.game.base.GameElement;
 
 import org.andengine.entity.sprite.Sprite;
 
@@ -45,13 +45,13 @@ public class MathUtils {
         return finalAngle - sprite.getRotation();
     }
 
-    public static Set<Node> getAdjacentNodes(Node[][] nodes, Node centerNode, int step, boolean withDiagonal, MovingElement movingElement) {
-        Set<Node> adjacentNodes = new HashSet<Node>();
+    public static <E extends Node> Set<E> getAdjacentNodes(E[][] nodes, E centerNode, int step, boolean withDiagonal, MovingElement movingElement) {
+        Set<E> adjacentNodes = new HashSet<E>();
 
         for (int y = centerNode.getY() - step; y < centerNode.getY() + step + 1; y++) {
             for (int x = centerNode.getX() - step; x < centerNode.getX() + step + 1; x++) {
                 if (x >= 0 && x < nodes[0].length && y >= 0 && y < nodes.length && (x != centerNode.getX() || y != centerNode.getY())) {
-                    Node node = nodes[y][x];
+                    E node = nodes[y][x];
 
                     if ((withDiagonal || calcManhattanDistance(centerNode, node) <= step) && (movingElement == null || movingElement.canMoveIn(node))) {
                         adjacentNodes.add(node);

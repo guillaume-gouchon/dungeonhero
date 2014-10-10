@@ -1,11 +1,10 @@
-package com.glevel.dungeonhero.game;
+package com.glevel.dungeonhero.game.base;
 
 import android.app.Activity;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
-import com.glevel.dungeonhero.game.base.interfaces.OnUserActionDetected;
-import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.game.base.interfaces.UserActionListener;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 import org.andengine.engine.camera.ZoomCamera;
@@ -18,13 +17,14 @@ import org.andengine.input.touch.detector.ScrollDetector;
 import org.andengine.input.touch.detector.ScrollDetector.IScrollDetectorListener;
 import org.andengine.input.touch.detector.SurfaceScrollDetector;
 
-public class InputManager implements IOnSceneTouchListener, IScrollDetectorListener, IPinchZoomDetectorListener, OnUserActionDetected {
+public class InputManager implements IOnSceneTouchListener, IScrollDetectorListener, IPinchZoomDetectorListener {
 
+    private static final int DRAG_MINIMUM_DISTANCE = 300;// in pixels ^2
     private static final int AUTO_SCROLLING_EDGE_DISTANCE_THRESHOLD = 40;// in pixels
     private static final int AUTO_SCROLLING_SPEED = 5;// in pixels
 
     private final ZoomCamera mCamera;
-    private final OnUserActionDetected mUserActionListener;
+    private final UserActionListener mUserActionListener;
     private final SurfaceScrollDetector mScrollDetector;
     private final PinchZoomDetector mPinchZoomDetector;
     private final Point mScreenDimensions;
@@ -35,24 +35,14 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
     private float mLastX;
     private float mLastY;
 
-    private GameElement mSelectedElement;
-
     private boolean mIsEnabled = true;
 
-    public InputManager(Activity activity, ZoomCamera camera, OnUserActionDetected userActionListener) {
+    public InputManager(Activity activity, ZoomCamera camera, UserActionListener userActionListener) {
         mCamera = camera;
         mScrollDetector = new SurfaceScrollDetector(this);
         mPinchZoomDetector = new PinchZoomDetector(this);
         mScreenDimensions = ApplicationUtils.getScreenDimensions(activity);
         mUserActionListener = userActionListener;
-    }
-
-    public void setLastX(float lastX) {
-        mLastX = mLastX;
-    }
-
-    public void setLastY(float lastY) {
-        mLastY = mLastY;
     }
 
     /**
@@ -62,7 +52,9 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
     public void onScrollStarted(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY) {
         final float zoomFactor = mCamera.getZoomFactor();
         mCamera.offsetCenter(-pDistanceX / zoomFactor, -pDistanceY / zoomFactor);
-        mIsDragged = true;
+        if (pDistanceX * pDistanceX + pDistanceY * pDistanceY > DRAG_MINIMUM_DISTANCE) {
+            mIsDragged = true;
+        }
     }
 
     @Override
@@ -110,19 +102,26 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
             }
             mScrollDetector.onTouchEvent(pSceneTouchEvent);
 
-
-            switch (pSceneTouchEvent.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    mIsDragged = false;
-                    mLastX = pSceneTouchEvent.getX();
-                    mLastY = pSceneTouchEvent.getY();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (!mIsDragged) {
-                        onTouch(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
-                    }
-                    mIsDragged = false;
-                    break;
+            if (mIsEnabled) {
+                switch (pSceneTouchEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mIsDragged = false;
+                        mLastX = pSceneTouchEvent.getX();
+                        mLastY = pSceneTouchEvent.getY();
+                        mUserActionListener.onTouch(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        mUserActionListener.onTouch(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (!mIsDragged) {
+                            mUserActionListener.onTap(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+                        } else {
+                            mUserActionListener.onCancel(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+                        }
+                        mIsDragged = false;
+                        break;
+                }
             }
         }
 
@@ -145,44 +144,8 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
         mCamera.offsetCenter(px * AUTO_SCROLLING_SPEED / mCamera.getZoomFactor(), py * AUTO_SCROLLING_SPEED / mCamera.getZoomFactor());
     }
 
-    public GameElement getSelectedElement() {
-        return mSelectedElement;
-    }
-
-    private void unSelectAll() {
-        if (mSelectedElement != null) {
-            onElementUnselected();
-        }
-    }
-
-    public boolean isEnabled() {
-        return mIsEnabled;
-    }
-
     public void setEnabled(boolean isEnabled) {
         this.mIsEnabled = isEnabled;
-    }
-
-    @Override
-    public void onElementSelected(GameElement gameElement) {
-        if (mIsEnabled) {
-            unSelectAll();
-            mSelectedElement = gameElement;
-            mUserActionListener.onElementSelected(gameElement);
-        }
-    }
-
-    @Override
-    public void onElementUnselected() {
-        mSelectedElement = null;
-        mUserActionListener.onElementUnselected();
-    }
-
-    @Override
-    public void onTouch(float x, float y) {
-        if (mIsEnabled) {
-            mUserActionListener.onTouch(x, y);
-        }
     }
 
 }

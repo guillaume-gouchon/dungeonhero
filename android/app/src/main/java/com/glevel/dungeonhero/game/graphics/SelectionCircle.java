@@ -1,10 +1,9 @@
 package com.glevel.dungeonhero.game.graphics;
 
-import com.glevel.dungeonhero.game.GraphicsManager;
 import com.glevel.dungeonhero.game.andengine.custom.CenteredSprite;
-import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.game.base.GraphicsManager;
 
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class SelectionCircle extends CenteredSprite {
@@ -12,6 +11,7 @@ public class SelectionCircle extends CenteredSprite {
     public SelectionCircle(VertexBufferObjectManager pVertexBufferObjectManager) {
         super(0, 0, GraphicsManager.sGfxMap.get("selection.png"), pVertexBufferObjectManager);
         setScale(0.25f);
+        setZIndex(5);
         setVisible(false);
     }
 
@@ -22,9 +22,9 @@ public class SelectionCircle extends CenteredSprite {
     }
 
     public void attachToGameElement(GameElement gameElement) {
-        Sprite sprite = gameElement.getSprite();
+        GameElementSprite sprite = gameElement.getSprite();
         setColor(gameElement.getSelectionColor());
-        setPosition(sprite.getX(), sprite.getY() + getHeightScaled() / 2);
+        setPosition(sprite.getX(), sprite.getY() - GameElementSprite.Y_OFFSET + getHeightScaled() / 2);
         setVisible(true);
     }
 

@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class Book implements Serializable, InAppProduct {
 
+    private static final long serialVersionUID = -2713633045742704862L;
+
     private final int bookId;
     private final int name, image;
     private final int introText, outroText;

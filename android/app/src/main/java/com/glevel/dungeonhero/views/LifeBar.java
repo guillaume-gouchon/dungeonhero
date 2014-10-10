@@ -40,7 +40,7 @@ public class LifeBar extends LinearLayout {
         mContainer = findViewById(R.id.container);
         mLifeBar = findViewById(R.id.life_bar);
 
-        mLowLifeAnimation = AnimationUtils.loadAnimation(context, R.anim.fade);
+        mLowLifeAnimation = AnimationUtils.loadAnimation(context, R.anim.low_life_fade);
     }
 
     public void updateLife(float ratio) {
@@ -48,7 +48,7 @@ public class LifeBar extends LinearLayout {
             mLifeBar.setLayoutParams(new LayoutParams((int) (mContainer.getWidth() * ratio), mContainer.getHeight()));
         }
 
-        if (ratio < 0.25) {
+        if (ratio < 0.25f) {
             mContainer.startAnimation(mLowLifeAnimation);
         } else {
             mContainer.setAnimation(null);

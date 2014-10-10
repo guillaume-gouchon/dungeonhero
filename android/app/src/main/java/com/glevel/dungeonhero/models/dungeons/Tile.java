@@ -2,7 +2,8 @@ package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
-import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.models.Actions;
 import com.glevel.dungeonhero.utils.pathfinding.Node;
 
 import org.andengine.extension.tmx.TMXProperties;
@@ -14,17 +15,14 @@ import java.io.Serializable;
 
 public class Tile extends TMXTile implements Node, Serializable {
 
+    private static final long serialVersionUID = 3793350205301888410L;
+
     private GameElement content = null;
     private GroundTypes ground = null;
     private TerrainTypes terrain = null;
     private transient TMXTileProperty property;
-
-    public int getAction() {
-        return action;
-    }
-
-    private int action = 0;
-
+    private transient Actions action;
+    private transient boolean isSelected = false;
 
     /**
      * Constructor from a .tmx tile map
@@ -109,9 +107,20 @@ public class Tile extends TMXTile implements Node, Serializable {
         return property;
     }
 
-    public void setAction(int action) {
+    public void setAction(Actions action) {
         this.action = action;
+    }
 
+    public Actions getAction() {
+        return action;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 
 }

@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class Dungeon implements Serializable {
 
+    private static final long serialVersionUID = 4765596237193067497L;
+
     private Room[][] rooms = new Room[10][10];
     private int currentPosition;
     private final int start;

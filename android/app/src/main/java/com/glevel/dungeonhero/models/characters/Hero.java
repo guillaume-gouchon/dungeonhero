@@ -6,13 +6,14 @@ import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by guillaume ON 10/2/14.
  */
-public class Hero extends Unit implements InAppProduct, Serializable {
+public class Hero extends Unit implements InAppProduct {
+
+    private static final long serialVersionUID = -2887616275513777101L;
 
     protected boolean mHasBeenBought = false;
 

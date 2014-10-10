@@ -18,6 +18,8 @@ import java.io.Serializable;
 public class Game extends DatabaseResource implements Serializable {
 
     public static final String TABLE_NAME = "game";
+    private static final long serialVersionUID = -840485102400894219L;
+    
     private Book book;
     private int[] booksDone;
     private Chapter chapter;

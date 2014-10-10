@@ -9,15 +9,12 @@ import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.game.GUIManager;
 import com.glevel.dungeonhero.game.GameConstants;
-import com.glevel.dungeonhero.game.GraphicsManager;
-import com.glevel.dungeonhero.game.InputManager;
-import com.glevel.dungeonhero.game.SoundEffectManager;
 import com.glevel.dungeonhero.game.andengine.custom.CenteredSprite;
 import com.glevel.dungeonhero.game.andengine.custom.CustomLayoutGameActivity;
 import com.glevel.dungeonhero.game.andengine.custom.CustomZoomCamera;
 import com.glevel.dungeonhero.game.base.interfaces.OnNewSoundToPlay;
 import com.glevel.dungeonhero.game.base.interfaces.OnNewSpriteToDraw;
-import com.glevel.dungeonhero.game.base.interfaces.OnUserActionDetected;
+import com.glevel.dungeonhero.game.base.interfaces.UserActionListener;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 
@@ -35,7 +32,7 @@ import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.util.color.Color;
 
-public abstract class CustomGameActivity extends CustomLayoutGameActivity implements OnNewSpriteToDraw, OnNewSoundToPlay, OnUserActionDetected {
+public abstract class CustomGameActivity extends CustomLayoutGameActivity implements OnNewSpriteToDraw, OnNewSoundToPlay, UserActionListener {
 
     protected DatabaseHelper mDbHelper;
     protected SharedPreferences mSharedPrefs;
@@ -50,6 +47,7 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
     protected GUIManager mGUIManager;
     protected SoundEffectManager mSoundEffectManager;
     protected Font mDefaultFont;
+    protected UserActionListener mInputDispatcher;
 
     @Override
     public EngineOptions onCreateEngineOptions() {

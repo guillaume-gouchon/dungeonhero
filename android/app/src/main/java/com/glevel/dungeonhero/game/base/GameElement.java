@@ -1,9 +1,10 @@
-package com.glevel.dungeonhero.game.models;
+package com.glevel.dungeonhero.game.base;
 
 import com.glevel.dungeonhero.game.graphics.GameElementSprite;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
 import java.io.Serializable;
@@ -16,7 +17,7 @@ public abstract class GameElement implements Serializable {
     private final String spriteName;
     private Ranks rank;
     private transient Tile tilePosition;
-    private transient GameElementSprite sprite;
+    protected transient GameElementSprite sprite;
 
     public GameElement(int name, String spriteName, Ranks rank) {
         this.name = name;
@@ -24,12 +25,10 @@ public abstract class GameElement implements Serializable {
         this.rank = rank;
     }
 
+    public abstract void createSprite(VertexBufferObjectManager vertexBufferObjectManager);
+
     public GameElementSprite getSprite() {
         return sprite;
-    }
-
-    public void setSprite(GameElementSprite sprite) {
-        this.sprite = sprite;
     }
 
     public int getName() {
@@ -63,6 +62,10 @@ public abstract class GameElement implements Serializable {
             default:
                 return new Color(1.0f, 1.0f, 1.0f, 0.7f);
         }
+    }
+
+    public boolean isEnemy(GameElement gameElement) {
+        return (rank == Ranks.ME || rank == Ranks.ALLY) && gameElement.getRank() == Ranks.ENEMY || rank == Ranks.ENEMY && (gameElement.getRank() == Ranks.ME || gameElement.getRank() == Ranks.ALLY);
     }
 
     public Ranks getRank() {

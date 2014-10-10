@@ -2,109 +2,116 @@ package org.andengine.extension.tmx;
 
 import org.andengine.opengl.texture.region.ITextureRegion;
 
+import java.io.Serializable;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- * 
+ *
  * @author Nicolas Gramlich
  * @since 10:39:48 - 05.08.2010
  */
-public class TMXTile {
-	// ===========================================================
-	// Constants
-	// ===========================================================
+public class TMXTile implements Serializable {
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
+    private static final long serialVersionUID = -6845953827871592586L;
 
-	int mGlobalTileID;
-	private final int mTileRow;
-	private final int mTileColumn;
-	private final int mTileWidth;
-	private final int mTileHeight;
-	ITextureRegion mTextureRegion;
+    // ===========================================================
+    // Constants
+    // ===========================================================
 
-	// ===========================================================
-	// Constructors
-	// ===========================================================
+    // ===========================================================
+    // Fields
+    // ===========================================================
 
-	public TMXTile(final int pGlobalTileID, final int pTileColumn, final int pTileRow, final int pTileWidth, final int pTileHeight, final ITextureRegion pTextureRegion) {
-		this.mGlobalTileID = pGlobalTileID;
-		this.mTileRow = pTileRow;
-		this.mTileColumn = pTileColumn;
-		this.mTileWidth = pTileWidth;
-		this.mTileHeight = pTileHeight;
-		this.mTextureRegion = pTextureRegion;
-	}
+    transient int mGlobalTileID;
+    private transient final int mTileRow;
+    private transient final int mTileColumn;
+    private transient final int mTileWidth;
+    private transient final int mTileHeight;
+    transient ITextureRegion mTextureRegion;
 
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
+    // ===========================================================
+    // Constructors
+    // ===========================================================
 
-	public int getGlobalTileID() {
-		return this.mGlobalTileID;
-	}
+    public TMXTile(final int pGlobalTileID, final int pTileColumn, final int pTileRow, final int pTileWidth, final int pTileHeight, final ITextureRegion pTextureRegion) {
+        this.mGlobalTileID = pGlobalTileID;
+        this.mTileRow = pTileRow;
+        this.mTileColumn = pTileColumn;
+        this.mTileWidth = pTileWidth;
+        this.mTileHeight = pTileHeight;
+        this.mTextureRegion = pTextureRegion;
+    }
 
-	public int getTileRow() {
-		return this.mTileRow;
-	}
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
 
-	public int getTileColumn() {
-		return this.mTileColumn;
-	}
+    public int getGlobalTileID() {
+        return this.mGlobalTileID;
+    }
 
-	public int getTileX() {
-		return this.mTileColumn * this.mTileWidth;
-	}
+    public int getTileRow() {
+        return this.mTileRow;
+    }
 
-	public int getTileY() {
-		return this.mTileRow * this.mTileHeight;
-	}
+    public int getTileColumn() {
+        return this.mTileColumn;
+    }
 
-	public int getTileWidth() {
-		return this.mTileWidth;
-	}
+    public int getTileX() {
+        return this.mTileColumn * this.mTileWidth;
+    }
 
-	public int getTileHeight() {
-		return this.mTileHeight;
-	}
+    public int getTileY() {
+        return this.mTileRow * this.mTileHeight;
+    }
 
-	public ITextureRegion getTextureRegion() {
-		return this.mTextureRegion;
-	}
+    public int getTileWidth() {
+        return this.mTileWidth;
+    }
 
-	/**
-	 * Note this will also set the {@link org.andengine.opengl.texture.region.ITextureRegion} with the associated pGlobalTileID of the {@link TMXTiledMap}.
-	 * @param pTMXTiledMap
-	 * @param pGlobalTileID
-	 */
-	public void setGlobalTileID(final TMXTiledMap pTMXTiledMap, final int pGlobalTileID) {
-		this.mGlobalTileID = pGlobalTileID;
-		this.mTextureRegion = pTMXTiledMap.getTextureRegionFromGlobalTileID(pGlobalTileID);
-	}
+    public int getTileHeight() {
+        return this.mTileHeight;
+    }
 
-	/**
-	 * You'd probably want to call {@link TMXTile#setGlobalTileID(TMXTiledMap, int)} instead.
-	 * @param pTextureRegion
-	 */
-	public void setTextureRegion(final ITextureRegion pTextureRegion) {
-		this.mTextureRegion = pTextureRegion;
-	}
+    public ITextureRegion getTextureRegion() {
+        return this.mTextureRegion;
+    }
 
-	public TMXProperties<TMXTileProperty> getTMXTileProperties(final TMXTiledMap pTMXTiledMap) {
-		return pTMXTiledMap.getTMXTileProperties(this.mGlobalTileID);
-	}
+    /**
+     * Note this will also set the {@link org.andengine.opengl.texture.region.ITextureRegion} with the associated pGlobalTileID of the {@link TMXTiledMap}.
+     *
+     * @param pTMXTiledMap
+     * @param pGlobalTileID
+     */
+    public void setGlobalTileID(final TMXTiledMap pTMXTiledMap, final int pGlobalTileID) {
+        this.mGlobalTileID = pGlobalTileID;
+        this.mTextureRegion = pTMXTiledMap.getTextureRegionFromGlobalTileID(pGlobalTileID);
+    }
 
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
+    /**
+     * You'd probably want to call {@link TMXTile#setGlobalTileID(TMXTiledMap, int)} instead.
+     *
+     * @param pTextureRegion
+     */
+    public void setTextureRegion(final ITextureRegion pTextureRegion) {
+        this.mTextureRegion = pTextureRegion;
+    }
 
-	// ===========================================================
-	// Methods
-	// ===========================================================
+    public TMXProperties<TMXTileProperty> getTMXTileProperties(final TMXTiledMap pTMXTiledMap) {
+        return pTMXTiledMap.getTMXTileProperties(this.mGlobalTileID);
+    }
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
+    // ===========================================================
+    // Methods for/from SuperClass/Interfaces
+    // ===========================================================
+
+    // ===========================================================
+    // Methods
+    // ===========================================================
+
+    // ===========================================================
+    // Inner and Anonymous Classes
+    // ===========================================================
 }

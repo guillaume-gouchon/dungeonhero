@@ -6,17 +6,22 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.data.HeroFactory;
 import com.glevel.dungeonhero.game.base.CustomGameActivity;
+import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.ActionTile;
-import com.glevel.dungeonhero.game.graphics.GameElementSprite;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
-import com.glevel.dungeonhero.game.models.GameElement;
+import com.glevel.dungeonhero.models.Actions;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.models.characters.Monster;
+import com.glevel.dungeonhero.models.characters.Pnj;
+import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
+import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.utils.pathfinding.AStar;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
@@ -45,9 +50,10 @@ public class GameActivity extends CustomGameActivity {
     private Unit mActiveCharacter;
 
 
-    private SelectionCircle selectionCircle;
+    private SelectionCircle mSelectionCircle;
     private Entity mGroundLayer;
     private TMXTiledMap mTmxTiledMap;
+    private GameElement mSelectedElement;
 
     @Override
     protected void initGameActivity() {
@@ -75,18 +81,10 @@ public class GameActivity extends CustomGameActivity {
         final TMXLoader tmxLoader = new TMXLoader(this.getAssets(), mEngine.getTextureManager(),
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA, this.getVertexBufferObjectManager(), null);
         mTmxTiledMap = tmxLoader.loadFromAsset("tmx/" + mRoom.getTmxName() + ".tmx");
-        mRoom.initRoom(mTmxTiledMap);
 
-        // TODO : place hero
-        mRoom.getDoors().get(Directions.NORTH).setContent(mGame.getHero());
+        mRoom.initRoom(mTmxTiledMap, mGame.getHero(), mDungeon);
 
-        mRoom.getTiles()[5][5].setContent(HeroFactory.buildWarrior());
-        mRoom.getTiles()[5][6].setContent(HeroFactory.buildWarrior());
-        mRoom.getTiles()[5][7].setContent(HeroFactory.buildWarrior());
-        mRoom.getTiles()[5][8].setContent(HeroFactory.buildWarrior());
-        mRoom.getTiles()[5][9].setContent(HeroFactory.buildWarrior());
-
-
+        mTmxTiledMap.getTMXLayers().get(1).setZIndex(10);
         for (TMXLayer tmxLayer : mTmxTiledMap.getTMXLayers()) {
             mScene.attachChild(tmxLayer);
         }
@@ -104,9 +102,8 @@ public class GameActivity extends CustomGameActivity {
         mGroundLayer.setZIndex(2);
         mScene.attachChild(mGroundLayer);
 
-        selectionCircle = new SelectionCircle(getVertexBufferObjectManager());
-        selectionCircle.setZIndex(5);
-        mScene.attachChild(selectionCircle);
+        mSelectionCircle = new SelectionCircle(getVertexBufferObjectManager());
+        mScene.attachChild(mSelectionCircle);
 
         // add elements to scene
         GameElement gameElement;
@@ -188,9 +185,232 @@ public class GameActivity extends CustomGameActivity {
     }
 
     private void nextTurn() {
-        mActiveCharacter = mGame.getHero();
+        hideActionTiles();
+        hideElementInfo();
+        mActiveCharacter = mRoom.getQueue().get(0);
+        mRoom.getQueue().add(mRoom.getQueue().get(0));
+        mRoom.getQueue().remove(0);
+        mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue());
         showMovement();
+
+        if (mActiveCharacter instanceof Monster) {
+            mInputManager.setEnabled(false);
+            attack(mGame.getHero().getTilePosition());
+        }
     }
+
+    public void addElementToScene(GameElement gameElement) {
+        gameElement.createSprite(getVertexBufferObjectManager());
+        super.addElementToScene(gameElement.getSprite(), false);
+    }
+
+    public void removeElement(GameElement gameElement) {
+        gameElement.setTilePosition(null);
+        mRoom.getObjects().remove(gameElement);
+        // TODO
+        if (gameElement instanceof Unit) {
+            mRoom.getQueue().remove(gameElement);
+        }
+        super.removeElement(gameElement.getSprite(), false);
+    }
+
+    @Override
+    public void endGame() {
+        super.endGame();
+    }
+
+    @Override
+    public void onTouch(float x, float y) {
+        Tile tile = getTileAtCoordinates(x, y);
+        if (tile != null && tile.getAction() != null && tile.getAction() != Actions.MOVE) {
+            selectTile(tile);
+        }
+    }
+
+    @Override
+    public void onCancel(float x, float y) {
+        selectTile(null);
+    }
+
+    @Override
+    public void onTap(float x, float y) {
+        Tile tile = getTileAtCoordinates(x, y);
+        if (tile != null) {
+            if (tile.getContent() != null && tile.getContent() != mSelectedElement && tile.getContent().getRank() != Ranks.ME) {
+                showElementInfo(tile.getContent());
+            } else if (tile.getAction() != null) {
+                executeAction(tile);
+            } else {
+                hideElementInfo();
+            }
+        }
+    }
+
+    private void executeAction(Tile tile) {
+        hideElementInfo();
+        mInputManager.setEnabled(false);
+        switch (tile.getAction()) {
+            case MOVE:
+                if (tile == mSelectedTile) {
+                    move(tile);
+                } else {
+                    selectTile(tile);
+                    mInputManager.setEnabled(true);
+                }
+                break;
+            case ATTACK:
+                attack(tile);
+                break;
+            case TALK:
+                talk(tile);
+                break;
+            case SEARCH:
+                search(tile);
+                break;
+        }
+    }
+
+
+    private void move(Tile tile) {
+        List<Tile> path = new AStar<Tile>().search(mRoom.getTiles(), mActiveCharacter.getTilePosition(), tile, false, mActiveCharacter);
+        walkTo(path, new Runnable() {
+            @Override
+            public void run() {
+                mInputManager.setEnabled(true);
+                nextTurn();
+            }
+        });
+    }
+
+    private void attack(final Tile tile) {
+        goCloserTo(tile, new Runnable() {
+            @Override
+            public void run() {
+                // TODO
+                Unit unit = (Unit) tile.getContent();
+                unit.setCurrentHP(unit.getCurrentHP() - 5);
+                if (unit != mGame.getHero() && unit.getCurrentHP() <= 0) {
+                    removeElement(unit);
+                    mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue());
+                }
+                mInputManager.setEnabled(true);
+                nextTurn();
+            }
+        });
+    }
+
+    private void search(final Tile tile) {
+        goCloserTo(tile, new Runnable() {
+            @Override
+            public void run() {
+                // TODO
+                Searchable searchable = (Searchable) tile.getContent();
+                Item foundItem = searchable.search();
+                mInputManager.setEnabled(true);
+                nextTurn();
+            }
+        });
+    }
+
+    private void talk(Tile tile) {
+        goCloserTo(tile, new Runnable() {
+            @Override
+            public void run() {
+                // TODO
+                mInputManager.setEnabled(true);
+                nextTurn();
+            }
+        });
+    }
+
+    private void goCloserTo(Tile tile, Runnable runnable) {
+        if (MathUtils.calcManhattanDistance(mActiveCharacter.getTilePosition(), tile) == 1) {
+            runnable.run();
+            return;
+        }
+
+        Tile closestTile = null;
+        Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mRoom.getTiles(), tile, 1, false, mActiveCharacter);
+        for (Tile adjacent : adjacentTiles) {
+            if (adjacent.getAction() == Actions.MOVE) {
+                closestTile = adjacent;
+                break;
+            }
+        }
+
+        if (closestTile != null) {
+            List<Tile> path = new AStar<Tile>().search(mRoom.getTiles(), mActiveCharacter.getTilePosition(), closestTile, false, mActiveCharacter);
+            walkTo(path, runnable);
+        } else {
+            runnable.run();
+        }
+    }
+
+    private Tile mSelectedTile = null;
+
+    private void selectTile(Tile tile) {
+        // unselect previous selected tile
+        if (mSelectedTile != null) {
+            mSelectedTile.setSelected(false);
+        }
+
+        mSelectedTile = tile;
+        if (mSelectedTile != null) {
+            mSelectedTile.setSelected(true);
+        }
+    }
+
+    private Tile getTileAtCoordinates(float x, float y) {
+        TMXTile tmxTile = mTmxTiledMap.getTMXLayers().get(0).getTMXTileAt(x, y);
+        if (tmxTile != null) {
+            return mRoom.getTiles()[tmxTile.getTileRow()][tmxTile.getTileColumn()];
+        } else {
+            return null;
+        }
+    }
+
+    private void addAvailableAction(GameElement gameElement) {
+        boolean isActionPossible = MathUtils.calcManhattanDistance(mActiveCharacter.getTilePosition(), gameElement.getTilePosition()) == 1;
+        if (!isActionPossible) {
+            Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mRoom.getTiles(), gameElement.getTilePosition(), 1, false, mActiveCharacter);
+            for (Tile adjacent : adjacentTiles) {
+                if (adjacent.getAction() == Actions.MOVE) {
+                    isActionPossible = true;
+                    break;
+                }
+            }
+        }
+
+        if (isActionPossible) {
+            if (mActiveCharacter.isEnemy(gameElement)) {
+                addActionToTile(Actions.ATTACK, gameElement.getTilePosition());
+            } else if (gameElement instanceof Pnj) {
+                addActionToTile(Actions.TALK, gameElement.getTilePosition());
+            } else if (gameElement instanceof Searchable) {
+                addActionToTile(Actions.SEARCH, gameElement.getTilePosition());
+            }
+        }
+    }
+
+    private void addActionToTile(Actions action, Tile tile) {
+        ActionTile actionTile = new ActionTile(action, tile, getVertexBufferObjectManager());
+        tile.setAction(action);
+        mGroundLayer.attachChild(actionTile);
+    }
+
+
+    private void showElementInfo(GameElement gameElement) {
+        mSelectedElement = gameElement;
+        mSelectionCircle.attachToGameElement(gameElement);
+        mGUIManager.showGameElementInfo(gameElement);
+    }
+
+    private void hideElementInfo() {
+        mSelectedElement = null;
+        mSelectionCircle.unAttach();
+        mGUIManager.hideGameElementInfo();
+    }
+
 
     private void showMovement() {
         // get reachable tiles
@@ -201,10 +421,12 @@ public class GameActivity extends CustomGameActivity {
                 if (!reachableTiles.contains(tile) && MathUtils.calcManhattanDistance(tile, mActiveCharacter.getTilePosition()) <= mActiveCharacter.getMovement()
                         && mActiveCharacter.canMoveIn(tile)) {
                     List<Tile> path = new AStar<Tile>().search(mRoom.getTiles(), mActiveCharacter.getTilePosition(), tile, false, mActiveCharacter);
-                    for (int n = 1; n < path.size(); n++) {
-                        t = path.get(n);
-                        if (n <= mActiveCharacter.getMovement()) {
-                            reachableTiles.add(t);
+                    if (path != null) {
+                        for (int n = 0; n < path.size(); n++) {
+                            t = path.get(n);
+                            if (n <= mActiveCharacter.getMovement()) {
+                                reachableTiles.add(t);
+                            }
                         }
                     }
                 }
@@ -213,68 +435,27 @@ public class GameActivity extends CustomGameActivity {
 
         ActionTile c;
         for (Tile tile : reachableTiles) {
-            tile.setAction(1);
-            c = new ActionTile(tile, getVertexBufferObjectManager());
+            tile.setAction(Actions.MOVE);
+            c = new ActionTile(Actions.MOVE, tile, getVertexBufferObjectManager());
             mGroundLayer.attachChild(c);
+        }
+
+        for (GameElement gameElement : mRoom.getObjects()) {
+            if (mActiveCharacter != gameElement && MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mActiveCharacter.getTilePosition()) <= mActiveCharacter.getMovement() + 1) {
+                addAvailableAction(gameElement);
+            }
         }
     }
 
-    private void hideMovement() {
+    private void hideActionTiles() {
+        mSelectedTile = null;
         ActionTile actionTile;
         for (int n = 0; n < mGroundLayer.getChildCount(); n++) {
             actionTile = (ActionTile) mGroundLayer.getChildByIndex(n);
-            actionTile.getTile().setAction(0);
+            actionTile.getTile().setAction(null);
+            actionTile.getTile().setSelected(false);
         }
         mGroundLayer.detachChildren();
-    }
-
-    public void addElementToScene(GameElement gameElement) {
-        // create sprite
-        GameElementSprite sprite = null;
-        if (gameElement instanceof Unit) {
-            sprite = new UnitSprite(gameElement, getVertexBufferObjectManager(), mInputManager);
-            sprite.setZIndex(10);
-        }
-
-        super.addElementToScene(sprite, true);
-    }
-
-    @Override
-    public void endGame() {
-        super.endGame();
-    }
-
-    @Override
-    public void onElementSelected(GameElement gameElement) {
-        selectionCircle.attachToGameElement(gameElement);
-        mGUIManager.showGameElementInfo(gameElement);
-    }
-
-    @Override
-    public void onElementUnselected() {
-        selectionCircle.unAttach();
-        mGUIManager.hideGameElementInfo();
-    }
-
-    @Override
-    public void onTouch(float x, float y) {
-        Tile tile = getTileAtCoordinates(x, y);
-        if (tile != null && tile.getAction() == 1) {
-            mInputManager.setEnabled(false);
-            onElementUnselected();
-            hideMovement();
-
-            List<Tile> path = new AStar<Tile>().search(mRoom.getTiles(), mActiveCharacter.getTilePosition(), tile, false, mActiveCharacter);
-            walkTo(path, new Runnable() {
-                @Override
-                public void run() {
-                    showMovement();
-                    mInputManager.setEnabled(true);
-                }
-            });
-        } else {
-            onElementUnselected();
-        }
     }
 
     TimerHandler moveHandler;
@@ -296,10 +477,10 @@ public class GameActivity extends CustomGameActivity {
                             || direction == Directions.SOUTH && sprite.getY() >= nextTile.getTileY()
                             || direction == Directions.NORTH && sprite.getY() <= nextTile.getTileY()) {
                         mScene.unregisterUpdateHandler(moveHandler);
-                        mActiveCharacter.getTilePosition().setContent(null);
                         mActiveCharacter.setTilePosition(nextTile);
                         sprite.setPosition(nextTile.getTileX(), nextTile.getTileY());
-                        nextTile.setContent(mActiveCharacter);
+
+                        mScene.sortChildren(true);
                         walkTo(p, callback);
                     }
                 }
@@ -309,15 +490,6 @@ public class GameActivity extends CustomGameActivity {
             UnitSprite sprite = (UnitSprite) mActiveCharacter.getSprite();
             sprite.stand();
             callback.run();
-        }
-    }
-
-    public Tile getTileAtCoordinates(float x, float y) {
-        TMXTile tmxTile = mTmxTiledMap.getTMXLayers().get(0).getTMXTileAt(x, y);
-        if (tmxTile != null) {
-            return mRoom.getTiles()[tmxTile.getTileRow()][tmxTile.getTileColumn()];
-        } else {
-            return null;
         }
     }
 

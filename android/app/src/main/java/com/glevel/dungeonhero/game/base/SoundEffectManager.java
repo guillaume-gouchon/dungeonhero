@@ -1,8 +1,9 @@
-package com.glevel.dungeonhero.game;
+package com.glevel.dungeonhero.game.base;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 import com.glevel.dungeonhero.models.Game;
 
