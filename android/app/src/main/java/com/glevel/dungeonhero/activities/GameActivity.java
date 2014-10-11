@@ -7,6 +7,7 @@ import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.data.HeroFactory;
 import com.glevel.dungeonhero.game.base.CustomGameActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.graphics.ActionTile;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
@@ -43,17 +44,15 @@ import java.util.Set;
 public class GameActivity extends CustomGameActivity {
 
     public static final String EXTRA_GAME_ID = "game_id";
-
+    TimerHandler moveHandler;
     private Dungeon mDungeon;
     private Room mRoom;
-
     private Unit mActiveCharacter;
-
-
     private SelectionCircle mSelectionCircle;
     private Entity mGroundLayer;
     private TMXTiledMap mTmxTiledMap;
     private GameElement mSelectedElement;
+    private Tile mSelectedTile = null;
 
     @Override
     protected void initGameActivity() {
@@ -66,6 +65,9 @@ public class GameActivity extends CustomGameActivity {
 
         mDungeon = mGame.getDungeon();
         mRoom = mDungeon.getCurrentRoom();
+
+        // TODO
+        mMustSaveGame = false;
     }
 
     @Override
@@ -132,66 +134,24 @@ public class GameActivity extends CustomGameActivity {
         // hide loading screen
         mGUIManager.hideLoadingScreen();
 
-        //        // register game logic loop
-//        TimerHandler spriteTimerHandler = new TimerHandler(1.0f / GameConstants.GAME_LOOP_FREQUENCY, true,
-//                new ITimerCallback() {
-//                    Player winner;
-//
-//                    @Override
-//                    public void onTimePassed(TimerHandler pTimerHandler) {
-//                        winner = mBattle.update();
-//                        if (winner != null) {
-//                            endGame(winner, false);
-//                        }
-//
-//                        // update selected element order's crosshair
-//                        if (mInputManager.selectedElement == null) {
-//                            crosshair.setVisible(false);
-//                        } else if (mInputManager.selectedElement.getGameElement() instanceof Unit) {
-//                            Unit unit = (Unit) mInputManager.selectedElement.getGameElement();
-//                            Order o = unit.getOrder();
-//                            if (unit.getRank() == GameElement.Rank.ally && o != null) {
-//                                if (o instanceof FireOrder) {
-//                                    FireOrder f = (FireOrder) o;
-//                                    crosshair.setColor(Color.RED);
-//                                    crosshair.setPosition(f.getXDestination(), f.getYDestination());
-//                                    crosshair.setVisible(true);
-//                                } else if (o instanceof MoveOrder) {
-//                                    MoveOrder f = (MoveOrder) o;
-//                                    crosshair.setColor(Color.GREEN);
-//                                    crosshair.setPosition(f.getXDestination(), f.getYDestination());
-//                                    crosshair.setVisible(true);
-//                                } else {
-//                                    crosshair.setVisible(false);
-//                                }
-//                            } else {
-//                                crosshair.setVisible(false);
-//                            }
-//                        }
-//
-//                        mScene.sortChildren(true);
-//                    }
-//                });
-//        mEngine.registerUpdateHandler(spriteTimerHandler);
-//
-//        // show go label
-//        mGameGUI.displayBigLabel(getString(R.string.go), R.color.white);
-//
-//        String atmoSound = GameConstants.ATMO_SOUNDS[(int) Math.round(Math.random() * (GameConstants.ATMO_SOUNDS.length - 1))];
-//        playGeolocalizedSound(atmoSound, (float) (Math.random() * mBattle.getMap().getWidth() * GameConstants.PIXEL_BY_TILE),
-//                (float) (Math.random() * mBattle.getMap().getHeight() * GameConstants.PIXEL_BY_TILE));
-
         nextTurn();
     }
 
     private void nextTurn() {
-        hideActionTiles();
-        hideElementInfo();
         mActiveCharacter = mRoom.getQueue().get(0);
         mRoom.getQueue().add(mRoom.getQueue().get(0));
         mRoom.getQueue().remove(0);
-        mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue());
-        showMovement();
+        mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
+
+        hideActionTiles();
+
+        if (mRoom.isSafe()) {
+            showActions();
+        } else {
+            showMovement();
+        }
+
+        hideElementInfo();
 
         if (mActiveCharacter instanceof Monster) {
             mInputManager.setEnabled(false);
@@ -205,12 +165,8 @@ public class GameActivity extends CustomGameActivity {
     }
 
     public void removeElement(GameElement gameElement) {
-        gameElement.setTilePosition(null);
-        mRoom.getObjects().remove(gameElement);
-        // TODO
-        if (gameElement instanceof Unit) {
-            mRoom.getQueue().remove(gameElement);
-        }
+        gameElement.destroy();
+        mRoom.removeElement(gameElement);
         super.removeElement(gameElement.getSprite(), false);
     }
 
@@ -222,7 +178,7 @@ public class GameActivity extends CustomGameActivity {
     @Override
     public void onTouch(float x, float y) {
         Tile tile = getTileAtCoordinates(x, y);
-        if (tile != null && tile.getAction() != null && tile.getAction() != Actions.MOVE) {
+        if (tile != null && tile.getAction() != null) {
             selectTile(tile);
         }
     }
@@ -238,25 +194,24 @@ public class GameActivity extends CustomGameActivity {
         if (tile != null) {
             if (tile.getContent() != null && tile.getContent() != mSelectedElement && tile.getContent().getRank() != Ranks.ME) {
                 showElementInfo(tile.getContent());
+            } else if (tile.getContent() != null && tile.getContent().getRank() == Ranks.ME && mSelectedTile == tile) {// end movement
+                nextTurn();
             } else if (tile.getAction() != null) {
                 executeAction(tile);
             } else {
                 hideElementInfo();
+                if (mRoom.isSafe() && mActiveCharacter.canMoveIn(tile)) {
+                    move(tile);
+                }
             }
         }
     }
 
     private void executeAction(Tile tile) {
         hideElementInfo();
-        mInputManager.setEnabled(false);
         switch (tile.getAction()) {
             case MOVE:
-                if (tile == mSelectedTile) {
-                    move(tile);
-                } else {
-                    selectTile(tile);
-                    mInputManager.setEnabled(true);
-                }
+                move(tile);
                 break;
             case ATTACK:
                 attack(tile);
@@ -270,28 +225,34 @@ public class GameActivity extends CustomGameActivity {
         }
     }
 
-
     private void move(Tile tile) {
+        mInputManager.setEnabled(false);
         List<Tile> path = new AStar<Tile>().search(mRoom.getTiles(), mActiveCharacter.getTilePosition(), tile, false, mActiveCharacter);
-        walkTo(path, new Runnable() {
-            @Override
-            public void run() {
-                mInputManager.setEnabled(true);
-                nextTurn();
-            }
-        });
+        if (path != null) {
+            walkTo(path, new OnActionExecuted() {
+                @Override
+                public void onActionDone(boolean success) {
+                    mInputManager.setEnabled(true);
+                }
+            });
+        } else {
+            mInputManager.setEnabled(true);
+        }
     }
 
     private void attack(final Tile tile) {
-        goCloserTo(tile, new Runnable() {
+        mInputManager.setEnabled(false);
+        goCloserTo(tile, new OnActionExecuted() {
             @Override
-            public void run() {
+            public void onActionDone(boolean success) {
                 // TODO
-                Unit unit = (Unit) tile.getContent();
-                unit.setCurrentHP(unit.getCurrentHP() - 5);
-                if (unit != mGame.getHero() && unit.getCurrentHP() <= 0) {
-                    removeElement(unit);
-                    mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue());
+                if (success) {
+                    Unit unit = (Unit) tile.getContent();
+                    unit.setCurrentHP(unit.getCurrentHP() - 5);
+                    if (unit != mGame.getHero() && unit.getCurrentHP() <= 0) {
+                        removeElement(unit);
+                        mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
+                    }
                 }
                 mInputManager.setEnabled(true);
                 nextTurn();
@@ -300,12 +261,15 @@ public class GameActivity extends CustomGameActivity {
     }
 
     private void search(final Tile tile) {
-        goCloserTo(tile, new Runnable() {
+        mInputManager.setEnabled(false);
+        goCloserTo(tile, new OnActionExecuted() {
             @Override
-            public void run() {
+            public void onActionDone(boolean success) {
                 // TODO
-                Searchable searchable = (Searchable) tile.getContent();
-                Item foundItem = searchable.search();
+                if (success) {
+                    Searchable searchable = (Searchable) tile.getContent();
+                    Item foundItem = searchable.search();
+                }
                 mInputManager.setEnabled(true);
                 nextTurn();
             }
@@ -313,9 +277,10 @@ public class GameActivity extends CustomGameActivity {
     }
 
     private void talk(Tile tile) {
-        goCloserTo(tile, new Runnable() {
+        mInputManager.setEnabled(false);
+        goCloserTo(tile, new OnActionExecuted() {
             @Override
-            public void run() {
+            public void onActionDone(boolean success) {
                 // TODO
                 mInputManager.setEnabled(true);
                 nextTurn();
@@ -323,30 +288,29 @@ public class GameActivity extends CustomGameActivity {
         });
     }
 
-    private void goCloserTo(Tile tile, Runnable runnable) {
+    private void goCloserTo(Tile tile, OnActionExecuted callback) {
         if (MathUtils.calcManhattanDistance(mActiveCharacter.getTilePosition(), tile) == 1) {
-            runnable.run();
+            callback.onActionDone(true);
             return;
         }
 
-        Tile closestTile = null;
+        List<Tile> shortestPath = null;
         Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mRoom.getTiles(), tile, 1, false, mActiveCharacter);
         for (Tile adjacent : adjacentTiles) {
-            if (adjacent.getAction() == Actions.MOVE) {
-                closestTile = adjacent;
-                break;
+            if (mRoom.isSafe() || adjacent.getAction() == Actions.MOVE) {
+                List<Tile> path = new AStar<Tile>().search(mRoom.getTiles(), mActiveCharacter.getTilePosition(), adjacent, false, mActiveCharacter);
+                if (path != null && (shortestPath == null || path.size() < shortestPath.size())) {
+                    shortestPath = path;
+                }
             }
         }
 
-        if (closestTile != null) {
-            List<Tile> path = new AStar<Tile>().search(mRoom.getTiles(), mActiveCharacter.getTilePosition(), closestTile, false, mActiveCharacter);
-            walkTo(path, runnable);
+        if (shortestPath != null) {
+            walkTo(shortestPath, callback);
         } else {
-            runnable.run();
+            callback.onActionDone(false);
         }
     }
-
-    private Tile mSelectedTile = null;
 
     private void selectTile(Tile tile) {
         // unselect previous selected tile
@@ -370,7 +334,7 @@ public class GameActivity extends CustomGameActivity {
     }
 
     private void addAvailableAction(GameElement gameElement) {
-        boolean isActionPossible = MathUtils.calcManhattanDistance(mActiveCharacter.getTilePosition(), gameElement.getTilePosition()) == 1;
+        boolean isActionPossible = mRoom.isSafe() || MathUtils.calcManhattanDistance(mActiveCharacter.getTilePosition(), gameElement.getTilePosition()) == 1;
         if (!isActionPossible) {
             Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mRoom.getTiles(), gameElement.getTilePosition(), 1, false, mActiveCharacter);
             for (Tile adjacent : adjacentTiles) {
@@ -398,7 +362,6 @@ public class GameActivity extends CustomGameActivity {
         mGroundLayer.attachChild(actionTile);
     }
 
-
     private void showElementInfo(GameElement gameElement) {
         mSelectedElement = gameElement;
         mSelectionCircle.attachToGameElement(gameElement);
@@ -408,9 +371,9 @@ public class GameActivity extends CustomGameActivity {
     private void hideElementInfo() {
         mSelectedElement = null;
         mSelectionCircle.unAttach();
-        mGUIManager.hideGameElementInfo();
+        mGUIManager.hideGameElementInfo(mRoom.isSafe());
+        selectTile(null);
     }
-
 
     private void showMovement() {
         // get reachable tiles
@@ -445,6 +408,16 @@ public class GameActivity extends CustomGameActivity {
                 addAvailableAction(gameElement);
             }
         }
+
+        showActions();
+    }
+
+    private void showActions() {
+        for (GameElement gameElement : mRoom.getObjects()) {
+            if (mActiveCharacter != gameElement && (mRoom.isSafe() || MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mActiveCharacter.getTilePosition()) <= mActiveCharacter.getMovement() + 1)) {
+                addAvailableAction(gameElement);
+            }
+        }
     }
 
     private void hideActionTiles() {
@@ -458,9 +431,7 @@ public class GameActivity extends CustomGameActivity {
         mGroundLayer.detachChildren();
     }
 
-    TimerHandler moveHandler;
-
-    private void walkTo(List<Tile> path, final Runnable callback) {
+    private void walkTo(List<Tile> path, final OnActionExecuted callback) {
         if (path.size() > 1) {
             path.remove(0);
             final UnitSprite sprite = (UnitSprite) mActiveCharacter.getSprite();
@@ -489,7 +460,7 @@ public class GameActivity extends CustomGameActivity {
         } else {
             UnitSprite sprite = (UnitSprite) mActiveCharacter.getSprite();
             sprite.stand();
-            callback.run();
+            callback.onActionDone(true);
         }
     }
 

@@ -51,8 +51,13 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
 
     @Override
     public EngineOptions onCreateEngineOptions() {
-        this.mCamera = new CustomZoomCamera(0, 0, GameConstants.CAMERA_WIDTH, GameConstants.CAMERA_HEIGHT, GameConstants.CAMERA_ZOOM_MIN, GameConstants.CAMERA_ZOOM_MAX);
-        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), mCamera);
+        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean isLandscape = mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_LANDSCAPE, false);
+
+        mCamera = new CustomZoomCamera(0, 0, isLandscape ? GameConstants.CAMERA_WIDTH : GameConstants.CAMERA_HEIGHT,
+                isLandscape ? GameConstants.CAMERA_HEIGHT : GameConstants.CAMERA_WIDTH, GameConstants.CAMERA_ZOOM_MIN, GameConstants.CAMERA_ZOOM_MAX);
+        EngineOptions engineOptions = new EngineOptions(true, isLandscape ? ScreenOrientation.LANDSCAPE_SENSOR : ScreenOrientation.PORTRAIT_FIXED,
+                new FillResolutionPolicy(), mCamera);
         engineOptions.getAudioOptions().setNeedsSound(true);
         return engineOptions;
     }
@@ -89,7 +94,7 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
         mSoundEffectManager.init(mGame, mEngine);
 
         // load font
-        mDefaultFont = FontFactory.create(this.getFontManager(), this.getTextureManager(), 256, 256,
+        mDefaultFont = FontFactory.create(getFontManager(), getTextureManager(), 256, 256,
                 Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, Color.WHITE.hashCode());
         mDefaultFont.load();
 
@@ -208,8 +213,7 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
     }
 
     @Override
-    public void drawAnimatedSprite(float x, float y, String spriteName, int frameDuration, float scale, int loopCount,
-                                   final boolean removeAfter, int zIndex) {
+    public void drawAnimatedSprite(float x, float y, String spriteName, int frameDuration, float scale, int loopCount, final boolean removeAfter, int zIndex) {
         if (GraphicsManager.sGfxMap.get(spriteName) == null) return;
 
         final AnimatedSprite sprite = new AnimatedSprite(0, 0, GraphicsManager.sGfxMap.get(spriteName), getVertexBufferObjectManager());

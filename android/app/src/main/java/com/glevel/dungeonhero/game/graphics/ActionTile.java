@@ -9,7 +9,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class ActionTile extends Rectangle {
 
-    private static final float INACTIVE_ALPHA = 0.1f, ACTIVE_ALPHA = 0.3f;
+    private static final float INACTIVE_ALPHA = 0.2f, ACTIVE_ALPHA = 0.3f;
 
     private final Tile mTile;
 

@@ -32,12 +32,7 @@ import com.google.example.games.basegameutils.BaseGameActivity;
 
 import java.util.List;
 
-public class HomeActivity extends BaseGameActivity implements OnClickListener {
-
-
-    private static enum ScreenState {
-        HOME, SOLO, SETTINGS
-    }
+public class HomeActivity extends BaseGameActivity implements OnClickListener, GameChooserFragment.OnFragmentClosed {
 
     private static final int REQUEST_ACHIEVEMENTS = 0;
 
@@ -45,16 +40,14 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
     private ScreenState mScreenState = ScreenState.HOME;
     private DatabaseHelper mDbHelper;
     private List mLstGames;
-
     private Animation mMainButtonAnimationRightIn, mMainButtonAnimationRightOut, mMainButtonAnimationLeftIn, mMainButtonAnimationLeftOut;
     private Animation mFadeOutAnimation, mFadeInAnimation;
-    private Button mNewGameButton, mSettingsButton, mLoadGameButton, mShareButton;
+    private Button mNewGameButton, mSettingsButton, mLoadGameButton;
     private ViewGroup mSettingsLayout;
     private View mBackButton, mAppNameView;
     private Dialog mAboutDialog = null;
     private ImageView mStormsBg;
     private ViewGroup mLoginLayout;
-
     private Runnable mStormEffect;
 
     @Override
@@ -80,6 +73,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
     protected void onPause() {
         super.onPause();
         mStormsBg.removeCallbacks(mStormEffect);
+
         if (mAboutDialog != null) {
             mAboutDialog.dismiss();
         }
@@ -103,6 +97,9 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
                 case R.id.loadGameButton:
                     MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                     ApplicationUtils.openDialogFragment(this, new GameChooserFragment(), null);
+                    hideMainHomeButtons();
+                    mBackButton.setVisibility(View.GONE);
+                    mBackButton.setAnimation(null);
                     break;
                 case R.id.settingsButton:
                     MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
@@ -202,7 +199,6 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
                         break;
                     case R.id.musicOn:
                         newMusicState = GameConstants.MusicStates.ON;
-
                         break;
                 }
                 editor.putInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, newMusicState.ordinal());
@@ -212,6 +208,23 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
                 } else {
                     MusicManager.release();
                 }
+            }
+        });
+
+        // screen orientation in game
+        RadioGroup screenOrientationRadioGroup = (RadioGroup) findViewById(R.id.landscapeMode);
+        // update radio buttons states according to the preferences
+        boolean isLandscapeMode = mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_LANDSCAPE, false);
+        int index = isLandscapeMode ? 1 : 0;
+        ((RadioButton) screenOrientationRadioGroup.getChildAt(index)).setChecked(true);
+        screenOrientationRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // enable / disable sound in preferences
+                boolean isLandscapeMode = checkedId == R.id.landcape;
+                Editor editor = mSharedPrefs.edit();
+                editor.putBoolean(GameConstants.GAME_PREFS_LANDSCAPE, isLandscapeMode);
+                editor.commit();
             }
         });
 
@@ -324,6 +337,17 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener {
         findViewById(R.id.sign_out_button).setVisibility(View.GONE);
         findViewById(R.id.achievementsButton).setVisibility(View.GONE);
         findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void OnFragmentClosed() {
+        showMainHomeButtons();
+        mBackButton.setVisibility(View.GONE);
+        mBackButton.setAnimation(null);
+    }
+
+    private static enum ScreenState {
+        HOME, SOLO, SETTINGS
     }
 
 }

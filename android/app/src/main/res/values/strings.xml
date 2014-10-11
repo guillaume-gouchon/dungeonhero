@@ -56,6 +56,9 @@
     <string name="about">About Dungeon Hero</string>
     <string name="rate_app">Rate the app</string>
     <string name="share">Share</string>
+    <string name="screen_orientation">Screen orientation in game</string>
+    <string name="landscape">Landscape</string>
+    <string name="portrait">Portrait</string>
 
     <!-- New Game -->
     <string name="choose_hero_message">Choose a Hero</string>
@@ -84,10 +87,9 @@
     <string name="loading_game">Loading</string>
     <string name="loading_dots">. . .</string>
     <string name="game_paused">Pause</string>
-    <string name="surrender">Surrender</string>
-    <string name="confirm_surrender_message">Are you sure you want\nto surrender ?</string>
     <string name="resume_game">Resume Game</string>
-    <string name="save_exit">Exit</string>
+    <string name="leave_quest">Leave Quest</string>
+    <string name="confirm_leave_quest">Are you sure you want\nto leave this quest ?</string>
     <string name="deployment_phase">Deployment Phase</string>
     <string name="start">Deployment Done</string>
     <string name="go">Go !</string>

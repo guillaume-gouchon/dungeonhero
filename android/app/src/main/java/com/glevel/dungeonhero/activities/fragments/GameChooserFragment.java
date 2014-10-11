@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.activities.fragments;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -29,6 +31,8 @@ public class GameChooserFragment extends DialogFragment {
             launchGame(mSavedGamesList.get(position));
         }
     };
+
+    private OnFragmentClosed mListener;
     private ListView mGamesListView;
     private GamesListAdapter mAdapter;
     private MyDatabase mDbHelper;
@@ -40,6 +44,12 @@ public class GameChooserFragment extends DialogFragment {
         setStyle(STYLE_NO_TITLE, 0); // remove title from dialog fragment
 
         mDbHelper = new MyDatabase(getActivity());
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mListener = (OnFragmentClosed) activity;
     }
 
     @Override
@@ -55,6 +65,12 @@ public class GameChooserFragment extends DialogFragment {
     }
 
     @Override
+    public void onDismiss(DialogInterface dialog) {
+        mListener.OnFragmentClosed();
+        super.onDismiss(dialog);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mSavedGamesList = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
@@ -65,7 +81,7 @@ public class GameChooserFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.game_chooser_fragment, container, false);
-        
+
         mGamesListView = (ListView) layout.findViewById(R.id.gamesList);
         mGamesListView.setOnItemClickListener(mOnItemClickedListener);
 
@@ -85,6 +101,10 @@ public class GameChooserFragment extends DialogFragment {
         intent.putExtra(GameActivity.EXTRA_GAME_ID, game.getId());
         startActivity(intent);
         getActivity().finish();
+    }
+
+    public static interface OnFragmentClosed {
+        public void OnFragmentClosed();
     }
 
 }

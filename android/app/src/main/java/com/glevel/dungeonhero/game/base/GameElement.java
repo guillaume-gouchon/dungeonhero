@@ -15,9 +15,9 @@ public abstract class GameElement implements Serializable {
 
     private final int name;
     private final String spriteName;
+    protected transient GameElementSprite sprite;
     private Ranks rank;
     private transient Tile tilePosition;
-    protected transient GameElementSprite sprite;
 
     public GameElement(int name, String spriteName, Ranks rank) {
         this.name = name;
@@ -74,6 +74,10 @@ public abstract class GameElement implements Serializable {
 
     public void setRank(Ranks rank) {
         this.rank = rank;
+    }
+
+    public void destroy() {
+        setTilePosition(null);
     }
 
 }

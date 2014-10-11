@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_game_menu"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <com.glevel.dungeonhero.views.CustomTextView
         style="@style/SplashScreenTitle"
@@ -23,11 +23,19 @@
         android:text="@string/resume_game" />
 
     <com.glevel.dungeonhero.views.CustomButton
+        android:id="@+id/leaveQuestButton"
+        style="@style/HomeScreenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/leave_quest" />
+
+    <com.glevel.dungeonhero.views.CustomButton
         android:id="@+id/exitButton"
         style="@style/HomeScreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="@string/save_exit" />
+        android:text="@string/exit" />
 
 </LinearLayout>

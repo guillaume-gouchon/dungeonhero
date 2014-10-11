@@ -6,6 +6,7 @@ import com.glevel.dungeonhero.data.dungeon.Rooms;
 import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.characters.Hero;
+import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 
 import org.andengine.extension.tmx.TMXLayer;
@@ -31,6 +32,7 @@ public class Room implements Serializable {
     private transient Map<Directions, Tile> doors;
     private transient List<GameElement> objects = new ArrayList<GameElement>();
     private transient List<Unit> queue = new ArrayList<Unit>();
+    private transient boolean isSafe;
 
     public Room() {
         // create random room
@@ -83,6 +85,7 @@ public class Room implements Serializable {
 
             createRoomContent(hero, dungeon);
         }
+        checkSafe();
     }
 
     private void addContentFromExistingTiles() {
@@ -98,15 +101,14 @@ public class Room implements Serializable {
     private void createRoomContent(Hero hero, Dungeon dungeon) {
         // TODO : place hero
         addGameElement(hero, doors.get(Directions.NORTH));
-        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
+//        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
         addGameElement(MonsterFactory.buildGoblin(), 5, 8);
-        addGameElement(MonsterFactory.buildGoblin(), 5, 7);
+//        addGameElement(MonsterFactory.buildGoblin(), 5, 7);
 
         addGameElement(DecorationFactory.buildLight(), 5, 10);
         addGameElement(DecorationFactory.buildLight(), 5, 12);
 
         addGameElement(DecorationFactory.buildTreasureChest(), 7, 5);
-
     }
 
     private void addGameElement(GameElement gameElement, int x, int y) {
@@ -119,6 +121,25 @@ public class Room implements Serializable {
             queue.add((Unit) gameElement);
         }
         objects.add(gameElement);
+        checkSafe();
+    }
+
+    public void removeElement(GameElement gameElement) {
+        objects.remove(gameElement);
+        if (gameElement instanceof Unit) {
+            queue.remove(gameElement);
+        }
+        checkSafe();
+    }
+
+    private void checkSafe() {
+        isSafe = true;
+        for (Unit unit : queue) {
+            if (unit.getRank() == Ranks.ENEMY) {
+                isSafe = false;
+                return;
+            }
+        }
     }
 
     public Tile[][] getTiles() {
@@ -147,6 +168,14 @@ public class Room implements Serializable {
 
     public List<GameElement> getObjects() {
         return objects;
+    }
+
+    public boolean isSafe() {
+        return isSafe;
+    }
+
+    public void setSafe(boolean isSafe) {
+        this.isSafe = isSafe;
     }
 
 }

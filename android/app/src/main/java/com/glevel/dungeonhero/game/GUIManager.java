@@ -13,11 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
 import com.glevel.dungeonhero.game.base.CustomGameActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.utils.MusicManager;
+import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.LifeBar;
 
 import java.util.List;
@@ -80,6 +82,28 @@ public class GUIManager {
             public void onClick(View v) {
                 MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
                 mGameMenuDialog.dismiss();
+            }
+        });
+
+        // leave quest button
+        mGameMenuDialog.findViewById(R.id.leaveQuestButton).setAnimation(menuButtonAnimation);
+        mGameMenuDialog.findViewById(R.id.leaveQuestButton).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
+                Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(R.string.confirm_leave_quest),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
+                                if (which == R.id.okButton) {
+                                    mActivity.startActivity(new Intent(mActivity, BookChooserActivity.class));
+                                    mActivity.finish();
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+                confirmDialog.show();
             }
         });
 
@@ -160,12 +184,14 @@ public class GUIManager {
         });
     }
 
-    public void hideGameElementInfo() {
+    public void hideGameElementInfo(final boolean isSafe) {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mSelectedElementLayout.setVisibility(View.GONE);
-                mQueueLayout.setVisibility(View.VISIBLE);
+                if (!isSafe) {
+                    mQueueLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -178,20 +204,25 @@ public class GUIManager {
         });
     }
 
-    public void updateQueue(final Unit activeCharacter, final List<Unit> queue) {
+    public void updateQueue(final Unit activeCharacter, final List<Unit> queue, final boolean isSafe) {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.activeCharacter), activeCharacter);
-                if (queue.size() > 1) {
-                    updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextCharacter), queue.get(0));
+                if (isSafe) {
+                    mQueueLayout.setVisibility(View.GONE);
                 } else {
-                    mQueueLayout.findViewById(R.id.nextCharacter).setVisibility(View.GONE);
-                }
-                if (queue.size() > 2) {
-                    updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextnextCharacter), queue.get(1));
-                } else {
-                    mQueueLayout.findViewById(R.id.nextnextCharacter).setVisibility(View.GONE);
+                    mQueueLayout.setVisibility(View.VISIBLE);
+                    updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.activeCharacter), activeCharacter);
+                    if (queue.size() > 1) {
+                        updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextCharacter), queue.get(0));
+                    } else {
+                        mQueueLayout.findViewById(R.id.nextCharacter).setVisibility(View.GONE);
+                    }
+                    if (queue.size() > 2) {
+                        updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextnextCharacter), queue.get(1));
+                    } else {
+                        mQueueLayout.findViewById(R.id.nextnextCharacter).setVisibility(View.GONE);
+                    }
                 }
             }
         });

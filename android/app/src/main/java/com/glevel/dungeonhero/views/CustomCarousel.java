@@ -60,7 +60,7 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
     private void updatePagination() {
         mPagination.removeAllViews();
-        mPaginationDots = new View[mAdapter.getCount() - 1];
+        mPaginationDots = new View[mAdapter.getCount() + 1 - mNbColumns];
 
         int sizeDot = ApplicationUtils.convertDpToPixels(mContext, DOTS_SIZE);
         LayoutParams layoutParams = new LinearLayout.LayoutParams(sizeDot, sizeDot);
@@ -107,9 +107,9 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
     public static abstract class Adapter<T> extends PagerAdapter {
 
         private final LayoutInflater mInflater;
+        protected List<T> mDataList;
         private int mLayoutResource;
         private int mNbColumns;
-        protected List<T> mDataList;
         private OnClickListener mItemClickedListener;
 
         private boolean isElementSelected = false;// avoid view pager's multiple selections
@@ -161,6 +161,11 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
         public void setNbColumns(int nbColumns) {
             mNbColumns = nbColumns;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            ((ViewPager) container).removeView((View) object);
         }
 
     }

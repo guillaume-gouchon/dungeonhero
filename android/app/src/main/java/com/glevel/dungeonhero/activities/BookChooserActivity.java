@@ -37,7 +37,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     private List<Book> mLstBooks;
     private SharedPreferences mSharedPrefs;
     private Dialog mGameMenuDialog;
-
+    private CustomAlertDialog mTutorialDialog;
 
     /**
      * Callbacks
@@ -92,6 +92,14 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     protected void onPause() {
         super.onPause();
         mStormsBg.removeCallbacks(mStormEffect);
+
+        if (mGameMenuDialog != null) {
+            mGameMenuDialog.dismiss();
+        }
+
+        if (mTutorialDialog != null) {
+            mTutorialDialog.dismiss();
+        }
     }
 
     @Override
@@ -112,7 +120,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
 
     private void showTutorialDialog(final Book selectedBook) {
         // ask user if he wants to do the tutorial as he is a noob
-        Dialog dialog = new CustomAlertDialog(this, R.style.Dialog, getString(R.string.ask_tutorial), new DialogInterface.OnClickListener() {
+        mTutorialDialog = new CustomAlertDialog(this, R.style.Dialog, getString(R.string.ask_tutorial), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
@@ -127,7 +135,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
                 }
             }
         });
-        dialog.show();
+        mTutorialDialog.show();
         mSharedPrefs.edit().putInt(GameConstants.TUTORIAL_DONE, 1).commit();
     }
 
@@ -147,6 +155,8 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
             }
         });
 
+        mGameMenuDialog.findViewById(R.id.leaveQuestButton).setVisibility(View.GONE);
+
         // exit button
         mGameMenuDialog.findViewById(R.id.exitButton).setAnimation(menuButtonAnimation);
         mGameMenuDialog.findViewById(R.id.exitButton).setOnClickListener(new OnClickListener() {
@@ -165,7 +175,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
         if (selectedBook.isAvailable()) {
             Hero hero = (Hero) getIntent().getSerializableExtra(Hero.class.getName());
             Game game = new Game(hero, selectedBook);
-            
+
             Intent intent = new Intent(BookChooserActivity.this, GameActivity.class);
             intent.putExtra(Game.class.getName(), game);
             startActivity(intent);

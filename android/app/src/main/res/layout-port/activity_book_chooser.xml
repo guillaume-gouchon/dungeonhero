@@ -23,7 +23,7 @@
             android:id="@+id/heroes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            custom:nbColumns="2" />
+            custom:nbColumns="1" />
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/chooseBookMessage"

@@ -23,15 +23,15 @@
             android:id="@+id/heroes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            custom:nbColumns="2" />
+            custom:nbColumns="1" />
 
         <com.glevel.dungeonhero.views.CustomTextView
-            android:id="@+id/chooseBookMessage"
+            android:id="@+id/chooseHeroMessage"
             style="@style/AnimatedMessage"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/choose_book_message" />
+            android:text="@string/choose_hero_message" />
 
     </RelativeLayout>
 

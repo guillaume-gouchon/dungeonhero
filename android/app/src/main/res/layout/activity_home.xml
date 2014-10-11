@@ -8,9 +8,10 @@
         android:id="@+id/storms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/bg_village"
-        android:tint="#cc000000" />
+        android:tint="#cc000000"
+        android:layout_centerInParent="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -110,7 +111,7 @@
                 style="@style/SettingsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="12dp"
                 android:text="@string/music_volume" />
 
             <RadioGroup
@@ -136,6 +137,38 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/music_on" />
+            </RadioGroup>
+
+            <com.glevel.dungeonhero.views.CustomTitle
+                style="@style/SettingsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/screen_orientation" />
+
+            <RadioGroup
+                android:id="@+id/landscapeMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <com.glevel.dungeonhero.views.CustomRadioButton
+                    android:id="@+id/portrait"
+                    style="@style/RadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/portrait" />
+
+                <com.glevel.dungeonhero.views.CustomRadioButton
+                    android:id="@+id/landcape"
+                    style="@style/RadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/landscape" />
             </RadioGroup>
 
         </LinearLayout>
