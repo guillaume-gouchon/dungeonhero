@@ -320,7 +320,7 @@ public class GUIManager {
                             @Override
                             public void onClick(View view) {
                                 mDiscussionDialog.dismiss();
-                                callback.onReplySelected(pnj, 0);
+                                callback.onReplySelected(pnj, -1);
                             }
                         });
                         reactionsLayout.addView(reactionTV);
@@ -347,13 +347,13 @@ public class GUIManager {
 
                     if (reward == null) {
                         itemTV.setText(R.string.found_nothing);
-                        itemTV.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.found_nothing, 0, 0);
+                        itemTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, reward.getItem().getImage());
                         goldTV.setVisibility(View.GONE);
                         xpTV.setVisibility(View.GONE);
                     } else {
                         if (reward.getItem() != null) {
                             itemTV.setText(mActivity.getString(R.string.found_item, mActivity.getString(reward.getItem().getName())));
-                            itemTV.setCompoundDrawablesWithIntrinsicBounds(0, reward.getItem().getImage(), 0, 0);
+                            itemTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, reward.getItem().getImage());
                             itemTV.setVisibility(View.VISIBLE);
                         } else {
                             itemTV.setVisibility(View.GONE);

@@ -213,7 +213,9 @@ public class GameActivity extends CustomGameActivity {
                 if (mRoom.isSafe() && mActiveCharacter.canMoveIn(tile)) {
                     if (isMoving) {
                         interrupt = true;
+                        selectTile(null);
                     } else {
+                        selectTile(tile);
                         move(tile);
                     }
                 }
@@ -251,6 +253,7 @@ public class GameActivity extends CustomGameActivity {
                 public void onActionDone(boolean success) {
                     mInputManager.setEnabled(true);
                     isMoving = false;
+                    selectTile(null);
                 }
             });
         } else {
@@ -327,15 +330,15 @@ public class GameActivity extends CustomGameActivity {
     private void talkTo(Pnj pnj) {
         OnDiscussionReplySelected onDiscussionSelected = new OnDiscussionReplySelected() {
             @Override
-            public void onReplySelected(Pnj pnj, int nbSkips) {
+            public void onReplySelected(Pnj pnj, int next) {
                 Reward reward = pnj.getDiscussions().get(0).getReward();
                 if (reward != null) {
                     foundReward(reward);
                 }
-                for (int n = 0; n < nbSkips; n++) {
+                for (int n = 0; n < next; n++) {
                     pnj.getDiscussions().remove(0);
                 }
-                if (pnj.getDiscussions().size() > 0) {
+                if (next >= 0 && pnj.getDiscussions().size() > 0) {
                     talkTo(pnj);
                 }
             }

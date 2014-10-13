@@ -24,10 +24,12 @@ public class ActionTile extends Rectangle {
 
     @Override
     protected void onManagedUpdate(final float pSecondsElapsed) {
-        if (mTile.isSelected() && mAction == Actions.MOVE) {
-            setAlpha(ACTIVE_ALPHA);
-        } else if (getAlpha() == ACTIVE_ALPHA) {
-            setAlpha(INACTIVE_ALPHA);
+        if (mAction == Actions.MOVE) {
+            if (mTile.isSelected()) {
+                setAlpha(ACTIVE_ALPHA);
+            } else if (getAlpha() == ACTIVE_ALPHA) {
+                setAlpha(INACTIVE_ALPHA);
+            }
         }
 
         super.onManagedUpdate(pSecondsElapsed);

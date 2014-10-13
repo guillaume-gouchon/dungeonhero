@@ -7,6 +7,6 @@ import com.glevel.dungeonhero.models.characters.Pnj;
  */
 public interface OnDiscussionReplySelected {
 
-    public void onReplySelected(Pnj pnj, int selectedReply);
+    public void onReplySelected(Pnj pnj, int next);
 
 }
