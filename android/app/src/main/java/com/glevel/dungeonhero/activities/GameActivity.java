@@ -53,6 +53,8 @@ public class GameActivity extends CustomGameActivity {
     private TMXTiledMap mTmxTiledMap;
     private GameElement mSelectedElement;
     private Tile mSelectedTile = null;
+    private boolean isMoving = false;
+    private boolean interrupt = false;
 
     @Override
     protected void initGameActivity() {
@@ -201,7 +203,11 @@ public class GameActivity extends CustomGameActivity {
             } else {
                 hideElementInfo();
                 if (mRoom.isSafe() && mActiveCharacter.canMoveIn(tile)) {
-                    move(tile);
+                    if (isMoving) {
+                        interrupt = true;
+                    } else {
+                        move(tile);
+                    }
                 }
             }
         }
@@ -226,13 +232,17 @@ public class GameActivity extends CustomGameActivity {
     }
 
     private void move(Tile tile) {
-        mInputManager.setEnabled(false);
+        if (!mRoom.isSafe()) {
+            mInputManager.setEnabled(false);
+        }
         List<Tile> path = new AStar<Tile>().search(mRoom.getTiles(), mActiveCharacter.getTilePosition(), tile, false, mActiveCharacter);
         if (path != null) {
+            isMoving = true;
             walkTo(path, new OnActionExecuted() {
                 @Override
                 public void onActionDone(boolean success) {
                     mInputManager.setEnabled(true);
+                    isMoving = false;
                 }
             });
         } else {
@@ -254,6 +264,7 @@ public class GameActivity extends CustomGameActivity {
                         mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
                     }
                 }
+                isMoving = false;
                 mInputManager.setEnabled(true);
                 nextTurn();
             }
@@ -270,6 +281,7 @@ public class GameActivity extends CustomGameActivity {
                     Searchable searchable = (Searchable) tile.getContent();
                     Item foundItem = searchable.search();
                 }
+                isMoving = false;
                 mInputManager.setEnabled(true);
                 nextTurn();
             }
@@ -282,6 +294,7 @@ public class GameActivity extends CustomGameActivity {
             @Override
             public void onActionDone(boolean success) {
                 // TODO
+                isMoving = false;
                 mInputManager.setEnabled(true);
                 nextTurn();
             }
@@ -306,6 +319,7 @@ public class GameActivity extends CustomGameActivity {
         }
 
         if (shortestPath != null) {
+            isMoving = true;
             walkTo(shortestPath, callback);
         } else {
             callback.onActionDone(false);
@@ -452,7 +466,12 @@ public class GameActivity extends CustomGameActivity {
                         sprite.setPosition(nextTile.getTileX(), nextTile.getTileY());
 
                         mScene.sortChildren(true);
-                        walkTo(p, callback);
+                        if (!interrupt) {
+                            walkTo(p, callback);
+                        } else {
+                            callback.onActionDone(false);
+                            interrupt = false;
+                        }
                     }
                 }
             });
