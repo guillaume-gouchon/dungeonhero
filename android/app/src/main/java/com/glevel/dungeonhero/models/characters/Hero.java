@@ -1,12 +1,7 @@
 package com.glevel.dungeonhero.models.characters;
 
 
-import com.glevel.dungeonhero.models.items.Item;
-import com.glevel.dungeonhero.models.skills.ActiveSkill;
-import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
-
-import java.util.List;
 
 /**
  * Created by guillaume ON 10/2/14.
@@ -20,9 +15,10 @@ public class Hero extends Unit implements InAppProduct {
     private final String productId;
     private int xp;
     private int level;
+    private int frags = 0;
 
-    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins, List<Item> items, List<PassiveSkill> passive, List<ActiveSkill> active, String productId, int xp, int level) {
-        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, currentAttack, block, currentBlock, name, description, coins, items, passive, active);
+    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins, String productId, int xp, int level) {
+        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, currentAttack, block, currentBlock, name, description, coins);
         this.productId = productId;
         this.xp = xp;
         this.level = level;
@@ -46,6 +42,47 @@ public class Hero extends Unit implements InAppProduct {
     @Override
     public boolean isFree() {
         return productId == null;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public void setFrags(int frags) {
+        this.frags = frags;
+    }
+
+    public int getFrags() {
+        return frags;
+    }
+
+    public void addGold(int goldAmount) {
+        gold += goldAmount;
+    }
+
+    public void addXP(int xpAmount) {
+        xp += xpAmount;
+        checkLevelChange();
+    }
+
+    private void checkLevelChange() {
+        // TODO
+        if (xp > 1000) {
+            xp -= 1000;
+            level++;
+        }
     }
 
 }

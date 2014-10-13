@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="15dp"
-        android:background="@drawable/bg_horizontal_chooser"
+        android:background="@drawable/bg_carousel"
         android:text="@string/placeholder"
         android:textSize="18sp" />
 

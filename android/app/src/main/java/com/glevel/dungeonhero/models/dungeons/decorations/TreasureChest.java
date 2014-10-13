@@ -1,7 +1,7 @@
 package com.glevel.dungeonhero.models.dungeons.decorations;
 
 import com.glevel.dungeonhero.game.graphics.TreasureSprite;
-import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.models.Reward;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -12,8 +12,8 @@ public class TreasureChest extends Searchable {
 
     private static final long serialVersionUID = -9160370172054769184L;
 
-    public TreasureChest(int name, String spriteName) {
-        super(name, spriteName);
+    public TreasureChest(int name, String spriteName, Reward reward) {
+        super(name, spriteName, reward);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class TreasureChest extends Searchable {
     }
 
     @Override
-    public Item search() {
+    public Reward search() {
         ((TreasureSprite) sprite).open();
         return super.search();
     }

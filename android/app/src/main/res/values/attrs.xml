@@ -10,4 +10,7 @@
         <attr name="linkTextColorToDrawable" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="LifeBar">
+        <attr name="lifeColor" format="reference" />
+    </declare-styleable>
 </resources> 

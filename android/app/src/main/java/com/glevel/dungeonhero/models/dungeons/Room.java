@@ -1,11 +1,12 @@
 package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.data.DecorationFactory;
-import com.glevel.dungeonhero.data.MonsterFactory;
+import com.glevel.dungeonhero.data.PNJFactory;
 import com.glevel.dungeonhero.data.dungeon.Rooms;
 import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.characters.Hero;
+import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 
@@ -102,7 +103,7 @@ public class Room implements Serializable {
         // TODO : place hero
         addGameElement(hero, doors.get(Directions.NORTH));
 //        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
-        addGameElement(MonsterFactory.buildGoblin(), 5, 8);
+        addGameElement(PNJFactory.buildPNJ(), 5, 8);
 //        addGameElement(MonsterFactory.buildGoblin(), 5, 7);
 
         addGameElement(DecorationFactory.buildLight(), 5, 10);
@@ -117,7 +118,7 @@ public class Room implements Serializable {
 
     private void addGameElement(GameElement gameElement, Tile tile) {
         gameElement.setTilePosition(tile);
-        if (gameElement instanceof Unit) {
+        if (gameElement instanceof Unit && (!(gameElement instanceof Pnj) || ((Pnj) gameElement).isActive())) {
             queue.add((Unit) gameElement);
         }
         objects.add(gameElement);

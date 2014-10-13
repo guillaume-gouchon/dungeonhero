@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.activities;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.BookFactory;
@@ -8,21 +9,24 @@ import com.glevel.dungeonhero.data.HeroFactory;
 import com.glevel.dungeonhero.game.base.CustomGameActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
+import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
 import com.glevel.dungeonhero.game.graphics.ActionTile;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.Actions;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.models.Reward;
+import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
+import com.glevel.dungeonhero.models.discussions.Discussion;
 import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
-import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.utils.pathfinding.AStar;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
@@ -46,6 +50,7 @@ public class GameActivity extends CustomGameActivity {
     public static final String EXTRA_GAME_ID = "game_id";
     TimerHandler moveHandler;
     private Dungeon mDungeon;
+    private Hero mHero;
     private Room mRoom;
     private Unit mActiveCharacter;
     private SelectionCircle mSelectionCircle;
@@ -67,6 +72,7 @@ public class GameActivity extends CustomGameActivity {
 
         mDungeon = mGame.getDungeon();
         mRoom = mDungeon.getCurrentRoom();
+        mHero = mGame.getHero();
 
         // TODO
         mMustSaveGame = false;
@@ -86,7 +92,7 @@ public class GameActivity extends CustomGameActivity {
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA, this.getVertexBufferObjectManager(), null);
         mTmxTiledMap = tmxLoader.loadFromAsset("tmx/" + mRoom.getTmxName() + ".tmx");
 
-        mRoom.initRoom(mTmxTiledMap, mGame.getHero(), mDungeon);
+        mRoom.initRoom(mTmxTiledMap, mHero, mDungeon);
 
         mTmxTiledMap.getTMXLayers().get(1).setZIndex(10);
         for (TMXLayer tmxLayer : mTmxTiledMap.getTMXLayers()) {
@@ -130,7 +136,7 @@ public class GameActivity extends CustomGameActivity {
 
     public void startGame() {
         // init camera position
-        Tile tile = mGame.getHero().getTilePosition();
+        Tile tile = mHero.getTilePosition();
         this.mCamera.setCenter(tile.getX(), tile.getY());
 
         // hide loading screen
@@ -157,8 +163,10 @@ public class GameActivity extends CustomGameActivity {
 
         if (mActiveCharacter instanceof Monster) {
             mInputManager.setEnabled(false);
-            attack(mGame.getHero().getTilePosition());
+            attack(mHero.getTilePosition());
         }
+
+        mGUIManager.updateActiveHeroLayout(mHero);
     }
 
     public void addElementToScene(GameElement gameElement) {
@@ -259,7 +267,7 @@ public class GameActivity extends CustomGameActivity {
                 if (success) {
                     Unit unit = (Unit) tile.getContent();
                     unit.setCurrentHP(unit.getCurrentHP() - 5);
-                    if (unit != mGame.getHero() && unit.getCurrentHP() <= 0) {
+                    if (unit != mHero && unit.getCurrentHP() <= 0) {
                         removeElement(unit);
                         mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
                     }
@@ -276,10 +284,10 @@ public class GameActivity extends CustomGameActivity {
         goCloserTo(tile, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                // TODO
                 if (success) {
                     Searchable searchable = (Searchable) tile.getContent();
-                    Item foundItem = searchable.search();
+                    Reward reward = searchable.search();
+                    foundReward(reward);
                 }
                 isMoving = false;
                 mInputManager.setEnabled(true);
@@ -288,17 +296,59 @@ public class GameActivity extends CustomGameActivity {
         });
     }
 
-    private void talk(Tile tile) {
+    private void foundReward(Reward reward) {
+        mGUIManager.showReward(reward);
+
+        if (reward != null) {
+            // update hero
+            if (reward.getItem() != null) {
+                mHero.getItems().add(reward.getItem());
+            }
+            mHero.addGold(reward.getGold());
+            mHero.addXP(reward.getXp());
+        }
+    }
+
+    private void talk(final Tile tile) {
         mInputManager.setEnabled(false);
         goCloserTo(tile, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                // TODO
                 isMoving = false;
+                if (success) {
+                    talkTo((Pnj) tile.getContent());
+                }
                 mInputManager.setEnabled(true);
                 nextTurn();
             }
         });
+    }
+
+    private void talkTo(Pnj pnj) {
+        OnDiscussionReplySelected onDiscussionSelected = new OnDiscussionReplySelected() {
+            @Override
+            public void onReplySelected(Pnj pnj, int nbSkips) {
+                Reward reward = pnj.getDiscussions().get(0).getReward();
+                if (reward != null) {
+                    foundReward(reward);
+                }
+                for (int n = 0; n < nbSkips; n++) {
+                    pnj.getDiscussions().remove(0);
+                }
+                if (pnj.getDiscussions().size() > 0) {
+                    talkTo(pnj);
+                }
+            }
+        };
+        if (pnj.getDiscussions().size() > 0) {
+            Discussion discussion = pnj.getDiscussions().get(0);
+            mGUIManager.showDiscussion(pnj, discussion, onDiscussionSelected);
+            if (!discussion.isPermanent()) {
+                pnj.getDiscussions().remove(0);
+            }
+        } else {
+            mGUIManager.showDiscussion(pnj, new Discussion(pnj.getImage(), pnj.getName(), R.string.discussion_is_over, null, true, null), onDiscussionSelected);
+        }
     }
 
     private void goCloserTo(Tile tile, OnActionExecuted callback) {
@@ -480,6 +530,18 @@ public class GameActivity extends CustomGameActivity {
             UnitSprite sprite = (UnitSprite) mActiveCharacter.getSprite();
             sprite.stand();
             callback.onActionDone(true);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.hero:
+                mGUIManager.showHeroInfo(mHero);
+                break;
+            case R.id.bag:
+                mGUIManager.showBag(mHero);
+                break;
         }
     }
 

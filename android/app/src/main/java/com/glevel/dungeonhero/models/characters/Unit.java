@@ -1,7 +1,7 @@
 package com.glevel.dungeonhero.models.characters;
 
-import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
@@ -11,6 +11,7 @@ import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,14 +42,14 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     private final int description;
 
     // Possessions
-    private int coins;
-    private List<Item> items;
+    protected int gold;
+    protected final List<Item> items = new ArrayList<Item>();
 
     // SKills
-    private List<PassiveSkill> passive;
-    private List<ActiveSkill> active;
+    private final List<PassiveSkill> passive = new ArrayList<PassiveSkill>();
+    private final List<ActiveSkill> active = new ArrayList<ActiveSkill>();
 
-    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins, List<Item> items, List<PassiveSkill> passive, List<ActiveSkill> active) {
+    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins) {
         super(name, spriteName, rank);
         this.image = image;
         this.hp = hp;
@@ -61,10 +62,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         this.block = block;
         this.currentBlock = currentBlock;
         this.description = description;
-        this.coins = coins;
-        this.items = items;
-        this.passive = passive;
-        this.active = active;
+        this.gold = coins;
     }
 
     public int getImage() {
@@ -147,36 +145,24 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         return description;
     }
 
-    public int getCoins() {
-        return coins;
+    public int getGold() {
+        return gold;
     }
 
-    public void setCoins(int coins) {
-        this.coins = coins;
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
     public List<PassiveSkill> getPassive() {
         return passive;
     }
 
-    public void setPassive(List<PassiveSkill> passive) {
-        this.passive = passive;
-    }
-
     public List<ActiveSkill> getActive() {
         return active;
-    }
-
-    public void setActive(List<ActiveSkill> active) {
-        this.active = active;
     }
 
     @Override

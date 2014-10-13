@@ -89,7 +89,7 @@
         <item name="@android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="Dialog" parent="@android:style/Theme.Holo.Dialog.NoActionBar">
+    <style name="Dialog" parent="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth">
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
         <item name="@android:windowBackground">@android:color/transparent</item>
     </style>
@@ -129,7 +129,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:padding">8dp</item>
         <item name="android:drawablePadding">8dp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">left|center_vertical</item>
 
     </style>
 
@@ -175,6 +175,38 @@
         <item name="android:shadowDx">4</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">4</item>
+    </style>
+
+    <style name="DiscussionName">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+
+    <style name="DiscussionMessage">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingRight">25dp</item>
+        <item name="android:paddingLeft">25dp</item>
+    </style>
+
+    <style name="RewardMessage">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+
+    <style name="Reply">
+        <item name="android:textColor">@drawable/text_color_reply</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">left|center_vertical</item>
     </style>
 
 </resources>

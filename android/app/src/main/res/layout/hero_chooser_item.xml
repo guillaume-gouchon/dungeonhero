@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_margin="10dp"
         android:padding="15dp"
-        android:background="@drawable/bg_horizontal_chooser">
+        android:background="@drawable/bg_carousel">
 
         <RelativeLayout
             android:layout_width="match_parent"
