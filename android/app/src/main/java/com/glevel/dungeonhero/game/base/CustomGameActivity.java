@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
 
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
@@ -32,7 +33,7 @@ import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.util.color.Color;
 
-public abstract class CustomGameActivity extends CustomLayoutGameActivity implements OnNewSpriteToDraw, OnNewSoundToPlay, UserActionListener {
+public abstract class CustomGameActivity extends CustomLayoutGameActivity implements OnNewSpriteToDraw, OnNewSoundToPlay, UserActionListener, View.OnClickListener {
 
     protected DatabaseHelper mDbHelper;
     protected SharedPreferences mSharedPrefs;

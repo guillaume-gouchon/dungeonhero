@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,22 +19,17 @@ public class LifeBar extends LinearLayout {
     private View mContainer, mLifeBar;
     private Animation mLowLifeAnimation;
 
-    public LifeBar(Context context) {
-        super(context);
-        init(context);
-    }
-
     public LifeBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, attrs);
     }
 
     public LifeBar(Context context, AttributeSet attrs, int style) {
         super(context, attrs, style);
-        init(context);
+        init(context, attrs);
     }
 
-    private void init(Context context) {
+    private void init(Context context, AttributeSet attrs) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.in_game_life_bar, this, true);
 
@@ -41,6 +37,11 @@ public class LifeBar extends LinearLayout {
         mLifeBar = findViewById(R.id.life_bar);
 
         mLowLifeAnimation = AnimationUtils.loadAnimation(context, R.anim.low_life_fade);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LifeBar);
+        int lifeColor = a.getResourceId(R.styleable.LifeBar_lifeColor, R.color.green);
+        mLifeBar.setBackgroundResource(lifeColor);
+        a.recycle();
     }
 
     public void updateLife(float ratio) {

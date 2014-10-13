@@ -8,17 +8,8 @@ import com.glevel.dungeonhero.models.characters.Monster;
  */
 public class MonsterFactory {
 
-//    public static List<Hero> getHeroes() {
-//        List<Hero> lstHeroes = new ArrayList<Hero>();
-//        lstHeroes.add(buildWarrior());
-//        lstHeroes.add(buildWarrior());
-//        lstHeroes.add(buildWarrior());
-//        lstHeroes.add(buildWarrior());
-//        return lstHeroes;
-//    }
-
     public static Monster buildGoblin() {
-        return new Monster(R.drawable.goblin, "goblin.png", 5, 5, 6, 10, 2, 8, 8, 8, 8, R.string.app_name, R.string.choose_hero_message, 10, null, null, null);
+        return new Monster(R.drawable.goblin, "goblin.png", 5, 5, 6, 10, 2, 8, 8, 8, 8, R.string.app_name, R.string.choose_hero_message, 10);
     }
 
 }
