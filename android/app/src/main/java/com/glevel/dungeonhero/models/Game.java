@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.glevel.dungeonhero.data.BookFactory;
-import com.glevel.dungeonhero.game.base.CustomGameActivity;
+import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.utils.database.ByteSerializer;
@@ -51,10 +51,10 @@ public class Game extends DatabaseResource implements Serializable {
         return game;
     }
 
-    public void setOnNewSprite(CustomGameActivity gameActivity) {
+    public void setOnNewSprite(MyBaseGameActivity gameActivity) {
     }
 
-    public void setOnNewSoundToPlay(CustomGameActivity gameActivity) {
+    public void setOnNewSoundToPlay(MyBaseGameActivity gameActivity) {
     }
 
     @Override

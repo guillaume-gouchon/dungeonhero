@@ -1,11 +1,8 @@
 package com.glevel.dungeonhero.game.base;
 
-import android.app.Activity;
-import android.graphics.Point;
 import android.view.MotionEvent;
 
 import com.glevel.dungeonhero.game.base.interfaces.UserActionListener;
-import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 import org.andengine.engine.camera.ZoomCamera;
 import org.andengine.entity.scene.IOnSceneTouchListener;
@@ -20,14 +17,13 @@ import org.andengine.input.touch.detector.SurfaceScrollDetector;
 public class InputManager implements IOnSceneTouchListener, IScrollDetectorListener, IPinchZoomDetectorListener {
 
     private static final int DRAG_MINIMUM_DISTANCE = 300;// in pixels ^2
-    private static final int AUTO_SCROLLING_EDGE_DISTANCE_THRESHOLD = 40;// in pixels
-    private static final int AUTO_SCROLLING_SPEED = 5;// in pixels
+    private static final int AUTO_SCROLLING_THRESHOLD = 20;// in pixels
+    private static final int AUTO_SCROLLING_SPEED = 1;// in pixels
 
     private final ZoomCamera mCamera;
     private final UserActionListener mUserActionListener;
     private final SurfaceScrollDetector mScrollDetector;
     private final PinchZoomDetector mPinchZoomDetector;
-    private final Point mScreenDimensions;
 
     private float mPinchZoomStartedCameraZoomFactor;
     private boolean mIsDragged = false;
@@ -37,11 +33,10 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
 
     private boolean mIsEnabled = true;
 
-    public InputManager(Activity activity, ZoomCamera camera, UserActionListener userActionListener) {
+    public InputManager(ZoomCamera camera, UserActionListener userActionListener) {
         mCamera = camera;
         mScrollDetector = new SurfaceScrollDetector(this);
         mPinchZoomDetector = new PinchZoomDetector(this);
-        mScreenDimensions = ApplicationUtils.getScreenDimensions(activity);
         mUserActionListener = userActionListener;
     }
 
@@ -128,20 +123,20 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
         return true;
     }
 
-    public void checkAutoScrolling() {
+    public void checkAutoScrolling(float x, float y) {
         float px = 0;
         float py = 0;
-        if (mLastX < AUTO_SCROLLING_EDGE_DISTANCE_THRESHOLD) {
+        if (x < mCamera.getCenterX() - AUTO_SCROLLING_THRESHOLD) {
             px = -1;
-        } else if (mLastX > mScreenDimensions.x - AUTO_SCROLLING_EDGE_DISTANCE_THRESHOLD) {
+        } else if (x > mCamera.getCenterX() + AUTO_SCROLLING_THRESHOLD) {
             px = 1;
         }
-        if (mLastY < AUTO_SCROLLING_EDGE_DISTANCE_THRESHOLD) {
-            py = -1;
-        } else if (mLastY > mScreenDimensions.y - AUTO_SCROLLING_EDGE_DISTANCE_THRESHOLD) {
+        if (y > mCamera.getCenterY() + AUTO_SCROLLING_THRESHOLD) {
             py = 1;
+        } else if (y < mCamera.getCenterY() - AUTO_SCROLLING_THRESHOLD) {
+            py = -1;
         }
-        mCamera.offsetCenter(px * AUTO_SCROLLING_SPEED / mCamera.getZoomFactor(), py * AUTO_SCROLLING_SPEED / mCamera.getZoomFactor());
+        mCamera.offsetCenter(px * AUTO_SCROLLING_SPEED, py * AUTO_SCROLLING_SPEED);
     }
 
     public void setEnabled(boolean isEnabled) {

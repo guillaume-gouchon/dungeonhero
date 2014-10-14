@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@drawable/bg_gui"
+    android:background="@drawable/bg_reward"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="30dp">
 
-    <com.glevel.dungeonhero.views.CustomTextView
-        android:id="@+id/item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/placeholder"
-        style="@style/RewardMessage"
-        android:textColor="@color/white" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@drawable/bg_gui"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <com.glevel.dungeonhero.views.CustomTextView
-        android:id="@+id/gold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/placeholder"
-        style="@style/RewardMessage"
-        android:drawableLeft="@drawable/ic_coin"
-        android:textColor="@color/strength" />
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:id="@+id/item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder"
+            style="@style/RewardMessage"
+            android:textColor="@color/white" />
 
-    <com.glevel.dungeonhero.views.CustomTextView
-        android:id="@+id/xp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/placeholder"
-        style="@style/RewardMessage"
-        android:textColor="@color/attack" />
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:id="@+id/gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder"
+            style="@style/RewardMessage"
+            android:drawableLeft="@drawable/ic_coin"
+            android:textColor="@color/strength" />
 
-    <com.glevel.dungeonhero.views.CustomTextView
-        android:id="@+id/dismiss_button"
-        style="@style/RewardMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/close"
-        android:background="@drawable/bg_transparent_btn"
-        android:textColor="@drawable/text_color_btn" />
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:id="@+id/xp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder"
+            style="@style/RewardMessage"
+            android:textColor="@color/attack" />
 
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:id="@+id/dismiss_button"
+            style="@style/RewardMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/close"
+            android:background="@drawable/bg_transparent_btn"
+            android:textColor="@drawable/text_color_btn" />
+    </LinearLayout>
 </LinearLayout>

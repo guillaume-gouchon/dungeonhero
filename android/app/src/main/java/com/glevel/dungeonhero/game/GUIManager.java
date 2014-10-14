@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
-import com.glevel.dungeonhero.game.base.CustomGameActivity;
+import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
 import com.glevel.dungeonhero.models.Reward;
@@ -34,14 +34,14 @@ import java.util.List;
 
 public class GUIManager {
 
-    private CustomGameActivity mActivity;
+    private MyBaseGameActivity mActivity;
 
     private Dialog mLoadingScreen, mGameMenuDialog, mHeroInfoDialog, mDiscussionDialog, mRewardDialog;
     private TextView mBigLabel;
     private Animation mBigLabelAnimation;
     private ViewGroup mSelectedElementLayout, mActiveHeroLayout, mQueueLayout;
 
-    public GUIManager(CustomGameActivity activity) {
+    public GUIManager(MyBaseGameActivity activity) {
         mActivity = activity;
     }
 
@@ -261,6 +261,7 @@ public class GUIManager {
         mHeroInfoDialog = new Dialog(mActivity, R.style.Dialog);
         mHeroInfoDialog.setContentView(R.layout.in_game_hero_details);
         mHeroInfoDialog.setCancelable(true);
+        mHeroInfoDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
         ((TextView) mHeroInfoDialog.findViewById(R.id.name)).setText(hero.getName());
         ((TextView) mHeroInfoDialog.findViewById(R.id.description)).setText(hero.getDescription());
@@ -288,6 +289,7 @@ public class GUIManager {
                     mDiscussionDialog = new Dialog(mActivity, R.style.Dialog);
                     mDiscussionDialog.setContentView(R.layout.in_game_discussion);
                     mDiscussionDialog.setCancelable(false);
+                    mDiscussionDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
                     TextView pnjName = (TextView) mDiscussionDialog.findViewById(R.id.name);
                     pnjName.setText(discussion.getName());
@@ -332,7 +334,7 @@ public class GUIManager {
         });
     }
 
-    public void showReward(final Reward reward) {
+    public void showReward(final Reward reward, final OnDismissListener onDismissListener) {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -340,6 +342,8 @@ public class GUIManager {
                     mRewardDialog = new Dialog(mActivity, R.style.Dialog);
                     mRewardDialog.setContentView(R.layout.in_game_reward);
                     mRewardDialog.setCancelable(false);
+                    mRewardDialog.setOnDismissListener(onDismissListener);
+                    mRewardDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
                     TextView itemTV = (TextView) mRewardDialog.findViewById(R.id.item);
                     TextView goldTV = (TextView) mRewardDialog.findViewById(R.id.gold);
@@ -347,7 +351,7 @@ public class GUIManager {
 
                     if (reward == null) {
                         itemTV.setText(R.string.found_nothing);
-                        itemTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, reward.getItem().getImage());
+                        itemTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.found_nothing);
                         goldTV.setVisibility(View.GONE);
                         xpTV.setVisibility(View.GONE);
                     } else {

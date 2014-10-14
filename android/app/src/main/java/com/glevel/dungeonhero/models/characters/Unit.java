@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.models.characters;
 
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
+import com.glevel.dungeonhero.models.FightResult;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
@@ -181,6 +182,45 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     public float getLifeRatio() {
         return (float) currentHP / (float) hp;
+    }
+
+    public FightResult attack(Unit target) {
+        FightResult fightResult;
+
+        int dice = (int) (Math.random() * 20);
+        int damage = calculateDamageBonus() + 1;
+
+        if (dice == 1) {
+            fightResult = new FightResult(FightResult.States.CRITICAL, damage * 2);
+        } else if (dice < currentAttack * 2 - target.getCurrentBlock()) {
+            if (Math.random() * 100 < calculateDodge()) {
+                fightResult = new FightResult(FightResult.States.DODGE, 0);
+            } else {
+                fightResult = new FightResult(FightResult.States.DAMAGE, damage);
+            }
+        } else {
+            fightResult = new FightResult(FightResult.States.BLOCK, 0);
+        }
+
+        target.takeDamage(fightResult.getDamage());
+
+        return fightResult;
+    }
+
+    public void takeDamage(int damage) {
+        currentHP -= damage;
+    }
+
+    public boolean isDead() {
+        return currentHP <= 0;
+    }
+
+    public int calculateDamageBonus() {
+        return Math.max(0, strength - 10);
+    }
+
+    public int calculateDodge() {
+        return Math.max(0, (dexterity - 10) * 5);
     }
 
 }

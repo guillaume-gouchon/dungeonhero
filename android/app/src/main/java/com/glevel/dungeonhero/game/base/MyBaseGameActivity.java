@@ -13,8 +13,7 @@ import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.andengine.custom.CenteredSprite;
 import com.glevel.dungeonhero.game.andengine.custom.CustomLayoutGameActivity;
 import com.glevel.dungeonhero.game.andengine.custom.CustomZoomCamera;
-import com.glevel.dungeonhero.game.base.interfaces.OnNewSoundToPlay;
-import com.glevel.dungeonhero.game.base.interfaces.OnNewSpriteToDraw;
+import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.UserActionListener;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
@@ -29,11 +28,12 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.shape.Shape;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.util.color.Color;
 
-public abstract class CustomGameActivity extends CustomLayoutGameActivity implements OnNewSpriteToDraw, OnNewSoundToPlay, UserActionListener, View.OnClickListener {
+public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implements UserActionListener, View.OnClickListener {
 
     protected DatabaseHelper mDbHelper;
     protected SharedPreferences mSharedPrefs;
@@ -96,7 +96,7 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
 
         // load font
         mDefaultFont = FontFactory.create(getFontManager(), getTextureManager(), 256, 256,
-                Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, Color.WHITE.hashCode());
+                Typeface.create(Typeface.createFromAsset(getAssets(), "fonts/font_text.otf"), Typeface.BOLD), 32, Color.WHITE.hashCode());
         mDefaultFont.load();
 
         pOnCreateResourcesCallback.onCreateResourcesFinished();
@@ -112,6 +112,7 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
         }
 
         super.onResume();
+
     }
 
     @Override
@@ -120,7 +121,7 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
         mScene = new Scene();
         mScene.setOnAreaTouchTraversalFrontToBack();
         mScene.setBackground(new Background(0, 0, 0));
-        mInputManager = new InputManager(this, mCamera, this);
+        mInputManager = new InputManager(mCamera, this);
         mScene.setOnSceneTouchListener(mInputManager);
         mScene.setTouchAreaBindingOnActionDownEnabled(true);
     }
@@ -171,11 +172,16 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
         mScene.attachChild(shape);
     }
 
-    public void removeElement(Shape shape, boolean isClickable) {
+    public void removeElement(final Shape shape, boolean isClickable) {
         if (isClickable) {
             mScene.unregisterTouchArea(shape);
         }
-        mScene.detachChild(shape);
+        runOnUpdateThread(new Runnable() {
+            @Override
+            public void run() {
+                mScene.detachChild(shape);
+            }
+        });
     }
 
     public void endGame() {
@@ -183,7 +189,6 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
         mEngine.stop();
     }
 
-    @Override
     public void drawSprite(float x, float y, String spriteName, final int duration, final int size) {
         final Sprite sprite = new CenteredSprite(x, y, GraphicsManager.sGfxMap.get(spriteName), getVertexBufferObjectManager());
         sprite.setScale(size);
@@ -213,8 +218,43 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
         }
     }
 
-    @Override
-    public void drawAnimatedSprite(float x, float y, String spriteName, int frameDuration, float scale, int loopCount, final boolean removeAfter, int zIndex) {
+    public void drawAnimatedText(float x, float y, String text, Color color, float scale, final int duration, final float offset) {
+        final Text animatedText = new Text(x, y, mDefaultFont, text, getVertexBufferObjectManager());
+        animatedText.setScaleCenter(0.5f, 0.5f);
+        animatedText.setColor(color);
+        animatedText.setScale(scale);
+        animatedText.setAlpha(0.7f);
+        mScene.attachChild(animatedText);
+        if (duration > 0) {
+            animatedText.registerUpdateHandler(new IUpdateHandler() {
+
+                private int timeLeft = duration;
+
+                public void onUpdate(float pSecondsElapsed) {
+                    if (offset != 0) {
+                        animatedText.setPosition(animatedText.getX(), animatedText.getY() + offset);
+                    }
+
+                    if (--timeLeft <= 0) {
+                        // remove sprite
+                        runOnUpdateThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mScene.detachChild(animatedText);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void reset() {
+                }
+
+            });
+        }
+    }
+
+    public void drawAnimatedSprite(float x, float y, String spriteName, int frameDuration, float scale, int loopCount, final boolean removeAfter, int zIndex, final OnActionExecuted callback) {
         if (GraphicsManager.sGfxMap.get(spriteName) == null) return;
 
         final AnimatedSprite sprite = new AnimatedSprite(0, 0, GraphicsManager.sGfxMap.get(spriteName), getVertexBufferObjectManager());
@@ -252,20 +292,30 @@ public abstract class CustomGameActivity extends CustomLayoutGameActivity implem
                     } else {
                         pAnimatedSprite.setCurrentTileIndex(1);
                     }
+
+                    if (callback != null) {
+                        callback.onActionDone(true);
+                    }
                 }
             });
         }
         mScene.attachChild(sprite);
     }
 
-    @Override
     public void playSound(String soundName, boolean isLooped) {
         mSoundEffectManager.playSound(soundName, isLooped);
     }
 
-    @Override
     public void playGeoSound(String soundName, float x, float y) {
         mSoundEffectManager.playGeoSound(soundName, x, y);
+    }
+
+    public InputManager getInputManager() {
+        return mInputManager;
+    }
+
+    public GUIManager getGUIManager() {
+        return mGUIManager;
     }
 
 }

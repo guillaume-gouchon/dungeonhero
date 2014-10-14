@@ -15,11 +15,11 @@
         custom:lifeColor="@color/darkGreen" />
 
     <ImageView
-        android:id="@+id/image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_equipment"
-        android:alpha="0.5" />
+        android:src="@drawable/bg_hero_details"
+        android:alpha="0.5"
+        android:padding="3dp" />
 
 </RelativeLayout>

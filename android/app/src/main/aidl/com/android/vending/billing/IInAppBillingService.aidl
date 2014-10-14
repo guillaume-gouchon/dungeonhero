@@ -141,4 +141,5 @@ interface IInAppBillingService {
      * @return 0 if consumption succeeded. Appropriate error values for failures.
      */
     int consumePurchase(int apiVersion, String packageName, String purchaseToken);
+
 }

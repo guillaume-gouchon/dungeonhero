@@ -15,11 +15,12 @@
 
     <ImageView
         android:id="@+id/grave"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:alpha="0.3"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:alpha="0.4"
         android:src="@drawable/ic_death" />
 
     <com.glevel.dungeonhero.views.CustomTitle

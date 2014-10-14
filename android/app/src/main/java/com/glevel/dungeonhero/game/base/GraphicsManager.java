@@ -39,6 +39,7 @@ public class GraphicsManager {
         loadGfxFromAssets(64, 64, "selection.png");
         loadTiledGfxFromAssets(21, 20, 3, 1, "light.png");
         loadTiledGfxFromAssets(34, 20, 2, 1, "chest.png");
+        loadTiledGfxFromAssets(300, 50, 6, 1, "blood.png");
     }
 
     private void loadGfxFromAssets(int textureWidth, int textureHeight, String spriteName) {

@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.data.DecorationFactory;
+import com.glevel.dungeonhero.data.MonsterFactory;
 import com.glevel.dungeonhero.data.PNJFactory;
 import com.glevel.dungeonhero.data.dungeon.Rooms;
 import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
@@ -100,11 +101,13 @@ public class Room implements Serializable {
     }
 
     private void createRoomContent(Hero hero, Dungeon dungeon) {
-        // TODO : place hero
+        // TODO
         addGameElement(hero, doors.get(Directions.NORTH));
-//        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
+        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
+        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
+        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
+
         addGameElement(PNJFactory.buildPNJ(), 5, 8);
-//        addGameElement(MonsterFactory.buildGoblin(), 5, 7);
 
         addGameElement(DecorationFactory.buildLight(), 5, 10);
         addGameElement(DecorationFactory.buildLight(), 5, 12);

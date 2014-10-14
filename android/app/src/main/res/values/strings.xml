@@ -127,15 +127,15 @@
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="no">No, I don\'t</string>
-    <string name="discussion_is_over">I do not want to talk to you anymore.</string>
+    <string name="discussion_is_over">I don\'t want to talk to you anymore.</string>
 
     <!-- In Game -->
     <string name="level_in_game">Level %1$s (%2$s/%3$s)</string>
     <string name="hp_in_game">%1$s / %2$s</string>
-    <string name="found_nothing">You found nothing !</string>
-    <string name="found_item">You got a %s !</string>
-    <string name="found_gold">You got %s Gold Coins !</string>
-    <string name="reward_xp">You were rewarded with %s XP !</string>
+    <string name="found_nothing">You found nothing\u00A0!</string>
+    <string name="found_item">You got a %s\u00A0!</string>
+    <string name="found_gold">You got %s Gold Coins\u00A0!</string>
+    <string name="reward_xp">You were rewarded with %s XP\u00A0!</string>
     <string name="close">Close</string>
 
 </resources>
