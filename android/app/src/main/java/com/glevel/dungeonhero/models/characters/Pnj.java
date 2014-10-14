@@ -15,8 +15,8 @@ public class Pnj extends Hero {
     private final List<Discussion> discussions = new ArrayList<Discussion>();
     private boolean isActive;
 
-    public Pnj(boolean isActive, Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins, int xp, int level) {
-        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, currentAttack, block, currentBlock, name, description, coins, null, xp, level);
+    public Pnj(boolean isActive, Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int block, int name, int description, int coins, int xp, int level) {
+        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, block, name, description, coins, null, xp, level);
     }
 
     public List<Discussion> getDiscussions() {

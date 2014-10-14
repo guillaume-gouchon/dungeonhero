@@ -21,36 +21,26 @@ import java.util.List;
 public abstract class Unit extends GameElement implements MovingElement<Tile>, Serializable {
 
     private static final long serialVersionUID = 1683650465351973413L;
-
+    protected final List<Item> items = new ArrayList<Item>();
     // Images
     private final int image;
-
-    // Characteristics
-    private int hp;
-    private int currentHP;
-
-    private int strength;
-    private int dexterity;
-    private int spirit;
-
-    private int attack;
-    private int currentAttack;
-
-    private int block;
-    private int currentBlock;
-
     // RP
     private final int description;
-
-    // Possessions
-    protected int gold;
-    protected final List<Item> items = new ArrayList<Item>();
-
     // SKills
     private final List<PassiveSkill> passive = new ArrayList<PassiveSkill>();
     private final List<ActiveSkill> active = new ArrayList<ActiveSkill>();
+    // Possessions
+    protected int gold;
+    // Characteristics
+    private int hp;
+    private int currentHP;
+    private int strength;
+    private int dexterity;
+    private int spirit;
+    private int attack;
+    private int block;
 
-    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins) {
+    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int block, int name, int description, int coins) {
         super(name, spriteName, rank);
         this.image = image;
         this.hp = hp;
@@ -59,9 +49,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         this.dexterity = dexterity;
         this.spirit = spirit;
         this.attack = attack;
-        this.currentAttack = currentAttack;
         this.block = block;
-        this.currentBlock = currentBlock;
         this.description = description;
         this.gold = coins;
     }
@@ -118,28 +106,12 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         this.attack = attack;
     }
 
-    public int getCurrentAttack() {
-        return currentAttack;
-    }
-
-    public void setCurrentAttack(int currentAttack) {
-        this.currentAttack = currentAttack;
-    }
-
     public int getBlock() {
         return block;
     }
 
     public void setBlock(int block) {
         this.block = block;
-    }
-
-    public int getCurrentBlock() {
-        return currentBlock;
-    }
-
-    public void setCurrentBlock(int currentBlock) {
-        this.currentBlock = currentBlock;
     }
 
     public int getDescription() {
@@ -192,7 +164,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         if (dice == 1) {
             fightResult = new FightResult(FightResult.States.CRITICAL, damage * 2);
-        } else if (dice < currentAttack * 2 - target.getCurrentBlock()) {
+        } else if (dice < attack * 2 - target.getBlock()) {
             if (Math.random() * 100 < calculateDodge()) {
                 fightResult = new FightResult(FightResult.States.DODGE, 0);
             } else {

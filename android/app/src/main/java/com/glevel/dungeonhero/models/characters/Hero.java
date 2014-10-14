@@ -18,8 +18,8 @@ public class Hero extends Unit implements InAppProduct {
     private int level;
     protected int frags = 0;
 
-    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int currentAttack, int block, int currentBlock, int name, int description, int coins, String productId, int xp, int level) {
-        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, currentAttack, block, currentBlock, name, description, coins);
+    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack,  int block, int name, int description, int coins, String productId, int xp, int level) {
+        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, block, name, description, coins);
         this.productId = productId;
         this.xp = xp;
         this.level = level;

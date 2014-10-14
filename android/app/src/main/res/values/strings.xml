@@ -118,11 +118,27 @@
     <!-- Books -->
     <string name="tutorial">Tutorial</string>
 
+    <!-- Heroes -->
+    <string name="berserker">Berserker</string>
+    <string name="warrior">Warrior</string>
+    <string name="ranger">Ranger</string>
+    <string name="wizard">Wizard</string>
+    <string name="thief">Thief</string>
+    <string name="druid">Druid</string>
+    <string name="berserker_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+    <string name="warrior_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+    <string name="ranger_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+    <string name="wizard_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+    <string name="thief_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+    <string name="druid_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+
+
+    <string name="goblin">Goblin</string>
+
+
     <!-- Data -->
     <string name="light">Light</string>
     <string name="treasure_chest">Treasure Chest</string>
-    <string name="warrior">Warrior</string>
-    <string name="warrior_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="hello_discussion">Hello adventurer, do you like eating pafs ?</string>
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>

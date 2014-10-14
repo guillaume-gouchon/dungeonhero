@@ -43,7 +43,7 @@ public class GameActivity extends MyBaseGameActivity {
         Bundle extras = getIntent().getExtras();
         // TODO test
 //        mGame = (Game) extras.getSerializable(Game.class.getName());
-        mGame = new Game(HeroFactory.buildWarrior(), BookFactory.buildInitiationBook(1));
+        mGame = new Game(HeroFactory.buildBerserker(), BookFactory.buildInitiationBook(1));
         mGame.setOnNewSprite(this);
         mGame.setOnNewSoundToPlay(this);
 
