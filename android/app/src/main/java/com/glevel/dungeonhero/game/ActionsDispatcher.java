@@ -526,6 +526,12 @@ public class ActionsDispatcher implements UserActionListener {
 
     private void animateGetReward(Monster target, final OnActionExecuted onActionExecuted) {
         Reward reward = target.getReward();
+        if (reward.getItem() != null) {
+            mGameActivity.getHero().getItems().add(reward.getItem());
+        }
+        mGameActivity.getHero().addGold(reward.getGold());
+        mGameActivity.getHero().addXP(reward.getXp());
+        
         if (reward != null) {
             if (reward.getGold() > 0) {
                 mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
