@@ -41,7 +41,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     private int block;
 
     public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int block, int name, int description, int coins) {
-        super(name, spriteName, rank);
+        super(name, spriteName, rank, 210, 400, 3, 4);
         this.image = image;
         this.hp = hp;
         this.currentHP = currentHP;

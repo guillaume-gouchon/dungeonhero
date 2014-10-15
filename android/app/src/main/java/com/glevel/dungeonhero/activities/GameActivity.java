@@ -18,6 +18,7 @@ import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.items.Item;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
@@ -25,6 +26,9 @@ import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.opengl.texture.TextureOptions;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends MyBaseGameActivity {
 
@@ -155,6 +159,10 @@ public class GameActivity extends MyBaseGameActivity {
                 mGUIManager.showBag(mHero);
                 break;
         }
+
+        if (view.getTag(R.string.item) != null) {
+            mGUIManager.showItemInfo(mHero, (Item) view.getTag(R.string.item));
+        }
     }
 
     public Unit getActiveCharacter() {
@@ -201,8 +209,14 @@ public class GameActivity extends MyBaseGameActivity {
                 mGUIManager.updateActiveHeroLayout(mHero);
 
                 if (mActiveCharacter instanceof Monster) {
-                    mInputManager.setEnabled(false);
-                    mActionDispatcher.attack(mHero.getTilePosition());
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            mInputManager.setEnabled(false);
+                            mActionDispatcher.attack(mHero.getTilePosition());
+                        }
+                    }, 500);
+
                 }
             }
         });

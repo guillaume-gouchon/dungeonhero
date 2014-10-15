@@ -14,6 +14,7 @@ import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.Actions;
 import com.glevel.dungeonhero.models.FightResult;
 import com.glevel.dungeonhero.models.Reward;
+import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
@@ -29,6 +30,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.tmx.TMXTile;
+import org.andengine.util.color.Color;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -48,7 +50,7 @@ public class ActionsDispatcher implements UserActionListener {
     private Tile mSelectedTile = null;
     private boolean isMoving = false;
     private boolean interrupt = false;
-    private TimerHandler moveHandler;
+    private TimerHandler animationHandler;
 
     // TODO needs refactor
     public ActionsDispatcher(GameActivity gameActivity, Scene scene) {
@@ -430,7 +432,7 @@ public class ActionsDispatcher implements UserActionListener {
             final Directions direction = Directions.from(nextTile.getX() - mGameActivity.getActiveCharacter().getTilePosition().getX(), mGameActivity.getActiveCharacter().getTilePosition().getY() - nextTile.getY());
             sprite.walk(direction);
             final List<Tile> p = new ArrayList<Tile>(path);
-            moveHandler = new TimerHandler(1.0f / 40, true, new ITimerCallback() {
+            animationHandler = new TimerHandler(1.0f / 40, true, new ITimerCallback() {
                 @Override
                 public void onTimePassed(TimerHandler pTimerHandler) {
                     sprite.setPosition(sprite.getX() + direction.getDx(), sprite.getY() - direction.getDy());
@@ -439,7 +441,7 @@ public class ActionsDispatcher implements UserActionListener {
                             || direction == Directions.WEST && sprite.getX() <= nextTile.getTileX()
                             || direction == Directions.SOUTH && sprite.getY() >= nextTile.getTileY()
                             || direction == Directions.NORTH && sprite.getY() <= nextTile.getTileY()) {
-                        mScene.unregisterUpdateHandler(moveHandler);
+                        mScene.unregisterUpdateHandler(animationHandler);
                         mGameActivity.getActiveCharacter().setTilePosition(nextTile);
                         sprite.setPosition(nextTile.getTileX(), nextTile.getTileY());
 
@@ -453,7 +455,7 @@ public class ActionsDispatcher implements UserActionListener {
                     }
                 }
             });
-            mScene.registerUpdateHandler(moveHandler);
+            mScene.registerUpdateHandler(animationHandler);
         } else {
             UnitSprite sprite = (UnitSprite) mGameActivity.getActiveCharacter().getSprite();
             sprite.stand();
@@ -474,11 +476,12 @@ public class ActionsDispatcher implements UserActionListener {
 
         // animate characters
         final Directions direction = Directions.from(targetSprite.getX() - attackerSprite.getX(), targetSprite.getY() - attackerSprite.getY());
-        moveHandler = new TimerHandler(1.0f / 60, true, new ITimerCallback() {
+        animationHandler = new TimerHandler(1.0f / 60, true, new ITimerCallback() {
 
-            private static final int OFFSET = 6;
-            private static final float ATTACKER_SPEED = 2.0f;
-            private static final float TARGET_SPEED = 0.5f;
+            private static final int DURATION_IN_FRAMES = 30;
+            private static final int OFFSET = 5;
+            private static final float ATTACKER_SPEED = 1.5f;
+            private static final float TARGET_SPEED = 0.6f;
 
             private int offset = OFFSET;
 
@@ -495,9 +498,9 @@ public class ActionsDispatcher implements UserActionListener {
                     } else if (fightResult.getState() == FightResult.States.DODGE) {
                         targetSprite.setPosition(targetSprite.getX() + (offset >= 0 ? ATTACKER_SPEED : -ATTACKER_SPEED) * direction.getDx(), targetSprite.getY() + (offset >= 0 ? ATTACKER_SPEED : -ATTACKER_SPEED) * direction.getDy());
                     }
-                } else {
+                } else if (offset <= -DURATION_IN_FRAMES + OFFSET) {
                     targetSprite.setColor(1.0f, 1.0f, 1.0f);
-                    mScene.unregisterUpdateHandler(moveHandler);
+                    mScene.unregisterUpdateHandler(animationHandler);
                     if (!done) {
                         done = true;
                         callback.onActionDone(true);
@@ -505,11 +508,45 @@ public class ActionsDispatcher implements UserActionListener {
                 }
             }
         });
-        mScene.registerUpdateHandler(moveHandler);
+        mScene.registerUpdateHandler(animationHandler);
     }
 
-    private void animateDeath(Unit target, OnActionExecuted onActionExecuted) {
-        mGameActivity.drawAnimatedSprite(target.getSprite().getX(), target.getSprite().getY(), "blood.png", 65, 0.3f, 0, true, 10, onActionExecuted);
+    private void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
+        mGameActivity.drawAnimatedSprite(target.getSprite().getX(), target.getSprite().getY(), "blood.png", 65, 0.3f, 0, true, 10, new OnActionExecuted() {
+            @Override
+            public void onActionDone(boolean success) {
+                if (target instanceof Monster) {
+                    animateGetReward((Monster) target, onActionExecuted);
+                } else {
+                    onActionExecuted.onActionDone(true);
+                }
+            }
+        });
+    }
+
+    private void animateGetReward(Monster target, final OnActionExecuted onActionExecuted) {
+        Reward reward = target.getReward();
+        if (reward != null) {
+            if (reward.getGold() > 0) {
+                mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
+            }
+            if (reward.getXp() > 0) {
+                mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", Color.BLUE, 0.2f, 50, -0.15f);
+            }
+            if (reward.getItem() != null) {
+                mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        onActionExecuted.onActionDone(true);
+                    }
+                });
+            } else {
+                onActionExecuted.onActionDone(true);
+            }
+        } else {
+            onActionExecuted.onActionDone(true);
+        }
+
     }
 
 }

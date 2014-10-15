@@ -52,7 +52,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mLstHeroes = HeroFactory.getHeroes();
+        mLstHeroes = HeroFactory.getAll();
 
         setContentView(R.layout.activity_new_game);
         setupUI();

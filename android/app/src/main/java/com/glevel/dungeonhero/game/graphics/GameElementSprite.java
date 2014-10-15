@@ -1,12 +1,12 @@
 package com.glevel.dungeonhero.game.graphics;
 
-import com.glevel.dungeonhero.game.base.GraphicsManager;
 import com.glevel.dungeonhero.game.andengine.custom.CenteredSprite;
 import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.game.base.GraphicsManager;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-public abstract class GameElementSprite extends CenteredSprite {
+public class GameElementSprite extends CenteredSprite {
 
     public static final int Y_OFFSET = 6;
 
@@ -15,6 +15,7 @@ public abstract class GameElementSprite extends CenteredSprite {
     }
 
     @Override
+
     public float getY() {
         return super.getY() + Y_OFFSET;
     }

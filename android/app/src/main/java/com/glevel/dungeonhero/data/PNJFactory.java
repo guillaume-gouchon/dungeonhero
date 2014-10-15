@@ -14,6 +14,12 @@ import java.util.List;
  */
 public class PNJFactory {
 
+    public static List<Pnj> getAll() {
+        List<Pnj> lst = new ArrayList<Pnj>();
+        lst.add(buildPNJ());
+        return lst;
+    }
+
     public static Pnj buildPNJ() {
         Pnj pnj = new Pnj(false, Ranks.NEUTRAL, R.drawable.goblin, "goblin.png", 5, 5, 6, 10, 2, 8, 8, R.string.app_name, R.string.choose_hero_message, 10, 1, 500);
         List<Reaction> reactions = new ArrayList<Reaction>();

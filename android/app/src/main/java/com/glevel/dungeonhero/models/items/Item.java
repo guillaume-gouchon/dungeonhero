@@ -1,16 +1,26 @@
 package com.glevel.dungeonhero.models.items;
 
+import java.io.Serializable;
+
 /**
  * Created by guillaume ON 10/6/14.
  */
-public class Item {
+public class Item implements Serializable {
+
+    private static final long serialVersionUID = -4963410849686406982L;
 
     private final int name;
     private final int image;
+    private final int color;
+    private final boolean droppable;
 
-    public Item(int name, int image) {
+    private boolean isIdentified;
+
+    public Item(int name, int image, int color, boolean droppable) {
         this.name = name;
         this.image = image;
+        this.color = color;
+        this.droppable = droppable;
     }
 
     public int getName() {
@@ -20,5 +30,21 @@ public class Item {
     public int getImage() {
         return image;
     }
-    
+
+    public boolean isIdentified() {
+        return isIdentified;
+    }
+
+    public void setIdentified(boolean isIdentified) {
+        this.isIdentified = isIdentified;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public boolean isDroppable() {
+        return droppable;
+    }
+
 }

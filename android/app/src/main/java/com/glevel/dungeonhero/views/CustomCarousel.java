@@ -60,7 +60,7 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
     private void updatePagination() {
         mPagination.removeAllViews();
-        mPaginationDots = new View[mAdapter.getCount() + 1 - mNbColumns];
+        mPaginationDots = new View[mAdapter.getCount() - (mNbColumns - 1)];
 
         int sizeDot = ApplicationUtils.convertDpToPixels(mContext, DOTS_SIZE);
         LayoutParams layoutParams = new LinearLayout.LayoutParams(sizeDot, sizeDot);
@@ -83,20 +83,13 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        int direction = position + (positionOffsetPixels > 0 ? 1 : -1);
-        if (direction >= 0 && direction < mPaginationDots.length) {
-            mPaginationDots[direction].setAlpha(ALPHA_PASSIVE_DOT + positionOffset * (ALPHA_ACTIVE_DOT - ALPHA_PASSIVE_DOT));
-            if (position >= 0 && position < mPaginationDots.length) {
-                mPaginationDots[position].setAlpha(ALPHA_ACTIVE_DOT - positionOffset * (ALPHA_ACTIVE_DOT - ALPHA_PASSIVE_DOT));
-            }
-        }
     }
 
     @Override
     public void onPageSelected(int position) {
-        int halfPosition = (int) Math.ceil((double) position / 2);
+        int realPosition = position;
         for (int n = 0; n < mPaginationDots.length; n++) {
-            if (halfPosition == n || halfPosition >= mPaginationDots.length && n == mPaginationDots.length - 1) {
+            if (realPosition == n || realPosition >= mPaginationDots.length && n == mPaginationDots.length - 1) {
                 mPaginationDots[n].setAlpha(ALPHA_ACTIVE_DOT);
             } else {
                 mPaginationDots[n].setAlpha(ALPHA_PASSIVE_DOT);

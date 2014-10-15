@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class BookFactory {
 
-    public static List<Book> getBooks() {
-        List<Book> lstBooks = new ArrayList<Book>();
-        lstBooks.add(buildInitiationBook(1 + lstBooks.size()));
-        lstBooks.add(buildInitiationBook(1 + lstBooks.size()));
-        return lstBooks;
+    public static List<Book> getAll() {
+        List<Book> lst = new ArrayList<Book>();
+        lst.add(buildInitiationBook(1 + lst.size()));
+        lst.add(buildInitiationBook(1 + lst.size()));
+        return lst;
     }
 
     public static Book buildInitiationBook(int bookId) {

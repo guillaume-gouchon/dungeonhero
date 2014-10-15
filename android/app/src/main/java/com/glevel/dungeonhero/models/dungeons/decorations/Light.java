@@ -12,7 +12,7 @@ public class Light extends Decoration {
     private static final long serialVersionUID = -1922234895386514835L;
 
     public Light(int name, String spriteName) {
-        super(name, spriteName);
+        super(name, spriteName, 21, 20, 3, 1);
     }
 
     @Override

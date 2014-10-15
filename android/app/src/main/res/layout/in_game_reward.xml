@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
-            style="@style/RewardMessage"
+            style="@style/PopupMessage"
             android:textColor="@color/white" />
 
         <com.glevel.dungeonhero.views.CustomTextView
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
-            style="@style/RewardMessage"
+            style="@style/PopupMessage"
             android:drawableLeft="@drawable/ic_coin"
             android:textColor="@color/strength" />
 
@@ -37,16 +37,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
-            style="@style/RewardMessage"
+            style="@style/PopupMessage"
             android:textColor="@color/attack" />
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/dismiss_button"
-            style="@style/RewardMessage"
+            style="@style/PopupButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/close"
-            android:background="@drawable/bg_transparent_btn"
-            android:textColor="@drawable/text_color_btn" />
+            android:text="@string/close" />
     </LinearLayout>
 </LinearLayout>

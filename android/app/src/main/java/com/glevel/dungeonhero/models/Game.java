@@ -4,13 +4,21 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.glevel.dungeonhero.data.BookFactory;
+import com.glevel.dungeonhero.data.DecorationFactory;
+import com.glevel.dungeonhero.data.MonsterFactory;
+import com.glevel.dungeonhero.data.PNJFactory;
+import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
+import com.glevel.dungeonhero.game.graphics.GraphicHolder;
+import com.glevel.dungeonhero.game.graphics.SpriteHolder;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.utils.database.ByteSerializer;
 import com.glevel.dungeonhero.utils.database.DatabaseResource;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by guillaume ON 10/2/14.
@@ -19,7 +27,7 @@ public class Game extends DatabaseResource implements Serializable {
 
     public static final String TABLE_NAME = "game";
     private static final long serialVersionUID = -840485102400894219L;
-    
+
     private Book book;
     private int[] booksDone;
     private Chapter chapter;
@@ -42,7 +50,7 @@ public class Game extends DatabaseResource implements Serializable {
         game.setId(cursor.getLong(0));
         int bookId = cursor.getInt(1);
         if (bookId > 0) {
-            game.setBook(BookFactory.getBooks().get(bookId - 1));
+            game.setBook(BookFactory.getAll().get(bookId - 1));
         }
         game.setChapter((Chapter) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
         game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
@@ -124,6 +132,33 @@ public class Game extends DatabaseResource implements Serializable {
         public String toString() {
             return columnName;
         }
+    }
+
+    public List<GraphicHolder> getGraphicsToLoad() {
+        List<GraphicHolder> toLoad = new ArrayList<GraphicHolder>();
+
+        // load hero
+        toLoad.add(hero);
+
+        // load monsters
+        for (GameElement element : MonsterFactory.getAll()) {
+            toLoad.add(element);
+        }
+
+        // load decorations
+        for (GameElement element : DecorationFactory.getAll()) {
+            toLoad.add(element);
+        }
+
+        // load PNJs
+        for (GameElement element : PNJFactory.getAll()) {
+            toLoad.add(element);
+        }
+
+        toLoad.add(new SpriteHolder("selection.png", 64, 64, 1, 1));
+        toLoad.add(new SpriteHolder("blood.png", 300, 50, 6, 1));
+
+        return toLoad;
     }
 
 }
