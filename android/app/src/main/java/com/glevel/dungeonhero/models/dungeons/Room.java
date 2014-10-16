@@ -1,15 +1,19 @@
 package com.glevel.dungeonhero.models.dungeons;
 
+import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.DecorationFactory;
-import com.glevel.dungeonhero.data.MonsterFactory;
 import com.glevel.dungeonhero.data.PNJFactory;
+import com.glevel.dungeonhero.data.WeaponFactory;
 import com.glevel.dungeonhero.data.dungeon.Rooms;
 import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
+import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
+import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXTile;
@@ -20,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by guillaume ON 10/8/14.
@@ -74,12 +79,8 @@ public class Room implements Serializable {
                         tile.setTerrain(objectTile.getTerrain());
 
                         // add properties
-                        if (objectTile.getProperty() != null) {
-                            tile.setProperty(objectTile.getProperty());
-
-                            if (tile.getTerrain() == TerrainTypes.DOOR) {
-                                doors.put(Directions.values()[Integer.parseInt(tile.getProperty().getValue())], tile);
-                            }
+                        if (tile.getTerrain() == TerrainTypes.DOOR) {
+                            doors.put(getDoorDirection(tile), tile);
                         }
                     }
                 }
@@ -88,6 +89,18 @@ public class Room implements Serializable {
             createRoomContent(hero, dungeon);
         }
         checkSafe();
+    }
+
+    private Directions getDoorDirection(Tile tile) {
+        int x = tile.getTileColumn();
+        int y = tile.getTileRow();
+        Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(tiles, tile, 1, false, null);
+        if (adjacentTiles.isEmpty()) {
+            return Directions.NORTH;
+        } else {
+            Tile adjacentTile = adjacentTiles.iterator().next();
+            return Directions.from(tile.getX() - adjacentTile.getX(), adjacentTile.getY() - tile.getY());
+        }
     }
 
     private void addContentFromExistingTiles() {
@@ -102,12 +115,13 @@ public class Room implements Serializable {
 
     private void createRoomContent(Hero hero, Dungeon dungeon) {
         // TODO
-        addGameElement(hero, doors.get(Directions.NORTH));
-        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
-        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
-        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
+        addGameElement(hero, doors.get(Directions.WEST));
+//        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
+//        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
+//        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
 
         addGameElement(PNJFactory.buildPNJ(), 5, 8);
+        addGameElement(new ItemOnGround(R.string.gold_coins, new Reward(WeaponFactory.buildSword(), 0, 0)), 10, 10);
 
         addGameElement(DecorationFactory.buildLight(), 5, 10);
         addGameElement(DecorationFactory.buildLight(), 5, 12);

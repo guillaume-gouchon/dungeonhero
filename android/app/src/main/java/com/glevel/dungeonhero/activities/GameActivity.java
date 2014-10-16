@@ -55,8 +55,17 @@ public class GameActivity extends MyBaseGameActivity {
         mRoom = mDungeon.getCurrentRoom();
         mHero = mGame.getHero();
 
+        // show intro story if needed
         // TODO
-        mMustSaveGame = false;
+//        if (mDungeon.hasToDisplayIntroStory() && mDungeon.getIntroText() > 0) {
+//            Bundle args = new Bundle();
+//            args.putInt(StoryFragment.ARGUMENT_STORY, mDungeon.getIntroText());
+//            ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
+//            mDungeon.setIntroTextAlreadyRead(true);
+//        }
+
+        // TODO : remove
+        mDoSaveGame = false;
     }
 
     @Override
@@ -105,10 +114,14 @@ public class GameActivity extends MyBaseGameActivity {
                     gameElement.setTilePosition(tile);
                     addElementToScene(gameElement);
                 }
+
+                gameElement = tile.getSubContent();
+                if (gameElement != null) {
+                    gameElement.setTilePosition(tile);
+                    addElementToScene(gameElement);
+                }
             }
         }
-
-        mScene.sortChildren(true);
 
         pOnPopulateSceneCallback.onPopulateSceneFinished();
 
@@ -151,17 +164,19 @@ public class GameActivity extends MyBaseGameActivity {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.hero:
-                mGUIManager.showHeroInfo(mHero);
-                break;
-            case R.id.bag:
-                mGUIManager.showBag(mHero);
-                break;
-        }
+        if (mInputManager.ismIsEnabled()) {
+            switch (view.getId()) {
+                case R.id.hero:
+                    mGUIManager.showHeroInfo(mHero);
+                    break;
+                case R.id.bag:
+                    mGUIManager.showBag(mHero);
+                    break;
+            }
 
-        if (view.getTag(R.string.item) != null) {
-            mGUIManager.showItemInfo(mHero, (Item) view.getTag(R.string.item));
+            if (view.getTag(R.string.item) != null) {
+                mGUIManager.showItemInfo(mHero, (Item) view.getTag(R.string.item));
+            }
         }
     }
 
@@ -208,11 +223,12 @@ public class GameActivity extends MyBaseGameActivity {
 
                 mGUIManager.updateActiveHeroLayout(mHero);
 
+                mInputManager.setEnabled(!mActiveCharacter.isEnemy(mHero));
+
                 if (mActiveCharacter instanceof Monster) {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            mInputManager.setEnabled(false);
                             mActionDispatcher.attack(mHero.getTilePosition());
                         }
                     }, 500);

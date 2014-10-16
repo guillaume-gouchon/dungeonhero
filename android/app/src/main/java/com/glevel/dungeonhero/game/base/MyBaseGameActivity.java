@@ -38,7 +38,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
     protected DatabaseHelper mDbHelper;
     protected SharedPreferences mSharedPrefs;
 
-    protected boolean mMustSaveGame = true;
+    protected boolean mDoSaveGame = true;
     protected Game mGame;
 
     protected Scene mScene;
@@ -48,7 +48,6 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
     protected GUIManager mGUIManager;
     protected SoundEffectManager mSoundEffectManager;
     protected Font mDefaultFont;
-    protected UserActionListener mInputDispatcher;
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -143,7 +142,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         if (mSoundEffectManager != null) {
             mSoundEffectManager.onPause();
         }
-        if (mMustSaveGame) {
+        if (mDoSaveGame) {
             mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).save(mGame);
         }
     }
@@ -170,6 +169,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
             mScene.registerTouchArea(shape);
         }
         mScene.attachChild(shape);
+        mScene.sortChildren(true);
     }
 
     public void removeElement(final Shape shape, boolean isClickable) {
@@ -223,7 +223,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         animatedText.setScaleCenter(0.5f, 0.5f);
         animatedText.setColor(color);
         animatedText.setScale(scale);
-        animatedText.setAlpha(0.7f);
+        animatedText.setAlpha(0.6f);
         mScene.attachChild(animatedText);
         if (duration > 0) {
             animatedText.registerUpdateHandler(new IUpdateHandler() {

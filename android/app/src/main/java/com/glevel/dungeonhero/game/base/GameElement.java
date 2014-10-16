@@ -17,7 +17,7 @@ public abstract class GameElement implements Serializable, GraphicHolder {
     private final int name;
     protected transient GameElementSprite sprite;
     private Ranks rank;
-    private transient Tile tilePosition;
+    protected transient Tile tilePosition;
 
     private final String spriteName;
     private final int spriteWidth, spriteHeight, nbSpritesX, nbSpritesY;

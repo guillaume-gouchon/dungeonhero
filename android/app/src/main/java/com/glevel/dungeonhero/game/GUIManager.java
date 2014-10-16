@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -372,7 +370,6 @@ public class GUIManager {
 
                         if (reward.getGold() > 0) {
                             goldTV.setText(mActivity.getString(R.string.found_gold, reward.getGold()));
-                            goldTV.getCompoundDrawables()[0].setColorFilter(goldTV.getCurrentTextColor(), PorterDuff.Mode.MULTIPLY);
                             goldTV.setVisibility(View.VISIBLE);
                         } else {
                             goldTV.setVisibility(View.GONE);
@@ -403,24 +400,24 @@ public class GUIManager {
         mBagDialog = new Dialog(mActivity, R.style.Dialog);
         mBagDialog.setContentView(R.layout.in_game_bag);
         mBagDialog.setCancelable(true);
+        mBagDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
         updateBag(hero);
 
-        ((TextView) mBagDialog.findViewById(R.id.gold)).setText("" + hero.getGold());
+        ((TextView) mBagDialog.findViewById(R.id.gold_amount)).setText("" + hero.getGold());
 
         mBagDialog.show();
     }
 
     private void updateBag(Hero hero) {
         ViewGroup bagLayout = (ViewGroup) mBagDialog.findViewById(R.id.bag);
-        bagLayout.removeAllViews();
-        LayoutInflater inflater = mActivity.getLayoutInflater();
-        GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
-        View itemView;
-        for (Item item : hero.getItems()) {
-            itemView = inflater.inflate(R.layout.in_game_item, null);
-            updateItemLayout(itemView, item);
-            bagLayout.addView(itemView);
+        Item item;
+        for (int n = 0; n < bagLayout.getChildCount(); n++) {
+            item = null;
+            if (n < hero.getItems().size()) {
+                item = hero.getItems().get(n);
+            }
+            updateItemLayout(bagLayout.getChildAt(n), item);
         }
 
         ViewGroup equipmentLayout = (ViewGroup) mBagDialog.findViewById(R.id.equipment);
@@ -435,31 +432,41 @@ public class GUIManager {
         View background = itemView.findViewById(R.id.background);
         ImageView image = (ImageView) itemView.findViewById(R.id.image);
 
+        itemView.setTag(R.string.item, item);
+
         if (item != null) {
             background.setBackgroundColor(mActivity.getResources().getColor(item.getColor()));
             image.setImageResource(item.getImage());
             image.setAlpha(1.0f);
             itemView.setEnabled(true);
-            itemView.setTag(R.string.item, item);
             itemView.setOnClickListener(mActivity);
-        } else {
+        } else if (itemView.isEnabled()) {
             background.setBackgroundColor(mActivity.getResources().getColor(android.R.color.transparent));
             image.setImageResource(defaultImage);
             image.setAlpha(0.2f);
             itemView.setEnabled(false);
-            itemView.setTag(R.string.item, null);
             itemView.setOnClickListener(null);
         }
     }
 
     private void updateItemLayout(View itemView, Item item) {
         View background = itemView.findViewById(R.id.background);
-        background.setBackgroundColor(mActivity.getResources().getColor(item.getColor()));
-
         ImageView image = (ImageView) itemView.findViewById(R.id.image);
-        image.setImageResource(item.getImage());
+
         itemView.setTag(R.string.item, item);
-        itemView.setOnClickListener(mActivity);
+
+        if (item != null) {
+            background.setBackgroundColor(mActivity.getResources().getColor(item.getColor()));
+            image.setImageResource(item.getImage());
+            itemView.setEnabled(true);
+            itemView.setOnClickListener(mActivity);
+        } else if (itemView.isEnabled()) {
+            background.setBackgroundColor(mActivity.getResources().getColor(android.R.color.transparent));
+            image.setImageResource(0);
+            itemView.setEnabled(false);
+            itemView.setOnClickListener(null);
+        }
+
     }
 
     public void showItemInfo(final Hero hero, final Item item) {

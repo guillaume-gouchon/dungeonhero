@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.game;
 
 import android.content.DialogInterface;
+import android.widget.Toast;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.GameActivity;
@@ -21,7 +22,10 @@ import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.discussions.Discussion;
 import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
+import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.pathfinding.AStar;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
@@ -63,7 +67,7 @@ public class ActionsDispatcher implements UserActionListener {
     @Override
     public void onTouch(float x, float y) {
         Tile tile = getTileAtCoordinates(x, y);
-        if (tile != null && tile.getAction() != null) {
+        if (tile != null && tile.getAction() != null && mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
             selectTile(tile);
         }
     }
@@ -71,10 +75,12 @@ public class ActionsDispatcher implements UserActionListener {
     @Override
     public void onTap(float x, float y) {
         Tile tile = getTileAtCoordinates(x, y);
-        if (tile != null) {
-            if (tile.getContent() != null && tile.getContent() != mSelectedElement && tile.getContent().getRank() != Ranks.ME) {
+        if (tile != null && mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
+            if (tile.getSubContent() != null && tile.getSubContent() != mSelectedElement) {
+                showElementInfo(tile.getSubContent());
+            } else if (tile.getContent() != null && tile.getContent() != mSelectedElement && tile.getContent().getRank() != Ranks.ME) {
                 showElementInfo(tile.getContent());
-            } else if (tile.getContent() != null && tile.getContent().getRank() == Ranks.ME && mSelectedTile == tile) {// end movement
+            } else if (tile.getContent() != null && tile.getContent().getRank() == Ranks.ME && mSelectedTile == tile && tile.getSubContent() == null) {// end movement
                 mGameActivity.nextTurn();
             } else if (!isMoving && tile.getAction() != null && tile.getAction() != Actions.NONE) {
                 executeAction(tile);
@@ -149,7 +155,9 @@ public class ActionsDispatcher implements UserActionListener {
                 }
             });
         } else {
-            mInputManager.setEnabled(true);
+            if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
+                mInputManager.setEnabled(true);
+            }
         }
     }
 
@@ -181,8 +189,9 @@ public class ActionsDispatcher implements UserActionListener {
                     mGameActivity.nextTurn();
                 }
                 isMoving = false;
-                mInputManager.setEnabled(true);
-
+                if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
+                    mInputManager.setEnabled(true);
+                }
             }
         });
     }
@@ -195,8 +204,16 @@ public class ActionsDispatcher implements UserActionListener {
             @Override
             public void onActionDone(boolean success) {
                 if (success) {
-                    Searchable searchable = (Searchable) tile.getContent();
+                    Searchable searchable;
+                    if (tile.getContent() != null && tile.getContent() instanceof Searchable) {
+                        searchable = (Searchable) tile.getContent();
+                    } else {
+                        searchable = (Searchable) tile.getSubContent();
+                    }
                     Reward reward = searchable.search();
+                    if (searchable instanceof ItemOnGround) {
+                        mGameActivity.removeElement(searchable);
+                    }
                     foundReward(reward, true);
                 } else {
                     mGameActivity.nextTurn();
@@ -220,10 +237,27 @@ public class ActionsDispatcher implements UserActionListener {
         if (reward != null) {
             // update hero
             if (reward.getItem() != null) {
-                mGameActivity.getHero().getItems().add(reward.getItem());
+                getItemOrDropIt(reward.getItem());
             }
             mGameActivity.getHero().addGold(reward.getGold());
             mGameActivity.getHero().addXP(reward.getXp());
+        }
+    }
+
+    private void getItemOrDropIt(Item item) {
+        boolean success = mGameActivity.getHero().addItem(item);
+        if (!success) {
+            mGameActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ApplicationUtils.showToast(mGameActivity, R.string.bag_full, Toast.LENGTH_LONG);
+                }
+            });
+            Tile tile = mGameActivity.getHero().getTilePosition();
+            ItemOnGround itemOnGround = new ItemOnGround(item.getName(), new Reward(item, 0, 0));
+            itemOnGround.setTilePosition(tile);
+            mGameActivity.addElementToScene(itemOnGround);
+            mGameActivity.getRoom().getObjects().add(itemOnGround);
         }
     }
 
@@ -281,18 +315,22 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void goCloserTo(Tile tile, OnActionExecuted callback) {
-        if (MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) == 1) {
+        if (MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) <= 1) {
             callback.onActionDone(true);
             return;
         }
 
         List<Tile> shortestPath = null;
-        Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, 1, false, mGameActivity.getActiveCharacter());
-        for (Tile adjacent : adjacentTiles) {
-            if (mGameActivity.getRoom().isSafe() || adjacent.getAction() == Actions.MOVE) {
-                List<Tile> path = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), adjacent, false, mGameActivity.getActiveCharacter());
-                if (path != null && (shortestPath == null || path.size() < shortestPath.size())) {
-                    shortestPath = path;
+        if (mGameActivity.getActiveCharacter().canMoveIn(tile)) {
+            shortestPath = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), tile, false, mGameActivity.getActiveCharacter());
+        } else {
+            Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, 1, false, mGameActivity.getActiveCharacter());
+            for (Tile adjacent : adjacentTiles) {
+                if (mGameActivity.getRoom().isSafe() || adjacent.getAction() == Actions.MOVE) {
+                    List<Tile> path = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), adjacent, false, mGameActivity.getActiveCharacter());
+                    if (path != null && (shortestPath == null || path.size() < shortestPath.size())) {
+                        shortestPath = path;
+                    }
                 }
             }
         }
@@ -327,7 +365,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void addAvailableAction(GameElement gameElement) {
-        boolean isActionPossible = mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), gameElement.getTilePosition()) == 1;
+        boolean isActionPossible = mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), gameElement.getTilePosition()) <= 1;
         if (!isActionPossible) {
             Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), gameElement.getTilePosition(), 1, false, mGameActivity.getActiveCharacter());
             for (Tile adjacent : adjacentTiles) {
@@ -393,16 +431,15 @@ public class ActionsDispatcher implements UserActionListener {
         for (Tile tile : reachableTiles) {
             tile.setAction(Actions.MOVE);
             c = new ActionTile(Actions.MOVE, tile, mGameActivity.getVertexBufferObjectManager());
+            if (mGameActivity.getActiveCharacter().getRank() != Ranks.ME) {
+                c.setAlpha(0.15f);
+            }
             mGameActivity.mGroundLayer.attachChild(c);
         }
 
-        for (GameElement gameElement : mGameActivity.getRoom().getObjects()) {
-            if (mGameActivity.getActiveCharacter() != gameElement && MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().getMovement() + 1) {
-                addAvailableAction(gameElement);
-            }
+        if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
+            showActions();
         }
-
-        showActions();
     }
 
     public void showActions() {
@@ -527,17 +564,17 @@ public class ActionsDispatcher implements UserActionListener {
     private void animateGetReward(Monster target, final OnActionExecuted onActionExecuted) {
         Reward reward = target.getReward();
         if (reward.getItem() != null) {
-            mGameActivity.getHero().getItems().add(reward.getItem());
+            getItemOrDropIt(reward.getItem());
         }
         mGameActivity.getHero().addGold(reward.getGold());
         mGameActivity.getHero().addXP(reward.getXp());
-        
+
         if (reward != null) {
             if (reward.getGold() > 0) {
-                mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
+                mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", new Color(1, 1, 0), 0.2f, 50, -0.15f);
             }
             if (reward.getXp() > 0) {
-                mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", Color.BLUE, 0.2f, 50, -0.15f);
+                mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(0, 0, 0.9f), 0.2f, 50, -0.15f);
             }
             if (reward.getItem() != null) {
                 mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {

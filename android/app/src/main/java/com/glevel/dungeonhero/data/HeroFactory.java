@@ -29,7 +29,7 @@ public class HeroFactory {
         Hero hero = new Hero(Ranks.ME, R.drawable.warrior, "warrior.png", 18, 18, 14, 9, 6, 12, 6, R.string.berserker, R.string.berserker_description, 10, null, 0, 1);
         hero.getPassive().add(new Rage());
         hero.equip(WeaponFactory.buildSword());
-        hero.getItems().add(WeaponFactory.buildSword());
+        hero.addItem(WeaponFactory.buildSword());
         return hero;
     }
 

@@ -157,6 +157,7 @@ public class Game extends DatabaseResource implements Serializable {
 
         toLoad.add(new SpriteHolder("selection.png", 64, 64, 1, 1));
         toLoad.add(new SpriteHolder("blood.png", 300, 50, 6, 1));
+        toLoad.add(new SpriteHolder("item_on_ground.png", 12, 12, 1, 1));
 
         return toLoad;
     }

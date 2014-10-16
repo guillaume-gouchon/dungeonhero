@@ -143,4 +143,8 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
         this.mIsEnabled = isEnabled;
     }
 
+    public boolean ismIsEnabled() {
+        return mIsEnabled;
+    }
+
 }

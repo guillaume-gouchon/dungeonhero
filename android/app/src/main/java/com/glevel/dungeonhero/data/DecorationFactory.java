@@ -30,7 +30,7 @@ public class DecorationFactory {
     }
 
     public static Decoration buildTreasureChest() {
-        return new TreasureChest(R.string.treasure_chest, "treasure_chest.png", new Reward(null, 210, 0));
+        return new TreasureChest(R.string.treasure_chest, "treasure_chest.png", new Reward(WeaponFactory.buildSword(), 210, 0));
     }
 
     public static Decoration buildBarrel() {

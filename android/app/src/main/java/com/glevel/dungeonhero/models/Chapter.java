@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.models;
 
+import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 
@@ -23,7 +24,7 @@ public class Chapter implements Serializable {
         this.introText = introText;
         this.outroText = outroText;
         this.boss = boss;
-        this.dungeon = new Dungeon();
+        this.dungeon = new Dungeon(R.string.about, 0);
         this.done = false;
     }
 

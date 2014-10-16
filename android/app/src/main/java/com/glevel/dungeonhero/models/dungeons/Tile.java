@@ -18,9 +18,9 @@ public class Tile extends TMXTile implements Node, Serializable {
     private static final long serialVersionUID = 3793350205301888410L;
 
     private GameElement content = null;
+    private GameElement subContent = null;
     private GroundTypes ground = null;
     private TerrainTypes terrain = null;
-    private transient TMXTileProperty property;
     private transient Actions action;
     private transient boolean isSelected = false;
 
@@ -43,7 +43,6 @@ public class Tile extends TMXTile implements Node, Serializable {
                 }
 
                 if (prop.getName().equals(TerrainTypes.DOOR.name())) {
-                    property = prop;
                     terrain = TerrainTypes.DOOR;
                 }
             }
@@ -99,14 +98,6 @@ public class Tile extends TMXTile implements Node, Serializable {
         return (int) ((getTileRow() + 0.5) * getTileHeight());
     }
 
-    public void setProperty(TMXTileProperty property) {
-        this.property = property;
-    }
-
-    public TMXTileProperty getProperty() {
-        return property;
-    }
-
     public void setAction(Actions action) {
         this.action = action;
     }
@@ -121,6 +112,15 @@ public class Tile extends TMXTile implements Node, Serializable {
 
     public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+
+    public GameElement getSubContent() {
+        return subContent;
+    }
+
+    public void setSubContent(GameElement subContent) {
+        this.subContent = subContent;
     }
 
 }

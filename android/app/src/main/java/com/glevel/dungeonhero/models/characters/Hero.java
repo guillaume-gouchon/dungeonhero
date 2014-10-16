@@ -16,6 +16,7 @@ import com.glevel.dungeonhero.utils.billing.InAppProduct;
 public class Hero extends Unit implements InAppProduct {
 
     private static final long serialVersionUID = -2887616275513777101L;
+    private static final int NB_ITEMS_MAX_IN_BAG = 15;
 
     protected boolean mHasBeenBought = false;
 
@@ -136,8 +137,10 @@ public class Hero extends Unit implements InAppProduct {
     }
 
     private void removeEquipment(int index) {
-        items.add(equipments[index]);
-        equipments[index] = null;
+        boolean success = addItem(equipments[index]);
+        if (success) {
+            equipments[index] = null;
+        }
     }
 
     public void addXP(int xpAmount) {
@@ -169,6 +172,15 @@ public class Hero extends Unit implements InAppProduct {
     public void use(Consumable consumable) {
         items.remove(consumable);
         consumable.use(this);
+    }
+
+    public boolean addItem(Item item) {
+        if (items.size() < NB_ITEMS_MAX_IN_BAG) {
+            items.add(item);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
