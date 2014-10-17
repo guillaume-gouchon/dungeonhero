@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.GameActivity;
+import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.InputManager;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
@@ -152,6 +153,9 @@ public class ActionsDispatcher implements UserActionListener {
                     mInputManager.setEnabled(true);
                     isMoving = false;
                     selectTile(null);
+                    if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
+                        mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
+                    }
                 }
             });
         } else {
@@ -253,12 +257,19 @@ public class ActionsDispatcher implements UserActionListener {
                     ApplicationUtils.showToast(mGameActivity, R.string.bag_full, Toast.LENGTH_LONG);
                 }
             });
-            Tile tile = mGameActivity.getHero().getTilePosition();
-            ItemOnGround itemOnGround = new ItemOnGround(item.getName(), new Reward(item, 0, 0));
-            itemOnGround.setTilePosition(tile);
-            mGameActivity.addElementToScene(itemOnGround);
-            mGameActivity.getRoom().getObjects().add(itemOnGround);
+            dropItem(item);
         }
+    }
+
+    public void dropItem(Item item) {
+        Tile tile = mGameActivity.getHero().getTilePosition();
+        if (tile.getSubContent() != null) {
+            mGameActivity.removeElement(tile.getSubContent());
+        }
+        ItemOnGround itemOnGround = new ItemOnGround(item.getName(), new Reward(item, 0, 0));
+        itemOnGround.setTilePosition(tile);
+        mGameActivity.addElementToScene(itemOnGround);
+        mGameActivity.getRoom().getObjects().add(itemOnGround);
     }
 
     private void talk(final Tile tile) {

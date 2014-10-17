@@ -10,6 +10,7 @@ import com.glevel.dungeonhero.data.HeroFactory;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
+import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -175,7 +176,13 @@ public class GameActivity extends MyBaseGameActivity {
             }
 
             if (view.getTag(R.string.item) != null) {
-                mGUIManager.showItemInfo(mHero, (Item) view.getTag(R.string.item));
+                final Item item = (Item) view.getTag(R.string.item);
+                mGUIManager.showItemInfo(mHero, item, new OnActionExecuted() {
+                    @Override
+                    public void onActionDone(boolean success) {
+                        mActionDispatcher.dropItem(item);
+                    }
+                });
             }
         }
     }
@@ -252,6 +259,10 @@ public class GameActivity extends MyBaseGameActivity {
                 }
             }
         });
+    }
+
+    public void switchRoom(Tile tilePosition) {
+        // TODO
     }
 
 }

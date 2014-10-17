@@ -19,6 +19,7 @@ import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
+import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -469,7 +470,7 @@ public class GUIManager {
 
     }
 
-    public void showItemInfo(final Hero hero, final Item item) {
+    public void showItemInfo(final Hero hero, final Item item, final OnActionExecuted onDropListener) {
         mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
         mItemInfoDialog.setContentView(R.layout.in_game_item_info);
         mItemInfoDialog.setCancelable(true);
@@ -526,6 +527,7 @@ public class GUIManager {
                 public void onClick(View view) {
                     hero.drop(item);
                     updateBag(hero);
+                    onDropListener.onActionDone(true);
                     mItemInfoDialog.dismiss();
                 }
             });

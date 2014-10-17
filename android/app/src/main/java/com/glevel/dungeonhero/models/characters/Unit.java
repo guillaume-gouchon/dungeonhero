@@ -140,7 +140,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     @Override
     public boolean canMoveIn(Tile tile) {
-        return tile.getGround() != null && tile.getContent() == null && (tile.getTerrain() == null || !tile.getTerrain().isBlocking());
+        return tile.getGround() != null && tile.getContent() == null;
     }
 
     public int getMovement() {

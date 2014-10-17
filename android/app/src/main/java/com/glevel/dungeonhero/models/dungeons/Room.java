@@ -4,8 +4,8 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.DecorationFactory;
 import com.glevel.dungeonhero.data.PNJFactory;
 import com.glevel.dungeonhero.data.WeaponFactory;
+import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.data.dungeon.Rooms;
-import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -22,6 +22,7 @@ import org.andengine.extension.tmx.TMXTiledMap;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,25 +64,19 @@ public class Room implements Serializable {
                 for (TMXTile tmxTile : tmxTiles) {
                     tile = new Tile(tmxTile, tiledMap);
                     tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = tile;
+
+                    // add properties
+                    if (tile.getGround() == GroundTypes.DOOR) {
+                        doors.put(getDoorDirection(tile), tile);
+                    }
                 }
             }
 
-            // add objects and doors
-            TMXLayer objectsLayer = tiledMap.getTMXLayers().get(1);
-            for (TMXTile[] tmxTiles : objectsLayer.getTMXTiles()) {
-                for (TMXTile tmxTile : tmxTiles) {
-                    Tile objectTile = new Tile(tmxTile, tiledMap);
-                    if (objectTile.getTerrain() != null) {
-                        if (tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] == null) {
-                            tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = objectTile;
-                        }
-                        tile = tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()];
-                        tile.setTerrain(objectTile.getTerrain());
-
-                        // add properties
-                        if (tile.getTerrain() == TerrainTypes.DOOR) {
-                            doors.put(getDoorDirection(tile), tile);
-                        }
+            for (Tile[] hTiles : tiles) {
+                for (Tile t : hTiles) {
+                    // add doors
+                    if (t.getGround() == GroundTypes.DOOR) {
+                        doors.put(getDoorDirection(t), t);
                     }
                 }
             }
@@ -95,12 +90,12 @@ public class Room implements Serializable {
         int x = tile.getTileColumn();
         int y = tile.getTileRow();
         Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(tiles, tile, 1, false, null);
-        if (adjacentTiles.isEmpty()) {
-            return Directions.NORTH;
-        } else {
-            Tile adjacentTile = adjacentTiles.iterator().next();
-            return Directions.from(tile.getX() - adjacentTile.getX(), adjacentTile.getY() - tile.getY());
-        }
+        Iterator<Tile> iterator = adjacentTiles.iterator();
+        Tile adjacentTile;
+        do {
+            adjacentTile = iterator.next();
+        } while (adjacentTile.getGround() == null && iterator.hasNext());
+        return Directions.from(tile.getX() - adjacentTile.getX(), adjacentTile.getY() - tile.getY());
     }
 
     private void addContentFromExistingTiles() {
@@ -115,7 +110,7 @@ public class Room implements Serializable {
 
     private void createRoomContent(Hero hero, Dungeon dungeon) {
         // TODO
-        addGameElement(hero, doors.get(Directions.WEST));
+        addGameElement(hero, doors.get(Directions.NORTH));
 //        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
 //        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
 //        addGameElement(MonsterFactory.buildGoblin(), 8, 8);

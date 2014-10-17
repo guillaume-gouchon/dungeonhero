@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
-import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.Actions;
 import com.glevel.dungeonhero.utils.pathfinding.Node;
@@ -20,7 +19,6 @@ public class Tile extends TMXTile implements Node, Serializable {
     private GameElement content = null;
     private GameElement subContent = null;
     private GroundTypes ground = null;
-    private TerrainTypes terrain = null;
     private transient Actions action;
     private transient boolean isSelected = false;
 
@@ -40,10 +38,8 @@ public class Tile extends TMXTile implements Node, Serializable {
                 // setup ground type
                 if (prop.getName().equals(GroundTypes.DUNGEON_FLOOR.name())) {
                     ground = GroundTypes.DUNGEON_FLOOR;
-                }
-
-                if (prop.getName().equals(TerrainTypes.DOOR.name())) {
-                    terrain = TerrainTypes.DOOR;
+                } else if (prop.getName().equals(GroundTypes.DOOR.name())) {
+                    ground = GroundTypes.DOOR;
                 }
             }
         }
@@ -63,14 +59,6 @@ public class Tile extends TMXTile implements Node, Serializable {
 
     public void setGround(GroundTypes ground) {
         this.ground = ground;
-    }
-
-    public TerrainTypes getTerrain() {
-        return terrain;
-    }
-
-    public void setTerrain(TerrainTypes terrain) {
-        this.terrain = terrain;
     }
 
     @Override
