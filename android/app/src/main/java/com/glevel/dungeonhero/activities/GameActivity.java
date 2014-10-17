@@ -26,22 +26,25 @@ import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.opengl.texture.TextureOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameActivity extends MyBaseGameActivity {
 
     public static final String EXTRA_GAME_ID = "game_id";
+    public SelectionCircle mSelectionCircle;
+    public Entity mGroundLayer;
+    public TMXTiledMap mTmxTiledMap;
     private Dungeon mDungeon;
     private Hero mHero;
     private Room mRoom;
     private Unit mActiveCharacter;
-    public SelectionCircle mSelectionCircle;
-    public Entity mGroundLayer;
-    public TMXTiledMap mTmxTiledMap;
     private ActionsDispatcher mActionDispatcher;
 
     @Override
     protected void initGameActivity() {
         Bundle extras = getIntent().getExtras();
-        // TODO test
+        // TODO : get game from Serializable
 //        mGame = (Game) extras.getSerializable(Game.class.getName());
         mGame = new Game(HeroFactory.buildBerserker(), BookFactory.buildInitiationBook(1));
         mGame.setOnNewSprite(this);
@@ -51,7 +54,7 @@ public class GameActivity extends MyBaseGameActivity {
         mRoom = mDungeon.getCurrentRoom();
         mHero = mGame.getHero();
 
-        // TODO
+        // TODO : dev
         mMustSaveGame = false;
     }
 
@@ -69,7 +72,12 @@ public class GameActivity extends MyBaseGameActivity {
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA, getVertexBufferObjectManager(), null);
         mTmxTiledMap = tmxLoader.loadFromAsset("tmx/" + mRoom.getTmxName() + ".tmx");
 
-        mRoom.initRoom(mTmxTiledMap, mHero, mDungeon);
+        mRoom.initRoom(mTmxTiledMap, mDungeon);
+
+        List<Unit> heroes = new ArrayList<Unit>();
+        heroes.add(mHero);
+        // TODO : get real direction
+        mDungeon.moveIn(heroes, mDungeon.getStartDirection());
 
         mTmxTiledMap.getTMXLayers().get(1).setZIndex(10);
         for (TMXLayer tmxLayer : mTmxTiledMap.getTMXLayers()) {

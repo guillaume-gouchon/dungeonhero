@@ -6,7 +6,6 @@ import com.glevel.dungeonhero.data.PNJFactory;
 import com.glevel.dungeonhero.data.dungeon.Rooms;
 import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
-import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
@@ -18,8 +17,10 @@ import org.andengine.extension.tmx.TMXTiledMap;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by guillaume ON 10/8/14.
@@ -42,7 +43,7 @@ public class Room implements Serializable {
         tmxName = availableRooms[(int) (Math.random() * availableRooms.length)].getTmxName();
     }
 
-    public void initRoom(TMXTiledMap tiledMap, Hero hero, Dungeon dungeon) {
+    public void initRoom(TMXTiledMap tiledMap, Dungeon dungeon) {
         if (tiles != null) {
             // build loaded room
             addContentFromExistingTiles();
@@ -85,7 +86,7 @@ public class Room implements Serializable {
                 }
             }
 
-            createRoomContent(hero, dungeon);
+            createRoomContent(dungeon);
         }
         checkSafe();
     }
@@ -100,9 +101,8 @@ public class Room implements Serializable {
         }
     }
 
-    private void createRoomContent(Hero hero, Dungeon dungeon) {
+    private void createRoomContent(Dungeon dungeon) {
         // TODO
-        addGameElement(hero, doors.get(Directions.NORTH));
         addGameElement(MonsterFactory.buildGoblin(), 5, 5);
         addGameElement(MonsterFactory.buildGoblin(), 6, 6);
         addGameElement(MonsterFactory.buildGoblin(), 8, 8);
@@ -180,6 +180,38 @@ public class Room implements Serializable {
 
     public void setSafe(boolean isSafe) {
         this.isSafe = isSafe;
+    }
+
+    public Directions getDirectionFromDoorTile(Tile doorTile) {
+        // get direction from doors list
+        Set<Map.Entry<Directions, Tile>> doorsEntrySet = doors.entrySet();
+        Iterator<Map.Entry<Directions, Tile>> doorIterator = doorsEntrySet.iterator();
+        Map.Entry<Directions, Tile> doorMap;
+        do {
+            doorMap = doorIterator.next();
+        } while (doorIterator.hasNext() && doorMap.getValue() != doorTile);
+
+        return doorMap.getKey();
+    }
+
+    public List<Unit> exit() {
+        List<Unit> unitsToMoveAway = new ArrayList<Unit>();
+        for (Unit unit : queue) {
+            if (unit.getRank() == Ranks.ME || unit.getRank() == Ranks.ALLY) {
+                removeElement(unit);
+                unit.setTilePosition(null);
+                unitsToMoveAway.add(unit);
+            }
+        }
+        return unitsToMoveAway;
+    }
+
+    public void moveIn(List<Unit> units, Directions from) {
+        // TODO : multiple heroes / allies
+        Tile position = doors.get(from);
+        for (Unit unit : units) {
+            addGameElement(unit, position);
+        }
     }
 
 }
