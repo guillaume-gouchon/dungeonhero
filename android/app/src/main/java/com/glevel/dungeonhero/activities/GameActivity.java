@@ -10,6 +10,7 @@ import com.glevel.dungeonhero.data.HeroFactory;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
+import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -18,6 +19,7 @@ import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.items.Item;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
@@ -26,8 +28,13 @@ import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.opengl.texture.TextureOptions;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
+=======
+import java.util.Timer;
+import java.util.TimerTask;
+>>>>>>> 0b8d3691be4ea793af5ca00d7c1f48a4400bb35f
 
 public class GameActivity extends MyBaseGameActivity {
 
@@ -54,8 +61,22 @@ public class GameActivity extends MyBaseGameActivity {
         mRoom = mDungeon.getCurrentRoom();
         mHero = mGame.getHero();
 
+<<<<<<< HEAD
         // TODO : dev
         mMustSaveGame = false;
+=======
+        // show intro story if needed
+        // TODO
+//        if (mDungeon.hasToDisplayIntroStory() && mDungeon.getIntroText() > 0) {
+//            Bundle args = new Bundle();
+//            args.putInt(StoryFragment.ARGUMENT_STORY, mDungeon.getIntroText());
+//            ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
+//            mDungeon.setIntroTextAlreadyRead(true);
+//        }
+
+        // TODO : remove
+        mDoSaveGame = false;
+>>>>>>> 0b8d3691be4ea793af5ca00d7c1f48a4400bb35f
     }
 
     @Override
@@ -109,10 +130,14 @@ public class GameActivity extends MyBaseGameActivity {
                     gameElement.setTilePosition(tile);
                     addElementToScene(gameElement);
                 }
+
+                gameElement = tile.getSubContent();
+                if (gameElement != null) {
+                    gameElement.setTilePosition(tile);
+                    addElementToScene(gameElement);
+                }
             }
         }
-
-        mScene.sortChildren(true);
 
         pOnPopulateSceneCallback.onPopulateSceneFinished();
 
@@ -155,13 +180,25 @@ public class GameActivity extends MyBaseGameActivity {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.hero:
-                mGUIManager.showHeroInfo(mHero);
-                break;
-            case R.id.bag:
-                mGUIManager.showBag(mHero);
-                break;
+        if (mInputManager.ismIsEnabled()) {
+            switch (view.getId()) {
+                case R.id.hero:
+                    mGUIManager.showHeroInfo(mHero);
+                    break;
+                case R.id.bag:
+                    mGUIManager.showBag(mHero);
+                    break;
+            }
+
+            if (view.getTag(R.string.item) != null) {
+                final Item item = (Item) view.getTag(R.string.item);
+                mGUIManager.showItemInfo(mHero, item, new OnActionExecuted() {
+                    @Override
+                    public void onActionDone(boolean success) {
+                        mActionDispatcher.dropItem(item);
+                    }
+                });
+            }
         }
     }
 
@@ -208,9 +245,16 @@ public class GameActivity extends MyBaseGameActivity {
 
                 mGUIManager.updateActiveHeroLayout(mHero);
 
+                mInputManager.setEnabled(!mActiveCharacter.isEnemy(mHero));
+
                 if (mActiveCharacter instanceof Monster) {
-                    mInputManager.setEnabled(false);
-                    mActionDispatcher.attack(mHero.getTilePosition());
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            mActionDispatcher.attack(mHero.getTilePosition());
+                        }
+                    }, 500);
+
                 }
             }
         });
@@ -230,6 +274,10 @@ public class GameActivity extends MyBaseGameActivity {
                 }
             }
         });
+    }
+
+    public void switchRoom(Tile tilePosition) {
+        // TODO
     }
 
 }

@@ -19,7 +19,7 @@ public class ActionTile extends Rectangle {
         mTile = tile;
         mAction = action;
         setColor(action.getColor());
-        setAlpha(INACTIVE_ALPHA);
+        setAlpha(mAction == Actions.MOVE || mAction == Actions.NONE ? INACTIVE_ALPHA : ACTIVE_ALPHA);
     }
 
     @Override

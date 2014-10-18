@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Margin in ViewPager caused the view to be too large. This manual margin fixes it. -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:padding="15dp"
+        android:background="@drawable/bg_carousel">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:padding="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    style="@style/HeroTitle"
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_toRightOf="@+id/image"
+                android:layout_marginTop="10dp">
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    style="@style/HeroDescription"
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/placeholder"
+                    android:textSize="18sp" />
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:id="@+id/strength"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_strength"
+                custom:textHint="@string/strength"
+                custom:linkTextColorToDrawable="true"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/strength" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:id="@+id/dexterity"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_dexterity"
+                custom:linkTextColorToDrawable="true"
+                custom:textHint="@string/dexterity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dexterity" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:id="@+id/spirit"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_spirit"
+                custom:linkTextColorToDrawable="true"
+                custom:textHint="@string/spirit"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/spirit" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:id="@+id/hp"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_health"
+                custom:linkTextColorToDrawable="true"
+                custom:textHint="@string/hp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/hp" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:id="@+id/attack"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_attack"
+                custom:linkTextColorToDrawable="true"
+                android:layout_weight="1"
+                custom:textHint="@string/attack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/attack" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:id="@+id/block"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_block"
+                custom:linkTextColorToDrawable="true"
+                android:layout_weight="1"
+                custom:textHint="@string/block"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/block" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

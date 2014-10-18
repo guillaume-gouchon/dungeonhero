@@ -1,14 +1,18 @@
 package com.glevel.dungeonhero.models.dungeons;
 
+import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.DecorationFactory;
-import com.glevel.dungeonhero.data.MonsterFactory;
 import com.glevel.dungeonhero.data.PNJFactory;
+import com.glevel.dungeonhero.data.WeaponFactory;
+import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.data.dungeon.Rooms;
-import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
+import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
+import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXTile;
@@ -59,29 +63,19 @@ public class Room implements Serializable {
                 for (TMXTile tmxTile : tmxTiles) {
                     tile = new Tile(tmxTile, tiledMap);
                     tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = tile;
+
+                    // add properties
+                    if (tile.getGround() == GroundTypes.DOOR) {
+                        doors.put(getDoorDirection(tile), tile);
+                    }
                 }
             }
 
-            // add objects and doors
-            TMXLayer objectsLayer = tiledMap.getTMXLayers().get(1);
-            for (TMXTile[] tmxTiles : objectsLayer.getTMXTiles()) {
-                for (TMXTile tmxTile : tmxTiles) {
-                    Tile objectTile = new Tile(tmxTile, tiledMap);
-                    if (objectTile.getTerrain() != null) {
-                        if (tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] == null) {
-                            tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = objectTile;
-                        }
-                        tile = tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()];
-                        tile.setTerrain(objectTile.getTerrain());
-
-                        // add properties
-                        if (objectTile.getProperty() != null) {
-                            tile.setProperty(objectTile.getProperty());
-
-                            if (tile.getTerrain() == TerrainTypes.DOOR) {
-                                doors.put(Directions.values()[Integer.parseInt(tile.getProperty().getValue())], tile);
-                            }
-                        }
+            for (Tile[] hTiles : tiles) {
+                for (Tile t : hTiles) {
+                    // add doors
+                    if (t.getGround() == GroundTypes.DOOR) {
+                        doors.put(getDoorDirection(t), t);
                     }
                 }
             }
@@ -89,6 +83,18 @@ public class Room implements Serializable {
             createRoomContent(dungeon);
         }
         checkSafe();
+    }
+
+    private Directions getDoorDirection(Tile tile) {
+        int x = tile.getTileColumn();
+        int y = tile.getTileRow();
+        Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(tiles, tile, 1, false, null);
+        Iterator<Tile> iterator = adjacentTiles.iterator();
+        Tile adjacentTile;
+        do {
+            adjacentTile = iterator.next();
+        } while (adjacentTile.getGround() == null && iterator.hasNext());
+        return Directions.from(tile.getX() - adjacentTile.getX(), adjacentTile.getY() - tile.getY());
     }
 
     private void addContentFromExistingTiles() {
@@ -103,11 +109,12 @@ public class Room implements Serializable {
 
     private void createRoomContent(Dungeon dungeon) {
         // TODO
-        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
-        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
-        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
+//        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
+//        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
+//        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
 
         addGameElement(PNJFactory.buildPNJ(), 5, 8);
+        addGameElement(new ItemOnGround(R.string.gold_coins, new Reward(WeaponFactory.buildSword(), 0, 0)), 10, 10);
 
         addGameElement(DecorationFactory.buildLight(), 5, 10);
         addGameElement(DecorationFactory.buildLight(), 5, 12);

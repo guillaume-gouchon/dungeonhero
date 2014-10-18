@@ -3,6 +3,7 @@
     <string name="app_name">Dungeon Hero</string>
     <string name="app_publisher">G-Level</string>
     <string name="id">id</string>
+    <string name="item">item</string>
     <string name="placeholder">placeholder</string>
     <string name="viewholder">viewholder</string>
     <string name="cancel">Cancel</string>
@@ -17,9 +18,9 @@
     <!-- Rate Dialog -->
     <string name="rate_dont_want">No, thanks</string>
     <string name="rate_later">Later</string>
-    <string name="rate_now">Rate it now !</string>
+    <string name="rate_now">Rate it now\u00A0!</string>
     <string name="rate_title">Rate the app ?</string>
-    <string name="rate_message">If you enjoy playing %s, please take a moment to rate it.\n\nThanks for your support !</string>
+    <string name="rate_message">If you enjoy playing %s, please take a moment to rate it.\n\nThanks for your support\u00A0!</string>
 
     <!-- About Dialog -->
     <string name="about_title">About Dungeon Hero</string>
@@ -35,16 +36,16 @@
     <string name="gamehelper_unknown_error">Unknown error.</string>
 
     <!-- Share app -->
-    <string name="share_subject">Check out %s on Android !</string>
-    <string name="share_message">This game is cool, you can get it on Google Play !\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_subject">Check out %s on Android\u00A0!</string>
+    <string name="share_message">This game is cool, you can get it on Google Play\u00A0!\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <!-- Home Screen -->
     <string name="new_game">New Game</string>
     <string name="load_game">Load Game</string>
     <string name="settings">Options</string>
     <string name="back">Back</string>
-    <string name="ask_tutorial">It is recommanded to do the tutorial in order to know how to play !\nWould you like to do it now ?</string>
-    <string name="advertisement">If you like Strategy Games,\ntry out my cool game <a href="https://play.google.com/store/apps/details?id=com.giggs.apps.chaos">Warlords Online</a> !</string>
+    <string name="ask_tutorial">It is recommended to do the tutorial in order to know how to play\u00A0!\nWould you like to do it now ?</string>
+    <string name="advertisement">If you like Strategy Games,\ntry out my cool game <a href="https://play.google.com/store/apps/details?id=com.giggs.apps.chaos">Warlords Online</a>\u00A0!</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="achievements">Trophees</string>
@@ -80,7 +81,7 @@
     <string name="frags">Killed enemies</string>
 
     <!-- Game Over -->
-    <string name="retry">Retry !</string>
+    <string name="retry">Retry\u00A0!</string>
     <string name="exit">Exit</string>
     <string name="game_over_title">Game Over</string>
 
@@ -93,10 +94,6 @@
     <string name="confirm_leave_quest">Are you sure you want\nto leave this quest ?</string>
     <string name="deployment_phase">Deployment Phase</string>
     <string name="start">Deployment Done</string>
-    <string name="go">Go !</string>
-    <string name="victory">Victory !</string>
-    <string name="defeat">Defeat&#8230;</string>
-
     <string name="game_menu">Game Menu</string>
     <string name="help">Help</string>
 
@@ -132,14 +129,30 @@
     <string name="thief_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="druid_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
 
+    <!-- Decorations -->
+    <string name="light">Candlestick</string>
+    <string name="treasure_chest">Treasure Chest</string>
+    <string name="box">Box</string>
+    <string name="barrel">Barrel</string>
+    <string name="small_chest">Small Chest</string>
 
+    <!-- Monsters -->
     <string name="goblin">Goblin</string>
-
+    <string name="chaos_warrior">Chaos Warrior</string>
+    <string name="demon">Demon</string>
+    <string name="orc">Orc</string>
+    <string name="troll">Troll</string>
+    <string name="ogre">Ogre</string>
+    <string name="chaos_wizard">Chaos Wizard</string>
+    <string name="ogre_king">Ogre King</string>
+    <string name="orc_captain">Orc Captain</string>
+    <string name="gargoyle">Gargoyle</string>
+    <string name="demon_king">High Demon</string>
+    <string name="goblin_king">Goblin King</string>
 
     <!-- Data -->
-    <string name="light">Light</string>
-    <string name="treasure_chest">Treasure Chest</string>
     <string name="hello_discussion">Hello adventurer, do you like eating pafs ?</string>
+    <string name="hello_discussion2">Ahah me too !</string>
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="no">No, I don\'t</string>
@@ -153,5 +166,11 @@
     <string name="found_gold">You got %s Gold Coins\u00A0!</string>
     <string name="reward_xp">You were rewarded with %s XP\u00A0!</string>
     <string name="close">Close</string>
+    <string name="use">Use</string>
+    <string name="equip">Equip</string>
+    <string name="remove">Remove</string>
+    <string name="drop">Drop</string>
+    <string name="gold_coins">Gold Coins</string>
+    <string name="bag_full">Your bag is full, the object has been dropped</string>
 
 </resources>

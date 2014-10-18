@@ -12,18 +12,25 @@ public class Dungeon implements Serializable {
 
     private static final long serialVersionUID = 4765596237193067497L;
 
-    private final int start;
     private final Directions startDirection;
 
-    private Room[][] rooms = new Room[10][10];
-    private int currentPosition;
+    private final Room[][] rooms = new Room[10][10];
+    private final int start;
+    private final int introText;
+    private final int outroText;
 
-    public Dungeon() {
-        //TODO : create random dungeon
+    private int currentPosition;
+    private boolean isIntroTextAlreadyRead = false;
+
+    public Dungeon(int introText, int outroText, Directions startDirection) {
+        // create random dungeon
         rooms[0][0] = new Room();
         start = 0;
-        startDirection = Directions.NORTH;
+        this.startDirection = startDirection;
         currentPosition = start;
+
+        this.introText = introText;
+        this.outroText = outroText;
     }
 
     public Room getCurrentRoom() {
@@ -59,6 +66,34 @@ public class Dungeon implements Serializable {
 
     public Directions getStartDirection() {
         return startDirection;
+    }
+    
+    public int getIntroText() {
+        return introText;
+    }
+
+    public int getOutroText() {
+        return outroText;
+    }
+
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public boolean hasToDisplayIntroStory() {
+        return currentPosition == start && !isIntroTextAlreadyRead;
+    }
+
+    public void setIntroTextAlreadyRead(boolean isIntroTextAlreadyRead) {
+        this.isIntroTextAlreadyRead = isIntroTextAlreadyRead;
     }
 
 }

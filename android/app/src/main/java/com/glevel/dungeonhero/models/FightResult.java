@@ -8,7 +8,7 @@ import org.andengine.util.color.Color;
 public class FightResult {
 
     public enum States {
-        DAMAGE(Color.RED), BLOCK(Color.BLUE), DODGE(Color.YELLOW), CRITICAL(Color.BLACK);
+        DAMAGE(Color.RED), BLOCK(new Color(0, 0, 0.9f)), DODGE(Color.YELLOW), CRITICAL(Color.WHITE);
 
         private Color color;
 

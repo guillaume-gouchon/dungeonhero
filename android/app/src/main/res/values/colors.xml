@@ -42,4 +42,11 @@
 
     <color name="border_in_game_pressed">#eebbbbbb</color>
 
+    <color name="bg_scroll">#BAB175</color>
+    <color name="bg_weapon">#D10000</color>2\
+    <color name="bg_armor">#758FBA</color>
+    <color name="bg_ring">#EDEA39</color>
+    <color name="bg_potion">#77A867</color>
+    <color name="bg_gold">#EDEA39</color>
+
 </resources>

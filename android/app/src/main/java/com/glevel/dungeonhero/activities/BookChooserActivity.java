@@ -60,7 +60,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mLstBooks = BookFactory.getBooks();
+        mLstBooks = BookFactory.getAll();
 
         setContentView(R.layout.activity_book_chooser);
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

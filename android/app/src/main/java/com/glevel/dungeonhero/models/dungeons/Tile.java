@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
-import com.glevel.dungeonhero.data.dungeon.TerrainTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.Actions;
 import com.glevel.dungeonhero.utils.pathfinding.Node;
@@ -18,9 +17,8 @@ public class Tile extends TMXTile implements Node, Serializable {
     private static final long serialVersionUID = 3793350205301888410L;
 
     private GameElement content = null;
+    private GameElement subContent = null;
     private GroundTypes ground = null;
-    private TerrainTypes terrain = null;
-    private transient TMXTileProperty property;
     private transient Actions action;
     private transient boolean isSelected = false;
 
@@ -40,11 +38,8 @@ public class Tile extends TMXTile implements Node, Serializable {
                 // setup ground type
                 if (prop.getName().equals(GroundTypes.DUNGEON_FLOOR.name())) {
                     ground = GroundTypes.DUNGEON_FLOOR;
-                }
-
-                if (prop.getName().equals(TerrainTypes.DOOR.name())) {
-                    property = prop;
-                    terrain = TerrainTypes.DOOR;
+                } else if (prop.getName().equals(GroundTypes.DOOR.name())) {
+                    ground = GroundTypes.DOOR;
                 }
             }
         }
@@ -64,14 +59,6 @@ public class Tile extends TMXTile implements Node, Serializable {
 
     public void setGround(GroundTypes ground) {
         this.ground = ground;
-    }
-
-    public TerrainTypes getTerrain() {
-        return terrain;
-    }
-
-    public void setTerrain(TerrainTypes terrain) {
-        this.terrain = terrain;
     }
 
     @Override
@@ -99,14 +86,6 @@ public class Tile extends TMXTile implements Node, Serializable {
         return (int) ((getTileRow() + 0.5) * getTileHeight());
     }
 
-    public void setProperty(TMXTileProperty property) {
-        this.property = property;
-    }
-
-    public TMXTileProperty getProperty() {
-        return property;
-    }
-
     public void setAction(Actions action) {
         this.action = action;
     }
@@ -121,6 +100,15 @@ public class Tile extends TMXTile implements Node, Serializable {
 
     public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+
+    public GameElement getSubContent() {
+        return subContent;
+    }
+
+    public void setSubContent(GameElement subContent) {
+        this.subContent = subContent;
     }
 
 }

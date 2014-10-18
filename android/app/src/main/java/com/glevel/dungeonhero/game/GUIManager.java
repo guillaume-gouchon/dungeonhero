@@ -4,21 +4,22 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
-import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
+import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -26,6 +27,9 @@ import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.discussions.Discussion;
 import com.glevel.dungeonhero.models.discussions.Reaction;
+import com.glevel.dungeonhero.models.items.Consumable;
+import com.glevel.dungeonhero.models.items.Equipment;
+import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.LifeBar;
@@ -36,7 +40,7 @@ public class GUIManager {
 
     private MyBaseGameActivity mActivity;
 
-    private Dialog mLoadingScreen, mGameMenuDialog, mHeroInfoDialog, mDiscussionDialog, mRewardDialog;
+    private Dialog mLoadingScreen, mGameMenuDialog, mHeroInfoDialog, mDiscussionDialog, mRewardDialog, mBagDialog, mItemInfoDialog;
     private TextView mBigLabel;
     private Animation mBigLabelAnimation;
     private ViewGroup mSelectedElementLayout, mActiveHeroLayout, mQueueLayout;
@@ -157,6 +161,12 @@ public class GUIManager {
         if (mRewardDialog != null) {
             mRewardDialog.dismiss();
         }
+        if (mBagDialog != null) {
+            mBagDialog.dismiss();
+        }
+        if (mItemInfoDialog != null) {
+            mItemInfoDialog.dismiss();
+        }
     }
 
     public void showLoadingScreen() {
@@ -270,15 +280,11 @@ public class GUIManager {
         ((TextView) mHeroInfoDialog.findViewById(R.id.strength)).setText("" + hero.getStrength());
         ((TextView) mHeroInfoDialog.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());
         ((TextView) mHeroInfoDialog.findViewById(R.id.spirit)).setText("" + hero.getSpirit());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.attack)).setText("" + hero.getCurrentAttack());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.block)).setText("" + hero.getCurrentBlock());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.attack)).setText("" + hero.getAttack());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.block)).setText("" + hero.getBlock());
         ((TextView) mHeroInfoDialog.findViewById(R.id.frags)).setText("" + hero.getFrags());
 
         mHeroInfoDialog.show();
-    }
-
-    public void showBag(Hero hero) {
-
     }
 
     public void showDiscussion(final Pnj pnj, final Discussion discussion, final OnDiscussionReplySelected callback) {
@@ -365,7 +371,6 @@ public class GUIManager {
 
                         if (reward.getGold() > 0) {
                             goldTV.setText(mActivity.getString(R.string.found_gold, reward.getGold()));
-                            goldTV.getCompoundDrawables()[0].setColorFilter(goldTV.getCurrentTextColor(), PorterDuff.Mode.MULTIPLY);
                             goldTV.setVisibility(View.VISIBLE);
                         } else {
                             goldTV.setVisibility(View.GONE);
@@ -390,6 +395,146 @@ public class GUIManager {
                 }
             }
         });
+    }
+
+    public void showBag(Hero hero) {
+        mBagDialog = new Dialog(mActivity, R.style.Dialog);
+        mBagDialog.setContentView(R.layout.in_game_bag);
+        mBagDialog.setCancelable(true);
+        mBagDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
+
+        updateBag(hero);
+
+        ((TextView) mBagDialog.findViewById(R.id.gold_amount)).setText("" + hero.getGold());
+
+        mBagDialog.show();
+    }
+
+    private void updateBag(Hero hero) {
+        ViewGroup bagLayout = (ViewGroup) mBagDialog.findViewById(R.id.bag);
+        Item item;
+        for (int n = 0; n < bagLayout.getChildCount(); n++) {
+            item = null;
+            if (n < hero.getItems().size()) {
+                item = hero.getItems().get(n);
+            }
+            updateItemLayout(bagLayout.getChildAt(n), item);
+        }
+
+        ViewGroup equipmentLayout = (ViewGroup) mBagDialog.findViewById(R.id.equipment);
+        Equipment equipment;
+        for (int n = 0; n < hero.getEquipments().length; n++) {
+            equipment = hero.getEquipments()[n];
+            updateEquipmentLayout(equipmentLayout.getChildAt(n), equipment, Equipment.getEquipmentEmptyImage(n));
+        }
+    }
+
+    private void updateEquipmentLayout(View itemView, Item item, int defaultImage) {
+        View background = itemView.findViewById(R.id.background);
+        ImageView image = (ImageView) itemView.findViewById(R.id.image);
+
+        itemView.setTag(R.string.item, item);
+
+        if (item != null) {
+            background.setBackgroundColor(mActivity.getResources().getColor(item.getColor()));
+            image.setImageResource(item.getImage());
+            image.setAlpha(1.0f);
+            itemView.setEnabled(true);
+            itemView.setOnClickListener(mActivity);
+        } else if (itemView.isEnabled()) {
+            background.setBackgroundColor(mActivity.getResources().getColor(android.R.color.transparent));
+            image.setImageResource(defaultImage);
+            image.setAlpha(0.2f);
+            itemView.setEnabled(false);
+            itemView.setOnClickListener(null);
+        }
+    }
+
+    private void updateItemLayout(View itemView, Item item) {
+        View background = itemView.findViewById(R.id.background);
+        ImageView image = (ImageView) itemView.findViewById(R.id.image);
+
+        itemView.setTag(R.string.item, item);
+
+        if (item != null) {
+            background.setBackgroundColor(mActivity.getResources().getColor(item.getColor()));
+            image.setImageResource(item.getImage());
+            itemView.setEnabled(true);
+            itemView.setOnClickListener(mActivity);
+        } else if (itemView.isEnabled()) {
+            background.setBackgroundColor(mActivity.getResources().getColor(android.R.color.transparent));
+            image.setImageResource(0);
+            itemView.setEnabled(false);
+            itemView.setOnClickListener(null);
+        }
+
+    }
+
+    public void showItemInfo(final Hero hero, final Item item, final OnActionExecuted onDropListener) {
+        mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
+        mItemInfoDialog.setContentView(R.layout.in_game_item_info);
+        mItemInfoDialog.setCancelable(true);
+
+        ((TextView) mItemInfoDialog.findViewById(R.id.name)).setText(item.getName());
+        ((ImageView) mItemInfoDialog.findViewById(R.id.image)).setImageResource(item.getImage());
+
+        Button actionButton = (Button) mItemInfoDialog.findViewById(R.id.actionButton);
+        Button dropButton = (Button) mItemInfoDialog.findViewById(R.id.dropButton);
+        if (!item.isDroppable()) {
+            dropButton.setVisibility(View.GONE);
+        }
+
+        if (item instanceof Equipment) {
+            final Equipment equipment = (Equipment) item;
+            if (hero.isEquipped(equipment)) {
+                actionButton.setText(R.string.remove);
+                actionButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hero.removeEquipment(equipment);
+                        updateBag(hero);
+                        mItemInfoDialog.dismiss();
+                    }
+                });
+                dropButton.setVisibility(View.GONE);
+            } else {
+                actionButton.setText(R.string.equip);
+                actionButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hero.equip(equipment);
+                        updateBag(hero);
+                        mItemInfoDialog.dismiss();
+                    }
+                });
+            }
+        } else if (item instanceof Consumable) {
+            final Consumable consumable = (Consumable) item;
+            actionButton.setText(R.string.use);
+            actionButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    hero.use(consumable);
+                    updateBag(hero);
+                    mItemInfoDialog.dismiss();
+                }
+            });
+        }
+
+        if (item.isDroppable()) {
+            dropButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    hero.drop(item);
+                    updateBag(hero);
+                    onDropListener.onActionDone(true);
+                    mItemInfoDialog.dismiss();
+                }
+            });
+        }
+
+
+        mItemInfoDialog.show();
     }
 
 }

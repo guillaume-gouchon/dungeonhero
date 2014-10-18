@@ -12,8 +12,8 @@ public abstract class Decoration extends GameElement implements Serializable {
 
     private static final long serialVersionUID = -705814371353878655L;
 
-    public Decoration(int name, String spriteName) {
-        super(name, spriteName, Ranks.NEUTRAL);
+    public Decoration(int name, String spriteName, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
+        super(name, spriteName, Ranks.NEUTRAL, spriteWidth, spriteHeight, nbSpritesX, nbSpritesY);
     }
 
 }

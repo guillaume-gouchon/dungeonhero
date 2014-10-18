@@ -13,7 +13,7 @@ public class TreasureChest extends Searchable {
     private static final long serialVersionUID = -9160370172054769184L;
 
     public TreasureChest(int name, String spriteName, Reward reward) {
-        super(name, spriteName, reward);
+        super(name, spriteName, reward, 34, 20, 2, 1);
     }
 
     @Override

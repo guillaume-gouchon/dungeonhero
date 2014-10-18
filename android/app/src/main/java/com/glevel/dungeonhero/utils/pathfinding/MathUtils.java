@@ -52,8 +52,7 @@ public class MathUtils {
             for (int x = centerNode.getX() - step; x < centerNode.getX() + step + 1; x++) {
                 if (x >= 0 && x < nodes[0].length && y >= 0 && y < nodes.length && (x != centerNode.getX() || y != centerNode.getY())) {
                     E node = nodes[y][x];
-
-                    if ((withDiagonal || calcManhattanDistance(centerNode, node) <= step) && (movingElement == null || movingElement.canMoveIn(node))) {
+                    if (node != null && (withDiagonal || calcManhattanDistance(centerNode, node) <= step) && (movingElement == null || movingElement.canMoveIn(node))) {
                         adjacentNodes.add(node);
                     }
                 }

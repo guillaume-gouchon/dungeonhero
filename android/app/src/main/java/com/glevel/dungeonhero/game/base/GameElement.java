@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.game.base;
 
 import com.glevel.dungeonhero.game.graphics.GameElementSprite;
+import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 
@@ -9,20 +10,26 @@ import org.andengine.util.color.Color;
 
 import java.io.Serializable;
 
-public abstract class GameElement implements Serializable {
+public abstract class GameElement implements Serializable, GraphicHolder {
 
     private static final long serialVersionUID = -5880458091427517171L;
 
     private final int name;
-    private final String spriteName;
     protected transient GameElementSprite sprite;
     private Ranks rank;
-    private transient Tile tilePosition;
+    protected transient Tile tilePosition;
 
-    public GameElement(int name, String spriteName, Ranks rank) {
+    private final String spriteName;
+    private final int spriteWidth, spriteHeight, nbSpritesX, nbSpritesY;
+
+    public GameElement(int name, String spriteName, Ranks rank, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
         this.name = name;
         this.spriteName = spriteName;
         this.rank = rank;
+        this.spriteWidth = spriteWidth;
+        this.spriteHeight = spriteHeight;
+        this.nbSpritesX = nbSpritesX;
+        this.nbSpritesY = nbSpritesY;
     }
 
     public abstract void createSprite(VertexBufferObjectManager vertexBufferObjectManager);
@@ -47,10 +54,6 @@ public abstract class GameElement implements Serializable {
         if (tilePosition != null) {
             tilePosition.setContent(this);
         }
-    }
-
-    public String getSpriteName() {
-        return spriteName;
     }
 
     public Color getSelectionColor() {
@@ -78,6 +81,31 @@ public abstract class GameElement implements Serializable {
 
     public void destroy() {
         setTilePosition(null);
+    }
+
+    @Override
+    public String getSpriteName() {
+        return spriteName;
+    }
+
+    @Override
+    public int getNbSpritesY() {
+        return nbSpritesY;
+    }
+
+    @Override
+    public int getSpriteWidth() {
+        return spriteWidth;
+    }
+
+    @Override
+    public int getSpriteHeight() {
+        return spriteHeight;
+    }
+
+    @Override
+    public int getNbSpritesX() {
+        return nbSpritesX;
     }
 
 }
