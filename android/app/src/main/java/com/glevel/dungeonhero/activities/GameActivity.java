@@ -28,13 +28,10 @@ import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.opengl.texture.TextureOptions;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
-=======
 import java.util.Timer;
 import java.util.TimerTask;
->>>>>>> 0b8d3691be4ea793af5ca00d7c1f48a4400bb35f
 
 public class GameActivity extends MyBaseGameActivity {
 
@@ -61,10 +58,6 @@ public class GameActivity extends MyBaseGameActivity {
         mRoom = mDungeon.getCurrentRoom();
         mHero = mGame.getHero();
 
-<<<<<<< HEAD
-        // TODO : dev
-        mMustSaveGame = false;
-=======
         // show intro story if needed
         // TODO
 //        if (mDungeon.hasToDisplayIntroStory() && mDungeon.getIntroText() > 0) {
@@ -76,7 +69,6 @@ public class GameActivity extends MyBaseGameActivity {
 
         // TODO : remove
         mDoSaveGame = false;
->>>>>>> 0b8d3691be4ea793af5ca00d7c1f48a4400bb35f
     }
 
     @Override
