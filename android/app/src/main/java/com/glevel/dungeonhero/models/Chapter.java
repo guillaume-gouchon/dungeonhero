@@ -24,7 +24,7 @@ public class Chapter implements Serializable {
         this.name = name;
         this.introText = introText;
         this.outroText = outroText;
-        this.dungeon = new Dungeon(R.string.about, 0, Directions.WEST);
+        this.dungeon = new Dungeon(R.string .about, 0, Directions.WEST);
         this.done = false;
         this.boss = boss;
     }
