@@ -227,6 +227,7 @@ public class GameActivity extends MyBaseGameActivity {
                     return;
                 }
                 mActiveCharacter = mRoom.getQueue().get(0);
+                mActiveCharacter.initNewTurn();
                 mRoom.getQueue().add(mRoom.getQueue().get(0));
                 mRoom.getQueue().remove(0);
                 mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
@@ -246,7 +247,6 @@ public class GameActivity extends MyBaseGameActivity {
                             mActionDispatcher.attack(mHero.getTilePosition());
                         }
                     }, 500);
-
                 }
             }
         });
@@ -268,8 +268,9 @@ public class GameActivity extends MyBaseGameActivity {
         });
     }
 
-    public void switchRoom(Tile tilePosition) {
-        // TODO
+    public void switchRoom(Tile doorTile) {
+        mDungeon.switchRoom(doorTile);
+        // TODO : animate room switching + repopulate scene
     }
 
 }

@@ -16,19 +16,17 @@ import com.glevel.dungeonhero.utils.billing.InAppProduct;
 public class Hero extends Unit implements InAppProduct {
 
     private static final long serialVersionUID = -2887616275513777101L;
+
     private static final int NB_ITEMS_MAX_IN_BAG = 15;
 
-    protected boolean mHasBeenBought = false;
-
     private final String productId;
+    protected boolean mHasBeenBought = false;
+    protected int frags = 0;
     private int xp;
     private int level;
-    protected int frags = 0;
 
-    private final Equipment[] equipments = new Equipment[5];
-
-    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int block, int name, int description, int coins, String productId, int xp, int level) {
-        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, block, name, description, coins);
+    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int block, int movement, int name, int description, int coins, String productId, int xp, int level) {
+        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, block, movement, name, description, coins);
         this.productId = productId;
         this.xp = xp;
         this.level = level;
@@ -70,12 +68,12 @@ public class Hero extends Unit implements InAppProduct {
         this.xp = xp;
     }
 
-    public void setFrags(int frags) {
-        this.frags = frags;
-    }
-
     public int getFrags() {
         return frags;
+    }
+
+    public void setFrags(int frags) {
+        this.frags = frags;
     }
 
     public void addGold(int goldAmount) {

@@ -1,7 +1,10 @@
 package com.glevel.dungeonhero.data;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.models.Buff;
+import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Equipment;
+import com.glevel.dungeonhero.models.items.Requirement;
 import com.glevel.dungeonhero.models.items.equipments.Weapon;
 
 /**
@@ -10,7 +13,10 @@ import com.glevel.dungeonhero.models.items.equipments.Weapon;
 public class WeaponFactory {
 
     public static Equipment buildSword() {
-        return new Weapon(R.string.troll, R.drawable.ic_chest);
+        Weapon item = new Weapon(R.string.troll, R.drawable.ic_chest, 5, 3);
+        item.addBuff(new Buff(5, Characteristics.ATTACK));
+        item.addRequirement(new Requirement(8, Characteristics.STRENGTH));
+        return item;
     }
 
 }

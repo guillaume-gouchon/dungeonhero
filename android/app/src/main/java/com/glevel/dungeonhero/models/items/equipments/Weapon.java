@@ -12,8 +12,21 @@ public class Weapon extends Equipment implements Serializable {
 
     private static final long serialVersionUID = 4191323307341633727L;
 
-    public Weapon(int name, int image) {
+    private final int minDamage;
+    private final int deltaDamage;
+
+    public Weapon(int name, int image, int minDamage, int deltaDamage) {
         super(name, image, R.color.bg_weapon);
+        this.minDamage = minDamage;
+        this.deltaDamage = deltaDamage;
     }
 
+    public int getMinDamage() {
+        return minDamage;
+    }
+
+    public int getDeltaDamage() {
+        return deltaDamage;
+    }
+    
 }

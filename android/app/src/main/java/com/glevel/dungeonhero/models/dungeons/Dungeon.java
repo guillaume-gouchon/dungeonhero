@@ -37,7 +37,7 @@ public class Dungeon implements Serializable {
         return rooms[currentPosition / 10][currentPosition % 10];
     }
 
-    public void moveToOtherRoom(Tile doorTile) {
+    public void switchRoom(Tile doorTile) {
         Room previousRoom = getCurrentRoom();
         Directions doorDirection = previousRoom.getDirectionFromDoorTile(doorTile);
         switch (doorDirection) {
@@ -67,7 +67,7 @@ public class Dungeon implements Serializable {
     public Directions getStartDirection() {
         return startDirection;
     }
-    
+
     public int getIntroText() {
         return introText;
     }

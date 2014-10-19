@@ -12,8 +12,15 @@ public class Armor extends Equipment implements Serializable {
 
     private static final long serialVersionUID = 4191323307341633727L;
 
-    public Armor(int name, int image) {
+    private final int protection;
+
+    public Armor(int name, int image, int protection) {
         super(name, image, R.color.bg_armor);
+        this.protection = protection;
     }
 
+    public int getProtection() {
+        return protection;
+    }
+    
 }
