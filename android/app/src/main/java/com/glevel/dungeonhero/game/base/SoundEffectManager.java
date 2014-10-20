@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.glevel.dungeonhero.game.GameConstants;
-import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
@@ -13,6 +13,7 @@ import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class SoundEffectManager {
 
@@ -40,7 +41,10 @@ public class SoundEffectManager {
 
         SoundFactory.setAssetBasePath(ASSETS_PATH);
 
-        // TODO load all sounds from game
+        List<String> soundEffectsToLoad = game.getSoundEffectsToLoad();
+        for (String soundEffect : soundEffectsToLoad) {
+            loadMfx(soundEffect);
+        }
     }
 
 
@@ -52,7 +56,7 @@ public class SoundEffectManager {
         playSound(soundName, isLooped, -1, -1);
     }
 
-    private void loadMfxFromAssets(String soundName) {
+    private void loadMfx(String soundName) {
         if (sMfxMap.get(soundName) == null) {
             try {
                 Sound mSound = SoundFactory.createSoundFromAsset(mEngine.getSoundManager(), mContext, soundName + SOUNDS_EXTENSION);

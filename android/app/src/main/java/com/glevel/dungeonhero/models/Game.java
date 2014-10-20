@@ -162,4 +162,10 @@ public class Game extends DatabaseResource implements Serializable {
         return toLoad;
     }
 
+    public List<String> getSoundEffectsToLoad() {
+        List<String> toLoad = new ArrayList<String>();
+    
+        return toLoad;
+    }
+
 }

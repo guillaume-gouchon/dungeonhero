@@ -102,6 +102,21 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
     }
 
     @Override
+    public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
+        mInputManager = new InputManager(mCamera, this);
+        prepareNewScene();
+    }
+
+    protected void prepareNewScene() {
+        mScene = new Scene();
+        mScene.setOnAreaTouchTraversalFrontToBack();
+        mScene.setBackground(new Background(0, 0, 0));
+        mScene.setOnSceneTouchListener(mInputManager);
+        mScene.setTouchAreaBindingOnActionDownEnabled(true);
+        mEngine.setScene(mScene);
+    }
+
+    @Override
     protected synchronized void onResume() {
         if (GraphicsManager.sGfxMap.size() == 0 && mGraphicsManager != null) {
             mEngine.stop();
@@ -112,17 +127,6 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
 
         super.onResume();
 
-    }
-
-    @Override
-    public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
-        // prepare scene
-        mScene = new Scene();
-        mScene.setOnAreaTouchTraversalFrontToBack();
-        mScene.setBackground(new Background(0, 0, 0));
-        mInputManager = new InputManager(mCamera, this);
-        mScene.setOnSceneTouchListener(mInputManager);
-        mScene.setTouchAreaBindingOnActionDownEnabled(true);
     }
 
     @Override

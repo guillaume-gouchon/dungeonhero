@@ -141,17 +141,22 @@ public class Hero extends Unit implements InAppProduct {
         }
     }
 
-    public void addXP(int xpAmount) {
+    public boolean addXP(int xpAmount) {
         xp += xpAmount;
-        checkLevelChange();
+        if (xp >= getNextLevelXPAmount()) {
+            increaseLevel();
+            return true;
+        }
+        return false;
     }
 
-    private void checkLevelChange() {
-        // TODO
-        if (xp > 1000) {
-            xp -= 1000;
-            level++;
-        }
+    private void increaseLevel() {
+        level++;
+        // TODO : increase hp, add skills, increase attack or defense
+    }
+
+    public int getNextLevelXPAmount() {
+        return (int) (100 * (Math.pow(2, level + 1) - 1));
     }
 
     @Override

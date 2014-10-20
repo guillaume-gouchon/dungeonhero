@@ -13,6 +13,7 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class GraphicsManager {
 
@@ -33,7 +34,8 @@ public class GraphicsManager {
 
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(ASSETS_PATH);
 
-        for (GraphicHolder graphicHolder : game.getGraphicsToLoad()) {
+        List<GraphicHolder> graphicsToLoad = game.getGraphicsToLoad();
+        for (GraphicHolder graphicHolder : graphicsToLoad) {
             loadGfx(graphicHolder);
         }
     }

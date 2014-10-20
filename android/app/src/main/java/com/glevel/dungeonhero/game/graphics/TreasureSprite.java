@@ -1,6 +1,6 @@
 package com.glevel.dungeonhero.game.graphics;
 
-import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.models.dungeons.decorations.TreasureChest;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -9,9 +9,12 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class TreasureSprite extends GameElementSprite {
 
-    public TreasureSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager) {
-        super(gameElement, vertexBufferObjectManager);
+    public TreasureSprite(TreasureChest treasureChest, VertexBufferObjectManager vertexBufferObjectManager) {
+        super(treasureChest, vertexBufferObjectManager);
         setZIndex(10);
+        if (treasureChest.isEmpty()) {
+            open();
+        }
     }
 
     public void open() {

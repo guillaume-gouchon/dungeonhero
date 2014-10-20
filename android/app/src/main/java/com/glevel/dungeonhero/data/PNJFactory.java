@@ -21,7 +21,7 @@ public class PNJFactory {
     }
 
     public static Pnj buildPNJ() {
-        Pnj pnj = new Pnj(false, Ranks.NEUTRAL, R.drawable.princess, "princess.png", 5, 5, 6, 10, 2, 8, 8, R.string.app_name, R.string.choose_hero_message, 10, 1, 500);
+        Pnj pnj = new Pnj(false, Ranks.NEUTRAL, R.drawable.princess, "princess.png", 5, 5, 6, 10, 2, 8, 8, 7, R.string.app_name, R.string.choose_hero_message, 10, 1, 500);
         List<Reaction> reactions = new ArrayList<Reaction>();
         reactions.add(new Reaction(R.string.yes, 0));
         reactions.add(new Reaction(R.string.no, 1));

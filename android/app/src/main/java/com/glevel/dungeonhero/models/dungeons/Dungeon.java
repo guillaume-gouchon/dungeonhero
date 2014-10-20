@@ -2,6 +2,8 @@ package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.models.characters.Unit;
 
+import org.andengine.extension.tmx.TMXTiledMap;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,7 +14,6 @@ public class Dungeon implements Serializable {
 
     private static final long serialVersionUID = 4765596237193067497L;
 
-    private final Directions startDirection;
 
     private final Room[][] rooms = new Room[10][10];
     private final int start;
@@ -20,13 +21,15 @@ public class Dungeon implements Serializable {
     private final int outroText;
 
     private int currentPosition;
+    private Directions currentDirection;
     private boolean isIntroTextAlreadyRead = false;
 
     public Dungeon(int introText, int outroText, Directions startDirection) {
-        // create random dungeon
+        // TODO : create random dungeon
         rooms[0][0] = new Room();
-        start = 0;
-        this.startDirection = startDirection;
+        rooms[0][1] = new Room();
+        start = 1;
+        currentDirection = startDirection;
         currentPosition = start;
 
         this.introText = introText;
@@ -54,18 +57,17 @@ public class Dungeon implements Serializable {
                 currentPosition--;
                 break;
         }
-
-        List<Unit> lstUnitsToMoveIn = previousRoom.exit();
-        moveIn(lstUnitsToMoveIn, doorDirection.getOpposite());
+        currentDirection = doorDirection.getOpposite();
     }
 
-    public void moveIn(List<Unit> lstUnitsToMoveIn, Directions from) {
+    public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> lstUnitsToMoveIn) {
         Room currentRoom = getCurrentRoom();
-        currentRoom.moveIn(lstUnitsToMoveIn, from);
+        currentRoom.initRoom(tmxTiledMap, this);
+        currentRoom.moveIn(lstUnitsToMoveIn, currentDirection);
     }
 
-    public Directions getStartDirection() {
-        return startDirection;
+    public Directions getCurrentDirection() {
+        return currentDirection;
     }
 
     public int getIntroText() {

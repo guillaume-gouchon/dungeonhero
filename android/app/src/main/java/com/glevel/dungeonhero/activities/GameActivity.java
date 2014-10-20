@@ -85,12 +85,9 @@ public class GameActivity extends MyBaseGameActivity {
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA, getVertexBufferObjectManager(), null);
         mTmxTiledMap = tmxLoader.loadFromAsset("tmx/" + mRoom.getTmxName() + ".tmx");
 
-        mRoom.initRoom(mTmxTiledMap, mDungeon);
-
         List<Unit> heroes = new ArrayList<Unit>();
         heroes.add(mHero);
-        // TODO : get real direction
-        mDungeon.moveIn(heroes, mDungeon.getStartDirection());
+        mDungeon.moveIn(mTmxTiledMap, heroes);
 
         mTmxTiledMap.getTMXLayers().get(1).setZIndex(10);
         for (TMXLayer tmxLayer : mTmxTiledMap.getTMXLayers()) {
@@ -268,9 +265,36 @@ public class GameActivity extends MyBaseGameActivity {
         });
     }
 
-    public void switchRoom(Tile doorTile) {
-        mDungeon.switchRoom(doorTile);
-        // TODO : animate room switching + repopulate scene
+    public void switchRoom(final Tile doorTile) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDungeon.switchRoom(doorTile);
+                mRoom = mDungeon.getCurrentRoom();
+                try {
+                    mGroundLayer.detachChildren();
+                    mScene.reset();
+                    mScene.clearTouchAreas();
+                    mScene.detachChildren();
+                    onCreateScene(new OnCreateSceneCallback() {
+                        @Override
+                        public void onCreateSceneFinished(Scene pScene) {
+                            try {
+                                onPopulateScene(mScene, new OnPopulateSceneCallback() {
+                                    @Override
+                                    public void onPopulateSceneFinished() {
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

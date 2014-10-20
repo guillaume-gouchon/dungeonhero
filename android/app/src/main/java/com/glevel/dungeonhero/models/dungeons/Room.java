@@ -34,7 +34,7 @@ public class Room implements Serializable {
     private static final long serialVersionUID = 4746018928851456729L;
 
     private final String tmxName;
-    private Tile[][] tiles;
+    private Tile[][] tiles = null;
 
     private transient Map<Directions, Tile> doors;
     private transient List<GameElement> objects = new ArrayList<GameElement>();
@@ -48,13 +48,13 @@ public class Room implements Serializable {
     }
 
     public void initRoom(TMXTiledMap tiledMap, Dungeon dungeon) {
-        if (tiles != null) {
+        if (tiles != null && objects.size() == 0) {
             // build loaded room
             addContentFromExistingTiles();
-        } else {
+        } else if (tiles == null) {
             // create new room
-            doors = new HashMap<Directions, Tile>(4);
             tiles = new Tile[tiledMap.getTileRows()][tiledMap.getTileColumns()];
+            doors = new HashMap<Directions, Tile>(4);
 
             // add ground tiles
             TMXLayer groundLayer = tiledMap.getTMXLayers().get(0);
@@ -63,11 +63,6 @@ public class Room implements Serializable {
                 for (TMXTile tmxTile : tmxTiles) {
                     tile = new Tile(tmxTile, tiledMap);
                     tiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = tile;
-
-                    // add properties
-                    if (tile.getGround() == GroundTypes.DOOR) {
-                        doors.put(getDoorDirection(tile), tile);
-                    }
                 }
             }
 
@@ -135,7 +130,7 @@ public class Room implements Serializable {
         checkSafe();
     }
 
-    public void removeElement(GameElement gameElement) {
+    public synchronized void removeElement(GameElement gameElement) {
         objects.remove(gameElement);
         if (gameElement instanceof Unit) {
             queue.remove(gameElement);
@@ -143,7 +138,7 @@ public class Room implements Serializable {
         checkSafe();
     }
 
-    private void checkSafe() {
+    private synchronized void checkSafe() {
         isSafe = true;
         for (Unit unit : queue) {
             if (unit.getRank() == Ranks.ENEMY) {
@@ -203,7 +198,8 @@ public class Room implements Serializable {
 
     public List<Unit> exit() {
         List<Unit> unitsToMoveAway = new ArrayList<Unit>();
-        for (Unit unit : queue) {
+        List<Unit> copy = new ArrayList<Unit>(queue);
+        for (Unit unit : copy) {
             if (unit.getRank() == Ranks.ME || unit.getRank() == Ranks.ALLY) {
                 removeElement(unit);
                 unit.setTilePosition(null);

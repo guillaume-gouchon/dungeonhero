@@ -139,6 +139,8 @@ public class ActionsDispatcher implements UserActionListener {
         if (path != null) {
             isMoving = true;
             animateMove(path, new OnActionExecuted() {
+                private boolean done = false;
+
                 @Override
                 public void onActionDone(boolean success) {
                     if (mGameActivity.getRoom().isSafe()) {
@@ -153,7 +155,8 @@ public class ActionsDispatcher implements UserActionListener {
                     mInputManager.setEnabled(true);
                     isMoving = false;
                     selectTile(null);
-                    if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
+                    if (!done && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
+                        done = true;
                         mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
                     }
                 }
