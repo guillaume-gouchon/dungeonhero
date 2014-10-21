@@ -13,7 +13,7 @@ import com.glevel.dungeonhero.models.items.equipments.Weapon;
 public class WeaponFactory {
 
     public static Equipment buildSword() {
-        Weapon item = new Weapon(R.string.troll, R.drawable.ic_chest, 5, 3);
+        Weapon item = new Weapon(R.string.short_sword, R.drawable.ic_weapon, 5, 3);
         item.addBuff(new Buff(5, Characteristics.ATTACK, null));
         item.addRequirement(new Requirement(8, Characteristics.STRENGTH));
         return item;

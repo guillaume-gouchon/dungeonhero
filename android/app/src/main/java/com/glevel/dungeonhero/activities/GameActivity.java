@@ -120,10 +120,9 @@ public class GameActivity extends MyBaseGameActivity {
                     addElementToScene(gameElement);
                 }
 
-                gameElement = tile.getSubContent();
-                if (gameElement != null) {
-                    gameElement.setTilePosition(tile);
-                    addElementToScene(gameElement);
+                for (GameElement subContent : tile.getSubContent()) {
+                    subContent.setTilePosition(tile);
+                    addElementToScene(subContent);
                 }
             }
         }

@@ -21,6 +21,7 @@ import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
+import com.glevel.dungeonhero.models.Buff;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Pnj;
@@ -30,8 +31,11 @@ import com.glevel.dungeonhero.models.discussions.Reaction;
 import com.glevel.dungeonhero.models.items.Consumable;
 import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.models.items.equipments.Armor;
+import com.glevel.dungeonhero.models.items.equipments.Weapon;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
+import com.glevel.dungeonhero.views.HintTextView;
 import com.glevel.dungeonhero.views.LifeBar;
 
 import java.util.List;
@@ -276,13 +280,18 @@ public class GUIManager {
         ((TextView) mHeroInfoDialog.findViewById(R.id.name)).setText(hero.getName());
         ((TextView) mHeroInfoDialog.findViewById(R.id.description)).setText(hero.getDescription());
         ((TextView) mHeroInfoDialog.findViewById(R.id.hp)).setText(mActivity.getString(R.string.hp_in_game, hero.getCurrentHP(), hero.getHp()));
-        ((TextView) mHeroInfoDialog.findViewById(R.id.level)).setText(mActivity.getString(R.string.level_in_game, hero.getLevel(), hero.getXp(), 1000));
+        ((TextView) mHeroInfoDialog.findViewById(R.id.level)).setText(mActivity.getString(R.string.level_in_game, hero.getLevel(), hero.getXp(), hero.getNextLevelXPAmount()));
         ((TextView) mHeroInfoDialog.findViewById(R.id.strength)).setText("" + hero.getStrength());
         ((TextView) mHeroInfoDialog.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());
         ((TextView) mHeroInfoDialog.findViewById(R.id.spirit)).setText("" + hero.getSpirit());
         ((TextView) mHeroInfoDialog.findViewById(R.id.attack)).setText("" + hero.getAttack());
         ((TextView) mHeroInfoDialog.findViewById(R.id.block)).setText("" + hero.getBlock());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.frags)).setText("" + hero.getFrags());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.movement)).setText("" + hero.calculateMovement());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.damage)).setText(mActivity.getString(R.string.damage) + " : " + hero.getFrags());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.protection)).setText(mActivity.getString(R.string.protection) + ": " + hero.calculateProtection());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.critical)).setText(mActivity.getString(R.string.critical) + " : " + hero.calculateCritical() + "%");
+        ((TextView) mHeroInfoDialog.findViewById(R.id.dodge)).setText(mActivity.getString(R.string.dodge) + " : " + hero.calculateDodge() + "%");
+        ((TextView) mHeroInfoDialog.findViewById(R.id.frags)).setText(hero.getFrags() + " " + mActivity.getString(R.string.frags));
 
         mHeroInfoDialog.show();
     }
@@ -471,70 +480,101 @@ public class GUIManager {
     }
 
     public void showItemInfo(final Hero hero, final Item item, final OnActionExecuted onDropListener) {
-        mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
-        mItemInfoDialog.setContentView(R.layout.in_game_item_info);
-        mItemInfoDialog.setCancelable(true);
+        if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
+            mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
+            mItemInfoDialog.setContentView(R.layout.in_game_item_info);
+            mItemInfoDialog.setCancelable(true);
 
-        ((TextView) mItemInfoDialog.findViewById(R.id.name)).setText(item.getName());
-        ((ImageView) mItemInfoDialog.findViewById(R.id.image)).setImageResource(item.getImage());
+            TextView nameTV = (TextView) mItemInfoDialog.findViewById(R.id.name);
+            nameTV.setText(item.getName());
+            nameTV.setCompoundDrawablesWithIntrinsicBounds(item.getImage(), 0, 0, 0);
 
-        Button actionButton = (Button) mItemInfoDialog.findViewById(R.id.actionButton);
-        Button dropButton = (Button) mItemInfoDialog.findViewById(R.id.dropButton);
-        if (!item.isDroppable()) {
-            dropButton.setVisibility(View.GONE);
-        }
-
-        if (item instanceof Equipment) {
-            final Equipment equipment = (Equipment) item;
-            if (hero.isEquipped(equipment)) {
-                actionButton.setText(R.string.remove);
-                actionButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        hero.removeEquipment(equipment);
-                        updateBag(hero);
-                        mItemInfoDialog.dismiss();
-                    }
-                });
-                dropButton.setVisibility(View.GONE);
+            TextView descriptionTV = (TextView) mItemInfoDialog.findViewById(R.id.description);
+            if (item.getDescription() > 0) {
+                descriptionTV.setText(item.getDescription());
             } else {
-                actionButton.setText(R.string.equip);
+                descriptionTV.setVisibility(View.GONE);
+            }
+
+            Button actionButton = (Button) mItemInfoDialog.findViewById(R.id.actionButton);
+            Button dropButton = (Button) mItemInfoDialog.findViewById(R.id.dropButton);
+            ViewGroup statsLayout = (ViewGroup) mItemInfoDialog.findViewById(R.id.stats);
+            int index = 0;
+
+            if (item instanceof Equipment) {
+                final Equipment equipment = (Equipment) item;
+                if (hero.isEquipped(equipment)) {
+                    actionButton.setText(R.string.remove);
+                    actionButton.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            hero.removeEquipment(equipment);
+                            updateBag(hero);
+                            mItemInfoDialog.dismiss();
+                        }
+                    });
+                    dropButton.setVisibility(View.GONE);
+                } else if (hero.canEquipItem(equipment)) {
+                    actionButton.setText(R.string.equip);
+                    actionButton.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            hero.equip(equipment);
+                            updateBag(hero);
+                            mItemInfoDialog.dismiss();
+                        }
+                    });
+                }
+
+                if (item instanceof Weapon) {
+                    Weapon weapon = (Weapon) item;
+                    addItemStatToLayout(statsLayout.getChildAt(index++), weapon.getMinDamage() + "-" + (weapon.getMinDamage() + weapon.getDeltaDamage()), R.drawable.ic_damage, R.string.damage, R.color.white);
+                } else if (item instanceof Armor) {
+                    Armor armor = (Armor) item;
+                    addItemStatToLayout(statsLayout.getChildAt(index++), "+" + armor.getProtection(), R.drawable.ic_armor, R.string.protection, R.color.white);
+                }
+                for (Buff buff : ((Equipment) item).getBuffs()) {
+                    addItemStatToLayout(statsLayout.getChildAt(index++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.attack : R.color.red);
+                }
+            } else if (item instanceof Consumable) {
+                final Consumable consumable = (Consumable) item;
+                actionButton.setText(R.string.use);
                 actionButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        hero.equip(equipment);
+                        hero.use(consumable);
                         updateBag(hero);
                         mItemInfoDialog.dismiss();
                     }
                 });
             }
-        } else if (item instanceof Consumable) {
-            final Consumable consumable = (Consumable) item;
-            actionButton.setText(R.string.use);
-            actionButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    hero.use(consumable);
-                    updateBag(hero);
-                    mItemInfoDialog.dismiss();
-                }
-            });
+
+            if (item.isDroppable()) {
+                dropButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hero.drop(item);
+                        updateBag(hero);
+                        onDropListener.onActionDone(true);
+                        mItemInfoDialog.dismiss();
+                    }
+                });
+            } else {
+                dropButton.setVisibility(View.GONE);
+            }
+
+            mItemInfoDialog.show();
         }
+    }
 
-        if (item.isDroppable()) {
-            dropButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    hero.drop(item);
-                    updateBag(hero);
-                    onDropListener.onActionDone(true);
-                    mItemInfoDialog.dismiss();
-                }
-            });
-        }
-
-
-        mItemInfoDialog.show();
+    private void addItemStatToLayout(View view, String text, int image, int hint, int color) {
+        HintTextView statView = (HintTextView) view;
+        statView.setText(text);
+        statView.setTextHint(hint);
+        statView.setCompoundDrawablesWithIntrinsicBounds(image, 0, 0, 0);
+        int colorResource = mActivity.getResources().getColor(color);
+        statView.setTextColor(colorResource);
+        statView.setVisibility(View.VISIBLE);
     }
 
 }

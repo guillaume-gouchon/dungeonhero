@@ -1,56 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/rootLayout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_gui"
-    android:padding="20dp">
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:gravity="center">
 
-    <ImageView
-        android:id="@+id/image"
+    <com.glevel.dungeonhero.views.CustomTextView
+        style="@style/PopupMessage"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:layout_centerInParent="true"
-        android:padding="5dp"
-        android:alpha="0.3" />
+        android:text="@string/placeholder"
+        android:padding="8dp" />
+
+    <com.glevel.dungeonhero.views.CustomTextView
+        style="@style/PopupDescription"
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder" />
+
+    <GridLayout
+        android:id="@+id/stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:padding="10dp"
+        android:layout_gravity="left">
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+    </GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="3dp"
-        android:gravity="center">
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
 
-        <com.glevel.dungeonhero.views.CustomTextView
-            style="@style/PopupMessage"
-            android:id="@+id/name"
+        <com.glevel.dungeonhero.views.CustomButton
+            android:id="@+id/actionButton"
+            style="@style/PopupButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.glevel.dungeonhero.views.CustomButton
+            android:id="@+id/dropButton"
+            style="@style/PopupButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="10dp">
-
-            <com.glevel.dungeonhero.views.CustomButton
-                android:id="@+id/actionButton"
-                style="@style/PopupButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder"
-                android:layout_marginRight="15dp" />
-
-            <com.glevel.dungeonhero.views.CustomButton
-                android:id="@+id/dropButton"
-                style="@style/PopupButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/drop" />
-        </LinearLayout>
-
+            android:text="@string/drop"
+            android:layout_marginLeft="20dp" />
     </LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>

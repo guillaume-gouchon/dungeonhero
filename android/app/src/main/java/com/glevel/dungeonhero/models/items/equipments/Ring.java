@@ -12,8 +12,8 @@ public class Ring extends Equipment implements Serializable {
 
     private static final long serialVersionUID = 4191323307341633727L;
 
-    public Ring(int name, int image) {
-        super(name, image, R.color.bg_ring);
+    public Ring(int name, int description, int image) {
+        super(name, description, image, R.color.bg_ring);
     }
 
 }

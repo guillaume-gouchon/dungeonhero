@@ -46,6 +46,9 @@ public class HintTextView extends TextView implements View.OnClickListener {
         setOnClickListener(this);
     }
 
+    public void setTextHint(int textHint) {
+        mTextHint = textHint;
+    }
 
     @Override
     public void onClick(View view) {

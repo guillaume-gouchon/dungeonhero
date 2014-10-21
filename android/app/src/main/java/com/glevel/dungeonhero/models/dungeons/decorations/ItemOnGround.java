@@ -21,11 +21,11 @@ public class ItemOnGround extends Searchable implements Serializable {
     @Override
     public void setTilePosition(Tile tilePosition) {
         if (this.tilePosition != null) {
-            this.tilePosition.setSubContent(null);
+            this.tilePosition.getSubContent().remove(this);
         }
         this.tilePosition = tilePosition;
         if (tilePosition != null) {
-            tilePosition.setSubContent(this);
+            tilePosition.getSubContent().add(this);
         }
     }
 
@@ -34,4 +34,5 @@ public class ItemOnGround extends Searchable implements Serializable {
         super.createSprite(vertexBufferObjectManager);
         sprite.setZIndex(2);
     }
+    
 }

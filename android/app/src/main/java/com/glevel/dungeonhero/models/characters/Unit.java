@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.models.characters;
 
+import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.Buff;
@@ -8,6 +9,7 @@ import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.models.items.Requirement;
 import com.glevel.dungeonhero.models.items.equipments.Weapon;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
@@ -151,10 +153,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         return tile.getGround() != null && tile.getContent() == null;
     }
 
-    public int getMovement() {
-        return 4;
-    }
-
     @Override
     public void createSprite(VertexBufferObjectManager vertexBufferObjectManager) {
         sprite = new UnitSprite(this, vertexBufferObjectManager);
@@ -262,6 +260,21 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
                 buffs.remove(buff);
             }
         }
+    }
+
+    public boolean canEquipItem(Equipment equipment) {
+        for (Requirement requirement : equipment.getRequirements()) {
+            if (requirement.getTarget().getName() == R.string.strength && strength < requirement.getValue()) {
+                return false;
+            } else if (requirement.getTarget().getName() == R.string.dexterity && dexterity < requirement.getValue()) {
+                return false;
+            } else if (requirement.getTarget().getName() == R.string.spirit && spirit < requirement.getValue()) {
+                return false;
+            } else if (requirement.getTarget().getName() == R.string.attack && attack < requirement.getValue()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

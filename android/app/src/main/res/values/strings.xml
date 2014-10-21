@@ -78,7 +78,7 @@
     <string name="spirit">Spirit : used to react, deduce, focus</string>
     <string name="attack">The ability to hit an enemy</string>
     <string name="block">The ability to block an enemy\'s attack</string>
-    <string name="frags">Killed enemies</string>
+    <string name="frags">Frags</string>
 
     <!-- Game Over -->
     <string name="retry">Retry\u00A0!</string>
@@ -150,13 +150,16 @@
     <string name="demon_king">High Demon</string>
     <string name="goblin_king">Goblin King</string>
 
-    <!-- Data -->
+    <!-- Discussions -->
     <string name="hello_discussion">Hello adventurer, do you like eating pafs ?</string>
     <string name="hello_discussion2">Ahah me too !</string>
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="no">No, I don\'t</string>
     <string name="discussion_is_over">I don\'t want to talk to you anymore.</string>
+
+    <!-- Items -->
+    <string name="short_sword">Short Sword</string>
 
     <!-- In Game -->
     <string name="level_in_game">Level %1$s (%2$s/%3$s)</string>
@@ -171,6 +174,12 @@
     <string name="remove">Remove</string>
     <string name="drop">Drop</string>
     <string name="gold_coins">Gold Coins</string>
-    <string name="bag_full">Your bag is full, the object has been dropped</string>
+    <string name="bag_full">Your bag is full, the object has been dropped on the ground</string>
+    <string name="damage">Damage</string>
+    <string name="protection">Protection</string>
+    <string name="dodge">Dodge</string>
+    <string name="movement">Movement</string>
+    <string name="initiative">Initiative</string>
+    <string name="critical">Critical Hit</string>
 
 </resources>

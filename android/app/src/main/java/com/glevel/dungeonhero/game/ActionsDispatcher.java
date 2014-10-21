@@ -77,11 +77,11 @@ public class ActionsDispatcher implements UserActionListener {
     public void onTap(float x, float y) {
         Tile tile = getTileAtCoordinates(x, y);
         if (tile != null && mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
-            if (tile.getSubContent() != null && tile.getSubContent() != mSelectedElement) {
-                showElementInfo(tile.getSubContent());
+            if (tile.getSubContent().size() > 0 && tile.getSubContent().get(0) != mSelectedElement) {
+                showElementInfo(tile.getSubContent().get(0));
             } else if (tile.getContent() != null && tile.getContent() != mSelectedElement && tile.getContent().getRank() != Ranks.ME) {
                 showElementInfo(tile.getContent());
-            } else if (tile.getContent() != null && tile.getContent().getRank() == Ranks.ME && mSelectedTile == tile && tile.getSubContent() == null) {// end movement
+            } else if (tile.getContent() != null && tile.getContent().getRank() == Ranks.ME && mSelectedTile == tile && tile.getSubContent().size() == 0) {// end movement
                 mGameActivity.nextTurn();
             } else if (!isMoving && tile.getAction() != null && tile.getAction() != Actions.NONE) {
                 executeAction(tile);
@@ -215,7 +215,7 @@ public class ActionsDispatcher implements UserActionListener {
                     if (tile.getContent() != null && tile.getContent() instanceof Searchable) {
                         searchable = (Searchable) tile.getContent();
                     } else {
-                        searchable = (Searchable) tile.getSubContent();
+                        searchable = (Searchable) tile.getSubContent().get(0);
                     }
                     Reward reward = searchable.search();
                     if (searchable instanceof ItemOnGround) {
@@ -266,9 +266,6 @@ public class ActionsDispatcher implements UserActionListener {
 
     public void dropItem(Item item) {
         Tile tile = mGameActivity.getHero().getTilePosition();
-        if (tile.getSubContent() != null) {
-            mGameActivity.removeElement(tile.getSubContent());
-        }
         ItemOnGround itemOnGround = new ItemOnGround(item.getName(), new Reward(item, 0, 0));
         itemOnGround.setTilePosition(tile);
         mGameActivity.addElementToScene(itemOnGround);
@@ -426,13 +423,13 @@ public class ActionsDispatcher implements UserActionListener {
         Tile t;
         for (Tile[] hTile : mGameActivity.getRoom().getTiles()) {
             for (Tile tile : hTile) {
-                if (!reachableTiles.contains(tile) && MathUtils.calcManhattanDistance(tile, mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().getMovement()
+                if (!reachableTiles.contains(tile) && MathUtils.calcManhattanDistance(tile, mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement()
                         && mGameActivity.getActiveCharacter().canMoveIn(tile)) {
                     List<Tile> path = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), tile, false, mGameActivity.getActiveCharacter());
                     if (path != null) {
                         for (int n = 0; n < path.size(); n++) {
                             t = path.get(n);
-                            if (n <= mGameActivity.getActiveCharacter().getMovement()) {
+                            if (n <= mGameActivity.getActiveCharacter().calculateMovement()) {
                                 reachableTiles.add(t);
                             }
                         }
@@ -458,7 +455,7 @@ public class ActionsDispatcher implements UserActionListener {
 
     public void showActions() {
         for (GameElement gameElement : mGameActivity.getRoom().getObjects()) {
-            if (mGameActivity.getActiveCharacter() != gameElement && (mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().getMovement() + 1)) {
+            if (mGameActivity.getActiveCharacter() != gameElement && (mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement() + 1)) {
                 addAvailableAction(gameElement);
             }
         }

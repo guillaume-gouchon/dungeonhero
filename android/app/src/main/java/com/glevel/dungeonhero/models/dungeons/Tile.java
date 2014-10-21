@@ -11,13 +11,15 @@ import org.andengine.extension.tmx.TMXTileProperty;
 import org.andengine.extension.tmx.TMXTiledMap;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tile extends TMXTile implements Node, Serializable {
 
     private static final long serialVersionUID = 3793350205301888410L;
 
     private GameElement content = null;
-    private GameElement subContent = null;
+    private final List<GameElement> subContent = new ArrayList<GameElement>();
     private GroundTypes ground = null;
     private transient Actions action;
     private transient boolean isSelected = false;
@@ -103,12 +105,8 @@ public class Tile extends TMXTile implements Node, Serializable {
     }
 
 
-    public GameElement getSubContent() {
+    public List<GameElement> getSubContent() {
         return subContent;
-    }
-
-    public void setSubContent(GameElement subContent) {
-        this.subContent = subContent;
     }
 
 }

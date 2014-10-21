@@ -15,8 +15,14 @@ public class Weapon extends Equipment implements Serializable {
     private final int minDamage;
     private final int deltaDamage;
 
+    public Weapon(int name, int description, int image, int minDamage, int deltaDamage) {
+        super(name, description, image, R.color.bg_weapon);
+        this.minDamage = minDamage;
+        this.deltaDamage = deltaDamage;
+    }
+
     public Weapon(int name, int image, int minDamage, int deltaDamage) {
-        super(name, image, R.color.bg_weapon);
+        super(name, 0, image, R.color.bg_weapon);
         this.minDamage = minDamage;
         this.deltaDamage = deltaDamage;
     }
@@ -28,5 +34,5 @@ public class Weapon extends Equipment implements Serializable {
     public int getDeltaDamage() {
         return deltaDamage;
     }
-    
+
 }

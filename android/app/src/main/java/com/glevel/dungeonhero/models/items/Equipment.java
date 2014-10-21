@@ -17,8 +17,8 @@ public class Equipment extends Item implements Serializable {
     private final List<Buff> buffs = new ArrayList<Buff>();
     private final List<Requirement> requirements = new ArrayList<Requirement>();
 
-    public Equipment(int name, int image, int color) {
-        super(name, image, color, true);
+    public Equipment(int name, int description, int image, int color) {
+        super(name, description, image, color, true);
     }
 
     public static int getEquipmentEmptyImage(int index) {

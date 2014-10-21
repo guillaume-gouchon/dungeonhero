@@ -10,14 +10,16 @@ public class Item implements Serializable {
     private static final long serialVersionUID = -4963410849686406982L;
 
     private final int name;
+    private final int description;
     private final int image;
     private final int color;
     private final boolean droppable;
 
     private boolean isIdentified;
 
-    public Item(int name, int image, int color, boolean droppable) {
+    public Item(int name, int description, int image, int color, boolean droppable) {
         this.name = name;
+        this.description = description;
         this.image = image;
         this.color = color;
         this.droppable = droppable;
@@ -47,4 +49,8 @@ public class Item implements Serializable {
         return droppable;
     }
 
+    public int getDescription() {
+        return description;
+    }
+    
 }
