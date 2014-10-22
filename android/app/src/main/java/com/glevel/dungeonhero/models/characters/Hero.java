@@ -18,6 +18,7 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     protected int frags = 0;
     private int xp;
     private int level;
+    private String heroName;
 
     public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int block, int movement, int name, int description, int coins, String productId, int xp, int level) {
         super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, block, movement, name, description, coins);
@@ -116,6 +117,14 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String getHeroName() {
+        return heroName;
+    }
+
+    public void setHeroName(String heroName) {
+        this.heroName = heroName;
     }
 
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.glevel.dungeonhero.views.CustomEditText
+        android:id="@+id/heroNameInput"
+        style="@style/PopupMessage"
+        android:gravity="left|center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:hint="@string/hero_name_input"
+        android:background="@color/black"
+        android:inputType="textNoSuggestions" />
+
+    <com.glevel.dungeonhero.views.CustomTextView
+        android:id="@+id/okButton"
+        style="@style/PopupButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ok" />
+
+</LinearLayout>

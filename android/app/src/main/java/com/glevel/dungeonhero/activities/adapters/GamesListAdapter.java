@@ -38,7 +38,7 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
         Game game = mSavedGames.get(position);
 
         TextView title = (TextView) convertView.findViewById(R.id.text);
-        title.setText(game.getHero().getName());
+        title.setText(game.getHero().getHeroName());
         title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(), 0, 0, 0);
         return convertView;
     }

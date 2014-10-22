@@ -227,7 +227,6 @@
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/frags"
-            android:layout_gravity="center"
             style="@style/HeroStat"
             android:drawableLeft="@drawable/ic_frags"
             custom:linkTextColorToDrawable="true"

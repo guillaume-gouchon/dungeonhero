@@ -280,7 +280,7 @@ public class GUIManager {
         mHeroInfoDialog.setCancelable(true);
         mHeroInfoDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
-        ((TextView) mHeroInfoDialog.findViewById(R.id.name)).setText(hero.getName());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.name)).setText(hero.getHeroName());
         ((TextView) mHeroInfoDialog.findViewById(R.id.description)).setText(hero.getDescription());
         ((TextView) mHeroInfoDialog.findViewById(R.id.hp)).setText(mActivity.getString(R.string.hp_in_game, hero.getCurrentHP(), hero.getHp()));
         ((TextView) mHeroInfoDialog.findViewById(R.id.level)).setText(mActivity.getString(R.string.level_in_game, hero.getLevel(), hero.getXp(), hero.getNextLevelXPAmount()));

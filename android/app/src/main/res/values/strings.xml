@@ -63,6 +63,7 @@
 
     <!-- New Game -->
     <string name="choose_hero_message">Choose a Hero</string>
+    <string name="hero_name_input">Enter your hero name...</string>
 
     <!-- Book Chooser -->
     <string name="choose_book_message">Join an adventure</string>

@@ -5,14 +5,13 @@
     android:layout_height="wrap_content"
     android:background="@android:color/black"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <com.glevel.dungeonhero.views.CustomTextView
         android:id="@+id/message"
         style="@style/AboutDialogText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginBottom="15dp"
         android:padding="20dp"
         android:text="@string/rate_message" />
@@ -20,7 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <com.glevel.dungeonhero.views.CustomButton
             android:id="@+id/cancelButton"

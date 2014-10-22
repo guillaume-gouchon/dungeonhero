@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -205,6 +206,17 @@ public class ApplicationUtils {
     public static int convertDpToPixels(Context context, int dp) {
         Resources res = context.getResources();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());
+    }
+
+    public static void showKeyboard(final Context context, final View view) {
+        // shows the keyboard
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager keyboard = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                keyboard.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }, 150);
     }
 
 }
