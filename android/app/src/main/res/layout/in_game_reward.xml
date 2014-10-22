@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
             style="@style/PopupMessage"
-            android:drawableLeft="@drawable/ic_coin"
+            android:drawableTop="@drawable/ic_coin"
             android:gravity="left" />
 
         <com.glevel.dungeonhero.views.CustomTextView

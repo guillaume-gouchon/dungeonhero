@@ -29,7 +29,9 @@ public class MonsterFactory {
     }
 
     public static Monster buildGoblin() {
-        return new Monster(R.drawable.goblin, "goblin.png", 5, 5, 6, 10, 2, 8, 8, 7, R.string.goblin, R.string.choose_hero_message, 10);
+        Monster monster = new Monster(R.drawable.goblin, "goblin.png", 5, 5, 6, 8, 2, 8, 8, 7, R.string.goblin, R.string.choose_hero_message, 10);
+        monster.equip(WeaponFactory.buildSword());
+        return monster;
     }
 
     public static Monster buildChaosWarrior() {

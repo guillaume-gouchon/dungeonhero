@@ -19,7 +19,7 @@ public class Tile extends TMXTile implements Node, Serializable {
     private static final long serialVersionUID = 3793350205301888410L;
 
     private GameElement content = null;
-    private final List<GameElement> subContent = new ArrayList<GameElement>();
+    private List<GameElement> subContent = new ArrayList<GameElement>();
     private GroundTypes ground = null;
     private transient Actions action;
     private transient boolean isSelected = false;
@@ -104,9 +104,12 @@ public class Tile extends TMXTile implements Node, Serializable {
         this.isSelected = isSelected;
     }
 
-
     public List<GameElement> getSubContent() {
         return subContent;
+    }
+
+    public void setSubContent(List<GameElement> subContent) {
+        this.subContent = subContent;
     }
 
 }

@@ -51,6 +51,9 @@ public class Equipment extends Item implements Serializable {
     }
 
     public List<Buff> getBuffs() {
+        if (!isIdentified) {
+            return new ArrayList<Buff>();
+        }
         return buffs;
     }
 

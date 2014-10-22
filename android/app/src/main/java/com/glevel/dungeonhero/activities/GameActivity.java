@@ -5,21 +5,23 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.data.BookFactory;
-import com.glevel.dungeonhero.data.HeroFactory;
+import com.glevel.dungeonhero.activities.fragments.StoryFragment;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
+import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Monster;
+import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
@@ -35,7 +37,6 @@ import java.util.TimerTask;
 
 public class GameActivity extends MyBaseGameActivity {
 
-    public static final String EXTRA_GAME_ID = "game_id";
     public SelectionCircle mSelectionCircle;
     public Entity mGroundLayer;
     public TMXTiledMap mTmxTiledMap;
@@ -48,27 +49,33 @@ public class GameActivity extends MyBaseGameActivity {
     @Override
     protected void initGameActivity() {
         Bundle extras = getIntent().getExtras();
-        // TODO : get game from Serializable
-//        mGame = (Game) extras.getSerializable(Game.class.getName());
-        mGame = new Game(HeroFactory.buildBerserker(), BookFactory.buildInitiationBook(1));
+        mGame = (Game) extras.getSerializable(Game.class.getName());
+//        mGame = new Game(HeroFactory.buildBerserker(), BookFactory.buildInitiationBook(1));
         mGame.setOnNewSprite(this);
         mGame.setOnNewSoundToPlay(this);
 
-        mDungeon = mGame.getDungeon();
+        if (mGame.getDungeon() == null) {
+            // start new dungeon
+            Chapter chapter = mGame.getChapter();
+
+            // create dungeon
+            chapter.createDungeon();
+            mGame.setDungeon(chapter.getDungeon());
+
+            mHero = mGame.getHero().clone();
+            mDungeon = mGame.getDungeon();
+
+
+            // show intro story if needed
+            if (mDungeon.getIntroText() > 0) {
+                Bundle args = new Bundle();
+                args.putInt(StoryFragment.ARGUMENT_STORY, mDungeon.getIntroText());
+                ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
+            }
+        } else {
+            mDungeon = mGame.getDungeon();
+        }
         mRoom = mDungeon.getCurrentRoom();
-        mHero = mGame.getHero();
-
-        // show intro story if needed
-        // TODO
-//        if (mDungeon.hasToDisplayIntroStory() && mDungeon.getIntroText() > 0) {
-//            Bundle args = new Bundle();
-//            args.putInt(StoryFragment.ARGUMENT_STORY, mDungeon.getIntroText());
-//            ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
-//            mDungeon.setIntroTextAlreadyRead(true);
-//        }
-
-        // TODO : remove
-        mDoSaveGame = false;
     }
 
     @Override
@@ -84,10 +91,6 @@ public class GameActivity extends MyBaseGameActivity {
         final TMXLoader tmxLoader = new TMXLoader(getAssets(), mEngine.getTextureManager(),
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA, getVertexBufferObjectManager(), null);
         mTmxTiledMap = tmxLoader.loadFromAsset("tmx/" + mRoom.getTmxName() + ".tmx");
-
-        List<Unit> heroes = new ArrayList<Unit>();
-        heroes.add(mHero);
-        mDungeon.moveIn(mTmxTiledMap, heroes);
 
         mTmxTiledMap.getTMXLayers().get(1).setZIndex(10);
         for (TMXLayer tmxLayer : mTmxTiledMap.getTMXLayers()) {
@@ -110,6 +113,12 @@ public class GameActivity extends MyBaseGameActivity {
         mSelectionCircle = new SelectionCircle(getVertexBufferObjectManager());
         mScene.attachChild(mSelectionCircle);
 
+        List<Unit> heroes = new ArrayList<Unit>();
+        if (mHero != null) {
+            heroes.add(mHero);
+        }
+        mDungeon.moveIn(mTmxTiledMap, heroes);
+
         // add elements to scene
         GameElement gameElement;
         for (Tile[] hTiles : mRoom.getTiles()) {
@@ -118,9 +127,13 @@ public class GameActivity extends MyBaseGameActivity {
                 if (gameElement != null) {
                     gameElement.setTilePosition(tile);
                     addElementToScene(gameElement);
+                    if (mHero == null && gameElement.getRank() == Ranks.ME) {
+                        mHero = (Hero) gameElement;
+                    }
                 }
 
-                for (GameElement subContent : tile.getSubContent()) {
+                List<GameElement> copy = new ArrayList<GameElement>(tile.getSubContent());
+                for (GameElement subContent : copy) {
                     subContent.setTilePosition(tile);
                     addElementToScene(subContent);
                 }
@@ -144,6 +157,16 @@ public class GameActivity extends MyBaseGameActivity {
         mRoom.removeElement(gameElement);
         mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
         super.removeElement(gameElement.getSprite(), false);
+    }
+
+    @Override
+    protected void onPause() {
+        if (mActiveCharacter != null && mActiveCharacter.isEnemy(mHero)) {
+            mRoom.getQueue().remove(mActiveCharacter);
+            mRoom.getQueue().add(0, mActiveCharacter);
+        }
+        mGame.setDungeon(mDungeon);
+        super.onPause();
     }
 
     @Override
@@ -204,7 +227,6 @@ public class GameActivity extends MyBaseGameActivity {
 
     public void startGame() {
         // init camera position
-        Tile tile = mHero.getTilePosition();
         mCamera.setCenter(mHero.getSprite().getX(), mHero.getSprite().getY());
 
         // hide loading screen
@@ -218,7 +240,9 @@ public class GameActivity extends MyBaseGameActivity {
             @Override
             public void run() {
                 if (mHero.isDead()) {
-                    startActivity(new Intent(GameActivity.this, GameOverActivity.class));
+                    Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
+                    intent.putExtra(Game.class.getName(), mGame);
+                    startActivity(intent);
                     finish();
                     return;
                 }

@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.models.items;
 
+import com.glevel.dungeonhero.R;
+
 import java.io.Serializable;
 
 /**
@@ -15,7 +17,7 @@ public class Item implements Serializable {
     private final int color;
     private final boolean droppable;
 
-    private boolean isIdentified;
+    protected boolean isIdentified;
 
     public Item(int name, int description, int image, int color, boolean droppable) {
         this.name = name;
@@ -26,6 +28,9 @@ public class Item implements Serializable {
     }
 
     public int getName() {
+        if (!isIdentified) {
+            return R.string.unknown_item;
+        }
         return name;
     }
 
@@ -50,7 +55,10 @@ public class Item implements Serializable {
     }
 
     public int getDescription() {
+        if (description > 0 && !isIdentified) {
+            return R.string.unknown_item;
+        }
         return description;
     }
-    
+
 }

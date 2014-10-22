@@ -134,7 +134,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:padding">8dp</item>
         <item name="android:drawablePadding">8dp</item>
-        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:gravity">left|center_vertical</item>
 
     </style>
 
@@ -216,11 +216,13 @@
 
     <style name="PopupButton">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@drawable/text_color_btn</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:padding">15dp</item>
-        <item name="android:drawablePadding">10dp</item>
-        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:background">@drawable/bg_popup_btn</item>
     </style>
 
     <style name="Reply">

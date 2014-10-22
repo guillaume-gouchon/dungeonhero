@@ -2,12 +2,15 @@ package com.glevel.dungeonhero.models.discussions;
 
 import com.glevel.dungeonhero.models.Reward;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by guillaume on 10/13/14.
  */
-public class Discussion {
+public class Discussion implements Serializable {
+
+    private static final long serialVersionUID = 4434121243275987291L;
 
     private final int image;
     private final int name;

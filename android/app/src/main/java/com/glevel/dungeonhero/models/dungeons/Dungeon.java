@@ -14,7 +14,6 @@ public class Dungeon implements Serializable {
 
     private static final long serialVersionUID = 4765596237193067497L;
 
-
     private final Room[][] rooms = new Room[10][10];
     private final int start;
     private final int introText;
@@ -22,7 +21,6 @@ public class Dungeon implements Serializable {
 
     private int currentPosition;
     private Directions currentDirection;
-    private boolean isIntroTextAlreadyRead = false;
 
     public Dungeon(int introText, int outroText, Directions startDirection) {
         // TODO : create random dungeon
@@ -42,6 +40,7 @@ public class Dungeon implements Serializable {
 
     public void switchRoom(Tile doorTile) {
         Room previousRoom = getCurrentRoom();
+        previousRoom.exit();
         Directions doorDirection = previousRoom.getDirectionFromDoorTile(doorTile);
         switch (doorDirection) {
             case NORTH:
@@ -88,14 +87,6 @@ public class Dungeon implements Serializable {
 
     public int getStart() {
         return start;
-    }
-
-    public boolean hasToDisplayIntroStory() {
-        return currentPosition == start && !isIntroTextAlreadyRead;
-    }
-
-    public void setIntroTextAlreadyRead(boolean isIntroTextAlreadyRead) {
-        this.isIntroTextAlreadyRead = isIntroTextAlreadyRead;
     }
 
 }

@@ -16,7 +16,7 @@ public class Chapter implements Serializable {
 
     private final int name;
     private final int introText, outroText;
-    private final transient Dungeon dungeon;
+    private transient Dungeon dungeon;
     private final Monster boss;
     private boolean done;
 
@@ -24,9 +24,13 @@ public class Chapter implements Serializable {
         this.name = name;
         this.introText = introText;
         this.outroText = outroText;
-        this.dungeon = new Dungeon(R.string .about, 0, Directions.WEST);
         this.done = false;
         this.boss = boss;
+    }
+
+    public void createDungeon() {
+        // TODO
+        this.dungeon = new Dungeon(R.string.about, 0, Directions.WEST);
     }
 
     public int getName() {

@@ -181,5 +181,7 @@
     <string name="movement">Movement</string>
     <string name="initiative">Initiative</string>
     <string name="critical">Critical Hit</string>
+    <string name="unknown_item">\?\?\?</string>
+    <string name="minimum">min. %s </string>
 
 </resources>

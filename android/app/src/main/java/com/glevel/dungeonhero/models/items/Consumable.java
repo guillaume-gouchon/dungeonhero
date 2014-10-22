@@ -1,6 +1,6 @@
 package com.glevel.dungeonhero.models.items;
 
-import com.glevel.dungeonhero.models.characters.Hero;
+import com.glevel.dungeonhero.models.characters.Unit;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public class Consumable extends Item implements Serializable {
         super(name, description, image, color, true);
     }
 
-    public void use(Hero owner) {
+    public void use(Unit owner) {
 
     }
 

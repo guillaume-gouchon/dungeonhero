@@ -11,6 +11,7 @@ import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.HeroesAdapter;
 import com.glevel.dungeonhero.data.HeroFactory;
+import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
@@ -38,8 +39,10 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
             int position = Integer.parseInt("" + v.getTag(R.string.id));
             Hero selectedHero = mLstHeroes.get(position);
             if (selectedHero.isAvailable()) {
+                Game game = new Game();
+                game.setHero(selectedHero);
                 Intent intent = new Intent(NewGameActivity.this, BookChooserActivity.class);
-                intent.putExtra(Hero.class.getName(), selectedHero);
+                intent.putExtra(Game.class.getName(), game);
                 startActivity(intent);
                 finish();
             } else {

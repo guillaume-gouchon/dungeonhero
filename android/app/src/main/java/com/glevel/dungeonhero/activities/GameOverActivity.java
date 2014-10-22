@@ -7,13 +7,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.glevel.dungeonhero.MyActivity;
+import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 public class GameOverActivity extends MyActivity implements View.OnClickListener {
 
     private Runnable mStormEffect;
     private ImageView mStormsBg;
+    private MyDatabase mDbHelper;
+    private Game mGame;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,12 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
         setContentView(R.layout.activity_game_over);
 
         setupUI();
+
+        mDbHelper = new MyDatabase(getApplicationContext());
+
+        mGame = (Game) getIntent().getSerializableExtra(Game.class.getName());
+        mGame.setDungeon(null);
+        mDbHelper.getRepository(MyDatabase.Repositories.GAME.toString()).save(mGame);
     }
 
     private void setupUI() {
@@ -55,7 +65,9 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.retryButton:
-                // TODO : retry dungeon
+                Intent intent = new Intent(this, GameActivity.class);
+                intent.putExtra(Game.class.getName(), mGame);
+                startActivity(intent);
                 finish();
                 break;
             case R.id.exitButton:

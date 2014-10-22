@@ -15,6 +15,11 @@
         android:text="@string/placeholder"
         android:padding="8dp" />
 
+    <View
+        android:background="@color/grey"
+        android:layout_height="2dp"
+        android:layout_width="match_parent" />
+
     <com.glevel.dungeonhero.views.CustomTextView
         style="@style/PopupDescription"
         android:id="@+id/description"
@@ -27,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="3"
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_gravity="left">
 
         <com.glevel.dungeonhero.views.HintTextView
@@ -55,6 +60,27 @@
             style="@style/HeroStat" />
     </GridLayout>
 
+    <GridLayout
+        android:id="@+id/requirements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:padding="5dp"
+        android:layout_gravity="left">
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+
+        <com.glevel.dungeonhero.views.HintTextView
+            android:visibility="gone"
+            style="@style/HeroStat" />
+    </GridLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,14 +88,14 @@
         android:gravity="center"
         android:layout_marginTop="10dp">
 
-        <com.glevel.dungeonhero.views.CustomButton
+        <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/actionButton"
             style="@style/PopupButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder" />
 
-        <com.glevel.dungeonhero.views.CustomButton
+        <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/dropButton"
             style="@style/PopupButton"
             android:layout_width="wrap_content"

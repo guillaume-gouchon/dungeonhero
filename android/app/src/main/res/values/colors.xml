@@ -8,6 +8,9 @@
     <color name="bg_btn_pressed_center">#aabbbbbb</color>
     <color name="bg_btn_disabled">#33000000</color>
 
+    <color name="bg_popup_btn">#111</color>
+    <color name="bg_popup_btn_pressed">#222</color>
+
     <color name="link">#aabbbbbb</color>
     <color name="link_pressed">#aa999999</color>
 
@@ -17,6 +20,7 @@
     <color name="hp">#C76969</color>
     <color name="attack">#77A867</color>
     <color name="block">#758FBA</color>
+    <color name="movement">#A88967</color>
 
     <color name="requisitionPoints">#EDEA39</color>
     <color name="grey">#aabbbbbb</color>
@@ -30,7 +34,6 @@
     <color name="blue">#6BB3D6</color>
     <color name="veteran">#ffffff</color>
     <color name="elite">#999999</color>
-    <color name="brown">#D9B904</color>
     <color name="bg_game_gui">#aa000000</color>
     <color name="bg_game_menu">#88000000</color>
     <color name="btn_stroke_color">#000000</color>

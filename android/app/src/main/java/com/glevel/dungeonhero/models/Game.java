@@ -32,17 +32,9 @@ public class Game extends DatabaseResource implements Serializable {
     private int[] booksDone;
     private Chapter chapter;
     private Hero hero;
-    private Dungeon dungeon;
+    private Dungeon dungeon = null;
 
     public Game() {
-    }
-
-    public Game(Hero hero, Book book) {
-        this.id = 0L;
-        this.hero = hero;
-        this.book = book;
-        this.chapter = book.getChapters().get(0);
-        this.dungeon = chapter.getDungeon();
     }
 
     public static Game fromCursor(Cursor cursor) {
@@ -50,11 +42,13 @@ public class Game extends DatabaseResource implements Serializable {
         game.setId(cursor.getLong(0));
         int bookId = cursor.getInt(1);
         if (bookId > 0) {
-            game.setBook(BookFactory.getAll().get(bookId - 1));
+            game.startNewBook(BookFactory.getAll().get(bookId - 1));
         }
         game.setChapter((Chapter) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
         game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
-        game.setDungeon((Dungeon) ByteSerializer.getObjectFromByte(cursor.getBlob(4)));
+        if (cursor.getBlob(4) != null) {
+            game.setDungeon((Dungeon) ByteSerializer.getObjectFromByte(cursor.getBlob(4)));
+        }
         game.setBooksDone((int[]) ByteSerializer.getObjectFromByte(cursor.getBlob(5)));
         return game;
     }
@@ -71,7 +65,7 @@ public class Game extends DatabaseResource implements Serializable {
         if (id > 0) {
             content.put(Game.COLUMN_ID, id);
         }
-        content.put(Columns.BOOK_ID.toString(), book.getBookId());
+        content.put(Columns.BOOK_ID.toString(), book != null ? book.getBookId() : 0L);
         content.put(Columns.CHAPTER.toString(), ByteSerializer.toByteArray(chapter));
         content.put(Columns.HERO.toString(), ByteSerializer.toByteArray(hero));
         content.put(Columns.DUNGEON.toString(), ByteSerializer.toByteArray(dungeon));
@@ -91,8 +85,9 @@ public class Game extends DatabaseResource implements Serializable {
         return book;
     }
 
-    public void setBook(Book book) {
+    public void startNewBook(Book book) {
         this.book = book;
+        this.chapter = book.getChapters().get(0);
     }
 
     public Chapter getChapter() {
@@ -120,7 +115,7 @@ public class Game extends DatabaseResource implements Serializable {
     }
 
     private enum Columns {
-        BOOK_ID("book_id"), CHAPTER("chapter"), HERO("hero"), DUNGEON("dungeon"), BOOKS_DONE("books_done");
+        BOOK_ID("book_id"), CHAPTER("chapter"), HERO("hero"), DUNGEON("dungeon"), BOOKS_DONE("books_done"), IN_ADVENTURE("in_adventure");
 
         private final String columnName;
 
@@ -164,7 +159,7 @@ public class Game extends DatabaseResource implements Serializable {
 
     public List<String> getSoundEffectsToLoad() {
         List<String> toLoad = new ArrayList<String>();
-    
+
         return toLoad;
     }
 

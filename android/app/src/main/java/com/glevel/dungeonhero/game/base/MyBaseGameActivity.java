@@ -67,6 +67,12 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         super.onCreate(pSavedInstanceState);
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mDbHelper = new MyDatabase(getApplicationContext());
+
+        // init GUI
+        mGUIManager = new GUIManager(this);
+        mGUIManager.initGUI();
+        mGUIManager.showLoadingScreen();
+
         initGameActivity();
     }
 
@@ -79,11 +85,6 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
 
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
-        // init GUI
-        mGUIManager = new GUIManager(this);
-        mGUIManager.initGUI();
-        mGUIManager.showLoadingScreen();
-
         // init game element factory
         mGraphicsManager = new GraphicsManager(this, getVertexBufferObjectManager(), getTextureManager());
         mGraphicsManager.initGraphics(mGame);
@@ -227,7 +228,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         animatedText.setScaleCenter(0.5f, 0.5f);
         animatedText.setColor(color);
         animatedText.setScale(scale);
-        animatedText.setAlpha(0.6f);
+        animatedText.setAlpha(0.75f);
         mScene.attachChild(animatedText);
         if (duration > 0) {
             animatedText.registerUpdateHandler(new IUpdateHandler() {
@@ -320,6 +321,10 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
 
     public GUIManager getGUIManager() {
         return mGUIManager;
+    }
+
+    public Game getGame() {
+        return mGame;
     }
 
 }

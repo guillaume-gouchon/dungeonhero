@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.adapters.GamesListAdapter;
 import com.glevel.dungeonhero.models.Game;
@@ -42,7 +43,6 @@ public class GameChooserFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_TITLE, 0); // remove title from dialog fragment
-
         mDbHelper = new MyDatabase(getActivity());
     }
 
@@ -97,8 +97,13 @@ public class GameChooserFragment extends DialogFragment {
     }
 
     private void launchGame(Game game) {
-        Intent intent = new Intent(getActivity(), GameActivity.class);
-        intent.putExtra(GameActivity.EXTRA_GAME_ID, game.getId());
+        Intent intent;
+        if (game.getDungeon() == null) {
+            intent = new Intent(getActivity(), BookChooserActivity.class);
+        } else {
+            intent = new Intent(getActivity(), GameActivity.class);
+        }
+        intent.putExtra(Game.class.getName(), game);
         startActivity(intent);
         getActivity().finish();
     }

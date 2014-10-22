@@ -57,7 +57,6 @@ public class ActionsDispatcher implements UserActionListener {
     private boolean interrupt = false;
     private TimerHandler animationHandler;
 
-    // TODO needs refactor
     public ActionsDispatcher(GameActivity gameActivity, Scene scene) {
         mGameActivity = gameActivity;
         mInputManager = mGameActivity.getInputManager();
@@ -143,7 +142,13 @@ public class ActionsDispatcher implements UserActionListener {
 
                 @Override
                 public void onActionDone(boolean success) {
-                    if (mGameActivity.getRoom().isSafe()) {
+                    mInputManager.setEnabled(true);
+                    isMoving = false;
+                    selectTile(null);
+                    if (!done && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
+                        done = true;
+                        mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
+                    } else if (mGameActivity.getRoom().isSafe()) {
                         mGameActivity.runOnUpdateThread(new Runnable() {
                             @Override
                             public void run() {
@@ -151,13 +156,6 @@ public class ActionsDispatcher implements UserActionListener {
                                 showActions();
                             }
                         });
-                    }
-                    mInputManager.setEnabled(true);
-                    isMoving = false;
-                    selectTile(null);
-                    if (!done && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
-                        done = true;
-                        mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
                     }
                 }
             });
@@ -519,7 +517,7 @@ public class ActionsDispatcher implements UserActionListener {
             mGameActivity.drawAnimatedText(targetSprite.getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE / 2, "-" + fightResult.getDamage(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
         }
         if (fightResult.getState() != FightResult.States.DAMAGE) {
-            mGameActivity.drawAnimatedText(targetSprite.getX() + GameConstants.PIXEL_BY_TILE / 2, targetSprite.getY() - GameConstants.PIXEL_BY_TILE / 2, fightResult.getState().name(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
+            mGameActivity.drawAnimatedText(targetSprite.getX() + GameConstants.PIXEL_BY_TILE / 2, targetSprite.getY() - GameConstants.PIXEL_BY_TILE / 2, fightResult.getState().name().toLowerCase(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
         }
 
         // animate characters
@@ -582,10 +580,10 @@ public class ActionsDispatcher implements UserActionListener {
 
         if (reward != null) {
             if (reward.getGold() > 0) {
-                mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", new Color(1, 1, 0), 0.2f, 50, -0.15f);
+                mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
             }
             if (reward.getXp() > 0) {
-                mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(0, 0, 0.9f), 0.2f, 50, -0.15f);
+                mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(0.1f, 0.3f, 0.9f), 0.2f, 50, -0.15f);
             }
             if (reward.getItem() != null) {
                 mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {

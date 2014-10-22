@@ -27,21 +27,21 @@
             android:value="@string/app_id" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="5208000" />
+            android:value="6111000" />
 
         <activity
             android:name=".activities.SplashActivity"
-            android:noHistory="true"></activity>
-        <activity android:name=".activities.HomeActivity"></activity>
-        <activity android:name=".activities.BookChooserActivity"></activity>
-        <activity android:name=".activities.NewGameActivity"></activity>
-        <activity android:name=".activities.GameActivity">
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.HomeActivity"></activity>
+        <activity android:name=".activities.BookChooserActivity"></activity>
+        <activity android:name=".activities.NewGameActivity"></activity>
+        <activity android:name=".activities.GameActivity"></activity>
         <activity android:name=".activities.TutorialActivity"></activity>
         <activity android:name=".activities.GameOverActivity"></activity>
     </application>

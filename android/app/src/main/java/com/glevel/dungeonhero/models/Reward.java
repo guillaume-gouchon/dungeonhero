@@ -2,10 +2,14 @@ package com.glevel.dungeonhero.models;
 
 import com.glevel.dungeonhero.models.items.Item;
 
+import java.io.Serializable;
+
 /**
  * Created by guillaume on 10/13/14.
  */
-public class Reward {
+public class Reward implements Serializable {
+
+    private static final long serialVersionUID = 5814508698731975285L;
 
     private final Item item;
     private final int gold;

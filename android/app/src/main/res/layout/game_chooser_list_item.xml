@@ -13,6 +13,7 @@
         android:padding="15dp"
         android:background="@drawable/bg_carousel"
         android:text="@string/placeholder"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="@color/white" />
 
 </LinearLayout>

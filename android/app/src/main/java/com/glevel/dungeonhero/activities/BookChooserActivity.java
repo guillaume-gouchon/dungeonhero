@@ -13,23 +13,27 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.glevel.dungeonhero.MyActivity;
+import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.BooksAdapter;
 import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Game;
-import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.utils.billing.InAppBillingHelper;
 import com.glevel.dungeonhero.utils.billing.OnBillingServiceConnectedListener;
+import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.CustomCarousel;
 
 import java.util.List;
 
 public class BookChooserActivity extends MyActivity implements OnBillingServiceConnectedListener {
+
+    private DatabaseHelper mDbHelper;
+    private Game mGame;
 
     private ImageView mStormsBg;
     private Runnable mStormEffect;
@@ -64,10 +68,16 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
 
         setContentView(R.layout.activity_book_chooser);
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mDbHelper = new MyDatabase(getApplicationContext());
 
         setupUI();
 
         mInAppBillingHelper = new InAppBillingHelper(this, this);
+
+        mGame = (Game) getIntent().getExtras().getSerializable(Game.class.getName());
+        mGame.setDungeon(null);
+        long gameId = mDbHelper.getRepository(MyDatabase.Repositories.GAME.toString()).save(mGame);
+        mGame.setId(gameId);
     }
 
     private void setupUI() {
@@ -173,11 +183,9 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
 
     private void onBookSelected(Book selectedBook) {
         if (selectedBook.isAvailable()) {
-            Hero hero = (Hero) getIntent().getSerializableExtra(Hero.class.getName());
-            Game game = new Game(hero, selectedBook);
-
-            Intent intent = new Intent(BookChooserActivity.this, GameActivity.class);
-            intent.putExtra(Game.class.getName(), game);
+            mGame.startNewBook(selectedBook);
+            Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra(Game.class.getName(), mGame);
             startActivity(intent);
             finish();
         } else {

@@ -2,22 +2,16 @@ package com.glevel.dungeonhero.models.characters;
 
 
 import com.glevel.dungeonhero.models.FightResult;
-import com.glevel.dungeonhero.models.items.Consumable;
 import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
-import com.glevel.dungeonhero.models.items.equipments.Armor;
-import com.glevel.dungeonhero.models.items.equipments.Ring;
-import com.glevel.dungeonhero.models.items.equipments.Weapon;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
 /**
  * Created by guillaume ON 10/2/14.
  */
-public class Hero extends Unit implements InAppProduct {
+public class Hero extends Unit implements InAppProduct, Cloneable {
 
     private static final long serialVersionUID = -2887616275513777101L;
-
-    private static final int NB_ITEMS_MAX_IN_BAG = 15;
 
     private final String productId;
     protected boolean mHasBeenBought = false;
@@ -84,63 +78,6 @@ public class Hero extends Unit implements InAppProduct {
         return equipments;
     }
 
-    public void equip(Equipment equipment) {
-        if (equipment instanceof Armor) {
-            if (equipments[2] != null) {
-                removeEquipment(2);
-            }
-            equipments[2] = equipment;
-        } else if (equipment instanceof Weapon) {
-            if (equipments[0] == null) {
-                equipments[0] = equipment;
-            } else if (equipments[1] == null) {
-                equipments[1] = equipment;
-            } else {
-                removeEquipment(1);
-                equipments[1] = equipment;
-            }
-        } else if (equipment instanceof Ring) {
-            if (equipments[3] == null) {
-                equipments[3] = equipment;
-            } else if (equipments[4] == null) {
-                equipments[4] = equipment;
-            } else {
-                removeEquipment(4);
-                equipments[4] = equipment;
-            }
-        }
-        items.remove(equipment);
-    }
-
-    public boolean isEquipped(Equipment equipment) {
-        Equipment e;
-        for (int n = 0; n < equipments.length; n++) {
-            e = equipments[n];
-            if (e == equipment) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void removeEquipment(Equipment equipment) {
-        Equipment e;
-        for (int n = 0; n < equipments.length; n++) {
-            e = equipments[n];
-            if (e == equipment) {
-                removeEquipment(n);
-                return;
-            }
-        }
-    }
-
-    private void removeEquipment(int index) {
-        boolean success = addItem(equipments[index]);
-        if (success) {
-            equipments[index] = null;
-        }
-    }
-
     public boolean addXP(int xpAmount) {
         xp += xpAmount;
         if (xp >= getNextLevelXPAmount()) {
@@ -172,18 +109,13 @@ public class Hero extends Unit implements InAppProduct {
         items.remove(item);
     }
 
-    public void use(Consumable consumable) {
-        items.remove(consumable);
-        consumable.use(this);
-    }
-
-    public boolean addItem(Item item) {
-        if (items.size() < NB_ITEMS_MAX_IN_BAG) {
-            items.add(item);
-            return true;
-        } else {
-            return false;
+    public Hero clone() {
+        try {
+            return (Hero) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
 }

@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
 import com.glevel.dungeonhero.models.Buff;
+import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Pnj;
@@ -31,6 +31,7 @@ import com.glevel.dungeonhero.models.discussions.Reaction;
 import com.glevel.dungeonhero.models.items.Consumable;
 import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.models.items.Requirement;
 import com.glevel.dungeonhero.models.items.equipments.Armor;
 import com.glevel.dungeonhero.models.items.equipments.Weapon;
 import com.glevel.dungeonhero.utils.MusicManager;
@@ -117,7 +118,9 @@ public class GUIManager {
                             public void onClick(DialogInterface dialog, int which) {
                                 MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
                                 if (which == R.id.okButton) {
-                                    mActivity.startActivity(new Intent(mActivity, BookChooserActivity.class));
+                                    Intent intent = new Intent(mActivity, BookChooserActivity.class);
+                                    intent.putExtra(Game.class.getName(), mActivity.getGame());
+                                    mActivity.startActivity(intent);
                                     mActivity.finish();
                                 }
                                 dialog.dismiss();
@@ -287,8 +290,8 @@ public class GUIManager {
         ((TextView) mHeroInfoDialog.findViewById(R.id.attack)).setText("" + hero.getAttack());
         ((TextView) mHeroInfoDialog.findViewById(R.id.block)).setText("" + hero.getBlock());
         ((TextView) mHeroInfoDialog.findViewById(R.id.movement)).setText("" + hero.calculateMovement());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.damage)).setText(mActivity.getString(R.string.damage) + " : " + hero.getFrags());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.protection)).setText(mActivity.getString(R.string.protection) + ": " + hero.calculateProtection());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.damage)).setText(mActivity.getString(R.string.damage) + " : " + hero.getReadableDamage());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.protection)).setText(mActivity.getString(R.string.protection) + " : " + hero.calculateProtection());
         ((TextView) mHeroInfoDialog.findViewById(R.id.critical)).setText(mActivity.getString(R.string.critical) + " : " + hero.calculateCritical() + "%");
         ((TextView) mHeroInfoDialog.findViewById(R.id.dodge)).setText(mActivity.getString(R.string.dodge) + " : " + hero.calculateDodge() + "%");
         ((TextView) mHeroInfoDialog.findViewById(R.id.frags)).setText(hero.getFrags() + " " + mActivity.getString(R.string.frags));
@@ -372,7 +375,7 @@ public class GUIManager {
                     } else {
                         if (reward.getItem() != null) {
                             itemTV.setText(mActivity.getString(R.string.found_item, mActivity.getString(reward.getItem().getName())));
-                            itemTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, reward.getItem().getImage());
+                            itemTV.setCompoundDrawablesWithIntrinsicBounds(0, reward.getItem().getImage(), 0, 0);
                             itemTV.setVisibility(View.VISIBLE);
                         } else {
                             itemTV.setVisibility(View.GONE);
@@ -496,10 +499,11 @@ public class GUIManager {
                 descriptionTV.setVisibility(View.GONE);
             }
 
-            Button actionButton = (Button) mItemInfoDialog.findViewById(R.id.actionButton);
-            Button dropButton = (Button) mItemInfoDialog.findViewById(R.id.dropButton);
+            TextView actionButton = (TextView) mItemInfoDialog.findViewById(R.id.actionButton);
+            TextView dropButton = (TextView) mItemInfoDialog.findViewById(R.id.dropButton);
             ViewGroup statsLayout = (ViewGroup) mItemInfoDialog.findViewById(R.id.stats);
-            int index = 0;
+            ViewGroup requirementsLayout = (ViewGroup) mItemInfoDialog.findViewById(R.id.requirements);
+            int indexStats = 0, indexRequirements = 0;
 
             if (item instanceof Equipment) {
                 final Equipment equipment = (Equipment) item;
@@ -524,17 +528,27 @@ public class GUIManager {
                             mItemInfoDialog.dismiss();
                         }
                     });
+                } else {
+                    actionButton.setVisibility(View.GONE);
                 }
 
+                // add unique stats
                 if (item instanceof Weapon) {
                     Weapon weapon = (Weapon) item;
-                    addItemStatToLayout(statsLayout.getChildAt(index++), weapon.getMinDamage() + "-" + (weapon.getMinDamage() + weapon.getDeltaDamage()), R.drawable.ic_damage, R.string.damage, R.color.white);
+                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), weapon.getMinDamage() + " - " + (weapon.getMinDamage() + weapon.getDeltaDamage()), R.drawable.ic_damage, R.string.damage, R.color.white);
                 } else if (item instanceof Armor) {
                     Armor armor = (Armor) item;
-                    addItemStatToLayout(statsLayout.getChildAt(index++), "+" + armor.getProtection(), R.drawable.ic_armor, R.string.protection, R.color.white);
+                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), "+" + armor.getProtection(), R.drawable.ic_armor, R.string.protection, R.color.white);
                 }
-                for (Buff buff : ((Equipment) item).getBuffs()) {
-                    addItemStatToLayout(statsLayout.getChildAt(index++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.attack : R.color.red);
+
+                // add buffs
+                for (Buff buff : equipment.getBuffs()) {
+                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.attack : R.color.red);
+                }
+
+                // add requirements
+                for (Requirement requirement : equipment.getRequirements()) {
+                    addStatToItemLayout(requirementsLayout.getChildAt(indexRequirements++), mActivity.getString(R.string.minimum, requirement.getValue()), requirement.getTarget().getImage(), requirement.getTarget().getName(), R.color.white);
                 }
             } else if (item instanceof Consumable) {
                 final Consumable consumable = (Consumable) item;
@@ -567,7 +581,7 @@ public class GUIManager {
         }
     }
 
-    private void addItemStatToLayout(View view, String text, int image, int hint, int color) {
+    private void addStatToItemLayout(View view, String text, int image, int hint, int color) {
         HintTextView statView = (HintTextView) view;
         statView.setText(text);
         statView.setTextHint(hint);

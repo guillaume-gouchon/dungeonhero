@@ -31,8 +31,14 @@
             android:layout_height="wrap_content"
             android:text="@string/placeholder" />
 
+        <View
+            android:layout_marginTop="5dp"
+            android:background="@color/grey"
+            android:layout_height="2dp"
+            android:layout_width="match_parent" />
+
         <LinearLayout
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -59,13 +65,12 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <GridLayout
+        <LinearLayout
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:useDefaultMargins="true">
+            android:orientation="horizontal">
 
             <com.glevel.dungeonhero.views.HintTextView
                 android:id="@+id/strength"
@@ -74,7 +79,8 @@
                 custom:textHint="@string/strength"
                 custom:linkTextColorToDrawable="true"
                 android:text="@string/placeholder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/strength" />
 
@@ -85,7 +91,8 @@
                 android:drawableLeft="@drawable/ic_dexterity"
                 custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/dexterity"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/dexterity" />
 
@@ -96,9 +103,18 @@
                 custom:linkTextColorToDrawable="true"
                 android:text="@string/placeholder"
                 custom:textHint="@string/spirit"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/spirit" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <com.glevel.dungeonhero.views.HintTextView
                 android:id="@+id/attack"
@@ -107,7 +123,8 @@
                 custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/attack"
                 android:text="@string/placeholder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/attack" />
 
@@ -118,7 +135,8 @@
                 custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/block"
                 android:text="@string/placeholder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/block" />
 
@@ -129,18 +147,23 @@
                 custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/movement"
                 android:text="@string/placeholder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textColor="@color/brown"
-                android:textSize="12sp" />
-        </GridLayout>
+                android:textColor="@color/movement" />
+        </LinearLayout>
 
-        <GridLayout
-            android:layout_gravity="center"
+        <View
             android:layout_marginTop="5dp"
+            android:background="@color/grey"
+            android:layout_height="2dp"
+            android:layout_width="match_parent" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2">
+            android:layout_height="wrap_content">
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/damage"
@@ -149,10 +172,11 @@
                 custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/damage"
                 android:text="@string/placeholder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/protection"
@@ -161,11 +185,18 @@
                 custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/protection"
                 android:text="@string/placeholder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/critical"
@@ -174,10 +205,11 @@
                 custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/critical"
                 android:text="@string/placeholder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/dodge"
@@ -186,11 +218,12 @@
                 custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/dodge"
                 android:text="@string/placeholder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
-        </GridLayout>
+                android:textSize="10sp" />
+        </LinearLayout>
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/frags"
@@ -203,6 +236,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
     </LinearLayout>
 </LinearLayout>

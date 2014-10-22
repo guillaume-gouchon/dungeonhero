@@ -7,9 +7,12 @@ import com.glevel.dungeonhero.models.Buff;
 import com.glevel.dungeonhero.models.FightResult;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.items.Characteristics;
+import com.glevel.dungeonhero.models.items.Consumable;
 import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.Requirement;
+import com.glevel.dungeonhero.models.items.equipments.Armor;
+import com.glevel.dungeonhero.models.items.equipments.Ring;
 import com.glevel.dungeonhero.models.items.equipments.Weapon;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
@@ -27,6 +30,9 @@ import java.util.List;
 public abstract class Unit extends GameElement implements MovingElement<Tile>, Serializable {
 
     private static final long serialVersionUID = 1683650465351973413L;
+
+    private static final int NB_ITEMS_MAX_IN_BAG = 15;
+
     protected final List<Item> items = new ArrayList<Item>();
     // SKills
     protected final List<PassiveSkill> passive = new ArrayList<PassiveSkill>();
@@ -166,17 +172,17 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         FightResult fightResult;
 
         int dice = (int) (Math.random() * 100);
-        int damage = calculateDamage((Weapon) equipments[0]);
+        int damage = (equipments[0] != null ? calculateDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateDamage((Weapon) equipments[1]) / 2 : 0);
 
         int critical = calculateCritical();
 
-        if (critical < dice) {
-            fightResult = new FightResult(FightResult.States.CRITICAL, damage * 2);
+        if (dice < critical) {
+            fightResult = new FightResult(FightResult.States.CRITICAL, damage * 2 - target.calculateProtection());
         } else if (dice < attack * 10 - target.getBlock() * 5) {
             if (Math.random() * 100 < calculateDodge()) {
                 fightResult = new FightResult(FightResult.States.DODGE, 0);
             } else {
-                fightResult = new FightResult(FightResult.States.DAMAGE, damage);
+                fightResult = new FightResult(FightResult.States.DAMAGE, damage - target.calculateProtection());
             }
         } else {
             fightResult = new FightResult(FightResult.States.BLOCK, 0);
@@ -185,6 +191,14 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         target.takeDamage(fightResult.getDamage());
 
         return fightResult;
+    }
+
+    public String getReadableDamage() {
+        int weapon1Min = (equipments[0] != null ? ((Weapon) equipments[0]).getMinDamage() : 0);
+        int weapon2Min = (equipments[1] != null ? ((Weapon) equipments[1]).getMinDamage() / 2 : 0);
+        int weapon1Delta = (equipments[0] != null ? ((Weapon) equipments[0]).getDeltaDamage() : 0);
+        int weapon2Delta = (equipments[1] != null ? ((Weapon) equipments[1]).getDeltaDamage() / 2 : 0);
+        return (weapon1Min + weapon2Min) + " - " + (weapon1Min + weapon1Delta + weapon2Min + weapon2Delta);
     }
 
     public void takeDamage(int damage) {
@@ -204,7 +218,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int calculateDamage(Weapon weapon) {
-        // TODO : add special bonus
         return calculateDamageBonus() + weapon.getMinDamage() + (int) (Math.random() * weapon.getDeltaDamage());
     }
 
@@ -260,6 +273,77 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
                 buffs.remove(buff);
             }
         }
+    }
+
+    public void equip(Equipment equipment) {
+        if (equipment instanceof Armor) {
+            if (equipments[2] != null) {
+                removeEquipment(2);
+            }
+            equipments[2] = equipment;
+        } else if (equipment instanceof Weapon) {
+            if (equipments[0] == null) {
+                equipments[0] = equipment;
+            } else if (equipments[1] == null) {
+                equipments[1] = equipment;
+            } else {
+                removeEquipment(1);
+                equipments[1] = equipment;
+            }
+        } else if (equipment instanceof Ring) {
+            if (equipments[3] == null) {
+                equipments[3] = equipment;
+            } else if (equipments[4] == null) {
+                equipments[4] = equipment;
+            } else {
+                removeEquipment(4);
+                equipments[4] = equipment;
+            }
+        }
+        items.remove(equipment);
+    }
+
+    public boolean isEquipped(Equipment equipment) {
+        Equipment e;
+        for (int n = 0; n < equipments.length; n++) {
+            e = equipments[n];
+            if (e == equipment) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeEquipment(Equipment equipment) {
+        Equipment e;
+        for (int n = 0; n < equipments.length; n++) {
+            e = equipments[n];
+            if (e == equipment) {
+                removeEquipment(n);
+                return;
+            }
+        }
+    }
+
+    private void removeEquipment(int index) {
+        boolean success = addItem(equipments[index]);
+        if (success) {
+            equipments[index] = null;
+        }
+    }
+
+    public boolean addItem(Item item) {
+        if (items.size() < NB_ITEMS_MAX_IN_BAG) {
+            items.add(item);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void use(Consumable consumable) {
+        items.remove(consumable);
+        consumable.use(this);
     }
 
     public boolean canEquipItem(Equipment equipment) {
