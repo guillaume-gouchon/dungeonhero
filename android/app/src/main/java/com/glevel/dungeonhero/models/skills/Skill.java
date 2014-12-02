@@ -8,5 +8,15 @@ import java.io.Serializable;
 public class Skill implements Serializable {
 
     private static final long serialVersionUID = 457816281507623195L;
+
+    private int name;
+    private int description;
+    private int image;
+
+    public Skill(int name, int description, int image) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+    }
     
 }

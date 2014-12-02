@@ -32,8 +32,6 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
         ((TextView) layout.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());
         ((TextView) layout.findViewById(R.id.spirit)).setText("" + hero.getSpirit());
         ((TextView) layout.findViewById(R.id.hp)).setText("" + hero.getHp());
-        ((TextView) layout.findViewById(R.id.attack)).setText("" + hero.getAttack());
-        ((TextView) layout.findViewById(R.id.block)).setText("" + hero.getBlock());
 
         return layout;
     }

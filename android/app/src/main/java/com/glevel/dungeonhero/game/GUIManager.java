@@ -287,8 +287,6 @@ public class GUIManager {
         ((TextView) mHeroInfoDialog.findViewById(R.id.strength)).setText("" + hero.getStrength());
         ((TextView) mHeroInfoDialog.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());
         ((TextView) mHeroInfoDialog.findViewById(R.id.spirit)).setText("" + hero.getSpirit());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.attack)).setText("" + hero.getAttack());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.block)).setText("" + hero.getBlock());
         ((TextView) mHeroInfoDialog.findViewById(R.id.movement)).setText("" + hero.calculateMovement());
         ((TextView) mHeroInfoDialog.findViewById(R.id.damage)).setText(mActivity.getString(R.string.damage) + " : " + hero.getReadableDamage());
         ((TextView) mHeroInfoDialog.findViewById(R.id.protection)).setText(mActivity.getString(R.string.protection) + " : " + hero.calculateProtection());

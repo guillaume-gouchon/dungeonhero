@@ -20,8 +20,8 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     private int level;
     private String heroName;
 
-    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int block, int movement, int name, int description, int coins, String productId, int xp, int level) {
-        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, attack, block, movement, name, description, coins);
+    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int name, int description, int coins, String productId, int xp, int level) {
+        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, movement, name, description, coins);
         this.productId = productId;
         this.xp = xp;
         this.level = level;

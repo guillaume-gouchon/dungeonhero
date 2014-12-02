@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.models.skills;
 
+import com.glevel.dungeonhero.models.Buff;
+
 import java.io.Serializable;
 
 /**
@@ -8,5 +10,9 @@ import java.io.Serializable;
 public class PassiveSkill extends Skill implements Serializable {
 
     private static final long serialVersionUID = -2557103327292997487L;
+
+    public PassiveSkill(int name, int description, int image, Buff buff) {
+        super(name, description, image);
+    }
 
 }

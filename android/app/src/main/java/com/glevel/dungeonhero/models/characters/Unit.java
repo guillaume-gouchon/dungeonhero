@@ -45,17 +45,16 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     private final int description;
     // Possessions
     protected int gold;
+
     // Characteristics
     private int hp;
     private int currentHP;
     private int strength;
     private int dexterity;
     private int spirit;
-    private int attack;
-    private int block;
     private int movement;
 
-    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int attack, int block, int movement, int name, int description, int coins) {
+    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int name, int description, int coins) {
         super(name, spriteName, rank, 210, 400, 3, 4);
         this.image = image;
         this.hp = hp;
@@ -63,8 +62,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         this.strength = strength;
         this.dexterity = dexterity;
         this.spirit = spirit;
-        this.attack = attack;
-        this.block = block;
         this.movement = movement;
         this.description = description;
         this.gold = coins;
@@ -112,22 +109,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     public void setSpirit(int spirit) {
         this.spirit = spirit;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public int getBlock() {
-        return block;
-    }
-
-    public void setBlock(int block) {
-        this.block = block;
     }
 
     public int getDescription() {
@@ -178,7 +159,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         if (dice < critical) {
             fightResult = new FightResult(FightResult.States.CRITICAL, damage * 2 - target.calculateProtection());
-        } else if (dice < attack * 10 - target.getBlock() * 5) {
+        } else if (dice > target.calculateBlock()) {
             if (Math.random() * 100 < calculateDodge()) {
                 fightResult = new FightResult(FightResult.States.DODGE, 0);
             } else {
@@ -227,6 +208,10 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     public int calculateInitiative() {
         return dexterity + spirit + getBonusFromBuffsAndEquipments(Characteristics.INITIATIVE);
+    }
+
+    public int calculateBlock() {
+        return getBonusFromBuffsAndEquipments(Characteristics.BLOCK);
     }
 
     public int calculateMovement() {
@@ -353,8 +338,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
             } else if (requirement.getTarget().getName() == R.string.dexterity && dexterity < requirement.getValue()) {
                 return false;
             } else if (requirement.getTarget().getName() == R.string.spirit && spirit < requirement.getValue()) {
-                return false;
-            } else if (requirement.getTarget().getName() == R.string.attack && attack < requirement.getValue()) {
                 return false;
             }
         }
