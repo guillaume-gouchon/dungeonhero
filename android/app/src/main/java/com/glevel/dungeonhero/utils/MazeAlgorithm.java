@@ -77,7 +77,7 @@ public class MazeAlgorithm {
 
             if (i < height - 1) {
                 for (int j = 0; j < width; j++) {
-                    if (horizontalWalls[j][j]) {
+                    if (horizontalWalls[i][j]) {
                         System.out.print("0 ");
                     } else {
                         System.out.print("8 ");
