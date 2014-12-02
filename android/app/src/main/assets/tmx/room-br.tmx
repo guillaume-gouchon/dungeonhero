@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="15" height="15" tilewidth="16" tileheight="16" backgroundcolor="#000000">
+<map version="1.0" orientation="orthogonal" width="13" height="9" tilewidth="16" tileheight="16" backgroundcolor="#000000">
  <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16">
   <image source="tileset.png" width="352" height="80"/>
   <tile id="0" terrain="0,0,0,4"/>
@@ -151,14 +151,14 @@
   <tile id="87" terrain="4,4,0,0"/>
   <tile id="88" terrain="4,0,0,0"/>
  </tileset>
- <layer name="ground" width="15" height="15">
+ <layer name="ground" width="13" height="9">
   <data encoding="base64" compression="zlib">
-   eJwLY2BgCBtk2IdIdRJALAnEUkSw0fXqAbE+EBsQwUbX6wLErkDsRgSbGm4Wg7qDFDeDaJ0BdPNAh/NQwgASkDu2
+   eJxjYKAfkARiPSB2hbJd0DBITAJKw4AbVEwKqs8NypZCYoPE9ZH0wMxzRWLDzJCAqnWFsnWgelyRsBSS+2BmgOwygLofF5AgOiQQwIkMPYQAAAfHCS8=
   </data>
  </layer>
- <layer name="objects" width="15" height="15">
+ <layer name="objects" width="13" height="9">
   <data encoding="base64" compression="zlib">
-   eJwLY2BgCKMAswExOwmYA0mvHBCHYsFhOMTl0PSS4k5q6PUEYhMS9RoBsRea34jF5OhBx55oYU5snMLcTE5YgfRlkak3iwrxCwpzYxIwcpxiS3eEMExvFhkYpA8A96hDJg==
+   eJxjY2BgYCcBcwCxDBCHkIDloHpIAXFk6AkhQw8DGXo8gNgIiI2RsBdUzhNNHIZNgDgUC2bAIQ7DWVgwAw5xGAYADckRIQ==
   </data>
  </layer>
 </map>

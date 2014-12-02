@@ -4,13 +4,19 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.text.InputType;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
@@ -34,14 +40,22 @@ import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.Requirement;
 import com.glevel.dungeonhero.models.items.equipments.Armor;
 import com.glevel.dungeonhero.models.items.equipments.Weapon;
+import com.glevel.dungeonhero.models.riddles.MultiChoicesRiddle;
+import com.glevel.dungeonhero.models.riddles.OpenRiddle;
+import com.glevel.dungeonhero.models.riddles.Riddle;
+import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.HintTextView;
 import com.glevel.dungeonhero.views.LifeBar;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GUIManager {
+
+    private static final String TAG = "GuiManager";
 
     private MyBaseGameActivity mActivity;
 
@@ -188,7 +202,7 @@ public class GUIManager {
 
                 // animate loading dots
                 Animation loadingDotsAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.loading_dots);
-                ((TextView) mLoadingScreen.findViewById(R.id.loadingDots)).startAnimation(loadingDotsAnimation);
+                mLoadingScreen.findViewById(R.id.loadingDots).startAnimation(loadingDotsAnimation);
 
                 mLoadingScreen.show();
             }
@@ -310,44 +324,176 @@ public class GUIManager {
                     TextView pnjName = (TextView) mDiscussionDialog.findViewById(R.id.name);
                     pnjName.setText(discussion.getName());
                     pnjName.setCompoundDrawablesWithIntrinsicBounds(discussion.getImage(), 0, 0, 0);
-                    ((TextView) mDiscussionDialog.findViewById(R.id.message)).setText(discussion.getMessage());
 
-                    ViewGroup reactionsLayout = (ViewGroup) mDiscussionDialog.findViewById(R.id.reactions);
-                    reactionsLayout.removeAllViews();
-
-                    LayoutInflater inflater = mActivity.getLayoutInflater();
-                    TextView reactionTV;
-                    if (discussion.getReactions() != null) {
-                        for (Reaction reaction : discussion.getReactions()) {
-                            reactionTV = (TextView) inflater.inflate(R.layout.in_game_discussion_reply, null);
-                            reactionTV.setText(reaction.getMessage());
-                            reactionTV.setTag(R.string.id, reaction.getSkipNextSteps());
-                            reactionTV.setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    mDiscussionDialog.dismiss();
-                                    callback.onReplySelected(pnj, (Integer) view.getTag(R.string.id));
-                                }
-                            });
-                            reactionsLayout.addView(reactionTV);
-                        }
+                    if (discussion.getRiddle() != null) {
+                        showRiddle(pnj, discussion, callback);
                     } else {
-                        reactionTV = (TextView) inflater.inflate(R.layout.in_game_discussion_reply, null);
-                        reactionTV.setText(R.string.ok);
-                        reactionTV.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                mDiscussionDialog.dismiss();
-                                callback.onReplySelected(pnj, -1);
-                            }
-                        });
-                        reactionsLayout.addView(reactionTV);
+                        showNormalDiscussion(pnj, discussion, callback);
                     }
 
                     mDiscussionDialog.show();
                 }
             }
         });
+    }
+
+    private void showNormalDiscussion(final Pnj pnj, Discussion discussion, final OnDiscussionReplySelected callback) {
+        ((TextView) mDiscussionDialog.findViewById(R.id.message)).setText(discussion.getMessage());
+
+        ViewGroup reactionsLayout = (ViewGroup) mDiscussionDialog.findViewById(R.id.reactions);
+        reactionsLayout.setVisibility(View.VISIBLE);
+        reactionsLayout.removeAllViews();
+
+        LayoutInflater inflater = mActivity.getLayoutInflater();
+        TextView reactionTV;
+        if (discussion.getReactions() != null) {
+            for (Reaction reaction : discussion.getReactions()) {
+                reactionTV = (TextView) inflater.inflate(R.layout.in_game_discussion_reply, null);
+                reactionTV.setText(reaction.getMessage());
+                reactionTV.setTag(R.string.id, reaction.getSkipNextSteps());
+                reactionTV.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mDiscussionDialog.dismiss();
+                        callback.onReplySelected(pnj, (Integer) view.getTag(R.string.id));
+                    }
+                });
+                reactionsLayout.addView(reactionTV);
+            }
+        } else {
+            reactionTV = (TextView) inflater.inflate(R.layout.in_game_discussion_reply, null);
+            reactionTV.setText(R.string.ok);
+            reactionTV.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mDiscussionDialog.dismiss();
+                    callback.onReplySelected(pnj, -1);
+                }
+            });
+            reactionsLayout.addView(reactionTV);
+        }
+    }
+
+    private void showRiddle(final Pnj pnj, Discussion discussion, final OnDiscussionReplySelected callback) {
+        Log.d(TAG, "show riddle");
+        final Riddle riddle = discussion.getRiddle();
+
+        // start timer
+        final ProgressBar mTimerView = (ProgressBar) mDiscussionDialog.findViewById(R.id.timer);
+        mTimerView.setVisibility(View.VISIBLE);
+        final Timer mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
+
+            final float timer = riddle.getTimer() * (1 + 1.0f * mActivity.getGame().getHero().getSpirit() / 100);
+            float currentTime = timer;
+
+            @Override
+            public void run() {
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentTime -= 0.5f;
+                        mTimerView.setProgress((int) (100.0f * currentTime / timer));
+                        if (currentTime <= 0) {
+                            mTimer.cancel();
+                            mDiscussionDialog.dismiss();
+                            callback.onReplySelected(pnj, 0);
+                        }
+                    }
+                });
+            }
+        }, 0, 500);
+
+        mDiscussionDialog.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                mTimer.cancel();
+            }
+        });
+
+        ((TextView) mDiscussionDialog.findViewById(R.id.message)).setText(riddle.getQuestion());
+
+        if (riddle instanceof MultiChoicesRiddle) {
+            final MultiChoicesRiddle multiChoicesRiddle = (MultiChoicesRiddle) riddle;
+            ViewGroup reactionsLayout = (ViewGroup) mDiscussionDialog.findViewById(R.id.reactions);
+            reactionsLayout.setVisibility(View.VISIBLE);
+            reactionsLayout.removeAllViews();
+
+            LayoutInflater inflater = mActivity.getLayoutInflater();
+            TextView reactionTV;
+            for (int answer : multiChoicesRiddle.getAnswers()) {
+                reactionTV = (TextView) inflater.inflate(R.layout.in_game_discussion_reply, null);
+                reactionTV.setText(answer);
+                reactionTV.setTag(answer);
+                reactionTV.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        mDiscussionDialog.dismiss();
+                        if (multiChoicesRiddle.isAnswerCorrect((Integer) view.getTag())) {
+                            showReward(riddle.getReward(), new OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    callback.onReplySelected(pnj, 1);
+                                }
+                            });
+                        } else {
+                            callback.onReplySelected(pnj, 0);
+                        }
+                    }
+                });
+                reactionsLayout.addView(reactionTV);
+            }
+        } else {
+            final OpenRiddle openRiddle = (OpenRiddle) riddle;
+            View answerRiddleLayout = mDiscussionDialog.findViewById(R.id.riddle_layout);
+            answerRiddleLayout.setVisibility(View.VISIBLE);
+
+            final EditText answerRiddleInput = (EditText) answerRiddleLayout.findViewById(R.id.riddle_input);
+            ApplicationUtils.showKeyboard(mActivity, answerRiddleInput);
+            answerRiddleInput.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            answerRiddleInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    String answer = v.getEditableText().toString();
+                    if (!answer.isEmpty() && actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE || event != null
+                            && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        mDiscussionDialog.dismiss();
+                        if (openRiddle.isAnswerCorrect(answer)) {
+                            showReward(riddle.getReward(), new OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    callback.onReplySelected(pnj, 1);
+                                }
+                            });
+                        } else {
+                            callback.onReplySelected(pnj, 0);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            mDiscussionDialog.findViewById(R.id.okButton).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String answer = answerRiddleInput.getEditableText().toString();
+                    if (!answer.isEmpty()) {
+                        mDiscussionDialog.dismiss();
+                        if (openRiddle.isAnswerCorrect(answer)) {
+                            showReward(riddle.getReward(), new OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    callback.onReplySelected(pnj, 1);
+                                }
+                            });
+                        } else {
+                            callback.onReplySelected(pnj, 0);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public void showReward(final Reward reward, final OnDismissListener onDismissListener) {

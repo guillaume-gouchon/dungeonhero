@@ -2,7 +2,6 @@ package com.glevel.dungeonhero.models;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.characters.Monster;
-import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 
 import java.io.Serializable;
@@ -30,7 +29,7 @@ public class Chapter implements Serializable {
 
     public void createDungeon() {
         // TODO
-        this.dungeon = new Dungeon(R.string.about, 0, Directions.WEST);
+        this.dungeon = new Dungeon(R.string.about, 0);
     }
 
     public int getName() {

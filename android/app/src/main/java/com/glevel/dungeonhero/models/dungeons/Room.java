@@ -2,11 +2,10 @@ package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.DecorationFactory;
-import com.glevel.dungeonhero.data.MonsterFactory;
 import com.glevel.dungeonhero.data.PNJFactory;
 import com.glevel.dungeonhero.data.WeaponFactory;
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
-import com.glevel.dungeonhero.data.dungeon.Rooms;
+import com.glevel.dungeonhero.data.dungeon.RoomFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Pnj;
@@ -45,10 +44,8 @@ public class Room implements Serializable {
     private transient boolean isSafe;
     private transient boolean reorder = true;
 
-    public Room() {
-        // create random room
-        Rooms[] availableRooms = Rooms.values();
-        tmxName = availableRooms[(int) (Math.random() * availableRooms.length)].getTmxName();
+    public Room(boolean[][] rooms, int xPosition, int yPosition) {
+        tmxName = RoomFactory.getRoomDependingOnDoorPositions(rooms, xPosition, yPosition);
     }
 
     public void initRoom(TMXTiledMap tiledMap, Dungeon dungeon) {
@@ -120,9 +117,9 @@ public class Room implements Serializable {
 
     private void createRoomContent(Dungeon dungeon) {
         // TODO
-        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
-        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
-        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
+//        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
+//        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
+//        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
 
         addGameElement(PNJFactory.buildPNJ(), 5, 8);
         addGameElement(new ItemOnGround(R.string.gold_coins, new Reward(WeaponFactory.buildSword(), 0, 0)), 10, 10);
