@@ -97,6 +97,7 @@
     <string name="start">Deployment Done</string>
     <string name="game_menu">Game Menu</string>
     <string name="help">Help</string>
+    <string name="riddle_answer_input">your answer...</string>
 
     <!-- Tutorial -->
     <string name="next">Next</string>
@@ -158,6 +159,8 @@
     <string name="yes">Yes</string>
     <string name="no">No, I don\'t</string>
     <string name="discussion_is_over">I don\'t want to talk to you anymore.</string>
+    <string name="hello_riddle">Qu\'est ce qui est petit et marron ?</string>
+    <string name="hello_riddle_wrong_answer">You got it wrong adventurer...</string>
 
     <!-- Items -->
     <string name="short_sword">Short Sword</string>

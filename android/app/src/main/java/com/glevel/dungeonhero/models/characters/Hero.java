@@ -90,7 +90,7 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
 
     private void increaseLevel() {
         level++;
-        // TODO : increase hp, add skills, increase attack or defense
+        // TODO : increase hp, add skills
     }
 
     public int getNextLevelXPAmount() {

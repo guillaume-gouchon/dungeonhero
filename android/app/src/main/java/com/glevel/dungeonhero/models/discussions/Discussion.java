@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.models.discussions;
 
 import com.glevel.dungeonhero.models.Reward;
+import com.glevel.dungeonhero.models.riddles.Riddle;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,10 +15,11 @@ public class Discussion implements Serializable {
 
     private final int image;
     private final int name;
-    private final int message;
-    private final List<Reaction> reactions;
-    private final boolean isPermanent;
-    private final Reward reward;
+    private int message;
+    private List<Reaction> reactions;
+    private boolean isPermanent;
+    private Reward reward;
+    private Riddle riddle;
 
     public Discussion(int image, int name, int message, List<Reaction> reactions, boolean isPermanent, Reward reward) {
         this.image = image;
@@ -26,6 +28,12 @@ public class Discussion implements Serializable {
         this.reactions = reactions;
         this.isPermanent = isPermanent;
         this.reward = reward;
+    }
+
+    public Discussion(int image, int name, Riddle riddle) {
+        this.image = image;
+        this.name = name;
+        this.riddle = riddle;
     }
 
     public int getImage() {
@@ -50,6 +58,10 @@ public class Discussion implements Serializable {
 
     public Reward getReward() {
         return reward;
+    }
+
+    public Riddle getRiddle() {
+        return riddle;
     }
 
 }

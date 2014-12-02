@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.models.characters.Unit;
+import com.glevel.dungeonhero.utils.MazeAlgorithm;
 
 import org.andengine.extension.tmx.TMXTiledMap;
 
@@ -15,23 +16,27 @@ public class Dungeon implements Serializable {
     private static final long serialVersionUID = 4765596237193067497L;
 
     private final Room[][] rooms = new Room[10][10];
-    private final int start;
+    private int start;
     private final int introText;
     private final int outroText;
 
     private int currentPosition;
     private Directions currentDirection;
 
-    public Dungeon(int introText, int outroText, Directions startDirection) {
-        // TODO : create random dungeon
-        rooms[0][0] = new Room();
-        rooms[0][1] = new Room();
-        start = 1;
-        currentDirection = startDirection;
-        currentPosition = start;
+    public Dungeon(int introText, int outroText) {
+        createRandomDungeon();
+
 
         this.introText = introText;
         this.outroText = outroText;
+    }
+
+    public void createRandomDungeon() {
+        boolean[][] maze = MazeAlgorithm.createMaze(10, 10);
+        rooms[0][0] = new Room(maze, 0, 0);
+        rooms[0][1] = new Room(maze, 1, 0);
+        start = 1;
+        currentPosition = start;
     }
 
     public Room getCurrentRoom() {

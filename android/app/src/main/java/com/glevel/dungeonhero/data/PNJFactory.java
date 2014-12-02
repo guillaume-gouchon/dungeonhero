@@ -1,10 +1,12 @@
 package com.glevel.dungeonhero.data;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.discussions.Discussion;
 import com.glevel.dungeonhero.models.discussions.Reaction;
+import com.glevel.dungeonhero.models.riddles.OpenRiddle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,12 @@ public class PNJFactory {
         reactions.add(new Reaction(R.string.yes, 0));
         reactions.add(new Reaction(R.string.no, 1));
         pnj.getDiscussions().add(new Discussion(pnj.getImage(), pnj.getName(), R.string.hello_discussion, reactions, false, null));
-        pnj.getDiscussions().add(new Discussion(pnj.getImage(), pnj.getName(), R.string.hello_discussion2, null, true, null));
+
+        reactions = new ArrayList<Reaction>();
+        reactions.add(new Reaction(R.string.ok, 0));
+        pnj.getDiscussions().add(new Discussion(pnj.getImage(), pnj.getName(), R.string.hello_discussion2, reactions, false, null));
+        pnj.getDiscussions().add(new Discussion(pnj.getImage(), pnj.getName(), new OpenRiddle(10, R.string.hello_riddle, "marron", new Reward(WeaponFactory.buildSword()))));
+        pnj.getDiscussions().add(new Discussion(pnj.getImage(), pnj.getName(), R.string.hello_riddle_wrong_answer, null, true, null));
         return pnj;
     }
 

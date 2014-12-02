@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.models.characters;
 
-import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.Buff;
@@ -348,13 +347,11 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     public boolean canEquipItem(Equipment equipment) {
         for (Requirement requirement : equipment.getRequirements()) {
-            if (requirement.getTarget().getName() == R.string.strength && strength < requirement.getValue()) {
+            if (requirement.getTarget() == Characteristics.STRENGTH && strength < requirement.getValue()) {
                 return false;
-            } else if (requirement.getTarget().getName() == R.string.dexterity && dexterity < requirement.getValue()) {
+            } else if (requirement.getTarget() == Characteristics.DEXTERITY && dexterity < requirement.getValue()) {
                 return false;
-            } else if (requirement.getTarget().getName() == R.string.spirit && spirit < requirement.getValue()) {
-                return false;
-            } else if (requirement.getTarget().getName() == R.string.attack && attack < requirement.getValue()) {
+            } else if (requirement.getTarget() == Characteristics.SPIRIT && spirit < requirement.getValue()) {
                 return false;
             }
         }
