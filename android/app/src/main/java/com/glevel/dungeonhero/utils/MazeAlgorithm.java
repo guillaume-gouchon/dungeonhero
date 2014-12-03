@@ -12,12 +12,10 @@ import java.util.List;
 public class MazeAlgorithm {
 
     public static boolean[][] createMaze(int width, int height) {
+        boolean[][] doors = new boolean[2 * height - 1][width];
         MazeNode[][] maze = new MazeNode[height][width];
         HashMap<Integer, List<MazeNode>> mapIndexNode = new HashMap<>(height * width);
         int nbWallsOpen = 0;
-
-        boolean[][] verticalWalls = new boolean[height][width - 1];
-        boolean[][] horizontalWalls = new boolean[height - 1][width];
 
         // initialize the maze and the indexes
         int index = 0;
@@ -32,27 +30,26 @@ public class MazeAlgorithm {
             }
         }
 
-        boolean[][] chosenWalls;
-        boolean wallToOpen;
         int xWall, yWall;
-        boolean areDifferentIndexes;
+        boolean wallToOpen;
+        boolean areSameIndexes;
         int newIndex, indexToUpdate;
         while (nbWallsOpen < width * height - 1) {
-            System.out.println("" + nbWallsOpen);
-            // open a random wall
             do {
-                chosenWalls = Math.random() < 0.5 ? verticalWalls : horizontalWalls;
-                yWall = ((int) (Math.random() * chosenWalls.length));
-                xWall = ((int) (Math.random() * chosenWalls[0].length));
-                wallToOpen = chosenWalls[yWall][xWall];
+                // get a random wall
+                yWall = ((int) (Math.random() * doors.length));
+                xWall = ((int) (Math.random() * (doors[0].length + (yWall % 2 == 0 ? -1 : 0))));
+                wallToOpen = doors[yWall][xWall];
+                System.out.println(xWall + "," + yWall);
 
-                newIndex = chosenWalls == verticalWalls ? maze[yWall][xWall + 1].getIndex() : maze[yWall + 1][xWall].getIndex();
-                indexToUpdate = maze[yWall][xWall].getIndex();
-                areDifferentIndexes = newIndex != indexToUpdate;
-            } while (wallToOpen || !areDifferentIndexes);
+                // check node indexes are different
+                indexToUpdate = maze[yWall / 2][xWall].getIndex();
+                newIndex = yWall % 2 == 0 ? maze[yWall / 2][xWall + 1].getIndex() : maze[yWall / 2 + 1][xWall].getIndex();
+                areSameIndexes = newIndex == indexToUpdate;
+            } while (wallToOpen || areSameIndexes);
 
-            System.out.println("open wall " + xWall + "," + yWall);
-            chosenWalls[yWall][xWall] = true;
+            // open door
+            doors[yWall][xWall] = true;
             nbWallsOpen++;
 
             // update nodes indexes
@@ -64,31 +61,7 @@ public class MazeAlgorithm {
             mapIndexNode.remove(indexToUpdate);
         }
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width - 1; j++) {
-                if (verticalWalls[i][j]) {
-                    System.out.print("x0");
-                } else {
-                    System.out.print("x8");
-                }
-            }
-            System.out.print("x");
-            System.out.println("");
-
-            if (i < height - 1) {
-                for (int j = 0; j < width; j++) {
-                    if (horizontalWalls[i][j]) {
-                        System.out.print("0 ");
-                    } else {
-                        System.out.print("8 ");
-                    }
-                }
-                System.out.println("");
-            }
-        }
-
-
-        return null;
+        return doors;
     }
 
     public static void main(String[] args) {

@@ -25,11 +25,11 @@ public enum Directions {
         }
     }
 
-    public float getDx() {
+    public int getDx() {
         return dx;
     }
 
-    public float getDy() {
+    public int getDy() {
         return dy;
     }
 

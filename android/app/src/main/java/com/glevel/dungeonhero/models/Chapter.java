@@ -28,8 +28,7 @@ public class Chapter implements Serializable {
     }
 
     public void createDungeon() {
-        // TODO
-        this.dungeon = new Dungeon(R.string.about, 0);
+        dungeon = new Dungeon(R.string.about, 0);
     }
 
     public int getName() {

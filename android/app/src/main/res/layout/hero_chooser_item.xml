@@ -110,28 +110,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/hp" />
-
-            <com.glevel.dungeonhero.views.HintTextView
-                android:id="@+id/attack"
-                style="@style/HeroStat"
-                android:drawableLeft="@drawable/ic_attack"
-                custom:linkTextColorToDrawable="true"
-                android:layout_weight="1"
-                custom:textHint="@string/attack"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/attack" />
-
-            <com.glevel.dungeonhero.views.HintTextView
-                android:id="@+id/block"
-                style="@style/HeroStat"
-                android:drawableLeft="@drawable/ic_block"
-                custom:linkTextColorToDrawable="true"
-                android:layout_weight="1"
-                custom:textHint="@string/block"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/block" />
         </LinearLayout>
 
     </LinearLayout>

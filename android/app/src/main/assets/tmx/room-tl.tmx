@@ -153,12 +153,12 @@
  </tileset>
  <layer name="ground" width="9" height="9">
   <data encoding="base64" compression="zlib">
-   eJxjYCAP+GARkwRifSB2gdISQOwKxG5Iagyg4npQWh+KpaDyYlD9blAxmDo3qF4Y0EPS6wJVIwFl0xsAAPKFBWs=
+   eJyLYGBgiCAD+2ARkwRifSB2gdISQOwKxG5Iagyg4npQWh+KpaDyYlD9blAxmDo3qF6YOXpIel2gaiSgbHL8QwkGAFfKFvM=
   </data>
  </layer>
  <layer name="objects" width="9" height="9">
   <data encoding="base64" compression="zlib">
-   eJxjY2BgYMeDOYBYBohD0DADElsOivEBOSR9+NQQAiA1HkSoMQJiYzzYBIhDicBZRGAAFPcMJg==
+   eJxjY2BgYMeDOYBYBohD0HAEElsOiiPwYDkkffjU4JOHqfEgQo0REBvjwSZAHEoEziICAwCHIBZ2
   </data>
  </layer>
 </map>

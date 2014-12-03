@@ -1,11 +1,15 @@
 package com.glevel.dungeonhero.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
+import com.glevel.dungeonhero.data.BookFactory;
+import com.glevel.dungeonhero.data.HeroFactory;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
@@ -17,6 +21,7 @@ import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
+import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
@@ -37,6 +42,8 @@ import java.util.TimerTask;
 
 public class GameActivity extends MyBaseGameActivity {
 
+    private static final String TAG = "GameActivity";
+
     public SelectionCircle mSelectionCircle;
     public Entity mGroundLayer;
     public TMXTiledMap mTmxTiledMap;
@@ -49,7 +56,13 @@ public class GameActivity extends MyBaseGameActivity {
     @Override
     protected void initGameActivity() {
         Bundle extras = getIntent().getExtras();
-        mGame = (Game) extras.getSerializable(Game.class.getName());
+        if (extras != null && extras.getSerializable(Game.class.getName()) != null) {
+            mGame = (Game) extras.getSerializable(Game.class.getName());
+        } else {
+            mGame = new Game();
+            mGame.setHero(HeroFactory.buildBerserker());
+            mGame.startNewBook(BookFactory.buildInitiationBook(0));
+        }
         mGame.setOnNewSprite(this);
         mGame.setOnNewSoundToPlay(this);
 
@@ -97,7 +110,7 @@ public class GameActivity extends MyBaseGameActivity {
         }
 
         // make the camera not exceed the bounds of the TMXEntity
-        mCamera.setBounds(0, 0, mTmxTiledMap.getTileHeight() * mTmxTiledMap.getTileRows(), mTmxTiledMap.getTileWidth() * mTmxTiledMap.getTileColumns());
+        mCamera.setBounds(0, 0, mTmxTiledMap.getTileWidth() * mTmxTiledMap.getTileColumns(), mTmxTiledMap.getTileHeight() * mTmxTiledMap.getTileRows());
         mCamera.setBoundsEnabled(true);
 
         pOnCreateSceneCallback.onCreateSceneFinished(mScene);
@@ -112,7 +125,7 @@ public class GameActivity extends MyBaseGameActivity {
         mSelectionCircle = new SelectionCircle(getVertexBufferObjectManager());
         mScene.attachChild(mSelectionCircle);
 
-        List<Unit> heroes = new ArrayList<Unit>();
+        List<Unit> heroes = new ArrayList<>();
         if (mHero != null) {
             heroes.add(mHero);
         }
@@ -131,7 +144,7 @@ public class GameActivity extends MyBaseGameActivity {
                     }
                 }
 
-                List<GameElement> copy = new ArrayList<GameElement>(tile.getSubContent());
+                List<GameElement> copy = new ArrayList<>(tile.getSubContent());
                 for (GameElement subContent : copy) {
                     subContent.setTilePosition(tile);
                     addElementToScene(subContent);
@@ -288,6 +301,8 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     public void switchRoom(final Tile doorTile) {
+        Log.d(TAG, "switch room");
+        final Directions doorDirection = mRoom.getDirectionFromDoorTile(doorTile);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -317,6 +332,28 @@ public class GameActivity extends MyBaseGameActivity {
                 }
             }
         });
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Log.d(TAG, "start animation");
+                int n = 30;
+                while (n > 0) {
+                    mScene.setX(mScene.getX() - doorDirection.getDx());
+                    mScene.setY(mScene.getY() + doorDirection.getDy());
+                    n--;
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d(TAG, "animation is done");
+                mScene.setX(0);
+                mScene.setY(0);
+                return null;
+            }
+        }.execute();
     }
 
 }

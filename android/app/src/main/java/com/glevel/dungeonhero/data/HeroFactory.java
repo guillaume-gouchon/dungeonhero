@@ -25,7 +25,6 @@ public class HeroFactory {
 
     public static Hero buildBerserker() {
         Hero hero = new Hero(Ranks.ME, R.drawable.warrior, "warrior.png", 18, 18, 14, 9, 6, 5, R.string.berserker, R.string.berserker_description, 10, null, 0, 1);
-        hero.getPassive().add(new Rage());
         hero.equip(WeaponFactory.buildSword());
         hero.addItem(WeaponFactory.buildSword());
         return hero;
@@ -33,7 +32,6 @@ public class HeroFactory {
 
     public static Hero buildWarrior() {
         Hero hero = new Hero(Ranks.ME, R.drawable.dwarf, "dwarf.png", 22, 22, 13, 7, 8, 5, R.string.warrior, R.string.warrior_description, 10, null, 0, 1);
-        hero.getPassive().add(new Nemesis(R.string.goblin));
         return hero;
     }
 

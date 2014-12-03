@@ -15,7 +15,9 @@ public class Dungeon implements Serializable {
 
     private static final long serialVersionUID = 4765596237193067497L;
 
-    private final Room[][] rooms = new Room[10][10];
+    private static final int DUNGEON_WIDTH = 3, DUNGEON_HEIGHT = 3;
+
+    private Room[][] rooms;
     private int start;
     private final int introText;
     private final int outroText;
@@ -24,18 +26,21 @@ public class Dungeon implements Serializable {
     private Directions currentDirection;
 
     public Dungeon(int introText, int outroText) {
-        createRandomDungeon();
-
+        createRandomDungeon(DUNGEON_WIDTH, DUNGEON_HEIGHT);
 
         this.introText = introText;
         this.outroText = outroText;
     }
 
-    public void createRandomDungeon() {
-        boolean[][] maze = MazeAlgorithm.createMaze(10, 10);
-        rooms[0][0] = new Room(maze, 0, 0);
-        rooms[0][1] = new Room(maze, 1, 0);
-        start = 1;
+    public void createRandomDungeon(int dungeonWidth, int dungeonHeight) {
+        rooms = new Room[dungeonHeight][dungeonWidth];
+        boolean[][] doors = MazeAlgorithm.createMaze(dungeonWidth, dungeonHeight);
+        for (int i = 0; i < dungeonHeight; i++) {
+            for (int j = 0; j < dungeonWidth; j++) {
+                rooms[i][j] = new Room(doors, i, j);
+            }
+        }
+        start = (int) (dungeonWidth * Math.random()) + 10 * (int) (dungeonHeight * Math.random());
         currentPosition = start;
     }
 
@@ -67,6 +72,9 @@ public class Dungeon implements Serializable {
     public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> lstUnitsToMoveIn) {
         Room currentRoom = getCurrentRoom();
         currentRoom.initRoom(tmxTiledMap, this);
+        if (currentDirection == null) {// heroes just enter the dungeon
+            currentDirection = currentRoom.getDoors().keySet().iterator().next();
+        }
         currentRoom.moveIn(lstUnitsToMoveIn, currentDirection);
     }
 

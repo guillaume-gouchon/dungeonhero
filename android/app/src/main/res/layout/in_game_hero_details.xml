@@ -109,26 +109,6 @@
                 android:textColor="@color/spirit" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.glevel.dungeonhero.views.HintTextView
-                android:id="@+id/movement"
-                style="@style/HeroStat"
-                android:drawableLeft="@drawable/ic_move"
-                custom:linkTextColorToDrawable="true"
-                custom:textHint="@string/movement"
-                android:text="@string/placeholder"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/movement" />
-        </LinearLayout>
-
         <View
             android:layout_marginTop="5dp"
             android:background="@color/grey"
@@ -175,19 +155,6 @@
             android:layout_height="wrap_content">
 
             <com.glevel.dungeonhero.views.CustomTextView
-                android:id="@+id/critical"
-                style="@style/HeroStat"
-                android:drawableLeft="@drawable/ic_critical"
-                custom:linkTextColorToDrawable="true"
-                custom:textHint="@string/critical"
-                android:text="@string/placeholder"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="10sp" />
-
-            <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/dodge"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_dodge"
@@ -199,18 +166,40 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                android:id="@+id/movement"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_move"
+                custom:linkTextColorToDrawable="true"
+                custom:textHint="@string/movement"
+                android:text="@string/placeholder"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
         </LinearLayout>
 
-        <com.glevel.dungeonhero.views.CustomTextView
-            android:id="@+id/frags"
-            style="@style/HeroStat"
-            android:drawableLeft="@drawable/ic_frags"
-            custom:linkTextColorToDrawable="true"
-            custom:textHint="@string/frags"
-            android:text="@string/placeholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="10sp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                android:id="@+id/frags"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_frags"
+                custom:linkTextColorToDrawable="true"
+                custom:textHint="@string/frags"
+                android:text="@string/placeholder"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

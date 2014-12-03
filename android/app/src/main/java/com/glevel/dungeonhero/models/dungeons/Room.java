@@ -1,17 +1,11 @@
 package com.glevel.dungeonhero.models.dungeons;
 
-import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.data.DecorationFactory;
-import com.glevel.dungeonhero.data.PNJFactory;
-import com.glevel.dungeonhero.data.WeaponFactory;
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.data.dungeon.RoomFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
-import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
-import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.extension.tmx.TMXLayer;
@@ -44,8 +38,8 @@ public class Room implements Serializable {
     private transient boolean isSafe;
     private transient boolean reorder = true;
 
-    public Room(boolean[][] rooms, int xPosition, int yPosition) {
-        tmxName = RoomFactory.getRoomDependingOnDoorPositions(rooms, xPosition, yPosition);
+    public Room(boolean[][] doors, int yPosition, int xPosition) {
+        tmxName = RoomFactory.getRoomDependingOnDoorPositions(doors, yPosition, xPosition);
     }
 
     public void initRoom(TMXTiledMap tiledMap, Dungeon dungeon) {
@@ -121,13 +115,13 @@ public class Room implements Serializable {
 //        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
 //        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
 
-        addGameElement(PNJFactory.buildPNJ(), 5, 8);
-        addGameElement(new ItemOnGround(R.string.gold_coins, new Reward(WeaponFactory.buildSword(), 0, 0)), 10, 10);
+//        addGameElement(PNJFactory.buildPNJ(), 5, 5);
+//        addGameElement(new ItemOnGround(R.string.gold_coins, new Reward(WeaponFactory.buildSword(), 0, 0)), 10, 10);
 
-        addGameElement(DecorationFactory.buildLight(), 5, 10);
-        addGameElement(DecorationFactory.buildLight(), 5, 12);
+//        addGameElement(DecorationFactory.buildLight(), 5, 10);
+//        addGameElement(DecorationFactory.buildLight(), 5, 12);
 
-        addGameElement(DecorationFactory.buildTreasureChest(), 7, 5);
+//        addGameElement(DecorationFactory.buildTreasureChest(), 4, 4);
     }
 
     private void addGameElement(GameElement gameElement, int x, int y) {
@@ -219,9 +213,11 @@ public class Room implements Serializable {
 
     public void moveIn(List<Unit> units, Directions from) {
         // TODO : multiple heroes / allies
-        Tile position = doors.get(from);
+        Tile doorPosition = doors.get(from);
+        int factor = from == Directions.SOUTH ? 2 : 1;
+        Tile tile = tiles[doorPosition.getY() + factor * from.getDy()][doorPosition.getX() - factor * from.getDx()];
         for (Unit unit : units) {
-            addGameElement(unit, position);
+            addGameElement(unit, tile);
         }
 
         // sort queue by initiative
