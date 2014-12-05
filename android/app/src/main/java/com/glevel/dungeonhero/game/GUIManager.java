@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
+import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
@@ -126,21 +127,7 @@ public class GUIManager {
             @Override
             public void onClick(View v) {
                 MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
-                Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(R.string.confirm_leave_quest),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
-                                if (which == R.id.okButton) {
-                                    Intent intent = new Intent(mActivity, BookChooserActivity.class);
-                                    intent.putExtra(Game.class.getName(), mActivity.getGame());
-                                    mActivity.startActivity(intent);
-                                    mActivity.finish();
-                                }
-                                dialog.dismiss();
-                            }
-                        });
-                confirmDialog.show();
+                showLeaveQuestDialog();
             }
         });
 
@@ -164,6 +151,69 @@ public class GUIManager {
 
         mGameMenuDialog.show();
         menuButtonAnimation.start();
+    }
+
+    public void showLeaveQuestDialog() {
+        Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(R.string.confirm_leave_quest),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
+                        if (which == R.id.okButton) {
+                            Intent intent = new Intent(mActivity, BookChooserActivity.class);
+                            intent.putExtra(Game.class.getName(), mActivity.getGame());
+                            mActivity.startActivity(intent);
+                            mActivity.finish();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+        confirmDialog.show();
+    }
+
+    public void showFinishQuestDialog() {
+        Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(R.string.confirm_finish_quest),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == R.id.okButton) {
+                            showVictoryDialog();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+        confirmDialog.show();
+    }
+
+    public void showVictoryDialog() {
+        final boolean hasNextChapter = mActivity.getGame().getBook().getChapters().size() > 0;
+        // TODO : show victory dialog with outro, go to next dungeon button
+        Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(mActivity.getGame().getDungeon().getOutroText()),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == R.id.okButton) {
+                            if (hasNextChapter) {
+                                // go to next chapter
+                                // TODO
+                                Intent intent = new Intent(mActivity, GameChooserFragment.class);
+                                intent.putExtra(Game.class.getName(), mActivity.getGame());
+                                mActivity.startActivity(intent);
+                                mActivity.finish();
+                            } else {
+                                // go back to book chooser for a new adventure
+                                Intent intent = new Intent(mActivity, BookChooserActivity.class);
+                                intent.putExtra(Game.class.getName(), mActivity.getGame());
+                                mActivity.startActivity(intent);
+                                mActivity.finish();
+                            }
+                        }
+                        dialog.dismiss();
+                    }
+                });
+        ((TextView) confirmDialog.findViewById(R.id.okButton)).setText(hasNextChapter ? R.string.go_to_next_chapter : R.string.finish_adventure);
+        confirmDialog.findViewById(R.id.cancelButton).setVisibility(View.GONE);
+        confirmDialog.show();
     }
 
     public void onPause() {

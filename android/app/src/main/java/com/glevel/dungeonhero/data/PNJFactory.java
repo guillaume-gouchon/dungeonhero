@@ -26,7 +26,7 @@ public class PNJFactory {
         Pnj pnj = new Pnj(false, Ranks.NEUTRAL, R.drawable.princess, "princess.png", 5, 5, 6, 10, 2, 7, R.string.app_name, R.string.choose_hero_message, 10, 1, 500);
         List<Reaction> reactions = new ArrayList<Reaction>();
         reactions.add(new Reaction(R.string.yes, 0));
-        reactions.add(new Reaction(R.string.no, 1));
+        reactions.add(new Reaction(R.string.no_i_dont, 1));
         pnj.getDiscussions().add(new Discussion(pnj.getImage(), pnj.getName(), R.string.hello_discussion, reactions, false, null));
 
         reactions = new ArrayList<Reaction>();

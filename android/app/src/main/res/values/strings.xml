@@ -92,12 +92,14 @@
     <string name="game_paused">Pause</string>
     <string name="resume_game">Resume Game</string>
     <string name="leave_quest">Leave Quest</string>
-    <string name="confirm_leave_quest">Are you sure you want\nto leave this quest ?</string>
+    <string name="confirm_leave_quest">Are you sure you want to leave this quest ?</string>
+    <string name="confirm_finish_quest">Are you sure you want to finish this quest and leave the dungeon ?</string>
     <string name="deployment_phase">Deployment Phase</string>
     <string name="start">Deployment Done</string>
     <string name="game_menu">Game Menu</string>
     <string name="help">Help</string>
     <string name="riddle_answer_input">your answer...</string>
+    <string name="game_master">Game Master</string>
 
     <!-- Tutorial -->
     <string name="next">Next</string>
@@ -157,7 +159,8 @@
     <string name="hello_discussion2">Ahah me too !</string>
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
-    <string name="no">No, I don\'t</string>
+    <string name="no">No</string>
+    <string name="no_i_dont">No, I don\'t</string>
     <string name="discussion_is_over">I don\'t want to talk to you anymore.</string>
     <string name="hello_riddle">Qu\'est ce qui est petit et marron ?</string>
     <string name="hello_riddle_wrong_answer">You got it wrong adventurer...</string>
@@ -188,5 +191,7 @@
     <string name="unknown_item">\?\?\?</string>
     <string name="minimum">min. %s </string>
     <string name="stairs">Stairs</string>
+    <string name="go_to_next_chapter">Go to next chapter</string>
+    <string name="finish_adventure">Finish adventure</string>
 
 </resources>

@@ -154,7 +154,17 @@ public class ActionsDispatcher implements UserActionListener {
                             && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0) instanceof Stairs) {
                         // enters a stairs tile
                         hideActionTiles();
-                        // TODO show : confirmation dialog
+
+                        mGameActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mGameActivity.getRoom().isSafe() && ((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
+                                    mGUIManager.showFinishQuestDialog();
+                                } else {
+                                    mGUIManager.showLeaveQuestDialog();
+                                }
+                            }
+                        });
                     } else if (mGameActivity.getRoom().isSafe()) {
                         mGameActivity.runOnUpdateThread(new Runnable() {
                             @Override
