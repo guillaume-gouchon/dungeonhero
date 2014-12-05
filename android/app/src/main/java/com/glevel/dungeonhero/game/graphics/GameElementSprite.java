@@ -15,7 +15,6 @@ public class GameElementSprite extends CenteredSprite {
     }
 
     @Override
-
     public float getY() {
         return super.getY() + Y_OFFSET;
     }

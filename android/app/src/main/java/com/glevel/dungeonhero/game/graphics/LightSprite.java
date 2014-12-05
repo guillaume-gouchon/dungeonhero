@@ -14,7 +14,7 @@ public class LightSprite extends GameElementSprite {
 
     public LightSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager) {
         super(gameElement, vertexBufferObjectManager);
-        setZIndex(10);
+        setZIndex(11);
         animate();
     }
 

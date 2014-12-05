@@ -1,10 +1,10 @@
 package com.glevel.dungeonhero.models;
 
-import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
+import com.glevel.dungeonhero.models.dungeons.Event;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by guillaume ON 10/3/14.
@@ -16,39 +16,27 @@ public class Chapter implements Serializable {
     private final int name;
     private final int introText, outroText;
     private transient Dungeon dungeon;
-    private final Monster boss;
+    private final List<Event> events;
     private boolean done;
 
-    public Chapter(int name, int introText, int outroText, Monster boss) {
+    public Chapter(int name, int introText, int outroText, List<Event> events) {
         this.name = name;
         this.introText = introText;
         this.outroText = outroText;
         this.done = false;
-        this.boss = boss;
+        this.events = events;
     }
 
     public void createDungeon() {
-        dungeon = new Dungeon(R.string.about, 0);
+        dungeon = new Dungeon(introText, outroText, events);
     }
 
     public int getName() {
         return name;
     }
 
-    public int getIntroText() {
-        return introText;
-    }
-
-    public int getOutroText() {
-        return outroText;
-    }
-
     public Dungeon getDungeon() {
         return dungeon;
-    }
-
-    public Monster getBoss() {
-        return boss;
     }
 
     public boolean isDone() {

@@ -3,6 +3,8 @@ package com.glevel.dungeonhero.models.dungeons.decorations;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.characters.Ranks;
 
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
+
 import java.io.Serializable;
 
 /**

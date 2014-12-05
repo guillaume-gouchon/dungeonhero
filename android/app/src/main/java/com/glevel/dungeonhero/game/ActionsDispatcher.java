@@ -25,6 +25,7 @@ import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
+import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.pathfinding.AStar;
@@ -146,8 +147,14 @@ public class ActionsDispatcher implements UserActionListener {
                     isMoving = false;
                     selectTile(null);
                     if (!done && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
+                        // enters a door tile
                         done = true;
                         mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
+                    } else if (!done && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().size() > 0
+                            && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0) instanceof Stairs) {
+                        // enters a stairs tile
+                        hideActionTiles();
+                        // TODO show : confirmation dialog
                     } else if (mGameActivity.getRoom().isSafe()) {
                         mGameActivity.runOnUpdateThread(new Runnable() {
                             @Override
@@ -160,6 +167,7 @@ public class ActionsDispatcher implements UserActionListener {
                 }
             });
         } else {
+            hideActionTiles();
             if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
                 mInputManager.setEnabled(true);
             }
@@ -417,7 +425,7 @@ public class ActionsDispatcher implements UserActionListener {
 
     public void showMovement() {
         // get reachable tiles
-        Set<Tile> reachableTiles = new HashSet<Tile>();
+        Set<Tile> reachableTiles = new HashSet<>();
         Tile t;
         for (Tile[] hTile : mGameActivity.getRoom().getTiles()) {
             for (Tile tile : hTile) {
@@ -477,7 +485,7 @@ public class ActionsDispatcher implements UserActionListener {
             final Tile nextTile = path.get(0);
             final Directions direction = Directions.from(nextTile.getX() - mGameActivity.getActiveCharacter().getTilePosition().getX(), mGameActivity.getActiveCharacter().getTilePosition().getY() - nextTile.getY());
             sprite.walk(direction);
-            final List<Tile> p = new ArrayList<Tile>(path);
+            final List<Tile> p = new ArrayList<>(path);
             animationHandler = new TimerHandler(1.0f / 40, true, new ITimerCallback() {
                 @Override
                 public void onTimePassed(TimerHandler pTimerHandler) {

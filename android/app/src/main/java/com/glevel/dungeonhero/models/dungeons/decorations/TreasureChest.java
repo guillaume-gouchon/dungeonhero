@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.models.dungeons.decorations;
 
+import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.game.graphics.TreasureSprite;
 import com.glevel.dungeonhero.models.Reward;
 
@@ -12,8 +13,8 @@ public class TreasureChest extends Searchable {
 
     private static final long serialVersionUID = -9160370172054769184L;
 
-    public TreasureChest(int name, String spriteName, Reward reward) {
-        super(name, spriteName, reward, 34, 20, 2, 1);
+    public TreasureChest(Reward reward) {
+        super(R.string.treasure_chest, "treasure_chest.png", reward, 34, 20, 2, 1);
     }
 
     @Override

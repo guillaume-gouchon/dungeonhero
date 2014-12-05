@@ -187,5 +187,6 @@
     <string name="critical">Critical Hit</string>
     <string name="unknown_item">\?\?\?</string>
     <string name="minimum">min. %s </string>
+    <string name="stairs">Stairs</string>
 
 </resources>

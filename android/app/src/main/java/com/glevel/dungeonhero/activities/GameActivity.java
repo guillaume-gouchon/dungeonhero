@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -155,6 +154,8 @@ public class GameActivity extends MyBaseGameActivity {
         pOnPopulateSceneCallback.onPopulateSceneFinished();
 
         mActionDispatcher = new ActionsDispatcher(this, mScene);
+
+        mScene.sortChildren();
 
         startGame();
     }
@@ -330,14 +331,11 @@ public class GameActivity extends MyBaseGameActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        });
 
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
                 Log.d(TAG, "start animation");
                 int n = 30;
+                mScene.setX(mScene.getX() + 30 * doorDirection.getDx());
+                mScene.setY(mScene.getY() - 30 * doorDirection.getDy());
                 while (n > 0) {
                     mScene.setX(mScene.getX() - doorDirection.getDx());
                     mScene.setY(mScene.getY() + doorDirection.getDy());
@@ -351,9 +349,8 @@ public class GameActivity extends MyBaseGameActivity {
                 Log.d(TAG, "animation is done");
                 mScene.setX(0);
                 mScene.setY(0);
-                return null;
             }
-        }.execute();
+        });
     }
 
 }

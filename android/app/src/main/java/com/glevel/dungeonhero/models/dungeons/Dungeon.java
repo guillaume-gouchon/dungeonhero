@@ -21,15 +21,19 @@ public class Dungeon implements Serializable {
     private int start;
     private final int introText;
     private final int outroText;
+    private List<Event> events;
+    private int nbRoomVisited;
 
     private int currentPosition;
     private Directions currentDirection;
 
-    public Dungeon(int introText, int outroText) {
+    public Dungeon(int introText, int outroText, List<Event> events) {
         createRandomDungeon(DUNGEON_WIDTH, DUNGEON_HEIGHT);
 
+        nbRoomVisited = 0;
         this.introText = introText;
         this.outroText = outroText;
+        this.events = events;
     }
 
     public void createRandomDungeon(int dungeonWidth, int dungeonHeight) {
@@ -70,16 +74,26 @@ public class Dungeon implements Serializable {
     }
 
     public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> lstUnitsToMoveIn) {
-        Room currentRoom = getCurrentRoom();
-        currentRoom.initRoom(tmxTiledMap, this);
-        if (currentDirection == null) {// heroes just enter the dungeon
-            currentDirection = currentRoom.getDoors().keySet().iterator().next();
-        }
-        currentRoom.moveIn(lstUnitsToMoveIn, currentDirection);
-    }
+        nbRoomVisited++;
 
-    public Directions getCurrentDirection() {
-        return currentDirection;
+        Room currentRoom = getCurrentRoom();
+        Event event = null;
+        if (currentDirection == null) {
+            // heroes just enter the dungeon
+            currentRoom.initRoom(tmxTiledMap, null);
+            currentDirection = Directions.NORTH;
+
+            // add stairs
+            currentRoom.prepareStartRoom(lstUnitsToMoveIn);
+            return;
+        } else if (events.size() > 0 && (nbRoomVisited == events.size() || Math.random() * 10 < nbRoomVisited)) {
+            // the room may contain an event
+            event = events.get((int) (events.size() * Math.random()));
+            events.remove(event);
+        }
+
+        currentRoom.initRoom(tmxTiledMap, event);
+        currentRoom.moveIn(lstUnitsToMoveIn, currentDirection);
     }
 
     public int getIntroText() {

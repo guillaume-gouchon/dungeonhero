@@ -1,11 +1,15 @@
 package com.glevel.dungeonhero.models.dungeons;
 
+import com.glevel.dungeonhero.data.DecorationFactory;
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.data.dungeon.RoomFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
+import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
+import com.glevel.dungeonhero.models.dungeons.decorations.TreasureChest;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.extension.tmx.TMXLayer;
@@ -29,23 +33,25 @@ public class Room implements Serializable {
 
     private static final long serialVersionUID = 4746018928851456729L;
 
+    private static final String TAG = "Room";
+
     private final String tmxName;
     private Tile[][] tiles = null;
 
     private transient Map<Directions, Tile> doors;
-    private transient List<GameElement> objects = new ArrayList<GameElement>();
-    private List<Unit> queue = new ArrayList<Unit>();
+    private transient List<GameElement> objects;
+    private List<Unit> queue = new ArrayList<>();
     private transient boolean isSafe;
-    private transient boolean reorder = true;
+    private transient boolean reorder;
 
     public Room(boolean[][] doors, int yPosition, int xPosition) {
         tmxName = RoomFactory.getRoomDependingOnDoorPositions(doors, yPosition, xPosition);
     }
 
-    public void initRoom(TMXTiledMap tiledMap, Dungeon dungeon) {
+    public void initRoom(TMXTiledMap tiledMap, Event event) {
         if (tiles != null && objects == null) {
             // build loaded room
-            objects = new ArrayList<GameElement>();
+            objects = new ArrayList<>();
 
             // recreate tiles
             Tile[][] newTiles = new Tile[tiledMap.getTileRows()][tiledMap.getTileColumns()];
@@ -70,6 +76,7 @@ public class Room implements Serializable {
         } else if (tiles == null) {
             // create new room
             tiles = new Tile[tiledMap.getTileRows()][tiledMap.getTileColumns()];
+            objects = new ArrayList<>();
 
             // add ground tiles
             TMXLayer groundLayer = tiledMap.getTMXLayers().get(0);
@@ -81,10 +88,11 @@ public class Room implements Serializable {
                 }
             }
 
-            createRoomContent(dungeon);
+            createRoomContent(event);
+            reorder = true;
         }
 
-        doors = new HashMap<Directions, Tile>(4);
+        doors = new HashMap<>(4);
         for (Tile[] hTiles : tiles) {
             for (Tile t : hTiles) {
                 // add doors
@@ -98,8 +106,6 @@ public class Room implements Serializable {
     }
 
     private Directions getDoorDirection(Tile tile) {
-        int x = tile.getTileColumn();
-        int y = tile.getTileRow();
         Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(tiles, tile, 1, false, null);
         Iterator<Tile> iterator = adjacentTiles.iterator();
         Tile adjacentTile;
@@ -109,7 +115,8 @@ public class Room implements Serializable {
         return Directions.from(tile.getX() - adjacentTile.getX(), adjacentTile.getY() - tile.getY());
     }
 
-    private void createRoomContent(Dungeon dungeon) {
+    private void createRoomContent(Event event) {
+
         // TODO
 //        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
 //        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
@@ -118,14 +125,36 @@ public class Room implements Serializable {
 //        addGameElement(PNJFactory.buildPNJ(), 5, 5);
 //        addGameElement(new ItemOnGround(R.string.gold_coins, new Reward(WeaponFactory.buildSword(), 0, 0)), 10, 10);
 
-//        addGameElement(DecorationFactory.buildLight(), 5, 10);
-//        addGameElement(DecorationFactory.buildLight(), 5, 12);
+        if (event != null) {
+            if (event.isDungeonOver()) {
+                addGameElement(new Stairs(true), getRandomFreeTile());
+            }
 
-//        addGameElement(DecorationFactory.buildTreasureChest(), 4, 4);
+            for (GameElement pnj : event.getPnjs()) {
+                addGameElement(pnj, getRandomFreeTile());
+            }
+
+            for (GameElement monster : event.getMonsters()) {
+                addGameElement(monster, getRandomFreeTile());
+            }
+
+            for (Reward reward : event.getRewards()) {
+                addGameElement(new TreasureChest(reward), getRandomFreeTile());
+            }
+        }
+
+        for (int n = 0; n < Math.round(Math.random() * 2); n++) {
+            addGameElement(DecorationFactory.buildLight(), getRandomFreeTile());
+        }
     }
 
-    private void addGameElement(GameElement gameElement, int x, int y) {
-        addGameElement(gameElement, tiles[x][y]);
+    private Tile getRandomFreeTile() {
+        Tile freeTile;
+        do {
+            freeTile = tiles[(int) (3 + Math.random() * (tiles.length - 7))][(int) (2 + Math.random() * (tiles[0].length - 4))];
+        }
+        while (freeTile.getGround() == null || freeTile.getContent() != null || freeTile.getSubContent().size() > 0);
+        return freeTile;
     }
 
     private void addGameElement(GameElement gameElement, Tile tile) {
@@ -216,6 +245,11 @@ public class Room implements Serializable {
         Tile doorPosition = doors.get(from);
         int factor = from == Directions.SOUTH ? 2 : 1;
         Tile tile = tiles[doorPosition.getY() + factor * from.getDy()][doorPosition.getX() - factor * from.getDx()];
+        if (tile.getContent() != null) {
+            // move previous content if any
+            tile.getContent().setTilePosition(getRandomFreeTile());
+        }
+
         for (Unit unit : units) {
             addGameElement(unit, tile);
         }
@@ -228,6 +262,15 @@ public class Room implements Serializable {
                     return -u1.calculateInitiative() + u2.calculateInitiative();
                 }
             });
+        }
+    }
+
+    public void prepareStartRoom(List<Unit> lstUnitsToMoveIn) {
+        // TODO : multiple heroes / allies
+        Tile stairTile = getRandomFreeTile();
+        addGameElement(new Stairs(false), stairTile);
+        for (Unit unit : lstUnitsToMoveIn) {
+            addGameElement(unit, stairTile);
         }
     }
 
