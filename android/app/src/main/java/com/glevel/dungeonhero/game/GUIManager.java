@@ -4,8 +4,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,14 @@ import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
+import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
-import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
+import com.glevel.dungeonhero.activities.fragments.StoryFragment;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
+import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Buff;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.Reward;
@@ -186,32 +189,58 @@ public class GUIManager {
     }
 
     public void showVictoryDialog() {
-        final boolean hasNextChapter = mActivity.getGame().getBook().getChapters().size() > 0;
-        // TODO : show victory dialog with outro, go to next dungeon button
-        Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(mActivity.getGame().getDungeon().getOutroText()),
+        final Book activeBook = mActivity.getGame().getBook();
+        boolean hasNextChapter = activeBook.getChapters().size() > 1;
+        Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getOutroText()),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == R.id.okButton) {
+                            boolean hasNextChapter = activeBook.goToNextChapter();
                             if (hasNextChapter) {
-                                // go to next chapter
-                                // TODO
-                                Intent intent = new Intent(mActivity, GameChooserFragment.class);
+                                Intent intent = new Intent(mActivity, GameActivity.class);
                                 intent.putExtra(Game.class.getName(), mActivity.getGame());
                                 mActivity.startActivity(intent);
                                 mActivity.finish();
                             } else {
-                                // go back to book chooser for a new adventure
-                                Intent intent = new Intent(mActivity, BookChooserActivity.class);
-                                intent.putExtra(Game.class.getName(), mActivity.getGame());
-                                mActivity.startActivity(intent);
-                                mActivity.finish();
+                                if (activeBook.getOutroText() > 0) {
+                                    // show outro text
+                                    Bundle args = new Bundle();
+                                    args.putInt(StoryFragment.ARGUMENT_STORY, activeBook.getOutroText());
+                                    args.putBoolean(StoryFragment.ARGUMENT_IS_OUTRO, true);
+                                    DialogFragment storyFragment = new StoryFragment();
+                                    ApplicationUtils.openDialogFragment(mActivity, storyFragment, args);
+                                } else {
+                                    // go directly to the book chooser, to start a new adventure
+                                    Intent intent = new Intent(mActivity, BookChooserActivity.class);
+                                    intent.putExtra(Game.class.getName(), mActivity.getGame());
+                                    mActivity.startActivity(intent);
+                                    mActivity.finish();
+                                }
                             }
                         }
                         dialog.dismiss();
                     }
                 });
+        ((TextView) confirmDialog.findViewById(R.id.name)).setCompoundDrawablesWithIntrinsicBounds(mActivity.getGame().getHero().getImage(), 0, 0, 0);
+        ((TextView) confirmDialog.findViewById(R.id.name)).setText(mActivity.getGame().getHero().getHeroName());
         ((TextView) confirmDialog.findViewById(R.id.okButton)).setText(hasNextChapter ? R.string.go_to_next_chapter : R.string.finish_adventure);
+        confirmDialog.findViewById(R.id.cancelButton).setVisibility(View.GONE);
+        confirmDialog.show();
+    }
+
+    public void showChapterIntro() {
+        Book activeBook = mActivity.getGame().getBook();
+        Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getIntroText()),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        ((TextView) confirmDialog.findViewById(R.id.name)).setCompoundDrawablesWithIntrinsicBounds(mActivity.getGame().getHero().getImage(), 0, 0, 0);
+        ((TextView) confirmDialog.findViewById(R.id.name)).setText(mActivity.getGame().getHero().getHeroName());
+        ((TextView) confirmDialog.findViewById(R.id.okButton)).setText(R.string.ok);
         confirmDialog.findViewById(R.id.cancelButton).setVisibility(View.GONE);
         confirmDialog.show();
     }
@@ -424,7 +453,6 @@ public class GUIManager {
     }
 
     private void showRiddle(final Pnj pnj, Discussion discussion, final OnDiscussionReplySelected callback) {
-        Log.d(TAG, "show riddle");
         final Riddle riddle = discussion.getRiddle();
 
         // start timer
@@ -506,17 +534,7 @@ public class GUIManager {
                     String answer = v.getEditableText().toString();
                     if (!answer.isEmpty() && actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE || event != null
                             && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        mDiscussionDialog.dismiss();
-                        if (openRiddle.isAnswerCorrect(answer)) {
-                            showReward(riddle.getReward(), new OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialog) {
-                                    callback.onReplySelected(pnj, 1);
-                                }
-                            });
-                        } else {
-                            callback.onReplySelected(pnj, 0);
-                        }
+                        answerRiddle(pnj, openRiddle, answer, callback);
                         return true;
                     }
                     return false;
@@ -527,21 +545,25 @@ public class GUIManager {
                 @Override
                 public void onClick(View v) {
                     String answer = answerRiddleInput.getEditableText().toString();
-                    if (!answer.isEmpty()) {
-                        mDiscussionDialog.dismiss();
-                        if (openRiddle.isAnswerCorrect(answer)) {
-                            showReward(riddle.getReward(), new OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialog) {
-                                    callback.onReplySelected(pnj, 1);
-                                }
-                            });
-                        } else {
-                            callback.onReplySelected(pnj, 0);
-                        }
-                    }
+                    answerRiddle(pnj, openRiddle, answer, callback);
                 }
             });
+        }
+    }
+
+    private void answerRiddle(final Pnj pnj, OpenRiddle openRiddle, String answer, final OnDiscussionReplySelected callback) {
+        if (!answer.isEmpty()) {
+            mDiscussionDialog.dismiss();
+            if (openRiddle.isAnswerCorrect(answer)) {
+                showReward(openRiddle.getReward(), new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        callback.onReplySelected(pnj, 1);
+                    }
+                });
+            } else {
+                callback.onReplySelected(pnj, 0);
+            }
         }
     }
 

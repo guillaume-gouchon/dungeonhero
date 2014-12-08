@@ -60,14 +60,14 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             mGame = new Game();
             mGame.setHero(HeroFactory.buildBerserker());
-            mGame.startNewBook(BookFactory.buildInitiationBook(0));
+            mGame.setBook(BookFactory.buildInitiationBook(0));
         }
         mGame.setOnNewSprite(this);
         mGame.setOnNewSoundToPlay(this);
 
         if (mGame.getDungeon() == null) {
             // start new dungeon
-            Chapter chapter = mGame.getChapter();
+            Chapter chapter = mGame.getBook().getActiveChapter();
 
             // create dungeon
             chapter.createDungeon();
@@ -77,11 +77,15 @@ public class GameActivity extends MyBaseGameActivity {
             mDungeon = mGame.getDungeon();
 
 
-            // show intro story if needed
-            if (mDungeon.getIntroText() > 0) {
+            // show book intro story if needed
+            if (mGame.getBook().getIntroText() > 0) {
                 Bundle args = new Bundle();
-                args.putInt(StoryFragment.ARGUMENT_STORY, mDungeon.getIntroText());
+                args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText());
                 ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
+            }
+
+            if (chapter.getIntroText() > 0) {
+                mGUIManager.showChapterIntro();
             }
         } else {
             mDungeon = mGame.getDungeon();
@@ -157,7 +161,7 @@ public class GameActivity extends MyBaseGameActivity {
 
         mScene.sortChildren();
 
-        startGame();
+;        startGame();
     }
 
     public void addElementToScene(GameElement gameElement) {
@@ -290,6 +294,7 @@ public class GameActivity extends MyBaseGameActivity {
         runOnUpdateThread(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG, "updating action tiles");
                 mActionDispatcher.hideActionTiles();
 
                 if (mRoom.isSafe()) {
@@ -297,41 +302,51 @@ public class GameActivity extends MyBaseGameActivity {
                 } else {
                     mActionDispatcher.showMovement();
                 }
+                Log.d(TAG, "updating action tiles is done");
             }
         });
     }
 
     public void switchRoom(final Tile doorTile) {
-        Log.d(TAG, "switch room");
+        Log.d(TAG, "switching room");
         final Directions doorDirection = mRoom.getDirectionFromDoorTile(doorTile);
+        mEngine.stop();
+        mDungeon.switchRoom(doorTile);
+        mRoom = mDungeon.getCurrentRoom();
+        try {
+            Log.d(TAG, "resetting scene");
+            mEngine.clearDrawHandlers();
+            mEngine.clearUpdateHandlers();
+            mScene.clearUpdateHandlers();
+            mGroundLayer.detachChildren();
+            mScene.reset();
+            mScene.clearTouchAreas();
+            mScene.detachChildren();
+            onCreateScene(new OnCreateSceneCallback() {
+                @Override
+                public void onCreateSceneFinished(Scene pScene) {
+                    try {
+                        onPopulateScene(mScene, new OnPopulateSceneCallback() {
+                            @Override
+                            public void onPopulateSceneFinished() {
+                                mEngine.start();
+                                animateRoomSwitch(doorDirection);
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void animateRoomSwitch(final Directions doorDirection) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mDungeon.switchRoom(doorTile);
-                mRoom = mDungeon.getCurrentRoom();
-                try {
-                    mGroundLayer.detachChildren();
-                    mScene.reset();
-                    mScene.clearTouchAreas();
-                    mScene.detachChildren();
-                    onCreateScene(new OnCreateSceneCallback() {
-                        @Override
-                        public void onCreateSceneFinished(Scene pScene) {
-                            try {
-                                onPopulateScene(mScene, new OnPopulateSceneCallback() {
-                                    @Override
-                                    public void onPopulateSceneFinished() {
-                                    }
-                                });
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
                 Log.d(TAG, "start animation");
                 int n = 30;
                 mScene.setX(mScene.getX() + 30 * doorDirection.getDx());
@@ -346,7 +361,7 @@ public class GameActivity extends MyBaseGameActivity {
                         e.printStackTrace();
                     }
                 }
-                Log.d(TAG, "animation is done");
+                Log.d(TAG, "animation is over");
                 mScene.setX(0);
                 mScene.setY(0);
             }

@@ -77,7 +77,7 @@ public abstract class Repository<T extends DatabaseResource> implements IReposit
 
     @Override
     public List<T> convertCursorToObjectList(Cursor c) {
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         if (c.getCount() == 0) {
             return list;
         }

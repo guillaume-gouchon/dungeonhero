@@ -24,8 +24,4 @@ public abstract class DatabaseResource implements Serializable {
 
     public abstract ContentValues getContentValues();
 
-    public boolean isNew() {
-        return id == 0L;
-    }
-
 }

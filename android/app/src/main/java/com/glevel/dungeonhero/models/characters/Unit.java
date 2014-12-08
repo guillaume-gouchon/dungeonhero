@@ -32,11 +32,11 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     private static final int NB_ITEMS_MAX_IN_BAG = 15;
 
-    protected final List<Item> items = new ArrayList<Item>();
-    // SKills
-    protected final List<PassiveSkill> passive = new ArrayList<PassiveSkill>();
-    protected final List<ActiveSkill> active = new ArrayList<ActiveSkill>();
-    protected final List<Buff> buffs = new ArrayList<Buff>();
+    protected final List<Item> items = new ArrayList<>();
+    // Skills
+    protected final List<PassiveSkill> passive = new ArrayList<>();
+    protected final List<ActiveSkill> active = new ArrayList<>();
+    protected final List<Buff> buffs = new ArrayList<>();
     protected final Equipment[] equipments = new Equipment[5];
     // Images
     private final int image;
@@ -53,7 +53,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     private int spirit;
     private int movement;
 
-    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int name, int description, int coins) {
+    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int name, int description) {
         super(name, spriteName, rank, 210, 400, 3, 4);
         this.image = image;
         this.hp = hp;
@@ -63,7 +63,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         this.spirit = spirit;
         this.movement = movement;
         this.description = description;
-        this.gold = coins;
+        this.gold = 0;
     }
 
     public int getImage() {
@@ -250,7 +250,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     public void initNewTurn() {
         // consume and remove ended buffs
-        List<Buff> copy = new ArrayList<Buff>(buffs);
+        List<Buff> copy = new ArrayList<>(buffs);
         for (Buff buff : copy) {
             boolean isOver = buff.consume();
             if (isOver) {

@@ -146,33 +146,31 @@ public class ActionsDispatcher implements UserActionListener {
                     mInputManager.setEnabled(true);
                     isMoving = false;
                     selectTile(null);
-                    if (!done && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
-                        // enters a door tile
+                    if (!done) {
                         done = true;
-                        mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
-                    } else if (!done && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().size() > 0
-                            && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0) instanceof Stairs) {
-                        // enters a stairs tile
-                        hideActionTiles();
+                        if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
+                            // enters a door tile
+                            mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
+                        } else if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().size() > 0
+                                && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0) instanceof Stairs) {
+                            // enters a stairs tile
+                            hideActionTiles();
+                            showActions();
 
-                        mGameActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mGameActivity.getRoom().isSafe() && ((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
-                                    mGUIManager.showFinishQuestDialog();
-                                } else {
-                                    mGUIManager.showLeaveQuestDialog();
+                            mGameActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (mGameActivity.getRoom().isSafe() && ((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
+                                        mGUIManager.showFinishQuestDialog();
+                                    } else {
+                                        mGUIManager.showLeaveQuestDialog();
+                                    }
                                 }
-                            }
-                        });
-                    } else if (mGameActivity.getRoom().isSafe()) {
-                        mGameActivity.runOnUpdateThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                hideActionTiles();
-                                showActions();
-                            }
-                        });
+                            });
+                        } else if (mGameActivity.getRoom().isSafe()) {
+                            hideActionTiles();
+                            showActions();
+                        }
                     }
                 }
             });

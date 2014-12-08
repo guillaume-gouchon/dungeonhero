@@ -1,26 +1,21 @@
 package com.glevel.dungeonhero.utils.database;
 
 import android.content.Context;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.io.IOException;
-import java.io.InputStream;
+import com.glevel.dungeonhero.models.Game;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DB_FILENAME = "db.sql";
-
-    private Context mContext;
     private Map<String, Repository<DatabaseResource>> mRepositories;
 
     public DatabaseHelper(Context context, String databaseName, int databaseVersion) {
         super(context, databaseName, null, databaseVersion);
-        mContext = context;
-        mRepositories = new HashMap<String, Repository<DatabaseResource>>();
+        mRepositories = new HashMap<>();
     }
 
     public void addRepository(String name, Repository repository) {
@@ -33,12 +28,12 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        executeSQLFile(db, DB_FILENAME);
+        createDatabaseFromResources(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        executeSQLFile(db, DB_FILENAME);
+        createDatabaseFromResources(db);
     }
 
     /**
@@ -51,17 +46,10 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
         super.onOpen(db);
     }
 
-    private void executeSQLFile(SQLiteDatabase db, String fileName) {
-        try {
-            InputStream is = mContext.getResources().getAssets().open(fileName);
-            String[] statements = FileHelper.parseSqlFile(is);
-            for (String statement : statements) {
-                db.execSQL(statement);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    // TODO : refactor
+    private void createDatabaseFromResources(SQLiteDatabase db) {
+        for (String sqlStatement : Game.getDatabaseCreationStatements()) {
+            db.execSQL(sqlStatement);
         }
     }
 

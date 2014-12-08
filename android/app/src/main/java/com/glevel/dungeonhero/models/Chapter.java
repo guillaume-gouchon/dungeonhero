@@ -13,26 +13,28 @@ public class Chapter implements Serializable {
 
     private static final long serialVersionUID = 1484748281734643544L;
 
-    private final int name;
     private final int introText, outroText;
     private transient Dungeon dungeon;
     private final List<Event> events;
     private boolean done;
 
-    public Chapter(int name, int introText, int outroText, List<Event> events) {
-        this.name = name;
+    public Chapter(int introText, int outroText, List<Event> events) {
         this.introText = introText;
         this.outroText = outroText;
         this.done = false;
         this.events = events;
     }
 
-    public void createDungeon() {
-        dungeon = new Dungeon(introText, outroText, events);
+    public int getIntroText() {
+        return introText;
     }
 
-    public int getName() {
-        return name;
+    public int getOutroText() {
+        return outroText;
+    }
+
+    public void createDungeon() {
+        dungeon = new Dungeon(3, 3, events);
     }
 
     public Dungeon getDungeon() {

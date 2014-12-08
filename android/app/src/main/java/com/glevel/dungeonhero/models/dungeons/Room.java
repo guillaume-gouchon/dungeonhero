@@ -1,10 +1,12 @@
 package com.glevel.dungeonhero.models.dungeons;
 
 import com.glevel.dungeonhero.data.DecorationFactory;
+import com.glevel.dungeonhero.data.MonsterFactory;
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
 import com.glevel.dungeonhero.data.dungeon.RoomFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.Reward;
+import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
@@ -48,7 +50,7 @@ public class Room implements Serializable {
         tmxName = RoomFactory.getRoomDependingOnDoorPositions(doors, yPosition, xPosition);
     }
 
-    public void initRoom(TMXTiledMap tiledMap, Event event) {
+    public void initRoom(TMXTiledMap tiledMap, Event event, int threatLevel) {
         if (tiles != null && objects == null) {
             // build loaded room
             objects = new ArrayList<>();
@@ -88,7 +90,7 @@ public class Room implements Serializable {
                 }
             }
 
-            createRoomContent(event);
+            createRoomContent(event, threatLevel);
             reorder = true;
         }
 
@@ -115,15 +117,7 @@ public class Room implements Serializable {
         return Directions.from(tile.getX() - adjacentTile.getX(), adjacentTile.getY() - tile.getY());
     }
 
-    private void createRoomContent(Event event) {
-
-        // TODO
-//        addGameElement(MonsterFactory.buildGoblin(), 5, 5);
-//        addGameElement(MonsterFactory.buildGoblin(), 6, 6);
-//        addGameElement(MonsterFactory.buildGoblin(), 8, 8);
-
-//        addGameElement(PNJFactory.buildPNJ(), 5, 5);
-//        addGameElement(new ItemOnGround(R.string.gold_coins, new Reward(WeaponFactory.buildSword(), 0, 0)), 10, 10);
+    private void createRoomContent(Event event, int threatLevel) {
 
         if (event != null) {
             if (event.isDungeonOver()) {
@@ -140,6 +134,12 @@ public class Room implements Serializable {
 
             for (Reward reward : event.getRewards()) {
                 addGameElement(new TreasureChest(reward), getRandomFreeTile());
+            }
+        } else {
+            // add some monsters and reward
+            List<Monster> monsters = MonsterFactory.getRoomContent(threatLevel);
+            for (Monster monster : monsters) {
+                addGameElement(monster, getRandomFreeTile());
             }
         }
 
@@ -196,14 +196,6 @@ public class Room implements Serializable {
         return tiles[0].length;
     }
 
-    public int getHeight() {
-        return tiles.length;
-    }
-
-    public Map<Directions, Tile> getDoors() {
-        return doors;
-    }
-
     public List<Unit> getQueue() {
         return queue;
     }
@@ -214,10 +206,6 @@ public class Room implements Serializable {
 
     public boolean isSafe() {
         return isSafe;
-    }
-
-    public void setSafe(boolean isSafe) {
-        this.isSafe = isSafe;
     }
 
     public Directions getDirectionFromDoorTile(Tile doorTile) {

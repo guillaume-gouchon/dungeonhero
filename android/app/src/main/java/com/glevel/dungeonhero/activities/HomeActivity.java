@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.method.LinkMovementMethod;
@@ -23,6 +24,7 @@ import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
 import com.glevel.dungeonhero.game.GameConstants;
+import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.utils.MusicManager.Music;
@@ -39,7 +41,6 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, G
     private SharedPreferences mSharedPrefs;
     private ScreenState mScreenState = ScreenState.HOME;
     private DatabaseHelper mDbHelper;
-    private List mLstGames;
     private Animation mMainButtonAnimationRightIn, mMainButtonAnimationRightOut, mMainButtonAnimationLeftIn, mMainButtonAnimationLeftOut;
     private Animation mFadeOutAnimation, mFadeInAnimation;
     private Button mNewGameButton, mSettingsButton, mLoadGameButton;
@@ -64,9 +65,24 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, G
         ApplicationUtils.showRateDialogIfNeeded(this);
         ApplicationUtils.showAdvertisementIfNeeded(this);
 
-        mLstGames = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
+        retrieveLoadGames();
 
         showMainHomeButtons();
+    }
+
+    private void retrieveLoadGames() {
+        new AsyncTask<Void, Void, List<Game>>() {
+            @Override
+            protected List<Game> doInBackground(Void... params) {
+                return mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
+            }
+
+            @Override
+            protected void onPostExecute(List<Game> games) {
+                super.onPostExecute(games);
+                mLoadGameButton.setEnabled(games.size() > 0);
+            }
+        }.execute();
     }
 
     @Override
@@ -177,10 +193,10 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, G
         mSettingsButton = (Button) findViewById(R.id.settingsButton);
         mSettingsButton.setOnClickListener(this);
 
-        mBackButton = (Button) findViewById(R.id.backButton);
+        mBackButton = findViewById(R.id.backButton);
         mBackButton.setOnClickListener(this);
 
-        mAppNameView = (View) findViewById(R.id.appName);
+        mAppNameView = findViewById(R.id.appName);
 
         // volume radio buttons
         RadioGroup radioMusicVolume = (RadioGroup) findViewById(R.id.musicVolume);
@@ -284,7 +300,6 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, G
         showButton(mNewGameButton, true);
         showButton(mLoadGameButton, false);
         showButton(mSettingsButton, true);
-        mLoadGameButton.setEnabled(mLstGames.size() > 0);
     }
 
     private void hideMainHomeButtons() {

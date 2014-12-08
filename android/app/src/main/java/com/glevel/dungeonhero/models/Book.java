@@ -14,9 +14,10 @@ public class Book implements Serializable, InAppProduct {
 
     private final int bookId;
     private final int name, image;
-    private final int introText, outroText;
-    private transient final List<Chapter> chapters;
+    private final int outroText;
+    private final List<Chapter> chapters;
     private final String productId;
+    private int introText;
     private boolean hasBeenBought;
     private boolean done;
 
@@ -81,6 +82,19 @@ public class Book implements Serializable, InAppProduct {
 
     public int getBookId() {
         return bookId;
+    }
+
+    public Chapter getActiveChapter() {
+        return chapters.get(0);
+    }
+
+    /**
+     * @return true if aventure is over
+     */
+    public boolean goToNextChapter() {
+        introText = 0;
+        chapters.remove(0);
+        return chapters.size() > 0;
     }
 
 }

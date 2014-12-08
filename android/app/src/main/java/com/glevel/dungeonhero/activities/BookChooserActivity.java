@@ -183,7 +183,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
 
     private void onBookSelected(Book selectedBook) {
         if (selectedBook.isAvailable()) {
-            mGame.startNewBook(selectedBook);
+            mGame.setBook(selectedBook);
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra(Game.class.getName(), mGame);
             startActivity(intent);

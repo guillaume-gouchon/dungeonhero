@@ -24,8 +24,8 @@ public class BookFactory {
         List<Chapter> chapters = new ArrayList<>();
         List<Event> events = new ArrayList<>();
         events.add(new Event.Builder(true).addPnj(PNJFactory.buildPNJ()).build());
-        chapters.add(new Chapter(0, 0, 0, events));
-        return new Book(bookId, R.string.tutorial, R.drawable.bg_book, 0, 0, chapters, null);
+        chapters.add(new Chapter(R.string.about_title, R.string.about_title, events));
+        return new Book(bookId, R.string.tutorial, R.drawable.bg_book, R.string.about_title, R.string.about_title, chapters, null);
     }
 
 }

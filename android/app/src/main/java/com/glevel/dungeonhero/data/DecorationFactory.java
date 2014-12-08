@@ -45,4 +45,8 @@ public class DecorationFactory {
         return new Searchable(R.string.treasure_chest, "small_chest.png", new Reward(null, 210, 0), 9, 12, 1, 1);
     }
 
+//    public static Decoration buildRewards() {
+//
+//    }
+
 }

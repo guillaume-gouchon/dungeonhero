@@ -1,5 +1,8 @@
 package com.glevel.dungeonhero.models.dungeons;
 
+import android.util.Log;
+
+import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.utils.MazeAlgorithm;
 
@@ -15,36 +18,36 @@ public class Dungeon implements Serializable {
 
     private static final long serialVersionUID = 4765596237193067497L;
 
-    private static final int DUNGEON_WIDTH = 3, DUNGEON_HEIGHT = 3;
+    private static final String TAG = "Dungeon";
 
     private Room[][] rooms;
     private int start;
-    private final int introText;
-    private final int outroText;
     private List<Event> events;
     private int nbRoomVisited;
+
+    private final int width, height;
 
     private int currentPosition;
     private Directions currentDirection;
 
-    public Dungeon(int introText, int outroText, List<Event> events) {
-        createRandomDungeon(DUNGEON_WIDTH, DUNGEON_HEIGHT);
-
+    public Dungeon(int width, int height, List<Event> events) {
+        this.width = width;
+        this.height = height;
         nbRoomVisited = 0;
-        this.introText = introText;
-        this.outroText = outroText;
         this.events = events;
+
+        createRandomDungeon();
     }
 
-    public void createRandomDungeon(int dungeonWidth, int dungeonHeight) {
-        rooms = new Room[dungeonHeight][dungeonWidth];
-        boolean[][] doors = MazeAlgorithm.createMaze(dungeonWidth, dungeonHeight);
-        for (int i = 0; i < dungeonHeight; i++) {
-            for (int j = 0; j < dungeonWidth; j++) {
+    public void createRandomDungeon() {
+        rooms = new Room[height][width];
+        boolean[][] doors = MazeAlgorithm.createMaze(width, height);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 rooms[i][j] = new Room(doors, i, j);
             }
         }
-        start = (int) (dungeonWidth * Math.random()) + 10 * (int) (dungeonHeight * Math.random());
+        start = (int) (width * Math.random()) + 10 * (int) (height * Math.random());
         currentPosition = start;
     }
 
@@ -74,42 +77,31 @@ public class Dungeon implements Serializable {
     }
 
     public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> lstUnitsToMoveIn) {
-        nbRoomVisited++;
-
         Room currentRoom = getCurrentRoom();
+        if (currentRoom.getTiles() == null) {
+            nbRoomVisited++;
+        }
+
+        int threatLevel = ((Hero) lstUnitsToMoveIn.get(0)).getLevel();
+        int nbRoomsLeft = width * height - nbRoomVisited;
+        Log.d(TAG, "Number of rooms not visited = " + nbRoomsLeft + ", events = " + events.size());
+
         Event event = null;
         if (currentDirection == null) {
             // heroes just enter the dungeon
-            currentRoom.initRoom(tmxTiledMap, null);
-            currentDirection = Directions.NORTH;
+            currentRoom.initRoom(tmxTiledMap, null, threatLevel);
 
             // add stairs
             currentRoom.prepareStartRoom(lstUnitsToMoveIn);
             return;
-        } else if (events.size() > 0 && (nbRoomVisited == events.size() || Math.random() * 10 < nbRoomVisited)) {
+        } else if (events.size() > 0 && (nbRoomsLeft < events.size() || Math.random() * 100 < nbRoomVisited * 3)) {
             // the room may contain an event
             event = events.get((int) (events.size() * Math.random()));
             events.remove(event);
         }
 
-        currentRoom.initRoom(tmxTiledMap, event);
+        currentRoom.initRoom(tmxTiledMap, event, threatLevel);
         currentRoom.moveIn(lstUnitsToMoveIn, currentDirection);
-    }
-
-    public int getIntroText() {
-        return introText;
-    }
-
-    public int getOutroText() {
-        return outroText;
-    }
-
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public void setCurrentPosition(int currentPosition) {
-        this.currentPosition = currentPosition;
     }
 
     public int getStart() {

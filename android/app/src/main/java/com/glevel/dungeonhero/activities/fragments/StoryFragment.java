@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.activities.fragments;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -12,6 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.activities.BookChooserActivity;
+import com.glevel.dungeonhero.activities.GameActivity;
+import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 import java.util.ArrayList;
@@ -20,12 +25,14 @@ import java.util.List;
 public class StoryFragment extends DialogFragment implements View.OnClickListener {
 
     public static final String ARGUMENT_STORY = "story";
+    public static final String ARGUMENT_IS_OUTRO = "is_outro";
 
     private Runnable mStormEffect;
     private ImageView mStormsBg;
 
     private List<View> mStoryViews = new ArrayList<View>();
     private int mCurrentLine;
+    private boolean mIsOutro = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,8 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
 
         startAnimation();
 
+        mIsOutro = args.getBoolean(ARGUMENT_IS_OUTRO);
+
         layout.findViewById(R.id.skipButton).setOnClickListener(this);
         layout.findViewById(R.id.replayButton).setOnClickListener(this);
 
@@ -90,11 +99,23 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
     }
 
     @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (mIsOutro) {
+            Intent intent = new Intent(getActivity(), BookChooserActivity.class);
+            intent.putExtra(Game.class.getName(), ((GameActivity) getActivity()).getGame());
+            getActivity().startActivity(intent);
+            getActivity().finish();
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.skipButton:
                 dismiss();
                 break;
+
             case R.id.replayButton:
                 startAnimation();
                 break;

@@ -3,7 +3,6 @@ package com.glevel.dungeonhero.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.data.DecorationFactory;
 import com.glevel.dungeonhero.data.MonsterFactory;
 import com.glevel.dungeonhero.data.PNJFactory;
@@ -30,7 +29,6 @@ public class Game extends DatabaseResource implements Serializable {
 
     private Book book;
     private int[] booksDone;
-    private Chapter chapter;
     private Hero hero;
     private Dungeon dungeon = null;
 
@@ -40,16 +38,14 @@ public class Game extends DatabaseResource implements Serializable {
     public static Game fromCursor(Cursor cursor) {
         Game game = new Game();
         game.setId(cursor.getLong(0));
-        int bookId = cursor.getInt(1);
-        if (bookId > 0) {
-            game.startNewBook(BookFactory.getAll().get(bookId - 1));
+        game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(1)));
+        game.setBooksDone((int[]) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
+        if (cursor.getBlob(3) != null) {
+            game.setBook((Book) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
         }
-        game.setChapter((Chapter) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
-        game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
         if (cursor.getBlob(4) != null) {
             game.setDungeon((Dungeon) ByteSerializer.getObjectFromByte(cursor.getBlob(4)));
         }
-        game.setBooksDone((int[]) ByteSerializer.getObjectFromByte(cursor.getBlob(5)));
         return game;
     }
 
@@ -65,12 +61,19 @@ public class Game extends DatabaseResource implements Serializable {
         if (id > 0) {
             content.put(Game.COLUMN_ID, id);
         }
-        content.put(Columns.BOOK_ID.toString(), book != null ? book.getBookId() : 0L);
-        content.put(Columns.CHAPTER.toString(), ByteSerializer.toByteArray(chapter));
         content.put(Columns.HERO.toString(), ByteSerializer.toByteArray(hero));
-        content.put(Columns.DUNGEON.toString(), ByteSerializer.toByteArray(dungeon));
         content.put(Columns.BOOKS_DONE.toString(), ByteSerializer.toByteArray(booksDone));
+        content.put(Columns.BOOK.toString(), ByteSerializer.toByteArray(book));
+        content.put(Columns.DUNGEON.toString(), ByteSerializer.toByteArray(dungeon));
         return content;
+    }
+
+    public static String[] getDatabaseCreationStatements() {
+        return new String[]{
+                "DROP TABLE IF EXISTS " + TABLE_NAME + ";",
+                "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY, " + Columns.HERO + " BLOB, " + Columns.BOOKS_DONE +
+                        " BLOB, " + Columns.BOOK + " BLOB, " + Columns.DUNGEON + " BLOB);"
+        };
     }
 
     public int[] getBooksDone() {
@@ -85,17 +88,8 @@ public class Game extends DatabaseResource implements Serializable {
         return book;
     }
 
-    public void startNewBook(Book book) {
+    public void setBook(Book book) {
         this.book = book;
-        this.chapter = book.getChapters().get(0);
-    }
-
-    public Chapter getChapter() {
-        return chapter;
-    }
-
-    public void setChapter(Chapter chapter) {
-        this.chapter = chapter;
     }
 
     public Hero getHero() {
@@ -115,7 +109,7 @@ public class Game extends DatabaseResource implements Serializable {
     }
 
     private enum Columns {
-        BOOK_ID("book_id"), CHAPTER("chapter"), HERO("hero"), DUNGEON("dungeon"), BOOKS_DONE("books_done"), IN_ADVENTURE("in_adventure");
+        HERO("hero"), BOOKS_DONE("books_done"), BOOK("book"), DUNGEON("dungeon");
 
         private final String columnName;
 
@@ -130,7 +124,7 @@ public class Game extends DatabaseResource implements Serializable {
     }
 
     public List<GraphicHolder> getGraphicsToLoad() {
-        List<GraphicHolder> toLoad = new ArrayList<GraphicHolder>();
+        List<GraphicHolder> toLoad = new ArrayList<>();
 
         // load hero
         toLoad.add(hero);
@@ -159,7 +153,7 @@ public class Game extends DatabaseResource implements Serializable {
     }
 
     public List<String> getSoundEffectsToLoad() {
-        List<String> toLoad = new ArrayList<String>();
+        List<String> toLoad = new ArrayList<>();
 
         return toLoad;
     }

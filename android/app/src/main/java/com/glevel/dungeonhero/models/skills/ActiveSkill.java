@@ -16,8 +16,8 @@ public class ActiveSkill extends Skill implements Serializable {
     private Buff buff;
     private int damage;
 
-    public ActiveSkill(int name, int description, int image) {
-        super(name, description, image);
+    public ActiveSkill(int name, int description, int image, int level) {
+        super(name, description, image, level);
     }
 
     public void use(Tile tile) {

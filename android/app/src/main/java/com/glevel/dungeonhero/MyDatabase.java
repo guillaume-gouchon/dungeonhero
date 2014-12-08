@@ -12,9 +12,10 @@ import com.glevel.dungeonhero.utils.database.Repository;
  */
 public class MyDatabase extends DatabaseHelper {
 
-    private static final int DB_VERSION = 18;
+    private static final int DB_VERSION = 19;
     private static final String DB_NAME = "dungeon_hero";
 
+    // TODO : refactor
     private Repository<Game> gameRepository = new Repository<Game>(this, Game.TABLE_NAME) {
         @Override
         public Game convertCursorRowToObject(Cursor cursor) {
