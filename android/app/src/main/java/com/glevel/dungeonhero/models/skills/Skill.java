@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.models.skills;
 
+import com.glevel.dungeonhero.R;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
 public abstract class Skill implements Serializable {
 
     private static final long serialVersionUID = 457816281507623195L;
+    private static final int SKILL_MAX_LEVEL = 6;
 
     private final int name;
     private final int description;
@@ -37,8 +40,31 @@ public abstract class Skill implements Serializable {
         return level;
     }
 
+    public boolean canBeImproved() {
+        return level <= SKILL_MAX_LEVEL;
+    }
+
     public void improve() {
         level++;
+    }
+
+    public int getColor() {
+        switch (level) {
+            case 0:
+                return R.color.bg_level_0;
+            case 1:
+                return R.color.bg_level_1;
+            case 2:
+                return R.color.bg_level_2;
+            case 3:
+                return R.color.bg_level_3;
+            case 4:
+                return R.color.bg_level_4;
+            case 5:
+                return R.color.bg_level_5;
+            default:
+                return R.color.bg_level_6;
+        }
     }
 
 }

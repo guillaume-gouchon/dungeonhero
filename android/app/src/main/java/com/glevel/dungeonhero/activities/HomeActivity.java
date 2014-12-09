@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.activities.fragments.GameChooserFragment;
+import com.glevel.dungeonhero.activities.fragments.LoadGameFragment;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
@@ -34,7 +34,7 @@ import com.google.example.games.basegameutils.BaseGameActivity;
 
 import java.util.List;
 
-public class HomeActivity extends BaseGameActivity implements OnClickListener, GameChooserFragment.OnFragmentClosed {
+public class HomeActivity extends BaseGameActivity implements OnClickListener, LoadGameFragment.OnFragmentClosed {
 
     private static final int REQUEST_ACHIEVEMENTS = 0;
 
@@ -112,7 +112,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, G
                     break;
                 case R.id.loadGameButton:
                     MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                    ApplicationUtils.openDialogFragment(this, new GameChooserFragment(), null);
+                    ApplicationUtils.openDialogFragment(this, new LoadGameFragment(), null);
                     hideMainHomeButtons();
                     mBackButton.setVisibility(View.GONE);
                     mBackButton.setAnimation(null);

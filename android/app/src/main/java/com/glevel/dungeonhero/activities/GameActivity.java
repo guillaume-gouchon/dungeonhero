@@ -25,6 +25,7 @@ import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 import org.andengine.entity.Entity;
@@ -87,10 +88,17 @@ public class GameActivity extends MyBaseGameActivity {
             if (chapter.getIntroText() > 0) {
                 mGUIManager.showChapterIntro();
             }
+
+            // if hero has some skill points left
+            if (mHero.getSkillPoints() > 0) {
+                mGUIManager.showNewLevelDialog();
+            }
+            mHero.reset();
         } else {
             mDungeon = mGame.getDungeon();
         }
         mRoom = mDungeon.getCurrentRoom();
+        Log.d(TAG, "current room " + mRoom);
     }
 
     @Override
@@ -128,11 +136,13 @@ public class GameActivity extends MyBaseGameActivity {
         mSelectionCircle = new SelectionCircle(getVertexBufferObjectManager());
         mScene.attachChild(mSelectionCircle);
 
-        List<Unit> heroes = new ArrayList<>();
         if (mHero != null) {
+            List<Unit> heroes = new ArrayList<>();
             heroes.add(mHero);
+            mDungeon.moveIn(mTmxTiledMap, heroes);
+        } else {
+            mRoom.initRoom(mTmxTiledMap, null, 0);
         }
-        mDungeon.moveIn(mTmxTiledMap, heroes);
 
         // add elements to scene
         GameElement gameElement;
@@ -161,7 +171,7 @@ public class GameActivity extends MyBaseGameActivity {
 
         mScene.sortChildren();
 
-;        startGame();
+        startGame();
     }
 
     public void addElementToScene(GameElement gameElement) {
@@ -226,6 +236,14 @@ public class GameActivity extends MyBaseGameActivity {
                         mActionDispatcher.dropItem(item);
                     }
                 });
+            } else if (view.getTag(R.string.skill) != null) {
+                mGUIManager.showSkillInfo((com.glevel.dungeonhero.models.skills.Skill) view.getTag(R.string.skill));
+            } else if (view.getTag(R.string.use_skill) != null) {
+                // TODO : use skill
+                ActiveSkill skill = (ActiveSkill) view.getTag(R.string.use_skill);
+                skill.use(null);
+                mGUIManager.updateSkillButtons();
+                nextTurn();
             }
         }
     }
@@ -246,8 +264,8 @@ public class GameActivity extends MyBaseGameActivity {
         // init camera position
         mCamera.setCenter(mHero.getSprite().getX(), mHero.getSprite().getY());
 
-        // hide loading screen
         mGUIManager.hideLoadingScreen();
+        mGUIManager.updateSkillButtons();
 
         nextTurn();
     }

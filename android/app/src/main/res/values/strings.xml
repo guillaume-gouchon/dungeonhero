@@ -97,9 +97,14 @@
     <string name="deployment_phase">Deployment Phase</string>
     <string name="start">Deployment Done</string>
     <string name="game_menu">Game Menu</string>
+    <string name="skill">skill</string>
     <string name="help">Help</string>
     <string name="riddle_answer_input">your answer...</string>
     <string name="game_master">Game Master</string>
+    <string name="new_level_title">You reached level %s !</string>
+    <string name="new_level_text">Choose which skills to improve.</string>
+    <string name="new_level_points_left">Skill points left : %s</string>
+    <string name="improve_skill">Improve skill</string>
 
     <!-- Tutorial -->
     <string name="next">Next</string>
@@ -180,6 +185,7 @@
     <string name="equip">Equip</string>
     <string name="remove">Remove</string>
     <string name="drop">Drop</string>
+    <string name="use_skill">use_skill</string>
     <string name="gold_coins">Gold Coins</string>
     <string name="bag_full">Your bag is full, the object has been dropped on the ground</string>
     <string name="damage">Damage</string>
@@ -190,7 +196,8 @@
     <string name="critical">Critical Hit</string>
     <string name="unknown_item">\?\?\?</string>
     <string name="minimum">min. %s </string>
-    <string name="stairs">Stairs</string>
+    <string name="exit_stairs">Exit Stairs</string>
+    <string name="entrance_stairs">Entrance stairs</string>
     <string name="go_to_next_chapter">Go to next chapter</string>
     <string name="finish_adventure">Finish adventure</string>
 

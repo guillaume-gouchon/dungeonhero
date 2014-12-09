@@ -13,8 +13,7 @@ import com.glevel.dungeonhero.models.items.Requirement;
 import com.glevel.dungeonhero.models.items.equipments.Armor;
 import com.glevel.dungeonhero.models.items.equipments.Ring;
 import com.glevel.dungeonhero.models.items.equipments.Weapon;
-import com.glevel.dungeonhero.models.skills.ActiveSkill;
-import com.glevel.dungeonhero.models.skills.PassiveSkill;
+import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -34,9 +33,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     protected final List<Item> items = new ArrayList<>();
     // Skills
-    protected final List<PassiveSkill> passive = new ArrayList<>();
-    protected final List<ActiveSkill> active = new ArrayList<>();
-    protected final List<Buff> buffs = new ArrayList<>();
+    protected final List<Skill> skills = new ArrayList<>();
+    protected List<Buff> buffs = new ArrayList<>();
     protected final Equipment[] equipments = new Equipment[5];
     // Images
     private final int image;
@@ -46,12 +44,12 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     protected int gold;
 
     // Characteristics
-    private int hp;
-    private int currentHP;
-    private int strength;
-    private int dexterity;
-    private int spirit;
-    private int movement;
+    protected int hp;
+    protected int currentHP;
+    protected int strength;
+    protected int dexterity;
+    protected int spirit;
+    protected int movement;
 
     public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int name, int description) {
         super(name, spriteName, rank, 210, 400, 3, 4);
@@ -126,12 +124,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         return items;
     }
 
-    public List<PassiveSkill> getPassive() {
-        return passive;
-    }
-
-    public List<ActiveSkill> getActive() {
-        return active;
+    public List<Skill> getSkills() {
+        return skills;
     }
 
     @Override

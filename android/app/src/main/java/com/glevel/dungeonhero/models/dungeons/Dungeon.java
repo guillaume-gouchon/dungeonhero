@@ -83,18 +83,19 @@ public class Dungeon implements Serializable {
         }
 
         int threatLevel = ((Hero) lstUnitsToMoveIn.get(0)).getLevel();
+
         int nbRoomsLeft = width * height - nbRoomVisited;
         Log.d(TAG, "Number of rooms not visited = " + nbRoomsLeft + ", events = " + events.size());
 
         Event event = null;
         if (currentDirection == null) {
             // heroes just enter the dungeon
-            currentRoom.initRoom(tmxTiledMap, null, threatLevel);
+            currentRoom.initRoom(tmxTiledMap, null, 0);
 
             // add stairs
             currentRoom.prepareStartRoom(lstUnitsToMoveIn);
             return;
-        } else if (events.size() > 0 && (nbRoomsLeft < events.size() || Math.random() * 100 < nbRoomVisited * 3)) {
+        } else if (events.size() > 0 && (nbRoomsLeft < events.size() || nbRoomVisited > 2 && Math.random() * 100 < nbRoomVisited * 2)) {
             // the room may contain an event
             event = events.get((int) (events.size() * Math.random()));
             events.remove(event);

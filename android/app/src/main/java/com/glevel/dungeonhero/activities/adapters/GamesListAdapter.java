@@ -19,7 +19,7 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
     private List<Game> mSavedGames;
 
     public GamesListAdapter(FragmentActivity activity, List<Game> savedCampaigns) {
-        super(activity, R.layout.game_chooser_list_item);
+        super(activity, R.layout.load_game_list_item);
         mSavedGames = savedCampaigns;
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -32,7 +32,7 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.game_chooser_list_item, null);
+            convertView = mInflater.inflate(R.layout.load_game_list_item, null);
         }
 
         Game game = mSavedGames.get(position);

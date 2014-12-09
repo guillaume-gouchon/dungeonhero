@@ -28,7 +28,7 @@ public class Game extends DatabaseResource implements Serializable {
     private static final long serialVersionUID = -840485102400894219L;
 
     private Book book;
-    private int[] booksDone;
+    private List<Integer> booksDone;
     private Hero hero;
     private Dungeon dungeon = null;
 
@@ -39,7 +39,7 @@ public class Game extends DatabaseResource implements Serializable {
         Game game = new Game();
         game.setId(cursor.getLong(0));
         game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(1)));
-        game.setBooksDone((int[]) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
+        game.setBooksDone((List<Integer>) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
         if (cursor.getBlob(3) != null) {
             game.setBook((Book) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
         }
@@ -62,7 +62,7 @@ public class Game extends DatabaseResource implements Serializable {
             content.put(Game.COLUMN_ID, id);
         }
         content.put(Columns.HERO.toString(), ByteSerializer.toByteArray(hero));
-        content.put(Columns.BOOKS_DONE.toString(), ByteSerializer.toByteArray(booksDone));
+        content.put(Columns.BOOKS_DONE.toString(), ByteSerializer.toByteArray((Serializable) booksDone));
         content.put(Columns.BOOK.toString(), ByteSerializer.toByteArray(book));
         content.put(Columns.DUNGEON.toString(), ByteSerializer.toByteArray(dungeon));
         return content;
@@ -76,11 +76,11 @@ public class Game extends DatabaseResource implements Serializable {
         };
     }
 
-    public int[] getBooksDone() {
+    public List<Integer> getBooksDone() {
         return booksDone;
     }
 
-    public void setBooksDone(int[] booksDone) {
+    public void setBooksDone(List<Integer> booksDone) {
         this.booksDone = booksDone;
     }
 
@@ -106,6 +106,11 @@ public class Game extends DatabaseResource implements Serializable {
 
     public void setDungeon(Dungeon dungeon) {
         this.dungeon = dungeon;
+    }
+
+    public void finishBook(Book activeBook) {
+        activeBook.setDone(true);
+        booksDone.add(activeBook.getBookId());
     }
 
     private enum Columns {

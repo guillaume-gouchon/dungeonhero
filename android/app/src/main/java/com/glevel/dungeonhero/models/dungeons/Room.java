@@ -69,7 +69,8 @@ public class Room implements Serializable {
                     newTiles[tmxTile.getTileRow()][tmxTile.getTileColumn()] = tile;
 
                     if (tile.getContent() != null) {
-                        addGameElement(tile.getContent(), tile);
+                        tile.getContent().setTilePosition(tile);
+                        objects.add(tile.getContent());
                     }
                 }
             }
@@ -118,7 +119,6 @@ public class Room implements Serializable {
     }
 
     private void createRoomContent(Event event, int threatLevel) {
-
         if (event != null) {
             if (event.isDungeonOver()) {
                 addGameElement(new Stairs(true), getRandomFreeTile());
@@ -135,12 +135,14 @@ public class Room implements Serializable {
             for (Reward reward : event.getRewards()) {
                 addGameElement(new TreasureChest(reward), getRandomFreeTile());
             }
-        } else {
+        } else if (threatLevel > 0) {
             // add some monsters and reward
             List<Monster> monsters = MonsterFactory.getRoomContent(threatLevel);
             for (Monster monster : monsters) {
                 addGameElement(monster, getRandomFreeTile());
             }
+
+            addGameElement(DecorationFactory.buildSmallChest(), getRandomFreeTile());
         }
 
         for (int n = 0; n < Math.round(Math.random() * 2); n++) {

@@ -2,16 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="3dp"
-    android:background="@drawable/bg_clickable_gui">
+    android:paddingRight="5dp">
 
     <ImageView
+        android:background="@drawable/bg_clickable_gui"
         android:id="@+id/image"
-        android:layout_width="@dimen/in_game_button_size"
-        android:layout_height="@dimen/in_game_button_size"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:scaleType="centerInside"
-        android:src="@drawable/bg_bag"
-        android:alpha="0.5"
-        android:padding="3dp" />
-
+        android:padding="3dp"
+        android:tint="#66000000" />
 </RelativeLayout>

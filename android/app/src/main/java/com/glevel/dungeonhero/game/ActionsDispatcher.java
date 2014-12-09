@@ -261,7 +261,10 @@ public class ActionsDispatcher implements UserActionListener {
                 getItemOrDropIt(reward.getItem());
             }
             mGameActivity.getHero().addGold(reward.getGold());
-            mGameActivity.getHero().addXP(reward.getXp());
+            boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
+            if (newLevel) {
+                mGUIManager.showNewLevelDialog();
+            }
         }
     }
 
@@ -340,7 +343,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void goCloserTo(Tile tile, OnActionExecuted callback) {
-        if (MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) <= 1) {
+        if (mGameActivity.getActiveCharacter().getTilePosition() == null || MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) <= 1) {
             callback.onActionDone(true);
             return;
         }
@@ -437,7 +440,7 @@ public class ActionsDispatcher implements UserActionListener {
         Tile t;
         for (Tile[] hTile : mGameActivity.getRoom().getTiles()) {
             for (Tile tile : hTile) {
-                if (!reachableTiles.contains(tile) && MathUtils.calcManhattanDistance(tile, mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement()
+                if (tile != null && !reachableTiles.contains(tile) && MathUtils.calcManhattanDistance(tile, mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement()
                         && mGameActivity.getActiveCharacter().canMoveIn(tile)) {
                     List<Tile> path = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), tile, false, mGameActivity.getActiveCharacter());
                     if (path != null) {
@@ -578,7 +581,7 @@ public class ActionsDispatcher implements UserActionListener {
             @Override
             public void onActionDone(boolean success) {
                 if (target instanceof Monster) {
-                    animateGetReward((Monster) target, onActionExecuted);
+                    animateFightReward((Monster) target, onActionExecuted);
                 } else {
                     onActionExecuted.onActionDone(true);
                 }
@@ -586,20 +589,23 @@ public class ActionsDispatcher implements UserActionListener {
         });
     }
 
-    private void animateGetReward(Monster target, final OnActionExecuted onActionExecuted) {
+    private void animateFightReward(Monster target, final OnActionExecuted onActionExecuted) {
         Reward reward = target.getReward();
         if (reward.getItem() != null) {
             getItemOrDropIt(reward.getItem());
         }
         mGameActivity.getHero().addGold(reward.getGold());
-        mGameActivity.getHero().addXP(reward.getXp());
+        boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
+        if (newLevel) {
+            mGUIManager.showNewLevelDialog();
+        }
 
         if (reward != null) {
             if (reward.getGold() > 0) {
                 mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
             }
             if (reward.getXp() > 0) {
-                mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(0.1f, 0.3f, 0.9f), 0.2f, 50, -0.15f);
+                mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
             }
             if (reward.getItem() != null) {
                 mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {

@@ -21,7 +21,7 @@ import com.glevel.dungeonhero.models.Game;
 
 import java.util.List;
 
-public class GameChooserFragment extends DialogFragment {
+public class LoadGameFragment extends DialogFragment {
 
     /**
      * Callbacks
@@ -80,7 +80,7 @@ public class GameChooserFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.game_chooser_fragment, container, false);
+        View layout = inflater.inflate(R.layout.load_game_fragment, container, false);
 
         mGamesListView = (ListView) layout.findViewById(R.id.gamesList);
         mGamesListView.setOnItemClickListener(mOnItemClickedListener);

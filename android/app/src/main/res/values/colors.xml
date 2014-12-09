@@ -7,6 +7,7 @@
     <color name="bg_btn_center">#ee000000</color>
     <color name="bg_btn_pressed_center">#aabbbbbb</color>
     <color name="bg_btn_disabled">#33000000</color>
+    <color name="bg_gui">#cc000000</color>
 
     <color name="bg_popup_btn">#111</color>
     <color name="bg_popup_btn_pressed">#222</color>
@@ -34,7 +35,6 @@
     <color name="blue">#6BB3D6</color>
     <color name="veteran">#ffffff</color>
     <color name="elite">#999999</color>
-    <color name="bg_game_gui">#aa000000</color>
     <color name="bg_game_menu">#88000000</color>
     <color name="btn_stroke_color">#000000</color>
 
@@ -46,10 +46,18 @@
     <color name="border_in_game_pressed">#eebbbbbb</color>
 
     <color name="bg_scroll">#BAB175</color>
-    <color name="bg_weapon">#D10000</color>2\
+    <color name="bg_weapon">#D10000</color>
     <color name="bg_armor">#758FBA</color>
     <color name="bg_ring">#EDEA39</color>
     <color name="bg_potion">#77A867</color>
     <color name="bg_gold">#EDEA39</color>
+
+    <color name="bg_level_0">#aa000000</color>
+    <color name="bg_level_1">#aaEDEA39</color>
+    <color name="bg_level_2">#aaFF9F38</color>
+    <color name="bg_level_3">#aaD10000</color>
+    <color name="bg_level_4">#aa5A9626</color>
+    <color name="bg_level_5">#aa6BB3D6</color>
+    <color name="bg_level_6">#aa6B53D6</color>
 
 </resources>

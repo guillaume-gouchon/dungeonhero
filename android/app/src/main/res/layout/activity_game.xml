@@ -29,6 +29,15 @@
             android:layout_height="wrap_content"
             layout="@layout/in_game_bag_button" />
 
+        <LinearLayout
+            android:id="@+id/skillButtonsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/bag"
+            android:gravity="left|center_vertical"></LinearLayout>
 
         <include
             android:id="@+id/hero"

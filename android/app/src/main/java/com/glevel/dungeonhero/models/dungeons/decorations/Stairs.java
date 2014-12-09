@@ -18,7 +18,7 @@ public class Stairs extends Decoration implements Serializable {
     private final boolean isDownStairs;
 
     public Stairs(boolean isDownStairs) {
-        super(R.string.stairs, "stairs.png", 32, 20, 2, 1);
+        super(isDownStairs ? R.string.exit_stairs : R.string.entrance_stairs, "stairs.png", 32, 20, 2, 1);
         this.isDownStairs = isDownStairs;
     }
 

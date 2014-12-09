@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.data;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Ranks;
+import com.glevel.dungeonhero.models.skills.ActiveSkill;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class HeroFactory {
         Hero hero = new Hero(Ranks.ME, R.drawable.warrior, "warrior.png", 18, 18, 14, 9, 6, 5, R.string.berserker, R.string.berserker_description, 10, null, 0, 1);
         hero.equip(WeaponFactory.buildSword());
         hero.addItem(WeaponFactory.buildSword());
+        hero.getSkills().add(new ActiveSkill(R.string.about, R.string.about, R.drawable.ic_key, 0));
         return hero;
     }
 

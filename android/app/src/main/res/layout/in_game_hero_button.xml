@@ -8,15 +8,15 @@
 
     <com.glevel.dungeonhero.views.LifeBar
         android:id="@+id/life"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/in_game_button_size"
+        android:layout_height="@dimen/in_game_button_size"
         android:rotation="90"
         android:alpha="0.6"
         custom:lifeColor="@color/darkGreen" />
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/in_game_button_size"
+        android:layout_height="@dimen/in_game_button_size"
         android:scaleType="centerInside"
         android:src="@drawable/bg_hero_details"
         android:alpha="0.6"

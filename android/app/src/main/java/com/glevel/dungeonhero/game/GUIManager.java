@@ -47,6 +47,9 @@ import com.glevel.dungeonhero.models.items.equipments.Weapon;
 import com.glevel.dungeonhero.models.riddles.MultiChoicesRiddle;
 import com.glevel.dungeonhero.models.riddles.OpenRiddle;
 import com.glevel.dungeonhero.models.riddles.Riddle;
+import com.glevel.dungeonhero.models.skills.ActiveSkill;
+import com.glevel.dungeonhero.models.skills.PassiveSkill;
+import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
@@ -59,14 +62,16 @@ import java.util.TimerTask;
 
 public class GUIManager {
 
-    private static final String TAG = "GuiManager";
+    private static final String TAG = "GUIManager";
 
     private MyBaseGameActivity mActivity;
 
-    private Dialog mLoadingScreen, mGameMenuDialog, mHeroInfoDialog, mDiscussionDialog, mRewardDialog, mBagDialog, mItemInfoDialog;
+    private Dialog mLoadingScreen, mGameMenuDialog, mHeroInfoDialog, mDiscussionDialog, mRewardDialog,
+            mBagDialog, mItemInfoDialog, mNewLevelDialog;
     private TextView mBigLabel;
     private Animation mBigLabelAnimation;
     private ViewGroup mSelectedElementLayout, mActiveHeroLayout, mQueueLayout;
+    private ViewGroup mSkillButtonsLayout;
 
     public GUIManager(MyBaseGameActivity activity) {
         mActivity = activity;
@@ -84,6 +89,8 @@ public class GUIManager {
         // setup big label TV
         mBigLabelAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.big_label_in_game);
         mBigLabel = (TextView) mActivity.findViewById(R.id.bigLabel);
+
+        mSkillButtonsLayout = (ViewGroup) mActivity.findViewById(R.id.skillButtonsLayout);
     }
 
     public void displayBigLabel(final String text, final int color) {
@@ -203,6 +210,7 @@ public class GUIManager {
                                 mActivity.startActivity(intent);
                                 mActivity.finish();
                             } else {
+                                mActivity.getGame().finishBook(activeBook);
                                 if (activeBook.getOutroText() > 0) {
                                     // show outro text
                                     Bundle args = new Bundle();
@@ -266,6 +274,9 @@ public class GUIManager {
         }
         if (mItemInfoDialog != null) {
             mItemInfoDialog.dismiss();
+        }
+        if (mNewLevelDialog != null) {
+            mNewLevelDialog.dismiss();
         }
     }
 
@@ -371,7 +382,6 @@ public class GUIManager {
         mHeroInfoDialog = new Dialog(mActivity, R.style.Dialog);
         mHeroInfoDialog.setContentView(R.layout.in_game_hero_details);
         mHeroInfoDialog.setCancelable(true);
-        mHeroInfoDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
         ((TextView) mHeroInfoDialog.findViewById(R.id.name)).setText(hero.getHeroName());
         ((TextView) mHeroInfoDialog.findViewById(R.id.description)).setText(hero.getDescription());
@@ -397,7 +407,6 @@ public class GUIManager {
                     mDiscussionDialog = new Dialog(mActivity, R.style.Dialog);
                     mDiscussionDialog.setContentView(R.layout.in_game_discussion);
                     mDiscussionDialog.setCancelable(false);
-                    mDiscussionDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
                     TextView pnjName = (TextView) mDiscussionDialog.findViewById(R.id.name);
                     pnjName.setText(discussion.getName());
@@ -576,7 +585,6 @@ public class GUIManager {
                     mRewardDialog.setContentView(R.layout.in_game_reward);
                     mRewardDialog.setCancelable(false);
                     mRewardDialog.setOnDismissListener(onDismissListener);
-                    mRewardDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
                     TextView itemTV = (TextView) mRewardDialog.findViewById(R.id.item);
                     TextView goldTV = (TextView) mRewardDialog.findViewById(R.id.gold);
@@ -628,7 +636,6 @@ public class GUIManager {
         mBagDialog = new Dialog(mActivity, R.style.Dialog);
         mBagDialog.setContentView(R.layout.in_game_bag);
         mBagDialog.setCancelable(true);
-        mBagDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
         updateBag(hero);
 
@@ -694,7 +701,6 @@ public class GUIManager {
             itemView.setEnabled(false);
             itemView.setOnClickListener(null);
         }
-
     }
 
     public void showItemInfo(final Hero hero, final Item item, final OnActionExecuted onDropListener) {
@@ -804,6 +810,113 @@ public class GUIManager {
         int colorResource = mActivity.getResources().getColor(color);
         statView.setTextColor(colorResource);
         statView.setVisibility(View.VISIBLE);
+    }
+
+    public void showNewLevelDialog() {
+        mNewLevelDialog = new Dialog(mActivity, R.style.Dialog);
+        mNewLevelDialog.setContentView(R.layout.in_game_new_level);
+        mNewLevelDialog.setCancelable(false);
+
+        showSkills(mActivity.getGame().getHero());
+
+        mNewLevelDialog.findViewById(R.id.close).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateSkillButtons();
+                mNewLevelDialog.dismiss();
+            }
+        });
+        ((TextView) mNewLevelDialog.findViewById(R.id.new_level_title)).setText(mActivity.getString(R.string.new_level_title, mActivity.getGame().getHero().getLevel()));
+
+        mNewLevelDialog.show();
+    }
+
+    private void showSkills(Hero hero) {
+        if (mActivity.getGame().getHero().getSkillPoints() == 0) {
+            mNewLevelDialog.findViewById(R.id.close).setVisibility(View.VISIBLE);
+        }
+
+        ((TextView) mNewLevelDialog.findViewById(R.id.points_left)).setText(mActivity.getString(R.string.new_level_points_left, mActivity.getGame().getHero().getSkillPoints()));
+
+        ViewGroup skillLayout = (ViewGroup) mNewLevelDialog.findViewById(R.id.skills);
+        for (int n = 0; n < skillLayout.getChildCount(); n++) {
+            if (n < hero.getSkills().size()) {
+                updateSkillLayout(skillLayout.getChildAt(n), hero.getSkills().get(n));
+            } else {
+                skillLayout.getChildAt(n).setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void updateSkillLayout(View itemView, Skill skill) {
+        View background = itemView.findViewById(R.id.background);
+        ImageView image = (ImageView) itemView.findViewById(R.id.image);
+
+        itemView.setTag(R.string.skill, skill);
+
+        background.setBackgroundColor(mActivity.getResources().getColor(skill.getColor()));
+        image.setImageResource(skill.getImage());
+        itemView.setOnClickListener(mActivity);
+    }
+
+    public void showSkillInfo(final Skill skill) {
+        if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
+            mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
+            mItemInfoDialog.setContentView(R.layout.in_game_item_info);
+            mItemInfoDialog.setCancelable(true);
+
+            TextView nameTV = (TextView) mItemInfoDialog.findViewById(R.id.name);
+            nameTV.setText(mActivity.getString(skill.getName()) + " (lvl " + skill.getLevel() + ")");
+            nameTV.setCompoundDrawablesWithIntrinsicBounds(skill.getImage(), 0, 0, 0);
+
+            TextView descriptionTV = (TextView) mItemInfoDialog.findViewById(R.id.description);
+            if (skill.getDescription() > 0) {
+                descriptionTV.setText(skill.getDescription());
+            } else {
+                descriptionTV.setVisibility(View.GONE);
+            }
+
+            TextView actionButton = (TextView) mItemInfoDialog.findViewById(R.id.actionButton);
+            actionButton.setText(R.string.improve_skill);
+            actionButton.setVisibility(skill.canBeImproved() && mActivity.getGame().getHero().getSkillPoints() > 0 ? View.VISIBLE : View.GONE);
+            actionButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.getGame().getHero().useSkillPoint();
+                    skill.improve();
+                    showSkills(mActivity.getGame().getHero());
+                    mItemInfoDialog.dismiss();
+                }
+            });
+
+            mItemInfoDialog.findViewById(R.id.dropButton).setVisibility(View.GONE);
+            mItemInfoDialog.show();
+        }
+    }
+
+    public void updateSkillButtons() {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LayoutInflater inflater = mActivity.getLayoutInflater();
+                mSkillButtonsLayout.removeAllViews();
+                View skillButton;
+                for (Skill skill : mActivity.getGame().getHero().getSkills()) {
+                    if (skill.getLevel() > 0) {
+                        skillButton = inflater.inflate(R.layout.in_game_skill_button, null);
+                        skillButton.setTag(R.string.use_skill, skill);
+                        ((ImageView) skillButton.findViewById(R.id.image)).setImageResource(skill.getImage());
+                        if (skill instanceof PassiveSkill || skill instanceof ActiveSkill && ((ActiveSkill) skill).isUsed()) {
+                            skillButton.findViewById(R.id.image).setEnabled(false);
+                            skillButton.setAlpha(0.5f);
+                        } else {
+                            skillButton.setOnClickListener(mActivity);
+                        }
+                        mSkillButtonsLayout.addView(skillButton);
+                    }
+                }
+            }
+        });
     }
 
 }
