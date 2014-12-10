@@ -66,7 +66,7 @@
     <string name="hero_name_input">Enter your hero name...</string>
 
     <!-- Book Chooser -->
-    <string name="choose_book_message">Join an adventure</string>
+    <string name="choose_book_message">Choose a Quest</string>
 
     <!-- Story -->
     <string name="skip">Skip</string>
@@ -77,7 +77,6 @@
     <string name="strength">Strength : used to deal damage, hold heavy charges</string>
     <string name="dexterity">Dexterity : used to dodge, react, aim</string>
     <string name="spirit">Spirit : used to react, deduce, focus</string>
-    <string name="attack">The ability to hit an enemy</string>
     <string name="block">The ability to block an enemy\'s attack</string>
     <string name="frags">Frags</string>
 
@@ -200,5 +199,9 @@
     <string name="entrance_stairs">Entrance stairs</string>
     <string name="go_to_next_chapter">Go to next chapter</string>
     <string name="finish_adventure">Finish adventure</string>
-
+    <string name="use_skill_on">preparing %s...</string>
+    <string name="use_skill_off">cancel %s</string>
+    <string name="secondary_stats">Secondary stats</string>
+    <string name="skills">Skills</string>
+    <string name="use_skill_personal">%s !</string>
 </resources>

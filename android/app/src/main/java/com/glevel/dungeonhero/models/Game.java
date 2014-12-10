@@ -7,7 +7,6 @@ import com.glevel.dungeonhero.data.DecorationFactory;
 import com.glevel.dungeonhero.data.MonsterFactory;
 import com.glevel.dungeonhero.data.PNJFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
-import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.game.graphics.SpriteHolder;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -28,12 +27,9 @@ public class Game extends DatabaseResource implements Serializable {
     private static final long serialVersionUID = -840485102400894219L;
 
     private Book book;
-    private List<Integer> booksDone;
+    private List<Integer> booksDone = new ArrayList<>();
     private Hero hero;
     private Dungeon dungeon = null;
-
-    public Game() {
-    }
 
     public static Game fromCursor(Cursor cursor) {
         Game game = new Game();
@@ -47,12 +43,6 @@ public class Game extends DatabaseResource implements Serializable {
             game.setDungeon((Dungeon) ByteSerializer.getObjectFromByte(cursor.getBlob(4)));
         }
         return game;
-    }
-
-    public void setOnNewSprite(MyBaseGameActivity gameActivity) {
-    }
-
-    public void setOnNewSoundToPlay(MyBaseGameActivity gameActivity) {
     }
 
     @Override
@@ -74,10 +64,6 @@ public class Game extends DatabaseResource implements Serializable {
                 "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY, " + Columns.HERO + " BLOB, " + Columns.BOOKS_DONE +
                         " BLOB, " + Columns.BOOK + " BLOB, " + Columns.DUNGEON + " BLOB);"
         };
-    }
-
-    public List<Integer> getBooksDone() {
-        return booksDone;
     }
 
     public void setBooksDone(List<Integer> booksDone) {
@@ -110,7 +96,7 @@ public class Game extends DatabaseResource implements Serializable {
 
     public void finishBook(Book activeBook) {
         activeBook.setDone(true);
-        booksDone.add(activeBook.getBookId());
+        booksDone.add(activeBook.getId());
     }
 
     private enum Columns {
@@ -159,8 +145,12 @@ public class Game extends DatabaseResource implements Serializable {
 
     public List<String> getSoundEffectsToLoad() {
         List<String> toLoad = new ArrayList<>();
-
+        // TODO
         return toLoad;
+    }
+
+    public List<Integer> getBooksDone() {
+        return booksDone;
     }
 
 }

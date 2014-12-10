@@ -27,6 +27,8 @@ public class BooksAdapter extends CustomCarousel.Adapter<Book> {
 
         ((TextView) layout.findViewById(R.id.name)).setText(book.getName());
         ((ImageView) layout.findViewById(R.id.image)).setImageResource(book.getImage());
+        layout.findViewById(R.id.lock).setVisibility(book.isAvailable() ? View.GONE : View.VISIBLE);
+        layout.findViewById(R.id.done).setVisibility(book.isDone() ? View.VISIBLE : View.GONE);
 
         return layout;
     }

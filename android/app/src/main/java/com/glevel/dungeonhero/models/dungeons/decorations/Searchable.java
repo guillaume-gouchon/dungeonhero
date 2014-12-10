@@ -30,18 +30,13 @@ public class Searchable extends Decoration implements Serializable {
         if (isEmpty) return null;
 
         isEmpty = true;
-
-        if (reward != null) {
-            return reward;
-        } else {
-            // TODO random stuff
-            return null;
-        }
+        return reward;
     }
 
     @Override
     public void createSprite(VertexBufferObjectManager vertexBufferObjectManager) {
         sprite = new GameElementSprite(this, vertexBufferObjectManager);
+        sprite.setZIndex(11);
     }
 
 }

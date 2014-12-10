@@ -9,12 +9,12 @@ public class Requirement implements Serializable {
 
     private static final long serialVersionUID = 2763812604684913301L;
 
-    private final int value;
     private final Characteristics target;
+    private final int value;
 
-    public Requirement(int value, Characteristics target) {
-        this.value = value;
+    public Requirement(Characteristics target, int value) {
         this.target = target;
+        this.value = value;
     }
 
     public int getValue() {

@@ -80,7 +80,15 @@ public class MonsterFactory {
 
     public static List<Monster> getRoomContent(int threatLevel) {
         List<Monster> l = new ArrayList<>();
-        int nbMonsters = (int) (Math.random() * (threatLevel + 2));
+        int nbMonsters;
+        int random = (int) (Math.random() * 10);
+        if (random < 1) {
+            nbMonsters = 0;
+        } else if (random < 8) {
+            nbMonsters = 1;
+        } else {
+            nbMonsters = 2;
+        }
         for (int n = 0; n < nbMonsters; n++) {
             l.add(getRandomMonster(threatLevel));
         }

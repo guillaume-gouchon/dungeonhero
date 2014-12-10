@@ -14,6 +14,8 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by guillaume ON 10/3/14.
@@ -113,6 +115,12 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
                 if (!isElementSelected) {
                     isElementSelected = true;
                     mItemClickedListener.onClick(view);
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            isElementSelected = false;
+                        }
+                    }, 500);
                 }
             }
         };

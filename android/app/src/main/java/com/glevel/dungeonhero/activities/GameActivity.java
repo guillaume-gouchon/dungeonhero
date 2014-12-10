@@ -13,17 +13,23 @@ import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
+import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Monster;
+import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.effects.Effect;
+import com.glevel.dungeonhero.models.effects.HeroicEffect;
+import com.glevel.dungeonhero.models.effects.PoisonEffect;
+import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
@@ -59,12 +65,11 @@ public class GameActivity extends MyBaseGameActivity {
         if (extras != null && extras.getSerializable(Game.class.getName()) != null) {
             mGame = (Game) extras.getSerializable(Game.class.getName());
         } else {
+            // TODO : used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildBerserker());
-            mGame.setBook(BookFactory.buildInitiationBook(0));
+            mGame.setBook(BookFactory.buildInitiationBook(1));
         }
-        mGame.setOnNewSprite(this);
-        mGame.setOnNewSoundToPlay(this);
 
         if (mGame.getDungeon() == null) {
             // start new dungeon
@@ -86,13 +91,21 @@ public class GameActivity extends MyBaseGameActivity {
             }
 
             if (chapter.getIntroText() > 0) {
-                mGUIManager.showChapterIntro();
-            }
-
-            // if hero has some skill points left
-            if (mHero.getSkillPoints() > 0) {
+                OnDiscussionReplySelected callback = null;
+                if (mHero.getSkillPoints() > 0) {
+                    // if hero has some skill points left
+                    callback = new OnDiscussionReplySelected() {
+                        @Override
+                        public void onReplySelected(Pnj pnj, int next) {
+                            mGUIManager.showNewLevelDialog();
+                        }
+                    };
+                }
+                mGUIManager.showChapterIntro(callback);
+            } else if (mHero.getSkillPoints() > 0) {
                 mGUIManager.showNewLevelDialog();
             }
+
             mHero.reset();
         } else {
             mDungeon = mGame.getDungeon();
@@ -239,11 +252,7 @@ public class GameActivity extends MyBaseGameActivity {
             } else if (view.getTag(R.string.skill) != null) {
                 mGUIManager.showSkillInfo((com.glevel.dungeonhero.models.skills.Skill) view.getTag(R.string.skill));
             } else if (view.getTag(R.string.use_skill) != null) {
-                // TODO : use skill
-                ActiveSkill skill = (ActiveSkill) view.getTag(R.string.use_skill);
-                skill.use(null);
-                mGUIManager.updateSkillButtons();
-                nextTurn();
+                mActionDispatcher.setActivatedSkill((ActiveSkill) view.getTag(R.string.use_skill));
             }
         }
     }
@@ -281,12 +290,25 @@ public class GameActivity extends MyBaseGameActivity {
                     finish();
                     return;
                 }
-                mActiveCharacter = mRoom.getQueue().get(0);
-                mActiveCharacter.initNewTurn();
-                mRoom.getQueue().add(mRoom.getQueue().get(0));
-                mRoom.getQueue().remove(0);
-                mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
 
+
+                boolean isHeroic = false;
+                if (mActiveCharacter != null) {
+                    for (Effect effect : mActiveCharacter.getBuffs()) {
+                        if (effect instanceof HeroicEffect) {
+                            isHeroic = true;
+                        }
+                    }
+                }
+
+                if (!isHeroic) {
+                    // next character
+                    mActiveCharacter = mRoom.getQueue().get(0);
+
+                    mRoom.getQueue().add(mRoom.getQueue().get(0));
+                    mRoom.getQueue().remove(0);
+                    mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
+                }
                 updateActionTiles();
 
                 mActionDispatcher.hideElementInfo();
@@ -295,7 +317,26 @@ public class GameActivity extends MyBaseGameActivity {
 
                 mInputManager.setEnabled(!mActiveCharacter.isEnemy(mHero));
 
-                if (mActiveCharacter instanceof Monster) {
+                // handle current buffs
+                boolean skipTurn = false;
+                List<Effect> copy = new ArrayList<>(mActiveCharacter.getBuffs());
+                for (Effect effect : copy) {
+                    if (effect instanceof PoisonEffect) {
+                        mActionDispatcher.applyEffect(effect, mActiveCharacter.getTilePosition(), false);
+                    } else if (effect instanceof StunEffect) {
+                        if (mActiveCharacter.testCharacteristic(effect.getTarget(), effect.getValue())) {
+                            mActiveCharacter.getBuffs().remove(effect);
+                        } else {
+                            skipTurn = true;
+                        }
+                    }
+                }
+
+                mActiveCharacter.initNewTurn();
+
+                if (skipTurn) {
+                    nextTurn();
+                } else if (mActiveCharacter instanceof Monster) {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {

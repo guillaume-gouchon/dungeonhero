@@ -20,17 +20,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
-            style="@style/PopupMessage"
-            android:textColor="@color/white" />
+            style="@style/PopupMessage" />
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/gold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
-            style="@style/PopupMessage"
-            android:drawableTop="@drawable/ic_coin"
-            android:gravity="left" />
+            style="@style/PopupMessage" />
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/xp"

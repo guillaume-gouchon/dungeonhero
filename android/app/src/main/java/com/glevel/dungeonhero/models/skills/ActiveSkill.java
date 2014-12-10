@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.models.skills;
 
-import com.glevel.dungeonhero.models.Buff;
-import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.effects.Effect;
 
 import java.io.Serializable;
 
@@ -13,14 +12,18 @@ public class ActiveSkill extends Skill implements Serializable {
     private static final long serialVersionUID = 6075354202501161474L;
     private boolean isUsed = false;
 
-    private Buff buff;
-    private int damage;
+    private final boolean personal;
+    private final int radius;
+    private final Effect effect;
 
-    public ActiveSkill(int name, int description, int image, int level) {
+    public ActiveSkill(int name, int description, int image, int level, boolean personal, int radius, Effect effect) {
         super(name, description, image, level);
+        this.personal = personal;
+        this.radius = radius;
+        this.effect = effect;
     }
 
-    public void use(Tile tile) {
+    public void use() {
         isUsed = true;
     }
 
@@ -32,20 +35,16 @@ public class ActiveSkill extends Skill implements Serializable {
         isUsed = false;
     }
 
-    public Buff getBuff() {
-        return buff;
+    public Effect getEffect() {
+        return effect;
     }
 
-    public void setBuff(Buff buff) {
-        this.buff = buff;
+    public boolean isPersonal() {
+        return personal;
     }
 
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public int getRadius() {
+        return radius;
     }
 
 }

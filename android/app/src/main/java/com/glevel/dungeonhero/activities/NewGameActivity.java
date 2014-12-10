@@ -114,7 +114,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
 
     private void showNameInputDialog(final Hero selectedHero) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = (View) inflater.inflate(R.layout.dialog_hero_name_input, null);
+        View view = inflater.inflate(R.layout.dialog_hero_name_input, null);
 
         mHeroNameDialog = new AlertDialog.Builder(this, R.style.Dialog).setView(view).create();
 
@@ -140,7 +140,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
             }
         });
 
-        mHeroNameDialog.setCancelable(false);
+        mHeroNameDialog.setCancelable(true);
         mHeroNameDialog.show();
     }
 

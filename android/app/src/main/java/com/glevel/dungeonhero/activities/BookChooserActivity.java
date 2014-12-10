@@ -64,20 +64,25 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mLstBooks = BookFactory.getAll();
-
         setContentView(R.layout.activity_book_chooser);
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mDbHelper = new MyDatabase(getApplicationContext());
-
-        setupUI();
-
-        mInAppBillingHelper = new InAppBillingHelper(this, this);
 
         mGame = (Game) getIntent().getExtras().getSerializable(Game.class.getName());
         mGame.setDungeon(null);
         long gameId = mDbHelper.getRepository(MyDatabase.Repositories.GAME.toString()).save(mGame);
         mGame.setId(gameId);
+
+        mLstBooks = BookFactory.getAll();
+        for (Book book : mLstBooks) {
+            if (mGame.getBooksDone().contains(book.getId())) {
+                book.setDone(true);
+            }
+        }
+
+        mInAppBillingHelper = new InAppBillingHelper(this, this);
+
+        setupUI();
     }
 
     private void setupUI() {
@@ -146,7 +151,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
             }
         });
         mTutorialDialog.show();
-        mSharedPrefs.edit().putInt(GameConstants.TUTORIAL_DONE, 1).commit();
+        mSharedPrefs.edit().putInt(GameConstants.TUTORIAL_DONE, 1).apply();
     }
 
     private void openGameMenu() {

@@ -1,7 +1,7 @@
 package com.glevel.dungeonhero.models.items;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.models.Buff;
+import com.glevel.dungeonhero.models.effects.Effect;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Equipment extends Item implements Serializable {
 
     private static final long serialVersionUID = -1500593967008364005L;
 
-    private final List<Buff> buffs = new ArrayList<Buff>();
+    private final List<Effect> effects = new ArrayList<Effect>();
     private final List<Requirement> requirements = new ArrayList<Requirement>();
 
     public Equipment(int name, int description, int image, int color) {
@@ -38,8 +38,8 @@ public class Equipment extends Item implements Serializable {
         }
     }
 
-    public void addBuff(Buff buff) {
-        buffs.add(buff);
+    public void addEffect(Effect effect) {
+        effects.add(effect);
     }
 
     public void addRequirement(Requirement requirement) {
@@ -50,11 +50,11 @@ public class Equipment extends Item implements Serializable {
         return requirements;
     }
 
-    public List<Buff> getBuffs() {
+    public List<Effect> getEffects() {
         if (!isIdentified) {
-            return new ArrayList<Buff>();
+            return new ArrayList<Effect>();
         }
-        return buffs;
+        return effects;
     }
 
 }

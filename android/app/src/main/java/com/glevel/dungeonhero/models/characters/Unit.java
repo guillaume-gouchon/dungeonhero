@@ -2,9 +2,9 @@ package com.glevel.dungeonhero.models.characters;
 
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
-import com.glevel.dungeonhero.models.Buff;
 import com.glevel.dungeonhero.models.FightResult;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Consumable;
 import com.glevel.dungeonhero.models.items.Equipment;
@@ -13,6 +13,7 @@ import com.glevel.dungeonhero.models.items.Requirement;
 import com.glevel.dungeonhero.models.items.equipments.Armor;
 import com.glevel.dungeonhero.models.items.equipments.Ring;
 import com.glevel.dungeonhero.models.items.equipments.Weapon;
+import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
 
@@ -34,7 +35,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     protected final List<Item> items = new ArrayList<>();
     // Skills
     protected final List<Skill> skills = new ArrayList<>();
-    protected List<Buff> buffs = new ArrayList<>();
+    protected List<Effect> buffs = new ArrayList<>();
     protected final Equipment[] equipments = new Equipment[5];
     // Images
     private final int image;
@@ -146,6 +147,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         FightResult fightResult;
 
         int dice = (int) (Math.random() * 100);
+        // TODO : get damage bonus
         int damage = (equipments[0] != null ? calculateDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateDamage((Weapon) equipments[1]) / 2 : 0);
 
         int critical = calculateCritical();
@@ -187,7 +189,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         return Math.max(0, strength - 10);
     }
 
-    public List<Buff> getBuffs() {
+    public List<Effect> getBuffs() {
         return buffs;
     }
 
@@ -196,34 +198,40 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int calculateProtection() {
-        return getBonusFromBuffsAndEquipments(Characteristics.PROTECTION);
+        return Math.max(0, getBonusesFromBuffsAndEquipments(Characteristics.PROTECTION));
     }
 
     public int calculateInitiative() {
-        return dexterity + spirit + getBonusFromBuffsAndEquipments(Characteristics.INITIATIVE);
+        return dexterity + spirit + getBonusesFromBuffsAndEquipments(Characteristics.INITIATIVE);
     }
 
     public int calculateBlock() {
-        return getBonusFromBuffsAndEquipments(Characteristics.BLOCK);
+        return Math.max(0, getBonusesFromBuffsAndEquipments(Characteristics.BLOCK));
     }
 
     public int calculateMovement() {
-        return movement + getBonusFromBuffsAndEquipments(Characteristics.MOVEMENT);
+        return Math.max(1, movement + getBonusesFromBuffsAndEquipments(Characteristics.MOVEMENT));
     }
 
     public int calculateDodge() {
-        return Math.max(0, Math.max(0, (dexterity - 10) * 5) + getBonusFromBuffsAndEquipments(Characteristics.DODGE));
+        return Math.max(0, Math.max(0, (dexterity - 10) * 5) + getBonusesFromBuffsAndEquipments(Characteristics.DODGE));
     }
 
     public int calculateCritical() {
-        return Math.max(0, 5 + getBonusFromBuffsAndEquipments(Characteristics.CRITICAL));
+        return Math.max(0, 5 + getBonusesFromBuffsAndEquipments(Characteristics.CRITICAL));
     }
 
-    private int getBonusFromBuffsAndEquipments(Characteristics characteristic) {
+    private int getBonusesFromBuffsAndEquipments(Characteristics characteristic) {
         int bonus = 0;
-        for (Buff buff : buffs) {
+        for (Effect buff : buffs) {
             if (buff.getTarget() == characteristic) {
                 bonus += buff.getValue();
+            }
+        }
+
+        for (Skill skill : skills) {
+            if (skill instanceof PassiveSkill && ((PassiveSkill) skill).getEffect().getTarget() == characteristic) {
+                bonus += ((PassiveSkill) skill).getEffect().getValue();
             }
         }
 
@@ -231,7 +239,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         for (int n = 0; n < equipments.length; n++) {
             if (equipments[n] != null) {
                 equipment = equipments[n];
-                for (Buff buff : equipment.getBuffs()) {
+                for (Effect buff : equipment.getEffects()) {
                     if (buff.getTarget() == characteristic) {
                         bonus += buff.getValue();
                     }
@@ -244,8 +252,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     public void initNewTurn() {
         // consume and remove ended buffs
-        List<Buff> copy = new ArrayList<>(buffs);
-        for (Buff buff : copy) {
+        List<Effect> copy = new ArrayList<>(buffs);
+        for (Effect buff : copy) {
             boolean isOver = buff.consume();
             if (isOver) {
                 buffs.remove(buff);
@@ -337,4 +345,18 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         return true;
     }
 
+    public boolean testCharacteristic(Characteristics target, int value) {
+        int characValue;
+        switch (target) {
+            case STRENGTH:
+                characValue = strength;
+                break;
+            case DEXTERITY:
+                characValue = dexterity;
+                break;
+            default:
+                characValue = spirit;
+        }
+        return Math.random() * 20 + value < characValue;
+    }
 }

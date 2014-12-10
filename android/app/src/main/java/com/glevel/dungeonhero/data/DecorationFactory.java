@@ -6,6 +6,7 @@ import com.glevel.dungeonhero.models.dungeons.decorations.Decoration;
 import com.glevel.dungeonhero.models.dungeons.decorations.Light;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
 import com.glevel.dungeonhero.models.dungeons.decorations.TreasureChest;
+import com.glevel.dungeonhero.models.items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,10 @@ public class DecorationFactory {
     public static List<Decoration> getAll() {
         List<Decoration> lst = new ArrayList<Decoration>();
         lst.add(buildLight());
-        lst.add(buildBox());
-        lst.add(buildBarrel());
-        lst.add(buildSmallChest());
-        lst.add(buildTreasureChest());
+        lst.add(buildBox(null));
+        lst.add(buildBarrel(null));
+        lst.add(buildSmallChest(null));
+        lst.add(buildTreasureChest(null));
         return lst;
     }
 
@@ -29,24 +30,54 @@ public class DecorationFactory {
         return new Light(R.string.light, "light.png");
     }
 
-    public static Decoration buildTreasureChest() {
-        return new TreasureChest(new Reward(WeaponFactory.buildSword(), 210, 0));
+    public static Decoration buildTreasureChest(Reward reward) {
+        return new TreasureChest(reward);
     }
 
-    public static Decoration buildBarrel() {
-        return new Searchable(R.string.barrel, "barrel.png", new Reward(null, 210, 0), 13, 16, 1, 1);
+    public static Decoration buildBarrel(Reward reward) {
+        return new Searchable(R.string.barrel, "barrel.png", reward, 13, 16, 1, 1);
     }
 
-    public static Decoration buildBox() {
-        return new Searchable(R.string.box, "box.png", new Reward(null, 210, 0), 18, 24, 1, 1);
+    public static Decoration buildBox(Reward reward) {
+        return new Searchable(R.string.box, "box.png", reward, 18, 24, 1, 1);
     }
 
-    public static Decoration buildSmallChest() {
-        return new Searchable(R.string.treasure_chest, "small_chest.png", new Reward(null, 210, 0), 9, 12, 1, 1);
+    public static Decoration buildSmallChest(Reward reward) {
+        return new Searchable(R.string.small_chest, "small_chest.png", reward, 9, 12, 1, 1);
     }
 
-//    public static Decoration buildRewards() {
-//
-//    }
+    public static List<Decoration> getRoomContent(int threatLevel) {
+        List<Decoration> l = new ArrayList<>();
+        int total = Math.random() < 0.3 ? 0 : 1;
+        for (int n = 0; n < total; n++) {
+            l.add(getRandomReward(threatLevel));
+        }
+        return l;
+    }
+
+    private static Decoration getRandomReward(int threatLevel) {
+        // create random reward
+        Reward reward = null;
+        int gold = 0;
+        Item item = ItemFactory.getRandomItem(threatLevel);
+        if (item == null) {
+            gold = (int) (Math.pow(threatLevel, 2) * 25 * (int) (Math.random() * 4));
+        }
+        if (item != null || gold > 0) {
+            reward = new Reward(item, gold, 0);
+        }
+
+        int random = (int) (Math.random() * 4);
+        switch (random) {
+            case 0:
+                return buildSmallChest(reward);
+            case 1:
+                return buildBox(reward);
+            case 2:
+                return buildBarrel(reward);
+            default:
+                return buildTreasureChest(reward);
+        }
+    }
 
 }

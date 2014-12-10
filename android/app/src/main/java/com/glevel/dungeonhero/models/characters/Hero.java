@@ -30,7 +30,7 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
         this.productId = productId;
         this.xp = xp;
         this.level = level;
-        getInitialSkillPoints();
+        this.skillPoints = getInitialSkillPoints();
     }
 
     @Override
@@ -73,8 +73,8 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
         return frags;
     }
 
-    public void setFrags(int frags) {
-        this.frags = frags;
+    public void addFrag() {
+        frags++;
     }
 
     public void addGold(int goldAmount) {
@@ -134,33 +134,24 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
         currentHP = hp;
     }
 
-    private void getInitialSkillPoints() {
+    private int getInitialSkillPoints() {
         if (strength > dexterity && strength > spirit) {
-            skillPoints++;
+            return 1;
         } else if (dexterity > strength && dexterity > spirit) {
-            skillPoints += 2;
+            return 2;
         } else if (spirit > dexterity && spirit > strength) {
-            skillPoints += 3;
+            return 3;
         } else if (strength == dexterity && strength > spirit) {
-            skillPoints += 1;
+            return 1;
         } else if (strength == spirit && strength > dexterity) {
-            skillPoints += 2;
-        } else if (dexterity == spirit && dexterity > strength) {
-            skillPoints += 2;
+            return 2;
+        } else {
+            return 2;
         }
     }
 
     public int getNextLevelXPAmount() {
         return (int) (100 * (Math.pow(2, level + 1) - 1));
-    }
-
-    @Override
-    public FightResult attack(Unit target) {
-        FightResult fightResult = super.attack(target);
-        if (target.isDead()) {
-            frags++;
-        }
-        return fightResult;
     }
 
     public void drop(Item item) {

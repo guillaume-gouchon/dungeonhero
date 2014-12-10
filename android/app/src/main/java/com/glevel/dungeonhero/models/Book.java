@@ -12,7 +12,7 @@ public class Book implements Serializable, InAppProduct {
 
     private static final long serialVersionUID = -2713633045742704862L;
 
-    private final int bookId;
+    private final int id;
     private final int name, image;
     private final int outroText;
     private final List<Chapter> chapters;
@@ -21,8 +21,8 @@ public class Book implements Serializable, InAppProduct {
     private boolean hasBeenBought;
     private boolean done;
 
-    public Book(int bookId, int name, int image, int introText, int outroText, List<Chapter> chapters, String productId) {
-        this.bookId = bookId;
+    public Book(int id, int name, int image, int introText, int outroText, List<Chapter> chapters, String productId) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.introText = introText;
@@ -80,8 +80,8 @@ public class Book implements Serializable, InAppProduct {
         this.done = done;
     }
 
-    public int getBookId() {
-        return bookId;
+    public int getId() {
+        return id;
     }
 
     public Chapter getActiveChapter() {

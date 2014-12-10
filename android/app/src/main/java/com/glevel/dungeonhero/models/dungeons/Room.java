@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.models.dungeons;
 
+import android.util.Log;
+
 import com.glevel.dungeonhero.data.DecorationFactory;
 import com.glevel.dungeonhero.data.MonsterFactory;
 import com.glevel.dungeonhero.data.dungeon.GroundTypes;
@@ -10,6 +12,7 @@ import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
+import com.glevel.dungeonhero.models.dungeons.decorations.Decoration;
 import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
 import com.glevel.dungeonhero.models.dungeons.decorations.TreasureChest;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
@@ -119,35 +122,60 @@ public class Room implements Serializable {
     }
 
     private void createRoomContent(Event event, int threatLevel) {
+        int nbFreeTiles = getFreeTilesTotal();
+
         if (event != null) {
             if (event.isDungeonOver()) {
                 addGameElement(new Stairs(true), getRandomFreeTile());
+                nbFreeTiles--;
             }
 
             for (GameElement pnj : event.getPnjs()) {
                 addGameElement(pnj, getRandomFreeTile());
+                nbFreeTiles--;
             }
 
             for (GameElement monster : event.getMonsters()) {
                 addGameElement(monster, getRandomFreeTile());
+                nbFreeTiles--;
             }
 
             for (Reward reward : event.getRewards()) {
                 addGameElement(new TreasureChest(reward), getRandomFreeTile());
+                nbFreeTiles--;
             }
-        } else if (threatLevel > 0) {
-            // add some monsters and reward
+        }
+
+        if (threatLevel > 0) {
+            // add some monsters
             List<Monster> monsters = MonsterFactory.getRoomContent(threatLevel);
             for (Monster monster : monsters) {
-                addGameElement(monster, getRandomFreeTile());
+                if (nbFreeTiles > 0) {
+                    addGameElement(monster, getRandomFreeTile());
+                    nbFreeTiles--;
+                }
             }
 
-            addGameElement(DecorationFactory.buildSmallChest(), getRandomFreeTile());
+            // add some rewards
+            List<Decoration> treasures = DecorationFactory.getRoomContent(threatLevel);
+            for (Decoration treasure : treasures) {
+                if (nbFreeTiles > 0) {
+                    addGameElement(treasure, getRandomFreeTile());
+                    nbFreeTiles--;
+                }
+            }
         }
 
         for (int n = 0; n < Math.round(Math.random() * 2); n++) {
-            addGameElement(DecorationFactory.buildLight(), getRandomFreeTile());
+            if (nbFreeTiles > 0) {
+                addGameElement(DecorationFactory.buildLight(), getRandomFreeTile());
+                nbFreeTiles--;
+            }
         }
+    }
+
+    private int getFreeTilesTotal() {
+        return (tiles.length - 7) * (tiles[0].length - 4) - 1;
     }
 
     private Tile getRandomFreeTile() {
@@ -237,6 +265,7 @@ public class Room implements Serializable {
         Tile tile = tiles[doorPosition.getY() + factor * from.getDy()][doorPosition.getX() - factor * from.getDx()];
         if (tile.getContent() != null) {
             // move previous content if any
+            Log.d(TAG, "there is already something at the entrance");
             tile.getContent().setTilePosition(getRandomFreeTile());
         }
 

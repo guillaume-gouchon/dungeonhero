@@ -30,7 +30,6 @@ import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
 import com.glevel.dungeonhero.models.Book;
-import com.glevel.dungeonhero.models.Buff;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -38,6 +37,7 @@ import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.discussions.Discussion;
 import com.glevel.dungeonhero.models.discussions.Reaction;
+import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.items.Consumable;
 import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
@@ -237,13 +237,16 @@ public class GUIManager {
         confirmDialog.show();
     }
 
-    public void showChapterIntro() {
+    public void showChapterIntro(final OnDiscussionReplySelected callback) {
         Book activeBook = mActivity.getGame().getBook();
         Dialog confirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getIntroText()),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        if (callback != null) {
+                            callback.onReplySelected(null, 0);
+                        }
                     }
                 });
         ((TextView) confirmDialog.findViewById(R.id.name)).setCompoundDrawablesWithIntrinsicBounds(mActivity.getGame().getHero().getImage(), 0, 0, 0);
@@ -394,7 +397,10 @@ public class GUIManager {
         ((TextView) mHeroInfoDialog.findViewById(R.id.damage)).setText(mActivity.getString(R.string.damage) + " : " + hero.getReadableDamage());
         ((TextView) mHeroInfoDialog.findViewById(R.id.protection)).setText(mActivity.getString(R.string.protection) + " : " + hero.calculateProtection());
         ((TextView) mHeroInfoDialog.findViewById(R.id.dodge)).setText(mActivity.getString(R.string.dodge) + " : " + hero.calculateDodge() + "%");
+        ((TextView) mHeroInfoDialog.findViewById(R.id.critical)).setText(mActivity.getString(R.string.critical) + " : " + hero.calculateCritical() + "%");
         ((TextView) mHeroInfoDialog.findViewById(R.id.frags)).setText(hero.getFrags() + " " + mActivity.getString(R.string.frags));
+
+        showSkills(mHeroInfoDialog, mActivity.getGame().getHero());
 
         mHeroInfoDialog.show();
     }
@@ -407,6 +413,7 @@ public class GUIManager {
                     mDiscussionDialog = new Dialog(mActivity, R.style.Dialog);
                     mDiscussionDialog.setContentView(R.layout.in_game_discussion);
                     mDiscussionDialog.setCancelable(false);
+                    mDiscussionDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
                     TextView pnjName = (TextView) mDiscussionDialog.findViewById(R.id.name);
                     pnjName.setText(discussion.getName());
@@ -763,7 +770,7 @@ public class GUIManager {
                 }
 
                 // add buffs
-                for (Buff buff : equipment.getBuffs()) {
+                for (Effect buff : equipment.getEffects()) {
                     addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.attack : R.color.red);
                 }
 
@@ -817,28 +824,25 @@ public class GUIManager {
         mNewLevelDialog.setContentView(R.layout.in_game_new_level);
         mNewLevelDialog.setCancelable(false);
 
-        showSkills(mActivity.getGame().getHero());
+        showSkills(mNewLevelDialog, mActivity.getGame().getHero());
 
-        mNewLevelDialog.findViewById(R.id.close).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateSkillButtons();
-                mNewLevelDialog.dismiss();
-            }
-        });
         ((TextView) mNewLevelDialog.findViewById(R.id.new_level_title)).setText(mActivity.getString(R.string.new_level_title, mActivity.getGame().getHero().getLevel()));
 
         mNewLevelDialog.show();
     }
 
-    private void showSkills(Hero hero) {
-        if (mActivity.getGame().getHero().getSkillPoints() == 0) {
-            mNewLevelDialog.findViewById(R.id.close).setVisibility(View.VISIBLE);
+    private void showSkills(Dialog dialog, Hero hero) {
+        if (dialog == mNewLevelDialog) {
+            if (mActivity.getGame().getHero().getSkillPoints() == 0) {
+                updateSkillButtons();
+                mNewLevelDialog.dismiss();
+                return;
+            }
+
+            ((TextView) mNewLevelDialog.findViewById(R.id.points_left)).setText(mActivity.getString(R.string.new_level_points_left, mActivity.getGame().getHero().getSkillPoints()));
         }
 
-        ((TextView) mNewLevelDialog.findViewById(R.id.points_left)).setText(mActivity.getString(R.string.new_level_points_left, mActivity.getGame().getHero().getSkillPoints()));
-
-        ViewGroup skillLayout = (ViewGroup) mNewLevelDialog.findViewById(R.id.skills);
+        ViewGroup skillLayout = (ViewGroup) dialog.findViewById(R.id.skills);
         for (int n = 0; n < skillLayout.getChildCount(); n++) {
             if (n < hero.getSkills().size()) {
                 updateSkillLayout(skillLayout.getChildAt(n), hero.getSkills().get(n));
@@ -884,7 +888,7 @@ public class GUIManager {
                 public void onClick(View v) {
                     mActivity.getGame().getHero().useSkillPoint();
                     skill.improve();
-                    showSkills(mActivity.getGame().getHero());
+                    showSkills(mNewLevelDialog, mActivity.getGame().getHero());
                     mItemInfoDialog.dismiss();
                 }
             });

@@ -31,12 +31,6 @@
             android:layout_height="wrap_content"
             android:text="@string/placeholder" />
 
-        <View
-            android:layout_marginTop="5dp"
-            android:background="@color/grey"
-            android:layout_height="2dp"
-            android:layout_width="match_parent" />
-
         <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
@@ -115,6 +109,14 @@
             android:layout_height="2dp"
             android:layout_width="match_parent" />
 
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:padding="7dp"
+            android:text="@string/secondary_stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_gravity="center"
@@ -187,6 +189,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.glevel.dungeonhero.views.CustomTextView
+                android:id="@+id/critical"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_critics"
+                custom:linkTextColorToDrawable="true"
+                custom:textHint="@string/critical"
+                android:text="@string/placeholder"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/frags"
@@ -201,5 +215,42 @@
                 android:textColor="@color/white"
                 android:textSize="10sp" />
         </LinearLayout>
+
+        <View
+            android:layout_marginTop="5dp"
+            android:background="@color/grey"
+            android:layout_height="2dp"
+            android:layout_width="match_parent" />
+
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:padding="7dp"
+            android:text="@string/skills"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <GridLayout
+            android:id="@+id/skills"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="4">
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+        </GridLayout>
     </LinearLayout>
 </LinearLayout>

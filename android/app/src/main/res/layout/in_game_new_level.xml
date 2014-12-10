@@ -67,14 +67,5 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:textSize="14sp" />
-
-        <com.glevel.dungeonhero.views.CustomTextView
-            android:id="@+id/close"
-            style="@style/PopupButton"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/close"
-            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

@@ -207,18 +207,16 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, L
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // enable / disable sound in preferences
-                GameConstants.MusicStates newMusicState = null;
-                Editor editor = mSharedPrefs.edit();
+                GameConstants.MusicStates newMusicState;
                 switch (checkedId) {
-                    case R.id.musicOff:
-                        newMusicState = GameConstants.MusicStates.OFF;
-                        break;
                     case R.id.musicOn:
                         newMusicState = GameConstants.MusicStates.ON;
                         break;
+                    default:
+                        newMusicState = GameConstants.MusicStates.OFF;
+                        break;
                 }
-                editor.putInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, newMusicState.ordinal());
-                editor.commit();
+                mSharedPrefs.edit().putInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, newMusicState.ordinal()).apply();
                 if (newMusicState == GameConstants.MusicStates.ON) {
                     MusicManager.start(HomeActivity.this, Music.MUSIC_MENU);
                 } else {
@@ -240,7 +238,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, L
                 boolean isLandscapeMode = checkedId == R.id.landcape;
                 Editor editor = mSharedPrefs.edit();
                 editor.putBoolean(GameConstants.GAME_PREFS_LANDSCAPE, isLandscapeMode);
-                editor.commit();
+                editor.apply();
             }
         });
 
