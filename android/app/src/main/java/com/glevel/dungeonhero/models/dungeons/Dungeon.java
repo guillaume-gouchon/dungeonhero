@@ -59,6 +59,7 @@ public class Dungeon implements Serializable {
         Room previousRoom = getCurrentRoom();
         previousRoom.exit();
         Directions doorDirection = previousRoom.getDirectionFromDoorTile(doorTile);
+        Log.d(TAG, "switch room to direction = " + doorDirection.name());
         switch (doorDirection) {
             case NORTH:
                 currentPosition -= 10;

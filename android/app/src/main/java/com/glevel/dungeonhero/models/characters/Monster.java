@@ -17,8 +17,8 @@ public class Monster extends Unit {
     }
 
     private void createRandomReward() {
-        // TODO
-        reward = new Reward(null, 30, 10);
+        int gold = (int) (Math.random() * 5) * (5 + 10 * skills.size());
+        reward = new Reward(null, gold, strength + dexterity + spirit + 15 * skills.size());
     }
 
     public Reward getReward() {

@@ -277,10 +277,24 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, L
         view.setEnabled(true);
     }
 
-    private void hideButton(View view, boolean toRight) {
+    private void hideButton(final View view, boolean toRight) {
         if (toRight) {
             view.startAnimation(mMainButtonAnimationRightOut);
         } else {
+            mMainButtonAnimationLeftOut.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    view.setAnimation(null);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
             view.startAnimation(mMainButtonAnimationLeftOut);
         }
         view.setVisibility(View.GONE);

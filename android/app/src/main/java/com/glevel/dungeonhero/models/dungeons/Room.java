@@ -15,7 +15,6 @@ import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.decorations.Decoration;
 import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
 import com.glevel.dungeonhero.models.dungeons.decorations.TreasureChest;
-import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXTile;
@@ -112,13 +111,15 @@ public class Room implements Serializable {
     }
 
     private Directions getDoorDirection(Tile tile) {
-        Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(tiles, tile, 1, false, null);
-        Iterator<Tile> iterator = adjacentTiles.iterator();
-        Tile adjacentTile;
-        do {
-            adjacentTile = iterator.next();
-        } while (adjacentTile.getGround() == null && iterator.hasNext());
-        return Directions.from(tile.getX() - adjacentTile.getX(), adjacentTile.getY() - tile.getY());
+        if (tile.getX() == 0) {
+            return Directions.WEST;
+        } else if (tile.getX() == getWidth() - 1) {
+            return Directions.EAST;
+        } else if (tile.getY() == 1) {
+            return Directions.NORTH;
+        } else {
+            return Directions.SOUTH;
+        }
     }
 
     private void createRoomContent(Event event, int threatLevel) {
@@ -260,6 +261,7 @@ public class Room implements Serializable {
 
     public void moveIn(List<Unit> units, Directions from) {
         // TODO : multiple heroes / allies
+        Log.d(TAG, "moving in into room from direction = " + from.name() + ", " + units.size() + " units");
         Tile doorPosition = doors.get(from);
         int factor = from == Directions.SOUTH ? 2 : 1;
         Tile tile = tiles[doorPosition.getY() + factor * from.getDy()][doorPosition.getX() - factor * from.getDx()];
@@ -271,6 +273,7 @@ public class Room implements Serializable {
 
         for (Unit unit : units) {
             addGameElement(unit, tile);
+            Log.d(TAG, "hero is tile " + tile.getX() + "," + tile.getY());
         }
 
         // sort queue by initiative

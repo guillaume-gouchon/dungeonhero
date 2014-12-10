@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.game.base;
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.glevel.dungeonhero.game.base.interfaces.UserActionListener;
@@ -15,6 +16,8 @@ import org.andengine.input.touch.detector.ScrollDetector.IScrollDetectorListener
 import org.andengine.input.touch.detector.SurfaceScrollDetector;
 
 public class InputManager implements IOnSceneTouchListener, IScrollDetectorListener, IPinchZoomDetectorListener {
+
+    private static final String TAG = "InputManager";
 
     private static final int DRAG_MINIMUM_DISTANCE = 300;// in pixels ^2
     private static final int AUTO_SCROLLING_THRESHOLD = 20;// in pixels
@@ -117,6 +120,8 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
                         mIsDragged = false;
                         break;
                 }
+            } else {
+                Log.d(TAG, "input is disabled");
             }
         }
 

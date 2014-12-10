@@ -12,7 +12,7 @@ import com.glevel.dungeonhero.utils.database.Repository;
  */
 public class MyDatabase extends DatabaseHelper {
 
-    private static final int DB_VERSION = 21;
+    private static final int DB_VERSION = 22;
     private static final String DB_NAME = "dungeon_hero";
 
     // TODO : refactor

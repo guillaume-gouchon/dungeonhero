@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.game;
 
 import android.content.DialogInterface;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.glevel.dungeonhero.R;
@@ -51,6 +52,8 @@ import java.util.Set;
  */
 public class ActionsDispatcher implements UserActionListener {
 
+    private static final String TAG = "ActionDispatcher";
+
     private final GameActivity mGameActivity;
     private final GUIManager mGUIManager;
     private final InputManager mInputManager;
@@ -59,6 +62,7 @@ public class ActionsDispatcher implements UserActionListener {
     private Tile mSelectedTile = null;
     private boolean isMoving = false;
     private boolean interrupt = false;
+    private boolean inputDisabled = false;
     private TimerHandler animationHandler;
     private ActiveSkill activatedSkill = null;
 
@@ -79,6 +83,9 @@ public class ActionsDispatcher implements UserActionListener {
 
     @Override
     public void onTap(float x, float y) {
+        Log.d(TAG, "onTap received, disabled ? " + inputDisabled);
+        if (inputDisabled) return;
+
         Tile tile = getTileAtCoordinates(x, y);
         if (tile != null && mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
             if (activatedSkill != null) {
@@ -138,8 +145,9 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void move(Tile tile) {
+        Log.d(TAG, "move to " + tile.getX() + "," + tile.getY());
         if (!mGameActivity.getRoom().isSafe()) {
-            mInputManager.setEnabled(false);
+            setInputEnabled(false);
         }
         List<Tile> path = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), tile, false, mGameActivity.getActiveCharacter());
         if (path != null) {
@@ -149,7 +157,7 @@ public class ActionsDispatcher implements UserActionListener {
 
                 @Override
                 public void onActionDone(boolean success) {
-                    mInputManager.setEnabled(true);
+                    setInputEnabled(true);
                     isMoving = false;
                     selectTile(null);
                     if (!done) {
@@ -183,13 +191,14 @@ public class ActionsDispatcher implements UserActionListener {
         } else {
             hideActionTiles();
             if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
-                mInputManager.setEnabled(true);
+                setInputEnabled(true);
             }
         }
     }
 
     public void attack(final Tile tile) {
-        mInputManager.setEnabled(false);
+        Log.d(TAG, "attack");
+        setInputEnabled(false);
         goCloserTo(tile, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
@@ -216,16 +225,14 @@ public class ActionsDispatcher implements UserActionListener {
                     mGameActivity.nextTurn();
                 }
                 isMoving = false;
-                if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
-                    mInputManager.setEnabled(true);
-                }
             }
         });
     }
 
     private void search(final Tile tile) {
+        Log.d(TAG, "search");
         if (!mGameActivity.getRoom().isSafe()) {
-            mInputManager.setEnabled(false);
+            setInputEnabled(false);
         }
         goCloserTo(tile, new OnActionExecuted() {
             @Override
@@ -246,7 +253,6 @@ public class ActionsDispatcher implements UserActionListener {
                     mGameActivity.nextTurn();
                 }
                 isMoving = false;
-                mInputManager.setEnabled(true);
             }
         });
     }
@@ -296,8 +302,9 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void talk(final Tile tile) {
+        Log.d(TAG, "talk");
         if (!mGameActivity.getRoom().isSafe()) {
-            mInputManager.setEnabled(false);
+            setInputEnabled(false);
         }
         goCloserTo(tile, new OnActionExecuted() {
             @Override
@@ -308,7 +315,6 @@ public class ActionsDispatcher implements UserActionListener {
                 } else {
                     mGameActivity.nextTurn();
                 }
-                mInputManager.setEnabled(true);
             }
         });
     }
@@ -583,6 +589,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
+        Log.d(TAG, "animating death");
         mGameActivity.drawAnimatedSprite(target.getSprite().getX(), target.getSprite().getY(), "blood.png", 65, 0.3f, 0, true, 10, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
@@ -596,6 +603,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void animateFightReward(Monster target, final OnActionExecuted onActionExecuted) {
+        Log.d(TAG, "animating fight reward");
         Reward reward = target.getReward();
         if (reward.getItem() != null) {
             getItemOrDropIt(reward.getItem());
@@ -607,27 +615,24 @@ public class ActionsDispatcher implements UserActionListener {
             mGUIManager.showNewLevelDialog();
         }
 
-        if (reward != null) {
-            if (reward.getGold() > 0) {
-                mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
-            }
-            if (reward.getXp() > 0) {
-                mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
-            }
-            if (reward.getItem() != null) {
-                mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        onActionExecuted.onActionDone(true);
-                    }
-                });
-            } else {
-                onActionExecuted.onActionDone(true);
-            }
+        if (reward.getGold() > 0) {
+            mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
+        }
+        if (reward.getXp() > 0) {
+            mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
+        }
+        if (reward.getItem() != null) {
+            mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    Log.d(TAG, "animating fight reward is over");
+                    onActionExecuted.onActionDone(true);
+                }
+            });
         } else {
+            Log.d(TAG, "animating fight reward is over");
             onActionExecuted.onActionDone(true);
         }
-
     }
 
     public void setActivatedSkill(ActiveSkill skill) {
@@ -697,6 +702,11 @@ public class ActionsDispatcher implements UserActionListener {
                 });
             }
         }
+    }
+
+    public void setInputEnabled(boolean enabled) {
+        inputDisabled = !enabled;
+        mInputManager.setEnabled(enabled);
     }
 
 }

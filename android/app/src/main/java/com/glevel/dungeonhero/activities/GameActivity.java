@@ -193,6 +193,7 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     public void removeElement(GameElement gameElement) {
+        Log.d(TAG, "removing element");
         gameElement.destroy();
         mRoom.removeElement(gameElement);
         mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
@@ -280,10 +281,12 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     public void nextTurn() {
+        Log.d(TAG, "NEXT TURN");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (mHero.isDead()) {
+                    Log.d(TAG, "hero is dead, game over !");
                     Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
                     intent.putExtra(Game.class.getName(), mGame);
                     startActivity(intent);
@@ -296,6 +299,7 @@ public class GameActivity extends MyBaseGameActivity {
                 if (mActiveCharacter != null) {
                     for (Effect effect : mActiveCharacter.getBuffs()) {
                         if (effect instanceof HeroicEffect) {
+                            Log.d(TAG, "character is heroic");
                             isHeroic = true;
                         }
                     }
@@ -304,29 +308,31 @@ public class GameActivity extends MyBaseGameActivity {
                 if (!isHeroic) {
                     // next character
                     mActiveCharacter = mRoom.getQueue().get(0);
+                    Log.d(TAG, "updating queue to next character = " + mActiveCharacter.getRank().name() + ", " + mActiveCharacter.getHp() + "hp");
 
                     mRoom.getQueue().add(mRoom.getQueue().get(0));
                     mRoom.getQueue().remove(0);
                     mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
                 }
+
                 updateActionTiles();
-
                 mActionDispatcher.hideElementInfo();
-
                 mGUIManager.updateActiveHeroLayout(mHero);
-
-                mInputManager.setEnabled(!mActiveCharacter.isEnemy(mHero));
 
                 // handle current buffs
                 boolean skipTurn = false;
                 List<Effect> copy = new ArrayList<>(mActiveCharacter.getBuffs());
                 for (Effect effect : copy) {
                     if (effect instanceof PoisonEffect) {
+                        Log.d(TAG, "got poison effect");
                         mActionDispatcher.applyEffect(effect, mActiveCharacter.getTilePosition(), false);
                     } else if (effect instanceof StunEffect) {
+                        Log.d(TAG, "got stun effect");
                         if (mActiveCharacter.testCharacteristic(effect.getTarget(), effect.getValue())) {
+                            Log.d(TAG, "stun test was a success");
                             mActiveCharacter.getBuffs().remove(effect);
                         } else {
+                            Log.d(TAG, "skip turn");
                             skipTurn = true;
                         }
                     }
@@ -337,6 +343,7 @@ public class GameActivity extends MyBaseGameActivity {
                 if (skipTurn) {
                     nextTurn();
                 } else if (mActiveCharacter instanceof Monster) {
+                    Log.d(TAG, "AI turn");
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
@@ -362,6 +369,7 @@ public class GameActivity extends MyBaseGameActivity {
                     mActionDispatcher.showMovement();
                 }
                 Log.d(TAG, "updating action tiles is done");
+                mActionDispatcher.setInputEnabled(!mActiveCharacter.isEnemy(mHero));
             }
         });
     }
@@ -389,6 +397,7 @@ public class GameActivity extends MyBaseGameActivity {
                             @Override
                             public void onPopulateSceneFinished() {
                                 mEngine.start();
+                                mInputManager.setEnabled(true);
                                 animateRoomSwitch(doorDirection);
                             }
                         });
