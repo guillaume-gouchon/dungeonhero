@@ -106,6 +106,8 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
             intent.putExtra(Game.class.getName(), ((GameActivity) getActivity()).getGame());
             getActivity().startActivity(intent);
             getActivity().finish();
+        } else {
+            ((GameActivity) getActivity()).showChapterIntro();
         }
     }
 

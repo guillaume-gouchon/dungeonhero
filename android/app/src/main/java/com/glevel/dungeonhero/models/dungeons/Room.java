@@ -25,10 +25,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by guillaume ON 10/8/14.
@@ -110,7 +108,7 @@ public class Room implements Serializable {
         checkSafe();
     }
 
-    private Directions getDoorDirection(Tile tile) {
+    public Directions getDoorDirection(Tile tile) {
         if (tile.getX() == 0) {
             return Directions.WEST;
         } else if (tile.getX() == getWidth() - 1) {
@@ -237,18 +235,6 @@ public class Room implements Serializable {
 
     public boolean isSafe() {
         return isSafe;
-    }
-
-    public Directions getDirectionFromDoorTile(Tile doorTile) {
-        // get direction from doors list
-        Set<Map.Entry<Directions, Tile>> doorsEntrySet = doors.entrySet();
-        Iterator<Map.Entry<Directions, Tile>> doorIterator = doorsEntrySet.iterator();
-        Map.Entry<Directions, Tile> doorMap;
-        do {
-            doorMap = doorIterator.next();
-        } while (doorIterator.hasNext() && doorMap.getValue() != doorTile);
-
-        return doorMap.getKey();
     }
 
     public void exit() {

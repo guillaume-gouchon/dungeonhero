@@ -153,12 +153,12 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         int critical = calculateCritical();
 
         if (dice < critical) {
-            fightResult = new FightResult(FightResult.States.CRITICAL, damage * 2 - target.calculateProtection());
+            fightResult = new FightResult(FightResult.States.CRITICAL, Math.max(0, damage * 2 - target.calculateProtection()));
         } else if (dice > target.calculateBlock()) {
             if (Math.random() * 100 < calculateDodge()) {
                 fightResult = new FightResult(FightResult.States.DODGE, 0);
             } else {
-                fightResult = new FightResult(FightResult.States.DAMAGE, damage - target.calculateProtection());
+                fightResult = new FightResult(FightResult.States.DAMAGE, Math.max(0, damage - target.calculateProtection()));
             }
         } else {
             fightResult = new FightResult(FightResult.States.BLOCK, 0);
@@ -230,7 +230,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         }
 
         for (Skill skill : skills) {
-            if (skill instanceof PassiveSkill && ((PassiveSkill) skill).getEffect().getTarget() == characteristic) {
+            if (skill.getLevel() > 0 && skill instanceof PassiveSkill && ((PassiveSkill) skill).getEffect().getTarget() == characteristic) {
                 bonus += ((PassiveSkill) skill).getEffect().getValue();
             }
         }

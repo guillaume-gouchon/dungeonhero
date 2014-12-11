@@ -67,7 +67,7 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             // TODO : used fot testing only
             mGame = new Game();
-            mGame.setHero(HeroFactory.buildBerserker());
+            mGame.setHero(HeroFactory.buildWizard());
             mGame.setBook(BookFactory.buildInitiationBook(1));
         }
 
@@ -82,28 +82,11 @@ public class GameActivity extends MyBaseGameActivity {
             mHero = mGame.getHero().clone();
             mDungeon = mGame.getDungeon();
 
-
             // show book intro story if needed
             if (mGame.getBook().getIntroText() > 0) {
                 Bundle args = new Bundle();
                 args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText());
                 ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
-            }
-
-            if (chapter.getIntroText() > 0) {
-                OnDiscussionReplySelected callback = null;
-                if (mHero.getSkillPoints() > 0) {
-                    // if hero has some skill points left
-                    callback = new OnDiscussionReplySelected() {
-                        @Override
-                        public void onReplySelected(Pnj pnj, int next) {
-                            mGUIManager.showNewLevelDialog();
-                        }
-                    };
-                }
-                mGUIManager.showChapterIntro(callback);
-            } else if (mHero.getSkillPoints() > 0) {
-                mGUIManager.showNewLevelDialog();
             }
 
             mHero.reset();
@@ -271,13 +254,30 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     public void startGame() {
-        // init camera position
         mCamera.setCenter(mHero.getSprite().getX(), mHero.getSprite().getY());
 
         mGUIManager.hideLoadingScreen();
         mGUIManager.updateSkillButtons();
 
         nextTurn();
+    }
+
+    public void showChapterIntro() {
+        if (mGame.getBook().getIntroText() > 0) {
+            OnDiscussionReplySelected callback = null;
+            if (mHero.getSkillPoints() > 0) {
+                // if hero has some skill points left
+                callback = new OnDiscussionReplySelected() {
+                    @Override
+                    public void onReplySelected(Pnj pnj, int next) {
+                        mGUIManager.showNewLevelDialog();
+                    }
+                };
+            }
+            mGUIManager.showChapterIntro(callback);
+        } else if (mHero.getSkillPoints() > 0) {
+            mGUIManager.showNewLevelDialog();
+        }
     }
 
     public void nextTurn() {
@@ -304,6 +304,8 @@ public class GameActivity extends MyBaseGameActivity {
                         }
                     }
                 }
+
+                // TODO : camouflage
 
                 if (!isHeroic) {
                     // next character
@@ -376,7 +378,7 @@ public class GameActivity extends MyBaseGameActivity {
 
     public void switchRoom(final Tile doorTile) {
         Log.d(TAG, "switching room");
-        final Directions doorDirection = mRoom.getDirectionFromDoorTile(doorTile);
+        final Directions doorDirection = mRoom.getDoorDirection(doorTile);
         mEngine.stop();
         mDungeon.switchRoom(doorTile);
         mRoom = mDungeon.getCurrentRoom();
@@ -415,7 +417,7 @@ public class GameActivity extends MyBaseGameActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "start animation");
+                Log.d(TAG, "start animation to direction " + doorDirection.name());
                 int n = 30;
                 mScene.setX(mScene.getX() + 30 * doorDirection.getDx());
                 mScene.setY(mScene.getY() - 30 * doorDirection.getDy());

@@ -28,7 +28,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,32 +49,32 @@ public class ApplicationUtils {
             final Editor editor = prefs.edit();
 
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = (View) inflater.inflate(R.layout.custom_rate_dialog, null);
+            View view = inflater.inflate(R.layout.custom_rate_dialog, null);
 
             // Create and show custom alert dialog
             final Dialog dialog = new AlertDialog.Builder(activity, R.style.Dialog).setView(view).create();
 
             ((TextView) view.findViewById(R.id.message)).setText(activity.getString(R.string.rate_message, activity.getString(R.string.app_name)));
-            ((Button) view.findViewById(R.id.cancelButton)).setOnClickListener(new OnClickListener() {
+            view.findViewById(R.id.cancelButton).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     editor.putInt(PREFS_RATE_DIALOG_IN, -1);
-                    editor.commit();
+                    editor.apply();
                     dialog.dismiss();
                 }
             });
-            ((Button) view.findViewById(R.id.neutralButton)).setOnClickListener(new OnClickListener() {
+            view.findViewById(R.id.neutralButton).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     editor.putInt(PREFS_RATE_DIALOG_IN, 5);
                     dialog.dismiss();
                 }
             });
-            ((Button) view.findViewById(R.id.okButton)).setOnClickListener(new OnClickListener() {
+            view.findViewById(R.id.okButton).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     editor.putInt(PREFS_RATE_DIALOG_IN, -1);
-                    editor.commit();
+                    editor.apply();
                     rateTheApp(activity);
                     dialog.dismiss();
                 }
@@ -178,15 +177,13 @@ public class ApplicationUtils {
     }
 
     public static boolean isAppInstalled(Context context, String uri) {
-        PackageManager pm = context.getPackageManager();
-        boolean app_installed = false;
         try {
+            PackageManager pm = context.getPackageManager();
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
-            app_installed = true;
+            return true;
         } catch (PackageManager.NameNotFoundException e) {
-            app_installed = false;
         }
-        return app_installed;
+        return false;
     }
 
     public static void showAdvertisementIfNeeded(Activity activity) {

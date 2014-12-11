@@ -16,7 +16,7 @@ import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.GameActivity;
-import com.glevel.dungeonhero.activities.adapters.GamesListAdapter;
+import com.glevel.dungeonhero.activities.adapters.LoadGamesAdapter;
 import com.glevel.dungeonhero.models.Game;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class LoadGameFragment extends DialogFragment {
 
     private OnFragmentClosed mListener;
     private ListView mGamesListView;
-    private GamesListAdapter mAdapter;
+    private LoadGamesAdapter mAdapter;
     private MyDatabase mDbHelper;
     private List<com.glevel.dungeonhero.models.Game> mSavedGamesList;
 
@@ -74,7 +74,7 @@ public class LoadGameFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         mSavedGamesList = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
-        mAdapter = new GamesListAdapter(getActivity(), mSavedGamesList);
+        mAdapter = new LoadGamesAdapter(getActivity(), mSavedGamesList);
         mGamesListView.setAdapter(mAdapter);
     }
 

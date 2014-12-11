@@ -13,12 +13,12 @@ import com.glevel.dungeonhero.models.Game;
 
 import java.util.List;
 
-public class GamesListAdapter extends ArrayAdapter<Game> {
+public class LoadGamesAdapter extends ArrayAdapter<Game> {
 
     private final LayoutInflater mInflater;
     private List<Game> mSavedGames;
 
-    public GamesListAdapter(FragmentActivity activity, List<Game> savedCampaigns) {
+    public LoadGamesAdapter(FragmentActivity activity, List<Game> savedCampaigns) {
         super(activity, R.layout.load_game_list_item);
         mSavedGames = savedCampaigns;
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

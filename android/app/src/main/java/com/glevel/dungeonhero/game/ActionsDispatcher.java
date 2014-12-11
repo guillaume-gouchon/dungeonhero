@@ -604,7 +604,7 @@ public class ActionsDispatcher implements UserActionListener {
 
     private void animateFightReward(Monster target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating fight reward");
-        Reward reward = target.getReward();
+        final Reward reward = target.getReward();
         if (reward.getItem() != null) {
             getItemOrDropIt(reward.getItem());
         }
@@ -612,7 +612,12 @@ public class ActionsDispatcher implements UserActionListener {
         mGameActivity.getHero().addFrag();
         boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
         if (newLevel) {
-            mGUIManager.showNewLevelDialog();
+            mGameActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mGUIManager.showNewLevelDialog();
+                }
+            });
         }
 
         if (reward.getGold() > 0) {
@@ -622,11 +627,16 @@ public class ActionsDispatcher implements UserActionListener {
             mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
         }
         if (reward.getItem() != null) {
-            mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
+            mGameActivity.runOnUiThread(new Runnable() {
                 @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    Log.d(TAG, "animating fight reward is over");
-                    onActionExecuted.onActionDone(true);
+                public void run() {
+                    mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            Log.d(TAG, "animating fight reward is over");
+                            onActionExecuted.onActionDone(true);
+                        }
+                    });
                 }
             });
         } else {
@@ -659,20 +669,24 @@ public class ActionsDispatcher implements UserActionListener {
         if (activatedSkill.getRadius() > 0) {
             Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, activatedSkill.getRadius(), true, null);
             for (Tile targetTile : targetTiles) {
-                applyEffect(buff, targetTile, true);
+                if (targetTile != mGameActivity.getActiveCharacter().getTilePosition()) {
+                    applyEffect(buff, targetTile, true);
+                }
             }
         }
 
         activatedSkill.use();
         activatedSkill = null;
         mGUIManager.updateSkillButtons();
+
+        // TODO : do next turn when everyone is dead
         mGameActivity.nextTurn();
     }
 
     public void applyEffect(Effect buff, final Tile tile, boolean addExtra) {
         // apply effect
         if (tile.getContent() != null && tile.getContent() instanceof Unit) {
-            Unit target = (Unit) tile.getContent();
+            final Unit target = (Unit) tile.getContent();
             if (buff.getTarget() == Characteristics.HP) {
                 // damage or heal
                 target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + buff.getValue()));
@@ -683,17 +697,9 @@ public class ActionsDispatcher implements UserActionListener {
             if (addExtra && buff.getSpecial() != null) {
                 target.getBuffs().add(buff.getSpecial());
             }
-        }
 
-        // animate
-        if (buff.getSpriteName() != null) {
-            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), buff.getSpriteName(), 50, 0.3f, 0, true, 100, null);
-        }
-
-        // animate deaths and remove dead units
-        if (tile.getContent() != null && tile.getContent() instanceof Unit) {
-            final Unit target = (Unit) tile.getContent();
             if (target.isDead()) {
+                // animate deaths and remove dead units
                 animateDeath(target, new OnActionExecuted() {
                     @Override
                     public void onActionDone(boolean success) {
@@ -702,6 +708,12 @@ public class ActionsDispatcher implements UserActionListener {
                 });
             }
         }
+
+        // animate
+        if (buff.getSpriteName() != null) {
+            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), buff.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+        }
+
     }
 
     public void setInputEnabled(boolean enabled) {

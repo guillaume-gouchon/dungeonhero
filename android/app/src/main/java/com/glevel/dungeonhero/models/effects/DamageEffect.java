@@ -15,7 +15,7 @@ public class DamageEffect extends Effect implements Serializable {
         super(spriteName, Characteristics.HP, value, Effect.INSTANT_EFFECT, null);
     }
 
-    public DamageEffect(String spriteName, int value, BuffEffect special) {
+    public DamageEffect(String spriteName, int value, Effect special) {
         super(spriteName, Characteristics.HP, value, Effect.INSTANT_EFFECT, special);
     }
 

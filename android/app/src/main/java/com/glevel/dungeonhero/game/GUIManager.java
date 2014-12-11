@@ -592,6 +592,7 @@ public class GUIManager {
                     mRewardDialog.setContentView(R.layout.in_game_reward);
                     mRewardDialog.setCancelable(false);
                     mRewardDialog.setOnDismissListener(onDismissListener);
+                    mRewardDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
                     TextView itemTV = (TextView) mRewardDialog.findViewById(R.id.item);
                     TextView goldTV = (TextView) mRewardDialog.findViewById(R.id.gold);

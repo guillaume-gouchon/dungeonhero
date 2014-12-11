@@ -123,7 +123,7 @@
     <style name="HeroTitle">
         <item name="android:textSize">22sp</item>
         <item name="android:padding">6dp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">left|center_vertical</item>
     </style>
 
     <style name="HeroDescription">

@@ -26,6 +26,7 @@
 
 
         <com.glevel.dungeonhero.views.CustomTextView
+            android:id="@+id/choose_skills_message"
             style="@style/PopupMessage"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"

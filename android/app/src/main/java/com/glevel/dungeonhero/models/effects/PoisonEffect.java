@@ -7,11 +7,11 @@ import java.io.Serializable;
 /**
  * Created by guillaume on 19/10/14.
  */
-public abstract class PoisonEffect extends Effect implements Serializable {
+public class PoisonEffect extends Effect implements Serializable {
 
     private static final long serialVersionUID = 8376399829147352445L;
 
-    public PoisonEffect(String spriteName, int value, int duration, BuffEffect special) {
+    public PoisonEffect(String spriteName, int value, int duration, Effect special) {
         super(spriteName, Characteristics.HP, value, duration, special);
     }
 

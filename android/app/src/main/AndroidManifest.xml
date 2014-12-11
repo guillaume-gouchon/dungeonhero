@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.glevel.dungeonhero"
-    android:installLocation="preferExternal"
-    android:versionCode="60"
-    android:versionName="1.0.1">
+    android:installLocation="preferExternal">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -27,14 +25,14 @@
             android:value="@string/app_id" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="6111000" />
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".activities.SplashActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
         <activity android:name=".activities.HomeActivity"></activity>
-        <activity android:name=".activities.BookChooserActivity"></activity>
-        <activity android:name=".activities.NewGameActivity"></activity>
+        <activity android:name=".activities.BookChooserActivity" />
+        <activity android:name=".activities.NewGameActivity" />
         <activity android:name=".activities.GameActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,8 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TutorialActivity"></activity>
-        <activity android:name=".activities.GameOverActivity"></activity>
+        <activity android:name=".activities.TutorialActivity" />
+        <activity android:name=".activities.GameOverActivity" />
     </application>
 
 </manifest>

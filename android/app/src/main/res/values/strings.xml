@@ -72,6 +72,11 @@
     <string name="skip">Skip</string>
     <string name="replay">Replay</string>
 
+    <!-- Game Over -->
+    <string name="retry">Retry\u00A0!</string>
+    <string name="exit">Exit</string>
+    <string name="game_over_title">Game Over</string>
+
     <!-- Characteristics -->
     <string name="hp">Health points</string>
     <string name="strength">Strength : used to deal damage, hold heavy charges</string>
@@ -79,31 +84,6 @@
     <string name="spirit">Spirit : used to react, deduce, focus</string>
     <string name="block">The ability to block an enemy\'s attack</string>
     <string name="frags">Frags</string>
-
-    <!-- Game Over -->
-    <string name="retry">Retry\u00A0!</string>
-    <string name="exit">Exit</string>
-    <string name="game_over_title">Game Over</string>
-
-    <!-- Game -->
-    <string name="loading_game">Loading</string>
-    <string name="loading_dots">. . .</string>
-    <string name="game_paused">Pause</string>
-    <string name="resume_game">Resume Game</string>
-    <string name="leave_quest">Leave Quest</string>
-    <string name="confirm_leave_quest">Are you sure you want to leave this quest ?</string>
-    <string name="confirm_finish_quest">Are you sure you want to finish this quest and leave the dungeon ?</string>
-    <string name="deployment_phase">Deployment Phase</string>
-    <string name="start">Deployment Done</string>
-    <string name="game_menu">Game Menu</string>
-    <string name="skill">skill</string>
-    <string name="help">Help</string>
-    <string name="riddle_answer_input">your answer...</string>
-    <string name="game_master">Game Master</string>
-    <string name="new_level_title">You reached level %s !</string>
-    <string name="new_level_text">Choose which skills to improve.</string>
-    <string name="new_level_points_left">Skill points left : %s</string>
-    <string name="improve_skill">Improve skill</string>
 
     <!-- Tutorial -->
     <string name="next">Next</string>
@@ -120,18 +100,68 @@
     <string name="tutorial10"><u>Terrains</u>\n\nUsing the terrain covers is one of the keys to success.\nBushes do not block line of sights but provide light protections.\nTrees, fields and houses block line of sights and are giving medium to high covers to your soldiers.</string>
     <string name="tutorial11"><u>Well done !</u>\n\nThis tutorial is now finished.\nTry to seek and destroy the 2 enemy riflemen on the map.\nGood luck !</string>
 
+    <!-- Game -->
+    <string name="loading_game">Loading</string>
+    <string name="loading_dots">. . .</string>
+    <string name="game_paused">Pause</string>
+    <string name="resume_game">Resume Game</string>
+    <string name="leave_quest">Leave Quest</string>
+    <string name="confirm_leave_quest">Are you sure you want to leave this quest ?</string>
+    <string name="confirm_finish_quest">Are you sure you want to finish this quest and leave the dungeon ?</string>
+    <string name="deployment_phase">Deployment Phase</string>
+    <string name="start">Deployment Done</string>
+    <string name="game_menu">Game Menu</string>
+    <string name="skill">skill</string>
+    <string name="riddle_answer_input">your answer...</string>
+    <string name="game_master">Game Master</string>
+    <string name="new_level_title">You reached level %s !</string>
+    <string name="new_level_text">Choose which skills to improve.</string>
+    <string name="new_level_points_left">Skill points left : %s</string>
+    <string name="improve_skill">Improve skill</string>
+    <string name="level_in_game">Level %1$s (%2$s/%3$s)</string>
+    <string name="hp_in_game">%1$s / %2$s</string>
+    <string name="found_nothing">You found nothing\u00A0!</string>
+    <string name="found_item">You got a %s\u00A0!</string>
+    <string name="found_gold">You got %s Gold Coins\u00A0!</string>
+    <string name="reward_xp">You were rewarded with %s XP\u00A0!</string>
+    <string name="close">Close</string>
+    <string name="use">Use</string>
+    <string name="equip">Equip</string>
+    <string name="remove">Remove</string>
+    <string name="drop">Drop</string>
+    <string name="use_skill">use_skill</string>
+    <string name="gold_coins">Gold Coins</string>
+    <string name="bag_full">Your bag is full, the object has been dropped on the ground</string>
+    <string name="damage">Damage</string>
+    <string name="protection">Protection</string>
+    <string name="dodge">Dodge</string>
+    <string name="movement">Movement</string>
+    <string name="initiative">Initiative</string>
+    <string name="critical">Critical Hit</string>
+    <string name="unknown_item">\?\?\?</string>
+    <string name="minimum">min. %s </string>
+    <string name="exit_stairs">Exit Stairs</string>
+    <string name="entrance_stairs">Entrance stairs</string>
+    <string name="go_to_next_chapter">Go to next chapter</string>
+    <string name="finish_adventure">Finish adventure</string>
+    <string name="use_skill_on">preparing %s...</string>
+    <string name="use_skill_off">cancel %s</string>
+    <string name="secondary_stats">Secondary stats</string>
+    <string name="skills">Skills</string>
+    <string name="use_skill_personal">%s !</string>
+
     <!-- Books -->
     <string name="tutorial">Tutorial</string>
 
     <!-- Heroes -->
     <string name="berserker">Berserker</string>
-    <string name="warrior">Warrior</string>
+    <string name="dwarf_warrior">Warrior</string>
     <string name="ranger">Ranger</string>
     <string name="wizard">Wizard</string>
     <string name="thief">Thief</string>
     <string name="druid">Druid</string>
     <string name="berserker_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
-    <string name="warrior_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+    <string name="dwarf_warrior_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="ranger_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="wizard_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="thief_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
@@ -172,36 +202,50 @@
     <!-- Items -->
     <string name="short_sword">Short Sword</string>
 
-    <!-- In Game -->
-    <string name="level_in_game">Level %1$s (%2$s/%3$s)</string>
-    <string name="hp_in_game">%1$s / %2$s</string>
-    <string name="found_nothing">You found nothing\u00A0!</string>
-    <string name="found_item">You got a %s\u00A0!</string>
-    <string name="found_gold">You got %s Gold Coins\u00A0!</string>
-    <string name="reward_xp">You were rewarded with %s XP\u00A0!</string>
-    <string name="close">Close</string>
-    <string name="use">Use</string>
-    <string name="equip">Equip</string>
-    <string name="remove">Remove</string>
-    <string name="drop">Drop</string>
-    <string name="use_skill">use_skill</string>
-    <string name="gold_coins">Gold Coins</string>
-    <string name="bag_full">Your bag is full, the object has been dropped on the ground</string>
-    <string name="damage">Damage</string>
-    <string name="protection">Protection</string>
-    <string name="dodge">Dodge</string>
-    <string name="movement">Movement</string>
-    <string name="initiative">Initiative</string>
-    <string name="critical">Critical Hit</string>
-    <string name="unknown_item">\?\?\?</string>
-    <string name="minimum">min. %s </string>
-    <string name="exit_stairs">Exit Stairs</string>
-    <string name="entrance_stairs">Entrance stairs</string>
-    <string name="go_to_next_chapter">Go to next chapter</string>
-    <string name="finish_adventure">Finish adventure</string>
-    <string name="use_skill_on">preparing %s...</string>
-    <string name="use_skill_off">cancel %s</string>
-    <string name="secondary_stats">Secondary stats</string>
-    <string name="skills">Skills</string>
-    <string name="use_skill_personal">%s !</string>
+    <!-- Skills -->
+    <string name="berserker_rage">Rage of the Berserker</string>
+    <string name="berserker_rage_description">You become enraged : you are able to deal more damages but your defense if slightly decreased.</string>
+    <string name="swirl_swords">Swirl of Swords</string>
+    <string name="swirl_swords_description">Inflict heavy damages to all the creatures around you.</string>
+    <string name="war_cry">War Cry</string>
+    <string name="war_cry_description">You cry out loudly to intimidate your opponents.</string>
+    <string name="fatal_blow">Fatal Blow</string>
+    <string name="fatal_blow_description">Increase greatly your chances of critical hit.</string>
+    <string name="camouflage">Camouflage</string>
+    <string name="camouflage_description">You hide yourself under your cloak, becoming invisible to your enemies\' eyes.</string>
+    <string name="poisonous_darts">Poisonous Darts</string>
+    <string name="poisonous_darts_description">You throw a poisonous dart on an enemy, dealing damages over time.</string>
+    <string name="dodge_master">Dodge Master</string>
+    <string name="dodge_master_description">You avoid your opponents\' attacks as a leaf blowing in the wind.</string>
+    <string name="ground_slam">Ground Slam</string>
+    <string name="ground_slam_description">You hit the ground vigorously, stunning and dealing damages to nearby enemies.</string>
+    <string name="parry_science">Parry Science</string>
+    <string name="parry_science_description">You study the art of parrying, increasing your chances to block an attack.</string>
+    <string name="drunken_master">Drunken Master</string>
+    <string name="drunken_master_description">You drink a large amount of Dwarf Ale, healing your wounds but decreasing your reflexes for some time.</string>
+    <string name="frost_arrow">Frost Arrow</string>
+    <string name="frost_arrow_description">You shoot a frost arrow on an opponent, dealing damages and slowing him down drastically.</string>
+    <string name="charm">Charm</string>
+    <string name="charm_description">You use your natural charm to disturb an enemy\'s mind.</string>
+    <string name="star_fall">Star Fall</string>
+    <string name="star_fall_description">You invoke a rain of stars on your enemies.</string>
+    <string name="paralysing_plant">Paralysing Plants</string>
+    <string name="paralysing_plant_description">Paralysing plants suddenly grow around your enemies, stopping them and slowing them down.</string>
+    <string name="healing_plants">Healing Plants</string>
+    <string name="healing_plants_description">You use your knowledge of natural things to heal your wounds with some plants you found.</string>
+    <string name="wolf_howl">Wolf Howl</string>
+    <string name="wolf_howl_description">You invoke the wolf spirit, boosting your chances of critical hits and dodging attacks for a small amount of time.</string>
+    <string name="crow_curse">Curse of the Crow</string>
+    <string name="crow_curse_description">You invoke the spirit of the Crow to curse your opponents, decreasing their attack and defense for some time.</string>
+    <string name="fireball">Fireball</string>
+    <string name="fireball_description">You cast a fireball on your enemies, dealing damages and burning them over time.</string>
+    <string name="sleep">Sleep</string>
+    <string name="sleep_description">You make one target sleeping deeply.</string>
+    <string name="thunder_storm">Thunder Storm</string>
+    <string name="thunder_storm_description">You invoke a thunder storm on your opponents, dealing electrical damages to them.</string>
+    <string name="stone_skin">Stone Skin</string>
+    <string name="stone_skin_description">Your skin becomes stone for some time, increasing your armor drastically.</string>
+    <string name="terror">Terror of Blarzog</string>
+    <string name="terror_description">You enters your enemies\'s mind and install terror in them, stunning your opponents and dealing damages to them over time.</string>
+
 </resources>

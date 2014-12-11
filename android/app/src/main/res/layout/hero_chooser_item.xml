@@ -11,54 +11,58 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="10dp"
-        android:padding="15dp"
+        android:padding="10dp"
         android:background="@drawable/bg_carousel">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="7dp"
+                android:layout_marginRight="5dp" />
 
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:layout_marginRight="5dp" />
-
-                <com.glevel.dungeonhero.views.CustomTextView
-                    style="@style/HeroTitle"
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/placeholder" />
-            </LinearLayout>
-
-            <ScrollView
-                android:layout_width="match_parent"
+            <com.glevel.dungeonhero.views.CustomTextView
+                style="@style/HeroTitle"
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:text="@string/placeholder" />
 
-                <com.glevel.dungeonhero.views.CustomTextView
-                    style="@style/HeroDescription"
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="@string/placeholder" />
-            </ScrollView>
+            <ImageView
+                android:id="@+id/lock"
+                android:tint="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_lock"
+                android:visibility="gone" />
         </LinearLayout>
 
-        <LinearLayout
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:layout_marginTop="1dp"
+            style="@style/HeroDescription"
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/placeholder" />
+
+        <View
+            android:layout_marginTop="7dp"
+            android:background="@color/grey"
+            android:layout_height="2dp"
+            android:layout_width="match_parent" />
+
+        <LinearLayout
+            android:layout_marginTop="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:orientation="horizontal">
 
             <com.glevel.dungeonhero.views.HintTextView
@@ -97,7 +101,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="7dp"
             android:orientation="horizontal">
 
             <com.glevel.dungeonhero.views.HintTextView
@@ -109,8 +114,55 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/hp" />
+                android:textColor="@color/spirit" />
+
+            <com.glevel.dungeonhero.views.HintTextView
+                android:id="@+id/movement"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_move"
+                custom:linkTextColorToDrawable="true"
+                custom:textHint="@string/movement"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/spirit" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
         </LinearLayout>
 
+        <View
+            android:layout_marginTop="7dp"
+            android:background="@color/grey"
+            android:layout_height="2dp"
+            android:layout_width="match_parent" />
+
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:padding="5dp"
+            android:text="@string/skills"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="3dp" />
+
+        <GridLayout
+            android:id="@+id/skills"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="5">
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+        </GridLayout>
     </LinearLayout>
 </LinearLayout>
