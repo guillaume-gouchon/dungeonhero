@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.models;
 
+import android.content.res.Resources;
+
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
 import java.io.Serializable;
@@ -8,28 +10,31 @@ import java.util.List;
 /**
  * Created by guillaume ON 10/3/14.
  */
-public class Book implements Serializable, InAppProduct {
+public class Book extends StorableResource implements Serializable, InAppProduct {
 
     private static final long serialVersionUID = -2713633045742704862L;
 
     private final int id;
-    private final int name, image;
-    private final int outroText;
+    private final String outroText;
+    private String introText;
     private final List<Chapter> chapters;
     private final String productId;
-    private int introText;
     private boolean hasBeenBought;
     private boolean done;
 
-    public Book(int id, int name, int image, int introText, int outroText, List<Chapter> chapters, String productId) {
+    public Book(int id, String identifier, String introText, String outroText, List<Chapter> chapters, String productId) {
+        super(identifier);
         this.id = id;
-        this.name = name;
-        this.image = image;
         this.introText = introText;
         this.outroText = outroText;
         this.chapters = chapters;
         this.productId = productId;
         this.done = false;
+    }
+
+    @Override
+    public int getImage(Resources resources) {
+        return StorableResource.getResource(resources, "bg_book", true);
     }
 
     @Override
@@ -56,20 +61,12 @@ public class Book implements Serializable, InAppProduct {
         return chapters;
     }
 
-    public int getName() {
-        return name;
+    public int getIntroText(Resources resources) {
+        return StorableResource.getResource(resources, introText, false);
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public int getIntroText() {
-        return introText;
-    }
-
-    public int getOutroText() {
-        return outroText;
+    public int getOutroText(Resources resources) {
+        return StorableResource.getResource(resources, outroText, false);
     }
 
     public boolean isDone() {
@@ -92,7 +89,7 @@ public class Book implements Serializable, InAppProduct {
      * @return true if aventure is over
      */
     public boolean goToNextChapter() {
-        introText = 0;
+        introText = null;
         chapters.remove(0);
         return chapters.size() > 0;
     }

@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.models.riddles;
+package com.glevel.dungeonhero.models.discussions.riddles;
 
 import com.glevel.dungeonhero.models.Reward;
 
@@ -12,7 +12,7 @@ public class OpenRiddle extends Riddle implements Serializable {
     private static final long serialVersionUID = 7852692444871638271L;
     private final String correctAnswer;
 
-    public OpenRiddle(int timer, int question, String correctAnswer, Reward reward) {
+    public OpenRiddle(int timer, String question, String correctAnswer, Reward reward) {
         super(timer, question, reward);
         this.correctAnswer = correctAnswer;
     }

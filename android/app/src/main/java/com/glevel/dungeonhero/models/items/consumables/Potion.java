@@ -12,8 +12,8 @@ public class Potion extends Consumable implements Serializable {
 
     private static final long serialVersionUID = 4997517384367232447L;
 
-    public Potion(int name, int description, int image) {
-        super(name, description, image, R.color.bg_potion);
+    public Potion(String identifier) {
+        super(identifier);
     }
-    
+
 }

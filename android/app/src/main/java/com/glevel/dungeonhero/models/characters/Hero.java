@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.models.characters;
 
 
-import com.glevel.dungeonhero.models.FightResult;
 import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
@@ -25,8 +24,8 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     private String heroName;
     private int skillPoints;
 
-    public Hero(Ranks ranks, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int name, int description, int coins, String productId, int xp, int level) {
-        super(ranks, image, spriteName, hp, currentHP, strength, dexterity, spirit, movement, name, description);
+    public Hero(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, String productId, int xp, int level) {
+        super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement);
         this.productId = productId;
         this.xp = xp;
         this.level = level;
@@ -65,10 +64,6 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
         return xp;
     }
 
-    public void setXp(int xp) {
-        this.xp = xp;
-    }
-
     public int getFrags() {
         return frags;
     }
@@ -102,32 +97,32 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
             strength += 6;
             dexterity += 2;
             spirit += 2;
-            skillPoints++;
+            skillPoints = 1;
         } else if (dexterity > strength && dexterity > spirit) {
             strength += 2;
             dexterity += 6;
             spirit += 2;
-            skillPoints += 2;
+            skillPoints = 2;
         } else if (spirit > dexterity && spirit > strength) {
             strength += 2;
             dexterity += 2;
             spirit += 6;
-            skillPoints += 3;
+            skillPoints = 3;
         } else if (strength == dexterity && strength > spirit) {
             strength += 4;
             dexterity += 4;
             spirit += 2;
-            skillPoints += 1;
+            skillPoints = 1;
         } else if (strength == spirit && strength > dexterity) {
             strength += 4;
             dexterity += 2;
             spirit += 4;
-            skillPoints += 2;
+            skillPoints = 2;
         } else if (dexterity == spirit && dexterity > strength) {
             strength += 2;
             dexterity += 4;
             spirit += 4;
-            skillPoints += 2;
+            skillPoints = 2;
         }
 
         hp += strength / 2;
@@ -151,7 +146,7 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     }
 
     public int getNextLevelXPAmount() {
-        return (int) (100 * (Math.pow(2, level + 1) - 1));
+        return (int) (100 * (Math.pow(2, level) - 1));
     }
 
     public void drop(Item item) {

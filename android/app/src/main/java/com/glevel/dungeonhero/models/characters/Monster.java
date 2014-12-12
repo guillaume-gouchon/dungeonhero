@@ -11,8 +11,8 @@ public class Monster extends Unit {
 
     private Reward reward;
 
-    public Monster(int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int name, int description) {
-        super(Ranks.ENEMY, image, spriteName, hp, currentHP, strength, dexterity, spirit, movement, name, description);
+    public Monster(String identifier, int hp, int currentHP, int strength, int dexterity, int spirit, int movement) {
+        super(identifier, Ranks.ENEMY, hp, currentHP, strength, dexterity, spirit, movement);
         createRandomReward();
     }
 

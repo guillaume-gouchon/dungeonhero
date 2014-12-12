@@ -11,8 +11,8 @@ public class Consumable extends Item implements Serializable {
 
     private static final long serialVersionUID = 3416498502861499207L;
 
-    public Consumable(int name, int description, int image, int color) {
-        super(name, description, image, color, true);
+    public Consumable(String identifier) {
+        super(identifier, true);
     }
 
     public void use(Unit owner) {

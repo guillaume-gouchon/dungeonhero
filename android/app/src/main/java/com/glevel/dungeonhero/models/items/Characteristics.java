@@ -11,7 +11,7 @@ public enum Characteristics {
     DEXTERITY(R.string.dexterity, R.drawable.ic_dexterity), SPIRIT(R.string.spirit, R.drawable.ic_spirit),
     DAMAGE(R.string.damage, R.drawable.ic_attack), BLOCK(R.string.block, R.drawable.ic_block),
     DODGE(R.string.dodge, R.drawable.ic_dodge), MOVEMENT(R.string.movement, R.drawable.ic_move),
-    INITIATIVE(R.string.initiative, R.drawable.ic_initiative), CRITICAL(R.string.critical, R.drawable.ic_critical),
+    INITIATIVE(R.string.initiative, R.drawable.ic_initiative), CRITICAL(R.string.critical, R.drawable.ic_critics),
     PROTECTION(R.string.protection, R.drawable.ic_armor);
 
     private final int name;

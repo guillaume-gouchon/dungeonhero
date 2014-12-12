@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.models.items.equipments;
 
-import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.items.Equipment;
 
 import java.io.Serializable;
@@ -15,14 +14,8 @@ public class Weapon extends Equipment implements Serializable {
     private final int minDamage;
     private final int deltaDamage;
 
-    public Weapon(int name, int description, int image, int minDamage, int deltaDamage) {
-        super(name, description, image, R.color.bg_weapon);
-        this.minDamage = minDamage;
-        this.deltaDamage = deltaDamage;
-    }
-
-    public Weapon(int name, int image, int minDamage, int deltaDamage) {
-        super(name, 0, image, R.color.bg_weapon);
+    public Weapon(String identifier, int minDamage, int deltaDamage, int level) {
+        super(identifier, level);
         this.minDamage = minDamage;
         this.deltaDamage = deltaDamage;
     }

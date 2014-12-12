@@ -1,7 +1,11 @@
 package com.glevel.dungeonhero.models.discussions;
 
+import android.content.res.Resources;
+
+import com.glevel.dungeonhero.MyApplication;
 import com.glevel.dungeonhero.models.Reward;
-import com.glevel.dungeonhero.models.riddles.Riddle;
+import com.glevel.dungeonhero.models.StorableResource;
+import com.glevel.dungeonhero.models.discussions.riddles.Riddle;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,39 +17,26 @@ public class Discussion implements Serializable {
 
     private static final long serialVersionUID = 4434121243275987291L;
 
-    private final int image;
-    private final int name;
-    private int message;
+    private String message;
     private List<Reaction> reactions;
     private boolean isPermanent;
     private Reward reward;
     private Riddle riddle;
 
-    public Discussion(int image, int name, int message, List<Reaction> reactions, boolean isPermanent, Reward reward) {
-        this.image = image;
-        this.name = name;
+    public Discussion(String message, List<Reaction> reactions, boolean isPermanent, Reward reward) {
+        this.message = message;
         this.message = message;
         this.reactions = reactions;
         this.isPermanent = isPermanent;
         this.reward = reward;
     }
 
-    public Discussion(int image, int name, Riddle riddle) {
-        this.image = image;
-        this.name = name;
+    public Discussion(Riddle riddle) {
         this.riddle = riddle;
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public int getName() {
-        return name;
-    }
-
-    public int getMessage() {
-        return message;
+    public int getMessage(Resources resources) {
+        return StorableResource.getResource(resources, message, false);
     }
 
     public List<Reaction> getReactions() {

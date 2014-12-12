@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by guillaume on 19/10/14.
  */
-public abstract class Effect implements Serializable {
+public abstract class Effect implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 3040363823518403336L;
 
@@ -15,9 +15,9 @@ public abstract class Effect implements Serializable {
     public static final int INFINITE_EFFECT = -1;
 
     private final String spriteName;
-    private final int value;
     private final Characteristics target;
     private final Effect special;
+    protected int value;
     private int duration;
 
     public Effect(String spriteName, Characteristics target, int value, int duration, Effect special) {
@@ -59,6 +59,21 @@ public abstract class Effect implements Serializable {
 
     public String getSpriteName() {
         return spriteName;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Effect getUpdatedEffectWithSkillLevel(int level) {
+        try {
+            Effect effect = (Effect) super.clone();
+            effect.setValue((int) (value * (1 + (level - 1) * 0.2)));
+            return effect;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

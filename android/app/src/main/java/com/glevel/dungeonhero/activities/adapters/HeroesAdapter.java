@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.activities.adapters;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,11 +18,13 @@ import java.util.List;
 public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
 
     private Activity mActivity;
+    private Resources mResources;
     private Dialog mSkillInfoDialog;
 
     public HeroesAdapter(Activity activity, int layoutResource, List<Hero> dataList, View.OnClickListener itemClickedListener) {
         super(activity, layoutResource, dataList, itemClickedListener);
         mActivity = activity;
+        mResources = activity.getResources();
     }
 
     @Override
@@ -31,9 +34,9 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
 
         Hero hero = mDataList.get(position);
 
-        ((TextView) layout.findViewById(R.id.name)).setText(hero.getName());
-        ((ImageView) layout.findViewById(R.id.image)).setImageResource(hero.getImage());
-        ((TextView) layout.findViewById(R.id.description)).setText(hero.getDescription());
+        ((TextView) layout.findViewById(R.id.name)).setText(hero.getName(mResources));
+        ((ImageView) layout.findViewById(R.id.image)).setImageResource(hero.getImage(mResources));
+        ((TextView) layout.findViewById(R.id.description)).setText(hero.getDescription(mResources));
         ((TextView) layout.findViewById(R.id.strength)).setText("" + hero.getStrength());
         ((TextView) layout.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());
         ((TextView) layout.findViewById(R.id.spirit)).setText("" + hero.getSpirit());
@@ -64,7 +67,7 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
         itemView.setTag(R.string.skill, skill);
         itemView.setAlpha(0.6f);
 
-        image.setImageResource(skill.getImage());
+        image.setImageResource(skill.getImage(mResources));
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,12 +83,12 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
             mSkillInfoDialog.setCancelable(true);
 
             TextView nameTV = (TextView) mSkillInfoDialog.findViewById(R.id.name);
-            nameTV.setText(skill.getName());
-            nameTV.setCompoundDrawablesWithIntrinsicBounds(skill.getImage(), 0, 0, 0);
+            nameTV.setText(skill.getName(mResources));
+            nameTV.setCompoundDrawablesWithIntrinsicBounds(skill.getImage(mResources), 0, 0, 0);
 
             TextView descriptionTV = (TextView) mSkillInfoDialog.findViewById(R.id.description);
-            if (skill.getDescription() > 0) {
-                descriptionTV.setText(skill.getDescription());
+            if (skill.getDescription(mResources) > 0) {
+                descriptionTV.setText(skill.getDescription(mResources));
             } else {
                 descriptionTV.setVisibility(View.GONE);
             }

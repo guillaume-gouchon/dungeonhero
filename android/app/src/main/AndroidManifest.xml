@@ -33,7 +33,9 @@
         <activity android:name=".activities.HomeActivity"></activity>
         <activity android:name=".activities.BookChooserActivity" />
         <activity android:name=".activities.NewGameActivity" />
-        <activity android:name=".activities.GameActivity">
+        <activity
+            android:name=".activities.GameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

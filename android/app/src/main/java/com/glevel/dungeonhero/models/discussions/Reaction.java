@@ -1,5 +1,9 @@
 package com.glevel.dungeonhero.models.discussions;
 
+import android.content.res.Resources;
+
+import com.glevel.dungeonhero.models.StorableResource;
+
 import java.io.Serializable;
 
 /**
@@ -9,16 +13,16 @@ public class Reaction implements Serializable {
 
     private static final long serialVersionUID = 3217490571298178133L;
 
-    private final int message;
+    private final String message;
     private final int skipNextSteps;
 
-    public Reaction(int message, int nextStep) {
+    public Reaction(String message, int nextStep) {
         this.message = message;
         this.skipNextSteps = nextStep;
     }
 
-    public int getMessage() {
-        return message;
+    public int getMessage(Resources resources) {
+        return StorableResource.getResource(resources, message, false);
     }
 
     public int getSkipNextSteps() {

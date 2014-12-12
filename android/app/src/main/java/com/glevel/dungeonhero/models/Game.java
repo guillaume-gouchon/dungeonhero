@@ -145,7 +145,7 @@ public class Game extends DatabaseResource implements Serializable {
 
     public List<String> getSoundEffectsToLoad() {
         List<String> toLoad = new ArrayList<>();
-        // TODO
+        // TODO : add sounds effects
         return toLoad;
     }
 

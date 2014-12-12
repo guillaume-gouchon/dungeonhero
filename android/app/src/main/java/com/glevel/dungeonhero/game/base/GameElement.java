@@ -1,7 +1,11 @@
 package com.glevel.dungeonhero.game.base;
 
+import android.content.res.Resources;
+
+import com.glevel.dungeonhero.MyApplication;
 import com.glevel.dungeonhero.game.graphics.GameElementSprite;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
+import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 
@@ -10,21 +14,18 @@ import org.andengine.util.color.Color;
 
 import java.io.Serializable;
 
-public abstract class GameElement implements Serializable, GraphicHolder {
+public abstract class GameElement extends StorableResource implements Serializable, GraphicHolder {
 
     private static final long serialVersionUID = -5880458091427517171L;
 
-    private final int name;
     protected transient GameElementSprite sprite;
     private Ranks rank;
     protected transient Tile tilePosition;
 
-    private final String spriteName;
     private final int spriteWidth, spriteHeight, nbSpritesX, nbSpritesY;
 
-    public GameElement(int name, String spriteName, Ranks rank, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
-        this.name = name;
-        this.spriteName = spriteName;
+    public GameElement(String identifier, Ranks rank, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
+        super(identifier);
         this.rank = rank;
         this.spriteWidth = spriteWidth;
         this.spriteHeight = spriteHeight;
@@ -36,10 +37,6 @@ public abstract class GameElement implements Serializable, GraphicHolder {
 
     public GameElementSprite getSprite() {
         return sprite;
-    }
-
-    public int getName() {
-        return name;
     }
 
     public Tile getTilePosition() {
@@ -85,7 +82,7 @@ public abstract class GameElement implements Serializable, GraphicHolder {
 
     @Override
     public String getSpriteName() {
-        return spriteName;
+        return identifier + ".png";
     }
 
     @Override

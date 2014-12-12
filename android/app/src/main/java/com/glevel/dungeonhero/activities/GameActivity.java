@@ -26,13 +26,16 @@ import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.effects.CamouflageEffect;
 import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.effects.HeroicEffect;
 import com.glevel.dungeonhero.models.effects.PoisonEffect;
 import com.glevel.dungeonhero.models.effects.StunEffect;
+import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
+import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
@@ -67,7 +70,7 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             // TODO : used fot testing only
             mGame = new Game();
-            mGame.setHero(HeroFactory.buildWizard());
+            mGame.setHero(HeroFactory.buildBerserker());
             mGame.setBook(BookFactory.buildInitiationBook(1));
         }
 
@@ -83,9 +86,9 @@ public class GameActivity extends MyBaseGameActivity {
             mDungeon = mGame.getDungeon();
 
             // show book intro story if needed
-            if (mGame.getBook().getIntroText() > 0) {
+            if (mGame.getBook().getIntroText(getResources()) > 0) {
                 Bundle args = new Bundle();
-                args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText());
+                args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText(getResources()));
                 ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
             }
 
@@ -165,7 +168,10 @@ public class GameActivity extends MyBaseGameActivity {
 
         mActionDispatcher = new ActionsDispatcher(this, mScene);
 
+        Log.d(TAG, "sort children by z-index");
         mScene.sortChildren();
+
+        mGUIManager.setData(mHero);
 
         startGame();
     }
@@ -233,11 +239,13 @@ public class GameActivity extends MyBaseGameActivity {
                         mActionDispatcher.dropItem(item);
                     }
                 });
-            } else if (view.getTag(R.string.skill) != null) {
-                mGUIManager.showSkillInfo((com.glevel.dungeonhero.models.skills.Skill) view.getTag(R.string.skill));
             } else if (view.getTag(R.string.use_skill) != null) {
                 mActionDispatcher.setActivatedSkill((ActiveSkill) view.getTag(R.string.use_skill));
             }
+        }
+
+        if (view.getTag(R.string.skill) != null) {
+            mGUIManager.showSkillInfo((com.glevel.dungeonhero.models.skills.Skill) view.getTag(R.string.skill));
         }
     }
 
@@ -263,20 +271,20 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     public void showChapterIntro() {
-        if (mGame.getBook().getIntroText() > 0) {
+        if (mGame.getBook().getIntroText(getResources()) > 0) {
             OnDiscussionReplySelected callback = null;
             if (mHero.getSkillPoints() > 0) {
                 // if hero has some skill points left
                 callback = new OnDiscussionReplySelected() {
                     @Override
                     public void onReplySelected(Pnj pnj, int next) {
-                        mGUIManager.showNewLevelDialog();
+                        mGUIManager.showNewLevelDialog(null);
                     }
                 };
             }
             mGUIManager.showChapterIntro(callback);
         } else if (mHero.getSkillPoints() > 0) {
-            mGUIManager.showNewLevelDialog();
+            mGUIManager.showNewLevelDialog(null);
         }
     }
 
@@ -295,19 +303,47 @@ public class GameActivity extends MyBaseGameActivity {
                 }
 
 
-                boolean isHeroic = false;
+                boolean isHeroic = false, isHidden = false;
                 if (mActiveCharacter != null) {
-                    for (Effect effect : mActiveCharacter.getBuffs()) {
+                    List<Effect> copy = new ArrayList<>(mActiveCharacter.getBuffs());
+                    for (Effect effect : copy) {
                         if (effect instanceof HeroicEffect) {
                             Log.d(TAG, "character is heroic");
                             isHeroic = true;
+                            // animate heroic
+                            if (effect.getSpriteName() != null) {
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+                            }
+                        } else if (effect instanceof CamouflageEffect) {
+                            Log.d(TAG, "character is invisible");
+                            isHidden = true;
+                            // animate invisible
+                            if (effect.getSpriteName() != null) {
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+                            }
+                            // test if character is still invisible
+                            for (GameElement element : mRoom.getObjects()) {
+                                if (element instanceof Monster) {
+                                    // test if the monster sees invisible character depending on the distance
+                                    double distance = MathUtils.calcManhattanDistance(element.getTilePosition(), mActiveCharacter.getTilePosition());
+                                    Log.d(TAG, "distance to invisible character = " + distance);
+                                    if (distance == 1 || ((Unit) element).testCharacteristic(Characteristics.SPIRIT, (int) (effect.getValue() + distance))) {
+                                        // character is not hidden anymore
+                                        isHidden = false;
+                                        mActiveCharacter.getBuffs().remove(effect);
+                                        // animate end of invisibility
+                                        if (effect.getSpriteName() != null) {
+                                            drawAnimatedSprite(element.getTilePosition().getTileX(), element.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
 
-                // TODO : camouflage
-
-                if (!isHeroic) {
+                if (!isHeroic && !isHidden) {
                     // next character
                     mActiveCharacter = mRoom.getQueue().get(0);
                     Log.d(TAG, "updating queue to next character = " + mActiveCharacter.getRank().name() + ", " + mActiveCharacter.getHp() + "hp");
@@ -336,6 +372,10 @@ public class GameActivity extends MyBaseGameActivity {
                         } else {
                             Log.d(TAG, "skip turn");
                             skipTurn = true;
+                            // animate stun
+                            if (effect.getSpriteName() != null) {
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+                            }
                         }
                     }
                 }

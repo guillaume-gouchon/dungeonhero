@@ -56,7 +56,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
 
         mCamera = new CustomZoomCamera(0, 0, isLandscape ? GameConstants.CAMERA_WIDTH : GameConstants.CAMERA_HEIGHT,
                 isLandscape ? GameConstants.CAMERA_HEIGHT : GameConstants.CAMERA_WIDTH, GameConstants.CAMERA_ZOOM_MIN, GameConstants.CAMERA_ZOOM_MAX);
-        EngineOptions engineOptions = new EngineOptions(true, isLandscape ? ScreenOrientation.LANDSCAPE_SENSOR : ScreenOrientation.PORTRAIT_FIXED,
+        EngineOptions engineOptions = new EngineOptions(true, isLandscape ? ScreenOrientation.LANDSCAPE_SENSOR : ScreenOrientation.PORTRAIT_SENSOR,
                 new FillResolutionPolicy(), mCamera);
         engineOptions.getAudioOptions().setNeedsSound(true);
         return engineOptions;

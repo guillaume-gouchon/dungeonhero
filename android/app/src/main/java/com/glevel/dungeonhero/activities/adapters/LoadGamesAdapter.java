@@ -15,11 +15,13 @@ import java.util.List;
 
 public class LoadGamesAdapter extends ArrayAdapter<Game> {
 
+    private Context mContext;
     private final LayoutInflater mInflater;
     private List<Game> mSavedGames;
 
     public LoadGamesAdapter(FragmentActivity activity, List<Game> savedCampaigns) {
         super(activity, R.layout.load_game_list_item);
+        mContext = activity.getApplicationContext();
         mSavedGames = savedCampaigns;
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -39,7 +41,7 @@ public class LoadGamesAdapter extends ArrayAdapter<Game> {
 
         TextView title = (TextView) convertView.findViewById(R.id.text);
         title.setText(game.getHero().getHeroName());
-        title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(), 0, 0, 0);
+        title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(mContext.getResources()), 0, 0, 0);
         return convertView;
     }
 

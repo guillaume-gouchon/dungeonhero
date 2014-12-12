@@ -13,8 +13,8 @@ public class PassiveSkill extends Skill implements Serializable {
 
     private final Effect effect;
 
-    public PassiveSkill(int name, int description, int image, int level, Effect effect) {
-        super(name, description, image, level);
+    public PassiveSkill(String identifier, int level, Effect effect) {
+        super(identifier, level);
         this.effect = effect;
     }
 

@@ -37,10 +37,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     protected final List<Skill> skills = new ArrayList<>();
     protected List<Effect> buffs = new ArrayList<>();
     protected final Equipment[] equipments = new Equipment[5];
-    // Images
-    private final int image;
-    // RP
-    private final int description;
+
     // Possessions
     protected int gold;
 
@@ -52,21 +49,15 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     protected int spirit;
     protected int movement;
 
-    public Unit(Ranks rank, int image, String spriteName, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int name, int description) {
-        super(name, spriteName, rank, 210, 400, 3, 4);
-        this.image = image;
+    public Unit(String identifier, Ranks rank, int hp, int currentHP, int strength, int dexterity, int spirit, int movement) {
+        super(identifier, rank, 210, 400, 3, 4);
         this.hp = hp;
         this.currentHP = currentHP;
         this.strength = strength;
         this.dexterity = dexterity;
         this.spirit = spirit;
         this.movement = movement;
-        this.description = description;
         this.gold = 0;
-    }
-
-    public int getImage() {
-        return image;
     }
 
     public int getHp() {
@@ -109,16 +100,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         this.spirit = spirit;
     }
 
-    public int getDescription() {
-        return description;
-    }
-
     public int getGold() {
         return gold;
-    }
-
-    public void setGold(int gold) {
-        this.gold = gold;
     }
 
     public List<Item> getItems() {
@@ -147,8 +130,11 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         FightResult fightResult;
 
         int dice = (int) (Math.random() * 100);
-        // TODO : get damage bonus
-        int damage = (equipments[0] != null ? calculateDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateDamage((Weapon) equipments[1]) / 2 : 0);
+
+        // TODO : add critical failure
+
+        int damage = Math.max(0, calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE)
+                + (equipments[0] != null ? calculateDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateDamage((Weapon) equipments[1]) / 2 : 0));
 
         int critical = calculateCritical();
 
@@ -185,7 +171,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         return currentHP <= 0;
     }
 
-    private int calculateDamageBonus() {
+    private int calculateDamageNaturalBonus() {
         return Math.max(0, strength - 10);
     }
 
@@ -194,7 +180,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int calculateDamage(Weapon weapon) {
-        return calculateDamageBonus() + weapon.getMinDamage() + (int) (Math.random() * weapon.getDeltaDamage());
+        return weapon.getMinDamage() + (int) (Math.random() * weapon.getDeltaDamage());
     }
 
     public int calculateProtection() {
@@ -231,7 +217,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         for (Skill skill : skills) {
             if (skill.getLevel() > 0 && skill instanceof PassiveSkill && ((PassiveSkill) skill).getEffect().getTarget() == characteristic) {
-                bonus += ((PassiveSkill) skill).getEffect().getValue();
+                Effect effect = ((PassiveSkill) skill).getEffect().getUpdatedEffectWithSkillLevel(skill.getLevel());
+                bonus += effect.getValue();
             }
         }
 

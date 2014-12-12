@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.data;
 
-import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.dungeons.decorations.Decoration;
 import com.glevel.dungeonhero.models.dungeons.decorations.Light;
@@ -17,7 +16,7 @@ import java.util.List;
 public class DecorationFactory {
 
     public static List<Decoration> getAll() {
-        List<Decoration> lst = new ArrayList<Decoration>();
+        List<Decoration> lst = new ArrayList<>();
         lst.add(buildLight());
         lst.add(buildBox(null));
         lst.add(buildBarrel(null));
@@ -27,7 +26,7 @@ public class DecorationFactory {
     }
 
     public static Decoration buildLight() {
-        return new Light(R.string.light, "light.png");
+        return new Light("light");
     }
 
     public static Decoration buildTreasureChest(Reward reward) {
@@ -35,15 +34,15 @@ public class DecorationFactory {
     }
 
     public static Decoration buildBarrel(Reward reward) {
-        return new Searchable(R.string.barrel, "barrel.png", reward, 13, 16, 1, 1);
+        return new Searchable("barrel", reward, 13, 16, 1, 1);
     }
 
     public static Decoration buildBox(Reward reward) {
-        return new Searchable(R.string.box, "box.png", reward, 18, 24, 1, 1);
+        return new Searchable("box", reward, 18, 24, 1, 1);
     }
 
     public static Decoration buildSmallChest(Reward reward) {
-        return new Searchable(R.string.small_chest, "small_chest.png", reward, 9, 12, 1, 1);
+        return new Searchable("small_chest", reward, 9, 12, 1, 1);
     }
 
     public static List<Decoration> getRoomContent(int threatLevel) {

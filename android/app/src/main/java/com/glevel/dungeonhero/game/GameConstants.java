@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.game;
 
+import com.glevel.dungeonhero.R;
+
 public class GameConstants {
 
     /**
@@ -18,6 +20,25 @@ public class GameConstants {
 
     public static enum MusicStates {
         OFF, ON
+    }
+
+    public static int getLevelColor(int level) {
+        switch (level) {
+            case 0:
+                return R.color.bg_level_0;
+            case 1:
+                return R.color.bg_level_1;
+            case 2:
+                return R.color.bg_level_2;
+            case 3:
+                return R.color.bg_level_3;
+            case 4:
+                return R.color.bg_level_4;
+            case 5:
+                return R.color.bg_level_5;
+            default:
+                return R.color.bg_level_6;
+        }
     }
 
 }

@@ -156,13 +156,13 @@
     <!-- Heroes -->
     <string name="berserker">Berserker</string>
     <string name="dwarf_warrior">Warrior</string>
-    <string name="ranger">Ranger</string>
+    <string name="elf_ranger">Ranger</string>
     <string name="wizard">Wizard</string>
     <string name="thief">Thief</string>
     <string name="druid">Druid</string>
     <string name="berserker_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="dwarf_warrior_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
-    <string name="ranger_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+    <string name="elf_ranger_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="wizard_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="thief_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
     <string name="druid_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
@@ -186,7 +186,10 @@
     <string name="orc_captain">Orc Captain</string>
     <string name="gargoyle">Gargoyle</string>
     <string name="demon_king">High Demon</string>
-    <string name="goblin_king">Goblin King</string>
+
+    <!-- PNJs -->
+    <string name="princess">Princess</string>
+
 
     <!-- Discussions -->
     <string name="hello_discussion">Hello adventurer, do you like eating pafs ?</string>
@@ -201,6 +204,7 @@
 
     <!-- Items -->
     <string name="short_sword">Short Sword</string>
+    <string name="short_sword_description">A short sword.</string>
 
     <!-- Skills -->
     <string name="berserker_rage">Rage of the Berserker</string>

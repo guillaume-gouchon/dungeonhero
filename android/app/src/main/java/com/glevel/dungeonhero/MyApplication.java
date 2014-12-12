@@ -5,12 +5,16 @@ import android.graphics.Typeface;
 
 public class MyApplication extends Application {
 
+    public static String sPackageName;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         // fonts caching
         loadFonts();
+
+        sPackageName = getPackageName();
     }
 
     /**

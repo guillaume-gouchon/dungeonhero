@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bag"
+    android:padding="30dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@drawable/bg_gui"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/equipment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <include
+                android:id="@+id/weapon1"
+                layout="@layout/in_game_item" />
+
+            <include
+                android:id="@+id/weapon2"
+                layout="@layout/in_game_item" />
+
+            <include
+                android:id="@+id/armor"
+                layout="@layout/in_game_item" />
+
+            <include
+                android:id="@+id/ring1"
+                layout="@layout/in_game_item" />
+
+            <include
+                android:id="@+id/ring2"
+                layout="@layout/in_game_item" />
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/bag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:columnCount="5">
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+
+            <include layout="@layout/in_game_item" />
+        </GridLayout>
+
+        <com.glevel.dungeonhero.views.CustomTextView
+            android:id="@+id/gold_amount"
+            style="@style/PopupMessage"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:drawableLeft="@drawable/ic_coin" />
+    </LinearLayout>
+</LinearLayout>

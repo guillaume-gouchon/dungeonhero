@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.models.riddles;
+package com.glevel.dungeonhero.models.discussions.riddles;
 
 import com.glevel.dungeonhero.models.Reward;
 
@@ -14,7 +14,7 @@ public class MultiChoicesRiddle extends Riddle implements Serializable {
     private List<Integer> answers;
     private int correctAnswerIndex;
 
-    public MultiChoicesRiddle(int timer, int question, List<Integer> answers, int correctAnswerIndex, Reward reward) {
+    public MultiChoicesRiddle(int timer, String question, List<Integer> answers, int correctAnswerIndex, Reward reward) {
         super(timer, question, reward);
         this.answers = answers;
         this.correctAnswerIndex = correctAnswerIndex;

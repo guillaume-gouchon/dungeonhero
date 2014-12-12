@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.models.dungeons.decorations;
 
-import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.game.graphics.StairsSprite;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 
@@ -18,8 +17,13 @@ public class Stairs extends Decoration implements Serializable {
     private final boolean isDownStairs;
 
     public Stairs(boolean isDownStairs) {
-        super(isDownStairs ? R.string.exit_stairs : R.string.entrance_stairs, "stairs.png", 32, 20, 2, 1);
+        super(isDownStairs ? "exit_stairs" : "entrance_stairs", 32, 20, 2, 1);
         this.isDownStairs = isDownStairs;
+    }
+
+    @Override
+    public String getSpriteName() {
+        return "stairs.png";
     }
 
     @Override

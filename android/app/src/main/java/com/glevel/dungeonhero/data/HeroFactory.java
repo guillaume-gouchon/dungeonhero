@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.data;
 
-import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Ranks;
 
@@ -24,7 +23,7 @@ public class HeroFactory {
     }
 
     public static Hero buildBerserker() {
-        Hero hero = new Hero(Ranks.ME, R.drawable.warrior, "warrior.png", 18, 18, 12, 12, 6, 4, R.string.berserker, R.string.berserker_description, 10, null, 0, 1);
+        Hero hero = new Hero("berserker", Ranks.ME, 18, 18, 12, 12, 6, 4, null, 0, 1);
         hero.equip(WeaponFactory.buildSword());
         hero.getSkills().add(SkillFactory.buildRage());
         hero.getSkills().add(SkillFactory.buildSwirlOfSwords());
@@ -33,7 +32,7 @@ public class HeroFactory {
     }
 
     public static Hero buildDwarfWarrior() {
-        Hero hero = new Hero(Ranks.ME, R.drawable.dwarf, "dwarf.png", 25, 25, 14, 7, 9, 3, R.string.dwarf_warrior, R.string.dwarf_warrior_description, 10, "dwarf_warrior", 0, 1);
+        Hero hero = new Hero("dwarf_warrior", Ranks.ME, 25, 25, 14, 7, 9, 3, "dwarf_warrior", 0, 1);
         hero.equip(WeaponFactory.buildSword());
         hero.getSkills().add(SkillFactory.buildGroundSlam());
         hero.getSkills().add(SkillFactory.buildParryScience());
@@ -42,7 +41,7 @@ public class HeroFactory {
     }
 
     public static Hero buildElf() {
-        Hero hero = new Hero(Ranks.ME, R.drawable.elf, "elf.png", 12, 12, 6, 12, 12, 5, R.string.ranger, R.string.ranger_description, 10, null, 0, 1);
+        Hero hero = new Hero("elf_ranger", Ranks.ME, 12, 12, 6, 12, 12, 5, null, 0, 1);
         hero.equip(WeaponFactory.buildSword());
         hero.getSkills().add(SkillFactory.buildFrostArrow());
         hero.getSkills().add(SkillFactory.buildCharm());
@@ -52,7 +51,7 @@ public class HeroFactory {
     }
 
     public static Hero buildWizard() {
-        Hero hero = new Hero(Ranks.ME, R.drawable.wizard, "wizard.png", 10, 10, 6, 10, 14, 4, R.string.wizard, R.string.wizard_description, 10, null, 0, 1);
+        Hero hero = new Hero("wizard", Ranks.ME, 10, 10, 6, 10, 14, 4, null, 0, 1);
         hero.equip(WeaponFactory.buildSword());
         hero.getSkills().add(SkillFactory.buildFireball());
         hero.getSkills().add(SkillFactory.buildSleep());
@@ -63,7 +62,7 @@ public class HeroFactory {
     }
 
     public static Hero buildDruid() {
-        Hero hero = new Hero(Ranks.ME, R.drawable.druid, "druid.png", 14, 14, 11, 8, 11, 4, R.string.druid, R.string.druid_description, 10, null, 0, 1);
+        Hero hero = new Hero("druid", Ranks.ME, 14, 14, 11, 8, 11, 4, null, 0, 1);
         hero.equip(WeaponFactory.buildSword());
         hero.getSkills().add(SkillFactory.buildParalysingPlants());
         hero.getSkills().add(SkillFactory.buildHealingHerbs());
@@ -73,7 +72,7 @@ public class HeroFactory {
     }
 
     public static Hero buildThief() {
-        Hero hero = new Hero(Ranks.ME, R.drawable.thief, "thief.png", 15, 15, 8, 13, 9, 5, R.string.thief, R.string.thief_description, 10, null, 0, 1);
+        Hero hero = new Hero("thief", Ranks.ME, 15, 15, 8, 13, 9, 5, null, 0, 1);
         hero.equip(WeaponFactory.buildSword());
         hero.getSkills().add(SkillFactory.buildCamouflage());
         hero.getSkills().add(SkillFactory.buildFatalBlow());

@@ -13,12 +13,12 @@
         android:gravity="center"
         android:background="@drawable/bg_gui"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="7dp">
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/new_level_title"
             style="@style/PopupMessage"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -40,8 +40,8 @@
             android:id="@+id/skills"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:columnCount="4">
+            android:layout_marginTop="3dp"
+            android:columnCount="8">
 
             <include layout="@layout/in_game_item" />
 
@@ -63,7 +63,7 @@
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/points_left"
             style="@style/PopupMessage"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"

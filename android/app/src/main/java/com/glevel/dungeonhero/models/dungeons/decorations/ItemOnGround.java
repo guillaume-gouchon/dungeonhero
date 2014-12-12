@@ -14,8 +14,13 @@ public class ItemOnGround extends Searchable implements Serializable {
 
     private static final long serialVersionUID = -5951439044612420653L;
 
-    public ItemOnGround(int name, Reward reward) {
-        super(name, "item_on_ground.png", reward, 12, 12, 1, 1);
+    public ItemOnGround(String identifier, Reward reward) {
+        super(identifier, reward, 12, 12, 1, 1);
+    }
+
+    @Override
+    public String getSpriteName() {
+        return "item_on_ground.png";
     }
 
     @Override
@@ -34,5 +39,5 @@ public class ItemOnGround extends Searchable implements Serializable {
         super.createSprite(vertexBufferObjectManager);
         sprite.setZIndex(2);
     }
-    
+
 }

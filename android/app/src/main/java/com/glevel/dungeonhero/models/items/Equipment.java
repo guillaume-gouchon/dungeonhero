@@ -16,9 +16,11 @@ public class Equipment extends Item implements Serializable {
 
     private final List<Effect> effects = new ArrayList<Effect>();
     private final List<Requirement> requirements = new ArrayList<Requirement>();
+    private final int level;
 
-    public Equipment(int name, int description, int image, int color) {
-        super(name, description, image, color, true);
+    public Equipment(String identifier, int level) {
+        super(identifier, true);
+        this.level = level;
     }
 
     public static int getEquipmentEmptyImage(int index) {
@@ -42,6 +44,10 @@ public class Equipment extends Item implements Serializable {
         effects.add(effect);
     }
 
+    public List<Effect> getEffects() {
+        return effects;
+    }
+
     public void addRequirement(Requirement requirement) {
         requirements.add(requirement);
     }
@@ -50,11 +56,8 @@ public class Equipment extends Item implements Serializable {
         return requirements;
     }
 
-    public List<Effect> getEffects() {
-        if (!isIdentified) {
-            return new ArrayList<Effect>();
-        }
-        return effects;
+    public int getLevel() {
+        return level;
     }
 
 }

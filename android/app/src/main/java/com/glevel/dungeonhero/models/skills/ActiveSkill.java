@@ -16,8 +16,8 @@ public class ActiveSkill extends Skill implements Serializable {
     private final int radius;
     private final Effect effect;
 
-    public ActiveSkill(int name, int description, int image, int level, boolean personal, int radius, Effect effect) {
-        super(name, description, image, level);
+    public ActiveSkill(String identifier, int level, boolean personal, int radius, Effect effect) {
+        super(identifier, level);
         this.personal = personal;
         this.radius = radius;
         this.effect = effect;

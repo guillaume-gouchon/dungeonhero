@@ -17,8 +17,8 @@ public class Searchable extends Decoration implements Serializable {
     private boolean isEmpty = false;
     private Reward reward;
 
-    public Searchable(int name, String spriteName, Reward reward, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
-        super(name, spriteName, spriteWidth, spriteHeight, nbSpritesX, nbSpritesY);
+    public Searchable(String identifier, Reward reward, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
+        super(identifier, spriteWidth, spriteHeight, nbSpritesX, nbSpritesY);
         this.reward = reward;
     }
 

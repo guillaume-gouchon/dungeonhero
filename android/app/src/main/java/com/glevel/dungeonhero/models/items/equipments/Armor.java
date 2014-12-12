@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.models.items.equipments;
 
-import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.items.Equipment;
 
 import java.io.Serializable;
@@ -14,8 +13,8 @@ public class Armor extends Equipment implements Serializable {
 
     private final int protection;
 
-    public Armor(int name, int description, int image, int protection) {
-        super(name, description, image, R.color.bg_armor);
+    public Armor(String identifier, int protection, int level) {
+        super(identifier, level);
         this.protection = protection;
     }
 

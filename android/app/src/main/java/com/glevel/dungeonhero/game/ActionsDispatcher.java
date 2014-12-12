@@ -46,6 +46,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by guillaume on 10/14/14.
@@ -100,7 +102,10 @@ public class ActionsDispatcher implements UserActionListener {
                 executeAction(tile);
             } else {
                 hideElementInfo();
-                if (mGameActivity.getRoom().isSafe()) {
+                if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition() == tile && tile.getSubContent().size() > 0
+                        && tile.getSubContent().get(0) instanceof Stairs) {
+                    enterStairs();
+                } else if (mGameActivity.getRoom().isSafe()) {
                     if (isMoving) {
                         interrupt = true;
                         mGameActivity.runOnUpdateThread(new Runnable() {
@@ -167,20 +172,7 @@ public class ActionsDispatcher implements UserActionListener {
                             mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
                         } else if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().size() > 0
                                 && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0) instanceof Stairs) {
-                            // enters a stairs tile
-                            hideActionTiles();
-                            showActions();
-
-                            mGameActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (mGameActivity.getRoom().isSafe() && ((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
-                                        mGUIManager.showFinishQuestDialog();
-                                    } else {
-                                        mGUIManager.showLeaveQuestDialog();
-                                    }
-                                }
-                            });
+                            enterStairs();
                         } else if (mGameActivity.getRoom().isSafe()) {
                             hideActionTiles();
                             showActions();
@@ -194,6 +186,22 @@ public class ActionsDispatcher implements UserActionListener {
                 setInputEnabled(true);
             }
         }
+    }
+
+    private void enterStairs() {
+        hideActionTiles();
+        showActions();
+
+        mGameActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mGameActivity.getRoom().isSafe() && ((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
+                    mGUIManager.showFinishQuestDialog();
+                } else {
+                    mGUIManager.showLeaveQuestDialog();
+                }
+            }
+        });
     }
 
     public void attack(final Tile tile) {
@@ -242,7 +250,11 @@ public class ActionsDispatcher implements UserActionListener {
                     if (tile.getContent() != null && tile.getContent() instanceof Searchable) {
                         searchable = (Searchable) tile.getContent();
                     } else {
-                        searchable = (Searchable) tile.getSubContent().get(0);
+                        if (tile.getSubContent().get(0) instanceof Stairs) {
+                            searchable = (Searchable) tile.getSubContent().get(1);
+                        } else {
+                            searchable = (Searchable) tile.getSubContent().get(0);
+                        }
                     }
                     Reward reward = searchable.search();
                     if (searchable instanceof ItemOnGround) {
@@ -275,7 +287,7 @@ public class ActionsDispatcher implements UserActionListener {
             mGameActivity.getHero().addGold(reward.getGold());
             boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
             if (newLevel) {
-                mGUIManager.showNewLevelDialog();
+                mGUIManager.showNewLevelDialog(null);
             }
         }
     }
@@ -295,7 +307,7 @@ public class ActionsDispatcher implements UserActionListener {
 
     public void dropItem(Item item) {
         Tile tile = mGameActivity.getHero().getTilePosition();
-        ItemOnGround itemOnGround = new ItemOnGround(item.getName(), new Reward(item, 0, 0));
+        ItemOnGround itemOnGround = new ItemOnGround(item.getIdentifier(), new Reward(item, 0, 0));
         itemOnGround.setTilePosition(tile);
         mGameActivity.addElementToScene(itemOnGround);
         mGameActivity.getRoom().getObjects().add(itemOnGround);
@@ -350,7 +362,7 @@ public class ActionsDispatcher implements UserActionListener {
                 pnj.getDiscussions().remove(0);
             }
         } else {
-            mGUIManager.showDiscussion(pnj, new Discussion(pnj.getImage(), pnj.getName(), R.string.discussion_is_over, null, true, null), onDiscussionSelected);
+            mGUIManager.showDiscussion(pnj, new Discussion("discussion_is_over", null, true, null), onDiscussionSelected);
         }
     }
 
@@ -472,6 +484,8 @@ public class ActionsDispatcher implements UserActionListener {
             tile.setAction(Actions.MOVE);
             c = new ActionTile(Actions.MOVE, tile, mGameActivity.getVertexBufferObjectManager());
             if (mGameActivity.getActiveCharacter().getRank() != Ranks.ME) {
+                // enemies tiles are red and more transparent
+                c.setColor(new Color(1.0f, 0.0f, 0.0f));
                 c.setAlpha(0.15f);
             }
             mGameActivity.mGroundLayer.attachChild(c);
@@ -610,15 +624,7 @@ public class ActionsDispatcher implements UserActionListener {
         }
         mGameActivity.getHero().addGold(reward.getGold());
         mGameActivity.getHero().addFrag();
-        boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
-        if (newLevel) {
-            mGameActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mGUIManager.showNewLevelDialog();
-                }
-            });
-        }
+        final boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
 
         if (reward.getGold() > 0) {
             mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
@@ -634,43 +640,64 @@ public class ActionsDispatcher implements UserActionListener {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
                             Log.d(TAG, "animating fight reward is over");
-                            onActionExecuted.onActionDone(true);
+                            if (newLevel) {
+                                mGameActivity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mGUIManager.showNewLevelDialog(onActionExecuted);
+                                    }
+                                });
+                            } else {
+                                onActionExecuted.onActionDone(true);
+                            }
                         }
                     });
                 }
             });
         } else {
             Log.d(TAG, "animating fight reward is over");
-            onActionExecuted.onActionDone(true);
+            if (newLevel) {
+                mGameActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mGUIManager.showNewLevelDialog(onActionExecuted);
+                    }
+                });
+            } else {
+                onActionExecuted.onActionDone(true);
+            }
         }
     }
 
     public void setActivatedSkill(ActiveSkill skill) {
         if (skill.isPersonal()) {
             activatedSkill = skill;
-            mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(skill.getName())), R.color.green);
+            mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(skill.getName(mGameActivity.getResources()))), R.color.green);
             useSkill(mGameActivity.getActiveCharacter().getTilePosition());
         } else if (activatedSkill == skill) {
             activatedSkill = null;
-            mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_off, mGameActivity.getString(skill.getName())), R.color.red);
+            mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_off, mGameActivity.getString(skill.getName(mGameActivity.getResources()))), R.color.red);
         } else {
             activatedSkill = skill;
-            mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_on, mGameActivity.getString(skill.getName())), R.color.green);
+            mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_on, mGameActivity.getString(skill.getName(mGameActivity.getResources()))), R.color.green);
         }
     }
 
     public void useSkill(Tile tile) {
-        mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(activatedSkill.getName())), R.color.green);
-        Effect buff = activatedSkill.getEffect();
+        mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(activatedSkill.getName(mGameActivity.getResources()))), R.color.green);
+        Effect effect = activatedSkill.getEffect();
+
+        // update effect value depending on skill level
+        Effect updatedEffect = effect.getUpdatedEffectWithSkillLevel(activatedSkill.getLevel());
 
         if (!activatedSkill.isPersonal() || activatedSkill.getRadius() == 0) {
-            applyEffect(buff, tile, true);
+            applyEffect(updatedEffect, tile, true);
         }
         if (activatedSkill.getRadius() > 0) {
             Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, activatedSkill.getRadius(), true, null);
             for (Tile targetTile : targetTiles) {
                 if (targetTile != mGameActivity.getActiveCharacter().getTilePosition()) {
-                    applyEffect(buff, targetTile, true);
+                    applyEffect(updatedEffect, targetTile, true);
                 }
             }
         }
@@ -679,23 +706,33 @@ public class ActionsDispatcher implements UserActionListener {
         activatedSkill = null;
         mGUIManager.updateSkillButtons();
 
-        // TODO : do next turn when everyone is dead
-        mGameActivity.nextTurn();
+        // do next turn when everyone is dead
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mGameActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mGameActivity.nextTurn();
+                    }
+                });
+            }
+        }, 700);
     }
 
-    public void applyEffect(Effect buff, final Tile tile, boolean addExtra) {
+    public void applyEffect(Effect effect, final Tile tile, boolean addExtra) {
         // apply effect
         if (tile.getContent() != null && tile.getContent() instanceof Unit) {
             final Unit target = (Unit) tile.getContent();
-            if (buff.getTarget() == Characteristics.HP) {
+            if (effect.getTarget() == Characteristics.HP) {
                 // damage or heal
-                target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + buff.getValue()));
+                target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + effect.getValue()));
             } else {
                 // special effects
-                target.getBuffs().add(buff);
+                target.getBuffs().add(effect);
             }
-            if (addExtra && buff.getSpecial() != null) {
-                target.getBuffs().add(buff.getSpecial());
+            if (addExtra && effect.getSpecial() != null) {
+                target.getBuffs().add(effect.getSpecial());
             }
 
             if (target.isDead()) {
@@ -710,10 +747,9 @@ public class ActionsDispatcher implements UserActionListener {
         }
 
         // animate
-        if (buff.getSpriteName() != null) {
-            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), buff.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+        if (effect.getSpriteName() != null) {
+            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
         }
-
     }
 
     public void setInputEnabled(boolean enabled) {
