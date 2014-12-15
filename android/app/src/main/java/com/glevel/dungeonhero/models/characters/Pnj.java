@@ -15,8 +15,8 @@ public class Pnj extends Hero {
     private final List<Discussion> discussions = new ArrayList<Discussion>();
     private boolean isActive;
 
-    public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level) {
-        super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement, null, xp, level);
+    public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType) {
+        super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement, null, xp, level, heroType);
     }
 
     public List<Discussion> getDiscussions() {

@@ -32,7 +32,7 @@
             android:text="@string/placeholder" />
 
         <LinearLayout
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -61,7 +61,7 @@
 
         <LinearLayout
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -110,7 +110,7 @@
             android:layout_width="match_parent" />
 
         <com.glevel.dungeonhero.views.CustomTextView
-            android:padding="7dp"
+            android:padding="5dp"
             android:text="@string/secondary_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -223,7 +223,7 @@
             android:layout_width="match_parent" />
 
         <com.glevel.dungeonhero.views.CustomTextView
-            android:padding="7dp"
+            android:padding="5dp"
             android:text="@string/skills"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

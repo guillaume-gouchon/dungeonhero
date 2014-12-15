@@ -3,9 +3,9 @@ package com.glevel.dungeonhero.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.glevel.dungeonhero.data.DecorationFactory;
-import com.glevel.dungeonhero.data.MonsterFactory;
-import com.glevel.dungeonhero.data.PNJFactory;
+import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
+import com.glevel.dungeonhero.data.characters.MonsterFactory;
+import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.game.graphics.SpriteHolder;

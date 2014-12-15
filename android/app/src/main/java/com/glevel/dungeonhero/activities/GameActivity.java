@@ -8,7 +8,7 @@ import android.view.View;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
 import com.glevel.dungeonhero.data.BookFactory;
-import com.glevel.dungeonhero.data.HeroFactory;
+import com.glevel.dungeonhero.data.characters.HeroFactory;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
@@ -33,6 +33,7 @@ import com.glevel.dungeonhero.models.effects.PoisonEffect;
 import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.models.items.consumables.Potion;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
@@ -70,7 +71,7 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             // TODO : used fot testing only
             mGame = new Game();
-            mGame.setHero(HeroFactory.buildBerserker());
+            mGame.setHero(HeroFactory.buildElfRanger());
             mGame.setBook(BookFactory.buildInitiationBook(1));
         }
 
@@ -185,7 +186,7 @@ public class GameActivity extends MyBaseGameActivity {
         Log.d(TAG, "removing element");
         gameElement.destroy();
         mRoom.removeElement(gameElement);
-        mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
+        mGUIManager.updateQueue(mActiveCharacter, mRoom);
         super.removeElement(gameElement.getSprite(), false);
     }
 
@@ -232,6 +233,7 @@ public class GameActivity extends MyBaseGameActivity {
             }
 
             if (view.getTag(R.string.item) != null) {
+                Log.d(TAG, "Show item info");
                 final Item item = (Item) view.getTag(R.string.item);
                 mGUIManager.showItemInfo(mHero, item, new OnActionExecuted() {
                     @Override
@@ -240,7 +242,26 @@ public class GameActivity extends MyBaseGameActivity {
                     }
                 });
             } else if (view.getTag(R.string.use_skill) != null) {
+                Log.d(TAG, "Use skill");
                 mActionDispatcher.setActivatedSkill((ActiveSkill) view.getTag(R.string.use_skill));
+            }
+
+            if (view.getTag(R.string.item) != null) {
+                Log.d(TAG, "Drop Item");
+                final Item item = (Item) view.getTag(R.string.item);
+                mGUIManager.showItemInfo(mHero, item, new OnActionExecuted() {
+                    @Override
+                    public void onActionDone(boolean success) {
+                        mActionDispatcher.dropItem(item);
+                    }
+                });
+            }
+
+            if (view.getTag(R.string.potion) != null) {
+                Log.d(TAG, "Drink potion");
+                final Potion potion = (Potion) view.getTag(R.string.potion);
+                mHero.use(potion);
+                mActionDispatcher.applyEffect(potion.getEffect(), mHero.getTilePosition(), false);
             }
         }
 
@@ -350,12 +371,12 @@ public class GameActivity extends MyBaseGameActivity {
 
                     mRoom.getQueue().add(mRoom.getQueue().get(0));
                     mRoom.getQueue().remove(0);
-                    mGUIManager.updateQueue(mActiveCharacter, mRoom.getQueue(), mRoom.isSafe());
+                    mGUIManager.updateQueue(mActiveCharacter, mRoom);
                 }
 
                 updateActionTiles();
                 mActionDispatcher.hideElementInfo();
-                mGUIManager.updateActiveHeroLayout(mHero);
+                mGUIManager.updateActiveHeroLayout();
 
                 // handle current buffs
                 boolean skipTurn = false;

@@ -1,7 +1,5 @@
 package com.glevel.dungeonhero.models.items.equipments;
 
-import com.glevel.dungeonhero.models.items.Equipment;
-
 import java.io.Serializable;
 
 /**

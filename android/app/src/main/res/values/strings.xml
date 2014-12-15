@@ -149,6 +149,8 @@
     <string name="secondary_stats">Secondary stats</string>
     <string name="skills">Skills</string>
     <string name="use_skill_personal">%s !</string>
+    <string name="potion">potion</string>
+    <string name="drink">Drink</string>
 
     <!-- Books -->
     <string name="tutorial">Tutorial</string>
@@ -187,9 +189,58 @@
     <string name="gargoyle">Gargoyle</string>
     <string name="demon_king">High Demon</string>
 
+    <!-- Weapons -->
+    <string name="axe">Axe</string>
+    <string name="battle_axe">Battle Axe</string>
+    <string name="boomerang">Boomerang</string>
+    <string name="bow">Bow</string>
+    <string name="broad_sword">Broad Sword</string>
+    <string name="crossbow">Crossbow</string>
+    <string name="dagger">Dagger</string>
+    <string name="large_shield">Large Shield</string>
+    <string name="laser_saber">Laser Saber</string>
+    <string name="laser_saber_description">What is that thing ???</string>
+    <string name="long_sword">Long Sword</string>
+    <string name="round_shield">Round Shield</string>
+    <string name="short_sword">Short Sword</string>
+    <string name="shuriken">Shuriken</string>
+    <string name="spear">Spear</string>
+    <string name="spiked_mace">Morgenstern</string>
+    <string name="throwing_daggers">Throwing Daggers</string>
+    <string name="wizard_staff">Wizard Staff</string>
+
+    <!-- Armors -->
+    <string name="robe">Robe</string>
+    <string name="leather_vest">Leather Vest</string>
+    <string name="leather_plastron">Leather Plastron</string>
+    <string name="chain_mail">Chain Mail</string>
+    <string name="lamellar">Lamellar</string>
+    <string name="breast_plate">Breast Plate</string>
+
+    <!-- Potions -->
+    <string name="force_potion">Force Potion</string>
+    <string name="force_potion_description">Boost up your strength for a limited amount of time.</string>
+    <string name="greater_healing_potion">Greater Healing Potion</string>
+    <string name="greater_healing_potion_description">Makes recover 30 health points.</string>
+    <string name="healing_potion">Healing Potion</string>
+    <string name="healing_potion_description">Makes recover 10 health points.</string>
+    <string name="heroic_potion">Heroic Potion</string>
+    <string name="heroic_potion_description">Once drunk, this potion makes you feeling heroic. You can play twice in a row.</string>
+    <string name="invisibility_potion">Invisibility Potion</string>
+    <string name="invisibility_potion_description">This grey liquid turns you invisible for a limited amount of time.</string>
+    <string name="luck_potion">Luck Potion</string>
+    <string name="luck_potion_description">You are feeling lucky; it is easier for you to avoid attacks.</string>
+    <string name="magic_shield_potion">Magic shield Potion</string>
+    <string name="magic_shield_potion_description">If you drink this mixture, an invisible magic shield will appear around you and will protect you for a limited amount of time.</string>
+    <string name="recovery_potion">Recovery Potion</string>
+    <string name="recovery_potion_description">Restores all your skills.</string>
+    <string name="speed_potion">Speed Potion</string>
+    <string name="speed_potion_description">This sparkling potion will make you light as a feather, increasing your movement for a limited amount of time.</string>
+    <string name="unknown_liquid">Unknown Liquid</string>
+    <string name="unknown_liquid_description">Who knows what it is...</string>
+
     <!-- PNJs -->
     <string name="princess">Princess</string>
-
 
     <!-- Discussions -->
     <string name="hello_discussion">Hello adventurer, do you like eating pafs ?</string>
@@ -201,10 +252,6 @@
     <string name="discussion_is_over">I don\'t want to talk to you anymore.</string>
     <string name="hello_riddle">Qu\'est ce qui est petit et marron ?</string>
     <string name="hello_riddle_wrong_answer">You got it wrong adventurer...</string>
-
-    <!-- Items -->
-    <string name="short_sword">Short Sword</string>
-    <string name="short_sword_description">A short sword.</string>
 
     <!-- Skills -->
     <string name="berserker_rage">Rage of the Berserker</string>

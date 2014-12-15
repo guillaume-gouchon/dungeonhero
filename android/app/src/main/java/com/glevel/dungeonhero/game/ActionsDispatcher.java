@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.GameActivity;
-import com.glevel.dungeonhero.data.dungeon.GroundTypes;
+import com.glevel.dungeonhero.data.dungeons.GroundTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.InputManager;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
@@ -28,9 +28,11 @@ import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
 import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
 import com.glevel.dungeonhero.models.effects.Effect;
+import com.glevel.dungeonhero.models.effects.RecoveryEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
+import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.pathfinding.AStar;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
@@ -207,7 +209,8 @@ public class ActionsDispatcher implements UserActionListener {
     public void attack(final Tile tile) {
         Log.d(TAG, "attack");
         setInputEnabled(false);
-        goCloserTo(tile, new OnActionExecuted() {
+
+        OnActionExecuted callback = new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
                 if (success) {
@@ -234,7 +237,13 @@ public class ActionsDispatcher implements UserActionListener {
                 }
                 isMoving = false;
             }
-        });
+        };
+
+        if (mGameActivity.getActiveCharacter().isRangeAttack()) {
+            callback.onActionDone(true);
+        } else {
+            goCloserTo(tile, callback);
+        }
     }
 
     private void search(final Tile tile) {
@@ -417,7 +426,8 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void addAvailableAction(GameElement gameElement) {
-        boolean isActionPossible = mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), gameElement.getTilePosition()) <= 1;
+        boolean isActionPossible = mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), gameElement.getTilePosition()) <= 1
+                || mGameActivity.getActiveCharacter().isRangeAttack() && gameElement.isEnemy(mGameActivity.getActiveCharacter());
         if (!isActionPossible) {
             Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), gameElement.getTilePosition(), 1, false, mGameActivity.getActiveCharacter());
             for (Tile adjacent : adjacentTiles) {
@@ -498,7 +508,9 @@ public class ActionsDispatcher implements UserActionListener {
 
     public void showActions() {
         for (GameElement gameElement : mGameActivity.getRoom().getObjects()) {
-            if (mGameActivity.getActiveCharacter() != gameElement && (mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement() + 1)) {
+            if (mGameActivity.getActiveCharacter() != gameElement
+                    && ((mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement() + 1)
+                    || mGameActivity.getActiveCharacter().isRangeAttack() && gameElement.isEnemy(mGameActivity.getActiveCharacter()))) {
                 addAvailableAction(gameElement);
             }
         }
@@ -721,10 +733,18 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     public void applyEffect(Effect effect, final Tile tile, boolean addExtra) {
+        Log.d(TAG, "Applying effect of " + effect.getValue() + " " + effect.getTarget() + " on tile " + tile.getX() + "," + tile.getY());
         // apply effect
         if (tile.getContent() != null && tile.getContent() instanceof Unit) {
             final Unit target = (Unit) tile.getContent();
-            if (effect.getTarget() == Characteristics.HP) {
+            if (effect instanceof RecoveryEffect) {
+                // recover all skills
+                for (Skill skill : target.getSkills()) {
+                    if (skill instanceof ActiveSkill) {
+                        ((ActiveSkill) skill).reset();
+                    }
+                }
+            } else if (effect.getTarget() == Characteristics.HP) {
                 // damage or heal
                 target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + effect.getValue()));
             } else {
@@ -750,6 +770,9 @@ public class ActionsDispatcher implements UserActionListener {
         if (effect.getSpriteName() != null) {
             mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
         }
+
+        mGUIManager.updateActiveHeroLayout();
+        mGUIManager.updateQueue(mGameActivity.getActiveCharacter(), mGameActivity.getRoom());
     }
 
     public void setInputEnabled(boolean enabled) {

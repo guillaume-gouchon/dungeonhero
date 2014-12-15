@@ -2,10 +2,10 @@ package com.glevel.dungeonhero.models.dungeons;
 
 import android.util.Log;
 
-import com.glevel.dungeonhero.data.DecorationFactory;
-import com.glevel.dungeonhero.data.MonsterFactory;
-import com.glevel.dungeonhero.data.dungeon.GroundTypes;
-import com.glevel.dungeonhero.data.dungeon.RoomFactory;
+import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
+import com.glevel.dungeonhero.data.characters.MonsterFactory;
+import com.glevel.dungeonhero.data.dungeons.GroundTypes;
+import com.glevel.dungeonhero.data.dungeons.RoomFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Monster;

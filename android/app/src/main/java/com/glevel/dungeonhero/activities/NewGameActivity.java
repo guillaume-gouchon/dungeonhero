@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.HeroesAdapter;
-import com.glevel.dungeonhero.data.HeroFactory;
+import com.glevel.dungeonhero.data.characters.HeroFactory;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.utils.ApplicationUtils;

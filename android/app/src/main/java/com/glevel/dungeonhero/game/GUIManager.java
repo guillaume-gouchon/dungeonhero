@@ -42,13 +42,16 @@ import com.glevel.dungeonhero.models.discussions.Reaction;
 import com.glevel.dungeonhero.models.discussions.riddles.MultiChoicesRiddle;
 import com.glevel.dungeonhero.models.discussions.riddles.OpenRiddle;
 import com.glevel.dungeonhero.models.discussions.riddles.Riddle;
+import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.effects.Effect;
-import com.glevel.dungeonhero.models.items.Consumable;
-import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
-import com.glevel.dungeonhero.models.items.Requirement;
+import com.glevel.dungeonhero.models.items.consumables.Potion;
 import com.glevel.dungeonhero.models.items.equipments.Armor;
-import com.glevel.dungeonhero.models.items.equipments.Weapon;
+import com.glevel.dungeonhero.models.items.equipments.Equipment;
+import com.glevel.dungeonhero.models.items.equipments.weapons.TwoHandedWeapon;
+import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
+import com.glevel.dungeonhero.models.items.requirements.Requirement;
+import com.glevel.dungeonhero.models.items.requirements.StatRequirement;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
@@ -58,7 +61,6 @@ import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.HintTextView;
 import com.glevel.dungeonhero.views.LifeBar;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -354,32 +356,32 @@ public class GUIManager {
         });
     }
 
-    public void updateActiveHeroLayout(final Hero hero) {
+    public void updateActiveHeroLayout() {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 LifeBar lifeBar = (LifeBar) mActiveHeroLayout.findViewById(R.id.life);
-                lifeBar.updateLife(hero.getLifeRatio());
+                lifeBar.updateLife(mHero.getLifeRatio());
             }
         });
     }
 
-    public void updateQueue(final Unit activeCharacter, final List<Unit> queue, final boolean isSafe) {
+    public void updateQueue(final Unit activeCharacter, final Room room) {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (isSafe) {
+                if (room.isSafe()) {
                     mQueueLayout.setVisibility(View.GONE);
                 } else {
                     mQueueLayout.setVisibility(View.VISIBLE);
                     updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.activeCharacter), activeCharacter);
-                    if (queue.size() > 1) {
-                        updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextCharacter), queue.get(0));
+                    if (room.getQueue().size() > 1) {
+                        updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextCharacter), room.getQueue().get(0));
                     } else {
                         mQueueLayout.findViewById(R.id.nextCharacter).setVisibility(View.GONE);
                     }
-                    if (queue.size() > 2) {
-                        updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextnextCharacter), queue.get(1));
+                    if (room.getQueue().size() > 2) {
+                        updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextnextCharacter), room.getQueue().get(1));
                     } else {
                         mQueueLayout.findViewById(R.id.nextnextCharacter).setVisibility(View.GONE);
                     }
@@ -687,6 +689,12 @@ public class GUIManager {
             equipment = hero.getEquipments()[n];
             updateEquipmentLayout(equipmentLayout.getChildAt(n), equipment, Equipment.getEquipmentEmptyImage(n));
         }
+
+        if (hero.getEquipments()[0] instanceof TwoHandedWeapon) {
+            ImageView image = (ImageView) equipmentLayout.getChildAt(1).findViewById(R.id.image);
+            image.setImageResource(hero.getEquipments()[0].getImage(mResources));
+            image.setAlpha(0.5f);
+        }
     }
 
     private void updateEquipmentLayout(View itemView, Item item, int defaultImage) {
@@ -701,7 +709,7 @@ public class GUIManager {
             image.setAlpha(1.0f);
             itemView.setEnabled(true);
             itemView.setOnClickListener(mActivity);
-        } else if (itemView.isEnabled()) {
+        } else {
             background.setBackgroundColor(mActivity.getResources().getColor(android.R.color.transparent));
             image.setImageResource(defaultImage);
             image.setAlpha(0.2f);
@@ -746,7 +754,7 @@ public class GUIManager {
                 descriptionTV.setVisibility(View.GONE);
             }
 
-            TextView actionButton = (TextView) mItemInfoDialog.findViewById(R.id.actionButton);
+            final TextView actionButton = (TextView) mItemInfoDialog.findViewById(R.id.actionButton);
             TextView dropButton = (TextView) mItemInfoDialog.findViewById(R.id.dropButton);
             ViewGroup statsLayout = (ViewGroup) mItemInfoDialog.findViewById(R.id.stats);
             ViewGroup requirementsLayout = (ViewGroup) mItemInfoDialog.findViewById(R.id.requirements);
@@ -795,17 +803,21 @@ public class GUIManager {
 
                 // add requirements
                 for (Requirement requirement : equipment.getRequirements()) {
-                    addStatToItemLayout(requirementsLayout.getChildAt(indexRequirements++), mActivity.getString(R.string.minimum, requirement.getValue()), requirement.getTarget().getImage(), requirement.getTarget().getName(), R.color.white);
+                    if (requirement instanceof StatRequirement) {
+                        StatRequirement statRequirement = (StatRequirement) requirement;
+                        addStatToItemLayout(requirementsLayout.getChildAt(indexRequirements++), mActivity.getString(R.string.minimum, statRequirement.getValue()), statRequirement.getTarget().getImage(), statRequirement.getTarget().getName(), R.color.white);
+                    }
                 }
-            } else if (item instanceof Consumable) {
-                final Consumable consumable = (Consumable) item;
-                actionButton.setText(R.string.use);
+            } else if (item instanceof Potion) {
+                final Potion potion = (Potion) item;
+                actionButton.setText(R.string.drink);
+                actionButton.setTag(R.string.potion, potion);
                 actionButton.setOnClickListener(new OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        hero.use(consumable);
-                        updateBag(hero);
+                    public void onClick(View v) {
                         mItemInfoDialog.dismiss();
+                        mBagDialog.dismiss();
+                        mActivity.onClick(v);
                     }
                 });
             }

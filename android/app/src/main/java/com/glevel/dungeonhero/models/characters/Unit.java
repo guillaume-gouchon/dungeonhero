@@ -6,13 +6,14 @@ import com.glevel.dungeonhero.models.FightResult;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.items.Characteristics;
-import com.glevel.dungeonhero.models.items.Consumable;
-import com.glevel.dungeonhero.models.items.Equipment;
 import com.glevel.dungeonhero.models.items.Item;
-import com.glevel.dungeonhero.models.items.Requirement;
+import com.glevel.dungeonhero.models.items.consumables.Consumable;
 import com.glevel.dungeonhero.models.items.equipments.Armor;
+import com.glevel.dungeonhero.models.items.equipments.Equipment;
 import com.glevel.dungeonhero.models.items.equipments.Ring;
-import com.glevel.dungeonhero.models.items.equipments.Weapon;
+import com.glevel.dungeonhero.models.items.equipments.weapons.RangeWeapon;
+import com.glevel.dungeonhero.models.items.equipments.weapons.TwoHandedWeapon;
+import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
@@ -226,6 +227,9 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         for (int n = 0; n < equipments.length; n++) {
             if (equipments[n] != null) {
                 equipment = equipments[n];
+                if (characteristic == Characteristics.PROTECTION && equipment instanceof Armor) {
+                    bonus += ((Armor) equipment).getProtection();
+                }
                 for (Effect buff : equipment.getEffects()) {
                     if (buff.getTarget() == characteristic) {
                         bonus += buff.getValue();
@@ -254,14 +258,22 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
                 removeEquipment(2);
             }
             equipments[2] = equipment;
+        } else if (equipment instanceof TwoHandedWeapon) {
+            if (equipments[0] != null) {
+                removeEquipment(0);
+            }
+            if (equipments[1] != null) {
+                removeEquipment(1);
+            }
+            equipments[0] = equipment;
         } else if (equipment instanceof Weapon) {
             if (equipments[0] == null) {
                 equipments[0] = equipment;
-            } else if (equipments[1] == null) {
+            } else if (!(equipments[0] instanceof TwoHandedWeapon) && equipments[1] == null) {
                 equipments[1] = equipment;
             } else {
-                removeEquipment(1);
-                equipments[1] = equipment;
+                removeEquipment(0);
+                equipments[0] = equipment;
             }
         } else if (equipment instanceof Ring) {
             if (equipments[3] == null) {
@@ -316,20 +328,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
     public void use(Consumable consumable) {
         items.remove(consumable);
-        consumable.use(this);
-    }
-
-    public boolean canEquipItem(Equipment equipment) {
-        for (Requirement requirement : equipment.getRequirements()) {
-            if (requirement.getTarget() == Characteristics.STRENGTH && strength < requirement.getValue()) {
-                return false;
-            } else if (requirement.getTarget() == Characteristics.DEXTERITY && dexterity < requirement.getValue()) {
-                return false;
-            } else if (requirement.getTarget() == Characteristics.SPIRIT && spirit < requirement.getValue()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public boolean testCharacteristic(Characteristics target, int value) {
@@ -346,4 +344,9 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         }
         return Math.random() * 20 + value < characValue;
     }
+
+    public boolean isRangeAttack() {
+        return equipments[0] != null && equipments[0] instanceof RangeWeapon;
+    }
+
 }

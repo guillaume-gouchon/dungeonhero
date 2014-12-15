@@ -37,7 +37,7 @@ public class ItemOnGround extends Searchable implements Serializable {
     @Override
     public void createSprite(VertexBufferObjectManager vertexBufferObjectManager) {
         super.createSprite(vertexBufferObjectManager);
-        sprite.setZIndex(2);
+        sprite.setZIndex(3);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.data;
 
+import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.dungeons.Event;

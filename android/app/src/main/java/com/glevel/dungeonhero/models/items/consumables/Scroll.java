@@ -1,8 +1,5 @@
 package com.glevel.dungeonhero.models.items.consumables;
 
-import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.models.items.Consumable;
-
 import java.io.Serializable;
 
 /**

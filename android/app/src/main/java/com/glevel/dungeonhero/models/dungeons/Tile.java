@@ -1,6 +1,6 @@
 package com.glevel.dungeonhero.models.dungeons;
 
-import com.glevel.dungeonhero.data.dungeon.GroundTypes;
+import com.glevel.dungeonhero.data.dungeons.GroundTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.Actions;
 import com.glevel.dungeonhero.utils.pathfinding.Node;

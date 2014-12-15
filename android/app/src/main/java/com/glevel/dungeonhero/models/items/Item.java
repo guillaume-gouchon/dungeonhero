@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.models.items;
 
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.StorableResource;
+import com.glevel.dungeonhero.models.items.equipments.Equipment;
 
 import java.io.Serializable;
 

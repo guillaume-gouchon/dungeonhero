@@ -1,8 +1,13 @@
 package com.glevel.dungeonhero.models.characters;
 
 
-import com.glevel.dungeonhero.models.items.Equipment;
+import com.glevel.dungeonhero.data.items.PotionFactory;
+import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
+import com.glevel.dungeonhero.models.items.equipments.Equipment;
+import com.glevel.dungeonhero.models.items.requirements.HeroRequirement;
+import com.glevel.dungeonhero.models.items.requirements.Requirement;
+import com.glevel.dungeonhero.models.items.requirements.StatRequirement;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
@@ -17,6 +22,7 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     private static final long serialVersionUID = -2887616275513777101L;
 
     private final String productId;
+    private final HeroTypes heroType;
     protected boolean mHasBeenBought = false;
     protected int frags = 0;
     private int xp;
@@ -24,12 +30,21 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     private String heroName;
     private int skillPoints;
 
-    public Hero(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, String productId, int xp, int level) {
+    public enum HeroTypes {
+        STR, DEX, SPI, STR_DEX, STR_SPI, DEX_SPI
+    }
+
+    public Hero(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, String productId, int xp, int level, HeroTypes heroType) {
         super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement);
         this.productId = productId;
         this.xp = xp;
         this.level = level;
+        this.heroType = heroType;
         this.skillPoints = getInitialSkillPoints();
+
+        // add some healing potions
+        addItem(PotionFactory.buildHealingPotion());
+        addItem(PotionFactory.buildHealingPotion());
     }
 
     @Override
@@ -92,37 +107,44 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     private void increaseLevel() {
         level++;
 
-        // increase characteristics
-        if (strength > dexterity && strength > spirit) {
-            strength += 6;
-            dexterity += 2;
-            spirit += 2;
-            skillPoints = 1;
-        } else if (dexterity > strength && dexterity > spirit) {
-            strength += 2;
-            dexterity += 6;
-            spirit += 2;
-            skillPoints = 2;
-        } else if (spirit > dexterity && spirit > strength) {
-            strength += 2;
-            dexterity += 2;
-            spirit += 6;
-            skillPoints = 3;
-        } else if (strength == dexterity && strength > spirit) {
-            strength += 4;
-            dexterity += 4;
-            spirit += 2;
-            skillPoints = 1;
-        } else if (strength == spirit && strength > dexterity) {
-            strength += 4;
-            dexterity += 2;
-            spirit += 4;
-            skillPoints = 2;
-        } else if (dexterity == spirit && dexterity > strength) {
-            strength += 2;
-            dexterity += 4;
-            spirit += 4;
-            skillPoints = 2;
+        // increase characteristics and skill points
+        switch (heroType) {
+            case STR:
+                strength += 6;
+                dexterity += 2;
+                spirit += 2;
+                skillPoints = 1;
+                break;
+            case DEX:
+                strength += 2;
+                dexterity += 6;
+                spirit += 2;
+                skillPoints = 2;
+                break;
+            case SPI:
+                strength += 2;
+                dexterity += 2;
+                spirit += 6;
+                skillPoints = 3;
+                break;
+            case STR_DEX:
+                strength += 4;
+                dexterity += 4;
+                spirit += 2;
+                skillPoints = 1;
+                break;
+            case STR_SPI:
+                strength += 4;
+                dexterity += 2;
+                spirit += 4;
+                skillPoints = 2;
+                break;
+            case DEX_SPI:
+                strength += 2;
+                dexterity += 4;
+                spirit += 4;
+                skillPoints = 2;
+                break;
         }
 
         hp += strength / 2;
@@ -130,23 +152,24 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     }
 
     private int getInitialSkillPoints() {
-        if (strength > dexterity && strength > spirit) {
-            return 1;
-        } else if (dexterity > strength && dexterity > spirit) {
-            return 2;
-        } else if (spirit > dexterity && spirit > strength) {
-            return 3;
-        } else if (strength == dexterity && strength > spirit) {
-            return 1;
-        } else if (strength == spirit && strength > dexterity) {
-            return 2;
-        } else {
-            return 2;
+        switch (heroType) {
+            case STR:
+                return 1;
+            case DEX:
+                return 2;
+            case SPI:
+                return 3;
+            case STR_DEX:
+                return 1;
+            case STR_SPI:
+                return 2;
+            default:
+                return 2;
         }
     }
 
     public int getNextLevelXPAmount() {
-        return (int) (100 * (Math.pow(2, level) - 1));
+        return (int) (100 * (Math.pow(2, level + 1) - 1));
     }
 
     public void drop(Item item) {
@@ -187,4 +210,28 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
         currentHP = hp;
         buffs = new ArrayList<>();
     }
+
+    public HeroTypes getHeroType() {
+        return heroType;
+    }
+
+    public boolean canEquipItem(Equipment equipment) {
+        boolean canEquip = false;
+        for (Requirement requirement : equipment.getRequirements()) {
+            if (requirement instanceof HeroRequirement && heroType == ((HeroRequirement) requirement).getHeroType()) {
+                canEquip = true;
+            } else if (requirement instanceof StatRequirement) {
+                StatRequirement statRequirement = (StatRequirement) requirement;
+                if (statRequirement.getTarget() == Characteristics.STRENGTH && strength < statRequirement.getValue()) {
+                    return false;
+                } else if (statRequirement.getTarget() == Characteristics.DEXTERITY && dexterity < statRequirement.getValue()) {
+                    return false;
+                } else if (statRequirement.getTarget() == Characteristics.SPIRIT && spirit < statRequirement.getValue()) {
+                    return false;
+                }
+            }
+        }
+        return canEquip;
+    }
+
 }

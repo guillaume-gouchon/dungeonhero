@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.models.items.consumables;
 
-import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.models.items.Consumable;
+import com.glevel.dungeonhero.models.effects.Effect;
 
 import java.io.Serializable;
 
@@ -10,10 +9,17 @@ import java.io.Serializable;
  */
 public class Potion extends Consumable implements Serializable {
 
-    private static final long serialVersionUID = 4997517384367232447L;
+    private static final long serialVersionUID = 8959726100020921265L;
 
-    public Potion(String identifier) {
+    private final Effect effect;
+
+    public Potion(String identifier, Effect effect) {
         super(identifier);
+        this.effect = effect;
+    }
+
+    public Effect getEffect() {
+        return effect;
     }
 
 }

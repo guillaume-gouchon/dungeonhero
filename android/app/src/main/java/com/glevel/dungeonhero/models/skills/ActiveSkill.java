@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class ActiveSkill extends Skill implements Serializable {
 
     private static final long serialVersionUID = 6075354202501161474L;
+
     private boolean isUsed = false;
 
     private final boolean personal;
