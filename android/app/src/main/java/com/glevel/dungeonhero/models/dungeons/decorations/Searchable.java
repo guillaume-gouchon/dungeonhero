@@ -36,7 +36,6 @@ public class Searchable extends Decoration implements Serializable {
     @Override
     public void createSprite(VertexBufferObjectManager vertexBufferObjectManager) {
         sprite = new GameElementSprite(this, vertexBufferObjectManager);
-        sprite.setZIndex(10);
     }
 
 }

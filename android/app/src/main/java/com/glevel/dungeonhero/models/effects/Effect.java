@@ -19,13 +19,15 @@ public abstract class Effect implements Serializable, Cloneable {
     private final Effect special;
     protected int value;
     private int duration;
+    private int level;
 
-    public Effect(String spriteName, Characteristics target, int value, int duration, Effect special) {
+    public Effect(String spriteName, Characteristics target, int value, int duration, Effect special, int level) {
         this.spriteName = spriteName;
         this.value = value;
         this.duration = duration;
         this.target = target;
         this.special = special;
+        this.level = level;
     }
 
     public boolean consume() {
@@ -42,7 +44,7 @@ public abstract class Effect implements Serializable, Cloneable {
     }
 
     public int getValue() {
-        return value;
+        return (int) (value * (1 + 0.15 * level));
     }
 
     public Characteristics getTarget() {
@@ -50,7 +52,7 @@ public abstract class Effect implements Serializable, Cloneable {
     }
 
     public int getDuration() {
-        return duration;
+        return duration + level / 2;
     }
 
     public Effect getSpecial() {
@@ -61,19 +63,8 @@ public abstract class Effect implements Serializable, Cloneable {
         return spriteName;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public Effect getUpdatedEffectWithSkillLevel(int level) {
-        try {
-            Effect effect = (Effect) super.clone();
-            effect.setValue((int) (value * (1 + (level - 1) * 0.2)));
-            return effect;
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void improve() {
+        level++;
     }
 
 }

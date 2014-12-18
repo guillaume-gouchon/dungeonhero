@@ -48,7 +48,7 @@ public class DecorationFactory {
 
     public static List<Decoration> getRoomContent(int threatLevel) {
         List<Decoration> l = new ArrayList<>();
-        int total = Math.random() < 0.3 ? 0 : 1;
+        int total = Math.random() < 0.2 ? 0 : 1;
         for (int n = 0; n < total; n++) {
             l.add(getRandomReward(threatLevel));
         }

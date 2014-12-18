@@ -21,11 +21,11 @@ public class Weapon extends Equipment implements Serializable {
     }
 
     public int getMinDamage() {
-        return minDamage;
+        return (int) (minDamage * (1 + 0.15 * level));
     }
 
     public int getDeltaDamage() {
-        return deltaDamage;
+        return (int) (deltaDamage * (1 + 0.15 * level));
     }
 
 }

@@ -2,8 +2,8 @@ package com.glevel.dungeonhero.models.dungeons;
 
 import android.util.Log;
 
-import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
+import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.data.dungeons.GroundTypes;
 import com.glevel.dungeonhero.data.dungeons.RoomFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
@@ -280,6 +280,8 @@ public class Room implements Serializable {
         for (Unit unit : lstUnitsToMoveIn) {
             addGameElement(unit, stairTile);
         }
+        addGameElement(DecorationFactory.buildBox(null), getRandomFreeTile());
+        addGameElement(DecorationFactory.buildLight(), getRandomFreeTile());
     }
 
 }

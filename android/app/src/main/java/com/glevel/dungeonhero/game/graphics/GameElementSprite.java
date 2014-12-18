@@ -12,6 +12,7 @@ public class GameElementSprite extends CenteredSprite {
 
     public GameElementSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager) {
         super(gameElement.getTilePosition().getTileX(), gameElement.getTilePosition().getTileY(), GraphicsManager.sGfxMap.get(gameElement.getSpriteName()), vertexBufferObjectManager);
+        setZIndex(10 + gameElement.getTilePosition().getY());
     }
 
     @Override

@@ -11,8 +11,8 @@ public class BuffEffect extends Effect implements Serializable {
 
     private static final long serialVersionUID = 7151836860014013471L;
 
-    public BuffEffect(String spriteName, Characteristics target, int value, int duration, Effect special) {
-        super(spriteName, target, value, duration, special);
+    public BuffEffect(String spriteName, Characteristics target, int value, int duration, Effect special, int level) {
+        super(spriteName, target, value, duration, special, level);
     }
 
 }

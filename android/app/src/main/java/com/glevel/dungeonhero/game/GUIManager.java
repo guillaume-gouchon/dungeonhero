@@ -183,6 +183,7 @@ public class GUIManager {
                         MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
                         if (which == R.id.okButton) {
                             Intent intent = new Intent(mActivity, BookChooserActivity.class);
+                            mActivity.getGame().setHero(mHero);
                             intent.putExtra(Game.class.getName(), mActivity.getGame());
                             mActivity.startActivity(intent);
                             mActivity.finish();
@@ -215,6 +216,7 @@ public class GUIManager {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == R.id.okButton) {
+                            mActivity.getGame().setHero(mHero);
                             boolean hasNextChapter = activeBook.goToNextChapter();
                             if (hasNextChapter) {
                                 Intent intent = new Intent(mActivity, GameActivity.class);
@@ -249,7 +251,7 @@ public class GUIManager {
         mConfirmDialog.show();
     }
 
-    public void showChapterIntro(final OnDiscussionReplySelected callback) {
+    public void showChapterIntro(final OnActionExecuted callback) {
         Book activeBook = mActivity.getGame().getBook();
         mConfirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getIntroText(mResources)),
                 new DialogInterface.OnClickListener() {
@@ -257,7 +259,7 @@ public class GUIManager {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         if (callback != null) {
-                            callback.onReplySelected(null, 0);
+                            callback.onActionDone(true);
                         }
                     }
                 });
@@ -469,7 +471,7 @@ public class GUIManager {
                     @Override
                     public void onClick(View view) {
                         mDiscussionDialog.dismiss();
-                        callback.onReplySelected(pnj, (Integer) view.getTag(R.string.id));
+                        callback.onReplySelected(pnj, (Integer) view.getTag(R.string.id), null);
                     }
                 });
                 reactionsLayout.addView(reactionTV);
@@ -481,7 +483,7 @@ public class GUIManager {
                 @Override
                 public void onClick(View view) {
                     mDiscussionDialog.dismiss();
-                    callback.onReplySelected(pnj, -1);
+                    callback.onReplySelected(pnj, -1, null);
                 }
             });
             reactionsLayout.addView(reactionTV);
@@ -510,7 +512,7 @@ public class GUIManager {
                         if (currentTime <= 0) {
                             mTimer.cancel();
                             mDiscussionDialog.dismiss();
-                            callback.onReplySelected(pnj, 0);
+                            callback.onReplySelected(pnj, 0, null);
                         }
                     }
                 });
@@ -546,11 +548,11 @@ public class GUIManager {
                             showReward(riddle.getReward(), new OnDismissListener() {
                                 @Override
                                 public void onDismiss(DialogInterface dialog) {
-                                    callback.onReplySelected(pnj, 1);
+                                    callback.onReplySelected(pnj, 1, riddle.getReward());
                                 }
                             });
                         } else {
-                            callback.onReplySelected(pnj, 0);
+                            callback.onReplySelected(pnj, 0, null);
                         }
                     }
                 });
@@ -587,18 +589,18 @@ public class GUIManager {
         }
     }
 
-    private void answerRiddle(final Pnj pnj, OpenRiddle openRiddle, String answer, final OnDiscussionReplySelected callback) {
+    private void answerRiddle(final Pnj pnj, final OpenRiddle openRiddle, String answer, final OnDiscussionReplySelected callback) {
         if (!answer.isEmpty()) {
             mDiscussionDialog.dismiss();
             if (openRiddle.isAnswerCorrect(answer)) {
                 showReward(openRiddle.getReward(), new OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        callback.onReplySelected(pnj, 1);
+                        callback.onReplySelected(pnj, 1, openRiddle.getReward());
                     }
                 });
             } else {
-                callback.onReplySelected(pnj, 0);
+                callback.onReplySelected(pnj, 0, null);
             }
         }
     }
@@ -744,7 +746,11 @@ public class GUIManager {
             mItemInfoDialog.setCancelable(true);
 
             TextView nameTV = (TextView) mItemInfoDialog.findViewById(R.id.name);
-            nameTV.setText(item.getName(mResources));
+            if (item instanceof Equipment) {
+                nameTV.setText(mActivity.getString(item.getName(mResources)) + " (lvl " + ((Equipment) item).getLevel() + ")");
+            } else {
+                nameTV.setText(item.getName(mResources));
+            }
             nameTV.setCompoundDrawablesWithIntrinsicBounds(item.getImage(mResources), 0, 0, 0);
 
             TextView descriptionTV = (TextView) mItemInfoDialog.findViewById(R.id.description);
@@ -784,6 +790,7 @@ public class GUIManager {
                         }
                     });
                 } else {
+                    nameTV.setTextColor(mResources.getColor(R.color.red));
                     actionButton.setVisibility(View.GONE);
                 }
 
@@ -793,7 +800,7 @@ public class GUIManager {
                     addStatToItemLayout(statsLayout.getChildAt(indexStats++), weapon.getMinDamage() + " - " + (weapon.getMinDamage() + weapon.getDeltaDamage()), R.drawable.ic_damage, R.string.damage, R.color.white);
                 } else if (item instanceof Armor) {
                     Armor armor = (Armor) item;
-                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), "+" + armor.getProtection(), R.drawable.ic_armor, R.string.protection, R.color.white);
+                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), "+" + armor.getProtection(), R.drawable.ic_armor, R.string.protection, R.color.green);
                 }
 
                 // add buffs
@@ -947,22 +954,60 @@ public class GUIManager {
                 LayoutInflater inflater = mActivity.getLayoutInflater();
                 mSkillButtonsLayout.removeAllViews();
                 View skillButton;
-                for (Skill skill : mHero.getSkills()) {
+                for (final Skill skill : mHero.getSkills()) {
                     if (skill.getLevel() > 0) {
                         skillButton = inflater.inflate(R.layout.in_game_skill_button, null);
-                        skillButton.setTag(R.string.use_skill, skill);
+                        skillButton.setTag(R.string.show_skill, skill);
                         ((ImageView) skillButton.findViewById(R.id.image)).setImageResource(skill.getImage(mResources));
                         if (skill instanceof PassiveSkill || skill instanceof ActiveSkill && ((ActiveSkill) skill).isUsed()) {
                             skillButton.findViewById(R.id.image).setEnabled(false);
                             skillButton.setAlpha(0.5f);
-                        } else {
-                            skillButton.setOnClickListener(mActivity);
                         }
+
+                        skillButton.setOnClickListener(mActivity);
+
                         mSkillButtonsLayout.addView(skillButton);
                     }
                 }
             }
         });
+    }
+
+    public void showUseSkillInfo(final Skill skill) {
+        if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
+            mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
+            mItemInfoDialog.setContentView(R.layout.in_game_item_info);
+            mItemInfoDialog.setCancelable(true);
+
+            TextView nameTV = (TextView) mItemInfoDialog.findViewById(R.id.name);
+            nameTV.setText(mActivity.getString(skill.getName(mResources)) + " (lvl " + skill.getLevel() + ")");
+            nameTV.setCompoundDrawablesWithIntrinsicBounds(skill.getImage(mResources), 0, 0, 0);
+
+            TextView descriptionTV = (TextView) mItemInfoDialog.findViewById(R.id.description);
+            if (skill.getDescription(mResources) > 0) {
+                descriptionTV.setText(skill.getDescription(mResources));
+            } else {
+                descriptionTV.setVisibility(View.GONE);
+            }
+
+            TextView actionButton = (TextView) mItemInfoDialog.findViewById(R.id.actionButton);
+            if (skill instanceof PassiveSkill || skill instanceof ActiveSkill && ((ActiveSkill) skill).isUsed()) {
+                actionButton.setVisibility(View.GONE);
+            } else {
+                actionButton.setText(R.string.use);
+                actionButton.setTag(R.string.use_skill, skill);
+                actionButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mItemInfoDialog.dismiss();
+                        mActivity.onClick(v);
+                    }
+                });
+            }
+
+            mItemInfoDialog.findViewById(R.id.dropButton).setVisibility(View.GONE);
+            mItemInfoDialog.show();
+        }
     }
 
 }

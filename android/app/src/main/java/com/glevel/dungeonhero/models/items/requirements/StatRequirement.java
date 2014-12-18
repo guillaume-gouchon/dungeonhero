@@ -10,13 +10,13 @@ import java.io.Serializable;
 public class StatRequirement extends Requirement implements Serializable {
 
     private static final long serialVersionUID = 5714245105140860799L;
-    
+
     private final Characteristics target;
     private final int value;
 
-    public StatRequirement(Characteristics target, int value) {
+    public StatRequirement(Characteristics target, int value, int level) {
         this.target = target;
-        this.value = value;
+        this.value = getValueWithLevelModifier(value, level);
     }
 
     public int getValue() {
@@ -25,6 +25,10 @@ public class StatRequirement extends Requirement implements Serializable {
 
     public Characteristics getTarget() {
         return target;
+    }
+
+    public static int getValueWithLevelModifier(int value, int level) {
+        return (int) (value * (1 + 0.2 * level));
     }
 
 }

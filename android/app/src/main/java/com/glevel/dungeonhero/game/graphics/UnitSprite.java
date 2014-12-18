@@ -17,7 +17,6 @@ public class UnitSprite extends GameElementSprite {
     public UnitSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager) {
         super(gameElement, vertexBufferObjectManager);
         setScale(0.25f);
-        setZIndex(10);
         stand();
     }
 

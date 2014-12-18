@@ -5,6 +5,7 @@ import com.glevel.dungeonhero.data.items.PotionFactory;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.equipments.Equipment;
+import com.glevel.dungeonhero.models.items.equipments.Ring;
 import com.glevel.dungeonhero.models.items.requirements.HeroRequirement;
 import com.glevel.dungeonhero.models.items.requirements.Requirement;
 import com.glevel.dungeonhero.models.items.requirements.StatRequirement;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by guillaume ON 10/2/14.
  */
-public class Hero extends Unit implements InAppProduct, Cloneable {
+public class Hero extends Unit implements InAppProduct {
 
     private static final long serialVersionUID = -2887616275513777101L;
 
@@ -176,15 +177,6 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
         items.remove(item);
     }
 
-    public Hero clone() {
-        try {
-            return (Hero) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public String getHeroName() {
         return heroName;
     }
@@ -216,6 +208,9 @@ public class Hero extends Unit implements InAppProduct, Cloneable {
     }
 
     public boolean canEquipItem(Equipment equipment) {
+        if (equipment instanceof Ring) {
+            return true;
+        }
         boolean canEquip = false;
         for (Requirement requirement : equipment.getRequirements()) {
             if (requirement instanceof HeroRequirement && heroType == ((HeroRequirement) requirement).getHeroType()) {

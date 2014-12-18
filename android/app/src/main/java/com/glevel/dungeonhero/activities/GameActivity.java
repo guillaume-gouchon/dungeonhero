@@ -13,13 +13,11 @@ import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
-import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Monster;
-import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.Directions;
@@ -35,6 +33,7 @@ import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.consumables.Potion;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
+import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
@@ -45,6 +44,11 @@ import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.opengl.texture.TextureOptions;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -71,7 +75,7 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             // TODO : used fot testing only
             mGame = new Game();
-            mGame.setHero(HeroFactory.buildElfRanger());
+            mGame.setHero(HeroFactory.buildBerserker());
             mGame.setBook(BookFactory.buildInitiationBook(1));
         }
 
@@ -83,7 +87,22 @@ public class GameActivity extends MyBaseGameActivity {
             chapter.createDungeon();
             mGame.setDungeon(chapter.getDungeon());
 
-            mHero = mGame.getHero().clone();
+            // deep copy hero object
+            try {
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(bos);
+                oos.writeObject(mGame.getHero());
+                oos.flush();
+                oos.close();
+                bos.close();
+                byte[] byteData = bos.toByteArray();
+                ByteArrayInputStream bais = new ByteArrayInputStream(byteData);
+                mHero = (Hero) new ObjectInputStream(bais).readObject();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             mDungeon = mGame.getDungeon();
 
             // show book intro story if needed
@@ -241,6 +260,14 @@ public class GameActivity extends MyBaseGameActivity {
                         mActionDispatcher.dropItem(item);
                     }
                 });
+            } else if (view.getTag(R.string.show_skill) != null) {
+                Log.d(TAG, "Show skill");
+                if (mActionDispatcher.getActivatedSkill() == view.getTag(R.string.show_skill)) {
+                    // cancel skill
+                    mActionDispatcher.setActivatedSkill((ActiveSkill) view.getTag(R.string.show_skill));
+                } else {
+                    mGUIManager.showUseSkillInfo((Skill) view.getTag(R.string.show_skill));
+                }
             } else if (view.getTag(R.string.use_skill) != null) {
                 Log.d(TAG, "Use skill");
                 mActionDispatcher.setActivatedSkill((ActiveSkill) view.getTag(R.string.use_skill));
@@ -293,12 +320,12 @@ public class GameActivity extends MyBaseGameActivity {
 
     public void showChapterIntro() {
         if (mGame.getBook().getIntroText(getResources()) > 0) {
-            OnDiscussionReplySelected callback = null;
+            OnActionExecuted callback = null;
             if (mHero.getSkillPoints() > 0) {
                 // if hero has some skill points left
-                callback = new OnDiscussionReplySelected() {
+                callback = new OnActionExecuted() {
                     @Override
-                    public void onReplySelected(Pnj pnj, int next) {
+                    public void onActionDone(boolean success) {
                         mGUIManager.showNewLevelDialog(null);
                     }
                 };
@@ -410,13 +437,17 @@ public class GameActivity extends MyBaseGameActivity {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            mActionDispatcher.attack(mHero.getTilePosition());
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mActionDispatcher.attack(mHero.getTilePosition());
+                                }
+                            });
                         }
                     }, 500);
                 }
             }
         });
-
     }
 
     private void updateActionTiles() {
@@ -462,6 +493,7 @@ public class GameActivity extends MyBaseGameActivity {
                                 mEngine.start();
                                 mInputManager.setEnabled(true);
                                 animateRoomSwitch(doorDirection);
+                                mScene.sortChildren(true);
                             }
                         });
                     } catch (Exception e) {

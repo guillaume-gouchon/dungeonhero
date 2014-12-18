@@ -11,8 +11,8 @@ public class PermanentEffect extends Effect implements Serializable {
 
     private static final long serialVersionUID = -3595619934836089070L;
 
-    public PermanentEffect(Characteristics target, int value, PermanentEffect special) {
-        super(null, target, value, Effect.INFINITE_EFFECT, special);
+    public PermanentEffect(Characteristics target, int value, PermanentEffect special, int level) {
+        super(null, target, value, Effect.INFINITE_EFFECT, special, level);
     }
 
 }

@@ -18,7 +18,7 @@ public class Equipment extends Item implements Serializable {
 
     private final List<Effect> effects = new ArrayList<Effect>();
     private final List<Requirement> requirements = new ArrayList<Requirement>();
-    private final int level;
+    protected final int level;
 
     public Equipment(String identifier, int level) {
         super(identifier, true);

@@ -46,7 +46,6 @@
                 style="@style/HeroStat"
                 android:text="@string/placeholder"
                 android:drawableLeft="@drawable/ic_health"
-                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/hp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,36 +57,33 @@
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_strength"
                 custom:textHint="@string/strength"
-                custom:linkTextColorToDrawable="true"
                 android:text="@string/placeholder"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textColor="@color/strength" />
+                android:textColor="@color/white" />
 
             <com.glevel.dungeonhero.views.HintTextView
                 android:id="@+id/dexterity"
                 style="@style/HeroStat"
                 android:text="@string/placeholder"
                 android:drawableLeft="@drawable/ic_dexterity"
-                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/dexterity"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dexterity" />
+                android:textColor="@color/white" />
 
             <com.glevel.dungeonhero.views.HintTextView
                 android:id="@+id/spirit"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_spirit"
-                custom:linkTextColorToDrawable="true"
                 android:text="@string/placeholder"
                 custom:textHint="@string/spirit"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textColor="@color/spirit" />
+                android:textColor="@color/white" />
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/level"

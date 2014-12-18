@@ -174,7 +174,6 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
             mScene.registerTouchArea(shape);
         }
         mScene.attachChild(shape);
-        mScene.sortChildren(true);
     }
 
     public void removeElement(final Shape shape, boolean isClickable) {

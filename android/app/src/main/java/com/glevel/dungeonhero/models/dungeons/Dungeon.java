@@ -96,7 +96,7 @@ public class Dungeon implements Serializable {
             // add stairs
             currentRoom.prepareStartRoom(lstUnitsToMoveIn);
             return;
-        } else if (events.size() > 0 && (nbRoomsLeft < events.size() || nbRoomVisited > 2 && Math.random() * 100 < nbRoomVisited * 2)) {
+        } else if (currentRoom.getTiles() == null && events.size() > 0 && (nbRoomsLeft < events.size() || nbRoomVisited > 2 && Math.random() * 100 < nbRoomVisited * 2)) {
             // the room may contain an event
             event = events.get((int) (events.size() * Math.random()));
             events.remove(event);

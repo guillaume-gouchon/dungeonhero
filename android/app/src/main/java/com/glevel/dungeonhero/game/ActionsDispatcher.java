@@ -213,7 +213,8 @@ public class ActionsDispatcher implements UserActionListener {
         OnActionExecuted callback = new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                if (success) {
+                isMoving = false;
+                if (success && MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) <= 1) {
                     final Unit target = (Unit) tile.getContent();
                     FightResult fightResult = mGameActivity.getActiveCharacter().attack(target);
                     animateFight(mGameActivity.getActiveCharacter(), target, fightResult, new OnActionExecuted() {
@@ -235,7 +236,6 @@ public class ActionsDispatcher implements UserActionListener {
                 } else {
                     mGameActivity.nextTurn();
                 }
-                isMoving = false;
             }
         };
 
@@ -289,15 +289,18 @@ public class ActionsDispatcher implements UserActionListener {
         });
 
         if (reward != null) {
-            // update hero
-            if (reward.getItem() != null) {
-                getItemOrDropIt(reward.getItem());
-            }
-            mGameActivity.getHero().addGold(reward.getGold());
-            boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
-            if (newLevel) {
-                mGUIManager.showNewLevelDialog(null);
-            }
+            receiveReward(reward);
+        }
+    }
+
+    private void receiveReward(Reward reward) {
+        if (reward.getItem() != null) {
+            getItemOrDropIt(reward.getItem());
+        }
+        mGameActivity.getHero().addGold(reward.getGold());
+        boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
+        if (newLevel) {
+            mGUIManager.showNewLevelDialog(null);
         }
     }
 
@@ -343,7 +346,10 @@ public class ActionsDispatcher implements UserActionListener {
     private void talkTo(Pnj pnj) {
         OnDiscussionReplySelected onDiscussionSelected = new OnDiscussionReplySelected() {
             @Override
-            public void onReplySelected(Pnj pnj, int next) {
+            public void onReplySelected(Pnj pnj, int next, Reward instantReward) {
+                if (instantReward != null) {
+                    receiveReward(instantReward);
+                }
                 if (pnj.getDiscussions().size() > 0) {
                     Reward reward = pnj.getDiscussions().get(0).getReward();
                     if (reward != null) {
@@ -376,7 +382,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void goCloserTo(Tile tile, OnActionExecuted callback) {
-        if (mGameActivity.getActiveCharacter().getTilePosition() == null || MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) <= 1) {
+        if (MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) <= 1) {
             callback.onActionDone(true);
             return;
         }
@@ -392,6 +398,17 @@ public class ActionsDispatcher implements UserActionListener {
                     if (path != null && (shortestPath == null || path.size() < shortestPath.size())) {
                         shortestPath = path;
                     }
+                }
+            }
+            if (shortestPath == null) {
+                for (Tile adjacent : adjacentTiles) {
+                    List<Tile> path = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), adjacent, false, mGameActivity.getActiveCharacter());
+                    if (path != null && (shortestPath == null || path.size() < shortestPath.size())) {
+                        shortestPath = path;
+                    }
+                }
+                if (shortestPath != null) {
+                    shortestPath = shortestPath.subList(0, Math.min(mGameActivity.getActiveCharacter().calculateMovement() + 1, shortestPath.size()));
                 }
             }
         }
@@ -547,11 +564,13 @@ public class ActionsDispatcher implements UserActionListener {
                         mScene.unregisterUpdateHandler(animationHandler);
                         mGameActivity.getActiveCharacter().setTilePosition(nextTile);
                         sprite.setPosition(nextTile.getTileX(), nextTile.getTileY());
+                        Log.d(TAG, "character is z-index = " + sprite.getZIndex());
 
-                        mScene.sortChildren(true);
                         if (!interrupt) {
+                            mScene.sortChildren();
                             animateMove(p, callback);
                         } else {
+                            mScene.sortChildren();
                             callback.onActionDone(false);
                             interrupt = false;
                         }
@@ -562,6 +581,7 @@ public class ActionsDispatcher implements UserActionListener {
         } else {
             UnitSprite sprite = (UnitSprite) mGameActivity.getActiveCharacter().getSprite();
             sprite.stand();
+            mScene.sortChildren();
             callback.onActionDone(true);
         }
     }
@@ -681,6 +701,10 @@ public class ActionsDispatcher implements UserActionListener {
         }
     }
 
+    public ActiveSkill getActivatedSkill() {
+        return activatedSkill;
+    }
+
     public void setActivatedSkill(ActiveSkill skill) {
         if (skill.isPersonal()) {
             activatedSkill = skill;
@@ -699,17 +723,14 @@ public class ActionsDispatcher implements UserActionListener {
         mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(activatedSkill.getName(mGameActivity.getResources()))), R.color.green);
         Effect effect = activatedSkill.getEffect();
 
-        // update effect value depending on skill level
-        Effect updatedEffect = effect.getUpdatedEffectWithSkillLevel(activatedSkill.getLevel());
-
         if (!activatedSkill.isPersonal() || activatedSkill.getRadius() == 0) {
-            applyEffect(updatedEffect, tile, true);
+            applyEffect(effect, tile, true);
         }
         if (activatedSkill.getRadius() > 0) {
             Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, activatedSkill.getRadius(), true, null);
             for (Tile targetTile : targetTiles) {
                 if (targetTile != mGameActivity.getActiveCharacter().getTilePosition()) {
-                    applyEffect(updatedEffect, targetTile, true);
+                    applyEffect(effect, targetTile, true);
                 }
             }
         }
@@ -744,6 +765,7 @@ public class ActionsDispatcher implements UserActionListener {
                         ((ActiveSkill) skill).reset();
                     }
                 }
+                mGUIManager.updateSkillButtons();
             } else if (effect.getTarget() == Characteristics.HP) {
                 // damage or heal
                 target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + effect.getValue()));

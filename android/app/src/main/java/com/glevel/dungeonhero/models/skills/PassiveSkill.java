@@ -11,15 +11,8 @@ public class PassiveSkill extends Skill implements Serializable {
 
     private static final long serialVersionUID = -2557103327292997487L;
 
-    private final Effect effect;
-
     public PassiveSkill(String identifier, int level, Effect effect) {
-        super(identifier, level);
-        this.effect = effect;
-    }
-
-    public Effect getEffect() {
-        return effect;
+        super(identifier, effect, level);
     }
 
 }

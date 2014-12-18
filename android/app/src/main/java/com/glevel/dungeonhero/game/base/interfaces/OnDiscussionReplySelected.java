@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.game.base.interfaces;
 
+import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Pnj;
 
 /**
@@ -7,6 +8,6 @@ import com.glevel.dungeonhero.models.characters.Pnj;
  */
 public interface OnDiscussionReplySelected {
 
-    public void onReplySelected(Pnj pnj, int next);
+    public void onReplySelected(Pnj pnj, int next, Reward instantReward);
 
 }

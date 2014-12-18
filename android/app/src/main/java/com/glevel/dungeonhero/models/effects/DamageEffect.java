@@ -11,12 +11,12 @@ public class DamageEffect extends Effect implements Serializable {
 
     private static final long serialVersionUID = -44833170357322744L;
 
-    public DamageEffect(String spriteName, int value) {
-        super(spriteName, Characteristics.HP, value, Effect.INSTANT_EFFECT, null);
+    public DamageEffect(String spriteName, int value, int level) {
+        super(spriteName, Characteristics.HP, value, Effect.INSTANT_EFFECT, null, level);
     }
 
-    public DamageEffect(String spriteName, int value, Effect special) {
-        super(spriteName, Characteristics.HP, value, Effect.INSTANT_EFFECT, special);
+    public DamageEffect(String spriteName, int value, Effect special, int level) {
+        super(spriteName, Characteristics.HP, value, Effect.INSTANT_EFFECT, special, level);
     }
 
 }

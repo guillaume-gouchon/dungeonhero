@@ -1,8 +1,5 @@
 package com.glevel.dungeonhero.game.base;
 
-import android.content.res.Resources;
-
-import com.glevel.dungeonhero.MyApplication;
 import com.glevel.dungeonhero.game.graphics.GameElementSprite;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.models.StorableResource;
@@ -50,6 +47,9 @@ public abstract class GameElement extends StorableResource implements Serializab
         this.tilePosition = tilePosition;
         if (tilePosition != null) {
             tilePosition.setContent(this);
+            if (sprite != null) {
+                sprite.setZIndex(10 + tilePosition.getY());
+            }
         }
     }
 

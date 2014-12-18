@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.models.skills;
 
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.StorableResource;
+import com.glevel.dungeonhero.models.effects.Effect;
 
 import java.io.Serializable;
 
@@ -14,10 +15,12 @@ public abstract class Skill extends StorableResource implements Serializable {
     private static final int SKILL_MAX_LEVEL = 6;
 
     private int level;
+    private final Effect effect;
 
-    public Skill(String identifier, int level) {
+    public Skill(String identifier, Effect effect, int level) {
         super(identifier);
         this.level = level;
+        this.effect = effect;
     }
 
     public int getLevel() {
@@ -30,6 +33,14 @@ public abstract class Skill extends StorableResource implements Serializable {
 
     public void improve() {
         level++;
+        effect.improve();
+        if (effect.getSpecial() != null) {
+            effect.getSpecial().improve();
+        }
+    }
+
+    public Effect getEffect() {
+        return effect;
     }
 
     public int getColor() {

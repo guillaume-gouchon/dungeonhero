@@ -8,6 +8,7 @@
     <string name="viewholder">viewholder</string>
     <string name="cancel">Cancel</string>
     <string name="coming_soon">Coming soon&#8230;</string>
+    <string name="show_skill">show_skill</string>
 
     <!-- Contact -->
     <string name="mail_address">guillaume.gouchon@gmail.com</string>
@@ -79,9 +80,9 @@
 
     <!-- Characteristics -->
     <string name="hp">Health points</string>
-    <string name="strength">Strength : used to deal damage, hold heavy charges</string>
+    <string name="strength">Strength : used to deal damages, hold heavy items</string>
     <string name="dexterity">Dexterity : used to dodge, react, aim</string>
-    <string name="spirit">Spirit : used to react, deduce, focus</string>
+    <string name="spirit">Spirit : used to react, focus, gain skills</string>
     <string name="block">The ability to block an enemy\'s attack</string>
     <string name="frags">Frags</string>
 
@@ -238,6 +239,28 @@
     <string name="speed_potion_description">This sparkling potion will make you light as a feather, increasing your movement for a limited amount of time.</string>
     <string name="unknown_liquid">Unknown Liquid</string>
     <string name="unknown_liquid_description">Who knows what it is...</string>
+
+    <!-- Rings -->
+    <string name="dodge_ring">Blurred Ring</string>
+    <string name="dodge_ring_description">This ring makes the wearer looking blurry, dodging attacks more easily.</string>
+    <string name="speed_ring">Haste Ring</string>
+    <string name="speed_ring_description">The wearer feels lighter.</string>
+    <string name="protection_ring">Fire Shield Ring</string>
+    <string name="protection_ring_description">A shield of fire surrounds the wearer.</string>
+    <string name="critical_ring">Harmful Ring</string>
+    <string name="critical_ring_description">The wearer can detect more easily the weaknesses of its opponents.</string>
+    <string name="damage_ring">Ring of Insanity</string>
+    <string name="damage_ring_description">The wearer feels unstoppable.</string>
+    <string name="initiative_ring">Ring of Acuity</string>
+    <string name="initiative_ring_description">The wearer sees its senses being stimulated.</string>
+    <string name="strength_ring">Ring of Strength</string>
+    <string name="strength_ring_description">The wearer feels stronger.</string>
+    <string name="dexterity_ring">Ring of Dexterity</string>
+    <string name="dexterity_ring_description">The wearer feels more accurate.</string>
+    <string name="spirit_ring">Ring of Spirit</string>
+    <string name="spirit_ring_description">The wearer feels more clever.</string>
+    <string name="king_ring">Ring of Kings</string>
+    <string name="king_ring_description">The wearer feels far more powerful.</string>
 
     <!-- PNJs -->
     <string name="princess">Princess</string>

@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.models.characters;
 
+import android.util.Log;
+
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.FightResult;
@@ -16,6 +18,7 @@ import com.glevel.dungeonhero.models.items.equipments.weapons.TwoHandedWeapon;
 import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
+import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -29,6 +32,7 @@ import java.util.List;
  */
 public abstract class Unit extends GameElement implements MovingElement<Tile>, Serializable {
 
+    private static final String TAG = "Unit";
     private static final long serialVersionUID = 1683650465351973413L;
 
     private static final int NB_ITEMS_MAX_IN_BAG = 15;
@@ -78,27 +82,15 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int getStrength() {
-        return strength;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
+        return Math.max(0, strength + getBonusesFromBuffsAndEquipments(Characteristics.STRENGTH));
     }
 
     public int getDexterity() {
-        return dexterity;
-    }
-
-    public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
+        return Math.max(0, dexterity + getBonusesFromBuffsAndEquipments(Characteristics.DEXTERITY));
     }
 
     public int getSpirit() {
-        return spirit;
-    }
-
-    public void setSpirit(int spirit) {
-        this.spirit = spirit;
+        return Math.max(0, spirit + getBonusesFromBuffsAndEquipments(Characteristics.SPIRIT));
     }
 
     public int getGold() {
@@ -132,8 +124,13 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         int dice = (int) (Math.random() * 100);
 
-        // TODO : add critical failure
+        if (isRangeAttack() && MathUtils.calcManhattanDistance(tilePosition, target.getTilePosition()) <= 1) {
+            // malus for range weapon in close combat
+            dice = Math.min(99, dice + 20);
+        }
 
+        // TODO : add critical failure
+        
         int damage = Math.max(0, calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE)
                 + (equipments[0] != null ? calculateDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateDamage((Weapon) equipments[1]) / 2 : 0));
 
@@ -141,16 +138,20 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         if (dice < critical) {
             fightResult = new FightResult(FightResult.States.CRITICAL, Math.max(0, damage * 2 - target.calculateProtection()));
-        } else if (dice > target.calculateBlock()) {
-            if (Math.random() * 100 < calculateDodge()) {
+        } else if (dice > 100 - target.calculateBlock()) {
+            fightResult = new FightResult(FightResult.States.BLOCK, 0);
+        } else {
+            int dodgeScore = (int) (Math.random() * 100);
+            // range weapons are harder to dodge
+            if (isRangeAttack() && dodgeScore < calculateDodge() - 2 * dexterity
+                    || dodgeScore < calculateDodge()) {
                 fightResult = new FightResult(FightResult.States.DODGE, 0);
             } else {
                 fightResult = new FightResult(FightResult.States.DAMAGE, Math.max(0, damage - target.calculateProtection()));
             }
-        } else {
-            fightResult = new FightResult(FightResult.States.BLOCK, 0);
         }
 
+        Log.d(TAG, "dealing " + fightResult.getDamage() + " damage");
         target.takeDamage(fightResult.getDamage());
 
         return fightResult;
@@ -201,7 +202,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int calculateDodge() {
-        return Math.max(0, Math.max(0, (dexterity - 10) * 5) + getBonusesFromBuffsAndEquipments(Characteristics.DODGE));
+        return Math.max(0, Math.min(80, (dexterity - 10) * 5) + getBonusesFromBuffsAndEquipments(Characteristics.DODGE));
     }
 
     public int calculateCritical() {
@@ -218,7 +219,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         for (Skill skill : skills) {
             if (skill.getLevel() > 0 && skill instanceof PassiveSkill && ((PassiveSkill) skill).getEffect().getTarget() == characteristic) {
-                Effect effect = ((PassiveSkill) skill).getEffect().getUpdatedEffectWithSkillLevel(skill.getLevel());
+                Effect effect = ((PassiveSkill) skill).getEffect();
                 bonus += effect.getValue();
             }
         }

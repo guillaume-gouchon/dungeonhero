@@ -25,8 +25,4 @@ public class Monster extends Unit {
         return reward;
     }
 
-    public void setReward(Reward reward) {
-        this.reward = reward;
-    }
-
 }

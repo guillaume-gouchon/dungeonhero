@@ -11,8 +11,8 @@ public class PoisonEffect extends Effect implements Serializable {
 
     private static final long serialVersionUID = 8376399829147352445L;
 
-    public PoisonEffect(String spriteName, int value, int duration, Effect special) {
-        super(spriteName, Characteristics.HP, value, duration, special);
+    public PoisonEffect(String spriteName, int value, int duration, Effect special, int level) {
+        super(spriteName, Characteristics.HP, value, duration, special, level);
     }
 
 }

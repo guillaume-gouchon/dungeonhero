@@ -12,32 +12,25 @@ public class ActiveSkill extends Skill implements Serializable {
     private static final long serialVersionUID = 6075354202501161474L;
 
     private boolean isUsed = false;
-
     private final boolean personal;
     private final int radius;
-    private final Effect effect;
 
     public ActiveSkill(String identifier, int level, boolean personal, int radius, Effect effect) {
-        super(identifier, level);
+        super(identifier, effect, level);
         this.personal = personal;
         this.radius = radius;
-        this.effect = effect;
     }
 
     public void use() {
         isUsed = true;
     }
 
-    public boolean isUsed() {
-        return isUsed;
-    }
-
     public void reset() {
         isUsed = false;
     }
 
-    public Effect getEffect() {
-        return effect;
+    public boolean isUsed() {
+        return isUsed;
     }
 
     public boolean isPersonal() {
