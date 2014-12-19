@@ -326,4 +326,8 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         return mGame;
     }
 
+    public ZoomCamera getCamera() {
+        return mCamera;
+    }
+
 }

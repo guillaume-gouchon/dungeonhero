@@ -94,4 +94,8 @@ public class Book extends StorableResource implements Serializable, InAppProduct
         return chapters.size() > 0;
     }
 
+    public void read() {
+        introText = "";
+    }
+
 }

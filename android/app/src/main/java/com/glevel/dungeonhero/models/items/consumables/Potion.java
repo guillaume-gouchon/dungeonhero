@@ -13,8 +13,8 @@ public class Potion extends Consumable implements Serializable {
 
     private final Effect effect;
 
-    public Potion(String identifier, Effect effect) {
-        super(identifier);
+    public Potion(String identifier, Effect effect, int price) {
+        super(identifier, price);
         this.effect = effect;
     }
 

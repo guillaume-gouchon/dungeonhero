@@ -11,13 +11,14 @@ public class Armor extends Equipment implements Serializable {
 
     private final int protection;
 
-    public Armor(String identifier, int protection, int level) {
-        super(identifier, level);
+    public Armor(String identifier, int protection, int level, int price) {
+        super(identifier, level, (int) (price * (1 + (level * 0.25))));
         this.protection = protection;
     }
 
     public int getProtection() {
         return (int) (protection * (1 + 0.3 * level));
     }
+
 
 }

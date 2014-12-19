@@ -15,7 +15,7 @@ public class Chapter implements Serializable {
 
     private static final long serialVersionUID = 1484748281734643544L;
 
-    private final String introText, outroText;
+    private String introText, outroText;
     private transient Dungeon dungeon;
     private final List<Event> events;
     private boolean done;
@@ -29,6 +29,10 @@ public class Chapter implements Serializable {
 
     public int getIntroText(Resources resources) {
         return StorableResource.getResource(resources, introText, false);
+    }
+
+    public void read() {
+        introText = "";
     }
 
     public int getOutroText(Resources resources) {

@@ -36,11 +36,15 @@ import java.util.List;
 
 public class HomeActivity extends BaseGameActivity implements OnClickListener, LoadGameFragment.OnFragmentClosed {
 
-    private static final int REQUEST_ACHIEVEMENTS = 0;
+    private static final int REQUEST_ACHIEVEMENTS = 100;
 
     private SharedPreferences mSharedPrefs;
-    private ScreenState mScreenState = ScreenState.HOME;
     private DatabaseHelper mDbHelper;
+
+    /**
+     * UI
+     */
+    private ScreenState mScreenState = ScreenState.HOME;
     private Animation mMainButtonAnimationRightIn, mMainButtonAnimationRightOut, mMainButtonAnimationLeftIn, mMainButtonAnimationLeftOut;
     private Animation mFadeOutAnimation, mFadeInAnimation;
     private Button mNewGameButton, mSettingsButton, mLoadGameButton;

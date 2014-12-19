@@ -75,7 +75,7 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             // TODO : used fot testing only
             mGame = new Game();
-            mGame.setHero(HeroFactory.buildBerserker());
+            mGame.setHero(HeroFactory.buildDwarfWarrior());
             mGame.setBook(BookFactory.buildInitiationBook(1));
         }
 
@@ -104,13 +104,6 @@ public class GameActivity extends MyBaseGameActivity {
                 e.printStackTrace();
             }
             mDungeon = mGame.getDungeon();
-
-            // show book intro story if needed
-            if (mGame.getBook().getIntroText(getResources()) > 0) {
-                Bundle args = new Bundle();
-                args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText(getResources()));
-                ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
-            }
 
             mHero.reset();
         } else {
@@ -182,6 +175,21 @@ public class GameActivity extends MyBaseGameActivity {
                     addElementToScene(subContent);
                 }
             }
+        }
+
+        // show book intro story if needed
+        if (mGame.getBook().getIntroText(getResources()) > 0) {
+            Bundle args = new Bundle();
+            args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText(getResources()));
+            ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
+            mGame.getBook().read();
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showChapterIntro();
+                }
+            });
         }
 
         pOnPopulateSceneCallback.onPopulateSceneFinished();
@@ -319,7 +327,7 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     public void showChapterIntro() {
-        if (mGame.getBook().getIntroText(getResources()) > 0) {
+        if (mGame.getBook().getActiveChapter().getIntroText(getResources()) > 0) {
             OnActionExecuted callback = null;
             if (mHero.getSkillPoints() > 0) {
                 // if hero has some skill points left
@@ -331,6 +339,7 @@ public class GameActivity extends MyBaseGameActivity {
                 };
             }
             mGUIManager.showChapterIntro(callback);
+            mGame.getBook().getActiveChapter().read();
         } else if (mHero.getSkillPoints() > 0) {
             mGUIManager.showNewLevelDialog(null);
         }

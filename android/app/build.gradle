@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'dungeon'
+            keyPassword 'debug'
+            storeFile file('/home/guillaume/dungeon_debug.jks')
+            storePassword 'debug'
+        }
+    }
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
-
+    buildToolsVersion "21.1.2"
     defaultConfig {
         applicationId "com.glevel.dungeonhero"
         minSdkVersion 14
@@ -14,7 +21,10 @@ android {
     buildTypes {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+    }
+    productFlavors {
     }
 }
 

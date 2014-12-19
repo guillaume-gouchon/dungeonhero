@@ -9,6 +9,11 @@
     <string name="cancel">Cancel</string>
     <string name="coming_soon">Coming soon&#8230;</string>
     <string name="show_skill">show_skill</string>
+    <string name="sell_item">sell_item</string>
+    <string name="buy_item">buy_item</string>
+    <string name="skill">skill</string>
+    <string name="use_skill">use_skill</string>
+    <string name="potion">potion</string>
 
     <!-- Contact -->
     <string name="mail_address">guillaume.gouchon@gmail.com</string>
@@ -68,15 +73,26 @@
 
     <!-- Book Chooser -->
     <string name="choose_book_message">Choose a Quest</string>
+    <string name="tavern">Tavern</string>
 
     <!-- Story -->
     <string name="skip">Skip</string>
     <string name="replay">Replay</string>
 
     <!-- Game Over -->
-    <string name="retry">Retry\u00A0!</string>
+    <string name="retry">Retry !</string>
     <string name="exit">Exit</string>
     <string name="game_over_title">Game Over</string>
+
+    <!-- Shop -->
+    <string name="shop">Shop</string>
+    <string name="shop_intro_port">Hey adventurer, welcome to the Easy Dungeon !\n\nHere are today\'s offers.</string>
+    <string name="shop_intro">Hey adventurer, welcome to the Easy Dungeon ! Here are today\'s offers.</string>
+    <string name="shop_outro">Have a good death..euh day !</string>
+    <string name="your_bag">Your Bag</string>
+    <string name="buy_item_for">Buy item for %s gold coins</string>
+    <string name="sell_item_for">Sell item for %s gold coins</string>
+    <string name="transaction_confirmation">Are you sure ?</string>
 
     <!-- Characteristics -->
     <string name="hp">Health points</string>
@@ -85,21 +101,6 @@
     <string name="spirit">Spirit : used to react, focus, gain skills</string>
     <string name="block">The ability to block an enemy\'s attack</string>
     <string name="frags">Frags</string>
-
-    <!-- Tutorial -->
-    <string name="next">Next</string>
-    <string name="tutorial0"><u>Welcome to this tutorial !</u>\n\nWWII is a heavy tactical real-time strategy game. We\'ll see here how to lead your troops to victory.</string>
-    <string name="tutorial1"><u>How to win ?</u>\n\nThere are 2 ways to win a game in WWII : either you <u>destroy</u> the whole army of your opponent or you can win by <u>conquering</u> all the Strategic Points of the map.\nThese are randomly placed in players\' deployment zones when the battle starts.</string>
-    <string name="tutorial2"><u>Navigate through the map</u>\n\n You can navigate through the map by sweeping the screen with one finger; you can zoom in/ zoom out by pinching the screen.</string>
-    <string name="tutorial3"><u>Command your units</u>\n\nYou can give 4 different orders to your units :\nMove, Fire, Ambush and Defend orders.</string>
-    <string name="tutorial4"><u>Move orders</u>\n\n<u>Touch and Drag</u> a unit to another location on the battlefield to give a <u>Move Order</u>.\nWhile dragging the unit, you\'ll see a Shield icon appearing if the Move Order destination gives any sort of protection.</string>
-    <string name="tutorial5"><u>Fire orders</u>\n\nIf you target an enemy unit while giving an order to a unit, the order line will go from green to red, if the unit can shoot on the target, or black if there is no line of sight to reach the target.\nThe distance label color will also be updated based on the chance to hit the target :\nBlack = no chance, Green = best chances.</string>
-    <string name="tutorial6"><u>Defend / Ambush orders</u>\n\nWhen the battle starts all your soldiers are given <u>Ambush orders</u> and your vehicles <u>Defend orders</u>. \nTo give a Ambush order, just tap on a unit previously selected. If you tap on it again it will switch to a Defend order.\nWhile having Ambush orders, your units will be harder to localize, and will stay ambush until enemy units are close enough. With a Defend order, a unit will shoot at any enemy unit it sees.</string>
-    <string name="tutorial7"><u>Units information</u>\n\nLet\'s now have a look at a selected unit information layout !\nFirst line contains the name (the color displays the health of the unit, from green = healthy, to red = dead), the experience (no medal = recruit, 1 medal = veteran, 2 medals = elite) and the hauts-faits counter.\nThen, you have the weapons with their anti-personal and anti-tank efficiencies and the amount of ammo left.\nLast line contains the current action of the unit.</string>
-    <string name="tutorial8"><u>Units behaviours</u>\n\nIn WWII, the units are behaving like real human beings. Units under fire will hide themselves and will sometimes not be able to react. Less-experienced units will panic more than experienced ones. Before shooting, a unit will have to aim, and reload its weapon if needed. Units will adjust their firing speed depending on the amount of ammo left.</string>
-    <string name="tutorial9"><u>Vehicles and tanks</u>\n\nVehicles and tanks are powerful but expensive and less maneuverable units. Keep in mind that sides and rear of vehicles are more vulnerable. On short distance, vehicles can reverse. Watch out your troops, vehicles can run over soldiers. Vehicles can fire with their secondary weapon while moving.</string>
-    <string name="tutorial10"><u>Terrains</u>\n\nUsing the terrain covers is one of the keys to success.\nBushes do not block line of sights but provide light protections.\nTrees, fields and houses block line of sights and are giving medium to high covers to your soldiers.</string>
-    <string name="tutorial11"><u>Well done !</u>\n\nThis tutorial is now finished.\nTry to seek and destroy the 2 enemy riflemen on the map.\nGood luck !</string>
 
     <!-- Game -->
     <string name="loading_game">Loading</string>
@@ -112,7 +113,6 @@
     <string name="deployment_phase">Deployment Phase</string>
     <string name="start">Deployment Done</string>
     <string name="game_menu">Game Menu</string>
-    <string name="skill">skill</string>
     <string name="riddle_answer_input">your answer...</string>
     <string name="game_master">Game Master</string>
     <string name="new_level_title">You reached level %s !</string>
@@ -130,7 +130,6 @@
     <string name="equip">Equip</string>
     <string name="remove">Remove</string>
     <string name="drop">Drop</string>
-    <string name="use_skill">use_skill</string>
     <string name="gold_coins">Gold Coins</string>
     <string name="bag_full">Your bag is full, the object has been dropped on the ground</string>
     <string name="damage">Damage</string>
@@ -150,7 +149,6 @@
     <string name="secondary_stats">Secondary stats</string>
     <string name="skills">Skills</string>
     <string name="use_skill_personal">%s !</string>
-    <string name="potion">potion</string>
     <string name="drink">Drink</string>
 
     <!-- Books -->

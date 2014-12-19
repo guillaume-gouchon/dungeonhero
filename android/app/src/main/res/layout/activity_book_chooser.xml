@@ -16,13 +16,52 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp">
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
 
-        <com.glevel.dungeonhero.views.CustomCarousel
-            android:id="@+id/heroes"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            custom:nbColumns="2" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    android:id="@+id/shop_button"
+                    style="@style/Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shop"
+                    android:padding="12dp"
+                    android:drawablePadding="10dp"
+                    android:textSize="22sp"
+                    android:drawableLeft="@drawable/ic_coin"
+                    android:layout_marginLeft="8dp" />
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    android:id="@+id/tavern_button"
+                    style="@style/Button"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tavern"
+                    android:padding="12dp"
+                    android:drawablePadding="10dp"
+                    android:textSize="22sp"
+                    android:drawableLeft="@drawable/ic_door"
+                    android:layout_marginLeft="8dp" />
+            </LinearLayout>
+
+            <com.glevel.dungeonhero.views.CustomCarousel
+                android:id="@+id/books"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                custom:nbColumns="2" />
+        </LinearLayout>
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/chooseBookMessage"
@@ -31,7 +70,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choose_book_message" />
-
     </RelativeLayout>
-
 </FrameLayout>

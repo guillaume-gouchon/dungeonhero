@@ -719,38 +719,44 @@ public class ActionsDispatcher implements UserActionListener {
         }
     }
 
-    public void useSkill(Tile tile) {
+    public void useSkill(final Tile tile) {
         mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(activatedSkill.getName(mGameActivity.getResources()))), R.color.green);
-        Effect effect = activatedSkill.getEffect();
 
-        if (!activatedSkill.isPersonal() || activatedSkill.getRadius() == 0) {
-            applyEffect(effect, tile, true);
-        }
-        if (activatedSkill.getRadius() > 0) {
-            Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, activatedSkill.getRadius(), true, null);
-            for (Tile targetTile : targetTiles) {
-                if (targetTile != mGameActivity.getActiveCharacter().getTilePosition()) {
-                    applyEffect(effect, targetTile, true);
-                }
-            }
-        }
-
-        activatedSkill.use();
-        activatedSkill = null;
-        mGUIManager.updateSkillButtons();
-
-        // do next turn when everyone is dead
-        new Timer().schedule(new TimerTask() {
+        animateSkill(new OnActionExecuted() {
             @Override
-            public void run() {
-                mGameActivity.runOnUiThread(new Runnable() {
+            public void onActionDone(boolean success) {
+                Effect effect = activatedSkill.getEffect();
+                if (!activatedSkill.isPersonal() || activatedSkill.getRadius() == 0) {
+                    applyEffect(effect, tile, true);
+                }
+                if (activatedSkill.getRadius() > 0) {
+                    Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, activatedSkill.getRadius(), true, null);
+                    for (Tile targetTile : targetTiles) {
+                        if (targetTile != mGameActivity.getActiveCharacter().getTilePosition()) {
+                            applyEffect(effect, targetTile, true);
+                        }
+                    }
+                }
+
+                // TODO
+//                activatedSkill.use();
+                activatedSkill = null;
+                mGUIManager.updateSkillButtons();
+
+                // go to next turn when everyone is dead
+                new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        mGameActivity.nextTurn();
+                        mGameActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mGameActivity.nextTurn();
+                            }
+                        });
                     }
-                });
+                }, 700);
             }
-        }, 700);
+        });
     }
 
     public void applyEffect(Effect effect, final Tile tile, boolean addExtra) {
@@ -800,6 +806,137 @@ public class ActionsDispatcher implements UserActionListener {
     public void setInputEnabled(boolean enabled) {
         inputDisabled = !enabled;
         mInputManager.setEnabled(enabled);
+    }
+
+    private void animateSkill(final OnActionExecuted callback) {
+        final UnitSprite sprite = (UnitSprite) mGameActivity.getActiveCharacter().getSprite();
+        if (activatedSkill.getIdentifier().equals("swirl_swords")) {
+            new Timer().schedule(new TimerTask() {
+                private int n = 7;
+
+                @Override
+                public void run() {
+                    sprite.walk(Directions.values()[n % 4]);
+                    n--;
+                    if (n < 0) {
+                        sprite.stand();
+                        cancel();
+                        callback.onActionDone(true);
+                    }
+                }
+            }, 0, 80);
+        } else if (activatedSkill.getIdentifier().equals("berserker_rage")) {
+            sprite.stand();
+            sprite.setColor(Color.RED);
+            new Timer().schedule(new TimerTask() {
+                private int n = 7;
+
+                @Override
+                public void run() {
+                    sprite.setScale((float) (0.25 + 0.05 * (n % 2)));
+                    n--;
+                    if (n < 0) {
+                        sprite.setScale(0.25f);
+                        cancel();
+                        callback.onActionDone(true);
+                    }
+                }
+            }, 0, 80);
+        } else if (activatedSkill.getIdentifier().equals("camouflage")) {
+            sprite.stand();
+            new Timer().schedule(new TimerTask() {
+                private int n = 7;
+
+                @Override
+                public void run() {
+                    sprite.setAlpha((float) (0.3 + 0.1 * n));
+                    n--;
+                    if (n < 0) {
+                        cancel();
+                        callback.onActionDone(true);
+                    }
+                }
+            }, 0, 80);
+        } else if (activatedSkill.getIdentifier().equals("ground_slam")) {
+            sprite.stand();
+            new Timer().schedule(new TimerTask() {
+                private int n = 7;
+                private final float initialY = sprite.getY();
+                private final float initialCameraX = mGameActivity.getCamera().getCenterX();
+
+                @Override
+                public void run() {
+                    sprite.setPosition(sprite.getX(), (float) (initialY - 10 * Math.sin(n * Math.PI / 7)));
+                    mGameActivity.getCamera().offsetCenter((float) (-3 * Math.cos(n * 2 * Math.PI / 7)), mGameActivity.getCamera().getCenterY());
+
+                    n--;
+                    if (n < 0) {
+                        sprite.setPosition(sprite.getX(), initialY);
+                        mGameActivity.getCamera().setCenter(initialCameraX, mGameActivity.getCamera().getCenterY());
+                        cancel();
+                        callback.onActionDone(true);
+                    }
+                }
+            }, 0, 50);
+        } else if (activatedSkill.getIdentifier().equals("drunken_master")) {
+            sprite.stand();
+            new Timer().schedule(new TimerTask() {
+                private int n = 7;
+                private final float initialX = sprite.getX();
+
+                @Override
+                public void run() {
+                    sprite.setColor(Color.GREEN);
+                    sprite.setPosition((float) (initialX - 3 * Math.cos(n * 2 * Math.PI / 7)), sprite.getY());
+
+                    n--;
+                    if (n < 0) {
+                        sprite.setColor(Color.WHITE);
+                        sprite.setPosition(initialX, sprite.getY());
+                        cancel();
+                        callback.onActionDone(true);
+                    }
+                }
+            }, 0, 60);
+        } else if (activatedSkill.getIdentifier().equals("healing_plants")) {
+            sprite.stand();
+            new Timer().schedule(new TimerTask() {
+                private int n = 7;
+
+                @Override
+                public void run() {
+                    sprite.setColor(n % 4 == 0 ? Color.WHITE : new Color(0.0f, 0.6f, 0.0f));
+
+                    n--;
+                    if (n < 0) {
+                        sprite.setColor(Color.WHITE);
+                        cancel();
+                        callback.onActionDone(true);
+                    }
+                }
+            }, 0, 60);
+        } else if (activatedSkill.getIdentifier().equals("stone_skin")) {
+            sprite.stand();
+            sprite.setColor(new Color(0.65f, 0.24f, 0.08f, 1.0f));
+
+            new Timer().schedule(new TimerTask() {
+                private int n = 7;
+
+                @Override
+                public void run() {
+                    sprite.setScale((float) (0.25 + 0.07 * Math.sin(n * Math.PI / 7)));
+
+                    n--;
+                    if (n < 0) {
+                        sprite.setScale(0.25f);
+                        cancel();
+                        callback.onActionDone(true);
+                    }
+                }
+            }, 0, 60);
+        } else {
+            callback.onActionDone(true);
+        }
     }
 
 }

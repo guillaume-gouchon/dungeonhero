@@ -12,7 +12,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.BooksAdapter;
@@ -27,19 +26,26 @@ import com.glevel.dungeonhero.utils.billing.OnBillingServiceConnectedListener;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.CustomCarousel;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameActivity;
 
 import java.util.List;
 
-public class BookChooserActivity extends MyActivity implements OnBillingServiceConnectedListener {
+public class BookChooserActivity extends BaseGameActivity implements OnBillingServiceConnectedListener, OnClickListener {
 
-    private DatabaseHelper mDbHelper;
+    private static final int REQUEST_ACHIEVEMENTS = 100;
+
     private Game mGame;
-
-    private ImageView mStormsBg;
-    private Runnable mStormEffect;
+    private DatabaseHelper mDbHelper;
     private InAppBillingHelper mInAppBillingHelper;
     private List<Book> mLstBooks;
     private SharedPreferences mSharedPrefs;
+
+    /**
+     * UI
+     */
+    private ImageView mStormsBg;
+    private Runnable mStormEffect;
     private Dialog mGameMenuDialog;
     private CustomAlertDialog mTutorialDialog;
 
@@ -63,16 +69,18 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_book_chooser);
+
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mDbHelper = new MyDatabase(getApplicationContext());
 
+        // retrieve active game
         mGame = (Game) getIntent().getExtras().getSerializable(Game.class.getName());
         mGame.setDungeon(null);
         long gameId = mDbHelper.getRepository(MyDatabase.Repositories.GAME.toString()).save(mGame);
         mGame.setId(gameId);
 
+        // retrieve books
         mLstBooks = BookFactory.getAll();
         for (Book book : mLstBooks) {
             if (mGame.getBooksDone().contains(book.getId())) {
@@ -89,12 +97,15 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
         mStormsBg = (ImageView) findViewById(R.id.storms);
 
         // init carousel
-        CustomCarousel carousel = (CustomCarousel) findViewById(R.id.heroes);
+        CustomCarousel carousel = (CustomCarousel) findViewById(R.id.books);
         CustomCarousel.Adapter adapter = new BooksAdapter(getApplicationContext(), R.layout.book_chooser_item, mLstBooks, mOnStorySelectedListener);
         carousel.setAdapter(adapter);
 
         // start message animation
         findViewById(R.id.chooseBookMessage).startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.big_label_in_game));
+
+        findViewById(R.id.shop_button).setOnClickListener(this);
+        findViewById(R.id.tavern_button).setOnClickListener(this);
     }
 
     @Override
@@ -196,6 +207,30 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
         } else {
             mInAppBillingHelper.purchaseItem(selectedBook);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.shop_button:
+                Intent intent = new Intent(this, ShopActivity.class);
+                intent.putExtra(Game.class.getName(), mGame);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.tavern_button:
+                startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()), REQUEST_ACHIEVEMENTS);
+                break;
+        }
+    }
+
+    @Override
+    public void onSignInFailed() {
+    }
+
+    @Override
+    public void onSignInSucceeded() {
+        findViewById(R.id.tavern_button).setVisibility(View.VISIBLE);
     }
 
 }

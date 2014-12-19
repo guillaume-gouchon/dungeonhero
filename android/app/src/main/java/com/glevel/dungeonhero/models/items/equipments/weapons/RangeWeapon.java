@@ -9,8 +9,8 @@ public class RangeWeapon extends TwoHandedWeapon implements Serializable {
 
     private static final long serialVersionUID = 4444072098726014881L;
 
-    public RangeWeapon(String identifier, int minDamage, int deltaDamage, int level) {
-        super(identifier, minDamage, deltaDamage, level);
+    public RangeWeapon(String identifier, int minDamage, int deltaDamage, int level, int price) {
+        super(identifier, minDamage, deltaDamage, level, price);
     }
 
 }

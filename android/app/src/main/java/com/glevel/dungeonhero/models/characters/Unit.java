@@ -35,7 +35,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     private static final String TAG = "Unit";
     private static final long serialVersionUID = 1683650465351973413L;
 
-    private static final int NB_ITEMS_MAX_IN_BAG = 15;
+    public static final int NB_ITEMS_MAX_IN_BAG = 15;
 
     protected final List<Item> items = new ArrayList<>();
     // Skills

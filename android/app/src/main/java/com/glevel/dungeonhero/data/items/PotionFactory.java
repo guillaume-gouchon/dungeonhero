@@ -44,47 +44,47 @@ public class PotionFactory {
     }
 
     public static Potion buildForcePotion() {
-        Potion item = new Potion("force_potion", new BuffEffect("blood.png", Characteristics.DAMAGE, 10, 6, null, 0));
+        Potion item = new Potion("force_potion", new BuffEffect("blood.png", Characteristics.DAMAGE, 10, 6, null, 0), 70);
         return item;
     }
 
     public static Potion buildGreaterHealingPotion() {
-        Potion item = new Potion("greater_healing_potion", new DamageEffect("blood.png", 30, 0));
+        Potion item = new Potion("greater_healing_potion", new DamageEffect("blood.png", 30, 0), 150);
         return item;
     }
 
     public static Potion buildHealingPotion() {
-        Potion item = new Potion("healing_potion", new DamageEffect("blood.png", 10, 0));
+        Potion item = new Potion("healing_potion", new DamageEffect("blood.png", 10, 0), 50);
         return item;
     }
 
     public static Potion buildHeroicPotion() {
-        Potion item = new Potion("heroic_potion", new HeroicEffect("blood.png"));
+        Potion item = new Potion("heroic_potion", new HeroicEffect("blood.png"), 100);
         return item;
     }
 
     public static Potion buildInvisibilityPotion() {
-        Potion item = new Potion("invisibility_potion", new CamouflageEffect("blood.png", 5, 0));
+        Potion item = new Potion("invisibility_potion", new CamouflageEffect("blood.png", 5, 0), 80);
         return item;
     }
 
     public static Potion buildLuckPotion() {
-        Potion item = new Potion("luck_potion", new BuffEffect("blood.png", Characteristics.DODGE, 50, 6, null, 0));
+        Potion item = new Potion("luck_potion", new BuffEffect("blood.png", Characteristics.DODGE, 50, 6, null, 0), 70);
         return item;
     }
 
     public static Potion buildMagicShieldPotion() {
-        Potion item = new Potion("magic_shield_potion", new BuffEffect("blood.png", Characteristics.BLOCK, 40, 6, null, 0));
+        Potion item = new Potion("magic_shield_potion", new BuffEffect("blood.png", Characteristics.BLOCK, 40, 6, null, 0), 60);
         return item;
     }
 
     public static Potion buildRecoveryPotion() {
-        Potion item = new Potion("recovery_potion", new RecoveryEffect("blood.png"));
+        Potion item = new Potion("recovery_potion", new RecoveryEffect("blood.png"), 120);
         return item;
     }
 
     public static Potion buildSpeedPotion() {
-        Potion item = new Potion("speed_potion", new BuffEffect("blood.png", Characteristics.MOVEMENT, 5, 6, null, 0));
+        Potion item = new Potion("speed_potion", new BuffEffect("blood.png", Characteristics.MOVEMENT, 5, 6, null, 0), 40);
         return item;
     }
 
@@ -115,7 +115,7 @@ public class PotionFactory {
                 break;
         }
 
-        Potion item = new Potion("speed_potion", effect);
+        Potion item = new Potion("speed_potion", effect, 50);
         return item;
     }
 

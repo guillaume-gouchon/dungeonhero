@@ -39,7 +39,7 @@ public class SkillFactory {
     }
 
     public static Skill buildCamouflage() {
-        Effect effect = new CamouflageEffect("blood.png", 10, 0);
+        Effect effect = new CamouflageEffect(null, 10, 0);
         return new ActiveSkill("camouflage", 0, true, 0, effect);
     }
 
@@ -67,7 +67,7 @@ public class SkillFactory {
 
     public static Skill buildDrunkenMaster() {
         Effect extra = new BuffEffect("blood.png", Characteristics.BLOCK, -100, 8, null, 0);
-        Effect effect = new DamageEffect("blood.png", 15, extra, 0);
+        Effect effect = new DamageEffect(null, 15, extra, 0);
         return new ActiveSkill("drunken_master", 0, true, 0, effect);
     }
 
@@ -94,7 +94,7 @@ public class SkillFactory {
     }
 
     public static Skill buildHealingHerbs() {
-        Effect effect = new DamageEffect("blood.png", 10, null, 0);
+        Effect effect = new DamageEffect(null, 10, null, 0);
         return new ActiveSkill("healing_plants", 0, true, 0, effect);
     }
 
@@ -127,7 +127,7 @@ public class SkillFactory {
     }
 
     public static Skill buildStoneSkin() {
-        Effect effect = new BuffEffect("blood.png", Characteristics.PROTECTION, 15, 7, null, 0);
+        Effect effect = new BuffEffect(null, Characteristics.PROTECTION, 15, 7, null, 0);
         return new ActiveSkill("stone_skin", 0, true, 0, effect);
     }
 

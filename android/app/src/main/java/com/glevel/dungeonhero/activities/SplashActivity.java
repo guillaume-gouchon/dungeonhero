@@ -21,6 +21,9 @@ public class SplashActivity extends MyActivity {
 
     private static final int DELAY_AFTER_ANIMATION = 300, DELAY_BEFORE_ANIMATION = 200;
 
+    /**
+     * UI
+     */
     private ViewGroup mTitleLayout;
     private Animation mLetterAnimation, mBounceAnimation;
     private int mCurrentAnimationPlaying = 0;

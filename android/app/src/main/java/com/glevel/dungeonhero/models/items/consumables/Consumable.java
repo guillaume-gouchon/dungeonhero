@@ -7,12 +7,12 @@ import java.io.Serializable;
 /**
  * Created by guillaume ON 10/6/14.
  */
-public class Consumable extends Item implements Serializable {
+public abstract class Consumable extends Item implements Serializable {
 
     private static final long serialVersionUID = 3416498502861499207L;
 
-    public Consumable(String identifier) {
-        super(identifier, true);
+    public Consumable(String identifier, int price) {
+        super(identifier, true, price);
     }
 
 }

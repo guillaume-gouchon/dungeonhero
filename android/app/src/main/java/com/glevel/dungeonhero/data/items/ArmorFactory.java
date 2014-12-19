@@ -31,14 +31,14 @@ public class ArmorFactory {
     }
 
     public static Armor buildRobe(int level) {
-        Armor item = new Armor("robe", 2, level);
+        Armor item = new Armor("robe", 2, level, 150);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
         return item;
     }
 
     public static Armor buildLeatherVest(int level) {
-        Armor item = new Armor("leather_vest", 4, level);
+        Armor item = new Armor("leather_vest", 4, level, 180);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
@@ -48,7 +48,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildLeatherPlastron(int level) {
-        Armor item = new Armor("leather_plastron", 6, level);
+        Armor item = new Armor("leather_plastron", 6, level, 200);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
@@ -58,7 +58,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildChainMail(int level) {
-        Armor item = new Armor("chain_mail", 8, level);
+        Armor item = new Armor("chain_mail", 8, level, 250);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, level));
@@ -67,7 +67,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildLamellar(int level) {
-        Armor item = new Armor("lamellar", 10, level);
+        Armor item = new Armor("lamellar", 10, level, 250);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 13, level));
@@ -76,7 +76,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildBreastPlate(int level) {
-        Armor item = new Armor("breast_plate", 12, level);
+        Armor item = new Armor("breast_plate", 12, level, 350);
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 16, level));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addEffect(new PermanentEffect(Characteristics.DODGE, -20, null, level));

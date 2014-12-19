@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by guillaume ON 10/6/14.
  */
-public class Equipment extends Item implements Serializable {
+public abstract class Equipment extends Item implements Serializable {
 
     private static final long serialVersionUID = -1500593967008364005L;
 
@@ -20,8 +20,8 @@ public class Equipment extends Item implements Serializable {
     private final List<Requirement> requirements = new ArrayList<Requirement>();
     protected final int level;
 
-    public Equipment(String identifier, int level) {
-        super(identifier, true);
+    public Equipment(String identifier, int level, int price) {
+        super(identifier, true, price);
         this.level = level;
     }
 

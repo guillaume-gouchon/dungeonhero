@@ -54,7 +54,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildAxe(int level) {
-        Weapon item = new Weapon("axe", 8, 8, level);
+        Weapon item = new Weapon("axe", 8, 8, level, 150);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, level));
@@ -64,7 +64,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildBattleAxe(int level) {
-        TwoHandedWeapon item = new TwoHandedWeapon("battle_axe", 12, 12, level);
+        TwoHandedWeapon item = new TwoHandedWeapon("battle_axe", 12, 12, level, 400);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 12, level));
@@ -74,7 +74,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildBoomerang(int level) {
-        RangeWeapon item = new RangeWeapon("boomerang", 5, 5, level);
+        RangeWeapon item = new RangeWeapon("boomerang", 5, 5, level, 300);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
@@ -83,7 +83,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildBow(int level) {
-        RangeWeapon item = new RangeWeapon("bow", 8, 6, level);
+        RangeWeapon item = new RangeWeapon("bow", 8, 6, level, 250);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
@@ -92,7 +92,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildBroadSword(int level) {
-        TwoHandedWeapon item = new TwoHandedWeapon("broad_sword", 14, 4, level);
+        TwoHandedWeapon item = new TwoHandedWeapon("broad_sword", 14, 4, level, 250);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 12, level));
@@ -100,7 +100,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildCrossbow(int level) {
-        RangeWeapon item = new RangeWeapon("crossbow", 15, 5, level);
+        RangeWeapon item = new RangeWeapon("crossbow", 15, 5, level, 400);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
@@ -111,7 +111,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildDagger(int level) {
-        Weapon item = new Weapon("dagger", 5, 3, level);
+        Weapon item = new Weapon("dagger", 5, 3, level, 120);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
@@ -122,7 +122,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildLargeShield(int level) {
-        Weapon item = new Weapon("large_shield", 2, 1, level);
+        Weapon item = new Weapon("large_shield", 2, 1, level, 210);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 12, level));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, 25, null, 0));
@@ -130,7 +130,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildLongSword(int level) {
-        Weapon item = new Weapon("long_sword", 2, 1, level);
+        Weapon item = new Weapon("long_sword", 2, 1, level, 180);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, level));
@@ -139,7 +139,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildRoundShield(int level) {
-        Weapon item = new Weapon("round_shield", 1, 1, level);
+        Weapon item = new Weapon("round_shield", 1, 1, level, 120);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 7, level));
@@ -148,7 +148,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildShortSword(int level) {
-        Weapon item = new Weapon("short_sword", 6, 3, level);
+        Weapon item = new Weapon("short_sword", 6, 3, level, 150);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
@@ -160,14 +160,14 @@ public class WeaponFactory {
     }
 
     public static Equipment buildShuriken(int level) {
-        RangeWeapon item = new RangeWeapon("shuriken", 5, 2, level);
+        RangeWeapon item = new RangeWeapon("shuriken", 5, 2, level, 150);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
         item.addRequirement(new StatRequirement(Characteristics.DEXTERITY, 12, level));
         return item;
     }
 
     public static Equipment buildSpear(int level) {
-        TwoHandedWeapon item = new TwoHandedWeapon("spear", 9, 6, level);
+        TwoHandedWeapon item = new TwoHandedWeapon("spear", 9, 6, level, 120);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addEffect(new PermanentEffect(Characteristics.CRITICAL, 10, null, 0));
@@ -176,7 +176,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildMorgenstern(int level) {
-        Weapon item = new Weapon("spiked_mace", 10, 5, level);
+        Weapon item = new Weapon("spiked_mace", 10, 5, level, 350);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 12, level));
@@ -185,7 +185,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildThrowingDaggers(int level) {
-        RangeWeapon item = new RangeWeapon("throwing_daggers", 7, 2, level);
+        RangeWeapon item = new RangeWeapon("throwing_daggers", 7, 2, level, 130);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
         item.addRequirement(new StatRequirement(Characteristics.DEXTERITY, 10, level));
@@ -193,7 +193,7 @@ public class WeaponFactory {
     }
 
     public static Equipment buildWizardStaff(int level) {
-        TwoHandedWeapon item = new TwoHandedWeapon("wizard_staff", 5, 2, level);
+        TwoHandedWeapon item = new TwoHandedWeapon("wizard_staff", 5, 2, level, 150);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, 15, null, 0));

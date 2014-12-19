@@ -14,8 +14,8 @@ public class Weapon extends Equipment implements Serializable {
     private final int minDamage;
     private final int deltaDamage;
 
-    public Weapon(String identifier, int minDamage, int deltaDamage, int level) {
-        super(identifier, level);
+    public Weapon(String identifier, int minDamage, int deltaDamage, int level, int price) {
+        super(identifier, level, (int) (price * (1 + (level * 0.25))));
         this.minDamage = minDamage;
         this.deltaDamage = deltaDamage;
     }

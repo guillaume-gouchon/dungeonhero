@@ -9,15 +9,17 @@ import java.io.Serializable;
 /**
  * Created by guillaume ON 10/6/14.
  */
-public class Item extends StorableResource implements Serializable {
+public abstract class Item extends StorableResource implements Serializable {
 
     private static final long serialVersionUID = -4963410849686406982L;
 
     private final boolean droppable;
+    private final int price;
 
-    public Item(String identifier, boolean droppable) {
+    public Item(String identifier, boolean droppable, int price) {
         super(identifier);
         this.droppable = droppable;
+        this.price = price;
     }
 
     public int getColor() {
@@ -30,6 +32,10 @@ public class Item extends StorableResource implements Serializable {
 
     public boolean isDroppable() {
         return droppable;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
 }

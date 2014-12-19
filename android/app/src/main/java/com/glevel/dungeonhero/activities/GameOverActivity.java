@@ -14,10 +14,14 @@ import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 public class GameOverActivity extends MyActivity implements View.OnClickListener {
 
+    private Game mGame;
+    private MyDatabase mDbHelper;
+
+    /**
+     * UI
+     */
     private Runnable mStormEffect;
     private ImageView mStormsBg;
-    private MyDatabase mDbHelper;
-    private Game mGame;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

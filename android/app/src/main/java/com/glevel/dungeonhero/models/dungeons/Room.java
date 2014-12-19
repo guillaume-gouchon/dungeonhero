@@ -280,8 +280,6 @@ public class Room implements Serializable {
         for (Unit unit : lstUnitsToMoveIn) {
             addGameElement(unit, stairTile);
         }
-        addGameElement(DecorationFactory.buildBox(null), getRandomFreeTile());
-        addGameElement(DecorationFactory.buildLight(), getRandomFreeTile());
     }
 
 }

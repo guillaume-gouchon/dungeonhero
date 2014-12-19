@@ -26,6 +26,7 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
+import com.glevel.dungeonhero.activities.ShopActivity;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
@@ -111,7 +112,7 @@ public class GUIManager {
             public void run() {
                 mBigLabel.setVisibility(View.VISIBLE);
                 mBigLabel.setText("" + text);
-                mBigLabel.setTextColor(mActivity.getResources().getColor(color));
+                mBigLabel.setTextColor(mResources.getColor(color));
                 mBigLabel.startAnimation(mBigLabelAnimation);
             }
         });
@@ -225,6 +226,9 @@ public class GUIManager {
                                 mActivity.finish();
                             } else {
                                 mActivity.getGame().finishBook(activeBook);
+
+                                // reset shop when one quest is finished
+                                ShopActivity.resetShop(mActivity.getApplicationContext());
                                 if (activeBook.getOutroText(mResources) > 0) {
                                     // show outro text
                                     Bundle args = new Bundle();
@@ -706,13 +710,13 @@ public class GUIManager {
         itemView.setTag(R.string.item, item);
 
         if (item != null) {
-            background.setBackgroundColor(mActivity.getResources().getColor(item.getColor()));
+            background.setBackgroundColor(mResources.getColor(item.getColor()));
             image.setImageResource(item.getImage(mResources));
             image.setAlpha(1.0f);
             itemView.setEnabled(true);
             itemView.setOnClickListener(mActivity);
         } else {
-            background.setBackgroundColor(mActivity.getResources().getColor(android.R.color.transparent));
+            background.setBackgroundColor(mResources.getColor(android.R.color.transparent));
             image.setImageResource(defaultImage);
             image.setAlpha(0.2f);
             itemView.setEnabled(false);
@@ -727,12 +731,12 @@ public class GUIManager {
         itemView.setTag(R.string.item, item);
 
         if (item != null) {
-            background.setBackgroundColor(mActivity.getResources().getColor(item.getColor()));
+            background.setBackgroundColor(mResources.getColor(item.getColor()));
             image.setImageResource(item.getImage(mResources));
             itemView.setEnabled(true);
             itemView.setOnClickListener(mActivity);
         } else if (itemView.isEnabled()) {
-            background.setBackgroundColor(mActivity.getResources().getColor(android.R.color.transparent));
+            background.setBackgroundColor(mResources.getColor(android.R.color.transparent));
             image.setImageResource(0);
             itemView.setEnabled(false);
             itemView.setOnClickListener(null);
@@ -852,7 +856,7 @@ public class GUIManager {
         statView.setText(text);
         statView.setTextHint(hint);
         statView.setCompoundDrawablesWithIntrinsicBounds(image, 0, 0, 0);
-        int colorResource = mActivity.getResources().getColor(color);
+        int colorResource = mResources.getColor(color);
         statView.setTextColor(colorResource);
         statView.setVisibility(View.VISIBLE);
     }
@@ -907,7 +911,7 @@ public class GUIManager {
 
         itemView.setTag(R.string.skill, skill);
 
-        background.setBackgroundColor(mActivity.getResources().getColor(skill.getColor()));
+        background.setBackgroundColor(mResources.getColor(skill.getColor()));
         image.setImageResource(skill.getImage(mResources));
         itemView.setOnClickListener(mActivity);
     }
