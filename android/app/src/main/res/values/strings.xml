@@ -80,7 +80,7 @@
     <string name="replay">Replay</string>
 
     <!-- Game Over -->
-    <string name="retry">Retry !</string>
+    <string name="retry">Retry</string>
     <string name="exit">Exit</string>
     <string name="game_over_title">Game Over</string>
 
@@ -99,7 +99,6 @@
     <string name="strength">Strength : used to deal damages, hold heavy items</string>
     <string name="dexterity">Dexterity : used to dodge, react, aim</string>
     <string name="spirit">Spirit : used to react, focus, gain skills</string>
-    <string name="block">The ability to block an enemy\'s attack</string>
     <string name="frags">Frags</string>
 
     <!-- Game -->
@@ -138,6 +137,7 @@
     <string name="movement">Movement</string>
     <string name="initiative">Initiative</string>
     <string name="critical">Critical Hit</string>
+    <string name="block">Parry</string>
     <string name="unknown_item">\?\?\?</string>
     <string name="minimum">min. %s </string>
     <string name="exit_stairs">Exit Stairs</string>

@@ -6,6 +6,8 @@ import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.FightResult;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.models.effects.BuffEffect;
+import com.glevel.dungeonhero.models.effects.CamouflageEffect;
 import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
@@ -22,6 +24,7 @@ import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.color.Color;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,17 +35,14 @@ import java.util.List;
  */
 public abstract class Unit extends GameElement implements MovingElement<Tile>, Serializable {
 
+    public static final int NB_ITEMS_MAX_IN_BAG = 15;
     private static final String TAG = "Unit";
     private static final long serialVersionUID = 1683650465351973413L;
-
-    public static final int NB_ITEMS_MAX_IN_BAG = 15;
-
     protected final List<Item> items = new ArrayList<>();
     // Skills
     protected final List<Skill> skills = new ArrayList<>();
-    protected List<Effect> buffs = new ArrayList<>();
     protected final Equipment[] equipments = new Equipment[5];
-
+    protected List<Effect> buffs = new ArrayList<>();
     // Possessions
     protected int gold;
 
@@ -122,6 +122,17 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     public FightResult attack(Unit target) {
         FightResult fightResult;
 
+        // remove invisibility
+        boolean isInvisible = false;
+        for (Effect buff : buffs) {
+            if (buff instanceof CamouflageEffect) {
+                buffs.remove(buff);
+                updateSprite();
+                isInvisible = true;
+                break;
+            }
+        }
+
         int dice = (int) (Math.random() * 100);
 
         if (isRangeAttack() && MathUtils.calcManhattanDistance(tilePosition, target.getTilePosition()) <= 1) {
@@ -129,22 +140,26 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
             dice = Math.min(99, dice + 20);
         }
 
+        Log.d(TAG, "attack dice = " + dice);
+
         // TODO : add critical failure
-        
+
         int damage = Math.max(0, calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE)
                 + (equipments[0] != null ? calculateDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateDamage((Weapon) equipments[1]) / 2 : 0));
 
         int critical = calculateCritical();
 
-        if (dice < critical) {
+        if (isInvisible || dice < critical) {
             fightResult = new FightResult(FightResult.States.CRITICAL, Math.max(0, damage * 2 - target.calculateProtection()));
         } else if (dice > 100 - target.calculateBlock()) {
             fightResult = new FightResult(FightResult.States.BLOCK, 0);
         } else {
-            int dodgeScore = (int) (Math.random() * 100);
+            int dodgeDice = (int) (Math.random() * 100);
+            Log.d(TAG, "dodge dice = " + dodgeDice);
+
             // range weapons are harder to dodge
-            if (isRangeAttack() && dodgeScore < calculateDodge() - 2 * dexterity
-                    || dodgeScore < calculateDodge()) {
+            if (isRangeAttack() && dodgeDice < target.calculateDodge() - 2 * dexterity
+                    || !isRangeAttack() && dodgeDice < target.calculateDodge()) {
                 fightResult = new FightResult(FightResult.States.DODGE, 0);
             } else {
                 fightResult = new FightResult(FightResult.States.DAMAGE, Math.max(0, damage - target.calculateProtection()));
@@ -248,8 +263,29 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         for (Effect buff : copy) {
             boolean isOver = buff.consume();
             if (isOver) {
+                Log.d(TAG, "buff is over =" + buff.getTarget());
                 buffs.remove(buff);
             }
+        }
+        updateSprite();
+    }
+
+    public void updateSprite() {
+        Log.d(TAG, "update sprite with buffs");
+        boolean isInvisible = false;
+        boolean isColored = false;
+        for (Effect effect : buffs) {
+            if (effect instanceof CamouflageEffect) {
+                isInvisible = true;
+            } else if (!isColored && effect instanceof BuffEffect && ((BuffEffect) effect).getBuffColor() != null) {
+                isColored = true;
+                sprite.setColor(((BuffEffect) effect).getBuffColor());
+            }
+        }
+
+        sprite.setAlpha(isInvisible ? 0.3f : 1);
+        if (!isColored) {
+            sprite.setColor(new Color(1, 1, 1, sprite.getAlpha()));
         }
     }
 

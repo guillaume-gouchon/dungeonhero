@@ -153,10 +153,10 @@ public class ApplicationUtils {
                     isThunder = false;
                     backgroundView.setColorFilter(Color.argb(fromAlpha, 0, 0, 0));
                 }
-                backgroundView.postDelayed(this, 100);
+                backgroundView.postDelayed(this, 200);
             }
         };
-        backgroundView.postDelayed(stormEffectRunnable, 100);
+        backgroundView.postDelayed(stormEffectRunnable, 200);
         return stormEffectRunnable;
     }
 

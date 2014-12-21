@@ -199,6 +199,7 @@ public class GameActivity extends MyBaseGameActivity {
         Log.d(TAG, "sort children by z-index");
         mScene.sortChildren();
 
+        mHero.updateSprite();
         mGUIManager.setData(mHero);
 
         startGame();

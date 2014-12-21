@@ -212,47 +212,55 @@ public class GUIManager {
     public void showVictoryDialog() {
         final Book activeBook = mActivity.getGame().getBook();
         boolean hasNextChapter = activeBook.getChapters().size() > 1;
-        mConfirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getOutroText(mResources)),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == R.id.okButton) {
-                            mActivity.getGame().setHero(mHero);
-                            boolean hasNextChapter = activeBook.goToNextChapter();
-                            if (hasNextChapter) {
-                                Intent intent = new Intent(mActivity, GameActivity.class);
-                                intent.putExtra(Game.class.getName(), mActivity.getGame());
-                                mActivity.startActivity(intent);
-                                mActivity.finish();
-                            } else {
-                                mActivity.getGame().finishBook(activeBook);
-
-                                // reset shop when one quest is finished
-                                ShopActivity.resetShop(mActivity.getApplicationContext());
-                                if (activeBook.getOutroText(mResources) > 0) {
-                                    // show outro text
-                                    Bundle args = new Bundle();
-                                    args.putInt(StoryFragment.ARGUMENT_STORY, activeBook.getOutroText(mResources));
-                                    args.putBoolean(StoryFragment.ARGUMENT_IS_OUTRO, true);
-                                    DialogFragment storyFragment = new StoryFragment();
-                                    ApplicationUtils.openDialogFragment(mActivity, storyFragment, args);
-                                } else {
-                                    // go directly to the book chooser, to start a new adventure
-                                    Intent intent = new Intent(mActivity, BookChooserActivity.class);
-                                    intent.putExtra(Game.class.getName(), mActivity.getGame());
-                                    mActivity.startActivity(intent);
-                                    mActivity.finish();
-                                }
+        if (activeBook.getActiveChapter().getOutroText(mResources) > 0) {
+            mConfirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getOutroText(mResources)),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which == R.id.okButton) {
+                                finishQuest(activeBook);
                             }
+                            dialog.dismiss();
                         }
-                        dialog.dismiss();
-                    }
-                });
-        ((TextView) mConfirmDialog.findViewById(R.id.name)).setCompoundDrawablesWithIntrinsicBounds(mHero.getImage(mResources), 0, 0, 0);
-        ((TextView) mConfirmDialog.findViewById(R.id.name)).setText(mHero.getHeroName());
-        ((TextView) mConfirmDialog.findViewById(R.id.okButton)).setText(hasNextChapter ? R.string.go_to_next_chapter : R.string.finish_adventure);
-        mConfirmDialog.findViewById(R.id.cancelButton).setVisibility(View.GONE);
-        mConfirmDialog.show();
+                    });
+            ((TextView) mConfirmDialog.findViewById(R.id.name)).setCompoundDrawablesWithIntrinsicBounds(mHero.getImage(mResources), 0, 0, 0);
+            ((TextView) mConfirmDialog.findViewById(R.id.name)).setText(mHero.getHeroName());
+            ((TextView) mConfirmDialog.findViewById(R.id.okButton)).setText(hasNextChapter ? R.string.go_to_next_chapter : R.string.finish_adventure);
+            mConfirmDialog.findViewById(R.id.cancelButton).setVisibility(View.GONE);
+            mConfirmDialog.show();
+        } else {
+            finishQuest(activeBook);
+        }
+    }
+
+    private void finishQuest(Book activeBook) {
+        mActivity.getGame().setHero(mHero);
+        boolean hasNextChapter = activeBook.goToNextChapter();
+        if (hasNextChapter) {
+            Intent intent = new Intent(mActivity, GameActivity.class);
+            intent.putExtra(Game.class.getName(), mActivity.getGame());
+            mActivity.startActivity(intent);
+            mActivity.finish();
+        } else {
+            mActivity.getGame().finishBook(activeBook);
+
+            // reset shop when one quest is finished
+            ShopActivity.resetShop(mActivity.getApplicationContext());
+            if (activeBook.getOutroText(mResources) > 0) {
+                // show outro text
+                Bundle args = new Bundle();
+                args.putInt(StoryFragment.ARGUMENT_STORY, activeBook.getOutroText(mResources));
+                args.putBoolean(StoryFragment.ARGUMENT_IS_OUTRO, true);
+                DialogFragment storyFragment = new StoryFragment();
+                ApplicationUtils.openDialogFragment(mActivity, storyFragment, args);
+            } else {
+                // go directly to the book chooser, to start a new adventure
+                Intent intent = new Intent(mActivity, BookChooserActivity.class);
+                intent.putExtra(Game.class.getName(), mActivity.getGame());
+                mActivity.startActivity(intent);
+                mActivity.finish();
+            }
+        }
     }
 
     public void showChapterIntro(final OnActionExecuted callback) {
@@ -414,10 +422,11 @@ public class GUIManager {
         ((TextView) mHeroInfoDialog.findViewById(R.id.strength)).setText("" + hero.getStrength());
         ((TextView) mHeroInfoDialog.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());
         ((TextView) mHeroInfoDialog.findViewById(R.id.spirit)).setText("" + hero.getSpirit());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.movement)).setText(mActivity.getString(R.string.movement) + " : " + hero.calculateMovement());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.movement)).setText("" + hero.calculateMovement());
         ((TextView) mHeroInfoDialog.findViewById(R.id.damage)).setText(mActivity.getString(R.string.damage) + " : " + hero.getReadableDamage());
         ((TextView) mHeroInfoDialog.findViewById(R.id.protection)).setText(mActivity.getString(R.string.protection) + " : " + hero.calculateProtection());
         ((TextView) mHeroInfoDialog.findViewById(R.id.dodge)).setText(mActivity.getString(R.string.dodge) + " : " + hero.calculateDodge() + "%");
+        ((TextView) mHeroInfoDialog.findViewById(R.id.block)).setText(mActivity.getString(R.string.block) + " : " + hero.calculateBlock() + "%");
         ((TextView) mHeroInfoDialog.findViewById(R.id.critical)).setText(mActivity.getString(R.string.critical) + " : " + hero.calculateCritical() + "%");
         ((TextView) mHeroInfoDialog.findViewById(R.id.frags)).setText(hero.getFrags() + " " + mActivity.getString(R.string.frags));
 

@@ -7,20 +7,6 @@ import org.andengine.util.color.Color;
  */
 public class FightResult {
 
-    public enum States {
-        DAMAGE(Color.RED), BLOCK(Color.GREEN), DODGE(Color.GREEN), CRITICAL(Color.RED);
-
-        private Color color;
-
-        private States(Color color) {
-            this.color = color;
-        }
-
-        public Color getColor() {
-            return color;
-        }
-    }
-
     private final int damage;
     private final States state;
 
@@ -35,6 +21,20 @@ public class FightResult {
 
     public int getDamage() {
         return damage;
+    }
+
+    public enum States {
+        DAMAGE(Color.RED), BLOCK(new Color(0f, 0.8f, 0f)), DODGE(new Color(0f, 0.8f, 0f)), CRITICAL(Color.RED);
+
+        private Color color;
+
+        private States(Color color) {
+            this.color = color;
+        }
+
+        public Color getColor() {
+            return color;
+        }
     }
 
 }

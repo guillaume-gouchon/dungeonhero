@@ -10,7 +10,7 @@ public class Ring extends Equipment implements Serializable {
     private static final long serialVersionUID = 4191323307341633727L;
 
     public Ring(String identifier, int level, int price) {
-        super(identifier, level, (int) (price * (1 + (level * 0.25))));
+        super(identifier, level, (int) (price * (1 + (level * 0.2))));
     }
 
 }

@@ -19,13 +19,28 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-        <com.glevel.dungeonhero.views.CustomTextView
-            style="@style/HeroTitle"
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="@string/placeholder" />
+            android:orientation="horizontal">
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                style="@style/HeroTitle"
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/placeholder" />
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                android:id="@+id/level"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:gravity="center"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <com.glevel.dungeonhero.views.CustomTextView
             style="@style/HeroDescription"
@@ -85,14 +100,16 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white" />
 
-            <com.glevel.dungeonhero.views.CustomTextView
-                android:id="@+id/level"
+            <com.glevel.dungeonhero.views.HintTextView
+                android:id="@+id/movement"
+                style="@style/HeroStat"
+                android:drawableLeft="@drawable/ic_move"
+                android:text="@string/placeholder"
+                custom:textHint="@string/movement"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder"
-                android:gravity="center"
-                android:textSize="16sp" />
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <View
@@ -119,8 +136,6 @@
                 android:id="@+id/damage"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_damage"
-                custom:linkTextColorToDrawable="true"
-                custom:textHint="@string/damage"
                 android:text="@string/placeholder"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -132,8 +147,6 @@
                 android:id="@+id/protection"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_armor"
-                custom:linkTextColorToDrawable="true"
-                custom:textHint="@string/protection"
                 android:text="@string/placeholder"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -142,11 +155,9 @@
                 android:textSize="10sp" />
 
             <com.glevel.dungeonhero.views.CustomTextView
-                android:id="@+id/dodge"
+                android:id="@+id/critical"
                 style="@style/HeroStat"
-                android:drawableLeft="@drawable/ic_dodge"
-                custom:linkTextColorToDrawable="true"
-                custom:textHint="@string/dodge"
+                android:drawableLeft="@drawable/ic_critics"
                 android:text="@string/placeholder"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -162,11 +173,9 @@
             android:layout_height="wrap_content">
 
             <com.glevel.dungeonhero.views.CustomTextView
-                android:id="@+id/movement"
+                android:id="@+id/dodge"
                 style="@style/HeroStat"
-                android:drawableLeft="@drawable/ic_move"
-                custom:linkTextColorToDrawable="true"
-                custom:textHint="@string/movement"
+                android:drawableLeft="@drawable/ic_dodge"
                 android:text="@string/placeholder"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -175,11 +184,9 @@
                 android:textSize="10sp" />
 
             <com.glevel.dungeonhero.views.CustomTextView
-                android:id="@+id/critical"
+                android:id="@+id/block"
                 style="@style/HeroStat"
-                android:drawableLeft="@drawable/ic_critics"
-                custom:linkTextColorToDrawable="true"
-                custom:textHint="@string/critical"
+                android:drawableLeft="@drawable/ic_block"
                 android:text="@string/placeholder"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -191,8 +198,6 @@
                 android:id="@+id/frags"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_frags"
-                custom:linkTextColorToDrawable="true"
-                custom:textHint="@string/frags"
                 android:text="@string/placeholder"
                 android:layout_width="0dp"
                 android:layout_weight="1"

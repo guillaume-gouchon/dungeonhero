@@ -12,6 +12,8 @@ import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
 
+import org.andengine.util.color.Color;
+
 /**
  * Created by guillaume ON 10/6/14.
  */
@@ -19,7 +21,7 @@ public class SkillFactory {
 
     public static Skill buildRage() {
         BuffEffect extra = new BuffEffect(null, Characteristics.PROTECTION, -5, 3, null, 0);
-        Effect effect = new BuffEffect("blood.png", Characteristics.DAMAGE, 10, 3, extra, 0);
+        Effect effect = new BuffEffect(null, Characteristics.DAMAGE, 10, 3, extra, 0, Color.RED);
         return new ActiveSkill("berserker_rage", 0, true, 0, effect);
     }
 
@@ -50,7 +52,7 @@ public class SkillFactory {
     }
 
     public static Skill buildDodgeMaster() {
-        Effect effect = new PermanentEffect(Characteristics.DODGE, 20, null, 0);
+        Effect effect = new PermanentEffect(Characteristics.DODGE, 15, null, 0);
         return new PassiveSkill("dodge_master", 0, effect);
     }
 
@@ -61,7 +63,7 @@ public class SkillFactory {
     }
 
     public static Skill buildParryScience() {
-        Effect effect = new PermanentEffect(Characteristics.BLOCK, 20, null, 0);
+        Effect effect = new PermanentEffect(Characteristics.BLOCK, 15, null, 0);
         return new PassiveSkill("parry_science", 0, effect);
     }
 
@@ -127,7 +129,7 @@ public class SkillFactory {
     }
 
     public static Skill buildStoneSkin() {
-        Effect effect = new BuffEffect(null, Characteristics.PROTECTION, 15, 7, null, 0);
+        Effect effect = new BuffEffect(null, Characteristics.PROTECTION, 15, 7, null, 0, new Color(0.65f, 0.24f, 0.08f, 1.0f));
         return new ActiveSkill("stone_skin", 0, true, 0, effect);
     }
 

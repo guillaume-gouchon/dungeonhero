@@ -27,6 +27,7 @@ import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
 import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
+import com.glevel.dungeonhero.models.effects.BuffEffect;
 import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.effects.RecoveryEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
@@ -197,8 +198,10 @@ public class ActionsDispatcher implements UserActionListener {
         mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mGameActivity.getRoom().isSafe() && ((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
-                    mGUIManager.showFinishQuestDialog();
+                if (((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
+                    if (mGameActivity.getRoom().isSafe()) {
+                        mGUIManager.showFinishQuestDialog();
+                    }
                 } else {
                     mGUIManager.showLeaveQuestDialog();
                 }
@@ -224,7 +227,9 @@ public class ActionsDispatcher implements UserActionListener {
                                 animateDeath(target, new OnActionExecuted() {
                                     @Override
                                     public void onActionDone(boolean success) {
-                                        mGameActivity.removeElement(target);
+                                        if (target.getRank() != Ranks.ME) {
+                                            mGameActivity.removeElement(target);
+                                        }
                                         mGameActivity.nextTurn();
                                     }
                                 });
@@ -467,7 +472,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void addActionToTile(Actions action, Tile tile) {
-        ActionTile actionTile = new ActionTile(action, tile, mGameActivity.getVertexBufferObjectManager());
+        ActionTile actionTile = new ActionTile(action, tile, mGameActivity.getVertexBufferObjectManager(), false);
         tile.setAction(action);
         mGameActivity.mGroundLayer.attachChild(actionTile);
     }
@@ -509,12 +514,7 @@ public class ActionsDispatcher implements UserActionListener {
         ActionTile c;
         for (Tile tile : reachableTiles) {
             tile.setAction(Actions.MOVE);
-            c = new ActionTile(Actions.MOVE, tile, mGameActivity.getVertexBufferObjectManager());
-            if (mGameActivity.getActiveCharacter().getRank() != Ranks.ME) {
-                // enemies tiles are red and more transparent
-                c.setColor(new Color(1.0f, 0.0f, 0.0f));
-                c.setAlpha(0.15f);
-            }
+            c = new ActionTile(Actions.MOVE, tile, mGameActivity.getVertexBufferObjectManager(), mGameActivity.getActiveCharacter().getRank() != Ranks.ME);
             mGameActivity.mGroundLayer.attachChild(c);
         }
 
@@ -591,10 +591,10 @@ public class ActionsDispatcher implements UserActionListener {
 
         // draw text
         if (fightResult.getState() == FightResult.States.DAMAGE || fightResult.getState() == FightResult.States.CRITICAL) {
-            mGameActivity.drawAnimatedText(targetSprite.getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE / 2, "-" + fightResult.getDamage(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
+            mGameActivity.drawAnimatedText(targetSprite.getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE, "-" + fightResult.getDamage(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
         }
         if (fightResult.getState() != FightResult.States.DAMAGE) {
-            mGameActivity.drawAnimatedText(targetSprite.getX() + GameConstants.PIXEL_BY_TILE / 2, targetSprite.getY() - GameConstants.PIXEL_BY_TILE / 2, fightResult.getState().name().toLowerCase(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
+            mGameActivity.drawAnimatedText(targetSprite.getX() + GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE, fightResult.getState().name().toLowerCase(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
         }
 
         // animate characters
@@ -636,7 +636,8 @@ public class ActionsDispatcher implements UserActionListener {
 
     private void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating death");
-        mGameActivity.drawAnimatedSprite(target.getSprite().getX(), target.getSprite().getY(), "blood.png", 65, 0.3f, 0, true, 10, new OnActionExecuted() {
+        Sprite sprite = target.getSprite();
+        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.3f, 0, true, 10, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
                 if (target instanceof Monster) {
@@ -646,6 +647,8 @@ public class ActionsDispatcher implements UserActionListener {
                 }
             }
         });
+        sprite.setRotation(90);
+        sprite.setPosition(sprite.getX() + 5, sprite.getY() + 5);
     }
 
     private void animateFightReward(Monster target, final OnActionExecuted onActionExecuted) {
@@ -659,10 +662,10 @@ public class ActionsDispatcher implements UserActionListener {
         final boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
 
         if (reward.getGold() > 0) {
-            mGameActivity.drawAnimatedText(target.getSprite().getX() - GameConstants.PIXEL_BY_TILE, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
+            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() - 4 * GameConstants.PIXEL_BY_TILE / 3, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
         }
         if (reward.getXp() > 0) {
-            mGameActivity.drawAnimatedText(target.getSprite().getX() + 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE / 2, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
+            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() + GameConstants.PIXEL_BY_TILE / 2, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
         }
         if (reward.getItem() != null) {
             mGameActivity.runOnUiThread(new Runnable() {
@@ -827,13 +830,13 @@ public class ActionsDispatcher implements UserActionListener {
             }, 0, 80);
         } else if (activatedSkill.getIdentifier().equals("berserker_rage")) {
             sprite.stand();
-            sprite.setColor(Color.RED);
+            sprite.setColor(((BuffEffect) activatedSkill.getEffect()).getBuffColor());
             new Timer().schedule(new TimerTask() {
                 private int n = 7;
 
                 @Override
                 public void run() {
-                    sprite.setScale((float) (0.25 + 0.05 * (n % 2)));
+                    sprite.setScale((float) (0.25 + 0.03 * (n % 3)));
                     n--;
                     if (n < 0) {
                         sprite.setScale(0.25f);
@@ -860,14 +863,17 @@ public class ActionsDispatcher implements UserActionListener {
         } else if (activatedSkill.getIdentifier().equals("ground_slam")) {
             sprite.stand();
             new Timer().schedule(new TimerTask() {
-                private int n = 7;
+                private int n = 12;
                 private final float initialY = sprite.getY();
                 private final float initialCameraX = mGameActivity.getCamera().getCenterX();
 
                 @Override
                 public void run() {
-                    sprite.setPosition(sprite.getX(), (float) (initialY - 10 * Math.sin(n * Math.PI / 7)));
-                    mGameActivity.getCamera().offsetCenter((float) (-3 * Math.cos(n * 2 * Math.PI / 7)), mGameActivity.getCamera().getCenterY());
+                    if (n >= 5) {
+                        sprite.setPosition(sprite.getX(), (float) (initialY - 10 * Math.sin((n - 5) * Math.PI / 7)));
+                    } else {
+                        mGameActivity.getCamera().offsetCenter((float) (-3 * Math.cos(n * 2 * Math.PI / 5)), mGameActivity.getCamera().getCenterY());
+                    }
 
                     n--;
                     if (n < 0) {
@@ -917,7 +923,7 @@ public class ActionsDispatcher implements UserActionListener {
             }, 0, 60);
         } else if (activatedSkill.getIdentifier().equals("stone_skin")) {
             sprite.stand();
-            sprite.setColor(new Color(0.65f, 0.24f, 0.08f, 1.0f));
+            sprite.setColor(((BuffEffect) activatedSkill.getEffect()).getBuffColor());
 
             new Timer().schedule(new TimerTask() {
                 private int n = 7;
