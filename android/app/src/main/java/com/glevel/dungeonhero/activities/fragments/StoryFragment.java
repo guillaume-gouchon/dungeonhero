@@ -21,6 +21,8 @@ import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StoryFragment extends DialogFragment implements View.OnClickListener {
 
@@ -65,14 +67,14 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
         // split story into paragraphs
         String[] storyLines = story.split("\n");
 
-        ViewGroup rootLayout = (ViewGroup) layout.findViewById(R.id.rootLayout);
+        ViewGroup storyContentLayout = (ViewGroup) layout.findViewById(R.id.story_content);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TextView storyTV;
         for (String storyLine : storyLines) {
             storyTV = (TextView) inflater.inflate(R.layout.story_line, null);
             storyTV.setText(storyLine);
             storyTV.setLayoutParams(layoutParams);
-            rootLayout.addView(storyTV);
+            storyContentLayout.addView(storyTV);
             mStoryViews.add(storyTV);
         }
 
@@ -137,34 +139,39 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
     }
 
     private void startNextLineAnimation() {
-        if (mCurrentLine > 0) {
-            mStoryViews.get(mCurrentLine - 1).setAnimation(null);
-            mStoryViews.get(mCurrentLine - 1).startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.star_wars_text_2));
-
-            if (mCurrentLine > 1) {
-                mStoryViews.get(mCurrentLine - 2).setAnimation(null);
-                mStoryViews.get(mCurrentLine - 2).setVisibility(View.GONE);
-            }
-        }
         if (mCurrentLine < mStoryViews.size()) {
-            mStoryViews.get(mCurrentLine).setVisibility(View.VISIBLE);
+            final View view = mStoryViews.get(mCurrentLine);
+            view.setVisibility(View.VISIBLE);
 
-            Animation starWarsAnimation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.star_wars_text);
-            starWarsAnimation.setAnimationListener(new Animation.AnimationListener() {
+            Animation textAnimation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.story_text);
+            textAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    startNextLineAnimation();
+                    view.setVisibility(View.GONE);
+                    view.setAnimation(null);
                 }
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
                 }
             });
-            mStoryViews.get(mCurrentLine).startAnimation(starWarsAnimation);
+
+            view.startAnimation(textAnimation);
+//            new Timer().schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            startNextLineAnimation();
+//                        }
+//                    });
+//                }
+//            }, 3000);
         }
 
         mCurrentLine++;

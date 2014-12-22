@@ -26,12 +26,12 @@ public class SkillFactory {
     }
 
     public static Skill buildSwirlOfSwords() {
-        Effect effect = new DamageEffect("blood.png", -12, 0);
+        Effect effect = new DamageEffect(null, -12, 0);
         return new ActiveSkill("swirl_swords", 0, true, 1, effect);
     }
 
     public static Skill buildWarcry() {
-        Effect effect = new StunEffect("blood.png", Characteristics.STRENGTH, 12, 0);
+        Effect effect = new StunEffect(null, Characteristics.STRENGTH, 12, 0);
         return new ActiveSkill("war_cry", 0, true, 7, effect);
     }
 
@@ -46,8 +46,8 @@ public class SkillFactory {
     }
 
     public static Skill buildPoisonousDarts() {
-        Effect extra = new PoisonEffect("blood.png", -5, 3, null, 0);
-        Effect effect = new DamageEffect("blood.png", -8, extra, 0);
+        Effect extra = new PoisonEffect("poison.png", -5, 3, null, 0);
+        Effect effect = new DamageEffect("poison.png", -8, extra, 0);
         return new ActiveSkill("poisonous_darts", 0, false, 0, effect);
     }
 
@@ -57,8 +57,8 @@ public class SkillFactory {
     }
 
     public static Skill buildGroundSlam() {
-        Effect extra = new StunEffect("blood.png", Characteristics.STRENGTH, 3, 0);
-        Effect effect = new DamageEffect("blood.png", -12, extra, 0);
+        Effect extra = new StunEffect("ground_slam.png", Characteristics.STRENGTH, 3, 0);
+        Effect effect = new DamageEffect("ground_slam.png", -12, extra, 0);
         return new ActiveSkill("ground_slam", 0, true, 1, effect);
     }
 
@@ -68,30 +68,30 @@ public class SkillFactory {
     }
 
     public static Skill buildDrunkenMaster() {
-        Effect extra = new BuffEffect("blood.png", Characteristics.BLOCK, -100, 8, null, 0);
+        Effect extra = new BuffEffect(null, Characteristics.BLOCK, -100, 8, null, 0);
         Effect effect = new DamageEffect(null, 15, extra, 0);
         return new ActiveSkill("drunken_master", 0, true, 0, effect);
     }
 
     public static Skill buildFrostArrow() {
-        Effect extra = new BuffEffect("blood.png", Characteristics.MOVEMENT, -20, 6, null, 0);
-        Effect effect = new DamageEffect("blood.png", -12, extra, 0);
+        Effect extra = new BuffEffect("frost.png", Characteristics.MOVEMENT, -20, 6, null, 0);
+        Effect effect = new DamageEffect("frost.png", -12, extra, 0);
         return new ActiveSkill("frost_arrow", 0, false, 0, effect);
     }
 
     public static Skill buildCharm() {
-        Effect effect = new StunEffect("blood.png", Characteristics.SPIRIT, 8, 0);
+        Effect effect = new StunEffect("charm.png", Characteristics.SPIRIT, 8, 0);
         return new ActiveSkill("charm", 0, false, 0, effect);
     }
 
     public static Skill buildStarFall() {
-        Effect effect = new DamageEffect("blood.png", -8, null, 0);
+        Effect effect = new DamageEffect("starfall.png", -8, null, 0);
         return new ActiveSkill("star_fall", 0, false, 2, effect);
     }
 
     public static Skill buildParalysingPlants() {
-        Effect extra = new StunEffect("blood.png", Characteristics.STRENGTH, 5, 0);
-        Effect effect = new BuffEffect("blood.png", Characteristics.MOVEMENT, -20, 5, extra, 0);
+        Effect extra = new StunEffect("stun.png", Characteristics.STRENGTH, 5, 0);
+        Effect effect = new BuffEffect("poison.png", Characteristics.MOVEMENT, -20, 5, extra, 0);
         return new ActiveSkill("paralysing_plant", 0, false, 3, effect);
     }
 
@@ -101,30 +101,30 @@ public class SkillFactory {
     }
 
     public static Skill buildWolfHowl() {
-        Effect extra = new BuffEffect("blood.png", Characteristics.DODGE, 30, 5, null, 0);
-        Effect effect = new BuffEffect("blood.png", Characteristics.CRITICAL, 25, 5, extra, 0);
+        Effect extra = new BuffEffect(null, Characteristics.DODGE, 30, 5, null, 0);
+        Effect effect = new BuffEffect(null, Characteristics.CRITICAL, 25, 5, extra, 0, Color.RED);
         return new ActiveSkill("wolf_howl", 0, true, 0, effect);
     }
 
     public static Skill buildCrowCurse() {
-        Effect extra = new BuffEffect("blood.png", Characteristics.PROTECTION, -10, 5, null, 0);
-        Effect effect = new BuffEffect("blood.png", Characteristics.DAMAGE, -10, 5, extra, 0);
+        Effect extra = new BuffEffect(null, Characteristics.PROTECTION, -10, 5, null, 0);
+        Effect effect = new BuffEffect("curse.png", Characteristics.DAMAGE, -10, 5, extra, 0);
         return new ActiveSkill("crow_curse", 0, false, 3, effect);
     }
 
     public static Skill buildFireball() {
-        Effect extra = new PoisonEffect("blood.png", -3, 2, null, 0);
-        Effect effect = new DamageEffect("blood.png", -15, extra, 0);
+        Effect extra = new PoisonEffect("fireball.png", -3, 2, null, 0);
+        Effect effect = new DamageEffect("fireball.png", -15, extra, 0);
         return new ActiveSkill("fireball", 0, false, 1, effect);
     }
 
     public static Skill buildSleep() {
-        Effect effect = new StunEffect("blood.png", Characteristics.SPIRIT, 10, 0);
+        Effect effect = new StunEffect("stun.png", Characteristics.SPIRIT, 10, 0);
         return new ActiveSkill("sleep", 0, false, 0, effect);
     }
 
     public static Skill buildThunderStorm() {
-        Effect effect = new DamageEffect("blood.png", -7, null, 0);
+        Effect effect = new DamageEffect("fireball.png", -7, null, 0);
         return new ActiveSkill("thunder_storm", 0, false, 2, effect);
     }
 
@@ -134,8 +134,8 @@ public class SkillFactory {
     }
 
     public static Skill buildTerror() {
-        Effect extra = new StunEffect("blood.png", Characteristics.SPIRIT, 6, 0);
-        Effect effect = new PoisonEffect("blood.png", -3, 5, extra, 0);
+        Effect extra = new StunEffect("stun.png", Characteristics.SPIRIT, 6, 0);
+        Effect effect = new PoisonEffect("curse.png", -3, 5, extra, 0);
         return new ActiveSkill("terror", 0, false, 3, effect);
     }
 

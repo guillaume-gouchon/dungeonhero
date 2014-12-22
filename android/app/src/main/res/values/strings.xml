@@ -151,8 +151,11 @@
     <string name="use_skill_personal">%s !</string>
     <string name="drink">Drink</string>
 
-    <!-- Books -->
-    <string name="tutorial">Tutorial</string>
+    <!-- Discussions -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="discussion_is_over">I don\'t want to talk to you anymore.</string>
+    <string name="ok">Ok</string>
 
     <!-- Heroes -->
     <string name="berserker">Berserker</string>
@@ -260,20 +263,6 @@
     <string name="king_ring">Ring of Kings</string>
     <string name="king_ring_description">The wearer feels far more powerful.</string>
 
-    <!-- PNJs -->
-    <string name="princess">Princess</string>
-
-    <!-- Discussions -->
-    <string name="hello_discussion">Hello adventurer, do you like eating pafs ?</string>
-    <string name="hello_discussion2">Ahah me too !</string>
-    <string name="ok">Ok</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="no_i_dont">No, I don\'t</string>
-    <string name="discussion_is_over">I don\'t want to talk to you anymore.</string>
-    <string name="hello_riddle">Qu\'est ce qui est petit et marron ?</string>
-    <string name="hello_riddle_wrong_answer">You got it wrong adventurer...</string>
-
     <!-- Skills -->
     <string name="berserker_rage">Rage of the Berserker</string>
     <string name="berserker_rage_description">You become enraged : you are able to deal more damages but your defense if slightly decreased.</string>
@@ -319,5 +308,19 @@
     <string name="stone_skin_description">Your skin becomes stone for some time, increasing your armor drastically.</string>
     <string name="terror">Terror of Blarzog</string>
     <string name="terror_description">You enters your enemies\'s mind and install terror in them, stunning your opponents and dealing damages to them over time.</string>
+
+    <!-- Initiation Book -->
+    <string name="initiation">The Initiation</string>
+    <string name="initiation_intro">You finally decided to do it : you forgot your boring previous life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter had been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back.\nLooks like your first Quest begins !</string>
+    <string name="initiation_outro">The Initiation</string>
+    <string name="initiation_chapter_1">Let\'s go ! May the force be with me in this first adventure.\n(tap on a tile to move, tap again to stop your move)</string>
+
+    <!-- PNJs -->
+    <string name="princess">Princess</string>
+    <string name="hello_discussion">Hello adventurer, do you like eating pafs ?</string>
+    <string name="hello_discussion2">Ahah me too !</string>
+    <string name="no_i_dont">No, I don\'t</string>
+    <string name="hello_riddle">Qu\'est ce qui est petit et marron ?</string>
+    <string name="hello_riddle_wrong_answer">You got it wrong adventurer...</string>
 
 </resources>

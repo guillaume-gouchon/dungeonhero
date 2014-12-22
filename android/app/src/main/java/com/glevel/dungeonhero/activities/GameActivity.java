@@ -76,7 +76,7 @@ public class GameActivity extends MyBaseGameActivity {
             // TODO : used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildDwarfWarrior());
-            mGame.setBook(BookFactory.buildInitiationBook(1));
+            mGame.setBook(BookFactory.buildInitiationBook());
         }
 
         if (mGame.getDungeon() == null) {
@@ -370,14 +370,14 @@ public class GameActivity extends MyBaseGameActivity {
                             isHeroic = true;
                             // animate heroic
                             if (effect.getSpriteName() != null) {
-                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
                             }
                         } else if (effect instanceof CamouflageEffect) {
                             Log.d(TAG, "character is invisible");
                             isHidden = true;
                             // animate invisible
                             if (effect.getSpriteName() != null) {
-                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
                             }
                             // test if character is still invisible
                             for (GameElement element : mRoom.getObjects()) {
@@ -391,7 +391,7 @@ public class GameActivity extends MyBaseGameActivity {
                                         mActiveCharacter.getBuffs().remove(effect);
                                         // animate end of invisibility
                                         if (effect.getSpriteName() != null) {
-                                            drawAnimatedSprite(element.getTilePosition().getTileX(), element.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+                                            drawAnimatedSprite(element.getTilePosition().getTileX(), element.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
                                         }
                                         break;
                                     }
@@ -424,6 +424,7 @@ public class GameActivity extends MyBaseGameActivity {
                         mActionDispatcher.applyEffect(effect, mActiveCharacter.getTilePosition(), false);
                     } else if (effect instanceof StunEffect) {
                         Log.d(TAG, "got stun effect");
+                        drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), "stun.png", 50, 0.3f, 1.0f, 0, true, 100, null);
                         if (mActiveCharacter.testCharacteristic(effect.getTarget(), effect.getValue())) {
                             Log.d(TAG, "stun test was a success");
                             mActiveCharacter.getBuffs().remove(effect);
@@ -432,7 +433,7 @@ public class GameActivity extends MyBaseGameActivity {
                             skipTurn = true;
                             // animate stun
                             if (effect.getSpriteName() != null) {
-                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
                             }
                         }
                     }

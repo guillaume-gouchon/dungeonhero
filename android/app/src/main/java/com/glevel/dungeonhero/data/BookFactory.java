@@ -15,17 +15,20 @@ public class BookFactory {
 
     public static List<Book> getAll() {
         List<Book> lst = new ArrayList<>();
-        lst.add(buildInitiationBook(1 + lst.size()));
-        lst.add(buildInitiationBook(1 + lst.size()));
+        lst.add(buildInitiationBook());
+        lst.add(buildInitiationBook());
         return lst;
     }
 
-    public static Book buildInitiationBook(int bookId) {
+    public static Book buildInitiationBook() {
         List<Chapter> chapters = new ArrayList<>();
+
+        // chapter 1
         List<Event> events = new ArrayList<>();
         events.add(new Event.Builder(true).addPnj(PNJFactory.buildPNJ()).build());
-        chapters.add(new Chapter("", "", events));
-        return new Book(bookId, "tutorial", "", "", chapters, null);
+        chapters.add(new Chapter("initiation_chapter_1", "", events));
+
+        return new Book(1, "initiation", "initiation_intro", "initiation_outro", chapters, null);
     }
 
 }
