@@ -50,7 +50,6 @@
     <string name="load_game">Load Game</string>
     <string name="settings">Options</string>
     <string name="back">Back</string>
-    <string name="ask_tutorial">It is recommended to do the tutorial in order to know how to play\u00A0!\nWould you like to do it now ?</string>
     <string name="advertisement">If you like Strategy Games,\ntry out my cool game <a href="https://play.google.com/store/apps/details?id=com.giggs.apps.chaos">Warlords Online</a>\u00A0!</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
@@ -73,6 +72,8 @@
 
     <!-- Book Chooser -->
     <string name="choose_book_message">Choose a Quest</string>
+    <string name="ask_tutorial">It is recommended to do the tutorial in order to know how to play\u00A0!\nWould you like to do it now ?</string>
+    <string name="shop">Shop</string>
     <string name="tavern">Tavern</string>
 
     <!-- Story -->
@@ -85,7 +86,6 @@
     <string name="game_over_title">Game Over</string>
 
     <!-- Shop -->
-    <string name="shop">Shop</string>
     <string name="shop_intro_port">Hey adventurer, welcome to the Easy Dungeon !\n\nHere are today\'s offers.</string>
     <string name="shop_intro">Hey adventurer, welcome to the Easy Dungeon ! Here are today\'s offers.</string>
     <string name="shop_outro">Have a good death..euh day !</string>
@@ -311,9 +311,9 @@
 
     <!-- Initiation Book -->
     <string name="initiation">The Initiation</string>
-    <string name="initiation_intro">You finally decided to do it : you forgot your boring previous life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter had been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back.\nLooks like your first Quest begins !</string>
+    <string name="initiation_intro">You finally decided to do it: you forgot your boring previous life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter had been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back.\n\nLooks like your first Quest begins !</string>
     <string name="initiation_outro">The Initiation</string>
-    <string name="initiation_chapter_1">Let\'s go ! May the force be with me in this first adventure.\n(tap on a tile to move, tap again to stop your move)</string>
+    <string name="initiation_chapter_1">Let\'s go ! May the force be with me in this first adventure.</string>
 
     <!-- PNJs -->
     <string name="princess">Princess</string>
