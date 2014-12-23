@@ -47,6 +47,7 @@ import org.andengine.util.color.Color;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Timer;
@@ -328,6 +329,7 @@ public class ActionsDispatcher implements UserActionListener {
         itemOnGround.setTilePosition(tile);
         mGameActivity.addElementToScene(itemOnGround);
         mGameActivity.getRoom().getObjects().add(itemOnGround);
+        mScene.sortChildren(true);
     }
 
     private void talk(final Tile tile) {
@@ -595,9 +597,9 @@ public class ActionsDispatcher implements UserActionListener {
     private void animateFight(final Unit attacker, Unit target, final FightResult fightResult, final OnActionExecuted callback) {
         final Sprite attackerSprite = attacker.getSprite(), targetSprite = target.getSprite();
 
-        // draw text
+        // draw damage and fight result text
         if (fightResult.getState() == FightResult.States.DAMAGE || fightResult.getState() == FightResult.States.CRITICAL) {
-            mGameActivity.drawAnimatedText(targetSprite.getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE, "-" + fightResult.getDamage(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
+            showDamage(target, "-" + fightResult.getDamage());
         }
         if (fightResult.getState() != FightResult.States.DAMAGE) {
             mGameActivity.drawAnimatedText(targetSprite.getX() + GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE, fightResult.getState().name().toLowerCase(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
@@ -640,10 +642,14 @@ public class ActionsDispatcher implements UserActionListener {
         mScene.registerUpdateHandler(animationHandler);
     }
 
+    private void showDamage(Unit target, String damageMessage) {
+        mGameActivity.drawAnimatedText(target.getSprite().getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE, damageMessage, damageMessage.startsWith("-") ? FightResult.States.DAMAGE.getColor() : FightResult.States.DODGE.getColor(), 0.2f, 40, -0.15f);
+    }
+
     public void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating death");
         Sprite sprite = target.getSprite();
-        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.3f, 0, true, 10, new OnActionExecuted() {
+        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.3f, 1.0f, 0, true, 10, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
                 if (target instanceof Monster) {
@@ -747,8 +753,7 @@ public class ActionsDispatcher implements UserActionListener {
                     }
                 }
 
-                // TODO
-//                activatedSkill.use();
+                activatedSkill.use();
                 activatedSkill = null;
                 mGUIManager.updateSkillButtons();
 
@@ -783,6 +788,7 @@ public class ActionsDispatcher implements UserActionListener {
                 mGUIManager.updateSkillButtons();
             } else if (effect.getTarget() == Characteristics.HP) {
                 // damage or heal
+                showDamage(target, effect.getValue() > 0 ? "+" + Math.min(target.getHp() - target.getCurrentHP(), effect.getValue()) : "" + effect.getValue());
                 target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + effect.getValue()));
             } else {
                 // special effects
@@ -805,7 +811,7 @@ public class ActionsDispatcher implements UserActionListener {
 
         // animate
         if (effect.getSpriteName() != null) {
-            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), effect.getSpriteName(), 50, 0.3f, 0, true, 100, null);
+            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
         }
 
         mGUIManager.updateActiveHeroLayout();
@@ -820,12 +826,17 @@ public class ActionsDispatcher implements UserActionListener {
     private void animateSkill(final OnActionExecuted callback) {
         final UnitSprite sprite = (UnitSprite) mGameActivity.getActiveCharacter().getSprite();
         if (activatedSkill.getIdentifier().equals("swirl_swords")) {
+            Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), activatedSkill.getRadius(), true, null);
+            final Iterator<Tile> tileIterator = targetTiles.iterator();
             new Timer().schedule(new TimerTask() {
                 private int n = 7;
+                private Tile tile;
 
                 @Override
                 public void run() {
                     sprite.walk(Directions.values()[n % 4]);
+                    tile = tileIterator.next();
+                    mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), "slash.png", 70, 0.3f, 0.6f, 0, true, 100, null);
                     n--;
                     if (n < 0) {
                         sprite.stand();
@@ -910,6 +921,24 @@ public class ActionsDispatcher implements UserActionListener {
                     }
                 }
             }, 0, 60);
+        } else if (activatedSkill.getIdentifier().equals("war_cry")) {
+            sprite.stand();
+            new Timer().schedule(new TimerTask() {
+                private int n = 8;
+                private final float initialCameraX = mGameActivity.getCamera().getCenterX();
+
+                @Override
+                public void run() {
+                    mGameActivity.getCamera().offsetCenter((float) (3 * Math.cos(n * 2 * Math.PI / 8)), mGameActivity.getCamera().getCenterY());
+
+                    n--;
+                    if (n < 0) {
+                        mGameActivity.getCamera().setCenter(initialCameraX, mGameActivity.getCamera().getCenterY());
+                        cancel();
+                        callback.onActionDone(true);
+                    }
+                }
+            }, 0, 50);
         } else if (activatedSkill.getIdentifier().equals("healing_plants")) {
             sprite.stand();
             new Timer().schedule(new TimerTask() {

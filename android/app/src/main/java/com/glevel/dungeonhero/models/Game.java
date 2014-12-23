@@ -3,9 +3,9 @@ package com.glevel.dungeonhero.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
 import com.glevel.dungeonhero.data.characters.PNJFactory;
+import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.game.graphics.SpriteHolder;
@@ -139,6 +139,15 @@ public class Game extends DatabaseResource implements Serializable {
         toLoad.add(new SpriteHolder("selection.png", 64, 64, 1, 1));
         toLoad.add(new SpriteHolder("blood.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("item_on_ground.png", 12, 12, 1, 1));
+        toLoad.add(new SpriteHolder("slash.png", 100, 50, 2, 1));
+        toLoad.add(new SpriteHolder("poison.png", 300, 50, 6, 1));
+        toLoad.add(new SpriteHolder("frost.png", 300, 50, 6, 1));
+        toLoad.add(new SpriteHolder("curse.png", 300, 50, 6, 1));
+        toLoad.add(new SpriteHolder("ground_slam.png", 300, 50, 6, 1));
+        toLoad.add(new SpriteHolder("stun.png", 400, 50, 8, 1));
+        toLoad.add(new SpriteHolder("charm.png", 400, 50, 8, 1));
+        toLoad.add(new SpriteHolder("fireball.png", 200, 100, 4, 2));
+        toLoad.add(new SpriteHolder("starfall.png", 200, 100, 4, 2));
 
         return toLoad;
     }

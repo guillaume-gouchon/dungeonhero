@@ -258,13 +258,14 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         }
     }
 
-    public void drawAnimatedSprite(float x, float y, String spriteName, int frameDuration, float scale, int loopCount, final boolean removeAfter, int zIndex, final OnActionExecuted callback) {
+    public void drawAnimatedSprite(float x, float y, String spriteName, int frameDuration, float scale, float alpha, int loopCount, final boolean removeAfter, int zIndex, final OnActionExecuted callback) {
         if (GraphicsManager.sGfxMap.get(spriteName) == null) return;
 
         final AnimatedSprite sprite = new AnimatedSprite(0, 0, GraphicsManager.sGfxMap.get(spriteName), getVertexBufferObjectManager());
         sprite.setPosition(x - sprite.getWidth() / 2.0f, y - sprite.getWidth() / 2.0f);
         sprite.setZIndex(zIndex);
         sprite.setScale(scale);
+        sprite.setAlpha(alpha);
         if (loopCount == -1) {
             sprite.animate(frameDuration, true);
         } else {

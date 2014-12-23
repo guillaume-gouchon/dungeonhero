@@ -32,6 +32,8 @@
             android:noHistory="true" />
         <activity android:name=".activities.HomeActivity"></activity>
         <activity android:name=".activities.BookChooserActivity" />
+        <activity android:name=".activities.GameOverActivity" />
+        <activity android:name=".activities.ShopActivity" />
         <activity android:name=".activities.NewGameActivity" />
         <activity
             android:name=".activities.GameActivity"
@@ -42,9 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TutorialActivity" />
-        <activity android:name=".activities.GameOverActivity" />
-        <activity android:name=".activities.ShopActivity" />
+
     </application>
 
 </manifest>
