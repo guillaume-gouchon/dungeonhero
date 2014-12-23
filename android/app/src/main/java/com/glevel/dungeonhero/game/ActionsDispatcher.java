@@ -368,9 +368,15 @@ public class ActionsDispatcher implements UserActionListener {
                         // go to next discussion
                         talkTo(pnj);
                     } else {
+                        if (pnj.getOnDiscussionOver() != null) {
+                            pnj.getOnDiscussionOver().onActionDone(true);
+                        }
                         mGameActivity.nextTurn();
                     }
                 } else {
+                    if (pnj.getOnDiscussionOver() != null) {
+                        pnj.getOnDiscussionOver().onActionDone(true);
+                    }
                     mGameActivity.nextTurn();
                 }
             }
@@ -382,7 +388,7 @@ public class ActionsDispatcher implements UserActionListener {
                 pnj.getDiscussions().remove(0);
             }
         } else {
-            mGUIManager.showDiscussion(pnj, new Discussion("discussion_is_over", null, true, null), onDiscussionSelected);
+            mGUIManager.showDiscussion(pnj, new Discussion("discussion_is_over", true, null), onDiscussionSelected);
         }
     }
 
@@ -634,7 +640,7 @@ public class ActionsDispatcher implements UserActionListener {
         mScene.registerUpdateHandler(animationHandler);
     }
 
-    private void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
+    public void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating death");
         Sprite sprite = target.getSprite();
         mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.3f, 0, true, 10, new OnActionExecuted() {

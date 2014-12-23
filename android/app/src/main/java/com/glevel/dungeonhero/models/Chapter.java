@@ -15,9 +15,10 @@ public class Chapter implements Serializable {
 
     private static final long serialVersionUID = 1484748281734643544L;
 
+    private final List<Event> events;
+    private int index;
     private String introText, outroText;
     private transient Dungeon dungeon;
-    private final List<Event> events;
     private boolean done;
 
     public Chapter(String introText, String outroText, List<Event> events) {
@@ -53,6 +54,18 @@ public class Chapter implements Serializable {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public boolean isFirst() {
+        return index == 0;
     }
 
 }

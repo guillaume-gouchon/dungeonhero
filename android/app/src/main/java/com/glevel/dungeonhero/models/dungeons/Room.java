@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.models.dungeons;
 import android.util.Log;
 
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
+import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.data.dungeons.GroundTypes;
 import com.glevel.dungeonhero.data.dungeons.RoomFactory;
@@ -177,7 +178,7 @@ public class Room implements Serializable {
         return (tiles.length - 7) * (tiles[0].length - 4) - 1;
     }
 
-    private Tile getRandomFreeTile() {
+    public Tile getRandomFreeTile() {
         Tile freeTile;
         do {
             freeTile = tiles[(int) (3 + Math.random() * (tiles.length - 7))][(int) (2 + Math.random() * (tiles[0].length - 4))];
@@ -186,7 +187,7 @@ public class Room implements Serializable {
         return freeTile;
     }
 
-    private void addGameElement(GameElement gameElement, Tile tile) {
+    public void addGameElement(GameElement gameElement, Tile tile) {
         gameElement.setTilePosition(tile);
         if (gameElement instanceof Unit && (!(gameElement instanceof Pnj) || ((Pnj) gameElement).isActive())) {
             queue.add((Unit) gameElement);

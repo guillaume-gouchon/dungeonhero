@@ -9,6 +9,7 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
 import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.data.characters.HeroFactory;
+import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
@@ -154,6 +155,11 @@ public class GameActivity extends MyBaseGameActivity {
             mDungeon.moveIn(mTmxTiledMap, heroes);
         } else {
             mRoom.initRoom(mTmxTiledMap, null, 0);
+        }
+
+        // add tutorial PNJ if this is the introduction quest
+        if (mGame.getBook().getId() == BookFactory.INTRODUCTION_BOOK_ID && mGame.getBook().getActiveChapter().isFirst()) {
+            mRoom.addGameElement(PNJFactory.buildTutorialPNJ(), mRoom.getRandomFreeTile());
         }
 
         // add elements to scene
@@ -348,6 +354,19 @@ public class GameActivity extends MyBaseGameActivity {
 
     public void nextTurn() {
         Log.d(TAG, "NEXT TURN");
+
+        // check dead units
+        for (final Unit unit : mRoom.getQueue()) {
+            if (unit.isDead()) {
+                mActionDispatcher.animateDeath(unit, new OnActionExecuted() {
+                    @Override
+                    public void onActionDone(boolean success) {
+                        removeElement(unit);
+                    }
+                });
+            }
+        }
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

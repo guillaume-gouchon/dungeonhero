@@ -57,10 +57,6 @@ public class Book extends StorableResource implements Serializable, InAppProduct
         return productId == null;
     }
 
-    public List<Chapter> getChapters() {
-        return chapters;
-    }
-
     public int getIntroText(Resources resources) {
         return StorableResource.getResource(resources, introText, false);
     }
@@ -85,6 +81,10 @@ public class Book extends StorableResource implements Serializable, InAppProduct
         return chapters.get(0);
     }
 
+    public boolean hasNextChapter() {
+        return chapters.size() > 1;
+    }
+
     /**
      * @return true if aventure is over
      */
@@ -96,6 +96,11 @@ public class Book extends StorableResource implements Serializable, InAppProduct
 
     public void read() {
         introText = "";
+    }
+
+    public void addChapter(Chapter chapter) {
+        chapter.setIndex(chapters.size());
+        chapters.add(chapter);
     }
 
 }

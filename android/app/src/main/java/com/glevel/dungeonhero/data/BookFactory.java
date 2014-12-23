@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class BookFactory {
 
+    public static final int INTRODUCTION_BOOK_ID = 1;
+
     public static List<Book> getAll() {
         List<Book> lst = new ArrayList<>();
         lst.add(buildInitiationBook(1 + lst.size()));
@@ -23,7 +25,7 @@ public class BookFactory {
     public static Book buildInitiationBook(int bookId) {
         List<Chapter> chapters = new ArrayList<>();
         List<Event> events = new ArrayList<>();
-        events.add(new Event.Builder(true).addPnj(PNJFactory.buildPNJ()).build());
+        events.add(new Event.Builder(true).addPnj(PNJFactory.buildTutorialPNJ()).build());
         chapters.add(new Chapter("", "", events));
         return new Book(bookId, "tutorial", "", "", chapters, null);
     }

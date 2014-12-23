@@ -211,7 +211,7 @@ public class GUIManager {
 
     public void showVictoryDialog() {
         final Book activeBook = mActivity.getGame().getBook();
-        boolean hasNextChapter = activeBook.getChapters().size() > 1;
+        boolean hasNextChapter = activeBook.hasNextChapter();
         if (activeBook.getActiveChapter().getOutroText(mResources) > 0) {
             mConfirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getOutroText(mResources)),
                     new DialogInterface.OnClickListener() {

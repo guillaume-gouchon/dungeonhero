@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.models.dungeons;
 
 import android.util.Log;
 
+import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.utils.MazeAlgorithm;

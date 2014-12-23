@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.models.characters;
 
+import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.models.discussions.Discussion;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ public class Pnj extends Hero {
 
     private static final long serialVersionUID = 4682214659658928572L;
 
-    private final List<Discussion> discussions = new ArrayList<Discussion>();
+    private final List<Discussion> discussions = new ArrayList<>();
+    private OnActionExecuted onDiscussionOver = null;
     private boolean isActive;
 
     public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType) {
@@ -29,6 +31,14 @@ public class Pnj extends Hero {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public OnActionExecuted getOnDiscussionOver() {
+        return onDiscussionOver;
+    }
+
+    public void setOnDiscussionOver(OnActionExecuted onDiscussionOver) {
+        this.onDiscussionOver = onDiscussionOver;
     }
 
 }
