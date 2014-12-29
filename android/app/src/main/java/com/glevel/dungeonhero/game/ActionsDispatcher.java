@@ -357,12 +357,8 @@ public class ActionsDispatcher implements UserActionListener {
                 if (instantReward != null) {
                     receiveReward(instantReward);
                 }
+
                 if (pnj.getDiscussions().size() > 0) {
-                    Reward reward = pnj.getDiscussions().get(0).getReward();
-                    if (reward != null) {
-                        // get reward if any
-                        foundReward(reward, false);
-                    }
                     for (int n = 0; n < next; n++) {
                         pnj.getDiscussions().remove(0);
                     }
@@ -370,16 +366,10 @@ public class ActionsDispatcher implements UserActionListener {
                         // go to next discussion
                         talkTo(pnj);
                     } else {
-                        if (pnj.getOnDiscussionOver() != null) {
-                            pnj.getOnDiscussionOver().onActionDone(true);
-                        }
-                        mGameActivity.nextTurn();
+                        finishDiscussion(pnj);
                     }
                 } else {
-                    if (pnj.getOnDiscussionOver() != null) {
-                        pnj.getOnDiscussionOver().onActionDone(true);
-                    }
-                    mGameActivity.nextTurn();
+                    finishDiscussion(pnj);
                 }
             }
         };
@@ -392,6 +382,30 @@ public class ActionsDispatcher implements UserActionListener {
         } else {
             mGUIManager.showDiscussion(pnj, new Discussion("discussion_is_over", true, null), onDiscussionSelected);
         }
+    }
+
+    private void finishDiscussion(Pnj pnj) {
+        Log.d(TAG, "finish discussion");
+        if (pnj.getOnDiscussionOver() != null) {
+            pnj.getOnDiscussionOver().onActionDone(true);
+
+            // check dead units
+            for (final Unit unit : mGameActivity.getRoom().getQueue()) {
+                if (unit.isDead()) {
+                    Log.d(TAG, "one unit is dead");
+                    animateDeath(unit, new OnActionExecuted() {
+                        @Override
+                        public void onActionDone(boolean success) {
+                            mGameActivity.removeElement(unit);
+                            mGameActivity.nextTurn();
+
+                        }
+                    });
+                    return;
+                }
+            }
+        }
+        mGameActivity.nextTurn();
     }
 
     private void goCloserTo(Tile tile, OnActionExecuted callback) {
@@ -594,7 +608,7 @@ public class ActionsDispatcher implements UserActionListener {
         }
     }
 
-    private void animateFight(final Unit attacker, Unit target, final FightResult fightResult, final OnActionExecuted callback) {
+    private void animateFight(final Unit attacker, final Unit target, final FightResult fightResult, final OnActionExecuted callback) {
         final Sprite attackerSprite = attacker.getSprite(), targetSprite = target.getSprite();
 
         // draw damage and fight result text
@@ -634,6 +648,7 @@ public class ActionsDispatcher implements UserActionListener {
                     mScene.unregisterUpdateHandler(animationHandler);
                     if (!done) {
                         done = true;
+                        target.updateSprite();
                         callback.onActionDone(true);
                     }
                 }
@@ -794,6 +809,7 @@ public class ActionsDispatcher implements UserActionListener {
                 // special effects
                 target.getBuffs().add(effect);
             }
+
             if (addExtra && effect.getSpecial() != null) {
                 target.getBuffs().add(effect.getSpecial());
             }
@@ -807,6 +823,8 @@ public class ActionsDispatcher implements UserActionListener {
                     }
                 });
             }
+
+            target.updateSprite();
         }
 
         // animate

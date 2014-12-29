@@ -20,14 +20,11 @@ public class Dungeon implements Serializable {
     private static final long serialVersionUID = 4765596237193067497L;
 
     private static final String TAG = "Dungeon";
-
+    private final int width, height;
     private Room[][] rooms;
     private int start;
     private List<Event> events;
     private int nbRoomVisited;
-
-    private final int width, height;
-
     private int currentPosition;
     private Directions currentDirection;
 
@@ -78,7 +75,7 @@ public class Dungeon implements Serializable {
         currentDirection = doorDirection.getOpposite();
     }
 
-    public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> lstUnitsToMoveIn) {
+    public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> lstUnitsToMoveIn, boolean isTutorial) {
         Room currentRoom = getCurrentRoom();
         if (currentRoom.getTiles() == null) {
             nbRoomVisited++;
@@ -96,6 +93,12 @@ public class Dungeon implements Serializable {
 
             // add stairs
             currentRoom.prepareStartRoom(lstUnitsToMoveIn);
+
+            // add tutorial PNJ if this is the introduction quest
+            if (isTutorial) {
+                currentRoom.addGameElement(PNJFactory.buildTutorialPNJ(), currentRoom.getRandomFreeTile());
+            }
+
             return;
         } else if (currentRoom.getTiles() == null && events.size() > 0 && (nbRoomsLeft < events.size() || nbRoomVisited > 2 && Math.random() * 100 < nbRoomVisited * 2)) {
             // the room may contain an event

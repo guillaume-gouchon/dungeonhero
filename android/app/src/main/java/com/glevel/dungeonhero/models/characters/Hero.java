@@ -31,10 +31,6 @@ public class Hero extends Unit implements InAppProduct {
     private String heroName;
     private int skillPoints;
 
-    public enum HeroTypes {
-        STR, DEX, SPI, STR_DEX, STR_SPI, DEX_SPI
-    }
-
     public Hero(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, String productId, int xp, int level, HeroTypes heroType) {
         super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement);
         this.productId = productId;
@@ -208,14 +204,13 @@ public class Hero extends Unit implements InAppProduct {
     }
 
     public boolean canEquipItem(Equipment equipment) {
-        if (equipment instanceof Ring) {
-            return true;
+        boolean canEquip = isEquipmentSuitable(equipment);
+        if (!canEquip) {
+            return false;
         }
-        boolean canEquip = false;
+
         for (Requirement requirement : equipment.getRequirements()) {
-            if (requirement instanceof HeroRequirement && heroType == ((HeroRequirement) requirement).getHeroType()) {
-                canEquip = true;
-            } else if (requirement instanceof StatRequirement) {
+            if (requirement instanceof StatRequirement) {
                 StatRequirement statRequirement = (StatRequirement) requirement;
                 if (statRequirement.getTarget() == Characteristics.STRENGTH && strength < statRequirement.getValue()) {
                     return false;
@@ -226,7 +221,23 @@ public class Hero extends Unit implements InAppProduct {
                 }
             }
         }
-        return canEquip;
+        return true;
+    }
+
+    public boolean isEquipmentSuitable(Equipment equipment) {
+        if (equipment instanceof Ring) {
+            return true;
+        }
+        for (Requirement requirement : equipment.getRequirements()) {
+            if (requirement instanceof HeroRequirement && heroType == ((HeroRequirement) requirement).getHeroType()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public enum HeroTypes {
+        STR, DEX, SPI, STR_DEX, STR_SPI, DEX_SPI
     }
 
 }

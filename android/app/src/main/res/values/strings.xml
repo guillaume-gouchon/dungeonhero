@@ -311,16 +311,20 @@
 
     <!-- Initiation Book -->
     <string name="initiation">The Initiation</string>
-    <string name="initiation_intro">You finally decided to do it: you forgot your boring previous life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter had been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back.\n\nLooks like your first Quest begins !</string>
-    <string name="initiation_outro">The Initiation</string>
-    <string name="initiation_chapter_1">Let\'s go ! May the force be with me in this first adventure.</string>
-
-    <!-- PNJs -->
-    <string name="princess">Princess</string>
-    <string name="hello_discussion">Hello adventurer, do you like eating pafs ?</string>
-    <string name="hello_discussion2">Ahah me too !</string>
-    <string name="no_i_dont">No, I don\'t</string>
-    <string name="hello_riddle">Qu\'est ce qui est petit et marron ?</string>
-    <string name="hello_riddle_wrong_answer">You got it wrong adventurer...</string>
+    <string name="initiation_intro">You finally decided to do jump ahead: you set aside your boring previous life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter had been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back.\n\nLooks like your first Quest begins !</string>
+    <string name="tutorial_character">Alhagar the Mighty</string>
+    <string name="initiation_chapter_1">Wow, this guy seems hurt to death... let\'s talk to him.\n\n<i>(tap on the character to select it, then tap again to go talk to him)</i></string>
+    <string name="initiation_tutorial_intro">Hey adventurer, don\'t do the same mistakes as me... I will tell you how to survive in these deadly dungeons.</string>
+    <string name="initiation_tutorial_movement">When there are no enemies, tap on a tile to move to it. In fight mode, the reachable tiles are green. Tap on your character to finish your turn.</string>
+    <string name="initiation_tutorial_search">To search for treasures, talk to characters, or to attack an enemy, you first need to select your target and then to tap on it again to validate the interaction. In fight mode, it will end your turn.</string>
+    <string name="initiation_tutorial_fight">You can tap the bag button to show your inventory. Equipments can be from level 0 to level 6, each level has its color in that order : black, yellow, orange, red, green, blue, and purple. Use the best equipment you can find and do not forget to drink potions in order to fight evil safely. Some items may not be suitable with the type of your character and so would be written in red.</string>
+    <string name="initiation_tutorial_skills">You also have some skills to help you. Like equipment, skills also have levels and colors corresponding to it. Skills can only be used once every dungeon floor, try to keep them for the most dangerous room... Do you want to have some more tips ?</string>
+    <string name="initiation_tutorial_tips">Experience is primordial : new levels will increase your health points, characteristics and will give you skill points to improve or to learn new skills. Concerning weapons, remember not to fight with range weapons in close combat, and try to use a shield with your left arm as a weapon will deal less damage with this arm.</string>
+    <string name="initiation_tutorial_outro">Aaargh, so it is time for me now...</string>
+    <string name="initiation_tutorial_outro_reward">Thanks for that... Take this Potion of Force to help you in your next fights... May the force be with you... Aaaaargh...</string>
+    <string name="initiation_tutorial_thanks">Thanks</string>
+    <string name="ok_get_it">Ok, I get it</string>
+    <string name="initiation_die_weak">Die, you are so weak compared to me !\n<i>(finish him)</i></string>
+    <string name="initiation_pray">I\'ll pray for you, mighty warrior.</string>
 
 </resources>

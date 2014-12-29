@@ -386,4 +386,16 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         return equipments[0] != null && equipments[0] instanceof RangeWeapon;
     }
 
+    public int getCharacteristic(Characteristics target) {
+        switch (target) {
+            case STRENGTH:
+                return getStrength();
+            case DEXTERITY:
+                return getDexterity();
+            case SPIRIT:
+                return getSpirit();
+        }
+        return 0;
+    }
+
 }

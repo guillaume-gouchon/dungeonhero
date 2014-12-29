@@ -66,7 +66,7 @@ public class PotionFactory {
     }
 
     public static Potion buildInvisibilityPotion() {
-        Potion item = new Potion("invisibility_potion", new CamouflageEffect(null, 5, 0), 80);
+        Potion item = new Potion("invisibility_potion", new CamouflageEffect(null, 10, 0), 80);
         return item;
     }
 

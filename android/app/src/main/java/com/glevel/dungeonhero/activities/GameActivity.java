@@ -104,6 +104,7 @@ public class GameActivity extends MyBaseGameActivity {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+
             mDungeon = mGame.getDungeon();
 
             mHero.reset();
@@ -152,14 +153,9 @@ public class GameActivity extends MyBaseGameActivity {
         if (mHero != null) {
             List<Unit> heroes = new ArrayList<>();
             heroes.add(mHero);
-            mDungeon.moveIn(mTmxTiledMap, heroes);
+            mDungeon.moveIn(mTmxTiledMap, heroes, mGame.getBook().getId() == BookFactory.INTRODUCTION_BOOK_ID && mGame.getBook().getActiveChapter().isFirst());
         } else {
             mRoom.initRoom(mTmxTiledMap, null, 0);
-        }
-
-        // add tutorial PNJ if this is the introduction quest
-        if (mGame.getBook().getId() == BookFactory.INTRODUCTION_BOOK_ID && mGame.getBook().getActiveChapter().isFirst()) {
-            mRoom.addGameElement(PNJFactory.buildTutorialPNJ(), mRoom.getRandomFreeTile());
         }
 
         // add elements to scene
@@ -354,19 +350,6 @@ public class GameActivity extends MyBaseGameActivity {
 
     public void nextTurn() {
         Log.d(TAG, "NEXT TURN");
-
-        // check dead units
-        for (final Unit unit : mRoom.getQueue()) {
-            if (unit.isDead()) {
-                mActionDispatcher.animateDeath(unit, new OnActionExecuted() {
-                    @Override
-                    public void onActionDone(boolean success) {
-                        removeElement(unit);
-                    }
-                });
-            }
-        }
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

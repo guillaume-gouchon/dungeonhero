@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.data;
 
-import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.dungeons.Event;
@@ -27,7 +26,6 @@ public class BookFactory {
 
         // chapter 1
         List<Event> events = new ArrayList<>();
-        events.add(new Event.Builder(true).addPnj(PNJFactory.buildTutorialPNJ()).build());
         chapters.add(new Chapter("initiation_chapter_1", "", events));
         return new Book(1, "initiation", "initiation_intro", "initiation_outro", chapters, null);
     }

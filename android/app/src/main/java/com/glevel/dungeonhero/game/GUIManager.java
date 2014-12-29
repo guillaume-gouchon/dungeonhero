@@ -466,7 +466,7 @@ public class GUIManager {
         });
     }
 
-    private void showNormalDiscussion(final Pnj pnj, Discussion discussion, final OnDiscussionReplySelected callback) {
+    private void showNormalDiscussion(final Pnj pnj, final Discussion discussion, final OnDiscussionReplySelected callback) {
         ((TextView) mDiscussionDialog.findViewById(R.id.message)).setText(discussion.getMessage(mResources));
 
         ViewGroup reactionsLayout = (ViewGroup) mDiscussionDialog.findViewById(R.id.reactions);
@@ -484,7 +484,7 @@ public class GUIManager {
                     @Override
                     public void onClick(View view) {
                         mDiscussionDialog.dismiss();
-                        callback.onReplySelected(pnj, (Integer) view.getTag(R.string.id), null);
+                        callback.onReplySelected(pnj, (Integer) view.getTag(R.string.id), discussion.getReward());
                     }
                 });
                 reactionsLayout.addView(reactionTV);
@@ -496,7 +496,7 @@ public class GUIManager {
                 @Override
                 public void onClick(View view) {
                     mDiscussionDialog.dismiss();
-                    callback.onReplySelected(pnj, -1, null);
+                    callback.onReplySelected(pnj, -1, discussion.getReward());
                 }
             });
             reactionsLayout.addView(reactionTV);
@@ -803,7 +803,9 @@ public class GUIManager {
                         }
                     });
                 } else {
-                    nameTV.setTextColor(mResources.getColor(R.color.red));
+                    if (!hero.isEquipmentSuitable(equipment)) {
+                        nameTV.setTextColor(mResources.getColor(R.color.red));
+                    }
                     actionButton.setVisibility(View.GONE);
                 }
 
@@ -825,7 +827,7 @@ public class GUIManager {
                 for (Requirement requirement : equipment.getRequirements()) {
                     if (requirement instanceof StatRequirement) {
                         StatRequirement statRequirement = (StatRequirement) requirement;
-                        addStatToItemLayout(requirementsLayout.getChildAt(indexRequirements++), mActivity.getString(R.string.minimum, statRequirement.getValue()), statRequirement.getTarget().getImage(), statRequirement.getTarget().getName(), R.color.white);
+                        addStatToItemLayout(requirementsLayout.getChildAt(indexRequirements++), mActivity.getString(R.string.minimum, statRequirement.getValue()), statRequirement.getTarget().getImage(), statRequirement.getTarget().getName(), statRequirement.getValue() > mHero.getCharacteristic(statRequirement.getTarget()) ? R.color.red : R.color.white);
                     }
                 }
             } else if (item instanceof Potion) {

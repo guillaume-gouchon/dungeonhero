@@ -24,54 +24,55 @@ public class PNJFactory {
     }
 
     public static Pnj buildTutorialPNJ() {
-        final Pnj pnj = new Pnj("princess", Ranks.NEUTRAL, 5, 5, 13, 10, 8, 0, 0, 1, Hero.HeroTypes.STR);
+        final Pnj pnj = new Pnj("tutorial_character", Ranks.NEUTRAL, 5, 5, 13, 10, 8, 0, 0, 1, Hero.HeroTypes.STR);
+        pnj.setActive(true);
 
         // intro
-        Discussion discussion = new Discussion("hello_discussion", false, null);
+        Discussion discussion = new Discussion("initiation_tutorial_intro", false, null);
         discussion.addReaction(new Reaction("ok", 0));
         pnj.getDiscussions().add(discussion);
 
         // explain movement
-        discussion = new Discussion("hello_discussion", false, null);
+        discussion = new Discussion("initiation_tutorial_movement", false, null);
         discussion.addReaction(new Reaction("ok_get_it", 0));
         pnj.getDiscussions().add(discussion);
 
         // explain talk and search
-        discussion = new Discussion("hello_discussion", false, null);
+        discussion = new Discussion("initiation_tutorial_search", false, null);
         discussion.addReaction(new Reaction("ok_get_it", 0));
         pnj.getDiscussions().add(discussion);
 
         // explain fighting
-        discussion = new Discussion("hello_discussion", false, null);
+        discussion = new Discussion("initiation_tutorial_fight", false, null);
         discussion.addReaction(new Reaction("ok_get_it", 0));
         pnj.getDiscussions().add(discussion);
 
         // explain skills
-        discussion = new Discussion("hello_discussion", false, null);
+        discussion = new Discussion("initiation_tutorial_skills", false, null);
         discussion.addReaction(new Reaction("yes", 0));
         discussion.addReaction(new Reaction("no", 1));
         pnj.getDiscussions().add(discussion);
 
         // explain tips
-        discussion = new Discussion("hello_discussion", false, null);
+        discussion = new Discussion("initiation_tutorial_tips", false, null);
         discussion.addReaction(new Reaction("ok_get_it", 0));
         pnj.getDiscussions().add(discussion);
 
         // outro
-        discussion = new Discussion("hello_discussion", false, null);
-        discussion.addReaction(new Reaction("die_weak", 1));
-        discussion.addReaction(new Reaction("pray", 0));
+        discussion = new Discussion("initiation_tutorial_outro", false, null);
+        discussion.addReaction(new Reaction("initiation_die_weak", 1));
+        discussion.addReaction(new Reaction("initiation_pray", 0));
         pnj.getDiscussions().add(discussion);
 
         // give reward
-        discussion = new Discussion("hello_discussion", false, new Reward(PotionFactory.buildForcePotion()));
-        discussion.addReaction(new Reaction("thanks", 0));
+        discussion = new Discussion("initiation_tutorial_outro_reward", false, new Reward(PotionFactory.buildForcePotion()));
+        discussion.addReaction(new Reaction("initiation_tutorial_thanks", 0));
         pnj.getDiscussions().add(discussion);
 
         pnj.setOnDiscussionOver(new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                pnj.setHp(0);
+                pnj.setCurrentHP(0);
             }
         });
 
