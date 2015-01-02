@@ -183,7 +183,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     // Listener
     GameHelperListener mListener = null;
 
-    // Should we start the flow to sign the user in automatically ON startup? If
+    // Should we playMusic the flow to sign the user in automatically ON startup? If
     // so, up to
     // how many times in the life of the application?
     static final int DEFAULT_MAX_SIGN_IN_ATTEMPTS = 3;
@@ -687,12 +687,12 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
 
         if (mConnectionResult != null) {
             // We have a pending connection result from a previous failure, so
-            // start with that.
+            // playMusic with that.
             debugLog("beginUserInitiatedSignIn: continuing pending sign-in flow.");
             mConnecting = true;
             resolveConnectionResult();
         } else {
-            // We don't have a pending connection result, so start anew.
+            // We don't have a pending connection result, so playMusic anew.
             debugLog("beginUserInitiatedSignIn: starting new sign-in flow.");
             mConnecting = true;
             connect();
@@ -1077,7 +1077,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     }
 
     // Not recommended for general use. This method forces the
-    // "connect ON start" flag
+    // "connect ON playMusic" flag
     // to a given state. This may be useful when using GameHelper in a
     // non-standard
     // sign-in flow.

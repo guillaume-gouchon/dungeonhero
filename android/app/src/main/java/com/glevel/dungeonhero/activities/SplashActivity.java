@@ -48,8 +48,11 @@ public class SplashActivity extends MyActivity {
         setupUI();
 
         prepareSplashScreenTitle();
+    }
 
-        mMusic = null;
+    @Override
+    protected int[] getMusicResource() {
+        return null;
     }
 
     @Override
@@ -81,7 +84,7 @@ public class SplashActivity extends MyActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // start next letter animation and the general bounce effect
+                // playMusic next letter animation and the general bounce effect
                 startNextFallingLetterAnimation();
                 mTitleLayout.startAnimation(mBounceAnimation);
             }

@@ -24,8 +24,7 @@ public class PNJFactory {
     }
 
     public static Pnj buildTutorialPNJ() {
-        final Pnj pnj = new Pnj("tutorial_character", Ranks.NEUTRAL, 5, 5, 13, 10, 8, 0, 0, 1, Hero.HeroTypes.STR);
-        pnj.setActive(true);
+        final Pnj pnj = new Pnj("tutorial_character", Ranks.NEUTRAL, 35, 2, 20, 14, 9, 0, 0, 5, Hero.HeroTypes.STR);
 
         // intro
         Discussion discussion = new Discussion("initiation_tutorial_intro", false, null);

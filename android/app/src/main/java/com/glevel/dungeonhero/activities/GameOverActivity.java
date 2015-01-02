@@ -11,6 +11,7 @@ import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
+import com.glevel.dungeonhero.utils.MusicManager;
 
 public class GameOverActivity extends MyActivity implements View.OnClickListener {
 
@@ -60,6 +61,11 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
     }
 
     @Override
+    protected int[] getMusicResource() {
+        return new int[]{R.raw.game_over};
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mStormsBg.removeCallbacks(mStormEffect);
@@ -69,12 +75,14 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.retryButton:
+                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra(Game.class.getName(), mGame);
                 startActivity(intent);
                 finish();
                 break;
             case R.id.exitButton:
+                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 startActivity(new Intent(this, HomeActivity.class));
                 finish();
                 break;

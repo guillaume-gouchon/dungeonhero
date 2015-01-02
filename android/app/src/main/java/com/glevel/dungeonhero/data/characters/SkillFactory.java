@@ -90,7 +90,7 @@ public class SkillFactory {
     }
 
     public static Skill buildParalysingPlants() {
-        Effect extra = new StunEffect("stun.png", Characteristics.STRENGTH, 5, 0);
+        Effect extra = new StunEffect(null, Characteristics.STRENGTH, 5, 0);
         Effect effect = new BuffEffect("poison.png", Characteristics.MOVEMENT, -20, 5, extra, 0);
         return new ActiveSkill("paralysing_plant", 0, false, 3, effect);
     }
@@ -119,7 +119,7 @@ public class SkillFactory {
     }
 
     public static Skill buildSleep() {
-        Effect effect = new StunEffect("stun.png", Characteristics.SPIRIT, 10, 0);
+        Effect effect = new StunEffect("curse.png", Characteristics.SPIRIT, 10, 0);
         return new ActiveSkill("sleep", 0, false, 0, effect);
     }
 
@@ -134,7 +134,7 @@ public class SkillFactory {
     }
 
     public static Skill buildTerror() {
-        Effect extra = new StunEffect("stun.png", Characteristics.SPIRIT, 6, 0);
+        Effect extra = new StunEffect("curse.png", Characteristics.SPIRIT, 6, 0);
         Effect effect = new PoisonEffect("curse.png", -3, 5, extra, 0);
         return new ActiveSkill("terror", 0, false, 3, effect);
     }

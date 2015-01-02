@@ -11,8 +11,9 @@ public class StairsSprite extends GameElementSprite {
 
     public StairsSprite(Stairs stairs, VertexBufferObjectManager vertexBufferObjectManager) {
         super(stairs, vertexBufferObjectManager);
+        setScale(0.9f);
         setZIndex(9);
-        if (stairs.isDownStairs()) {
+        if (!stairs.isDownStairs()) {
             setCurrentTileIndex(1);
         }
     }

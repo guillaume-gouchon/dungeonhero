@@ -16,6 +16,7 @@ import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
+import com.glevel.dungeonhero.utils.MusicManager;
 
 public class StoryFragment extends DialogFragment implements View.OnClickListener {
 
@@ -101,10 +102,12 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.skipButton:
+                MusicManager.playSound(getActivity().getApplicationContext(), R.raw.button_sound);
                 dismiss();
                 break;
 
             case R.id.replayButton:
+                MusicManager.playSound(getActivity().getApplicationContext(), R.raw.button_sound);
                 startAnimation();
                 break;
         }

@@ -28,6 +28,7 @@ import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
 import com.glevel.dungeonhero.models.items.requirements.Requirement;
 import com.glevel.dungeonhero.models.items.requirements.StatRequirement;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
+import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.HintTextView;
 
@@ -61,6 +62,10 @@ public class ShopActivity extends MyActivity implements OnClickListener {
     private Runnable mStormEffect;
     private ViewGroup mOffers, mBag;
     private Dialog mItemInfoDialog;
+
+    public static void resetShop(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(LAST_TIME_SHOP_VISITED_PREFS, 0).apply();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +102,11 @@ public class ShopActivity extends MyActivity implements OnClickListener {
     }
 
     @Override
+    protected int[] getMusicResource() {
+        return new int[]{R.raw.main_menu};
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mStormsBg.removeCallbacks(mStormEffect);
@@ -115,6 +125,7 @@ public class ShopActivity extends MyActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_button:
+                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 goToBookChooser();
                 break;
         }
@@ -344,10 +355,6 @@ public class ShopActivity extends MyActivity implements OnClickListener {
         }
         updateGoldAmount();
         updateBag();
-    }
-
-    public static void resetShop(Context context) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(LAST_TIME_SHOP_VISITED_PREFS, 0).apply();
     }
 
 }

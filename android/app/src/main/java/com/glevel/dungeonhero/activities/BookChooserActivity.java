@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.BooksAdapter;
@@ -26,14 +27,10 @@ import com.glevel.dungeonhero.utils.billing.OnBillingServiceConnectedListener;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.CustomCarousel;
-import com.google.android.gms.games.Games;
-import com.google.example.games.basegameutils.BaseGameActivity;
 
 import java.util.List;
 
-public class BookChooserActivity extends BaseGameActivity implements OnBillingServiceConnectedListener, OnClickListener {
-
-    private static final int REQUEST_ACHIEVEMENTS = 100;
+public class BookChooserActivity extends MyActivity implements OnBillingServiceConnectedListener, OnClickListener {
 
     private Game mGame;
     private DatabaseHelper mDbHelper;
@@ -101,7 +98,7 @@ public class BookChooserActivity extends BaseGameActivity implements OnBillingSe
         CustomCarousel.Adapter adapter = new BooksAdapter(getApplicationContext(), R.layout.book_chooser_item, mLstBooks, mOnStorySelectedListener);
         carousel.setAdapter(adapter);
 
-        // start message animation
+        // playMusic message animation
         findViewById(R.id.chooseBookMessage).startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.big_label_in_game));
 
         findViewById(R.id.shop_button).setOnClickListener(this);
@@ -115,8 +112,16 @@ public class BookChooserActivity extends BaseGameActivity implements OnBillingSe
     }
 
     @Override
+    protected int[] getMusicResource() {
+        return new int[]{R.raw.main_menu};
+    }
+    
+    @Override
     protected void onPause() {
         super.onPause();
+
+        mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).save(mGame);
+
         mStormsBg.removeCallbacks(mStormEffect);
 
         if (mGameMenuDialog != null) {
@@ -213,24 +218,13 @@ public class BookChooserActivity extends BaseGameActivity implements OnBillingSe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shop_button:
+                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 Intent intent = new Intent(this, ShopActivity.class);
                 intent.putExtra(Game.class.getName(), mGame);
                 startActivity(intent);
                 finish();
                 break;
-            case R.id.tavern_button:
-                startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()), REQUEST_ACHIEVEMENTS);
-                break;
         }
-    }
-
-    @Override
-    public void onSignInFailed() {
-    }
-
-    @Override
-    public void onSignInSucceeded() {
-        findViewById(R.id.tavern_button).setVisibility(View.VISIBLE);
     }
 
 }

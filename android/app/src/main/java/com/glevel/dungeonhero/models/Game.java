@@ -45,6 +45,14 @@ public class Game extends DatabaseResource implements Serializable {
         return game;
     }
 
+    public static String[] getDatabaseCreationStatements() {
+        return new String[]{
+                "DROP TABLE IF EXISTS " + TABLE_NAME + ";",
+                "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY, " + Columns.HERO + " BLOB, " + Columns.BOOKS_DONE +
+                        " BLOB, " + Columns.BOOK + " BLOB, " + Columns.DUNGEON + " BLOB);"
+        };
+    }
+
     @Override
     public ContentValues getContentValues() {
         ContentValues content = new ContentValues(Columns.values().length + 1);
@@ -56,18 +64,6 @@ public class Game extends DatabaseResource implements Serializable {
         content.put(Columns.BOOK.toString(), ByteSerializer.toByteArray(book));
         content.put(Columns.DUNGEON.toString(), ByteSerializer.toByteArray(dungeon));
         return content;
-    }
-
-    public static String[] getDatabaseCreationStatements() {
-        return new String[]{
-                "DROP TABLE IF EXISTS " + TABLE_NAME + ";",
-                "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY, " + Columns.HERO + " BLOB, " + Columns.BOOKS_DONE +
-                        " BLOB, " + Columns.BOOK + " BLOB, " + Columns.DUNGEON + " BLOB);"
-        };
-    }
-
-    public void setBooksDone(List<Integer> booksDone) {
-        this.booksDone = booksDone;
     }
 
     public Book getBook() {
@@ -99,21 +95,6 @@ public class Game extends DatabaseResource implements Serializable {
         booksDone.add(activeBook.getId());
     }
 
-    private enum Columns {
-        HERO("hero"), BOOKS_DONE("books_done"), BOOK("book"), DUNGEON("dungeon");
-
-        private final String columnName;
-
-        private Columns(String columnName) {
-            this.columnName = columnName;
-        }
-
-        @Override
-        public String toString() {
-            return columnName;
-        }
-    }
-
     public List<GraphicHolder> getGraphicsToLoad() {
         List<GraphicHolder> toLoad = new ArrayList<>();
 
@@ -135,17 +116,16 @@ public class Game extends DatabaseResource implements Serializable {
             toLoad.add(element);
         }
 
-        toLoad.add(new SpriteHolder("stairs.png", 32, 20, 2, 1));
+        toLoad.add(new SpriteHolder("stairs.png", 30, 30, 2, 1));
         toLoad.add(new SpriteHolder("selection.png", 64, 64, 1, 1));
         toLoad.add(new SpriteHolder("blood.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("item_on_ground.png", 12, 12, 1, 1));
-        toLoad.add(new SpriteHolder("slash.png", 100, 50, 2, 1));
+        toLoad.add(new SpriteHolder("slash.png", 250, 50, 5, 1));
         toLoad.add(new SpriteHolder("poison.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("frost.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("curse.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("ground_slam.png", 300, 50, 6, 1));
-        toLoad.add(new SpriteHolder("stun.png", 400, 50, 8, 1));
-        toLoad.add(new SpriteHolder("charm.png", 400, 50, 8, 1));
+        toLoad.add(new SpriteHolder("charm.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("fireball.png", 200, 100, 4, 2));
         toLoad.add(new SpriteHolder("starfall.png", 200, 100, 4, 2));
 
@@ -154,12 +134,42 @@ public class Game extends DatabaseResource implements Serializable {
 
     public List<String> getSoundEffectsToLoad() {
         List<String> toLoad = new ArrayList<>();
-        // TODO : add sounds effects
+
+        toLoad.add("block");
+        toLoad.add("close_combat_attack");
+        toLoad.add("coins");
+        toLoad.add("damage_hero");
+        toLoad.add("damage_monster");
+        toLoad.add("death");
+        toLoad.add("magic");
+        toLoad.add("new_level");
+        toLoad.add("range_attack");
+        toLoad.add("search");
+
         return toLoad;
     }
 
     public List<Integer> getBooksDone() {
         return booksDone;
+    }
+
+    public void setBooksDone(List<Integer> booksDone) {
+        this.booksDone = booksDone;
+    }
+
+    private enum Columns {
+        HERO("hero"), BOOKS_DONE("books_done"), BOOK("book"), DUNGEON("dungeon");
+
+        private final String columnName;
+
+        private Columns(String columnName) {
+            this.columnName = columnName;
+        }
+
+        @Override
+        public String toString() {
+            return columnName;
+        }
     }
 
 }

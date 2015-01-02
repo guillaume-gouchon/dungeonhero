@@ -150,6 +150,7 @@
     <string name="skills">Skills</string>
     <string name="use_skill_personal">%s !</string>
     <string name="drink">Drink</string>
+    <string name="sleep_effect">zzz</string>
 
     <!-- Discussions -->
     <string name="yes">Yes</string>

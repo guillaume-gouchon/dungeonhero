@@ -9,8 +9,8 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
 import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.data.characters.HeroFactory;
-import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
@@ -44,6 +44,7 @@ import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.util.color.Color;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -76,12 +77,12 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             // TODO : used fot testing only
             mGame = new Game();
-            mGame.setHero(HeroFactory.buildDwarfWarrior());
+            mGame.setHero(HeroFactory.buildBerserker());
             mGame.setBook(BookFactory.buildInitiationBook());
         }
 
         if (mGame.getDungeon() == null) {
-            // start new dungeon
+            // playMusic new dungeon
             Chapter chapter = mGame.getBook().getActiveChapter();
 
             // create dungeon
@@ -194,6 +195,7 @@ public class GameActivity extends MyBaseGameActivity {
             });
         }
 
+        Log.d(TAG, "populate scene is finished");
         pOnPopulateSceneCallback.onPopulateSceneFinished();
 
         mActionDispatcher = new ActionsDispatcher(this, mScene);
@@ -208,6 +210,7 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     public void addElementToScene(GameElement gameElement) {
+        Log.d(TAG, "add element to scene = " + gameElement.getIdentifier());
         gameElement.createSprite(getVertexBufferObjectManager());
         super.addElementToScene(gameElement.getSprite(), false);
     }
@@ -228,6 +231,11 @@ public class GameActivity extends MyBaseGameActivity {
         }
         mGame.setDungeon(mDungeon);
         super.onPause();
+    }
+
+    @Override
+    protected int[] getMusicResource() {
+        return new int[]{R.raw.adventure1, R.raw.adventure1, R.raw.adventure1};
     }
 
     @Override
@@ -299,6 +307,7 @@ public class GameActivity extends MyBaseGameActivity {
                 Log.d(TAG, "Drink potion");
                 final Potion potion = (Potion) view.getTag(R.string.potion);
                 mHero.use(potion);
+                playSound("magic", false);
                 mActionDispatcher.applyEffect(potion.getEffect(), mHero.getTilePosition(), false);
             }
         }
@@ -361,7 +370,6 @@ public class GameActivity extends MyBaseGameActivity {
                     finish();
                     return;
                 }
-
 
                 boolean isHeroic = false, isHidden = false;
                 if (mActiveCharacter != null) {
@@ -426,17 +434,13 @@ public class GameActivity extends MyBaseGameActivity {
                         mActionDispatcher.applyEffect(effect, mActiveCharacter.getTilePosition(), false);
                     } else if (effect instanceof StunEffect) {
                         Log.d(TAG, "got stun effect");
-                        drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), "stun.png", 50, 0.3f, 1.0f, 0, true, 100, null);
                         if (mActiveCharacter.testCharacteristic(effect.getTarget(), effect.getValue())) {
                             Log.d(TAG, "stun test was a success");
                             mActiveCharacter.getBuffs().remove(effect);
                         } else {
                             Log.d(TAG, "skip turn");
                             skipTurn = true;
-                            // animate stun
-                            if (effect.getSpriteName() != null) {
-                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
-                            }
+                            drawAnimatedText(mActiveCharacter.getSprite().getX() + GameConstants.PIXEL_BY_TILE / 3, mActiveCharacter.getSprite().getY() - 2 * GameConstants.PIXEL_BY_TILE / 3, getString(R.string.sleep_effect), new Color(0.0f, 1.0f, 0.0f), 0.2f, 50, -0.15f);
                         }
                     }
                 }
@@ -458,6 +462,8 @@ public class GameActivity extends MyBaseGameActivity {
                             });
                         }
                     }, 500);
+                } else if (mActiveCharacter.getRank() == Ranks.ME) {
+                    mInputManager.setEnabled(true);
                 }
             }
         });
@@ -484,14 +490,19 @@ public class GameActivity extends MyBaseGameActivity {
     public void switchRoom(final Tile doorTile) {
         Log.d(TAG, "switching room");
         final Directions doorDirection = mRoom.getDoorDirection(doorTile);
-        mEngine.stop();
-        mDungeon.switchRoom(doorTile);
+
+        List<Unit> heroes = new ArrayList<>();
+        heroes.add(mHero);
+        mDungeon.switchRoom(doorTile, heroes);
+
         mRoom = mDungeon.getCurrentRoom();
+
         try {
             Log.d(TAG, "resetting scene");
             mEngine.clearDrawHandlers();
             mEngine.clearUpdateHandlers();
             mScene.clearUpdateHandlers();
+            mEngine.stop();
             mGroundLayer.detachChildren();
             mScene.reset();
             mScene.clearTouchAreas();
@@ -504,7 +515,6 @@ public class GameActivity extends MyBaseGameActivity {
                             @Override
                             public void onPopulateSceneFinished() {
                                 mEngine.start();
-                                mInputManager.setEnabled(true);
                                 animateRoomSwitch(doorDirection);
                                 mScene.sortChildren(true);
                             }
@@ -523,7 +533,7 @@ public class GameActivity extends MyBaseGameActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "start animation to direction " + doorDirection.name());
+                Log.d(TAG, "playMusic animation to direction " + doorDirection.name());
                 int n = 30;
                 mScene.setX(mScene.getX() + 30 * doorDirection.getDx());
                 mScene.setY(mScene.getY() - 30 * doorDirection.getDy());

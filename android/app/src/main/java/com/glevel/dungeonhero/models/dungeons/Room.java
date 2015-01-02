@@ -3,7 +3,6 @@ package com.glevel.dungeonhero.models.dungeons;
 import android.util.Log;
 
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
-import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.data.dungeons.GroundTypes;
 import com.glevel.dungeonhero.data.dungeons.RoomFactory;
@@ -189,10 +188,15 @@ public class Room implements Serializable {
 
     public void addGameElement(GameElement gameElement, Tile tile) {
         gameElement.setTilePosition(tile);
-        if (gameElement instanceof Unit && (!(gameElement instanceof Pnj) || ((Pnj) gameElement).isActive())) {
+        if (!queue.contains(gameElement) && gameElement instanceof Unit && (!(gameElement instanceof Pnj) || ((Pnj) gameElement).isActive())) {
             queue.add((Unit) gameElement);
+            Log.d(TAG, "queue size =" + queue.size());
         }
-        objects.add(gameElement);
+
+        if (!objects.contains(gameElement)) {
+            objects.add(gameElement);
+        }
+
         checkSafe();
     }
 
@@ -238,17 +242,9 @@ public class Room implements Serializable {
         return isSafe;
     }
 
-    public void exit() {
-        for (Unit unit : queue) {
-            if (unit.getRank() == Ranks.ME || unit.getRank() == Ranks.ALLY) {
-                unit.setTilePosition(null);
-            }
-        }
-    }
-
-    public void moveIn(List<Unit> units, Directions from) {
+    public void moveIn(List<Unit> heroes, Directions from) {
         // TODO : multiple heroes / allies
-        Log.d(TAG, "moving in into room from direction = " + from.name() + ", " + units.size() + " units");
+        Log.d(TAG, "moving into room from direction = " + from.name() + ", " + heroes.size() + " units");
         Tile doorPosition = doors.get(from);
         int factor = from == Directions.SOUTH ? 2 : 1;
         Tile tile = tiles[doorPosition.getY() + factor * from.getDy()][doorPosition.getX() - factor * from.getDx()];
@@ -258,7 +254,7 @@ public class Room implements Serializable {
             tile.getContent().setTilePosition(getRandomFreeTile());
         }
 
-        for (Unit unit : units) {
+        for (Unit unit : heroes) {
             addGameElement(unit, tile);
             Log.d(TAG, "hero is tile " + tile.getX() + "," + tile.getY());
         }

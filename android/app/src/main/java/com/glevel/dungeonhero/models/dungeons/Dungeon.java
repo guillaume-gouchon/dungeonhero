@@ -53,9 +53,14 @@ public class Dungeon implements Serializable {
         return rooms[currentPosition / 10][currentPosition % 10];
     }
 
-    public void switchRoom(Tile doorTile) {
+    public void switchRoom(Tile doorTile, List<Unit> heroes) {
+        // exit room
+        for (Unit unit : heroes) {
+            unit.destroy();
+            Log.d(TAG, "hero exits room, tile=" + unit.getTilePosition());
+        }
+
         Room previousRoom = getCurrentRoom();
-        previousRoom.exit();
         Directions doorDirection = previousRoom.getDoorDirection(doorTile);
         Log.d(TAG, "switch room to direction = " + doorDirection.name());
         switch (doorDirection) {
@@ -75,13 +80,13 @@ public class Dungeon implements Serializable {
         currentDirection = doorDirection.getOpposite();
     }
 
-    public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> lstUnitsToMoveIn, boolean isTutorial) {
+    public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> heroes, boolean isTutorial) {
         Room currentRoom = getCurrentRoom();
         if (currentRoom.getTiles() == null) {
             nbRoomVisited++;
         }
 
-        int threatLevel = ((Hero) lstUnitsToMoveIn.get(0)).getLevel();
+        int threatLevel = ((Hero) heroes.get(0)).getLevel();
 
         int nbRoomsLeft = width * height - nbRoomVisited;
         Log.d(TAG, "Number of rooms not visited = " + nbRoomsLeft + ", events = " + events.size());
@@ -92,7 +97,7 @@ public class Dungeon implements Serializable {
             currentRoom.initRoom(tmxTiledMap, null, 0);
 
             // add stairs
-            currentRoom.prepareStartRoom(lstUnitsToMoveIn);
+            currentRoom.prepareStartRoom(heroes);
 
             // add tutorial PNJ if this is the introduction quest
             if (isTutorial) {
@@ -107,11 +112,7 @@ public class Dungeon implements Serializable {
         }
 
         currentRoom.initRoom(tmxTiledMap, event, threatLevel);
-        currentRoom.moveIn(lstUnitsToMoveIn, currentDirection);
-    }
-
-    public int getStart() {
-        return start;
+        currentRoom.moveIn(heroes, currentDirection);
     }
 
 }

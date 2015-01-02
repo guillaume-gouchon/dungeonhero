@@ -43,20 +43,20 @@ public class SoundEffectManager {
 
         List<String> soundEffectsToLoad = game.getSoundEffectsToLoad();
         for (String soundEffect : soundEffectsToLoad) {
-            loadMfx(soundEffect);
+            loadSfx(soundEffect);
         }
     }
 
 
     public void playGeoSound(String soundName, float x, float y) {
-        playSound(soundName, false, -1, -1);
+        playSound(soundName, false, x, y);
     }
 
     public void playSound(String soundName, boolean isLooped) {
         playSound(soundName, isLooped, -1, -1);
     }
 
-    private void loadMfx(String soundName) {
+    private void loadSfx(String soundName) {
         if (sMfxMap.get(soundName) == null) {
             try {
                 Sound mSound = SoundFactory.createSoundFromAsset(mEngine.getSoundManager(), mContext, soundName + SOUNDS_EXTENSION);

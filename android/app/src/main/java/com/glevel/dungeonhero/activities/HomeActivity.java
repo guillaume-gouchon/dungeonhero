@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.LoadGameFragment;
@@ -27,16 +28,11 @@ import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
-import com.glevel.dungeonhero.utils.MusicManager.Music;
 import com.glevel.dungeonhero.utils.database.DatabaseHelper;
-import com.google.android.gms.games.Games;
-import com.google.example.games.basegameutils.BaseGameActivity;
 
 import java.util.List;
 
-public class HomeActivity extends BaseGameActivity implements OnClickListener, LoadGameFragment.OnFragmentClosed {
-
-    private static final int REQUEST_ACHIEVEMENTS = 100;
+public class HomeActivity extends MyActivity implements OnClickListener, LoadGameFragment.OnFragmentClosed {
 
     private SharedPreferences mSharedPrefs;
     private DatabaseHelper mDbHelper;
@@ -143,17 +139,17 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, L
                             getString(R.string.share_message, getPackageName()), 0);
                     break;
                 case R.id.sign_in_button:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                    beginUserInitiatedSignIn();
+//                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
+//                    beginUserInitiatedSignIn();
                     break;
                 case R.id.sign_out_button:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                    signOut();
-                    showSignInButton();
+//                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
+//                    signOut();
+//                    showSignInButton();
                     break;
                 case R.id.achievementsButton:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                    startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()), REQUEST_ACHIEVEMENTS);
+//                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
+//                    startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()), REQUEST_ACHIEVEMENTS);
                     break;
             }
         }
@@ -222,7 +218,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, L
                 }
                 mSharedPrefs.edit().putInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, newMusicState.ordinal()).apply();
                 if (newMusicState == GameConstants.MusicStates.ON) {
-                    MusicManager.start(HomeActivity.this, Music.MUSIC_MENU);
+                    MusicManager.playMusic(HomeActivity.this, getMusicResource());
                 } else {
                     MusicManager.release();
                 }
@@ -239,6 +235,7 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, L
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // enable / disable sound in preferences
+                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 boolean isLandscapeMode = checkedId == R.id.landcape;
                 Editor editor = mSharedPrefs.edit();
                 editor.putBoolean(GameConstants.GAME_PREFS_LANDSCAPE, isLandscapeMode);
@@ -345,30 +342,35 @@ public class HomeActivity extends BaseGameActivity implements OnClickListener, L
         mStormEffect = ApplicationUtils.addStormBackgroundAtmosphere(mStormsBg, 150, 50);
     }
 
+    @Override
+    protected int[] getMusicResource() {
+        return new int[]{R.raw.main_menu};
+    }
+
     private void hideSettings() {
         mSettingsLayout.setVisibility(View.GONE);
         mSettingsLayout.startAnimation(mFadeOutAnimation);
     }
 
-    @Override
-    public void onSignInFailed() {
-        showSignInButton();
-    }
-
-    @Override
-    public void onSignInSucceeded() {
-        // show sign-out button, hide the sign-in button
-        findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-        findViewById(R.id.achievementsButton).setVisibility(View.VISIBLE);
-        findViewById(R.id.achievementsButton).startAnimation(mFadeInAnimation);
-        findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
-    }
-
-    private void showSignInButton() {
-        findViewById(R.id.sign_out_button).setVisibility(View.GONE);
-        findViewById(R.id.achievementsButton).setVisibility(View.GONE);
-        findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-    }
+//    @Override
+//    public void onSignInFailed() {
+//        showSignInButton();
+//    }
+//
+//    @Override
+//    public void onSignInSucceeded() {
+//        // show sign-out button, hide the sign-in button
+//        findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+//        findViewById(R.id.achievementsButton).setVisibility(View.VISIBLE);
+//        findViewById(R.id.achievementsButton).startAnimation(mFadeInAnimation);
+//        findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
+//    }
+//
+//    private void showSignInButton() {
+//        findViewById(R.id.sign_out_button).setVisibility(View.GONE);
+//        findViewById(R.id.achievementsButton).setVisibility(View.GONE);
+//        findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+//    }
 
     @Override
     public void OnFragmentClosed() {

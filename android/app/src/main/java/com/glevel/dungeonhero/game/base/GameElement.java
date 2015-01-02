@@ -1,10 +1,13 @@
 package com.glevel.dungeonhero.game.base;
 
+import android.util.Log;
+
 import com.glevel.dungeonhero.game.graphics.GameElementSprite;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.dungeons.Tile;
+import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
@@ -14,12 +17,11 @@ import java.io.Serializable;
 public abstract class GameElement extends StorableResource implements Serializable, GraphicHolder {
 
     private static final long serialVersionUID = -5880458091427517171L;
-
-    protected transient GameElementSprite sprite;
-    private Ranks rank;
-    protected transient Tile tilePosition;
-
+    private static final String TAG = "GameElement";
     private final int spriteWidth, spriteHeight, nbSpritesX, nbSpritesY;
+    protected transient GameElementSprite sprite;
+    protected transient Tile tilePosition;
+    private Ranks rank;
 
     public GameElement(String identifier, Ranks rank, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
         super(identifier);
@@ -41,6 +43,7 @@ public abstract class GameElement extends StorableResource implements Serializab
     }
 
     public void setTilePosition(Tile tilePosition) {
+        Log.d(TAG, "new tile for " + identifier + " = " + (tilePosition != null ? tilePosition.getX() + ", " + tilePosition.getY() : tilePosition));
         if (this.tilePosition != null) {
             this.tilePosition.setContent(null);
         }
@@ -66,6 +69,10 @@ public abstract class GameElement extends StorableResource implements Serializab
 
     public boolean isEnemy(GameElement gameElement) {
         return (rank == Ranks.ME || rank == Ranks.ALLY) && gameElement.getRank() == Ranks.ENEMY || rank == Ranks.ENEMY && (gameElement.getRank() == Ranks.ME || gameElement.getRank() == Ranks.ALLY);
+    }
+
+    public boolean isNextTo(Tile tile) {
+        return MathUtils.calcManhattanDistance(tilePosition, tile) == 1;
     }
 
     public Ranks getRank() {

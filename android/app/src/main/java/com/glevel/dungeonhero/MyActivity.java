@@ -5,12 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.glevel.dungeonhero.utils.MusicManager;
-import com.glevel.dungeonhero.utils.MusicManager.Music;
 
 public abstract class MyActivity extends FragmentActivity {
-
-    protected boolean mContinueMusic = false;
-    protected Music mMusic = Music.MUSIC_MENU;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,18 +19,15 @@ public abstract class MyActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (!mContinueMusic) {
-            MusicManager.pause();
-        }
+        MusicManager.pauseMusic();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mContinueMusic = false;
-        if (mMusic != null) {
-            MusicManager.start(this, mMusic);
-        }
+        MusicManager.playMusic(getApplicationContext(), getMusicResource());
     }
+
+    protected abstract int[] getMusicResource();
 
 }

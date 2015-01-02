@@ -75,7 +75,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
         CustomCarousel.Adapter heroesAdapter = new HeroesAdapter(this, R.layout.hero_chooser_item, mLstHeroes, mOnHeroSelectedListener);
         heroesCarousel.setAdapter(heroesAdapter);
 
-        // start message animation
+        // playMusic message animation
         findViewById(R.id.chooseHeroMessage).startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.big_label_in_game));
     }
 
@@ -83,6 +83,11 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
     protected void onResume() {
         super.onResume();
         mStormEffect = ApplicationUtils.addStormBackgroundAtmosphere(mStormsBg, 150, 50);
+    }
+
+    @Override
+    protected int[] getMusicResource() {
+        return new int[]{R.raw.main_menu};
     }
 
     @Override
@@ -124,6 +129,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
         heroNameInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE || event != null
                         && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     validateHeroName(selectedHero, heroNameInput.getEditableText().toString());
@@ -136,6 +142,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
         view.findViewById(R.id.okButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 validateHeroName(selectedHero, heroNameInput.getEditableText().toString());
             }
         });

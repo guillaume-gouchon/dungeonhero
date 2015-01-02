@@ -135,7 +135,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         int dice = (int) (Math.random() * 100);
 
-        if (isRangeAttack() && MathUtils.calcManhattanDistance(tilePosition, target.getTilePosition()) <= 1) {
+        if (isRangeAttack() && isNextTo(target.getTilePosition())) {
             // malus for range weapon in close combat
             dice = Math.min(99, dice + 20);
         }

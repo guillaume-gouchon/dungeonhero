@@ -18,6 +18,7 @@ import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.adapters.LoadGamesAdapter;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.utils.MusicManager;
 
 import java.util.List;
 
@@ -97,6 +98,8 @@ public class LoadGameFragment extends DialogFragment {
     }
 
     private void launchGame(Game game) {
+        MusicManager.playSound(getActivity().getApplicationContext(), R.raw.button_sound);
+        
         Intent intent;
         if (game.getDungeon() == null) {
             intent = new Intent(getActivity(), BookChooserActivity.class);

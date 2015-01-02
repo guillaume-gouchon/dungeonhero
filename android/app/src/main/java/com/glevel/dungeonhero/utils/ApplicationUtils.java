@@ -58,6 +58,7 @@ public class ApplicationUtils {
             view.findViewById(R.id.cancelButton).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MusicManager.playSound(activity.getApplicationContext(), R.raw.button_sound);
                     editor.putInt(PREFS_RATE_DIALOG_IN, -1);
                     editor.apply();
                     dialog.dismiss();
@@ -66,6 +67,7 @@ public class ApplicationUtils {
             view.findViewById(R.id.neutralButton).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MusicManager.playSound(activity.getApplicationContext(), R.raw.button_sound);
                     editor.putInt(PREFS_RATE_DIALOG_IN, 5);
                     dialog.dismiss();
                 }
@@ -73,6 +75,7 @@ public class ApplicationUtils {
             view.findViewById(R.id.okButton).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MusicManager.playSound(activity.getApplicationContext(), R.raw.button_sound);
                     editor.putInt(PREFS_RATE_DIALOG_IN, -1);
                     editor.apply();
                     rateTheApp(activity);

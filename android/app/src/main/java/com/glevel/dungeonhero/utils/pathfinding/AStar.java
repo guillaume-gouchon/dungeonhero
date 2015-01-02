@@ -54,7 +54,7 @@ public class AStar<N extends Node> {
             }
         }
 
-        // after the target is reached, start to populate the path
+        // after the target is reached, playMusic to populate the path
         if (goal != null) {
             Stack<N> stack = new Stack<N>();
             stack.push(goal.getNode());

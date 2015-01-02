@@ -100,7 +100,8 @@ public class ActionsDispatcher implements UserActionListener {
                 showElementInfo(tile.getSubContent().get(0));
             } else if (tile.getContent() != null && tile.getContent() != mSelectedElement && tile.getContent().getRank() != Ranks.ME) {
                 showElementInfo(tile.getContent());
-            } else if (tile.getContent() != null && tile.getContent().getRank() == Ranks.ME && mSelectedTile == tile && tile.getSubContent().size() == 0) {// end movement
+            } else if (tile.getContent() != null && tile.getContent().getRank() == Ranks.ME && mSelectedTile == tile && tile.getSubContent().size() == 0) {
+                // end movement
                 mGameActivity.nextTurn();
             } else if (!isMoving && tile.getAction() != null && tile.getAction() != Actions.NONE) {
                 executeAction(tile);
@@ -185,6 +186,7 @@ public class ActionsDispatcher implements UserActionListener {
                 }
             });
         } else {
+            Log.d(TAG, "path is null");
             hideActionTiles();
             if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
                 setInputEnabled(true);
@@ -218,7 +220,7 @@ public class ActionsDispatcher implements UserActionListener {
             @Override
             public void onActionDone(boolean success) {
                 isMoving = false;
-                if (success && MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) <= 1) {
+                if (success && (mGameActivity.getActiveCharacter().isRangeAttack() || mGameActivity.getActiveCharacter().isNextTo(tile))) {
                     final Unit target = (Unit) tile.getContent();
                     FightResult fightResult = mGameActivity.getActiveCharacter().attack(target);
                     animateFight(mGameActivity.getActiveCharacter(), target, fightResult, new OnActionExecuted() {
@@ -257,10 +259,13 @@ public class ActionsDispatcher implements UserActionListener {
         if (!mGameActivity.getRoom().isSafe()) {
             setInputEnabled(false);
         }
+
         goCloserTo(tile, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                if (success) {
+                if (success && mGameActivity.getActiveCharacter().isNextTo(tile)) {
+                    mGameActivity.playSound("search", false);
+
                     Searchable searchable;
                     if (tile.getContent() != null && tile.getContent() instanceof Searchable) {
                         searchable = (Searchable) tile.getContent();
@@ -341,7 +346,7 @@ public class ActionsDispatcher implements UserActionListener {
             @Override
             public void onActionDone(boolean success) {
                 isMoving = false;
-                if (success) {
+                if (success && mGameActivity.getActiveCharacter().isNextTo(tile)) {
                     talkTo((Pnj) tile.getContent());
                 } else {
                     mGameActivity.nextTurn();
@@ -390,13 +395,13 @@ public class ActionsDispatcher implements UserActionListener {
             pnj.getOnDiscussionOver().onActionDone(true);
 
             // check dead units
-            for (final Unit unit : mGameActivity.getRoom().getQueue()) {
-                if (unit.isDead()) {
+            for (final GameElement gameElement : mGameActivity.getRoom().getObjects()) {
+                if (gameElement instanceof Unit && ((Unit) gameElement).isDead()) {
                     Log.d(TAG, "one unit is dead");
-                    animateDeath(unit, new OnActionExecuted() {
+                    animateDeath((Unit) gameElement, new OnActionExecuted() {
                         @Override
                         public void onActionDone(boolean success) {
-                            mGameActivity.removeElement(unit);
+                            mGameActivity.removeElement(gameElement);
                             mGameActivity.nextTurn();
 
                         }
@@ -409,7 +414,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void goCloserTo(Tile tile, OnActionExecuted callback) {
-        if (MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), tile) <= 1) {
+        if (mGameActivity.getActiveCharacter().isNextTo(tile)) {
             callback.onActionDone(true);
             return;
         }
@@ -470,7 +475,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void addAvailableAction(GameElement gameElement) {
-        boolean isActionPossible = mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(mGameActivity.getActiveCharacter().getTilePosition(), gameElement.getTilePosition()) <= 1
+        boolean isActionPossible = mGameActivity.getRoom().isSafe() || mGameActivity.getActiveCharacter().isNextTo(gameElement.getTilePosition())
                 || mGameActivity.getActiveCharacter().isRangeAttack() && gameElement.isEnemy(mGameActivity.getActiveCharacter());
         if (!isActionPossible) {
             Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), gameElement.getTilePosition(), 1, false, mGameActivity.getActiveCharacter());
@@ -567,8 +572,10 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void animateMove(List<Tile> path, final OnActionExecuted callback) {
+        Log.d(TAG, "animate movement");
         if (path.size() > 1) {
             path.remove(0);
+            Log.d(TAG, "path size = " + path.size());
             final UnitSprite sprite = (UnitSprite) mGameActivity.getActiveCharacter().getSprite();
             final Tile nextTile = path.get(0);
             final Directions direction = Directions.from(nextTile.getX() - mGameActivity.getActiveCharacter().getTilePosition().getX(), mGameActivity.getActiveCharacter().getTilePosition().getY() - nextTile.getY());
@@ -577,13 +584,15 @@ public class ActionsDispatcher implements UserActionListener {
             animationHandler = new TimerHandler(1.0f / 40, true, new ITimerCallback() {
                 @Override
                 public void onTimePassed(TimerHandler pTimerHandler) {
-                    sprite.setPosition(sprite.getX() + direction.getDx(), sprite.getY() - direction.getDy());
-                    mInputManager.checkAutoScrolling(sprite.getX(), sprite.getY());
                     if (direction == Directions.EAST && sprite.getX() >= nextTile.getTileX()
                             || direction == Directions.WEST && sprite.getX() <= nextTile.getTileX()
                             || direction == Directions.SOUTH && sprite.getY() >= nextTile.getTileY()
                             || direction == Directions.NORTH && sprite.getY() <= nextTile.getTileY()) {
+
+                        Log.d(TAG, "unregister movement animation handler");
+                        animationHandler.reset();
                         mScene.unregisterUpdateHandler(animationHandler);
+
                         mGameActivity.getActiveCharacter().setTilePosition(nextTile);
                         sprite.setPosition(nextTile.getTileX(), nextTile.getTileY());
                         Log.d(TAG, "character is z-index = " + sprite.getZIndex());
@@ -592,24 +601,47 @@ public class ActionsDispatcher implements UserActionListener {
                             mScene.sortChildren();
                             animateMove(p, callback);
                         } else {
+                            Log.d(TAG, "interrupt movement");
                             mScene.sortChildren();
                             callback.onActionDone(false);
                             interrupt = false;
                         }
+                    } else {
+                        sprite.setPosition(sprite.getX() + direction.getDx(), sprite.getY() - direction.getDy());
+                        mInputManager.checkAutoScrolling(sprite.getX(), sprite.getY());
                     }
                 }
             });
             mScene.registerUpdateHandler(animationHandler);
         } else {
+            Log.d(TAG, "movement animation is over");
             UnitSprite sprite = (UnitSprite) mGameActivity.getActiveCharacter().getSprite();
             sprite.stand();
             mScene.sortChildren();
+            mScene.unregisterUpdateHandler(animationHandler);
             callback.onActionDone(true);
         }
     }
 
     private void animateFight(final Unit attacker, final Unit target, final FightResult fightResult, final OnActionExecuted callback) {
         final Sprite attackerSprite = attacker.getSprite(), targetSprite = target.getSprite();
+
+        if (attacker.isNextTo(target.getTilePosition())) {
+            mGameActivity.playSound("close_combat_attack", false);
+        } else if (attacker.isRangeAttack()) {
+            mGameActivity.playSound("range_attack", false);
+        }
+
+        // play sound
+        if (fightResult.getState() == FightResult.States.BLOCK) {
+            mGameActivity.playSound("block", false);
+        } else if (fightResult.getState() == FightResult.States.DAMAGE && fightResult.getDamage() > 0) {
+            if (target.getRank() == Ranks.ME) {
+                mGameActivity.playSound("damage_hero", false);
+            } else {
+                mGameActivity.playSound("damage_monster", false);
+            }
+        }
 
         // draw damage and fight result text
         if (fightResult.getState() == FightResult.States.DAMAGE || fightResult.getState() == FightResult.States.CRITICAL) {
@@ -674,6 +706,7 @@ public class ActionsDispatcher implements UserActionListener {
                 }
             }
         });
+        mGameActivity.playSound("death", false);
         sprite.setRotation(90);
         sprite.setPosition(sprite.getX() + 5, sprite.getY() + 5);
     }
@@ -689,6 +722,7 @@ public class ActionsDispatcher implements UserActionListener {
         final boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
 
         if (reward.getGold() > 0) {
+            mGameActivity.playSound("coins", false);
             mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() - 4 * GameConstants.PIXEL_BY_TILE / 3, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
         }
         if (reward.getXp() > 0) {
@@ -751,6 +785,7 @@ public class ActionsDispatcher implements UserActionListener {
 
     public void useSkill(final Tile tile) {
         mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(activatedSkill.getName(mGameActivity.getResources()))), R.color.green);
+        mGameActivity.playSound("magic", false);
 
         animateSkill(new OnActionExecuted() {
             @Override

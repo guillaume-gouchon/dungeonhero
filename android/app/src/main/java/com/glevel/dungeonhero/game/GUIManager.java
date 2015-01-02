@@ -69,7 +69,7 @@ public class GUIManager {
 
     private static final String TAG = "GUIManager";
 
-    private MyBaseGameActivity mActivity;
+    private MyBaseGameActivity mGameActivity;
     private Resources mResources;
     private Hero mHero;
 
@@ -82,24 +82,24 @@ public class GUIManager {
     private CustomAlertDialog mConfirmDialog;
 
     public GUIManager(MyBaseGameActivity activity) {
-        mActivity = activity;
-        mResources = mActivity.getResources();
+        mGameActivity = activity;
+        mResources = mGameActivity.getResources();
     }
 
     public void initGUI() {
-        mQueueLayout = (ViewGroup) mActivity.findViewById(R.id.queue);
-        mSelectedElementLayout = (ViewGroup) mActivity.findViewById(R.id.selectedElement);
+        mQueueLayout = (ViewGroup) mGameActivity.findViewById(R.id.queue);
+        mSelectedElementLayout = (ViewGroup) mGameActivity.findViewById(R.id.selectedElement);
 
-        mActiveHeroLayout = (ViewGroup) mActivity.findViewById(R.id.hero);
-        mActiveHeroLayout.setOnClickListener(mActivity);
+        mActiveHeroLayout = (ViewGroup) mGameActivity.findViewById(R.id.hero);
+        mActiveHeroLayout.setOnClickListener(mGameActivity);
 
-        mActivity.findViewById(R.id.bag).setOnClickListener(mActivity);
+        mGameActivity.findViewById(R.id.bag).setOnClickListener(mGameActivity);
 
         // setup big label TV
-        mBigLabelAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.big_label_in_game);
-        mBigLabel = (TextView) mActivity.findViewById(R.id.bigLabel);
+        mBigLabelAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.big_label_in_game);
+        mBigLabel = (TextView) mGameActivity.findViewById(R.id.bigLabel);
 
-        mSkillButtonsLayout = (ViewGroup) mActivity.findViewById(R.id.skillButtonsLayout);
+        mSkillButtonsLayout = (ViewGroup) mGameActivity.findViewById(R.id.skillButtonsLayout);
     }
 
     public void setData(Hero hero) {
@@ -107,7 +107,7 @@ public class GUIManager {
     }
 
     public void displayBigLabel(final String text, final int color) {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mBigLabel.setVisibility(View.VISIBLE);
@@ -119,27 +119,27 @@ public class GUIManager {
     }
 
     public void hideLoadingScreen() {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mLoadingScreen.dismiss();
-                mActivity.findViewById(R.id.rootLayout).setVisibility(View.VISIBLE);
+                mGameActivity.findViewById(R.id.rootLayout).setVisibility(View.VISIBLE);
             }
         });
     }
 
     public void openGameMenu() {
-        mGameMenuDialog = new Dialog(mActivity, R.style.FullScreenDialog);
+        mGameMenuDialog = new Dialog(mGameActivity, R.style.FullScreenDialog);
         mGameMenuDialog.setContentView(R.layout.dialog_game_menu);
         mGameMenuDialog.setCancelable(true);
-        Animation menuButtonAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.bottom_in);
+        Animation menuButtonAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.bottom_in);
 
         // resume game button
         mGameMenuDialog.findViewById(R.id.resumeGameButton).setAnimation(menuButtonAnimation);
         mGameMenuDialog.findViewById(R.id.resumeGameButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
+                MusicManager.playSound(mGameActivity.getApplicationContext(), R.raw.button_sound);
                 mGameMenuDialog.dismiss();
             }
         });
@@ -149,7 +149,7 @@ public class GUIManager {
         mGameMenuDialog.findViewById(R.id.leaveQuestButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
+                MusicManager.playSound(mGameActivity.getApplicationContext(), R.raw.button_sound);
                 showLeaveQuestDialog();
             }
         });
@@ -159,16 +159,16 @@ public class GUIManager {
         mGameMenuDialog.findViewById(R.id.exitButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
-                mActivity.startActivity(new Intent(mActivity, HomeActivity.class));
-                mActivity.finish();
+                MusicManager.playSound(mGameActivity.getApplicationContext(), R.raw.button_sound);
+                mGameActivity.startActivity(new Intent(mGameActivity, HomeActivity.class));
+                mGameActivity.finish();
             }
         });
 
         mGameMenuDialog.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                mActivity.resumeGame();
+                mGameActivity.resumeGame();
             }
         });
 
@@ -177,17 +177,16 @@ public class GUIManager {
     }
 
     public void showLeaveQuestDialog() {
-        mConfirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(R.string.confirm_leave_quest),
+        mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(R.string.confirm_leave_quest),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MusicManager.playSound(mActivity.getApplicationContext(), R.raw.button_sound);
                         if (which == R.id.okButton) {
-                            Intent intent = new Intent(mActivity, BookChooserActivity.class);
-                            mActivity.getGame().setHero(mHero);
-                            intent.putExtra(Game.class.getName(), mActivity.getGame());
-                            mActivity.startActivity(intent);
-                            mActivity.finish();
+                            Intent intent = new Intent(mGameActivity, BookChooserActivity.class);
+                            mGameActivity.getGame().setHero(mHero);
+                            intent.putExtra(Game.class.getName(), mGameActivity.getGame());
+                            mGameActivity.startActivity(intent);
+                            mGameActivity.finish();
                         }
                         dialog.dismiss();
                     }
@@ -196,7 +195,7 @@ public class GUIManager {
     }
 
     public void showFinishQuestDialog() {
-        mConfirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(R.string.confirm_finish_quest),
+        mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(R.string.confirm_finish_quest),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -210,10 +209,10 @@ public class GUIManager {
     }
 
     public void showVictoryDialog() {
-        final Book activeBook = mActivity.getGame().getBook();
+        final Book activeBook = mGameActivity.getGame().getBook();
         boolean hasNextChapter = activeBook.hasNextChapter();
         if (activeBook.getActiveChapter().getOutroText(mResources) > 0) {
-            mConfirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getOutroText(mResources)),
+            mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(activeBook.getActiveChapter().getOutroText(mResources)),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -234,38 +233,38 @@ public class GUIManager {
     }
 
     private void finishQuest(Book activeBook) {
-        mActivity.getGame().setHero(mHero);
+        mGameActivity.getGame().setHero(mHero);
         boolean hasNextChapter = activeBook.goToNextChapter();
         if (hasNextChapter) {
-            Intent intent = new Intent(mActivity, GameActivity.class);
-            intent.putExtra(Game.class.getName(), mActivity.getGame());
-            mActivity.startActivity(intent);
-            mActivity.finish();
+            Intent intent = new Intent(mGameActivity, GameActivity.class);
+            intent.putExtra(Game.class.getName(), mGameActivity.getGame());
+            mGameActivity.startActivity(intent);
+            mGameActivity.finish();
         } else {
-            mActivity.getGame().finishBook(activeBook);
+            mGameActivity.getGame().finishBook(activeBook);
 
             // reset shop when one quest is finished
-            ShopActivity.resetShop(mActivity.getApplicationContext());
+            ShopActivity.resetShop(mGameActivity.getApplicationContext());
             if (activeBook.getOutroText(mResources) > 0) {
                 // show outro text
                 Bundle args = new Bundle();
                 args.putInt(StoryFragment.ARGUMENT_STORY, activeBook.getOutroText(mResources));
                 args.putBoolean(StoryFragment.ARGUMENT_IS_OUTRO, true);
                 DialogFragment storyFragment = new StoryFragment();
-                ApplicationUtils.openDialogFragment(mActivity, storyFragment, args);
+                ApplicationUtils.openDialogFragment(mGameActivity, storyFragment, args);
             } else {
-                // go directly to the book chooser, to start a new adventure
-                Intent intent = new Intent(mActivity, BookChooserActivity.class);
-                intent.putExtra(Game.class.getName(), mActivity.getGame());
-                mActivity.startActivity(intent);
-                mActivity.finish();
+                // go directly to the book chooser, to playMusic a new adventure
+                Intent intent = new Intent(mGameActivity, BookChooserActivity.class);
+                intent.putExtra(Game.class.getName(), mGameActivity.getGame());
+                mGameActivity.startActivity(intent);
+                mGameActivity.finish();
             }
         }
     }
 
     public void showChapterIntro(final OnActionExecuted callback) {
-        Book activeBook = mActivity.getGame().getBook();
-        mConfirmDialog = new CustomAlertDialog(mActivity, R.style.Dialog, mActivity.getString(activeBook.getActiveChapter().getIntroText(mResources)),
+        Book activeBook = mGameActivity.getGame().getBook();
+        mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(activeBook.getActiveChapter().getIntroText(mResources)),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -313,17 +312,17 @@ public class GUIManager {
     }
 
     public void showLoadingScreen() {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // setup loading screen
-                mLoadingScreen = new Dialog(mActivity, R.style.FullScreenDialog);
+                mLoadingScreen = new Dialog(mGameActivity, R.style.FullScreenDialog);
                 mLoadingScreen.setContentView(R.layout.dialog_game_loading);
                 mLoadingScreen.setCancelable(false);
                 mLoadingScreen.setCanceledOnTouchOutside(false);
 
                 // animate loading dots
-                Animation loadingDotsAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.loading_dots);
+                Animation loadingDotsAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.loading_dots);
                 mLoadingScreen.findViewById(R.id.loadingDots).startAnimation(loadingDotsAnimation);
 
                 mLoadingScreen.show();
@@ -332,7 +331,7 @@ public class GUIManager {
     }
 
     public void showGameElementInfo(final GameElement gameElement) {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
@@ -344,7 +343,6 @@ public class GUIManager {
                 if (gameElement instanceof Unit) {
                     Unit unit = (Unit) gameElement;
                     nameTV.setCompoundDrawablesWithIntrinsicBounds(unit.getImage(mResources), 0, 0, 0);
-
                     lifeBar.updateLife(unit.getLifeRatio());
                     lifeBar.setVisibility(View.VISIBLE);
                 } else {
@@ -359,7 +357,7 @@ public class GUIManager {
     }
 
     public void hideGameElementInfo(final boolean isSafe) {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mSelectedElementLayout.setVisibility(View.GONE);
@@ -371,7 +369,7 @@ public class GUIManager {
     }
 
     public void updateActiveHeroLayout() {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 LifeBar lifeBar = (LifeBar) mActiveHeroLayout.findViewById(R.id.life);
@@ -381,7 +379,7 @@ public class GUIManager {
     }
 
     public void updateQueue(final Unit activeCharacter, final Room room) {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (room.isSafe()) {
@@ -411,24 +409,24 @@ public class GUIManager {
     }
 
     public void showHeroInfo(Hero hero) {
-        mHeroInfoDialog = new Dialog(mActivity, R.style.Dialog);
+        mHeroInfoDialog = new Dialog(mGameActivity, R.style.Dialog);
         mHeroInfoDialog.setContentView(R.layout.in_game_hero_details);
         mHeroInfoDialog.setCancelable(true);
 
         ((TextView) mHeroInfoDialog.findViewById(R.id.name)).setText(hero.getHeroName());
         ((TextView) mHeroInfoDialog.findViewById(R.id.description)).setText(hero.getDescription(mResources));
-        ((TextView) mHeroInfoDialog.findViewById(R.id.hp)).setText(mActivity.getString(R.string.hp_in_game, hero.getCurrentHP(), hero.getHp()));
-        ((TextView) mHeroInfoDialog.findViewById(R.id.level)).setText(mActivity.getString(R.string.level_in_game, hero.getLevel(), hero.getXp(), hero.getNextLevelXPAmount()));
+        ((TextView) mHeroInfoDialog.findViewById(R.id.hp)).setText(mGameActivity.getString(R.string.hp_in_game, hero.getCurrentHP(), hero.getHp()));
+        ((TextView) mHeroInfoDialog.findViewById(R.id.level)).setText(mGameActivity.getString(R.string.level_in_game, hero.getLevel(), hero.getXp(), hero.getNextLevelXPAmount()));
         ((TextView) mHeroInfoDialog.findViewById(R.id.strength)).setText("" + hero.getStrength());
         ((TextView) mHeroInfoDialog.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());
         ((TextView) mHeroInfoDialog.findViewById(R.id.spirit)).setText("" + hero.getSpirit());
         ((TextView) mHeroInfoDialog.findViewById(R.id.movement)).setText("" + hero.calculateMovement());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.damage)).setText(mActivity.getString(R.string.damage) + " : " + hero.getReadableDamage());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.protection)).setText(mActivity.getString(R.string.protection) + " : " + hero.calculateProtection());
-        ((TextView) mHeroInfoDialog.findViewById(R.id.dodge)).setText(mActivity.getString(R.string.dodge) + " : " + hero.calculateDodge() + "%");
-        ((TextView) mHeroInfoDialog.findViewById(R.id.block)).setText(mActivity.getString(R.string.block) + " : " + hero.calculateBlock() + "%");
-        ((TextView) mHeroInfoDialog.findViewById(R.id.critical)).setText(mActivity.getString(R.string.critical) + " : " + hero.calculateCritical() + "%");
-        ((TextView) mHeroInfoDialog.findViewById(R.id.frags)).setText(hero.getFrags() + " " + mActivity.getString(R.string.frags));
+        ((TextView) mHeroInfoDialog.findViewById(R.id.damage)).setText(mGameActivity.getString(R.string.damage) + " : " + hero.getReadableDamage());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.protection)).setText(mGameActivity.getString(R.string.protection) + " : " + hero.calculateProtection());
+        ((TextView) mHeroInfoDialog.findViewById(R.id.dodge)).setText(mGameActivity.getString(R.string.dodge) + " : " + hero.calculateDodge() + "%");
+        ((TextView) mHeroInfoDialog.findViewById(R.id.block)).setText(mGameActivity.getString(R.string.block) + " : " + hero.calculateBlock() + "%");
+        ((TextView) mHeroInfoDialog.findViewById(R.id.critical)).setText(mGameActivity.getString(R.string.critical) + " : " + hero.calculateCritical() + "%");
+        ((TextView) mHeroInfoDialog.findViewById(R.id.frags)).setText(hero.getFrags() + " " + mGameActivity.getString(R.string.frags));
 
         showSkills(mHeroInfoDialog, mHero);
 
@@ -436,11 +434,11 @@ public class GUIManager {
     }
 
     public void showDiscussion(final Pnj pnj, final Discussion discussion, final OnDiscussionReplySelected callback) {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (mDiscussionDialog == null || !mDiscussionDialog.isShowing()) {
-                    mDiscussionDialog = new Dialog(mActivity, R.style.Dialog);
+                    mDiscussionDialog = new Dialog(mGameActivity, R.style.Dialog);
                     mDiscussionDialog.setContentView(R.layout.in_game_discussion);
                     mDiscussionDialog.setCancelable(false);
                     mDiscussionDialog.findViewById(R.id.rootLayout).getBackground().setAlpha(70);
@@ -473,7 +471,7 @@ public class GUIManager {
         reactionsLayout.setVisibility(View.VISIBLE);
         reactionsLayout.removeAllViews();
 
-        LayoutInflater inflater = mActivity.getLayoutInflater();
+        LayoutInflater inflater = mGameActivity.getLayoutInflater();
         TextView reactionTV;
         if (discussion.getReactions() != null) {
             for (Reaction reaction : discussion.getReactions()) {
@@ -506,7 +504,7 @@ public class GUIManager {
     private void showRiddle(final Pnj pnj, Discussion discussion, final OnDiscussionReplySelected callback) {
         final Riddle riddle = discussion.getRiddle();
 
-        // start timer
+        // playMusic timer
         final ProgressBar mTimerView = (ProgressBar) mDiscussionDialog.findViewById(R.id.timer);
         mTimerView.setVisibility(View.VISIBLE);
         final Timer mTimer = new Timer();
@@ -517,7 +515,7 @@ public class GUIManager {
 
             @Override
             public void run() {
-                mActivity.runOnUiThread(new Runnable() {
+                mGameActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         currentTime -= 0.5f;
@@ -547,7 +545,7 @@ public class GUIManager {
             reactionsLayout.setVisibility(View.VISIBLE);
             reactionsLayout.removeAllViews();
 
-            LayoutInflater inflater = mActivity.getLayoutInflater();
+            LayoutInflater inflater = mGameActivity.getLayoutInflater();
             TextView reactionTV;
             for (int answer : multiChoicesRiddle.getAnswers()) {
                 reactionTV = (TextView) inflater.inflate(R.layout.in_game_discussion_reply, null);
@@ -577,7 +575,7 @@ public class GUIManager {
             answerRiddleLayout.setVisibility(View.VISIBLE);
 
             final EditText answerRiddleInput = (EditText) answerRiddleLayout.findViewById(R.id.riddle_input);
-            ApplicationUtils.showKeyboard(mActivity, answerRiddleInput);
+            ApplicationUtils.showKeyboard(mGameActivity, answerRiddleInput);
             answerRiddleInput.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
             answerRiddleInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
@@ -619,11 +617,11 @@ public class GUIManager {
     }
 
     public void showReward(final Reward reward, final OnDismissListener onDismissListener) {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (mRewardDialog == null || !mRewardDialog.isShowing()) {
-                    mRewardDialog = new Dialog(mActivity, R.style.Dialog);
+                    mRewardDialog = new Dialog(mGameActivity, R.style.Dialog);
                     mRewardDialog.setContentView(R.layout.in_game_reward);
                     mRewardDialog.setCancelable(false);
                     mRewardDialog.setOnDismissListener(onDismissListener);
@@ -640,7 +638,7 @@ public class GUIManager {
                         xpTV.setVisibility(View.GONE);
                     } else {
                         if (reward.getItem() != null) {
-                            itemTV.setText(mActivity.getString(R.string.found_item, mActivity.getString(reward.getItem().getName(mResources))));
+                            itemTV.setText(mGameActivity.getString(R.string.found_item, mGameActivity.getString(reward.getItem().getName(mResources))));
                             itemTV.setCompoundDrawablesWithIntrinsicBounds(0, reward.getItem().getImage(mResources), 0, 0);
                             itemTV.setVisibility(View.VISIBLE);
                         } else {
@@ -648,14 +646,15 @@ public class GUIManager {
                         }
 
                         if (reward.getGold() > 0) {
-                            goldTV.setText(mActivity.getString(R.string.found_gold, reward.getGold()));
+                            mGameActivity.playSound("coins", false);
+                            goldTV.setText(mGameActivity.getString(R.string.found_gold, reward.getGold()));
                             goldTV.setVisibility(View.VISIBLE);
                         } else {
                             goldTV.setVisibility(View.GONE);
                         }
 
                         if (reward.getXp() > 0) {
-                            xpTV.setText(mActivity.getString(R.string.reward_xp, reward.getXp()));
+                            xpTV.setText(mGameActivity.getString(R.string.reward_xp, reward.getXp()));
                             xpTV.setVisibility(View.VISIBLE);
                         } else {
                             xpTV.setVisibility(View.GONE);
@@ -676,7 +675,7 @@ public class GUIManager {
     }
 
     public void showBag(Hero hero) {
-        mBagDialog = new Dialog(mActivity, R.style.Dialog);
+        mBagDialog = new Dialog(mGameActivity, R.style.Dialog);
         mBagDialog.setContentView(R.layout.in_game_bag);
         mBagDialog.setCancelable(true);
 
@@ -723,7 +722,7 @@ public class GUIManager {
             image.setImageResource(item.getImage(mResources));
             image.setAlpha(1.0f);
             itemView.setEnabled(true);
-            itemView.setOnClickListener(mActivity);
+            itemView.setOnClickListener(mGameActivity);
         } else {
             background.setBackgroundColor(mResources.getColor(android.R.color.transparent));
             image.setImageResource(defaultImage);
@@ -743,7 +742,7 @@ public class GUIManager {
             background.setBackgroundColor(mResources.getColor(item.getColor()));
             image.setImageResource(item.getImage(mResources));
             itemView.setEnabled(true);
-            itemView.setOnClickListener(mActivity);
+            itemView.setOnClickListener(mGameActivity);
         } else if (itemView.isEnabled()) {
             background.setBackgroundColor(mResources.getColor(android.R.color.transparent));
             image.setImageResource(0);
@@ -754,13 +753,13 @@ public class GUIManager {
 
     public void showItemInfo(final Hero hero, final Item item, final OnActionExecuted onDropListener) {
         if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
-            mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
+            mItemInfoDialog = new Dialog(mGameActivity, R.style.DialogNoAnimation);
             mItemInfoDialog.setContentView(R.layout.in_game_item_info);
             mItemInfoDialog.setCancelable(true);
 
             TextView nameTV = (TextView) mItemInfoDialog.findViewById(R.id.name);
             if (item instanceof Equipment) {
-                nameTV.setText(mActivity.getString(item.getName(mResources)) + " (lvl " + ((Equipment) item).getLevel() + ")");
+                nameTV.setText(mGameActivity.getString(item.getName(mResources)) + " (lvl " + ((Equipment) item).getLevel() + ")");
             } else {
                 nameTV.setText(item.getName(mResources));
             }
@@ -827,7 +826,7 @@ public class GUIManager {
                 for (Requirement requirement : equipment.getRequirements()) {
                     if (requirement instanceof StatRequirement) {
                         StatRequirement statRequirement = (StatRequirement) requirement;
-                        addStatToItemLayout(requirementsLayout.getChildAt(indexRequirements++), mActivity.getString(R.string.minimum, statRequirement.getValue()), statRequirement.getTarget().getImage(), statRequirement.getTarget().getName(), statRequirement.getValue() > mHero.getCharacteristic(statRequirement.getTarget()) ? R.color.red : R.color.white);
+                        addStatToItemLayout(requirementsLayout.getChildAt(indexRequirements++), mGameActivity.getString(R.string.minimum, statRequirement.getValue()), statRequirement.getTarget().getImage(), statRequirement.getTarget().getName(), statRequirement.getValue() > mHero.getCharacteristic(statRequirement.getTarget()) ? R.color.red : R.color.white);
                     }
                 }
             } else if (item instanceof Potion) {
@@ -839,7 +838,7 @@ public class GUIManager {
                     public void onClick(View v) {
                         mItemInfoDialog.dismiss();
                         mBagDialog.dismiss();
-                        mActivity.onClick(v);
+                        mGameActivity.onClick(v);
                     }
                 });
             }
@@ -874,13 +873,13 @@ public class GUIManager {
 
     public void showNewLevelDialog(final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "Show new level dialog for " + mHero.getHeroName());
-        mNewLevelDialog = new Dialog(mActivity, R.style.Dialog);
+        mNewLevelDialog = new Dialog(mGameActivity, R.style.Dialog);
         mNewLevelDialog.setContentView(R.layout.in_game_new_level);
         mNewLevelDialog.setCancelable(false);
 
         showSkills(mNewLevelDialog, mHero);
 
-        ((TextView) mNewLevelDialog.findViewById(R.id.new_level_title)).setText(mActivity.getString(R.string.new_level_title, mHero.getLevel()));
+        ((TextView) mNewLevelDialog.findViewById(R.id.new_level_title)).setText(mGameActivity.getString(R.string.new_level_title, mHero.getLevel()));
 
         if (onActionExecuted != null) {
             mNewLevelDialog.setOnDismissListener(new OnDismissListener() {
@@ -892,6 +891,7 @@ public class GUIManager {
         }
 
         mNewLevelDialog.show();
+        mGameActivity.playSound("new_level", false);
     }
 
     private void showSkills(Dialog dialog, Hero hero) {
@@ -902,7 +902,7 @@ public class GUIManager {
                 return;
             }
 
-            ((TextView) mNewLevelDialog.findViewById(R.id.points_left)).setText(mActivity.getString(R.string.new_level_points_left, mHero.getSkillPoints()));
+            ((TextView) mNewLevelDialog.findViewById(R.id.points_left)).setText(mGameActivity.getString(R.string.new_level_points_left, mHero.getSkillPoints()));
         }
 
         Log.d(TAG, "Show " + hero.getSkills().size() + " skills");
@@ -924,17 +924,17 @@ public class GUIManager {
 
         background.setBackgroundColor(mResources.getColor(skill.getColor()));
         image.setImageResource(skill.getImage(mResources));
-        itemView.setOnClickListener(mActivity);
+        itemView.setOnClickListener(mGameActivity);
     }
 
     public void showSkillInfo(final Skill skill) {
         if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
-            mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
+            mItemInfoDialog = new Dialog(mGameActivity, R.style.DialogNoAnimation);
             mItemInfoDialog.setContentView(R.layout.in_game_item_info);
             mItemInfoDialog.setCancelable(true);
 
             TextView nameTV = (TextView) mItemInfoDialog.findViewById(R.id.name);
-            nameTV.setText(mActivity.getString(skill.getName(mResources)) + " (lvl " + skill.getLevel() + ")");
+            nameTV.setText(mGameActivity.getString(skill.getName(mResources)) + " (lvl " + skill.getLevel() + ")");
             nameTV.setCompoundDrawablesWithIntrinsicBounds(skill.getImage(mResources), 0, 0, 0);
 
             TextView descriptionTV = (TextView) mItemInfoDialog.findViewById(R.id.description);
@@ -963,10 +963,10 @@ public class GUIManager {
     }
 
     public void updateSkillButtons() {
-        mActivity.runOnUiThread(new Runnable() {
+        mGameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LayoutInflater inflater = mActivity.getLayoutInflater();
+                LayoutInflater inflater = mGameActivity.getLayoutInflater();
                 mSkillButtonsLayout.removeAllViews();
                 View skillButton;
                 for (final Skill skill : mHero.getSkills()) {
@@ -979,7 +979,7 @@ public class GUIManager {
                             skillButton.setAlpha(0.5f);
                         }
 
-                        skillButton.setOnClickListener(mActivity);
+                        skillButton.setOnClickListener(mGameActivity);
 
                         mSkillButtonsLayout.addView(skillButton);
                     }
@@ -990,12 +990,12 @@ public class GUIManager {
 
     public void showUseSkillInfo(final Skill skill) {
         if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
-            mItemInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
+            mItemInfoDialog = new Dialog(mGameActivity, R.style.DialogNoAnimation);
             mItemInfoDialog.setContentView(R.layout.in_game_item_info);
             mItemInfoDialog.setCancelable(true);
 
             TextView nameTV = (TextView) mItemInfoDialog.findViewById(R.id.name);
-            nameTV.setText(mActivity.getString(skill.getName(mResources)) + " (lvl " + skill.getLevel() + ")");
+            nameTV.setText(mGameActivity.getString(skill.getName(mResources)) + " (lvl " + skill.getLevel() + ")");
             nameTV.setCompoundDrawablesWithIntrinsicBounds(skill.getImage(mResources), 0, 0, 0);
 
             TextView descriptionTV = (TextView) mItemInfoDialog.findViewById(R.id.description);
@@ -1015,7 +1015,7 @@ public class GUIManager {
                     @Override
                     public void onClick(View v) {
                         mItemInfoDialog.dismiss();
-                        mActivity.onClick(v);
+                        mGameActivity.onClick(v);
                     }
                 });
             }
