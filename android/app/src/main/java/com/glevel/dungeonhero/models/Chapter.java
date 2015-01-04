@@ -15,6 +15,8 @@ public class Chapter implements Serializable {
 
     private static final long serialVersionUID = 1484748281734643544L;
 
+    private static final int DUNGEON_SIZE = 3;
+
     private final List<Event> events;
     private int index;
     private String introText, outroText;
@@ -41,7 +43,7 @@ public class Chapter implements Serializable {
     }
 
     public void createDungeon() {
-        dungeon = new Dungeon(3, 3, events);
+        dungeon = new Dungeon(DUNGEON_SIZE, DUNGEON_SIZE, events);
     }
 
     public Dungeon getDungeon() {

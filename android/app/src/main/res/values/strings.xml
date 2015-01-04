@@ -313,8 +313,11 @@
     <!-- Initiation Book -->
     <string name="initiation">The Initiation</string>
     <string name="initiation_intro">You finally decided to do jump ahead: you set aside your boring previous life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter had been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back.\n\nLooks like your first Quest begins !</string>
+    <string name="initiation_outro"></string>
     <string name="tutorial_character">Alhagar the Mighty</string>
     <string name="initiation_chapter_1">Wow, this guy seems hurt to death... let\'s talk to him.\n\n<i>(tap on the character to select it, then tap again to go talk to him)</i></string>
+    <string name="initiation_chapter_1_outro">Ah ah ! It\'s a good start !</string>
+    <string name="initiation_chapter_2">Let\'s find out where the Orc Chief is hiding and then save the girl !</string>
     <string name="initiation_tutorial_intro">Hey adventurer, don\'t do the same mistakes as me... I will tell you how to survive in these deadly dungeons.</string>
     <string name="initiation_tutorial_movement">When there are no enemies, tap on a tile to move to it. In fight mode, the reachable tiles are green. Tap on your character to finish your turn.</string>
     <string name="initiation_tutorial_search">To search for treasures, talk to characters, or to attack an enemy, you first need to select your target and then to tap on it again to validate the interaction. In fight mode, it will end your turn.</string>

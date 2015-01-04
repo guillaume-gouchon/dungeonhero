@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.data;
 
+import com.glevel.dungeonhero.data.characters.MonsterFactory;
+import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.dungeons.Event;
@@ -26,8 +28,15 @@ public class BookFactory {
 
         // chapter 1
         List<Event> events = new ArrayList<>();
-        chapters.add(new Chapter("initiation_chapter_1", "", events));
-        return new Book(1, "initiation", "initiation_intro", "initiation_outro", chapters, null);
+        events.add(new Event.Builder(true).build());
+        chapters.add(new Chapter("initiation_chapter_1", "initiation_chapter_1_outro", events));
+
+        // chapter 2
+        events = new ArrayList<>();
+        events.add(new Event.Builder(true).addMonster(MonsterFactory.buildOrcCaptain()).addPnj(PNJFactory.buildIntroQuestGirl()).build());
+        chapters.add(new Chapter("initiation_chapter_2", "", events));
+
+        return new Book(INTRODUCTION_BOOK_ID, "initiation", "initiation_intro", "initiation_outro", chapters, null);
     }
 
 }

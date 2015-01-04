@@ -78,4 +78,28 @@ public class PNJFactory {
         return pnj;
     }
 
+    public static Pnj buildIntroQuestGirl() {
+        final Pnj pnj = new Pnj("tutorial_character", Ranks.NEUTRAL, 35, 2, 20, 14, 9, 0, 0, 5, Hero.HeroTypes.STR);
+
+        // outro
+        Discussion discussion = new Discussion("initiation_tutorial_outro", false, null);
+        discussion.addReaction(new Reaction("initiation_die_weak", 1));
+        discussion.addReaction(new Reaction("initiation_pray", 0));
+        pnj.getDiscussions().add(discussion);
+
+        // give reward
+        discussion = new Discussion("initiation_tutorial_outro_reward", false, new Reward(PotionFactory.buildForcePotion()));
+        discussion.addReaction(new Reaction("initiation_tutorial_thanks", 0));
+        pnj.getDiscussions().add(discussion);
+
+        pnj.setOnDiscussionOver(new OnActionExecuted() {
+            @Override
+            public void onActionDone(boolean success) {
+                pnj.setCurrentHP(0);
+            }
+        });
+
+        return pnj;
+    }
+
 }

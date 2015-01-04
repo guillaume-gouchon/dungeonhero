@@ -854,9 +854,9 @@ public class ActionsDispatcher implements UserActionListener {
                 animateDeath(target, new OnActionExecuted() {
                     @Override
                     public void onActionDone(boolean success) {
-                        mGameActivity.removeElement(target);
                     }
                 });
+                mGameActivity.removeElement(target);
             }
 
             target.updateSprite();
