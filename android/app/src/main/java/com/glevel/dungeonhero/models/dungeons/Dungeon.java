@@ -101,7 +101,7 @@ public class Dungeon implements Serializable {
 
             // add tutorial PNJ if this is the introduction quest
             if (isTutorial) {
-                currentRoom.addGameElement(PNJFactory.buildInitiationQuestGirl(), currentRoom.getRandomFreeTile());
+                currentRoom.addGameElement(PNJFactory.buildTutorialPNJ(), currentRoom.getRandomFreeTile());
             }
 
             return;
