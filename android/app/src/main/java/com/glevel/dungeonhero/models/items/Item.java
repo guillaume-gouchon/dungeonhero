@@ -38,4 +38,8 @@ public abstract class Item extends StorableResource implements Serializable {
         return price;
     }
 
+    public int getSellPrice() {
+        return price / 4;
+    }
+
 }

@@ -276,20 +276,23 @@ public class ActionsDispatcher implements UserActionListener {
                             searchable = (Searchable) tile.getSubContent().get(0);
                         }
                     }
-                    Reward reward = searchable.search();
+                    final Reward reward = searchable.search();
                     if (searchable instanceof ItemOnGround) {
                         mGameActivity.removeElement(searchable);
                     }
 
                     // show reward popup
-                    if (reward != null) {
-                        mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                mGameActivity.nextTurn();
+                    mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            if (reward != null) {
+                                animateReward(reward);
                             }
-                        });
+                            mGameActivity.nextTurn();
+                        }
+                    });
 
+                    if (reward != null) {
                         if (reward.getItem() != null) {
                             getItemOrDropIt(reward.getItem());
                         }
@@ -325,7 +328,7 @@ public class ActionsDispatcher implements UserActionListener {
         mScene.sortChildren(true);
     }
 
-    private void talk(final Tile tile) {
+    public void talk(final Tile tile) {
         Log.d(TAG, "talk");
         if (!mGameActivity.getRoom().isSafe()) {
             setInputEnabled(false);

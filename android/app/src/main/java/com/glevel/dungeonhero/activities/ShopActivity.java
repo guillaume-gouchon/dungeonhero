@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.items.ItemFactory;
+import com.glevel.dungeonhero.data.items.PotionFactory;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Unit;
@@ -158,7 +159,11 @@ public class ShopActivity extends MyActivity implements OnClickListener {
             Item item;
             for (int n = 0; n < NUMBER_OFFERS; n++) {
                 do {
-                    item = ItemFactory.getRandomItem(mGame.getHero().getLevel());
+                    if (n >= NUMBER_OFFERS - 2) {
+                        item = PotionFactory.getRandomPotion();
+                    } else {
+                        item = ItemFactory.getRandomItem(mGame.getHero().getLevel());
+                    }
                 } while (item == null);
                 mItemsOffered.add(item);
             }
@@ -348,7 +353,7 @@ public class ShopActivity extends MyActivity implements OnClickListener {
     }
 
     private void sellItem(Item item) {
-        mGame.getHero().addGold(item.getPrice() / 2);
+        mGame.getHero().addGold(item.getSellPrice());
         if (mGame.getHero().getItems().indexOf(item) >= 0) {
             mGame.getHero().getItems().remove(item);
         } else {

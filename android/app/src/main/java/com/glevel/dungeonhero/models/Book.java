@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.models;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;

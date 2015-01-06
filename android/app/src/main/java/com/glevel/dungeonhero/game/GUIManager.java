@@ -649,7 +649,6 @@ public class GUIManager {
                         }
 
                         if (reward.getGold() > 0) {
-                            mGameActivity.playSound("coins", false);
                             goldTV.setText(mGameActivity.getString(R.string.found_gold, reward.getGold()));
                             goldTV.setVisibility(View.VISIBLE);
                         } else {

@@ -346,7 +346,22 @@ public class GameActivity extends MyBaseGameActivity {
                 callback = new OnActionExecuted() {
                     @Override
                     public void onActionDone(boolean success) {
-                        mGUIManager.showNewLevelDialog(null);
+                        mGUIManager.showNewLevelDialog(new OnActionExecuted() {
+                            @Override
+                            public void onActionDone(boolean success) {
+                                // auto-talk to the tutorial character
+                                if (mGame.getBook().getId() == BookFactory.INTRODUCTION_BOOK_ID && mGame.getBook().getActiveChapter().isFirst()) {
+                                    Unit tutoCharacter = null;
+                                    for (GameElement gameElement : mRoom.getObjects()) {
+                                        if (gameElement.getIdentifier().equals("tutorial_character")  ) {
+                                            tutoCharacter = (Unit) gameElement;
+                                            break;
+                                        }
+                                    }
+                                    mActionDispatcher.talk(tutoCharacter.getTilePosition());
+                                }
+                            }
+                        });
                     }
                 };
             }
