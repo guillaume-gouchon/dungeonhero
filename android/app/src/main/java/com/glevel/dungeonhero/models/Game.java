@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
-import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
@@ -112,7 +111,7 @@ public class Game extends DatabaseResource implements Serializable {
         }
 
         // load PNJs
-        for (GameElement element : PNJFactory.getAll()) {
+        for (GraphicHolder element : book.getResourcesToLoad()) {
             toLoad.add(element);
         }
 

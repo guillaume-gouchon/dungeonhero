@@ -50,18 +50,18 @@ public class DecorationFactory {
         List<Decoration> l = new ArrayList<>();
         int total = Math.random() < 0.2 ? 0 : 1;
         for (int n = 0; n < total; n++) {
-            l.add(getRandomReward(threatLevel));
+            l.add(getRandomSearchable(threatLevel));
         }
         return l;
     }
 
-    private static Decoration getRandomReward(int threatLevel) {
+    private static Decoration getRandomSearchable(int threatLevel) {
         // create random reward
         Reward reward = null;
         int gold = 0;
         Item item = ItemFactory.getRandomItem(threatLevel);
         if (item == null) {
-            gold = (int) (Math.pow(threatLevel, 2) * 25 * (int) (Math.random() * 4));
+            gold = (int) (threatLevel* 25 * (int) (Math.random() * 4));
         }
         if (item != null || gold > 0) {
             reward = new Reward(item, gold, 0);

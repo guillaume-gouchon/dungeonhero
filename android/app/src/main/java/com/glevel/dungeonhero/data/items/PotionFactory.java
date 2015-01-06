@@ -61,12 +61,12 @@ public class PotionFactory {
     }
 
     public static Potion buildHeroicPotion() {
-        Potion item = new Potion("heroic_potion", new HeroicEffect(null), 100);
+        Potion item = new Potion("heroic_potion", new HeroicEffect("curse.png"), 100);
         return item;
     }
 
     public static Potion buildInvisibilityPotion() {
-        Potion item = new Potion("invisibility_potion", new CamouflageEffect(null, 10, 0), 80);
+        Potion item = new Potion("invisibility_potion", new CamouflageEffect(null, 0, 0), 80);
         return item;
     }
 
@@ -81,12 +81,12 @@ public class PotionFactory {
     }
 
     public static Potion buildRecoveryPotion() {
-        Potion item = new Potion("recovery_potion", new RecoveryEffect(null), 120);
+        Potion item = new Potion("recovery_potion", new RecoveryEffect("curse.png"), 120);
         return item;
     }
 
     public static Potion buildSpeedPotion() {
-        Potion item = new Potion("speed_potion", new BuffEffect(null, Characteristics.MOVEMENT, 5, 6, null, 0, Color.BLUE), 40);
+        Potion item = new Potion("speed_potion", new BuffEffect(null, Characteristics.MOVEMENT, 6, 6, null, 0, Color.BLUE), 40);
         return item;
     }
 
@@ -95,25 +95,25 @@ public class PotionFactory {
         int random = (int) (Math.random() * 6);
         switch (random) {
             case 0:
-                effect = new DamageEffect("poison.png", 100, null, 0);
+                // full heal
+                effect = new DamageEffect("curse.png", 100, null, 0);
                 break;
             case 1:
+                // dodge
                 effect = new BuffEffect(null, Characteristics.DODGE, 50, 5, null, 0, Color.GREEN);
                 break;
             case 2:
+                // protection
                 effect = new BuffEffect(null, Characteristics.PROTECTION, 50, 5, null, 0, Color.YELLOW);
                 break;
             case 3:
-                // poison
-                effect = new PoisonEffect("poison.png", 2, 3, null, 0);
-                break;
             case 4:
-                // sleep potion
-                effect = new StunEffect("stun.png", Characteristics.SPIRIT, 5, 0);
+                // poison
+                effect = new PoisonEffect("poison.png", -3, 3, null, 0);
                 break;
             default:
-                // nothing
-                effect = new BuffEffect(null, Characteristics.MOVEMENT, 0, 0, null, 0);
+                // sleep
+                effect = new StunEffect("stun.png", Characteristics.SPIRIT, 4, 0);
                 break;
         }
 

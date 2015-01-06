@@ -73,8 +73,7 @@
                 custom:linkTextColorToDrawable="true"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/strength" />
+                android:layout_height="wrap_content" />
 
             <com.glevel.dungeonhero.views.HintTextView
                 android:id="@+id/dexterity"
@@ -84,8 +83,7 @@
                 custom:textHint="@string/dexterity"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/dexterity" />
+                android:layout_height="wrap_content" />
 
             <com.glevel.dungeonhero.views.HintTextView
                 android:id="@+id/spirit"
@@ -95,8 +93,7 @@
                 custom:textHint="@string/spirit"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/spirit" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -113,8 +110,7 @@
                 custom:textHint="@string/hp"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/spirit" />
+                android:layout_height="wrap_content" />
 
             <com.glevel.dungeonhero.views.HintTextView
                 android:id="@+id/movement"
@@ -124,8 +120,7 @@
                 custom:textHint="@string/movement"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/spirit" />
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="0dp"

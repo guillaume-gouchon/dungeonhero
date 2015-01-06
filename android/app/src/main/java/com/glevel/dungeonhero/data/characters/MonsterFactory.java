@@ -30,49 +30,50 @@ public class MonsterFactory {
     }
 
     public static Monster buildGoblin() {
-        Monster monster = new Monster("goblin", 5, 5, 6, 12, 6, 5);
+        Monster monster = new Monster("goblin", 5, 5, 6, 12, 4, 5);
         monster.equip(WeaponFactory.buildDagger(0));
         return monster;
     }
 
     public static Monster buildOrc() {
-        Monster monster = new Monster("orc", 10, 10, 11, 9, 5, 4);
-        monster.equip(WeaponFactory.buildShortSword(0));
+        Monster monster = new Monster("orc", 9, 9, 11, 8, 5, 4);
+        monster.equip(WeaponFactory.buildAxe(0));
         monster.equip(ArmorFactory.buildLeatherVest(0));
         return monster;
     }
 
     public static Monster buildOrcCaptain() {
-        Monster monster = new Monster("orc_captain", 13, 13, 13, 9, 7, 4);
-        monster.equip(WeaponFactory.buildLongSword(0));
+        Monster monster = new Monster("orc_captain", 13, 13, 12, 8, 8, 4);
+        monster.equip(WeaponFactory.buildShortSword(0));
         monster.equip(WeaponFactory.buildRoundShield(0));
         monster.equip(ArmorFactory.buildLeatherPlastron(0));
         return monster;
     }
 
     public static Monster buildTroll() {
-        Monster monster = new Monster("troll", 22, 22, 15, 8, 2, 3);
+        Monster monster = new Monster("troll", 20, 20, 14, 7, 2, 3);
         monster.equip(WeaponFactory.buildMorgenstern(0));
         return monster;
     }
 
     public static Monster buildOgre() {
-        Monster monster = new Monster("ogre", 16, 16, 13, 9, 5, 4);
+        Monster monster = new Monster("ogre", 15, 15, 13, 8, 5, 3);
         monster.equip(WeaponFactory.buildMorgenstern(0));
-        monster.equip(ArmorFactory.buildLeatherPlastron(1));
+        monster.equip(ArmorFactory.buildLeatherPlastron(0));
         return monster;
     }
 
     public static Monster buildOgreKing() {
-        Monster monster = new Monster("ogre_king", 20, 20, 15, 11, 7, 4);
-        monster.equip(WeaponFactory.buildMorgenstern(2));
-        monster.equip(ArmorFactory.buildChainMail(2));
+        Monster monster = new Monster("ogre_king", 20, 20, 15, 10, 10, 4);
+        monster.equip(WeaponFactory.buildMorgenstern(1));
+        monster.equip(ArmorFactory.buildChainMail(0));
         return monster;
     }
 
     public static Monster buildGargoyle() {
-        Monster monster = new Monster("gargoyle", 25, 25, 17, 12, 12, 5);
-        monster.equip(WeaponFactory.buildBroadSword(2));
+        Monster monster = new Monster("gargoyle", 22, 22, 15, 8, 12, 5);
+        monster.equip(WeaponFactory.buildBroadSword(1));
+        monster.equip(ArmorFactory.buildLeatherPlastron(1));
         return monster;
     }
 
@@ -85,7 +86,7 @@ public class MonsterFactory {
     }
 
     public static Monster buildChaosWizard() {
-        Monster monster = new Monster("chaos_wizard", 5, 5, 6, 8, 2, 7);
+        Monster monster = new Monster("chaos_wizard", 13, 13, 8, 7, 13, 4);
         monster.equip(WeaponFactory.buildWizardStaff(2));
         monster.equip(ArmorFactory.buildRobe(2));
         monster.equip(RingFactory.getRandomRing(2));
@@ -108,7 +109,7 @@ public class MonsterFactory {
             nbMonsters = 0;
         } else if (random < 5) {
             nbMonsters = 1;
-        } else if (random < 8) {
+        } else if (random < 9) {
             nbMonsters = 2;
         } else {
             nbMonsters = 3;
@@ -120,7 +121,7 @@ public class MonsterFactory {
     }
 
     public static Monster getRandomMonster(int threatLevel) {
-        int diceRoll = (int) (2 + Math.floor(Math.random() * 10));
+        int diceRoll = (int) (2 + Math.random() * 11);
         switch (threatLevel) {
             case 1:
                 switch (diceRoll) {
@@ -133,13 +134,12 @@ public class MonsterFactory {
                     case 6:
                     case 7:
                     case 8:
+                    case 12:
                         return buildOrc();
                     case 9:
                         return buildOrcCaptain();
                     case 11:
                         return buildTroll();
-                    case 12:
-                        return buildOgre();
                 }
             case 2:
                 switch (diceRoll) {
@@ -149,9 +149,9 @@ public class MonsterFactory {
                     case 11:
                         return buildOrc();
                     case 5:
+                    case 7:
                         return buildOrcCaptain();
                     case 6:
-                    case 7:
                         return buildTroll();
                     case 8:
                     case 9:

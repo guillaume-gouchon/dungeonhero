@@ -8,7 +8,7 @@ import com.glevel.dungeonhero.models.items.Item;
 public class ItemFactory {
 
     public static Item getRandomItem(int threatLevel) {
-        int level = (int) Math.max(0, Math.min(6, threatLevel - 1 + Math.random() * 3));
+        int level = (int) Math.max(0, Math.min(6, threatLevel - 2 + Math.random() * 4));
         int random = (int) (Math.random() * 7);
         switch (random) {
             case 0:

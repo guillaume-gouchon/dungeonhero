@@ -15,7 +15,6 @@ public class Pnj extends Hero {
 
     private final List<Discussion> discussions = new ArrayList<>();
     private OnActionExecuted onDiscussionOver = null;
-    private boolean isActive;
 
     public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType) {
         super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement, null, xp, level, heroType);
@@ -25,20 +24,20 @@ public class Pnj extends Hero {
         return discussions;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
     public OnActionExecuted getOnDiscussionOver() {
         return onDiscussionOver;
     }
 
     public void setOnDiscussionOver(OnActionExecuted onDiscussionOver) {
         this.onDiscussionOver = onDiscussionOver;
+    }
+
+    public Discussion getNextDiscussion() {
+        // update end of discussion callback action
+        if (discussions.get(0).getOnActionExecuted() != null) {
+            this.onDiscussionOver = discussions.get(0).getOnActionExecuted();
+        }
+        return discussions.get(0);
     }
 
 }

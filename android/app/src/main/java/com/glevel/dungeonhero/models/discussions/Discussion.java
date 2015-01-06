@@ -23,11 +23,19 @@ public class Discussion implements Serializable {
     private boolean isPermanent;
     private Reward reward;
     private Riddle riddle;
+    private OnActionExecuted onActionExecuted = null;
 
     public Discussion(String message, boolean isPermanent, Reward reward) {
         this.message = message;
         this.isPermanent = isPermanent;
         this.reward = reward;
+    }
+
+    public Discussion(String message, boolean isPermanent, Reward reward, OnActionExecuted onActionExecuted) {
+        this.message = message;
+        this.isPermanent = isPermanent;
+        this.reward = reward;
+        this.onActionExecuted = onActionExecuted;
     }
 
     public Discussion(Riddle riddle) {
@@ -59,6 +67,10 @@ public class Discussion implements Serializable {
 
     public Riddle getRiddle() {
         return riddle;
+    }
+
+    public OnActionExecuted getOnActionExecuted() {
+        return onActionExecuted;
     }
 
 }

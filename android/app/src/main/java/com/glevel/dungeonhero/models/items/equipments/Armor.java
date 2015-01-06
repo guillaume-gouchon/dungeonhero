@@ -17,7 +17,7 @@ public class Armor extends Equipment implements Serializable {
     }
 
     public int getProtection() {
-        return (int) (protection * (1 + 0.3 * level));
+        return (int) Math.max(protection * (1 + 0.2 * level), protection + level);
     }
 
 

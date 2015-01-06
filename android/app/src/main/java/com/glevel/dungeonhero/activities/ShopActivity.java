@@ -21,6 +21,8 @@ import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.effects.Effect;
+import com.glevel.dungeonhero.models.effects.PermanentEffect;
+import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.equipments.Armor;
 import com.glevel.dungeonhero.models.items.equipments.Equipment;
@@ -279,7 +281,11 @@ public class ShopActivity extends MyActivity implements OnClickListener {
 
                 // add buffs
                 for (Effect buff : equipment.getEffects()) {
-                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.attack : R.color.red);
+                    if (buff instanceof PermanentEffect) {
+                        addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.green : R.color.red);
+                    } else if (buff instanceof StunEffect) {
+                        addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), R.drawable.ic_stun, R.string.chance_stun, buff.getValue() > 0 ? R.color.green : R.color.red);
+                    }
                 }
 
                 // add requirements

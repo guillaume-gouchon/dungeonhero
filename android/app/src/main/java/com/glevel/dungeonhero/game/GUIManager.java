@@ -45,6 +45,8 @@ import com.glevel.dungeonhero.models.discussions.riddles.OpenRiddle;
 import com.glevel.dungeonhero.models.discussions.riddles.Riddle;
 import com.glevel.dungeonhero.models.dungeons.Room;
 import com.glevel.dungeonhero.models.effects.Effect;
+import com.glevel.dungeonhero.models.effects.PermanentEffect;
+import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.consumables.Potion;
 import com.glevel.dungeonhero.models.items.equipments.Armor;
@@ -234,6 +236,7 @@ public class GUIManager {
 
     private void finishQuest(Book activeBook) {
         mGameActivity.getGame().setHero(mHero);
+        mGameActivity.getGame().setDungeon(null);
         boolean hasNextChapter = activeBook.goToNextChapter();
         if (hasNextChapter) {
             Intent intent = new Intent(mGameActivity, GameActivity.class);
@@ -817,9 +820,13 @@ public class GUIManager {
                     addStatToItemLayout(statsLayout.getChildAt(indexStats++), "+" + armor.getProtection(), R.drawable.ic_armor, R.string.protection, R.color.green);
                 }
 
-                // add buffs
+                // add effects
                 for (Effect buff : equipment.getEffects()) {
-                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.attack : R.color.red);
+                    if (buff instanceof PermanentEffect) {
+                        addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.green : R.color.red);
+                    } else if (buff instanceof StunEffect) {
+                        addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), R.drawable.ic_stun, R.string.chance_stun, buff.getValue() > 0 ? R.color.green : R.color.red);
+                    }
                 }
 
                 // add requirements

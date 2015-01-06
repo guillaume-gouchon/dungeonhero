@@ -9,6 +9,7 @@ import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.effects.BuffEffect;
 import com.glevel.dungeonhero.models.effects.CamouflageEffect;
 import com.glevel.dungeonhero.models.effects.Effect;
+import com.glevel.dungeonhero.models.effects.PermanentEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.consumables.Consumable;
@@ -20,7 +21,6 @@ import com.glevel.dungeonhero.models.items.equipments.weapons.TwoHandedWeapon;
 import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
-import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -135,33 +135,38 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         int dice = (int) (Math.random() * 100);
 
-        if (isRangeAttack() && isNextTo(target.getTilePosition())) {
-            // malus for range weapon in close combat
-            dice = Math.min(99, dice + 20);
+        if (isRangeAttack()) {
+            if (isNextTo(target.getTilePosition())) {
+                // malus for range weapon in close combat
+                dice = Math.min(99, dice + 20);
+            } else {
+                // range attack bonus or malus depending on dexterity
+                dice = Math.max(0, dice - (dexterity - 12) * 3);
+            }
         }
 
         Log.d(TAG, "attack dice = " + dice);
 
         // TODO : add critical failure
 
-        int damage = Math.max(0, calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE)
-                + (equipments[0] != null ? calculateDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateDamage((Weapon) equipments[1]) / 2 : 0));
-
         int critical = calculateCritical();
 
         if (isInvisible || dice < critical) {
-            fightResult = new FightResult(FightResult.States.CRITICAL, Math.max(0, damage * 2 - target.calculateProtection()));
+            int criticalDamage = Math.max(0, calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE)
+                    + (equipments[0] != null ? calculateCriticalDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateCriticalDamage((Weapon) equipments[1]) / 2 : 0));
+            fightResult = new FightResult(FightResult.States.CRITICAL, (int) Math.max(0, criticalDamage * 1.5f - target.calculateProtection()));
+        } else if (dice >= 95) {
+            fightResult = new FightResult(FightResult.States.MISS, 0);
         } else if (dice > 100 - target.calculateBlock()) {
             fightResult = new FightResult(FightResult.States.BLOCK, 0);
         } else {
             int dodgeDice = (int) (Math.random() * 100);
             Log.d(TAG, "dodge dice = " + dodgeDice);
-
-            // range weapons are harder to dodge
-            if (isRangeAttack() && dodgeDice < target.calculateDodge() - 2 * dexterity
-                    || !isRangeAttack() && dodgeDice < target.calculateDodge()) {
+            if (dodgeDice < target.calculateDodge()) {
                 fightResult = new FightResult(FightResult.States.DODGE, 0);
             } else {
+                int damage = Math.max(0, calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE)
+                        + (equipments[0] != null ? calculateDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateDamage((Weapon) equipments[1]) / 2 : 0));
                 fightResult = new FightResult(FightResult.States.DAMAGE, Math.max(0, damage - target.calculateProtection()));
             }
         }
@@ -169,7 +174,23 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         Log.d(TAG, "dealing " + fightResult.getDamage() + " damage");
         target.takeDamage(fightResult.getDamage());
 
+        // add weapons special effects
+        if (equipments[0] != null) {
+            applyWeaponEffect(equipments[0], target);
+        }
+        if (equipments[1] != null) {
+            applyWeaponEffect(equipments[1], target);
+        }
+
         return fightResult;
+    }
+
+    private static void applyWeaponEffect(Equipment equipment, Unit target) {
+        for (Effect effect : equipment.getEffects()) {
+            if (!(effect instanceof PermanentEffect)) {
+                target.getBuffs().add(effect);
+            }
+        }
     }
 
     public String getReadableDamage() {
@@ -177,7 +198,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         int weapon2Min = (equipments[1] != null ? ((Weapon) equipments[1]).getMinDamage() / 2 : 0);
         int weapon1Delta = (equipments[0] != null ? ((Weapon) equipments[0]).getDeltaDamage() : 0);
         int weapon2Delta = (equipments[1] != null ? ((Weapon) equipments[1]).getDeltaDamage() / 2 : 0);
-        return (weapon1Min + weapon2Min) + " - " + (weapon1Min + weapon1Delta + weapon2Min + weapon2Delta);
+        return (calculateDamageNaturalBonus() + weapon1Min + weapon2Min) + " - " + (calculateDamageNaturalBonus() + weapon1Min + weapon1Delta + weapon2Min + weapon2Delta);
     }
 
     public void takeDamage(int damage) {
@@ -189,7 +210,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     private int calculateDamageNaturalBonus() {
-        return Math.max(0, strength - 10);
+        return Math.max(0, (getStrength() - 10) / 2);
     }
 
     public List<Effect> getBuffs() {
@@ -197,7 +218,11 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int calculateDamage(Weapon weapon) {
-        return weapon.getMinDamage() + (int) (Math.random() * weapon.getDeltaDamage());
+        return weapon.getMinDamage() + (int) (Math.random() * (weapon.getDeltaDamage() + 1));
+    }
+
+    public int calculateCriticalDamage(Weapon weapon) {
+        return weapon.getMinDamage() + weapon.getDeltaDamage();
     }
 
     public int calculateProtection() {
@@ -209,7 +234,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int calculateBlock() {
-        return Math.max(0, getBonusesFromBuffsAndEquipments(Characteristics.BLOCK));
+        return Math.max(0, Math.min(80, getBonusesFromBuffsAndEquipments(Characteristics.BLOCK)));
     }
 
     public int calculateMovement() {
@@ -217,7 +242,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public int calculateDodge() {
-        return Math.max(0, Math.min(80, (dexterity - 10) * 5) + getBonusesFromBuffsAndEquipments(Characteristics.DODGE));
+        return Math.max(5, Math.min(80, (getDexterity() - 10) * 4) + getBonusesFromBuffsAndEquipments(Characteristics.DODGE));
     }
 
     public int calculateCritical() {
@@ -368,18 +393,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
     }
 
     public boolean testCharacteristic(Characteristics target, int value) {
-        int characValue;
-        switch (target) {
-            case STRENGTH:
-                characValue = strength;
-                break;
-            case DEXTERITY:
-                characValue = dexterity;
-                break;
-            default:
-                characValue = spirit;
-        }
-        return Math.random() * 20 + value < characValue;
+        int dice = (int) (Math.random() * 20);
+        return dice == 1 || dice < getCharacteristic(target) - value;
     }
 
     public boolean isRangeAttack() {

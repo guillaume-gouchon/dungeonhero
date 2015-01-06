@@ -24,19 +24,23 @@ public class BookFactory {
     }
 
     public static Book buildInitiationBook() {
-        List<Chapter> chapters = new ArrayList<>();
+        Book book = new Book(INTRODUCTION_BOOK_ID, "initiation", "initiation_intro", "initiation_outro", null);
 
         // chapter 1
         List<Event> events = new ArrayList<>();
         events.add(new Event.Builder(true).build());
-        chapters.add(new Chapter("initiation_chapter_1", "initiation_chapter_1_outro", events));
+        book.addChapter(new Chapter("initiation_chapter_1", "initiation_chapter_1_outro", events));
 
         // chapter 2
         events = new ArrayList<>();
-        events.add(new Event.Builder(true).addMonster(MonsterFactory.buildOrcCaptain()).addPnj(PNJFactory.buildIntroQuestGirl()).build());
-        chapters.add(new Chapter("initiation_chapter_2", "", events));
+        events.add(new Event.Builder(true).addMonster(MonsterFactory.buildOrcCaptain()).addPnj(PNJFactory.buildInitiationQuestGirl()).build());
+        book.addChapter(new Chapter("initiation_chapter_2", "", events));
 
-        return new Book(INTRODUCTION_BOOK_ID, "initiation", "initiation_intro", "initiation_outro", chapters, null);
+        // add resources
+        book.addResource(PNJFactory.buildTutorialPNJ());
+        book.addResource(PNJFactory.buildInitiationQuestGirl());
+
+        return book;
     }
 
 }

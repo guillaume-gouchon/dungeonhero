@@ -82,7 +82,7 @@ public class GameActivity extends MyBaseGameActivity {
         }
 
         if (mGame.getDungeon() == null) {
-            // playMusic new dungeon
+            // new dungeon
             Chapter chapter = mGame.getBook().getActiveChapter();
 
             // create dungeon
@@ -371,6 +371,15 @@ public class GameActivity extends MyBaseGameActivity {
                     return;
                 }
 
+                // add new enemies
+                for (GameElement element : mRoom.getObjects()) {
+                    if (element instanceof Unit && (element.getRank() == Ranks.ENEMY || element.getRank() == Ranks.ALLY)
+                            && !mRoom.getQueue().contains(element)) {
+                        mRoom.getQueue().add(0, (Unit) element);
+                        mRoom.checkSafe();
+                    }
+                }
+
                 boolean isHeroic = false, isHidden = false;
                 if (mActiveCharacter != null) {
                     List<Effect> copy = new ArrayList<>(mActiveCharacter.getBuffs());
@@ -449,7 +458,7 @@ public class GameActivity extends MyBaseGameActivity {
 
                 if (skipTurn) {
                     nextTurn();
-                } else if (mActiveCharacter instanceof Monster) {
+                } else if (mActiveCharacter.isEnemy(mHero)) {
                     Log.d(TAG, "AI turn");
                     new Timer().schedule(new TimerTask() {
                         @Override

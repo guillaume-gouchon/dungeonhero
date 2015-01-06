@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.models;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Event;
@@ -17,7 +18,8 @@ public class Chapter implements Serializable {
 
     private static final int DUNGEON_SIZE = 3;
 
-    private final List<Event> events;
+    private final List<Event> initialEvents;
+    private List<Event> events;
     private int index;
     private String introText, outroText;
     private transient Dungeon dungeon;
@@ -27,6 +29,7 @@ public class Chapter implements Serializable {
         this.introText = introText;
         this.outroText = outroText;
         this.done = false;
+        this.initialEvents = events;
         this.events = events;
     }
 
@@ -58,16 +61,16 @@ public class Chapter implements Serializable {
         this.done = done;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
     public void setIndex(int index) {
         this.index = index;
     }
 
     public boolean isFirst() {
         return index == 0;
+    }
+
+    public void resetChapter() {
+        events = initialEvents;
     }
 
 }

@@ -35,6 +35,7 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
 
         mGame = (Game) getIntent().getSerializableExtra(Game.class.getName());
         mGame.setDungeon(null);
+        mGame.getBook().getActiveChapter().resetChapter();
         mDbHelper.getRepository(MyDatabase.Repositories.GAME.toString()).save(mGame);
     }
 

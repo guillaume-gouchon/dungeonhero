@@ -24,7 +24,7 @@ public class FightResult {
     }
 
     public enum States {
-        DAMAGE(Color.RED), BLOCK(new Color(0f, 0.8f, 0f)), DODGE(new Color(0f, 0.8f, 0f)), CRITICAL(Color.RED);
+        MISS(Color.YELLOW), DAMAGE(Color.RED), BLOCK(new Color(0f, 0.8f, 0f)), DODGE(new Color(0f, 0.8f, 0f)), CRITICAL(Color.RED);
 
         private Color color;
 

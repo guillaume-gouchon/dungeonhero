@@ -108,7 +108,7 @@
     <string name="resume_game">Resume Game</string>
     <string name="leave_quest">Leave Quest</string>
     <string name="confirm_leave_quest">Are you sure you want to leave this quest ?</string>
-    <string name="confirm_finish_quest">Are you sure you want to finish this quest and leave the dungeon ?</string>
+    <string name="confirm_finish_quest">Are you sure you want to leave this dungeon floor ?</string>
     <string name="deployment_phase">Deployment Phase</string>
     <string name="start">Deployment Done</string>
     <string name="game_menu">Game Menu</string>
@@ -151,6 +151,7 @@
     <string name="use_skill_personal">%s !</string>
     <string name="drink">Drink</string>
     <string name="sleep_effect">zzz</string>
+    <string name="chance_stun">Chance to stun target</string>
 
     <!-- Discussions -->
     <string name="yes">Yes</string>
@@ -231,7 +232,7 @@
     <string name="heroic_potion_description">Once drunk, this potion makes you feeling heroic. You can play twice in a row.</string>
     <string name="invisibility_potion">Invisibility Potion</string>
     <string name="invisibility_potion_description">This grey liquid turns you invisible for a limited amount of time.</string>
-    <string name="luck_potion">Luck Potion</string>
+    <string name="luck_potion">Potion of Luck</string>
     <string name="luck_potion_description">You are feeling lucky; it is easier for you to avoid attacks.</string>
     <string name="magic_shield_potion">Magic shield Potion</string>
     <string name="magic_shield_potion_description">If you drink this mixture, an invisible magic shield will appear around you and will protect you for a limited amount of time.</string>
@@ -312,23 +313,38 @@
 
     <!-- Initiation Book -->
     <string name="initiation">The Initiation</string>
-    <string name="initiation_intro">You finally decided to do jump ahead: you set aside your boring previous life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter had been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back.\n\nLooks like your first Quest begins !</string>
-    <string name="initiation_outro"></string>
+    <string name="initiation_intro">Finally, you decided to jump ahead: you set aside your boring life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter Lubrice has been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back alive.\n\nLooks like your first Quest begins !</string>
+    <string name="initiation_outro">Well done, your first quest is a success !\n\nYou left the caverns straight away and arrived at the nearest village in the evening.\n\nAfter a few pints at the tavern, you had a well-deserved sleep.\n\nYour thirst for adventures has to wait until the next day.</string>
     <string name="tutorial_character">Alhagar the Mighty</string>
     <string name="initiation_chapter_1">Wow, this guy seems hurt to death... let\'s talk to him.\n\n<i>(tap on the character to select it, then tap again to go talk to him)</i></string>
     <string name="initiation_chapter_1_outro">Ah ah ! It\'s a good start !</string>
     <string name="initiation_chapter_2">Let\'s find out where the Orc Chief is hiding and then save the girl !</string>
-    <string name="initiation_tutorial_intro">Hey adventurer, don\'t do the same mistakes as me... I will tell you how to survive in these deadly dungeons.</string>
-    <string name="initiation_tutorial_movement">When there are no enemies, tap on a tile to move to it. In fight mode, the reachable tiles are green. Tap on your character to finish your turn.</string>
-    <string name="initiation_tutorial_search">To search for treasures, talk to characters, or to attack an enemy, you first need to select your target and then to tap on it again to validate the interaction. In fight mode, it will end your turn.</string>
-    <string name="initiation_tutorial_fight">You can tap the bag button to show your inventory. Equipments can be from level 0 to level 6, each level has its color in that order : black, yellow, orange, red, green, blue, and purple. Use the best equipment you can find and do not forget to drink potions in order to fight evil safely. Some items may not be suitable with the type of your character and so would be written in red.</string>
-    <string name="initiation_tutorial_skills">You also have some skills to help you. Like equipment, skills also have levels and colors corresponding to it. Skills can only be used once every dungeon floor, try to keep them for the most dangerous room... Do you want to have some more tips ?</string>
-    <string name="initiation_tutorial_tips">Experience is primordial : new levels will increase your health points, characteristics and will give you skill points to improve or to learn new skills. Concerning weapons, remember not to fight with range weapons in close combat, and try to use a shield with your left arm as a weapon will deal less damage with this arm.</string>
+    <string name="initiation_tutorial_intro">Hey adventurer, don\'t do the same mistakes as me...\n\nI will tell you how to survive in this deadly dungeon.</string>
+    <string name="initiation_tutorial_movement">When there are no enemies, tap on any tile to move to it.\nDuring fight mode, the reachable tiles are enlightened in green; you have to tap on your character to finish your turn.</string>
+    <string name="initiation_tutorial_search">To search for treasures, talk to characters, or to attack an enemy, you\'ll first need to select your target and then to tap on it again to validate the interaction.\nIn fight mode, it will end your turn.</string>
+    <string name="initiation_tutorial_fight">Tap the bag button to show your inventory. Equipments are from level 0 to level 6, each level has its own color following this order : black, yellow, orange, red, green, blue, and purple.\n\nUse the best equipment you find and don\'t forget to use your potions in order to fight evil safely.\n\nFinally, some items may not be suitable with the type of your hero and so would be written in red.</string>
+    <string name="initiation_tutorial_skills">You also have skills to help you in your quests.\nLike equipment, skills have levels and colors corresponding to it.\nSkills can only be used once every dungeon floor, try to keep them for the most dangerous room...\n\nDo you want I tell you some more tips ?</string>
+    <string name="initiation_tutorial_tips">Experience is primordial : new levels will increase your health points, characteristics and will give you skill points to improve or to learn new skills.\n\nConcerning weapons, remember not to fight with range weapons in close combat, and try to use a shield with your second arm cause a weapon will deal less damage with this arm.</string>
     <string name="initiation_tutorial_outro">Aaargh, so it is time for me now...</string>
     <string name="initiation_tutorial_outro_reward">Thanks for that... Take this Potion of Force to help you in your next fights... May the force be with you... Aaaaargh...</string>
     <string name="initiation_tutorial_thanks">Thanks</string>
     <string name="ok_get_it">Ok, I get it</string>
     <string name="initiation_die_weak">Die, you are so weak compared to me !\n<i>(finish him)</i></string>
     <string name="initiation_pray">I\'ll pray for you, mighty warrior.</string>
-
+    <string name="initiation_quest_girl">Lubrice</string>
+    <string name="initiation_girl_1">Who are you ? Are you here to save me ?</string>
+    <string name="initiation_girl_1_answer_1">Why would I save you ?</string>
+    <string name="initiation_girl_1_answer_2">Yes, your father sent me here to rescue you</string>
+    <string name="initiation_girl_1_answer_3">No, I\'ll just steal your gold and leave !</string>
+    <string name="initiation_girl_11">We are poor farmers, we don\'t have much to give you...</string>
+    <string name="initiation_girl_11_answer_1">Everyone has something special...\n<i>(kiss her)</i></string>
+    <string name="initiation_girl_11_answer_2">And this ring on your hand ?\n<i>(point her green emerald ring)</i></string>
+    <string name="initiation_girl_12">Thanks brave adventurer, your name and your glorious acts will be renowned in all the kingdom !</string>
+    <string name="initiation_girl_12_answer_1">No problem my lady, let\'s leave this place now !</string>
+    <string name="initiation_girl_13">Pleeeaaaaase ! Don\'t leave me with these creatures !</string>
+    <string name="initiation_girl_13_answer_1">You are not that rich but your gold will be well spent at the tavern; have a good stay !</string>
+    <string name="initiation_girl_111">I prefer a troll than you, a sweaty stinky adventurer !\n<i>(she slaps you)</i></string>
+    <string name="initiation_girl_111_answer_1">Ouch... damn, I should take a bath</string>
+    <string name="initiation_girl_112">It was a gift from my beloved mother... before she got run over by a herd of savage pigs...</string>
+    <string name="initiation_girl_112_answer_1">Such a nice ending ! Ok, let\'s leave this place now</string>
 </resources>

@@ -31,14 +31,15 @@ public class ArmorFactory {
     }
 
     public static Armor buildRobe(int level) {
-        Armor item = new Armor("robe", 2, level, 150);
+        Armor item = new Armor("robe", 1, level, 200);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         return item;
     }
 
     public static Armor buildLeatherVest(int level) {
-        Armor item = new Armor("leather_vest", 4, level, 180);
+        Armor item = new Armor("leather_vest", 2, level, 220);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
@@ -48,37 +49,37 @@ public class ArmorFactory {
     }
 
     public static Armor buildLeatherPlastron(int level) {
-        Armor item = new Armor("leather_plastron", 6, level, 200);
+        Armor item = new Armor("leather_plastron", 3, level, 280);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
+        item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 8, level));
         item.addEffect(new PermanentEffect(Characteristics.DODGE, -5, null, level));
         return item;
     }
 
     public static Armor buildChainMail(int level) {
-        Armor item = new Armor("chain_mail", 8, level, 250);
+        Armor item = new Armor("chain_mail", 4, level, 350);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, level));
-        item.addEffect(new PermanentEffect(Characteristics.DODGE, -5, null, level));
         return item;
     }
 
     public static Armor buildLamellar(int level) {
-        Armor item = new Armor("lamellar", 10, level, 250);
+        Armor item = new Armor("lamellar", 5, level, 300);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
-        item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 13, level));
+        item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 12, level));
         item.addEffect(new PermanentEffect(Characteristics.DODGE, -15, null, level));
         return item;
     }
 
     public static Armor buildBreastPlate(int level) {
-        Armor item = new Armor("breast_plate", 12, level, 350);
-        item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 16, level));
+        Armor item = new Armor("breast_plate", 6, level, 450);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
+        item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 15, level));
         item.addEffect(new PermanentEffect(Characteristics.DODGE, -20, null, level));
         item.addEffect(new PermanentEffect(Characteristics.MOVEMENT, -1, null, level));
         return item;

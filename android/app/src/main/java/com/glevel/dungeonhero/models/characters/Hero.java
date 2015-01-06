@@ -22,6 +22,8 @@ public class Hero extends Unit implements InAppProduct {
 
     private static final long serialVersionUID = -2887616275513777101L;
 
+    private static final int LEVEL_MAX = 6;
+
     private final String productId;
     private final HeroTypes heroType;
     protected boolean mHasBeenBought = false;
@@ -93,6 +95,10 @@ public class Hero extends Unit implements InAppProduct {
     }
 
     public boolean addXP(int xpAmount) {
+        if (level == LEVEL_MAX) {
+            return false;
+        }
+
         xp += xpAmount;
         if (xp >= getNextLevelXPAmount()) {
             increaseLevel();
@@ -107,39 +113,39 @@ public class Hero extends Unit implements InAppProduct {
         // increase characteristics and skill points
         switch (heroType) {
             case STR:
-                strength += 6;
-                dexterity += 2;
-                spirit += 2;
+                strength += 2;
+                dexterity += 1;
+                spirit += 1;
                 skillPoints = 1;
                 break;
             case DEX:
-                strength += 2;
-                dexterity += 6;
-                spirit += 2;
+                strength += 1;
+                dexterity += 2;
+                spirit += 1;
                 skillPoints = 2;
                 break;
             case SPI:
-                strength += 2;
-                dexterity += 2;
-                spirit += 6;
+                strength += 1;
+                dexterity += 1;
+                spirit += 2;
                 skillPoints = 3;
                 break;
             case STR_DEX:
-                strength += 4;
-                dexterity += 4;
-                spirit += 2;
+                strength += 2;
+                dexterity += 2;
+                spirit += 1;
                 skillPoints = 1;
                 break;
             case STR_SPI:
-                strength += 4;
-                dexterity += 2;
-                spirit += 4;
+                strength += 2;
+                dexterity += 1;
+                spirit += 2;
                 skillPoints = 2;
                 break;
             case DEX_SPI:
-                strength += 2;
-                dexterity += 4;
-                spirit += 4;
+                strength += 1;
+                dexterity += 2;
+                spirit += 2;
                 skillPoints = 2;
                 break;
         }
@@ -197,10 +203,6 @@ public class Hero extends Unit implements InAppProduct {
         }
         currentHP = hp;
         buffs = new ArrayList<>();
-    }
-
-    public HeroTypes getHeroType() {
-        return heroType;
     }
 
     public boolean canEquipItem(Equipment equipment) {

@@ -188,7 +188,7 @@ public class Room implements Serializable {
 
     public void addGameElement(GameElement gameElement, Tile tile) {
         gameElement.setTilePosition(tile);
-        if (!queue.contains(gameElement) && gameElement instanceof Unit && (!(gameElement instanceof Pnj) || ((Pnj) gameElement).isActive())) {
+        if (!queue.contains(gameElement) && gameElement instanceof Unit && !(gameElement instanceof Pnj)) {
             queue.add((Unit) gameElement);
             Log.d(TAG, "queue size =" + queue.size());
         }
@@ -208,7 +208,7 @@ public class Room implements Serializable {
         checkSafe();
     }
 
-    private synchronized void checkSafe() {
+    public synchronized void checkSafe() {
         isSafe = true;
         for (Unit unit : queue) {
             if (unit.getRank() == Ranks.ENEMY) {

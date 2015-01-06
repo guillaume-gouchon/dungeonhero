@@ -96,7 +96,7 @@ public class ActionsDispatcher implements UserActionListener {
         if (tile != null && mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
             if (activatedSkill != null) {
                 useSkill(tile);
-            } else if (tile.getSubContent().size() > 0 && tile.getSubContent().get(0) != mSelectedElement) {
+            } else if (tile.getSubContent().size() > 0 && tile.getSubContent().get(0) != mSelectedElement && (tile.getContent() == null || tile.getContent().getRank() != Ranks.ENEMY)) {
                 showElementInfo(tile.getSubContent().get(0));
             } else if (tile.getContent() != null && tile.getContent() != mSelectedElement && tile.getContent().getRank() != Ranks.ME) {
                 showElementInfo(tile.getContent());
@@ -280,39 +280,27 @@ public class ActionsDispatcher implements UserActionListener {
                     if (searchable instanceof ItemOnGround) {
                         mGameActivity.removeElement(searchable);
                     }
-                    foundReward(reward, true);
+
+                    // show reward popup
+                    if (reward != null) {
+                        mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                mGameActivity.nextTurn();
+                            }
+                        });
+
+                        if (reward.getItem() != null) {
+                            getItemOrDropIt(reward.getItem());
+                        }
+                        mGameActivity.getHero().addGold(reward.getGold());
+                    }
                 } else {
                     mGameActivity.nextTurn();
                 }
                 isMoving = false;
             }
         });
-    }
-
-    private void foundReward(Reward reward, final boolean nextTurn) {
-        mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if (nextTurn) {
-                    mGameActivity.nextTurn();
-                }
-            }
-        });
-
-        if (reward != null) {
-            receiveReward(reward);
-        }
-    }
-
-    private void receiveReward(Reward reward) {
-        if (reward.getItem() != null) {
-            getItemOrDropIt(reward.getItem());
-        }
-        mGameActivity.getHero().addGold(reward.getGold());
-        boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
-        if (newLevel) {
-            mGUIManager.showNewLevelDialog(null);
-        }
     }
 
     private void getItemOrDropIt(Item item) {
@@ -360,7 +348,18 @@ public class ActionsDispatcher implements UserActionListener {
             @Override
             public void onReplySelected(Pnj pnj, int next, Reward instantReward) {
                 if (instantReward != null) {
-                    receiveReward(instantReward);
+                    if (instantReward.getItem() != null) {
+                        getItemOrDropIt(instantReward.getItem());
+                        mGUIManager.showReward(instantReward, null);
+                    }
+
+                    mGameActivity.getHero().addGold(instantReward.getGold());
+                    boolean newLevel = mGameActivity.getHero().addXP(instantReward.getXp());
+                    animateReward(instantReward);
+
+                    if (newLevel) {
+                        mGUIManager.showNewLevelDialog(null);
+                    }
                 }
 
                 if (pnj.getDiscussions().size() > 0) {
@@ -379,7 +378,7 @@ public class ActionsDispatcher implements UserActionListener {
             }
         };
         if (pnj.getDiscussions().size() > 0) {
-            Discussion discussion = pnj.getDiscussions().get(0);
+            Discussion discussion = pnj.getNextDiscussion();
             mGUIManager.showDiscussion(pnj, discussion, onDiscussionSelected);
             if (!discussion.isPermanent()) {
                 pnj.getDiscussions().remove(0);
@@ -711,6 +710,16 @@ public class ActionsDispatcher implements UserActionListener {
         sprite.setPosition(sprite.getX() + 5, sprite.getY() + 5);
     }
 
+    private void animateReward(Reward reward) {
+        if (reward.getGold() > 0) {
+            mGameActivity.playSound("coins", false);
+            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() - 4 * GameConstants.PIXEL_BY_TILE / 3, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
+        }
+        if (reward.getXp() > 0) {
+            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() + GameConstants.PIXEL_BY_TILE / 2, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
+        }
+    }
+
     private void animateFightReward(Monster target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating fight reward");
         final Reward reward = target.getReward();
@@ -721,13 +730,8 @@ public class ActionsDispatcher implements UserActionListener {
         mGameActivity.getHero().addFrag();
         final boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
 
-        if (reward.getGold() > 0) {
-            mGameActivity.playSound("coins", false);
-            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() - 4 * GameConstants.PIXEL_BY_TILE / 3, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
-        }
-        if (reward.getXp() > 0) {
-            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() + GameConstants.PIXEL_BY_TILE / 2, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
-        }
+        animateReward(reward);
+
         if (reward.getItem() != null) {
             mGameActivity.runOnUiThread(new Runnable() {
                 @Override

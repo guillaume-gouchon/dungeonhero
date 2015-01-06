@@ -1,10 +1,14 @@
 package com.glevel.dungeonhero.models;
 
 import android.content.res.Resources;
+import android.util.Log;
 
+import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,21 +17,22 @@ import java.util.List;
 public class Book extends StorableResource implements Serializable, InAppProduct {
 
     private static final long serialVersionUID = -2713633045742704862L;
+    private static final String TAG = "Book";
 
     private final int id;
     private final String outroText;
     private String introText;
-    private final List<Chapter> chapters;
+    private final List<Chapter> chapters = new ArrayList<>();
+    private final List<GraphicHolder> resourcesToLoad = new ArrayList<>();
     private final String productId;
     private boolean hasBeenBought;
     private boolean done;
 
-    public Book(int id, String identifier, String introText, String outroText, List<Chapter> chapters, String productId) {
+    public Book(int id, String identifier, String introText, String outroText, String productId) {
         super(identifier);
         this.id = id;
         this.introText = introText;
         this.outroText = outroText;
-        this.chapters = chapters;
         this.productId = productId;
         this.done = false;
     }
@@ -89,8 +94,9 @@ public class Book extends StorableResource implements Serializable, InAppProduct
      * @return true if aventure is over
      */
     public boolean goToNextChapter() {
-        introText = null;
+        Log.d(TAG, "go to next chapter");
         chapters.remove(0);
+        Log.d(TAG, chapters.size() + " chapters left");
         return chapters.size() > 0;
     }
 
@@ -101,6 +107,14 @@ public class Book extends StorableResource implements Serializable, InAppProduct
     public void addChapter(Chapter chapter) {
         chapter.setIndex(chapters.size());
         chapters.add(chapter);
+    }
+
+    public List<GraphicHolder> getResourcesToLoad() {
+        return resourcesToLoad;
+    }
+
+    public void addResource(GameElement element) {
+        resourcesToLoad.add(element);
     }
 
 }

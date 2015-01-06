@@ -18,12 +18,12 @@ public class RingFactory {
                 ring.addEffect(new PermanentEffect(Characteristics.DODGE, 10, null, level));
                 return ring;
             case 1:
-                ring = new Ring("speed_ring", level, 200);
-                ring.addEffect(new PermanentEffect(Characteristics.MOVEMENT, 2, null, level));
+                ring = new Ring("speed_ring", level, 300);
+                ring.addEffect(new PermanentEffect(Characteristics.MOVEMENT, 1, null, level));
                 return ring;
             case 2:
-                ring = new Ring("protection_ring", level, 220);
-                ring.addEffect(new PermanentEffect(Characteristics.PROTECTION, 3, null, level));
+                ring = new Ring("protection_ring", level, 200);
+                ring.addEffect(new PermanentEffect(Characteristics.PROTECTION, 1, null, level));
                 return ring;
             case 3:
                 ring = new Ring("critical_ring", level, 180);
@@ -35,26 +35,26 @@ public class RingFactory {
                 ring.addEffect(new PermanentEffect(Characteristics.SPIRIT, -3, null, level));
                 return ring;
             case 5:
-                ring = new Ring("initiative_ring", level, 160);
+                ring = new Ring("initiative_ring", level, 250);
                 ring.addEffect(new PermanentEffect(Characteristics.INITIATIVE, 5, null, level));
                 return ring;
             case 6:
                 ring = new Ring("strength_ring", level, 180);
-                ring.addEffect(new PermanentEffect(Characteristics.STRENGTH, 3, null, level));
+                ring.addEffect(new PermanentEffect(Characteristics.STRENGTH, 1, null, level));
                 return ring;
             case 7:
                 ring = new Ring("dexterity_ring", level, 180);
-                ring.addEffect(new PermanentEffect(Characteristics.DEXTERITY, 3, null, level));
+                ring.addEffect(new PermanentEffect(Characteristics.DEXTERITY, 1, null, level));
                 return ring;
             case 8:
                 ring = new Ring("spirit_ring", level, 180);
-                ring.addEffect(new PermanentEffect(Characteristics.SPIRIT, 3, null, level));
+                ring.addEffect(new PermanentEffect(Characteristics.SPIRIT, 1, null, level));
                 return ring;
             default:
                 ring = new Ring("king_ring", level, 350);
-                ring.addEffect(new PermanentEffect(Characteristics.STRENGTH, 2, null, level));
-                ring.addEffect(new PermanentEffect(Characteristics.DEXTERITY, 2, null, level));
-                ring.addEffect(new PermanentEffect(Characteristics.SPIRIT, 2, null, level));
+                ring.addEffect(new PermanentEffect(Characteristics.STRENGTH, 1, null, level));
+                ring.addEffect(new PermanentEffect(Characteristics.DEXTERITY, 1, null, level));
+                ring.addEffect(new PermanentEffect(Characteristics.SPIRIT, 1, null, level));
                 return ring;
         }
     }
