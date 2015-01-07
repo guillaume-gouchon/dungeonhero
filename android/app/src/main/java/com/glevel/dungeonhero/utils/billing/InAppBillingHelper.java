@@ -42,11 +42,13 @@ public class InAppBillingHelper {
         mServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceDisconnected(ComponentName name) {
+                Log.d(TAG, "billing service is disconnected");
                 mService = null;
             }
 
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
+                Log.d(TAG, "billing service is connected");
                 mService = IInAppBillingService.Stub.asInterface(service);
                 callback.onBillingServiceConnected();
             }
@@ -117,6 +119,8 @@ public class InAppBillingHelper {
                 if (pendingIntent != null) {
                     mActivity.startIntentSenderForResult(pendingIntent.getIntentSender(), BILLING_REQUEST_CODE,
                             new Intent(), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0));
+                } else {
+                    Log.d(TAG, "pendingIntent is null");
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();

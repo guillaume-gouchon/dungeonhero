@@ -147,8 +147,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
 
         Log.d(TAG, "attack dice = " + dice);
 
-        // TODO : add critical failure
-
         int critical = calculateCritical();
 
         if (isInvisible || dice < critical) {
