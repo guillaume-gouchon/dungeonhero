@@ -61,13 +61,6 @@ public class PNJFactory {
         discussion.addReaction(new Reaction("initiation_tutorial_thanks", 0));
         pnj.getDiscussions().add(discussion);
 
-        pnj.setOnDiscussionOver(new OnActionExecuted() {
-            @Override
-            public void onActionDone(boolean success) {
-                pnj.setCurrentHP(0);
-            }
-        });
-
         return pnj;
     }
 

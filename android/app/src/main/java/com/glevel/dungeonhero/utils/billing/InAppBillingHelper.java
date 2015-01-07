@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 import com.android.vending.billing.IInAppBillingService;
 
@@ -20,6 +21,8 @@ public class InAppBillingHelper {
 
     public static final int BILLING_REQUEST_CODE = 3000;
 
+    private static final String TAG = "InAppBillingHelper";
+
     private static final int API_VERSION = 3;
     private static final String IN_APP_PURCHASE_TYPE = "in-app";
     private static final String DEVELOPER_PAYLOAD = "doobiididadoobiiidoodidadoodidaaaaaa";
@@ -28,6 +31,7 @@ public class InAppBillingHelper {
     private static final String RESPONSE_PURCHASE_ITEMS_KEY = "INAPP_PURCHASE_ITEM_LIST";
     private static final int RESPONSE_SUCCESS = 0;
 
+    public static final String BUY_ALL_HEROES_IN_APP_ID = "all_heroes";
 
     private Activity mActivity;
     private IInAppBillingService mService;
@@ -58,11 +62,13 @@ public class InAppBillingHelper {
             int responseCode = response.getInt(RESPONSE_CODE_KEY);
             if (responseCode == RESPONSE_SUCCESS) {
                 ArrayList<String> ownedItems = response.getStringArrayList(RESPONSE_PURCHASE_ITEMS_KEY);
+                boolean hasAll = ownedItems.contains(BUY_ALL_HEROES_IN_APP_ID);
+                Log.d(TAG, "has all heroes ? " + hasAll);
                 for (InAppProduct inAppProduct : inAppProducts) {
                     if (!inAppProduct.isAvailable()) {
                         inAppProduct.setHasBeenBought(false);
                         for (String productId : ownedItems) {
-                            if (inAppProduct.getProductId().equals(productId)) {
+                            if (hasAll || inAppProduct.getProductId().equals(productId)) {
                                 inAppProduct.setHasBeenBought(true);
                                 break;
                             }
@@ -98,8 +104,15 @@ public class InAppBillingHelper {
 
     public void purchaseItem(InAppProduct inAppProduct) {
         if (mService != null && !inAppProduct.isAvailable()) {
+            purchaseItem(inAppProduct.getProductId());
+        }
+    }
+
+    public void purchaseItem(String inAppProductId) {
+        Log.d(TAG, "purchasing " + inAppProductId);
+        if (mService != null) {
             try {
-                Bundle buyIntentBundle = mService.getBuyIntent(API_VERSION, mActivity.getPackageName(), inAppProduct.getProductId(), IN_APP_PURCHASE_TYPE, DEVELOPER_PAYLOAD);
+                Bundle buyIntentBundle = mService.getBuyIntent(API_VERSION, mActivity.getPackageName(), inAppProductId, IN_APP_PURCHASE_TYPE, DEVELOPER_PAYLOAD);
                 PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
                 if (pendingIntent != null) {
                     mActivity.startIntentSenderForResult(pendingIntent.getIntentSender(), BILLING_REQUEST_CODE,
@@ -110,6 +123,8 @@ public class InAppBillingHelper {
             } catch (SendIntentException e) {
                 e.printStackTrace();
             }
+        } else {
+            Log.d(TAG, "billing service is null");
         }
     }
 

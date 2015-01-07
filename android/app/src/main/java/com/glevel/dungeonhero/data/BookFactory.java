@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class BookFactory {
 
-    public static final int INTRODUCTION_BOOK_ID = 1;
-
     public static List<Book> getAll() {
         List<Book> lst = new ArrayList<>();
         lst.add(buildInitiationBook());
@@ -24,7 +22,7 @@ public class BookFactory {
     }
 
     public static Book buildInitiationBook() {
-        Book book = new Book(INTRODUCTION_BOOK_ID, "initiation", "initiation_intro", "initiation_outro", null);
+        Book book = new Book(Book.TUTORIAL_BOOK_ID, "initiation", "initiation_intro", "initiation_outro", null);
 
         // chapter 1
         List<Event> events = new ArrayList<>();

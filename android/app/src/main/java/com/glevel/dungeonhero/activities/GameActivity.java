@@ -9,6 +9,7 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
 import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.data.characters.HeroFactory;
+import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.base.GameElement;
@@ -19,6 +20,7 @@ import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Monster;
+import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.Directions;
@@ -154,7 +156,21 @@ public class GameActivity extends MyBaseGameActivity {
         if (mHero != null) {
             List<Unit> heroes = new ArrayList<>();
             heroes.add(mHero);
-            mDungeon.moveIn(mTmxTiledMap, heroes, mGame.getBook().getId() == BookFactory.INTRODUCTION_BOOK_ID && mGame.getBook().getActiveChapter().isFirst());
+            mDungeon.moveIn(mTmxTiledMap, heroes);
+            if (mGame.getBook().isTutorialTime() && mDungeon.isFirstRoom()) {
+                // add tutorial PNJ if this is the introduction quest
+                final Pnj tutorialCharacter = PNJFactory.buildTutorialPNJ();
+                tutorialCharacter.setOnDiscussionOver(new OnActionExecuted() {
+                    @Override
+                    public void onActionDone(boolean success) {
+                        tutorialCharacter.setCurrentHP(0);
+                        if (mHero.getSkillPoints() > 0) {
+                            mGUIManager.showNewLevelDialog(null);
+                        }
+                    }
+                });
+                mRoom.addGameElement(tutorialCharacter, mRoom.getRandomFreeTile());
+            }
         } else {
             mRoom.initRoom(mTmxTiledMap, null, 0);
         }
@@ -346,22 +362,19 @@ public class GameActivity extends MyBaseGameActivity {
                 callback = new OnActionExecuted() {
                     @Override
                     public void onActionDone(boolean success) {
-                        mGUIManager.showNewLevelDialog(new OnActionExecuted() {
-                            @Override
-                            public void onActionDone(boolean success) {
-                                // auto-talk to the tutorial character
-                                if (mGame.getBook().getId() == BookFactory.INTRODUCTION_BOOK_ID && mGame.getBook().getActiveChapter().isFirst()) {
-                                    Unit tutoCharacter = null;
-                                    for (GameElement gameElement : mRoom.getObjects()) {
-                                        if (gameElement.getIdentifier().equals("tutorial_character")  ) {
-                                            tutoCharacter = (Unit) gameElement;
-                                            break;
-                                        }
-                                    }
-                                    mActionDispatcher.talk(tutoCharacter.getTilePosition());
+                        if (mGame.getBook().isTutorialTime()) {
+                            // auto-talk to the tutorial character
+                            Unit tutoCharacter = null;
+                            for (GameElement gameElement : mRoom.getObjects()) {
+                                if (gameElement.getIdentifier().equals("tutorial_character")) {
+                                    tutoCharacter = (Unit) gameElement;
+                                    break;
                                 }
                             }
-                        });
+                            mActionDispatcher.talk(tutoCharacter.getTilePosition());
+                        } else {
+                            mGUIManager.showNewLevelDialog(null);
+                        }
                     }
                 };
             }

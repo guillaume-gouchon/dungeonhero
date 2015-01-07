@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class RecoveryEffect extends Effect implements Serializable {
 
-    private static final long serialVersionUID = 5666509606513893631L;
+    private static final long serialVersionUID = 3434030449727561337L;
 
     public RecoveryEffect(String spriteName) {
         super(spriteName, null, 0, INSTANT_EFFECT, null, 0);

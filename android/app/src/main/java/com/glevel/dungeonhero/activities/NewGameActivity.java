@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,12 +33,16 @@ import java.util.List;
 
 public class NewGameActivity extends MyActivity implements OnBillingServiceConnectedListener {
 
+    private InAppBillingHelper mInAppBillingHelper;
+    private List<Hero> mLstHeroes;
+
+    /**
+     * UI
+     */
     private ImageView mStormsBg;
     private Runnable mStormEffect;
     private AlertDialog mHeroNameDialog;
-
-    private InAppBillingHelper mInAppBillingHelper;
-    private List<Hero> mLstHeroes;
+    private Dialog mBuyDialog;
 
     /**
      * Callbacks
@@ -50,10 +56,32 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
             if (selectedHero.isAvailable()) {
                 showNameInputDialog(selectedHero);
             } else {
-                mInAppBillingHelper.purchaseItem(selectedHero);
+                showBuyHeroPopup(selectedHero);
             }
         }
     };
+
+    private void showBuyHeroPopup(final Hero selectedHero) {
+        mBuyDialog = new Dialog(this, R.style.Dialog);
+        mBuyDialog.setCancelable(true);
+        mBuyDialog.setContentView(R.layout.dialog_buy_hero);
+        TextView buyHeroButton = (TextView) mBuyDialog.findViewById(R.id.buy_hero);
+        buyHeroButton.setText(getString(R.string.buy_hero, getString(selectedHero.getName(getResources()))));
+        buyHeroButton.setCompoundDrawablesWithIntrinsicBounds(0, selectedHero.getImage(getResources()), 0, 0);
+        buyHeroButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInAppBillingHelper.purchaseItem(selectedHero);
+            }
+        });
+        mBuyDialog.findViewById(R.id.buy_all_heroes).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInAppBillingHelper.purchaseItem(InAppBillingHelper.BUY_ALL_HEROES_IN_APP_ID);
+            }
+        });
+        mBuyDialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +125,10 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
 
         if (mHeroNameDialog != null) {
             mHeroNameDialog.dismiss();
+        }
+
+        if (mBuyDialog != null) {
+            mBuyDialog.dismiss();
         }
     }
 

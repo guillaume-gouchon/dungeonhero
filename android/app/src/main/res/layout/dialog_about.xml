@@ -3,7 +3,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_custom_alert_dialog"
+    android:background="@drawable/bg_gui"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -37,12 +37,12 @@
         android:text="@string/about_other_sources" />
 
     <com.glevel.dungeonhero.views.CustomTextView
+        android:id="@+id/version"
         style="@style/AboutDialogText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="left|center_vertical"
-        android:text="@string/about_version"
         android:textSize="15sp" />
 
 </LinearLayout>

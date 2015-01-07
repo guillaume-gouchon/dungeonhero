@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="10dp"
-        android:padding="10dp"
+        android:padding="8dp"
         android:background="@drawable/bg_carousel">
 
         <LinearLayout

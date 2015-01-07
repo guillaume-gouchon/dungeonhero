@@ -3,7 +3,6 @@ package com.glevel.dungeonhero.models;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
@@ -19,6 +18,7 @@ public class Book extends StorableResource implements Serializable, InAppProduct
 
     private static final long serialVersionUID = -2713633045742704862L;
     private static final String TAG = "Book";
+    public static final int TUTORIAL_BOOK_ID = 1;
 
     private final int id;
     private final String outroText;
@@ -116,6 +116,10 @@ public class Book extends StorableResource implements Serializable, InAppProduct
 
     public void addResource(GameElement element) {
         resourcesToLoad.add(element);
+    }
+
+    public boolean isTutorialTime() {
+        return id == TUTORIAL_BOOK_ID && getActiveChapter().isFirst() && !done;
     }
 
 }

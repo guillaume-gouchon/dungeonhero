@@ -9,20 +9,13 @@ public class Monster extends Unit {
 
     private static final long serialVersionUID = 8983588742551521654L;
 
-    private Reward reward;
-
     public Monster(String identifier, int hp, int currentHP, int strength, int dexterity, int spirit, int movement) {
         super(identifier, Ranks.ENEMY, hp, currentHP, strength, dexterity, spirit, movement);
-        createRandomReward();
-    }
-
-    private void createRandomReward() {
-        int gold = (int) (Math.random() * 5) * (5 + 10 * skills.size());
-        reward = new Reward(null, gold, strength + dexterity + spirit + 15 * skills.size());
     }
 
     public Reward getReward() {
-        return reward;
+        int gold = (int) (Math.random() * 5) * (5 + 10 * skills.size());
+        return new Reward(null, gold, hp * 2 + (equipments[0] != null ? equipments[0].getLevel() + 1 : 0) * 8 + (equipments[2] != null ? equipments[2].getLevel() * 5 : 0) + 15 * skills.size());
     }
 
 }

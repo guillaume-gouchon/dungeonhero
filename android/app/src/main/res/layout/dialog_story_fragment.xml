@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/replay" />
 
     <com.glevel.dungeonhero.views.CustomButton
@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/skip" />
 
 </RelativeLayout>

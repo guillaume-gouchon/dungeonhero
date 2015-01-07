@@ -2,7 +2,6 @@ package com.glevel.dungeonhero.models.dungeons;
 
 import android.util.Log;
 
-import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.utils.MazeAlgorithm;
@@ -80,7 +79,7 @@ public class Dungeon implements Serializable {
         currentDirection = doorDirection.getOpposite();
     }
 
-    public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> heroes, boolean isTutorial) {
+    public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> heroes) {
         Room currentRoom = getCurrentRoom();
         if (currentRoom.getTiles() == null) {
             nbRoomVisited++;
@@ -92,18 +91,12 @@ public class Dungeon implements Serializable {
         Log.d(TAG, "Number of rooms not visited = " + nbRoomsLeft + ", events = " + events.size());
 
         Event event = null;
-        if (currentDirection == null) {
+        if (isFirstRoom()) {
             // heroes just enter the dungeon
             currentRoom.initRoom(tmxTiledMap, null, 0);
 
             // add stairs
             currentRoom.prepareStartRoom(heroes);
-
-            // add tutorial PNJ if this is the introduction quest
-            if (isTutorial) {
-                currentRoom.addGameElement(PNJFactory.buildTutorialPNJ(), currentRoom.getRandomFreeTile());
-            }
-
             return;
         } else if (currentRoom.getTiles() == null && events.size() > 0 && (nbRoomsLeft < events.size() || nbRoomVisited > 2 && Math.random() * 100 < nbRoomVisited * 2)) {
             // the room may contain an event
@@ -113,6 +106,10 @@ public class Dungeon implements Serializable {
 
         currentRoom.initRoom(tmxTiledMap, event, threatLevel);
         currentRoom.moveIn(heroes, currentDirection);
+    }
+
+    public boolean isFirstRoom() {
+        return currentDirection == null;
     }
 
 }

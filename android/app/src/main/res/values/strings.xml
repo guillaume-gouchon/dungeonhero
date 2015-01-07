@@ -26,14 +26,14 @@
     <string name="rate_later">Later</string>
     <string name="rate_now">Rate it now\u00A0!</string>
     <string name="rate_title">Rate the app ?</string>
-    <string name="rate_message">If you enjoy playing %s, please take a moment to rate it.\n\nThanks for your support\u00A0!</string>
+    <string name="rate_message">If you enjoy playing %s, please take a moment to rate it.\n\nThanks for your support !</string>
 
     <!-- About Dialog -->
     <string name="about_title">About Dungeon Hero</string>
-    <string name="about_credits">Game and Music by <a href="http://gouchon.com">Guillaume Gouchon</a>.</string>
+    <string name="about_credits">Game and Music by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nPropose your own quests\non the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a>.</string>
     <string name="about_contact"><a href="mailto:guillaume.gouchon@gmail.com">Contact me</a> if you have any issue or question.</string>
     <string name="about_other_sources">The game is using AndEngine by Nicolas Gramlich.\nVarious icons by <a href="http://game-icons.net">game-icons.net</a>.\nBackground art by Q_x.</string>
-    <string name="about_version">Version : 1.0.0</string>
+    <string name="about_version">Version : %s</string>
 
     <!-- Google Game Services Integration -->
     <string name="gamehelper_sign_in_failed">Failed to sign in. Please check your network connection and try again.</string>
@@ -50,7 +50,7 @@
     <string name="load_game">Load Game</string>
     <string name="settings">Options</string>
     <string name="back">Back</string>
-    <string name="advertisement">If you like Strategy Games,\ntry out my cool game <a href="https://play.google.com/store/apps/details?id=com.giggs.apps.chaos">Warlords Online</a>\u00A0!</string>
+    <string name="advertisement">If you enjoy playing this game,\nplease like the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a> and propose your own quests !</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="achievements">Trophees</string>
@@ -69,6 +69,8 @@
     <!-- New Game -->
     <string name="choose_hero_message">Choose a Hero</string>
     <string name="hero_name_input">Enter your hero name...</string>
+    <string name="buy_hero">Buy %s</string>
+    <string name="buy_all_heroes">Buy all 5 Heroes\n(30% discount !)</string>
 
     <!-- Book Chooser -->
     <string name="choose_book_message">Choose a Quest</string>
@@ -161,17 +163,17 @@
 
     <!-- Heroes -->
     <string name="berserker">Berserker</string>
-    <string name="dwarf_warrior">Warrior</string>
-    <string name="elf_ranger">Ranger</string>
+    <string name="dwarf_warrior">Dwarf Warrior</string>
+    <string name="elf_ranger">Elf Ranger</string>
     <string name="wizard">Wizard</string>
     <string name="thief">Thief</string>
     <string name="druid">Druid</string>
-    <string name="berserker_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
-    <string name="dwarf_warrior_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
-    <string name="elf_ranger_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
-    <string name="wizard_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
-    <string name="thief_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
-    <string name="druid_description">You are the Warrior, a great fighter in close combat but beware to all the magic.</string>
+    <string name="berserker_description">You are the Berserker, a fearless tribal warrior fighting his foes with rage and tenacity.</string>
+    <string name="dwarf_warrior_description">You are the Dwarf Warrior, a tough close combat fighter but weak against magic.</string>
+    <string name="elf_ranger_description">You are the Elf Ranger, a versatile adventurer with range attack skills as well as magical capacities.</string>
+    <string name="wizard_description">You are the Wizard, a great sorcerer specialized in offensive spells. Beware to contact fights though.</string>
+    <string name="thief_description">You are the Thief, a silent but deadly adventurer who can hide herself from her enemies.</string>
+    <string name="druid_description">You are the Druid, a strong spell caster who uses her knowledge of natural energies to defeat her foes.</string>
 
     <!-- Decorations -->
     <string name="light">Candlestick</string>
@@ -347,4 +349,5 @@
     <string name="initiation_girl_111_answer_1">Ouch... damn, I should take a bath</string>
     <string name="initiation_girl_112">It was a gift from my beloved mother... before she got run over by a herd of savage pigs...</string>
     <string name="initiation_girl_112_answer_1">Such a nice ending ! Ok, let\'s leave this place now</string>
+
 </resources>

@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class StunEffect extends Effect implements Serializable {
 
-    private static final long serialVersionUID = 5666509606513893631L;
+    private static final long serialVersionUID = -2944649879887761312L;
 
     public StunEffect(String spriteName, Characteristics target, int value, int level) {
         super(spriteName, target, value, INFINITE_EFFECT, null, level);

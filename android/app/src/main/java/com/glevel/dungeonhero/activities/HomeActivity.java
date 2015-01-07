@@ -65,8 +65,6 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         ApplicationUtils.showRateDialogIfNeeded(this);
         ApplicationUtils.showAdvertisementIfNeeded(this);
 
-        retrieveLoadGames();
-
         showMainHomeButtons();
     }
 
@@ -74,7 +72,7 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         new AsyncTask<Void, Void, List<Game>>() {
             @Override
             protected List<Game> doInBackground(Void... params) {
-                return mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
+                return mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).get(null, null, null, "1");
             }
 
             @Override
@@ -265,6 +263,7 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         contactTV.setMovementMethod(LinkMovementMethod.getInstance());
         TextView sourcesTV = (TextView) mAboutDialog.findViewById(R.id.aboutSources);
         sourcesTV.setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView) mAboutDialog.findViewById(R.id.version)).setText(getString(R.string.about_version, ApplicationUtils.getAppVersion(getApplicationContext())));
         mAboutDialog.show();
     }
 
@@ -312,6 +311,8 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         mLoginLayout.setVisibility(View.VISIBLE);
         showButton(mNewGameButton, true);
         showButton(mLoadGameButton, false);
+        retrieveLoadGames();
+
         showButton(mSettingsButton, true);
     }
 
