@@ -196,7 +196,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         int weapon2Min = (equipments[1] != null ? ((Weapon) equipments[1]).getMinDamage() / 2 : 0);
         int weapon1Delta = (equipments[0] != null ? ((Weapon) equipments[0]).getDeltaDamage() : 0);
         int weapon2Delta = (equipments[1] != null ? ((Weapon) equipments[1]).getDeltaDamage() / 2 : 0);
-        return (calculateDamageNaturalBonus() + weapon1Min + weapon2Min) + " - " + (calculateDamageNaturalBonus() + weapon1Min + weapon1Delta + weapon2Min + weapon2Delta);
+        int minDamage = calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE) + weapon1Min + weapon2Min;
+        return (minDamage + " - " + minDamage + weapon1Delta + weapon2Delta);
     }
 
     public void takeDamage(int damage) {

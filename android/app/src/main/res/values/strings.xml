@@ -71,6 +71,7 @@
     <string name="hero_name_input">Enter your hero name...</string>
     <string name="buy_hero">Buy %s</string>
     <string name="buy_all_heroes">Buy all 5 Heroes\n(30% discount !)</string>
+    <string name="buy_reminder"><i>(by buying a hero, you will fill my fridge with one more beer)</i></string>
 
     <!-- Book Chooser -->
     <string name="choose_book_message">Choose a Quest</string>
