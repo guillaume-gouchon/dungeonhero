@@ -5,14 +5,10 @@ import com.glevel.dungeonhero.models.Reward;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume on 10/10/14.
  */
-public class Searchable extends Decoration implements Serializable {
-
-    private static final long serialVersionUID = -705814371353878655L;
+public class Searchable extends Decoration {
 
     private boolean isEmpty = false;
     private Reward reward;

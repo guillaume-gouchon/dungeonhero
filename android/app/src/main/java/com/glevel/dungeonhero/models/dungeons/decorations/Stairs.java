@@ -5,14 +5,10 @@ import com.glevel.dungeonhero.models.dungeons.Tile;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume on 10/16/14.
  */
-public class Stairs extends Decoration implements Serializable {
-
-    private static final long serialVersionUID = 3129456613587633463L;
+public class Stairs extends Decoration {
 
     private final boolean isDownStairs;
 

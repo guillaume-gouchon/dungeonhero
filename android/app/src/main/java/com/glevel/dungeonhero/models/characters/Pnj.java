@@ -1,7 +1,7 @@
 package com.glevel.dungeonhero.models.characters;
 
-import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.models.discussions.Discussion;
+import com.glevel.dungeonhero.models.discussions.DiscussionCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,8 @@ import java.util.List;
  */
 public class Pnj extends Hero {
 
-    private static final long serialVersionUID = 4682214659658928572L;
-
     private final List<Discussion> discussions = new ArrayList<>();
-    private OnActionExecuted onDiscussionOver = null;
+    private DiscussionCallback onDiscussionOver = null;
 
     public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType) {
         super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement, null, xp, level, heroType);
@@ -24,11 +22,11 @@ public class Pnj extends Hero {
         return discussions;
     }
 
-    public OnActionExecuted getOnDiscussionOver() {
+    public DiscussionCallback getDiscussionCallback() {
         return onDiscussionOver;
     }
 
-    public void setOnDiscussionOver(OnActionExecuted onDiscussionOver) {
+    public void setDiscussionCallback(DiscussionCallback onDiscussionOver) {
         this.onDiscussionOver = onDiscussionOver;
     }
 

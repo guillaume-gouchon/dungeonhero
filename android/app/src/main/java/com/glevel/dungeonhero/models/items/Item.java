@@ -4,14 +4,10 @@ import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.items.equipments.Equipment;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume ON 10/6/14.
  */
-public abstract class Item extends StorableResource implements Serializable {
-
-    private static final long serialVersionUID = -4963410849686406982L;
+public abstract class Item extends StorableResource {
 
     private final boolean droppable;
     private final int price;

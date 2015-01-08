@@ -2,7 +2,6 @@ package com.glevel.dungeonhero.models.discussions;
 
 import android.content.res.Resources;
 
-import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.discussions.riddles.Riddle;
@@ -23,7 +22,7 @@ public class Discussion implements Serializable {
     private boolean isPermanent;
     private Reward reward;
     private Riddle riddle;
-    private OnActionExecuted onActionExecuted = null;
+    private DiscussionCallback onDiscussionOver = null;
 
     public Discussion(String message, boolean isPermanent, Reward reward) {
         this.message = message;
@@ -31,11 +30,11 @@ public class Discussion implements Serializable {
         this.reward = reward;
     }
 
-    public Discussion(String message, boolean isPermanent, Reward reward, OnActionExecuted onActionExecuted) {
+    public Discussion(String message, boolean isPermanent, Reward reward, DiscussionCallback onDiscussionOver) {
         this.message = message;
         this.isPermanent = isPermanent;
         this.reward = reward;
-        this.onActionExecuted = onActionExecuted;
+        this.onDiscussionOver = onDiscussionOver;
     }
 
     public Discussion(Riddle riddle) {
@@ -69,8 +68,8 @@ public class Discussion implements Serializable {
         return riddle;
     }
 
-    public OnActionExecuted getOnActionExecuted() {
-        return onActionExecuted;
+    public DiscussionCallback getOnActionExecuted() {
+        return onDiscussionOver;
     }
 
 }

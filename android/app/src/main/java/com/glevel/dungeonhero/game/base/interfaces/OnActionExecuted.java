@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by guillaume on 10/9/14.
  */
-public interface OnActionExecuted extends Serializable {
+public interface OnActionExecuted {
 
     public void onActionDone(boolean success);
 

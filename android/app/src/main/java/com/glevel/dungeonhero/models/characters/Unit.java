@@ -26,25 +26,26 @@ import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by guillaume ON 10/2/14.
  */
-public abstract class Unit extends GameElement implements MovingElement<Tile>, Serializable {
+public abstract class Unit extends GameElement implements MovingElement<Tile> {
+
+    private static final String TAG = "Unit";
 
     public static final int NB_ITEMS_MAX_IN_BAG = 15;
-    private static final String TAG = "Unit";
-    private static final long serialVersionUID = 1683650465351973413L;
-    protected final List<Item> items = new ArrayList<>();
+
     // Skills
     protected final List<Skill> skills = new ArrayList<>();
-    protected final Equipment[] equipments = new Equipment[5];
     protected List<Effect> buffs = new ArrayList<>();
+
     // Possessions
     protected int gold;
+    protected final List<Item> items = new ArrayList<>();
+    protected final Equipment[] equipments = new Equipment[5];
 
     // Characteristics
     protected int hp;
@@ -197,7 +198,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile>, S
         int weapon1Delta = (equipments[0] != null ? ((Weapon) equipments[0]).getDeltaDamage() : 0);
         int weapon2Delta = (equipments[1] != null ? ((Weapon) equipments[1]).getDeltaDamage() / 2 : 0);
         int minDamage = calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE) + weapon1Min + weapon2Min;
-        return (minDamage + " - " + minDamage + weapon1Delta + weapon2Delta);
+        int maxDamage = minDamage + weapon1Delta + weapon2Delta;
+        return (minDamage + " - " + maxDamage);
     }
 
     public void takeDamage(int damage) {

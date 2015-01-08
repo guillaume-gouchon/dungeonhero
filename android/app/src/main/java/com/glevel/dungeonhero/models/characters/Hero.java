@@ -20,8 +20,6 @@ import java.util.ArrayList;
  */
 public class Hero extends Unit implements InAppProduct {
 
-    private static final long serialVersionUID = -2887616275513777101L;
-
     private static final int LEVEL_MAX = 6;
 
     private final String productId;

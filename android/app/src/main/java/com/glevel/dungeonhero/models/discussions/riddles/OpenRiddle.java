@@ -2,14 +2,11 @@ package com.glevel.dungeonhero.models.discussions.riddles;
 
 import com.glevel.dungeonhero.models.Reward;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume on 12/2/14.
  */
-public class OpenRiddle extends Riddle implements Serializable {
+public class OpenRiddle extends Riddle {
 
-    private static final long serialVersionUID = 7852692444871638271L;
     private final String correctAnswer;
 
     public OpenRiddle(int timer, String question, String correctAnswer, Reward reward) {

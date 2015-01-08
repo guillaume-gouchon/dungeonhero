@@ -2,15 +2,13 @@ package com.glevel.dungeonhero.models.discussions.riddles;
 
 import com.glevel.dungeonhero.models.Reward;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by guillaume on 12/2/14.
  */
-public class MultiChoicesRiddle extends Riddle implements Serializable {
+public class MultiChoicesRiddle extends Riddle {
 
-    private static final long serialVersionUID = -8402780163191722453L;
     private List<Integer> answers;
     private int correctAnswerIndex;
 

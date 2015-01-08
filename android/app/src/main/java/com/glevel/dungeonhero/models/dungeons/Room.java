@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
 import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
-import com.glevel.dungeonhero.data.dungeons.GroundTypes;
 import com.glevel.dungeonhero.data.dungeons.RoomFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.models.Reward;
@@ -243,7 +242,6 @@ public class Room implements Serializable {
     }
 
     public void moveIn(List<Unit> heroes, Directions from) {
-        // TODO : multiple heroes / allies
         Log.d(TAG, "moving into room from direction = " + from.name() + ", " + heroes.size() + " units");
         Tile doorPosition = doors.get(from);
         int factor = from == Directions.SOUTH ? 2 : 1;
@@ -271,7 +269,6 @@ public class Room implements Serializable {
     }
 
     public void prepareStartRoom(List<Unit> lstUnitsToMoveIn) {
-        // TODO : multiple heroes / allies
         Tile stairTile = getRandomFreeTile();
         addGameElement(new Stairs(false), stairTile);
         for (Unit unit : lstUnitsToMoveIn) {

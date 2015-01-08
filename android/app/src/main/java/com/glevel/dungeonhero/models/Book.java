@@ -7,16 +7,14 @@ import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by guillaume ON 10/3/14.
  */
-public class Book extends StorableResource implements Serializable, InAppProduct {
+public class Book extends StorableResource implements InAppProduct {
 
-    private static final long serialVersionUID = -2713633045742704862L;
     private static final String TAG = "Book";
     public static final int TUTORIAL_BOOK_ID = 1;
 

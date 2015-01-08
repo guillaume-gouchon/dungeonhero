@@ -13,6 +13,7 @@ import java.io.Serializable;
 public abstract class Riddle implements Serializable {
 
     private static final long serialVersionUID = -8538469758021996078L;
+    
     private final int timer;
     private final String question;
     private final Reward reward;

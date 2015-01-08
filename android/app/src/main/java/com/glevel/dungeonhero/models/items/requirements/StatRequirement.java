@@ -2,14 +2,10 @@ package com.glevel.dungeonhero.models.items.requirements;
 
 import com.glevel.dungeonhero.models.items.Characteristics;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume on 19/10/14.
  */
-public class StatRequirement extends Requirement implements Serializable {
-
-    private static final long serialVersionUID = 5714245105140860799L;
+public class StatRequirement extends Requirement {
 
     private final Characteristics target;
     private final int value;

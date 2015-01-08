@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.GameActivity;
-import com.glevel.dungeonhero.data.dungeons.GroundTypes;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.InputManager;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
@@ -23,6 +22,7 @@ import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.discussions.Discussion;
 import com.glevel.dungeonhero.models.dungeons.Directions;
+import com.glevel.dungeonhero.models.dungeons.GroundTypes;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
@@ -393,8 +393,8 @@ public class ActionsDispatcher implements UserActionListener {
 
     private void finishDiscussion(Pnj pnj) {
         Log.d(TAG, "finish discussion");
-        if (pnj.getOnDiscussionOver() != null) {
-            pnj.getOnDiscussionOver().onActionDone(true);
+        if (pnj.getDiscussionCallback() != null) {
+            pnj.getDiscussionCallback().onDiscussionOver();
 
             // check dead units
             for (final GameElement gameElement : mGameActivity.getRoom().getObjects()) {
@@ -583,7 +583,7 @@ public class ActionsDispatcher implements UserActionListener {
             final Directions direction = Directions.from(nextTile.getX() - mGameActivity.getActiveCharacter().getTilePosition().getX(), mGameActivity.getActiveCharacter().getTilePosition().getY() - nextTile.getY());
             sprite.walk(direction);
             final List<Tile> p = new ArrayList<>(path);
-            animationHandler = new TimerHandler(1.0f / 40, true, new ITimerCallback() {
+            animationHandler = new TimerHandler(1.0f / 60, true, new ITimerCallback() {
                 @Override
                 public void onTimePassed(TimerHandler pTimerHandler) {
                     if (direction == Directions.EAST && sprite.getX() >= nextTile.getTileX()
@@ -605,6 +605,7 @@ public class ActionsDispatcher implements UserActionListener {
                         } else {
                             Log.d(TAG, "interrupt movement");
                             mScene.sortChildren();
+                            sprite.stand();
                             callback.onActionDone(false);
                             interrupt = false;
                         }
@@ -626,7 +627,8 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void animateFight(final Unit attacker, final Unit target, final FightResult fightResult, final OnActionExecuted callback) {
-        final Sprite attackerSprite = attacker.getSprite(), targetSprite = target.getSprite();
+        final UnitSprite attackerSprite = (UnitSprite) attacker.getSprite();
+        final Sprite targetSprite = target.getSprite();
 
         if (attacker.isNextTo(target.getTilePosition())) {
             mGameActivity.playSound("close_combat_attack", false);
@@ -655,7 +657,8 @@ public class ActionsDispatcher implements UserActionListener {
 
         // animate characters
         final Directions direction = Directions.from(targetSprite.getX() - attackerSprite.getX(), targetSprite.getY() - attackerSprite.getY());
-        animationHandler = new TimerHandler(1.0f / 60, true, new ITimerCallback() {
+        attackerSprite.changeOrientation(Directions.from(targetSprite.getX() - attackerSprite.getX(), attackerSprite.getY() - targetSprite.getY()));
+        animationHandler = new TimerHandler(1.0f / 45, true, new ITimerCallback() {
 
             private static final int DURATION_IN_FRAMES = 30;
             private static final int OFFSET = 5;
@@ -682,6 +685,7 @@ public class ActionsDispatcher implements UserActionListener {
                     mScene.unregisterUpdateHandler(animationHandler);
                     if (!done) {
                         done = true;
+                        attackerSprite.stand();
                         target.updateSprite();
                         callback.onActionDone(true);
                     }

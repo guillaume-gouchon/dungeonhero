@@ -9,8 +9,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class Light extends Decoration {
 
-    private static final long serialVersionUID = -1922234895386514835L;
-
     public Light(String identifier) {
         super(identifier, 21, 20, 3, 1);
     }

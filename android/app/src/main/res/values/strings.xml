@@ -316,7 +316,7 @@
 
     <!-- Initiation Book -->
     <string name="initiation">The Initiation</string>
-    <string name="initiation_intro">Finally, you decided to jump ahead: you set aside your boring life to become a rootless adventurer, looking for gold and glory through the 3 kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter Lubrice has been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back alive.\n\nLooks like your first Quest begins !</string>
+    <string name="initiation_intro">Finally, you decided to jump ahead: you set aside your boring life to become a rootless adventurer, looking for gold and glory through the three kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter Lubrice has been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back alive.\n\nLooks like your first Quest begins !</string>
     <string name="initiation_outro">Well done, your first quest is a success !\n\nYou left the caverns straight away and arrived at the nearest village in the evening.\n\nAfter a few pints at the tavern, you had a well-deserved sleep.\n\nYour thirst for adventures has to wait until the next day.</string>
     <string name="tutorial_character">Alhagar the Mighty</string>
     <string name="initiation_chapter_1">Wow, this guy seems hurt to death... let\'s talk to him.</string>

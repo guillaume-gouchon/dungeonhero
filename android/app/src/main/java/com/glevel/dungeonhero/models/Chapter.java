@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.models;
 
 import android.content.res.Resources;
-import android.util.Log;
 
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Event;

@@ -187,6 +187,7 @@ public class GUIManager {
                             Intent intent = new Intent(mGameActivity, BookChooserActivity.class);
                             mGameActivity.getGame().setHero(mHero);
                             intent.putExtra(Game.class.getName(), mGameActivity.getGame());
+
                             mGameActivity.startActivity(intent);
                             mGameActivity.finish();
                         }
@@ -709,7 +710,7 @@ public class GUIManager {
         if (hero.getEquipments()[0] instanceof TwoHandedWeapon) {
             ImageView image = (ImageView) equipmentLayout.getChildAt(1).findViewById(R.id.image);
             image.setImageResource(hero.getEquipments()[0].getImage(mResources));
-            image.setAlpha(0.5f);
+            image.setAlpha(0.8f);
         }
     }
 

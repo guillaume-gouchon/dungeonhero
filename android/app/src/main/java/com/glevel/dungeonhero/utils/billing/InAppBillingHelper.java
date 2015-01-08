@@ -24,7 +24,7 @@ public class InAppBillingHelper {
     private static final String TAG = "InAppBillingHelper";
 
     private static final int API_VERSION = 3;
-    private static final String IN_APP_PURCHASE_TYPE = "in-app";
+    private static final String IN_APP_PURCHASE_TYPE = "inapp";
     private static final String DEVELOPER_PAYLOAD = "doobiididadoobiiidoodidadoodidaaaaaa";
     private static final String SERVICE_INTENT = "com.android.vending.billing.InAppBillingService.BIND";
     private static final String RESPONSE_CODE_KEY = "RESPONSE_CODE";

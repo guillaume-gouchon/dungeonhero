@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class Dungeon implements Serializable {
 
-    private static final long serialVersionUID = 4765596237193067497L;
-
     private static final String TAG = "Dungeon";
+    private static final long serialVersionUID = -5750050429857666567L;
+
     private final int width, height;
     private Room[][] rooms;
     private int start;

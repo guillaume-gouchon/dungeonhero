@@ -20,10 +20,9 @@ import java.util.List;
 /**
  * Created by guillaume ON 10/2/14.
  */
-public class Game extends DatabaseResource implements Serializable {
+public class Game extends DatabaseResource {
 
     public static final String TABLE_NAME = "game";
-    private static final long serialVersionUID = -840485102400894219L;
 
     private Book book;
     private List<Integer> booksDone = new ArrayList<>();

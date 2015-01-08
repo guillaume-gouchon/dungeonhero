@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.data.dungeons;
+package com.glevel.dungeonhero.models.dungeons;
 
 /**
  * Created by guillaume ON 10/8/14.

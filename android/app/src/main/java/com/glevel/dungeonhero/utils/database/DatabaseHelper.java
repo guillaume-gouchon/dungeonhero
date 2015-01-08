@@ -46,7 +46,6 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
         super.onOpen(db);
     }
 
-    // TODO : refactor
     private void createDatabaseFromResources(SQLiteDatabase db) {
         for (String sqlStatement : Game.getDatabaseCreationStatements()) {
             db.execSQL(sqlStatement);

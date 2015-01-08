@@ -100,10 +100,8 @@ ADDED from AndroidManifest.xml:41:9
 		ADDED from AndroidManifest.xml:41:19
 activity#com.glevel.dungeonhero.activities.GameActivity
 ADDED from AndroidManifest.xml:42:9
-	android:configChanges
-		ADDED from AndroidManifest.xml:44:13
 	android:name
-		ADDED from AndroidManifest.xml:43:13
+		ADDED from AndroidManifest.xml:42:19
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:support-v4:21.0.2:15:5

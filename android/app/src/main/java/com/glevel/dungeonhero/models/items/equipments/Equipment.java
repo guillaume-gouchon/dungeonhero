@@ -5,16 +5,13 @@ import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.requirements.Requirement;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by guillaume ON 10/6/14.
  */
-public abstract class Equipment extends Item implements Serializable {
-
-    private static final long serialVersionUID = -1500593967008364005L;
+public abstract class Equipment extends Item {
 
     private final List<Effect> effects = new ArrayList<Effect>();
     private final List<Requirement> requirements = new ArrayList<Requirement>();

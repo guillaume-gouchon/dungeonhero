@@ -4,14 +4,11 @@ import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.effects.Effect;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume ON 10/6/14.
  */
-public abstract class Skill extends StorableResource implements Serializable {
+public abstract class Skill extends StorableResource {
 
-    private static final long serialVersionUID = 457816281507623195L;
     private static final int SKILL_MAX_LEVEL = 6;
 
     private int level;

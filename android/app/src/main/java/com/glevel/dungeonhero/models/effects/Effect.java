@@ -9,9 +9,11 @@ import java.io.Serializable;
  */
 public abstract class Effect implements Serializable, Cloneable {
 
+    private static final long serialVersionUID = 3040363823518403336L;
+
     public static final int INSTANT_EFFECT = 0;
     public static final int INFINITE_EFFECT = -1;
-    private static final long serialVersionUID = 3040363823518403336L;
+    
     private final String spriteName;
     private final Characteristics target;
     private final Effect special;

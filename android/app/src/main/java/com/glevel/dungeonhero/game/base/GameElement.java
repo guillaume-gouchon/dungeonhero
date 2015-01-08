@@ -14,9 +14,8 @@ import org.andengine.util.color.Color;
 
 import java.io.Serializable;
 
-public abstract class GameElement extends StorableResource implements Serializable, GraphicHolder {
+public abstract class GameElement extends StorableResource implements GraphicHolder {
 
-    private static final long serialVersionUID = -5880458091427517171L;
     private static final String TAG = "GameElement";
     private final int spriteWidth, spriteHeight, nbSpritesX, nbSpritesY;
     protected transient GameElementSprite sprite;

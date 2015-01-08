@@ -3,12 +3,12 @@ package com.glevel.dungeonhero.data.characters;
 import com.glevel.dungeonhero.data.items.PotionFactory;
 import com.glevel.dungeonhero.data.items.RingFactory;
 import com.glevel.dungeonhero.data.items.WeaponFactory;
-import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.discussions.Discussion;
+import com.glevel.dungeonhero.models.discussions.DiscussionCallback;
 import com.glevel.dungeonhero.models.discussions.Reaction;
 
 /**
@@ -92,12 +92,7 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // she slaps you
-        discussion = new Discussion("initiation_girl_111", false, null, new OnActionExecuted() {
-            @Override
-            public void onActionDone(boolean success) {
-                pnj.setRank(Ranks.ENEMY);
-            }
-        });
+        discussion = new Discussion("initiation_girl_111", false, null, new InitiationQuestGirlDiscussionCallback(pnj));
 
         discussion.addReaction(new Reaction("initiation_girl_111_answer_1", 1));
         pnj.getDiscussions().add(discussion);
@@ -108,6 +103,18 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         return pnj;
+    }
+
+    private static class InitiationQuestGirlDiscussionCallback extends DiscussionCallback {
+
+        public InitiationQuestGirlDiscussionCallback(Pnj pnj) {
+            super(pnj);
+        }
+
+        @Override
+        public void onDiscussionOver() {
+            pnj.setRank(Ranks.ENEMY);
+        }
     }
 
 }

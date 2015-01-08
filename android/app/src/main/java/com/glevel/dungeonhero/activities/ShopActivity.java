@@ -303,7 +303,7 @@ public class ShopActivity extends MyActivity implements OnClickListener {
             }
 
             TextView actionButton = (TextView) mItemInfoDialog.findViewById(R.id.actionButton);
-            actionButton.setText(isSelling ? getString(R.string.sell_item_for, item.getPrice() / 2) : getString(R.string.buy_item_for, item.getPrice()));
+            actionButton.setText(isSelling ? getString(R.string.sell_item_for, item.getSellPrice()) : getString(R.string.buy_item_for, item.getPrice()));
             actionButton.setEnabled(isSelling || mGame.getHero().getGold() >= item.getPrice() && mGame.getHero().getItems().size() < Unit.NB_ITEMS_MAX_IN_BAG);
             actionButton.setOnClickListener(new OnClickListener() {
                 @Override

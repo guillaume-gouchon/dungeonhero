@@ -2,14 +2,10 @@ package com.glevel.dungeonhero.models.items.consumables;
 
 import com.glevel.dungeonhero.models.effects.Effect;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume ON 10/6/14.
  */
-public class Potion extends Consumable implements Serializable {
-
-    private static final long serialVersionUID = 8959726100020921265L;
+public class Potion extends Consumable {
 
     private final Effect effect;
 

@@ -4,14 +4,10 @@ import com.glevel.dungeonhero.models.items.Characteristics;
 
 import org.andengine.util.color.Color;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume on 19/10/14.
  */
-public class BuffEffect extends Effect implements Serializable {
-
-    private static final long serialVersionUID = 7151836860014013471L;
+public class BuffEffect extends Effect {
 
     private final Color buffColor;
 

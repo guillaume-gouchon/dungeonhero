@@ -5,14 +5,10 @@ import com.glevel.dungeonhero.models.dungeons.Tile;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import java.io.Serializable;
-
 /**
  * Created by guillaume on 10/16/14.
  */
-public class ItemOnGround extends Searchable implements Serializable {
-
-    private static final long serialVersionUID = -5951439044612420653L;
+public class ItemOnGround extends Searchable {
 
     public ItemOnGround(String identifier, Reward reward) {
         super(identifier, reward, 12, 12, 1, 1);

@@ -16,6 +16,7 @@ import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
+import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -23,6 +24,7 @@ import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
+import com.glevel.dungeonhero.models.discussions.DiscussionCallback;
 import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
@@ -160,15 +162,7 @@ public class GameActivity extends MyBaseGameActivity {
             if (mGame.getBook().isTutorialTime() && mDungeon.isFirstRoom()) {
                 // add tutorial PNJ if this is the introduction quest
                 final Pnj tutorialCharacter = PNJFactory.buildTutorialPNJ();
-                tutorialCharacter.setOnDiscussionOver(new OnActionExecuted() {
-                    @Override
-                    public void onActionDone(boolean success) {
-                        tutorialCharacter.setCurrentHP(0);
-                        if (mHero.getSkillPoints() > 0) {
-                            mGUIManager.showNewLevelDialog(null);
-                        }
-                    }
-                });
+                tutorialCharacter.setDiscussionCallback(new TutorialCharacterDiscussionCallback(tutorialCharacter));
                 mRoom.addGameElement(tutorialCharacter, mRoom.getRandomFreeTile());
             }
         } else {
@@ -223,6 +217,18 @@ public class GameActivity extends MyBaseGameActivity {
         mGUIManager.setData(mHero);
 
         startGame();
+    }
+
+    private static class TutorialCharacterDiscussionCallback extends DiscussionCallback {
+
+        public TutorialCharacterDiscussionCallback(Pnj pnj) {
+            super(pnj);
+        }
+
+        @Override
+        public void onDiscussionOver() {
+            pnj.setCurrentHP(0);
+        }
     }
 
     public void addElementToScene(GameElement gameElement) {
@@ -355,33 +361,42 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     public void showChapterIntro() {
-        if (mGame.getBook().getActiveChapter().getIntroText(getResources()) > 0) {
-            OnActionExecuted callback = null;
-            if (mHero.getSkillPoints() > 0) {
-                // if hero has some skill points left
-                callback = new OnActionExecuted() {
-                    @Override
-                    public void onActionDone(boolean success) {
-                        if (mGame.getBook().isTutorialTime()) {
-                            // auto-talk to the tutorial character
-                            Unit tutoCharacter = null;
-                            for (GameElement gameElement : mRoom.getObjects()) {
-                                if (gameElement.getIdentifier().equals("tutorial_character")) {
-                                    tutoCharacter = (Unit) gameElement;
-                                    break;
+        OnActionExecuted callback = new OnActionExecuted() {
+            @Override
+            public void onActionDone(boolean success) {
+                if (mGame.getBook().getActiveChapter().getIntroText(getResources()) > 0) {
+                    OnActionExecuted callback = new OnActionExecuted() {
+                        @Override
+                        public void onActionDone(boolean success) {
+                            if (mGame.getBook().isTutorialTime()) {
+                                // auto-talk to the tutorial character
+                                Unit tutoCharacter = null;
+                                for (GameElement gameElement : mRoom.getObjects()) {
+                                    if (gameElement.getIdentifier().equals("tutorial_character")) {
+                                        tutoCharacter = (Unit) gameElement;
+                                        break;
+                                    }
                                 }
+                                mActionDispatcher.talk(tutoCharacter.getTilePosition());
                             }
-                            mActionDispatcher.talk(tutoCharacter.getTilePosition());
-                        } else {
-                            mGUIManager.showNewLevelDialog(null);
                         }
+                    };
+
+                    // don't show tutorial intro the second time
+                    if (mGame.getBook().getId() != Book.TUTORIAL_BOOK_ID || !mGame.getBook().isDone()) {
+                        mGUIManager.showChapterIntro(callback);
                     }
-                };
+
+                    mGame.getBook().getActiveChapter().read();
+                }
             }
-            mGUIManager.showChapterIntro(callback);
-            mGame.getBook().getActiveChapter().read();
-        } else if (mHero.getSkillPoints() > 0) {
-            mGUIManager.showNewLevelDialog(null);
+        };
+
+        // show first new level dialog if needed
+        if (mHero.getSkillPoints() > 0) {
+            mGUIManager.showNewLevelDialog(callback);
+        } else {
+            callback.onActionDone(true);
         }
     }
 
