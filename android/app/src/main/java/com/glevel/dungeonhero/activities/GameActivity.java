@@ -24,7 +24,6 @@ import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
-import com.glevel.dungeonhero.models.discussions.DiscussionCallback;
 import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
@@ -162,7 +161,6 @@ public class GameActivity extends MyBaseGameActivity {
             if (mGame.getBook().isTutorialTime() && mDungeon.isFirstRoom()) {
                 // add tutorial PNJ if this is the introduction quest
                 final Pnj tutorialCharacter = PNJFactory.buildTutorialPNJ();
-                tutorialCharacter.setDiscussionCallback(new TutorialCharacterDiscussionCallback(tutorialCharacter));
                 mRoom.addGameElement(tutorialCharacter, mRoom.getRandomFreeTile());
             }
         } else {
@@ -217,18 +215,6 @@ public class GameActivity extends MyBaseGameActivity {
         mGUIManager.setData(mHero);
 
         startGame();
-    }
-
-    private static class TutorialCharacterDiscussionCallback extends DiscussionCallback {
-
-        public TutorialCharacterDiscussionCallback(Pnj pnj) {
-            super(pnj);
-        }
-
-        @Override
-        public void onDiscussionOver() {
-            pnj.setCurrentHP(0);
-        }
     }
 
     public void addElementToScene(GameElement gameElement) {

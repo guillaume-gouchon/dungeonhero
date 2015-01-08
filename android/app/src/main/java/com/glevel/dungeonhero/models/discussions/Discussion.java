@@ -68,7 +68,7 @@ public class Discussion implements Serializable {
         return riddle;
     }
 
-    public DiscussionCallback getOnActionExecuted() {
+    public DiscussionCallback getOnDiscussionOver() {
         return onDiscussionOver;
     }
 

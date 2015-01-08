@@ -61,7 +61,21 @@ public class PNJFactory {
         discussion.addReaction(new Reaction("initiation_tutorial_thanks", 0));
         pnj.getDiscussions().add(discussion);
 
+        pnj.setDiscussionCallback(new TutorialCharacterDiscussionCallback(pnj));
+
         return pnj;
+    }
+
+    private static class TutorialCharacterDiscussionCallback extends DiscussionCallback {
+
+        public TutorialCharacterDiscussionCallback(Pnj pnj) {
+            super(pnj);
+        }
+
+        @Override
+        public void onDiscussionOver() {
+            pnj.setCurrentHP(0);
+        }
     }
 
     public static Pnj buildInitiationQuestGirl() {
@@ -93,7 +107,6 @@ public class PNJFactory {
 
         // she slaps you
         discussion = new Discussion("initiation_girl_111", false, null, new InitiationQuestGirlDiscussionCallback(pnj));
-
         discussion.addReaction(new Reaction("initiation_girl_111_answer_1", 1));
         pnj.getDiscussions().add(discussion);
 

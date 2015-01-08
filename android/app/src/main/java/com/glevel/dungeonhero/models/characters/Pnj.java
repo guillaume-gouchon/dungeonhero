@@ -32,8 +32,8 @@ public class Pnj extends Hero {
 
     public Discussion getNextDiscussion() {
         // update end of discussion callback action
-        if (discussions.get(0).getOnActionExecuted() != null) {
-            this.onDiscussionOver = discussions.get(0).getOnActionExecuted();
+        if (discussions.get(0).getOnDiscussionOver() != null) {
+            this.onDiscussionOver = discussions.get(0).getOnDiscussionOver();
         }
         return discussions.get(0);
     }
