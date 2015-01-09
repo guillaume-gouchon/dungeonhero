@@ -359,15 +359,15 @@
     <string name="balrog_quest">The Balrog\'s Lair</string>
 
     <!-- Old Wizard's Quest -->
-    <string name="wizard_quest">The Strange Old Man\'s Quest</string>
+    <string name="wizard_quest">The Quest of the Strange Old Man</string>
 
     <!-- The Partnership -->
-    <string name="partnership_quest">The Partnership</string>
+    <string name="partnership_quest">Brothers in Arms</string>
 
     <!-- The Blonde Ale's Revenge -->
     <string name="ale_quest">The Blonde Ale\'s Revenge</string>
 
-    <!-- The Dreamer must awaken -->
-    <string name="dream_quest">The Dreamer must awaken</string>
+    <!-- The Dreamer must awake -->
+    <string name="dream_quest">The Dreamer must awake</string>
 
 </resources>

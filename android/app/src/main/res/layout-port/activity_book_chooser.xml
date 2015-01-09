@@ -40,7 +40,7 @@
                     android:drawablePadding="10dp"
                     android:textSize="22sp"
                     android:drawableLeft="@drawable/ic_coin"
-                    android:layout_marginLeft="8dp" />
+                    android:layout_marginLeft="10dp" />
 
                 <com.glevel.dungeonhero.views.CustomTextView
                     android:visibility="gone"
