@@ -80,8 +80,8 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
         // retrieve books
         mLstBooks = BookFactory.getAll();
         for (Book book : mLstBooks) {
-            if (mGame.getBooksDone().contains(book.getId())) {
-                book.setDone(true);
+            if (mGame.getBooksDone().get(book.getId()) != null) {
+                book.setBestScore(mGame.getBooksDone().get(book.getId()));
             }
         }
 
@@ -115,7 +115,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     protected int[] getMusicResource() {
         return new int[]{R.raw.main_menu};
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();

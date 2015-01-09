@@ -64,12 +64,14 @@ public class MusicManager {
     }
 
     public static void release() {
+        Log.d(TAG, "Release music player");
         try {
             if (sMediaPlayer != null) {
                 if (sMediaPlayer.isPlaying()) {
                     sMediaPlayer.stop();
                 }
                 sMediaPlayer.release();
+                sMediaPlayer = null;
             }
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

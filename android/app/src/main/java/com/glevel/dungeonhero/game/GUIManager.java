@@ -245,7 +245,7 @@ public class GUIManager {
             mGameActivity.startActivity(intent);
             mGameActivity.finish();
         } else {
-            mGameActivity.getGame().finishBook(activeBook);
+            mGameActivity.getGame().finishBook();
 
             // reset shop when one quest is finished
             ShopActivity.resetShop(mGameActivity.getApplicationContext());
@@ -710,7 +710,7 @@ public class GUIManager {
         if (hero.getEquipments()[0] instanceof TwoHandedWeapon) {
             ImageView image = (ImageView) equipmentLayout.getChildAt(1).findViewById(R.id.image);
             image.setImageResource(hero.getEquipments()[0].getImage(mResources));
-            image.setAlpha(0.8f);
+            image.setAlpha(0.7f);
         }
     }
 

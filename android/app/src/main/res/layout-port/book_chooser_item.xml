@@ -19,10 +19,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:padding="20dp"
         android:background="@drawable/bg_carousel"
         android:gravity="top|center">
 
@@ -34,10 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
-            android:textSize="28sp" />
+            android:layout_marginTop="20dp" />
 
         <View
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/white"
@@ -49,8 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
-            android:layout_marginTop="15dp"
-            android:textSize="18sp" />
+            android:layout_marginTop="35dp" />
     </LinearLayout>
 
     <ImageView

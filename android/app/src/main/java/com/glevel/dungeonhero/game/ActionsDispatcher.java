@@ -107,7 +107,7 @@ public class ActionsDispatcher implements UserActionListener {
                 executeAction(tile);
             } else {
                 hideElementInfo();
-                if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition() == tile && tile.getSubContent().size() > 0
+                if (mGameActivity.getRoom().isSafe() && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition() == tile && tile.getSubContent().size() > 0
                         && tile.getSubContent().get(0) instanceof Stairs) {
                     enterStairs();
                 } else if (mGameActivity.getRoom().isSafe()) {
@@ -175,7 +175,7 @@ public class ActionsDispatcher implements UserActionListener {
                         if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getGround() == GroundTypes.DOOR) {
                             // enters a door tile
                             mGameActivity.switchRoom(mGameActivity.getActiveCharacter().getTilePosition());
-                        } else if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().size() > 0
+                        } else if (mGameActivity.getRoom().isSafe() && mGameActivity.getActiveCharacter().getRank() == Ranks.ME && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().size() > 0
                                 && mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0) instanceof Stairs) {
                             enterStairs();
                         } else if (mGameActivity.getRoom().isSafe()) {
@@ -202,9 +202,7 @@ public class ActionsDispatcher implements UserActionListener {
             @Override
             public void run() {
                 if (((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
-                    if (mGameActivity.getRoom().isSafe()) {
-                        mGUIManager.showFinishQuestDialog();
-                    }
+                    mGUIManager.showFinishQuestDialog();
                 } else {
                     mGUIManager.showLeaveQuestDialog();
                 }

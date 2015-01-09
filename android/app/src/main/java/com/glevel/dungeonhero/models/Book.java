@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.models;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
@@ -16,7 +17,6 @@ import java.util.List;
 public class Book extends StorableResource implements InAppProduct {
 
     private static final String TAG = "Book";
-    public static final int TUTORIAL_BOOK_ID = 1;
 
     private final int id;
     private final String outroText;
@@ -25,7 +25,8 @@ public class Book extends StorableResource implements InAppProduct {
     private final List<GraphicHolder> resourcesToLoad = new ArrayList<>();
     private final String productId;
     private boolean hasBeenBought;
-    private boolean done;
+    private int bestScore;
+    private int currentScore;
 
     public Book(int id, String identifier, String introText, String outroText, String productId) {
         super(identifier);
@@ -33,7 +34,8 @@ public class Book extends StorableResource implements InAppProduct {
         this.introText = introText;
         this.outroText = outroText;
         this.productId = productId;
-        this.done = false;
+        this.bestScore = 0;
+        this.currentScore = 3;
     }
 
     @Override
@@ -70,11 +72,7 @@ public class Book extends StorableResource implements InAppProduct {
     }
 
     public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
+        return bestScore > 0;
     }
 
     public int getId() {
@@ -117,7 +115,24 @@ public class Book extends StorableResource implements InAppProduct {
     }
 
     public boolean isTutorialTime() {
-        return id == TUTORIAL_BOOK_ID && getActiveChapter().isFirst() && !done;
+        return id == BookFactory.TUTORIAL_BOOK_ID && getActiveChapter().isFirst() && !isDone();
+    }
+
+    public int getBestScore() {
+        return bestScore;
+    }
+
+    public void setBestScore(int score) {
+        this.bestScore = score;
+    }
+
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public void updateScore(int delta) {
+        currentScore = Math.min(3, Math.max(1, currentScore + delta));
+        Log.d(TAG, "updating score to " + currentScore);
     }
 
 }

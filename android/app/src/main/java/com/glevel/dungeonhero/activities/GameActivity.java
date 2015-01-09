@@ -16,7 +16,6 @@ import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
-import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -369,7 +368,7 @@ public class GameActivity extends MyBaseGameActivity {
                     };
 
                     // don't show tutorial intro the second time
-                    if (mGame.getBook().getId() != Book.TUTORIAL_BOOK_ID || !mGame.getBook().isDone()) {
+                    if (mGame.getBook().getId() != BookFactory.TUTORIAL_BOOK_ID || !mGame.getBook().isDone()) {
                         mGUIManager.showChapterIntro(callback);
                     }
 
@@ -393,6 +392,7 @@ public class GameActivity extends MyBaseGameActivity {
             public void run() {
                 if (mHero.isDead()) {
                     Log.d(TAG, "hero is dead, game over !");
+                    mGame.getBook().updateScore(-1);
                     Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
                     intent.putExtra(Game.class.getName(), mGame);
                     startActivity(intent);

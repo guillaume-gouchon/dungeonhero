@@ -76,7 +76,7 @@
     <!-- Book Chooser -->
     <string name="choose_book_message">Choose a Quest</string>
     <string name="ask_tutorial">It is recommended to do the tutorial in order to know how to play\u00A0!\nWould you like to do it now ?</string>
-    <string name="shop">Shop</string>
+    <string name="shop">Visit the Shop</string>
     <string name="tavern">Tavern</string>
 
     <!-- Story -->
@@ -314,8 +314,8 @@
     <string name="terror">Terror of Blarzog</string>
     <string name="terror_description">You enters your enemies\'s mind and install terror in them, stunning your opponents and dealing damages to them over time.</string>
 
-    <!-- Initiation Book -->
-    <string name="initiation">The Initiation</string>
+    <!-- Tutorial Quest -->
+    <string name="initiation_quest">The Initiation</string>
     <string name="initiation_intro">Finally, you decided to jump ahead: you set aside your boring life to become a rootless adventurer, looking for gold and glory through the three kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter Lubrice has been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back alive.\n\nLooks like your first Quest begins !</string>
     <string name="initiation_outro">Well done, your first quest is a success !\n\nYou left the caverns straight away and arrived at the nearest village in the evening.\n\nAfter a few pints at the tavern, you had a well-deserved sleep.\n\nYour thirst for adventures has to wait until the next day.</string>
     <string name="tutorial_character">Alhagar the Mighty</string>
@@ -350,5 +350,24 @@
     <string name="initiation_girl_111_answer_1">Ouch... damn, I should take a bath</string>
     <string name="initiation_girl_112">It was a gift from my beloved mother... before she got run over by a herd of savage pigs...</string>
     <string name="initiation_girl_112_answer_1">Such a nice ending ! Ok, let\'s leave this place now</string>
+
+    <!-- Sons of Valarky -->
+    <string name="valarky_quest">Sons of Valarky</string>
+    <string name="valarky_intro">A group of bandits known as Sons of Valarky is terrorizing the village of Gundin. Led by Valarky, a mighty chaos warrior, they regularly attack and rob the villagers, riding some tall and noisy horses.\n\nGundin\'s mayor is offering you 250 gold coins if you manage to put them out of harm.\n\nAfter a few hours of walking through the nearby forests, you finally find the entrance of their lair, ready to stop their dreadful wrongdoing.</string>
+
+    <!-- The Balrog -->
+    <string name="balrog_quest">The Balrog\'s Lair</string>
+
+    <!-- Old Wizard's Quest -->
+    <string name="wizard_quest">The Strange Old Man\'s Quest</string>
+
+    <!-- The Partnership -->
+    <string name="partnership_quest">The Partnership</string>
+
+    <!-- The Blonde Ale's Revenge -->
+    <string name="ale_quest">The Blonde Ale\'s Revenge</string>
+
+    <!-- The Dreamer must awaken -->
+    <string name="dream_quest">The Dreamer must awaken</string>
 
 </resources>

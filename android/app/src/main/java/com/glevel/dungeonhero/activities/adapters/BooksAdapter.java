@@ -30,9 +30,22 @@ public class BooksAdapter extends CustomCarousel.Adapter<Book> {
         Book book = mDataList.get(position);
 
         ((TextView) layout.findViewById(R.id.name)).setText(book.getName(mResources));
-        ((ImageView) layout.findViewById(R.id.image)).setImageResource(book.getImage(mResources));
+        ((TextView) layout.findViewById(R.id.summary)).setText(book.getIntroText(mResources));
         layout.findViewById(R.id.lock).setVisibility(book.isAvailable() ? View.GONE : View.VISIBLE);
-        layout.findViewById(R.id.done).setVisibility(book.isDone() ? View.VISIBLE : View.GONE);
+
+        ImageView scoreImage = (ImageView) layout.findViewById(R.id.score);
+        scoreImage.setVisibility(book.isDone() ? View.VISIBLE : View.GONE);
+        switch (book.getBestScore()) {
+            case 1:
+                scoreImage.setImageResource(R.drawable.ic_trophy_bronze);
+                break;
+            case 2:
+                scoreImage.setImageResource(R.drawable.ic_trophy_silver);
+                break;
+            case 3:
+                scoreImage.setImageResource(R.drawable.ic_trophy_gold);
+                break;
+        }
 
         return layout;
     }

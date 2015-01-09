@@ -212,11 +212,11 @@ public class Hero extends Unit implements InAppProduct {
         for (Requirement requirement : equipment.getRequirements()) {
             if (requirement instanceof StatRequirement) {
                 StatRequirement statRequirement = (StatRequirement) requirement;
-                if (statRequirement.getTarget() == Characteristics.STRENGTH && strength < statRequirement.getValue()) {
+                if (statRequirement.getTarget() == Characteristics.STRENGTH && getStrength() < statRequirement.getValue()) {
                     return false;
-                } else if (statRequirement.getTarget() == Characteristics.DEXTERITY && dexterity < statRequirement.getValue()) {
+                } else if (statRequirement.getTarget() == Characteristics.DEXTERITY && getDexterity() < statRequirement.getValue()) {
                     return false;
-                } else if (statRequirement.getTarget() == Characteristics.SPIRIT && spirit < statRequirement.getValue()) {
+                } else if (statRequirement.getTarget() == Characteristics.SPIRIT && getSpirit() < statRequirement.getValue()) {
                     return false;
                 }
             }

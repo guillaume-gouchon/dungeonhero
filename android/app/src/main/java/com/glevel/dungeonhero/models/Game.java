@@ -15,7 +15,9 @@ import com.glevel.dungeonhero.utils.database.DatabaseResource;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by guillaume ON 10/2/14.
@@ -25,7 +27,7 @@ public class Game extends DatabaseResource {
     public static final String TABLE_NAME = "game";
 
     private Book book;
-    private List<Integer> booksDone = new ArrayList<>();
+    private Map<Integer, Integer> booksDone = new HashMap<>();
     private Hero hero;
     private Dungeon dungeon = null;
 
@@ -33,7 +35,7 @@ public class Game extends DatabaseResource {
         Game game = new Game();
         game.setId(cursor.getLong(0));
         game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(1)));
-        game.setBooksDone((List<Integer>) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
+        game.setBooksDone((Map<Integer, Integer>) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
         if (cursor.getBlob(3) != null) {
             game.setBook((Book) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
         }
@@ -88,9 +90,11 @@ public class Game extends DatabaseResource {
         this.dungeon = dungeon;
     }
 
-    public void finishBook(Book activeBook) {
-        activeBook.setDone(true);
-        booksDone.add(activeBook.getId());
+    public void finishBook() {
+        // if score is better
+        if (booksDone.get(book.getId()) == null || book.getCurrentScore() > booksDone.get(book.getId())) {
+            booksDone.put(book.getId(), book.getCurrentScore());
+        }
     }
 
     public List<GraphicHolder> getGraphicsToLoad() {
@@ -147,11 +151,11 @@ public class Game extends DatabaseResource {
         return toLoad;
     }
 
-    public List<Integer> getBooksDone() {
+    public Map<Integer, Integer> getBooksDone() {
         return booksDone;
     }
 
-    public void setBooksDone(List<Integer> booksDone) {
+    public void setBooksDone(Map<Integer, Integer> booksDone) {
         this.booksDone = booksDone;
     }
 
