@@ -7,6 +7,8 @@ import com.glevel.dungeonhero.models.items.Characteristics;
  */
 public class DamageEffect extends Effect {
 
+    private static final long serialVersionUID = -8460128387814092995L;
+
     public DamageEffect(String spriteName, int value, int level) {
         super(spriteName, Characteristics.HP, value, Effect.INSTANT_EFFECT, null, level);
     }

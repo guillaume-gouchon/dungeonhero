@@ -10,6 +10,8 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class TreasureChest extends Searchable {
 
+    private static final long serialVersionUID = -8965387914362690452L;
+
     public TreasureChest(Reward reward) {
         super("treasure_chest", reward, 34, 20, 2, 1);
     }

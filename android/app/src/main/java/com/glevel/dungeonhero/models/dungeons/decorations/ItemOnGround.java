@@ -10,6 +10,8 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class ItemOnGround extends Searchable {
 
+    private static final long serialVersionUID = 16298680039695627L;
+
     public ItemOnGround(String identifier, Reward reward) {
         super(identifier, reward, 12, 12, 1, 1);
     }

@@ -10,6 +10,8 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class Stairs extends Decoration {
 
+    private static final long serialVersionUID = 7188693630132735199L;
+
     private final boolean isDownStairs;
 
     public Stairs(boolean isDownStairs) {

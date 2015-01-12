@@ -37,6 +37,7 @@ import java.util.List;
  */
 public abstract class Unit extends GameElement implements MovingElement<Tile> {
 
+    private static final long serialVersionUID = 9185541600463971808L;
     private static final String TAG = "Unit";
 
     public static final int NB_ITEMS_MAX_IN_BAG = 15;

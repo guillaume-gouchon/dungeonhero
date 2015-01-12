@@ -7,6 +7,8 @@ import com.glevel.dungeonhero.models.Reward;
  */
 public class OpenRiddle extends Riddle {
 
+    private static final long serialVersionUID = -6622374013398749183L;
+
     private final String correctAnswer;
 
     public OpenRiddle(int timer, String question, String correctAnswer, Reward reward) {

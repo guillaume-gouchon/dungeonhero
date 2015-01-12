@@ -9,6 +9,8 @@ import org.andengine.util.color.Color;
  */
 public class BuffEffect extends Effect {
 
+    private static final long serialVersionUID = -2502520164928739832L;
+
     private final Color buffColor;
 
     public BuffEffect(String spriteName, Characteristics target, int value, int duration, Effect special, int level) {

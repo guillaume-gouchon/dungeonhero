@@ -7,6 +7,8 @@ import com.glevel.dungeonhero.models.items.Characteristics;
  */
 public class StatRequirement extends Requirement {
 
+    private static final long serialVersionUID = -7523550796608275770L;
+
     private final Characteristics target;
     private final int value;
 

@@ -7,6 +7,8 @@ import com.glevel.dungeonhero.models.effects.Effect;
  */
 public class ActiveSkill extends Skill {
 
+    private static final long serialVersionUID = -3936496140028402150L;
+
     private boolean isUsed = false;
     private final boolean personal;
     private final int radius;

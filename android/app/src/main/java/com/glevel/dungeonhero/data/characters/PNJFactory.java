@@ -70,6 +70,8 @@ public class PNJFactory {
 
     private static class DeathDiscussionCallback extends DiscussionCallback {
 
+        private static final long serialVersionUID = -162134829548329521L;
+
         public DeathDiscussionCallback(Pnj pnj) {
             super(pnj);
         }
@@ -123,6 +125,8 @@ public class PNJFactory {
     }
 
     private static class EnemyDiscussionCallback extends DiscussionCallback {
+
+        private static final long serialVersionUID = 5869054321871679506L;
 
         public EnemyDiscussionCallback(Pnj pnj) {
             super(pnj);

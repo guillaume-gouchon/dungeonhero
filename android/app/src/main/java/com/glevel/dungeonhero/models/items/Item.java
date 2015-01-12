@@ -9,6 +9,8 @@ import com.glevel.dungeonhero.models.items.equipments.Equipment;
  */
 public abstract class Item extends StorableResource {
 
+    private static final long serialVersionUID = -7794186148059317585L;
+
     private final boolean droppable;
     private final int price;
 

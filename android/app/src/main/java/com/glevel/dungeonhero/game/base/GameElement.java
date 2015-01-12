@@ -12,11 +12,11 @@ import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
-import java.io.Serializable;
-
 public abstract class GameElement extends StorableResource implements GraphicHolder {
 
     private static final String TAG = "GameElement";
+    private static final long serialVersionUID = 3125325887530074781L;
+
     private final int spriteWidth, spriteHeight, nbSpritesX, nbSpritesY;
     protected transient GameElementSprite sprite;
     protected transient Tile tilePosition;

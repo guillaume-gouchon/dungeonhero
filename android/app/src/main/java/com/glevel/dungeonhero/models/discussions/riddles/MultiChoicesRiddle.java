@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class MultiChoicesRiddle extends Riddle {
 
+    private static final long serialVersionUID = -1822682302000146285L;
+
     private List<Integer> answers;
     private int correctAnswerIndex;
 

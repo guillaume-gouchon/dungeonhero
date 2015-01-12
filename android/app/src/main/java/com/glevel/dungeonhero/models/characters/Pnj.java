@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class Pnj extends Hero {
 
+    private static final long serialVersionUID = -5010552880846621793L;
+
     private final List<Discussion> discussions = new ArrayList<>();
     private DiscussionCallback onDiscussionOver = null;
     private final boolean isAutoTalk;

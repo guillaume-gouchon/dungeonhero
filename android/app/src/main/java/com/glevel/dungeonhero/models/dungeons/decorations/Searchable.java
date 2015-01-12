@@ -10,6 +10,8 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class Searchable extends Decoration {
 
+    private static final long serialVersionUID = 3803164461586732585L;
+
     private boolean isEmpty = false;
     private Reward reward;
 
