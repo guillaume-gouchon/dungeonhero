@@ -5,6 +5,7 @@ import android.util.Log;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.FightResult;
+import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.effects.BuffEffect;
 import com.glevel.dungeonhero.models.effects.CamouflageEffect;
@@ -19,6 +20,7 @@ import com.glevel.dungeonhero.models.items.equipments.Ring;
 import com.glevel.dungeonhero.models.items.equipments.weapons.RangeWeapon;
 import com.glevel.dungeonhero.models.items.equipments.weapons.TwoHandedWeapon;
 import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
+import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.PassiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.pathfinding.MovingElement;
@@ -27,6 +29,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,6 +57,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
     protected int dexterity;
     protected int spirit;
     protected int movement;
+    private Reward reward;
 
     public Unit(String identifier, Ranks rank, int hp, int currentHP, int strength, int dexterity, int spirit, int movement) {
         super(identifier, rank, 210, 400, 3, 4);
@@ -156,7 +160,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
             fightResult = new FightResult(FightResult.States.CRITICAL, (int) Math.max(0, criticalDamage * 1.5f - target.calculateProtection()));
         } else if (dice >= 95) {
             fightResult = new FightResult(FightResult.States.MISS, 0);
-        } else if (dice > 100 - target.calculateBlock()) {
+        } else if (dice > 95 - target.calculateBlock()) {
             fightResult = new FightResult(FightResult.States.BLOCK, 0);
         } else {
             int dodgeDice = (int) (Math.random() * 100);
@@ -412,6 +416,24 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
                 return getSpirit();
         }
         return 0;
+    }
+
+    public ActiveSkill getAvailableSkill() {
+        Collections.shuffle(skills);
+        for (Skill skill : skills) {
+            if (skill instanceof ActiveSkill && !((ActiveSkill) skill).isUsed()) {
+                return (ActiveSkill) skill;
+            }
+        }
+        return null;
+    }
+
+    public Reward getReward() {
+        return reward;
+    }
+
+    public void setReward(Reward reward) {
+        this.reward = reward;
     }
 
 }

@@ -344,7 +344,7 @@ public class ActionsDispatcher implements UserActionListener {
         });
     }
 
-    private void talkTo(Pnj pnj) {
+    public void talkTo(Pnj pnj) {
         OnDiscussionReplySelected onDiscussionSelected = new OnDiscussionReplySelected() {
             @Override
             public void onReplySelected(Pnj pnj, int next, Reward instantReward) {
@@ -367,7 +367,7 @@ public class ActionsDispatcher implements UserActionListener {
                     for (int n = 0; n < next; n++) {
                         pnj.getDiscussions().remove(0);
                     }
-                    if (next >= 0 && pnj.getDiscussions().size() > 0) {
+                    if (next >= 0 && pnj.getDiscussions().size() > 0 && !pnj.getDiscussions().get(0).isPermanent()) {
                         // go to next discussion
                         talkTo(pnj);
                     } else {
@@ -703,8 +703,8 @@ public class ActionsDispatcher implements UserActionListener {
         mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.3f, 1.0f, 0, true, 10, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                if (target instanceof Monster) {
-                    animateFightReward((Monster) target, onActionExecuted);
+                if (target instanceof Monster || target instanceof Pnj) {
+                    animateFightReward(target, onActionExecuted);
                 } else {
                     onActionExecuted.onActionDone(true);
                 }
@@ -725,7 +725,7 @@ public class ActionsDispatcher implements UserActionListener {
         }
     }
 
-    private void animateFightReward(Monster target, final OnActionExecuted onActionExecuted) {
+    private void animateFightReward(Unit target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating fight reward");
         final Reward reward = target.getReward();
         if (reward.getItem() != null) {

@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.data.items;
 
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.effects.PermanentEffect;
+import com.glevel.dungeonhero.models.effects.PoisonEffect;
 import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.equipments.Equipment;
@@ -208,6 +209,20 @@ public class WeaponFactory {
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, 15, null, level));
+        return item;
+    }
+
+    public static Equipment buildSwordOfPotential() {
+        Weapon item = new Weapon("potential_sword", 4, 7, 0, 800);
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
+        item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, 0));
+        item.addEffect(new PermanentEffect(Characteristics.BLOCK, 5, null, 0));
+        item.addEffect(new PoisonEffect("elec.png", -1, 2, null, 0));
         return item;
     }
 

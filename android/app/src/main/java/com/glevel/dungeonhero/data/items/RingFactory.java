@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.data.items;
 
 import com.glevel.dungeonhero.models.effects.PermanentEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
+import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.equipments.Ring;
 
 /**
@@ -31,8 +32,8 @@ public class RingFactory {
                 return ring;
             case 4:
                 ring = new Ring("damage_ring", level, 200);
-                ring.addEffect(new PermanentEffect(Characteristics.DAMAGE, 5, null, level));
-                ring.addEffect(new PermanentEffect(Characteristics.SPIRIT, -3, null, level));
+                ring.addEffect(new PermanentEffect(Characteristics.DAMAGE, 3, null, level));
+                ring.addEffect(new PermanentEffect(Characteristics.SPIRIT, -2, null, level));
                 return ring;
             case 5:
                 ring = new Ring("initiative_ring", level, 250);
@@ -59,4 +60,10 @@ public class RingFactory {
         }
     }
 
+    public static Item buildSOVRing() {
+        Ring ring = new Ring("sov_ring", 0, 220);
+        ring.addEffect(new PermanentEffect(Characteristics.CRITICAL, 5, null, 0));
+        ring.addEffect(new PermanentEffect(Characteristics.DAMAGE, 3, null, 0));
+        return ring;
+    }
 }

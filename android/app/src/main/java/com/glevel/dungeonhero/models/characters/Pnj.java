@@ -13,9 +13,11 @@ public class Pnj extends Hero {
 
     private final List<Discussion> discussions = new ArrayList<>();
     private DiscussionCallback onDiscussionOver = null;
+    private final boolean isAutoTalk;
 
-    public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType) {
+    public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType, boolean isAutoTalk) {
         super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement, null, xp, level, heroType);
+        this.isAutoTalk = isAutoTalk;
     }
 
     public List<Discussion> getDiscussions() {
@@ -36,6 +38,10 @@ public class Pnj extends Hero {
             this.onDiscussionOver = discussions.get(0).getOnDiscussionOver();
         }
         return discussions.get(0);
+    }
+
+    public boolean isAutoTalk() {
+        return isAutoTalk;
     }
 
 }

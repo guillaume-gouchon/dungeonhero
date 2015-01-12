@@ -126,7 +126,7 @@
     <string name="found_nothing">You found nothing\u00A0!</string>
     <string name="found_item">You got a %s\u00A0!</string>
     <string name="found_gold">You got %s Gold Coins\u00A0!</string>
-    <string name="reward_xp">You were rewarded with %s XP\u00A0!</string>
+    <string name="reward_xp">+ %s XP\u00A0!</string>
     <string name="close">Close</string>
     <string name="use">Use</string>
     <string name="equip">Equip</string>
@@ -351,9 +351,34 @@
     <string name="initiation_girl_112">It was a gift from my beloved mother... before she got run over by a herd of savage pigs...</string>
     <string name="initiation_girl_112_answer_1">Such a nice ending ! Ok, let\'s leave this place now</string>
 
-    <!-- Sons of Valarky -->
-    <string name="valarky_quest">Sons of Valarky</string>
-    <string name="valarky_intro">A group of bandits known as Sons of Valarky is terrorizing the village of Gundin. Led by Valarky, a mighty chaos warrior, they regularly attack and rob the villagers, riding some tall and noisy horses.\n\nGundin\'s mayor is offering you 250 gold coins if you manage to put them out of harm.\n\nAfter a few hours of walking through the nearby forests, you finally find the entrance of their lair, ready to stop their dreadful wrongdoing.</string>
+    <!-- Sons of Vanark -->
+    <string name="sons_quest">Sons of Vanark</string>
+    <string name="sons_intro">A group of bandits known as Sons of Vanark is terrorizing the village of Gundin. Led by Vanark, a mighty chaos warrior, they regularly attack and rob the villagers, riding some tall and noisy horses.\n\nGundin\'s mayor offered you 250 gold coins if you manage to put them out of harm.\n\nAfter a few hours of walking through the nearby forests, you finally find the entrance of their lair, ready to stop their dreadful wrongdoing.</string>
+    <string name="sons_outro">The town of Gundin is now safe thanks to you !\n\nThe mayor gave you the 250 gold coins at your return, advising you to not spend everything at the tavern !</string>
+    <string name="tiggy">Tiggy</string>
+    <string name="tiggy_1">Who the hell are you ?</string>
+    <string name="tiggy_1_answer_1">I am the new mechanician</string>
+    <string name="tiggy_1_answer_2">I am your deepest fear !</string>
+    <string name="tiggy_1_answer_3">I am here for business. Where is your boss ?</string>
+    <string name="tiggy_11">Ah ? Alright so you must be able to tell me which village is our next target ?</string>
+    <string name="tiggy_11_wrong">Ahah, such a bad liar ! Prepare to die !</string>
+    <string name="tiggy_11_wrong_answer_1">You first</string>
+    <string name="tiggy_11_right">Good, take that and bring it to Vanark. He is waiting for you downstairs.</string>
+    <string name="tiggy_12">Damn, who forgot again to close this entrance door ? ...</string>
+    <string name="tiggy_12_answer_1"><i>(charge him)</i></string>
+    <string name="tiggy_13">We are closed, go away.</string>
+    <string name="tiggy_131">You again ? You\'re pissing me off.</string>
+    <string name="sov_ring">SOV ring</string>
+    <string name="sov_ring_description">A silver ring with a skull and the letters SOV on it.</string>
+    <string name="potential_sword">Sword of Potential 12V</string>
+    <string name="potential_sword_description">A one-handed long sword enlightened in blue. When you take it, your hairs are getting dishevelled. Deals some damages overtime.</string>
+    <string name="sons_chapter_1_outro">I am missing the tavern...\nLet\'s finish this quest quickly !</string>
+    <string name="sons_chapter_2_outro">Nothing can stop me !\nLet\'s head back to Gundin.</string>
+    <string name="vanark">Vanark</string>
+    <string name="vanark_1">Who dares disturbing Vanark the Great\'s rest ? Get you ass ready to be kicked !</string>
+    <string name="vanark_1_answer_1">For Gundin !</string>
+    <string name="vanark_1_answer_2">For the Greater Good !</string>
+    <string name="vanark_1_answer_3">For the Profit !</string>
 
     <!-- The Balrog -->
     <string name="balrog_quest">The Balrog\'s Lair</string>

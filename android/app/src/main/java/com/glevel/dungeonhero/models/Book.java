@@ -4,8 +4,8 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.glevel.dungeonhero.data.BookFactory;
-import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
+import com.glevel.dungeonhero.models.dungeons.Event;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
 import java.util.ArrayList;
@@ -104,14 +104,16 @@ public class Book extends StorableResource implements InAppProduct {
     public void addChapter(Chapter chapter) {
         chapter.setIndex(chapters.size());
         chapters.add(chapter);
+
+        // add resources
+        for (Event event : chapter.getEvents()) {
+            resourcesToLoad.addAll(event.getMonsters());
+            resourcesToLoad.addAll(event.getPnjs());
+        }
     }
 
     public List<GraphicHolder> getResourcesToLoad() {
         return resourcesToLoad;
-    }
-
-    public void addResource(GameElement element) {
-        resourcesToLoad.add(element);
     }
 
     public boolean isTutorialTime() {

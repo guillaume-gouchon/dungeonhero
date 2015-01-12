@@ -39,7 +39,9 @@
         <activity android:name=".activities.GameOverActivity" />
         <activity android:name=".activities.ShopActivity" />
         <activity android:name=".activities.NewGameActivity" />
-        <activity android:name=".activities.GameActivity"></activity>
+        <activity android:name=".activities.GameActivity">
+
+        </activity>
     </application>
 
 </manifest>

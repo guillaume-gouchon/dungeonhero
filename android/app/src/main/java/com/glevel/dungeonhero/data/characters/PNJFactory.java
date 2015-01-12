@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.data.characters;
 
+import com.glevel.dungeonhero.data.items.ArmorFactory;
 import com.glevel.dungeonhero.data.items.PotionFactory;
 import com.glevel.dungeonhero.data.items.RingFactory;
 import com.glevel.dungeonhero.data.items.WeaponFactory;
@@ -10,6 +11,7 @@ import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.discussions.Discussion;
 import com.glevel.dungeonhero.models.discussions.DiscussionCallback;
 import com.glevel.dungeonhero.models.discussions.Reaction;
+import com.glevel.dungeonhero.models.discussions.riddles.OpenRiddle;
 
 /**
  * Created by guillaume ON 10/6/14.
@@ -17,7 +19,7 @@ import com.glevel.dungeonhero.models.discussions.Reaction;
 public class PNJFactory {
 
     public static Pnj buildTutorialPNJ() {
-        final Pnj pnj = new Pnj("tutorial_character", Ranks.NEUTRAL, 35, 2, 20, 14, 9, 0, 0, 5, Hero.HeroTypes.STR);
+        final Pnj pnj = new Pnj("tutorial_character", Ranks.NEUTRAL, 35, 2, 20, 14, 9, 0, 0, 5, Hero.HeroTypes.STR, false);
 
         // intro
         Discussion discussion = new Discussion("initiation_tutorial_intro", false, null);
@@ -61,14 +63,14 @@ public class PNJFactory {
         discussion.addReaction(new Reaction("initiation_tutorial_thanks", 0));
         pnj.getDiscussions().add(discussion);
 
-        pnj.setDiscussionCallback(new TutorialCharacterDiscussionCallback(pnj));
+        pnj.setDiscussionCallback(new DeathDiscussionCallback(pnj));
 
         return pnj;
     }
 
-    private static class TutorialCharacterDiscussionCallback extends DiscussionCallback {
+    private static class DeathDiscussionCallback extends DiscussionCallback {
 
-        public TutorialCharacterDiscussionCallback(Pnj pnj) {
+        public DeathDiscussionCallback(Pnj pnj) {
             super(pnj);
         }
 
@@ -79,8 +81,10 @@ public class PNJFactory {
     }
 
     public static Pnj buildInitiationQuestGirl() {
-        final Pnj pnj = new Pnj("initiation_quest_girl", Ranks.NEUTRAL, 7, 7, 4, 10, 10, 5, 0, 1, Hero.HeroTypes.SPI);
+        final Pnj pnj = new Pnj("initiation_quest_girl", Ranks.NEUTRAL, 7, 7, 4, 10, 10, 5, 0, 1, Hero.HeroTypes.SPI, false);
         pnj.equip(WeaponFactory.buildDagger(0));
+
+        pnj.setReward(new Reward(null, 5, 0));
 
         // who are you ?
         Discussion discussion = new Discussion("initiation_girl_1", false, null);
@@ -106,7 +110,7 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // she slaps you
-        discussion = new Discussion("initiation_girl_111", false, null, new InitiationQuestGirlDiscussionCallback(pnj));
+        discussion = new Discussion("initiation_girl_111", false, null, new EnemyDiscussionCallback(pnj));
         discussion.addReaction(new Reaction("initiation_girl_111_answer_1", 1));
         pnj.getDiscussions().add(discussion);
 
@@ -118,9 +122,9 @@ public class PNJFactory {
         return pnj;
     }
 
-    private static class InitiationQuestGirlDiscussionCallback extends DiscussionCallback {
+    private static class EnemyDiscussionCallback extends DiscussionCallback {
 
-        public InitiationQuestGirlDiscussionCallback(Pnj pnj) {
+        public EnemyDiscussionCallback(Pnj pnj) {
             super(pnj);
         }
 
@@ -128,6 +132,70 @@ public class PNJFactory {
         public void onDiscussionOver() {
             pnj.setRank(Ranks.ENEMY);
         }
+    }
+
+    public static Pnj buildTiggy() {
+        final Pnj pnj = new Pnj("tiggy", Ranks.NEUTRAL, 18, 18, 8, 16, 11, 5, 0, 3, Hero.HeroTypes.DEX, true);
+        pnj.equip(WeaponFactory.buildShortSword(2));
+        pnj.getSkills().add(SkillFactory.buildDodgeMaster().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildFatalBlow().improve());
+
+        pnj.setReward(new Reward(WeaponFactory.buildShortSword(2), 0, 45));
+
+        // who are you ?
+        Discussion discussion = new Discussion("tiggy_1", false, null);
+        discussion.addReaction(new Reaction("tiggy_1_answer_1", 0));
+        discussion.addReaction(new Reaction("tiggy_1_answer_2", 3));
+        discussion.addReaction(new Reaction("tiggy_1_answer_3", 4));
+        pnj.getDiscussions().add(discussion);
+
+        // next target ?
+        discussion = new Discussion(new OpenRiddle(25, "tiggy_11", "gundin", new Reward(null, 0, 50)));
+        pnj.getDiscussions().add(discussion);
+
+        // wrong answer
+        discussion = new Discussion("tiggy_11_wrong", false, null, new EnemyDiscussionCallback(pnj));
+        discussion.addReaction(new Reaction("tiggy_11_wrong_answer_1", 4));
+        pnj.getDiscussions().add(discussion);
+
+        // right answer
+        discussion = new Discussion("tiggy_11_right", false, new Reward(RingFactory.buildSOVRing()));
+        discussion.addReaction(new Reaction("ok", 3));
+        pnj.getDiscussions().add(discussion);
+
+        // attack
+        discussion = new Discussion("tiggy_12", false, null, new EnemyDiscussionCallback(pnj));
+        discussion.addReaction(new Reaction("tiggy_12_answer_1", 2));
+        pnj.getDiscussions().add(discussion);
+
+        // business
+        discussion = new Discussion("tiggy_13", false, null);
+        discussion.addReaction(new Reaction("ok", 0));
+        pnj.getDiscussions().add(discussion);
+
+        // you again ?
+        discussion = new Discussion("tiggy_131", true, null, new EnemyDiscussionCallback(pnj));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildVanark() {
+        final Pnj pnj = new Pnj("vanark", Ranks.ENEMY, 25, 25, 13, 12, 10, 5, 0, 3, Hero.HeroTypes.STR, true);
+        pnj.equip(WeaponFactory.buildMorgenstern(1));
+        pnj.equip(WeaponFactory.buildLargeShield(1));
+        pnj.equip(ArmorFactory.buildLamellar(1));
+        pnj.getSkills().add(SkillFactory.buildPoisonousDarts().improve());
+
+        pnj.setReward(new Reward(null, 250, 90));
+
+        Discussion discussion = new Discussion("vanark_1", false, null);
+        discussion.addReaction(new Reaction("vanark_1_answer_1", 0));
+        discussion.addReaction(new Reaction("vanark_1_answer_2", 0));
+        discussion.addReaction(new Reaction("vanark_1_answer_3", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
     }
 
 }

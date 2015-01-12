@@ -48,11 +48,6 @@ import org.andengine.extension.tmx.TMXTiledMap;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.util.color.Color;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -80,7 +75,7 @@ public class GameActivity extends MyBaseGameActivity {
             // TODO : used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildDwarfWarrior());
-            mGame.setBook(BookFactory.buildInitiationBook());
+            mGame.setBook(BookFactory.buildVanarkBook());
         }
 
         if (mGame.getDungeon() == null) {
@@ -91,22 +86,8 @@ public class GameActivity extends MyBaseGameActivity {
             chapter.createDungeon();
             mGame.setDungeon(chapter.getDungeon());
 
-            // deep copy hero object
-            try {
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ObjectOutputStream oos = new ObjectOutputStream(bos);
-                oos.writeObject(mGame.getHero());
-                oos.flush();
-                oos.close();
-                bos.close();
-                byte[] byteData = bos.toByteArray();
-                ByteArrayInputStream bais = new ByteArrayInputStream(byteData);
-                mHero = (Hero) new ObjectInputStream(bais).readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            // copy hero object for reset dungeon after gameover
+            mHero = (Hero) ApplicationUtils.deepCopy(mGame.getHero());
 
             mDungeon = mGame.getDungeon();
 
@@ -299,17 +280,6 @@ public class GameActivity extends MyBaseGameActivity {
                 mActionDispatcher.setActivatedSkill((ActiveSkill) view.getTag(R.string.use_skill));
             }
 
-            if (view.getTag(R.string.item) != null) {
-                Log.d(TAG, "Drop Item");
-                final Item item = (Item) view.getTag(R.string.item);
-                mGUIManager.showItemInfo(mHero, item, new OnActionExecuted() {
-                    @Override
-                    public void onActionDone(boolean success) {
-                        mActionDispatcher.dropItem(item);
-                    }
-                });
-            }
-
             if (view.getTag(R.string.potion) != null) {
                 Log.d(TAG, "Drink potion");
                 final Potion potion = (Potion) view.getTag(R.string.potion);
@@ -341,6 +311,14 @@ public class GameActivity extends MyBaseGameActivity {
 
         mGUIManager.hideLoadingScreen();
         mGUIManager.updateSkillButtons();
+
+        // auto-talk
+        for (GameElement element : mRoom.getObjects()) {
+            if (element instanceof Pnj && ((Pnj) element).isAutoTalk()) {
+                mActionDispatcher.talkTo((Pnj) element);
+                return;
+            }
+        }
 
         nextTurn();
     }
@@ -495,7 +473,15 @@ public class GameActivity extends MyBaseGameActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mActionDispatcher.attack(mHero.getTilePosition());
+                                    ActiveSkill availableSkill = mActiveCharacter.getAvailableSkill();
+                                    if (availableSkill != null && Math.random() < 0.7) {
+                                        mActionDispatcher.setActivatedSkill(availableSkill);
+                                        if (!availableSkill.isPersonal()) {
+                                            mActionDispatcher.useSkill(mHero.getTilePosition());
+                                        }
+                                    } else {
+                                        mActionDispatcher.attack(mHero.getTilePosition());
+                                    }
                                 }
                             });
                         }

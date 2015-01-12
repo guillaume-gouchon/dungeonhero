@@ -28,12 +28,13 @@ public abstract class Skill extends StorableResource {
         return level <= SKILL_MAX_LEVEL;
     }
 
-    public void improve() {
+    public Skill improve() {
         level++;
         effect.improve();
         if (effect.getSpecial() != null) {
             effect.getSpecial().improve();
         }
+        return this;
     }
 
     public Effect getEffect() {

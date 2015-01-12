@@ -35,6 +35,12 @@ import android.widget.Toast;
 
 import com.glevel.dungeonhero.R;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class ApplicationUtils {
 
     private static final String TAG = "ApplicationUtils";
@@ -231,6 +237,26 @@ public class ApplicationUtils {
             e.printStackTrace();
         }
         return "unknown";
+    }
+
+    public static Object deepCopy(Object object) {
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(object);
+            oos.flush();
+            oos.close();
+            bos.close();
+            byte[] byteData = bos.toByteArray();
+            ByteArrayInputStream bais = new ByteArrayInputStream(byteData);
+            return new ObjectInputStream(bais).readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 }
