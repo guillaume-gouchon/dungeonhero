@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.glevel.dungeonhero.data.BookFactory;
+import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.models.dungeons.Event;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
@@ -20,10 +21,10 @@ public class Book extends StorableResource implements InAppProduct {
 
     private final int id;
     private final String outroText;
-    private String introText;
     private final List<Chapter> chapters = new ArrayList<>();
     private final List<GraphicHolder> resourcesToLoad = new ArrayList<>();
     private final String productId;
+    private String introText;
     private boolean hasBeenBought;
     private int bestScore;
     private int currentScore;
@@ -104,6 +105,10 @@ public class Book extends StorableResource implements InAppProduct {
     public void addChapter(Chapter chapter) {
         chapter.setIndex(chapters.size());
         chapters.add(chapter);
+
+        if (id == BookFactory.TUTORIAL_BOOK_ID) {
+            resourcesToLoad.add(PNJFactory.buildTutorialPNJ());
+        }
 
         // add resources
         for (Event event : chapter.getEvents()) {
