@@ -144,7 +144,7 @@ public class PNJFactory {
         pnj.getSkills().add(SkillFactory.buildDodgeMaster().improve().improve());
         pnj.getSkills().add(SkillFactory.buildFatalBlow().improve());
 
-        pnj.setReward(new Reward(WeaponFactory.buildShortSword(2), 0, 45));
+        pnj.setReward(new Reward(WeaponFactory.buildShortSword(2), 0, 70));
 
         // who are you ?
         Discussion discussion = new Discussion("tiggy_1", false, null);
@@ -154,7 +154,7 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // next target ?
-        discussion = new Discussion(new OpenRiddle(25, "tiggy_11", "gundin", new Reward(null, 0, 50)));
+        discussion = new Discussion(new OpenRiddle(25, "tiggy_11", "gundin", new Reward(null, 0, 80)));
         pnj.getDiscussions().add(discussion);
 
         // wrong answer
@@ -191,7 +191,7 @@ public class PNJFactory {
         pnj.equip(ArmorFactory.buildLamellar(1));
         pnj.getSkills().add(SkillFactory.buildPoisonousDarts().improve());
 
-        pnj.setReward(new Reward(null, 250, 90));
+        pnj.setReward(new Reward(null, 250, 120));
 
         Discussion discussion = new Discussion("vanark_1", false, null);
         discussion.addReaction(new Reaction("vanark_1_answer_1", 0));

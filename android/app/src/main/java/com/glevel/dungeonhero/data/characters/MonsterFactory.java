@@ -74,11 +74,12 @@ public class MonsterFactory {
         Monster monster = new Monster("gargoyle", 22, 22, 15, 8, 12, 5);
         monster.equip(WeaponFactory.buildBroadSword(1));
         monster.equip(ArmorFactory.buildLeatherPlastron(1));
+        monster.getSkills().add(SkillFactory.buildFatalBlow());
         return monster;
     }
 
     public static Monster buildChaosWarrior() {
-        Monster monster = new Monster("chaos_warrior", 17, 17, 12, 9, 10, 4);
+        Monster monster = new Monster("chaos_warrior", 21, 21, 12, 9, 10, 4);
         monster.equip(WeaponFactory.buildLongSword(1));
         monster.equip(WeaponFactory.buildLargeShield(1));
         monster.equip(ArmorFactory.buildLamellar(1));
@@ -86,19 +87,26 @@ public class MonsterFactory {
     }
 
     public static Monster buildChaosWizard() {
-        Monster monster = new Monster("chaos_wizard", 13, 13, 8, 7, 13, 4);
+        Monster monster = new Monster("chaos_wizard", 19, 19, 8, 7, 13, 4);
         monster.equip(WeaponFactory.buildWizardStaff(2));
         monster.equip(ArmorFactory.buildRobe(2));
         monster.equip(RingFactory.getRandomRing(2));
+        monster.getSkills().add(SkillFactory.buildTerror());
+        monster.getSkills().add(SkillFactory.buildPoisonousDarts());
         return monster;
     }
 
     public static Monster buildDemon() {
-        return new Monster("demon", 5, 5, 6, 10, 2, 7);
+        Monster monster = new Monster("demon", 18, 18, 16, 11, 14, 5);
+        monster.getSkills().add(SkillFactory.buildRage().improve());
+        return monster;
     }
 
     public static Monster buildDemonKing() {
-        return new Monster("demon_king", 5, 5, 6, 10, 2, 7);
+        Monster monster = new Monster("demon_king", 26, 26, 17, 12, 16, 5);
+        monster.getSkills().add(SkillFactory.buildFireball().improve());
+        monster.getSkills().add(SkillFactory.buildRage().improve().improve().improve());
+        return monster;
     }
 
     public static List<Monster> getRoomContent(int threatLevel) {
@@ -134,12 +142,11 @@ public class MonsterFactory {
                     case 6:
                     case 7:
                     case 8:
+                    case 11:
                     case 12:
                         return buildOrc();
                     case 9:
                         return buildOrcCaptain();
-                    case 11:
-                        return buildTroll();
                 }
             case 2:
                 switch (diceRoll) {
@@ -147,10 +154,29 @@ public class MonsterFactory {
                     case 3:
                     case 4:
                     case 11:
+                    case 12:
                         return buildOrc();
                     case 5:
                     case 7:
+                    case 6:
                         return buildOrcCaptain();
+                    case 8:
+                    case 9:
+                        return buildTroll();
+                    case 10:
+                        return buildOgre();
+                }
+            case 3:
+                switch (diceRoll) {
+                    case 2:
+                    case 3:
+                        return buildOrc();
+                    case 4:
+                    case 11:
+                    case 12:
+                        return buildOrcCaptain();
+                    case 5:
+                    case 7:
                     case 6:
                         return buildTroll();
                     case 8:
@@ -158,8 +184,98 @@ public class MonsterFactory {
                         return buildOgre();
                     case 10:
                         return buildOgreKing();
+                }
+            case 4:
+                switch (diceRoll) {
+                    case 2:
+                    case 3:
+                        return buildOrcCaptain();
+                    case 4:
+                    case 11:
+                    case 12:
+                    case 5:
+                        return buildOgre();
+                    case 7:
+                    case 6:
+                    case 8:
+                        return buildOgreKing();
+                    case 9:
+                        return buildTroll();
+                    case 10:
+                        return buildGargoyle();
+                }
+            case 5:
+                switch (diceRoll) {
+                    case 2:
+                    case 3:
+                        return buildOgre();
+                    case 4:
+                    case 11:
+                    case 12:
+                    case 5:
+                        return buildOgreKing();
+                    case 7:
+                    case 6:
+                        return buildGargoyle();
+                    case 9:
+                        return buildChaosWizard();
+                    case 10:
+                    case 8:
+                        return buildChaosWarrior();
+                }
+            case 6:
+                switch (diceRoll) {
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 8:
+                    case 10:
+                        return buildChaosWarrior();
+                    case 11:
+                    case 12:
+                    case 5:
+                        return buildGargoyle();
+                    case 7:
+                    case 6:
+                        return buildChaosWizard();
+                    case 9:
+                        return buildDemon();
+                }
+            case 7:
+                switch (diceRoll) {
+                    case 2:
+                    case 3:
+                    case 4:
+                        return buildChaosWarrior();
+                    case 11:
                     case 12:
                         return buildGargoyle();
+                    case 7:
+                    case 6:
+                        return buildChaosWizard();
+                    case 9:
+                    case 8:
+                    case 10:
+                        return buildDemon();
+                    case 5:
+                        buildDemonKing();
+                }
+            default:
+                switch (diceRoll) {
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 11:
+                    case 12:
+                        return buildDemon();
+                    case 7:
+                    case 6:
+                    case 5:
+                        return buildChaosWizard();
+                    case 9:
+                    case 8:
+                    case 10:
+                        return buildDemonKing();
                 }
         }
         return null;
