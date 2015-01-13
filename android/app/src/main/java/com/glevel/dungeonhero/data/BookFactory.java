@@ -24,7 +24,7 @@ public class BookFactory {
         lst.add(buildInitiationBook());
         lst.add(buildVanarkBook());
         lst.add(buildBalrogQuest());
-//        lst.add(buildWizardQuest());
+        lst.add(buildWizardQuest());
 //        lst.add(buildPartnershipQuest());
 //        lst.add(buildAleQuest());
 //        lst.add(buildDreamQuest());
@@ -80,13 +80,27 @@ public class BookFactory {
         // chapter 2
         events = new ArrayList<>();
         events.add(new Event.Builder(true).addPnj(PNJFactory.buildBalrog()).build());
-        book.addChapter(new Chapter("balrog_chapter_2_intro", "balrog_chapter_2_outro", events));
+        book.addChapter(new Chapter("", "balrog_chapter_2_outro", events));
 
         return book;
     }
 
     public static Book buildWizardQuest() {
-        Book book = new Book(4, "wizard_quest", "initiation_intro", "initiation_outro", null);
+        Book book = new Book(4, "wizard_quest", "wizard_intro", "", null);
+
+        // chapter 1
+        List<Event> events = new ArrayList<>();
+        events.add(new Event.Builder(false).addPnj(PNJFactory.buildMinsk()).build());
+        events.add(new Event.Builder(false).addPnj(PNJFactory.buildMontaron()).build());
+        events.add(new Event.Builder(true).build());
+        book.addChapter(new Chapter("wizard_chapter_1_intro", "wizard_chapter_1_outro", events));
+
+        // chapter 2
+        events = new ArrayList<>();
+        events.add(new Event.Builder(false).addReward(new Reward(WeaponFactory.buildElvenThrowingDagger())).build());
+        events.add(new Event.Builder(true).addPnj(PNJFactory.buildXsar()).addMonster(MonsterFactory.buildTroll()).build());
+        book.addChapter(new Chapter("wizard_chapter_2_intro", "wizard_chapter_2_outro", events));
+
         return book;
     }
 

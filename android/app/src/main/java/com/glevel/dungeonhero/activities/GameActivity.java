@@ -75,7 +75,7 @@ public class GameActivity extends MyBaseGameActivity {
             // TODO : used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildBerserker());
-            mGame.setBook(BookFactory.buildBalrogQuest());
+            mGame.setBook(BookFactory.buildWizardQuest());
         }
 
         if (mGame.getDungeon() == null) {
@@ -444,10 +444,6 @@ public class GameActivity extends MyBaseGameActivity {
                     mGUIManager.updateQueue(mActiveCharacter, mRoom);
                 }
 
-                updateActionTiles();
-                mActionDispatcher.hideElementInfo();
-                mGUIManager.updateActiveHeroLayout();
-
                 // handle current buffs
                 boolean skipTurn = false;
                 List<Effect> copy = new ArrayList<>(mActiveCharacter.getBuffs());
@@ -476,6 +472,10 @@ public class GameActivity extends MyBaseGameActivity {
                     }
                     return;
                 }
+
+                updateActionTiles();
+                mActionDispatcher.hideElementInfo();
+                mGUIManager.updateActiveHeroLayout();
 
                 mActiveCharacter.initNewTurn();
 

@@ -271,4 +271,59 @@ public class PNJFactory {
         return pnj;
     }
 
+    public static Pnj buildXsar() {
+        Pnj pnj = new Pnj("xsar", Ranks.ENEMY, 30, 30, 10, 12, 18, 5, 0, 5, Hero.HeroTypes.SPI, true);
+        pnj.equip(WeaponFactory.buildDagger(3));
+        pnj.equip(ArmorFactory.buildRobe(3));
+        pnj.getSkills().add(SkillFactory.buildSleep().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildStoneSkin().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildFireball().improve());
+        pnj.getSkills().add(SkillFactory.buildPoisonousDarts().improve());
+
+        pnj.setReward(new Reward(null, 200, 160));
+
+        // hello
+        Discussion discussion = new Discussion("xsar_1", false, null);
+        discussion.addReaction(new Reaction("xsar_1_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildMinsk() {
+        Pnj pnj = new Pnj("minsk", Ranks.ENEMY, 28, 28, 18, 12, 4, 4, 0, 3, Hero.HeroTypes.STR, true);
+        pnj.equip(WeaponFactory.buildBroadSword(2));
+        pnj.equip(ArmorFactory.buildLamellar(2));
+        pnj.getSkills().add(SkillFactory.buildRage().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildParryScience().improve().improve());
+
+        pnj.setReward(new Reward(null, 140, 100));
+
+        // hello
+        Discussion discussion = new Discussion("minsk_1", false, null);
+        discussion.addReaction(new Reaction("minsk_1_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildMontaron() {
+        Pnj pnj = new Pnj("montaron", Ranks.NEUTRAL, 23, 23, 13, 15, 9, 5, 0, 3, Hero.HeroTypes.STR_DEX, false);
+        pnj.equip(WeaponFactory.buildMorgenstern(2));
+        pnj.equip(WeaponFactory.buildRoundShield(2));
+        pnj.equip(ArmorFactory.buildLeatherPlastron(2));
+        pnj.getSkills().add(SkillFactory.buildDodgeMaster().improve());
+        pnj.getSkills().add(SkillFactory.buildPoisonousDarts().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildStoneSkin().improve());
+
+        pnj.setReward(new Reward(null, 90, 120));
+
+        // hello
+        Discussion discussion = new Discussion("montaron_1", false, null, new EnemyDiscussionCallback(pnj));
+        discussion.addReaction(new Reaction("montaron_1_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
 }

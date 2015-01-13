@@ -145,7 +145,7 @@
     <string name="minimum">min. %s </string>
     <string name="exit_stairs">Exit Stairs</string>
     <string name="entrance_stairs">Entrance stairs</string>
-    <string name="go_to_next_chapter">Go to next chapter</string>
+    <string name="go_to_next_floor">Go to next floor</string>
     <string name="finish_adventure">Finish adventure</string>
     <string name="use_skill_on">preparing %s...</string>
     <string name="use_skill_off">cancel %s</string>
@@ -411,11 +411,27 @@
     <string name="balrog_121_answer_2">Let\'s play\u00A0!</string>
     <string name="balrog_1211">(Balrog the goblin taught you how to play dice)\n\nGood, say hello to all my friends from Gundin for me\u00A0! See you.</string>
     <string name="balrog_1212">(after a few games and after having lost half of your gold)</string>
-    <string name="balrog_1212_answer_1">but... you are cheating\u00A0! You\'ll pay for it\u00A0!</string>
+    <string name="balrog_1212_answer_1">but... you are cheating\u00A0! You\'ll pay for this\u00A0!</string>
     <string name="balrog_answer_fight">I hate adventurers... Why are they so aggressive\u00A0?</string>
 
     <!-- Old Wizard's Quest -->
     <string name="wizard_quest">The Quest of the Strange Old Man</string>
+    <string name="wizard_intro">As your are finishing your pint and hailing the innkeeper for the next one, a strange old man wearing a long black cloak is sitting at your table.\n\nAfter some talking, it appears that he is Xsar, the famous wizard, and that he is looking for some special ingredients, a rare species of mushrooms, in order to brew a potion.\n\nAfter pointing out on your map the location, he proposes you 200 gold coins for this simple quest.</string>
+    <string name="wizard_outro"></string>
+    <string name="wizard_chapter_1_intro">A strange place to find some mushrooms...</string>
+    <string name="wizard_chapter_1_outro">There must be rare species of mushrooms in this cave. Everyone seems to be looking for them.</string>
+    <string name="wizard_chapter_2_outro">Why do I only meet insane people in this village ?</string>
+    <string name="elven_throwing_daggers">Elven Throwing Daggers</string>
+    <string name="elven_throwing_daggers_description">These daggers are soaked with a powerful poison.</string>
+    <string name="minsk">Minsk</string>
+    <string name="minsk_1">Another adventurer here\u00A0? This is MY quest\u00A0!</string>
+    <string name="minsk_1_answer_1">Ok, let\'s fight then...</string>
+    <string name="montaron">Montaron</string>
+    <string name="montaron_1">Ahah ! You really thought I was not violent and crazy\u00A0?</string>
+    <string name="montaron_1_answer_1">I just wanted to talk...</string>
+    <string name="xsar">Xsar the Fool</string>
+    <string name="xsar_1">Good evening adventurer !\nIn fact, I was not looking for mushrooms as my special recipe; YOU will be my special recipe\u00A0!</string>
+    <string name="xsar_1_answer_1">Reminder for myself : avoid this kind of mushrooms...</string>
 
     <!-- The Partnership -->
     <string name="partnership_quest">Brothers in Arms</string>

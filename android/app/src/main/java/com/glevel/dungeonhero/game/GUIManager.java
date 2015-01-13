@@ -227,7 +227,7 @@ public class GUIManager {
                     });
             ((TextView) mConfirmDialog.findViewById(R.id.name)).setCompoundDrawablesWithIntrinsicBounds(mHero.getImage(mResources), 0, 0, 0);
             ((TextView) mConfirmDialog.findViewById(R.id.name)).setText(mHero.getHeroName());
-            ((TextView) mConfirmDialog.findViewById(R.id.okButton)).setText(hasNextChapter ? R.string.go_to_next_chapter : R.string.finish_adventure);
+            ((TextView) mConfirmDialog.findViewById(R.id.okButton)).setText(hasNextChapter ? R.string.go_to_next_floor : R.string.finish_adventure);
             mConfirmDialog.findViewById(R.id.cancelButton).setVisibility(View.GONE);
             mConfirmDialog.show();
         } else {

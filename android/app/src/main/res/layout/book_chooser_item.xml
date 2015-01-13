@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
-            android:textSize="28sp" />
+            android:textSize="26sp" />
 
         <View
             android:layout_marginTop="10dp"
