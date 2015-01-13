@@ -21,6 +21,7 @@ import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.discussions.Discussion;
+import com.glevel.dungeonhero.models.discussions.callbacks.StopDiscussionCallback;
 import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.GroundTypes;
 import com.glevel.dungeonhero.models.dungeons.Tile;
@@ -349,6 +350,7 @@ public class ActionsDispatcher implements UserActionListener {
             @Override
             public void onReplySelected(Pnj pnj, int next, Reward instantReward) {
                 if (instantReward != null) {
+                    Log.d(TAG, "got reward from discussion = " + instantReward.getItem() + "," + instantReward.getGold() + "," + instantReward.getXp());
                     if (instantReward.getItem() != null) {
                         getItemOrDropIt(instantReward.getItem());
                         mGUIManager.showReward(instantReward, null);
@@ -367,7 +369,7 @@ public class ActionsDispatcher implements UserActionListener {
                     for (int n = 0; n < next; n++) {
                         pnj.getDiscussions().remove(0);
                     }
-                    if (next >= 0 && pnj.getDiscussions().size() > 0 && !pnj.getDiscussions().get(0).isPermanent()) {
+                    if (next >= 0 && pnj.getDiscussions().size() > 0 && !pnj.getDiscussions().get(0).isPermanent() && !(pnj.getDiscussionCallback() instanceof StopDiscussionCallback)) {
                         // go to next discussion
                         talkTo(pnj);
                     } else {
@@ -378,6 +380,7 @@ public class ActionsDispatcher implements UserActionListener {
                 }
             }
         };
+
         if (pnj.getDiscussions().size() > 0) {
             Discussion discussion = pnj.getNextDiscussion();
             mGUIManager.showDiscussion(pnj, discussion, onDiscussionSelected);
@@ -658,7 +661,7 @@ public class ActionsDispatcher implements UserActionListener {
         attackerSprite.changeOrientation(Directions.from(targetSprite.getX() - attackerSprite.getX(), attackerSprite.getY() - targetSprite.getY()));
         animationHandler = new TimerHandler(1.0f / 45, true, new ITimerCallback() {
 
-            private static final int DURATION_IN_FRAMES = 30;
+            private static final int DURATION_IN_FRAMES = 20;
             private static final int OFFSET = 5;
             private static final float ATTACKER_SPEED = 1.5f;
             private static final float TARGET_SPEED = 0.6f;
@@ -728,6 +731,11 @@ public class ActionsDispatcher implements UserActionListener {
     private void animateFightReward(Unit target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating fight reward");
         final Reward reward = target.getReward();
+        if (reward == null) {
+            onActionExecuted.onActionDone(true);
+            return;
+        }
+
         if (reward.getItem() != null) {
             getItemOrDropIt(reward.getItem());
         }

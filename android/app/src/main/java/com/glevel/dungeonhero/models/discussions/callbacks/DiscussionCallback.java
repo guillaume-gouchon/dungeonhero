@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.models.discussions;
+package com.glevel.dungeonhero.models.discussions.callbacks;
 
 import com.glevel.dungeonhero.models.characters.Pnj;
 

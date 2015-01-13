@@ -6,6 +6,7 @@ import com.glevel.dungeonhero.data.items.WeaponFactory;
 import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Reward;
+import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.dungeons.Event;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class BookFactory {
         List<Book> lst = new ArrayList<>();
         lst.add(buildInitiationBook());
         lst.add(buildVanarkBook());
-//        lst.add(buildBalrogQuest());
+        lst.add(buildBalrogQuest());
 //        lst.add(buildWizardQuest());
 //        lst.add(buildPartnershipQuest());
 //        lst.add(buildAleQuest());
@@ -65,7 +66,22 @@ public class BookFactory {
     }
 
     public static Book buildBalrogQuest() {
-        Book book = new Book(3, "balrog_quest", "initiation_intro", "initiation_outro", null);
+        Book book = new Book(3, "balrog_quest", "balrog_intro", "balrog_outro", null);
+
+        // chapter 1
+        List<Event> events = new ArrayList<>();
+        Pnj whiteWizard = PNJFactory.buildWhiteWizard();
+        events.add(new Event.Builder(false).addPnj(whiteWizard).build());
+        events.add(new Event.Builder(false).addPnj(whiteWizard).build());
+        events.add(new Event.Builder(false).addPnj(whiteWizard).build());
+        events.add(new Event.Builder(true).build());
+        book.addChapter(new Chapter("balrog_chapter_1_intro", "balrog_chapter_1_outro", events));
+
+        // chapter 2
+        events = new ArrayList<>();
+        events.add(new Event.Builder(true).addPnj(PNJFactory.buildBalrog()).build());
+        book.addChapter(new Chapter("balrog_chapter_2_intro", "balrog_chapter_2_outro", events));
+
         return book;
     }
 

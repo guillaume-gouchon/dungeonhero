@@ -9,8 +9,10 @@ import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.discussions.Discussion;
-import com.glevel.dungeonhero.models.discussions.DiscussionCallback;
 import com.glevel.dungeonhero.models.discussions.Reaction;
+import com.glevel.dungeonhero.models.discussions.callbacks.DeathDiscussionCallback;
+import com.glevel.dungeonhero.models.discussions.callbacks.EnemyDiscussionCallback;
+import com.glevel.dungeonhero.models.discussions.callbacks.WhiteWizardDiscussionCallback;
 import com.glevel.dungeonhero.models.discussions.riddles.OpenRiddle;
 
 /**
@@ -19,7 +21,7 @@ import com.glevel.dungeonhero.models.discussions.riddles.OpenRiddle;
 public class PNJFactory {
 
     public static Pnj buildTutorialPNJ() {
-        final Pnj pnj = new Pnj("tutorial_character", Ranks.NEUTRAL, 35, 2, 20, 14, 9, 0, 0, 5, Hero.HeroTypes.STR, false);
+        Pnj pnj = new Pnj("tutorial_character", Ranks.NEUTRAL, 35, 2, 20, 14, 9, 0, 0, 5, Hero.HeroTypes.STR, false);
 
         // intro
         Discussion discussion = new Discussion("initiation_tutorial_intro", false, null);
@@ -68,22 +70,8 @@ public class PNJFactory {
         return pnj;
     }
 
-    private static class DeathDiscussionCallback extends DiscussionCallback {
-
-        private static final long serialVersionUID = -162134829548329521L;
-
-        public DeathDiscussionCallback(Pnj pnj) {
-            super(pnj);
-        }
-
-        @Override
-        public void onDiscussionOver() {
-            pnj.setCurrentHP(0);
-        }
-    }
-
     public static Pnj buildInitiationQuestGirl() {
-        final Pnj pnj = new Pnj("initiation_quest_girl", Ranks.NEUTRAL, 7, 7, 4, 10, 10, 5, 0, 1, Hero.HeroTypes.SPI, false);
+        Pnj pnj = new Pnj("initiation_quest_girl", Ranks.NEUTRAL, 7, 7, 4, 10, 10, 5, 0, 1, Hero.HeroTypes.SPI, false);
         pnj.equip(WeaponFactory.buildDagger(0));
 
         pnj.setReward(new Reward(null, 5, 0));
@@ -124,22 +112,8 @@ public class PNJFactory {
         return pnj;
     }
 
-    private static class EnemyDiscussionCallback extends DiscussionCallback {
-
-        private static final long serialVersionUID = 5869054321871679506L;
-
-        public EnemyDiscussionCallback(Pnj pnj) {
-            super(pnj);
-        }
-
-        @Override
-        public void onDiscussionOver() {
-            pnj.setRank(Ranks.ENEMY);
-        }
-    }
-
     public static Pnj buildTiggy() {
-        final Pnj pnj = new Pnj("tiggy", Ranks.NEUTRAL, 18, 18, 8, 16, 11, 5, 0, 3, Hero.HeroTypes.DEX, true);
+        Pnj pnj = new Pnj("tiggy", Ranks.NEUTRAL, 18, 18, 8, 16, 11, 5, 0, 3, Hero.HeroTypes.DEX, true);
         pnj.equip(WeaponFactory.buildShortSword(2));
         pnj.getSkills().add(SkillFactory.buildDodgeMaster().improve().improve());
         pnj.getSkills().add(SkillFactory.buildFatalBlow().improve());
@@ -185,7 +159,7 @@ public class PNJFactory {
     }
 
     public static Pnj buildVanark() {
-        final Pnj pnj = new Pnj("vanark", Ranks.ENEMY, 25, 25, 13, 12, 10, 5, 0, 3, Hero.HeroTypes.STR, true);
+        Pnj pnj = new Pnj("vanark", Ranks.ENEMY, 25, 25, 13, 12, 10, 5, 0, 3, Hero.HeroTypes.STR, true);
         pnj.equip(WeaponFactory.buildMorgenstern(1));
         pnj.equip(WeaponFactory.buildLargeShield(1));
         pnj.equip(ArmorFactory.buildLamellar(1));
@@ -197,6 +171,101 @@ public class PNJFactory {
         discussion.addReaction(new Reaction("vanark_1_answer_1", 0));
         discussion.addReaction(new Reaction("vanark_1_answer_2", 0));
         discussion.addReaction(new Reaction("vanark_1_answer_3", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildWhiteWizard() {
+        Pnj pnj = new Pnj("white_wizard", Ranks.NEUTRAL, 42, 42, 10, 12, 20, 4, 0, 6, Hero.HeroTypes.SPI, false);
+        pnj.equip(WeaponFactory.buildWizardStaff(6));
+        pnj.equip(ArmorFactory.buildRobe(6));
+        pnj.getSkills().add(SkillFactory.buildFireball().improve().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildFireball().improve().improve().improve());
+
+        pnj.setReward(new Reward(null, 0, 0));
+
+        // riddle 1
+        Discussion discussion = new Discussion(new OpenRiddle(40, "white_wizard_1", "nothing", new Reward(null, 0, 40)));
+        pnj.getDiscussions().add(discussion);
+
+        // wrong answer
+        discussion = new Discussion("white_wizard_wrong", false, null, new WhiteWizardDiscussionCallback(pnj, false));
+        discussion.addReaction(new Reaction("white_wizard_wrong_answer", 1));
+        pnj.getDiscussions().add(discussion);
+
+        // right answer
+        discussion = new Discussion("white_wizard_right", false, null, new WhiteWizardDiscussionCallback(pnj, true));
+        pnj.getDiscussions().add(discussion);
+
+        // riddle 2
+        discussion = new Discussion(new OpenRiddle(40, "white_wizard_2", "fire", new Reward(null, 0, 60)));
+        pnj.getDiscussions().add(discussion);
+
+        // wrong answer
+        discussion = new Discussion("white_wizard_wrong", false, null, new WhiteWizardDiscussionCallback(pnj, false));
+        discussion.addReaction(new Reaction("white_wizard_wrong_answer", 1));
+        pnj.getDiscussions().add(discussion);
+
+        // right answer
+        discussion = new Discussion("white_wizard_right", false, null, new WhiteWizardDiscussionCallback(pnj, true));
+        pnj.getDiscussions().add(discussion);
+
+        // riddle 3
+        discussion = new Discussion(new OpenRiddle(40, "white_wizard_3", "secret", new Reward(null, 0, 80)));
+        pnj.getDiscussions().add(discussion);
+
+        // wrong answer
+        discussion = new Discussion("white_wizard_wrong", false, null, new WhiteWizardDiscussionCallback(pnj, false));
+        discussion.addReaction(new Reaction("white_wizard_wrong_answer", 1));
+        pnj.getDiscussions().add(discussion);
+
+        // right answer
+        discussion = new Discussion("white_wizard_right_final", false, null, new WhiteWizardDiscussionCallback(pnj, true));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildBalrog() {
+        Pnj pnj = new Pnj("balrog", Ranks.NEUTRAL, 22, 22, 11, 16, 9, 6, 0, 3, Hero.HeroTypes.DEX, true);
+        pnj.equip(WeaponFactory.buildShortSword(2));
+        pnj.equip(WeaponFactory.buildShortSword(2));
+        pnj.equip(ArmorFactory.buildLeatherPlastron(2));
+        pnj.getSkills().add(SkillFactory.buildDodgeMaster().improve().improve().improve());
+
+        pnj.setReward(new Reward(null, 150, 80));
+
+        // hello
+        Discussion discussion = new Discussion("balrog_1", false, null);
+        discussion.addReaction(new Reaction("balrog_1_answer_1", 4));
+        discussion.addReaction(new Reaction("balrog_1_answer_2", 0));
+        pnj.getDiscussions().add(discussion);
+
+        // why are you here ?
+        discussion = new Discussion("balrog_12", false, null);
+        discussion.addReaction(new Reaction("balrog_12_answer_1", 0));
+        discussion.addReaction(new Reaction("balrog_12_answer_2", 3));
+        pnj.getDiscussions().add(discussion);
+
+        // what do you want ?
+        discussion = new Discussion("balrog_121", false, null);
+        discussion.addReaction(new Reaction("balrog_121_answer_1", 0));
+        discussion.addReaction(new Reaction("balrog_121_answer_2", 1));
+        pnj.getDiscussions().add(discussion);
+
+        // teach dice game
+        discussion = new Discussion("balrog_1211", false, new Reward(null, 0, 150));
+        discussion.addReaction(new Reaction("ok", 2));
+        pnj.getDiscussions().add(discussion);
+
+        // play dice
+        discussion = new Discussion("balrog_1212", false, null);
+        discussion.addReaction(new Reaction("balrog_1212_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        // die demon !
+        discussion = new Discussion("balrog_answer_fight", false, null, new EnemyDiscussionCallback(pnj));
         pnj.getDiscussions().add(discussion);
 
         return pnj;

@@ -1,7 +1,7 @@
 package com.glevel.dungeonhero.models.characters;
 
 import com.glevel.dungeonhero.models.discussions.Discussion;
-import com.glevel.dungeonhero.models.discussions.DiscussionCallback;
+import com.glevel.dungeonhero.models.discussions.callbacks.DiscussionCallback;
 
 import java.util.ArrayList;
 import java.util.List;

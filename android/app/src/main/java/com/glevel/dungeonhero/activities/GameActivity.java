@@ -74,8 +74,8 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             // TODO : used fot testing only
             mGame = new Game();
-            mGame.setHero(HeroFactory.buildDwarfWarrior());
-            mGame.setBook(BookFactory.buildVanarkBook());
+            mGame.setHero(HeroFactory.buildBerserker());
+            mGame.setBook(BookFactory.buildBalrogQuest());
         }
 
         if (mGame.getDungeon() == null) {
@@ -363,27 +363,34 @@ public class GameActivity extends MyBaseGameActivity {
         }
     }
 
+    private void gameover() {
+        Log.d(TAG, "hero is dead, game over !");
+        mGame.getBook().updateScore(-1);
+        Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
+        intent.putExtra(Game.class.getName(), mGame);
+        startActivity(intent);
+        finish();
+    }
+
     public void nextTurn() {
         Log.d(TAG, "NEXT TURN");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (mHero.isDead()) {
-                    Log.d(TAG, "hero is dead, game over !");
-                    mGame.getBook().updateScore(-1);
-                    Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
-                    intent.putExtra(Game.class.getName(), mGame);
-                    startActivity(intent);
-                    finish();
+                    gameover();
                     return;
                 }
 
-                // add new enemies
+                // add new enemies / remove characters
                 for (GameElement element : mRoom.getObjects()) {
                     if (element instanceof Unit && (element.getRank() == Ranks.ENEMY || element.getRank() == Ranks.ALLY)
                             && !mRoom.getQueue().contains(element)) {
                         mRoom.getQueue().add(0, (Unit) element);
                         mRoom.checkSafe();
+                    } else if (element instanceof Unit && element.getTilePosition() == null) {
+                        removeElement(element);
+                        break;
                     }
                 }
 
@@ -459,6 +466,15 @@ public class GameActivity extends MyBaseGameActivity {
                             drawAnimatedText(mActiveCharacter.getSprite().getX() + GameConstants.PIXEL_BY_TILE / 3, mActiveCharacter.getSprite().getY() - 2 * GameConstants.PIXEL_BY_TILE / 3, getString(R.string.sleep_effect), new Color(0.0f, 1.0f, 0.0f), 0.2f, 50, -0.15f);
                         }
                     }
+                }
+
+                if (mActiveCharacter.isDead()) {
+                    if (mActiveCharacter == mHero) {
+                        gameover();
+                    } else {
+                        nextTurn();
+                    }
+                    return;
                 }
 
                 mActiveCharacter.initNewTurn();

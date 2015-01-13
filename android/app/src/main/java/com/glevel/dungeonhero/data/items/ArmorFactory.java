@@ -85,4 +85,16 @@ public class ArmorFactory {
         return item;
     }
 
+    public static Armor buildMithrilArmor() {
+        Armor item = new Armor("mithril_armor", 4, 0, 850);
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
+        item.addEffect(new PermanentEffect(Characteristics.MOVEMENT, 1, null, 0));
+        return item;
+    }
+
 }

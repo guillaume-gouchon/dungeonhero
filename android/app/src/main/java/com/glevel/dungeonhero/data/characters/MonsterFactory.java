@@ -30,7 +30,7 @@ public class MonsterFactory {
     }
 
     public static Monster buildGoblin() {
-        Monster monster = new Monster("goblin", 5, 5, 6, 12, 4, 5);
+        Monster monster = new Monster("goblin", 5, 5, 6, 13, 5, 5);
         monster.equip(WeaponFactory.buildDagger(0));
         return monster;
     }

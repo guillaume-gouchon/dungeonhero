@@ -4,6 +4,7 @@ import android.content.res.Resources;
 
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.StorableResource;
+import com.glevel.dungeonhero.models.discussions.callbacks.DiscussionCallback;
 import com.glevel.dungeonhero.models.discussions.riddles.Riddle;
 
 import java.io.Serializable;

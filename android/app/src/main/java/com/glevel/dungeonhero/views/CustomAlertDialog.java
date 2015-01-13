@@ -23,7 +23,7 @@ public class CustomAlertDialog extends Dialog implements OnClickListener {
 
         TextView pnjName = (TextView) findViewById(R.id.name);
         pnjName.setText(R.string.game_master);
-        pnjName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_riddle, 0, 0, 0);
+        pnjName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.white_wizard, 0, 0, 0);
 
         ((TextView) findViewById(R.id.message)).setText(message);
 

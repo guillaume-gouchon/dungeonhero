@@ -13,7 +13,7 @@ public abstract class Effect implements Serializable, Cloneable {
 
     public static final int INSTANT_EFFECT = 0;
     public static final int INFINITE_EFFECT = -1;
-    
+
     private final String spriteName;
     private final Characteristics target;
     private final Effect special;
@@ -47,7 +47,7 @@ public abstract class Effect implements Serializable, Cloneable {
         if (target == Characteristics.MOVEMENT) {
             return value + level / 2;
         }
-        return (int) Math.max(value * (1 + 0.15 * level), value + level);
+        return (int) Math.max(value + 0.15 * value * level, value + level);
     }
 
     public Characteristics getTarget() {
