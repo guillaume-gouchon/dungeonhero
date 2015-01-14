@@ -114,7 +114,10 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
             public void onClick(View view) {
                 if (!isElementSelected) {
                     isElementSelected = true;
-                    mItemClickedListener.onClick(view);
+                    if (mItemClickedListener != null) {
+                        mItemClickedListener.onClick(view);
+                    }
+
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {

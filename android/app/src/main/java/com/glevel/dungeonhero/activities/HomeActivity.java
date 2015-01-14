@@ -72,7 +72,7 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         new AsyncTask<Void, Void, List<Game>>() {
             @Override
             protected List<Game> doInBackground(Void... params) {
-                return mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).get(null, null, null, "1");
+                return mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).get(new String[]{Game.COLUMN_ID}, null, null, null, "1");
             }
 
             @Override

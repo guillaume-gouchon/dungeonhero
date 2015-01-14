@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IRepository<T> {
 
-    public List<T> get(String selection, String[] selectionArgs, String orderBy, String limit);
+    public List<T> get(String[] columns, String selection, String[] selectionArgs, String orderBy, String limit);
 
     public List<T> getAll();
 

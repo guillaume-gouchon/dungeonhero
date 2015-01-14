@@ -31,6 +31,35 @@
                 android:orientation="horizontal">
 
                 <com.glevel.dungeonhero.views.CustomTextView
+                    android:id="@+id/hero_name"
+                    style="@style/HeroTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:drawablePadding="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="12dp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    android:id="@+id/bestiary_button"
+                    style="@style/Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bestiary"
+                    android:padding="12dp"
+                    android:drawablePadding="10dp"
+                    android:textSize="18sp"
+                    android:drawableLeft="@drawable/ic_bestiary"
+                    android:layout_marginRight="8dp" />
+
+                <com.glevel.dungeonhero.views.CustomTextView
                     android:id="@+id/shop_button"
                     style="@style/Button"
                     android:layout_width="wrap_content"
@@ -38,22 +67,9 @@
                     android:text="@string/shop"
                     android:padding="10dp"
                     android:drawablePadding="10dp"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:drawableLeft="@drawable/ic_coin"
-                    android:layout_marginLeft="10dp" />
-
-                <com.glevel.dungeonhero.views.CustomTextView
-                    android:visibility="gone"
-                    android:id="@+id/tavern_button"
-                    style="@style/Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tavern"
-                    android:padding="12dp"
-                    android:drawablePadding="10dp"
-                    android:textSize="22sp"
-                    android:drawableLeft="@drawable/ic_door"
-                    android:layout_marginLeft="8dp" />
+                    android:layout_marginRight="10dp" />
             </LinearLayout>
 
             <com.glevel.dungeonhero.views.CustomCarousel

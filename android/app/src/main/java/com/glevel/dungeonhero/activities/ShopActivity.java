@@ -87,6 +87,8 @@ public class ShopActivity extends MyActivity implements OnClickListener {
         mGoldAmount = (TextView) findViewById(R.id.gold_amount);
 
         findViewById(R.id.back_button).setOnClickListener(this);
+
+        ((TextView) findViewById(R.id.hero_name)).setCompoundDrawablesWithIntrinsicBounds(mGame.getHero().getImage(getResources()), 0, 0, 0);
     }
 
     @Override

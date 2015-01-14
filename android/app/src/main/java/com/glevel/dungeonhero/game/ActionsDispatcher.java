@@ -740,7 +740,7 @@ public class ActionsDispatcher implements UserActionListener {
             getItemOrDropIt(reward.getItem());
         }
         mGameActivity.getHero().addGold(reward.getGold());
-        mGameActivity.getHero().addFrag();
+        mGameActivity.getHero().addFrag(target.getIdentifier());
         final boolean newLevel = mGameActivity.getHero().addXP(reward.getXp());
 
         animateReward(reward);

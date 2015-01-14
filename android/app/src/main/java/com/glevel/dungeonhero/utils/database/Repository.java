@@ -29,20 +29,20 @@ public abstract class Repository<T extends DatabaseResource> implements IReposit
     }
 
     @Override
-    public List<T> get(String selection, String[] selectionArgs, String orderBy, String limit) {
+    public List<T> get(String[] columns, String selection, String[] selectionArgs, String orderBy, String limit) {
         this.openDatabase();
-        Cursor cursor = mDatabase.query(tableName, null, selection, selectionArgs, null, null, orderBy, limit);
+        Cursor cursor = mDatabase.query(tableName, columns, selection, selectionArgs, null, null, orderBy, limit);
         return convertCursorToObjectList(cursor);
     }
 
     @Override
     public List<T> getAll() {
-        return get(null, null, null, null);
+        return get(null, null, null, null, null);
     }
 
     @Override
     public T getById(long id) {
-        List<T> lst = get(T.COLUMN_ID + "=" + id, null, null, null);
+        List<T> lst = get(null, T.COLUMN_ID + "=" + id, null, null, null);
         if (lst != null && lst.size() > 0) {
             return lst.get(0);
         }

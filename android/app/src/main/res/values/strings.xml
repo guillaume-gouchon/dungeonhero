@@ -76,7 +76,9 @@
     <!-- Book Chooser -->
     <string name="choose_book_message">Choose a Quest</string>
     <string name="ask_tutorial">It is recommended to do the tutorial in order to know how to play\u00A0!\nWould you like to do it now ?</string>
-    <string name="shop">Visit the Shop</string>
+    <string name="visit_shop">Visit the Shop</string>
+    <string name="shop">Shop</string>
+    <string name="bestiary">Bestiary</string>
     <string name="tavern">Tavern</string>
 
     <!-- Story -->
@@ -96,6 +98,7 @@
     <string name="buy_item_for">Buy item for %s gold coins</string>
     <string name="sell_item_for">Sell item for %s gold coins</string>
     <string name="transaction_confirmation">Are you sure ?</string>
+    <string name="merchant">Merchant</string>
 
     <!-- Characteristics -->
     <string name="hp">Health points</string>

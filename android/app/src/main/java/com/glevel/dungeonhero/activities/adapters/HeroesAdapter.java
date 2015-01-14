@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.game.gui.SomethingDetails;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.views.CustomCarousel;
@@ -76,25 +77,9 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
         });
     }
 
-    public void showSkillInfo(final Skill skill) {
+    public void showSkillInfo(Skill skill) {
         if (mSkillInfoDialog == null || !mSkillInfoDialog.isShowing()) {
-            mSkillInfoDialog = new Dialog(mActivity, R.style.DialogNoAnimation);
-            mSkillInfoDialog.setContentView(R.layout.in_game_item_info);
-            mSkillInfoDialog.setCancelable(true);
-
-            TextView nameTV = (TextView) mSkillInfoDialog.findViewById(R.id.name);
-            nameTV.setText(skill.getName(mResources));
-            nameTV.setCompoundDrawablesWithIntrinsicBounds(skill.getImage(mResources), 0, 0, 0);
-
-            TextView descriptionTV = (TextView) mSkillInfoDialog.findViewById(R.id.description);
-            if (skill.getDescription(mResources) > 0) {
-                descriptionTV.setText(skill.getDescription(mResources));
-            } else {
-                descriptionTV.setVisibility(View.GONE);
-            }
-
-            mSkillInfoDialog.findViewById(R.id.main_action_btn).setVisibility(View.GONE);
-            mSkillInfoDialog.findViewById(R.id.secondary_action_btn).setVisibility(View.GONE);
+            mSkillInfoDialog = new SomethingDetails(mActivity, skill);
             mSkillInfoDialog.show();
         }
     }

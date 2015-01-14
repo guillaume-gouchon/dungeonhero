@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.models.characters;
 
 
 import com.glevel.dungeonhero.data.items.PotionFactory;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.equipments.Equipment;
@@ -14,6 +15,7 @@ import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by guillaume ON 10/2/14.
@@ -22,12 +24,10 @@ public class Hero extends Unit implements InAppProduct {
 
     private static final long serialVersionUID = -5970005172767341685L;
 
-    private static final int LEVEL_MAX = 6;
-
     private final String productId;
     private final HeroTypes heroType;
     protected boolean mHasBeenBought = false;
-    protected int frags = 0;
+    protected List<String> frags = new ArrayList<>();
     private int xp;
     private int level;
     private String heroName;
@@ -78,12 +78,12 @@ public class Hero extends Unit implements InAppProduct {
         return xp;
     }
 
-    public int getFrags() {
+    public List<String> getFrags() {
         return frags;
     }
 
-    public void addFrag() {
-        frags++;
+    public void addFrag(String type) {
+        frags.add(type);
     }
 
     public void addGold(int goldAmount) {
@@ -95,7 +95,7 @@ public class Hero extends Unit implements InAppProduct {
     }
 
     public boolean addXP(int xpAmount) {
-        if (level == LEVEL_MAX) {
+        if (level == GameConstants.HERO_LEVEL_MAX) {
             return false;
         }
 

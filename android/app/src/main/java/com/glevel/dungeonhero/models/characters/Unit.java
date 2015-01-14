@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.models.characters;
 
 import android.util.Log;
 
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.models.FightResult;
@@ -39,8 +40,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
 
     private static final long serialVersionUID = 9185541600463971808L;
     private static final String TAG = "Unit";
-
-    public static final int NB_ITEMS_MAX_IN_BAG = 15;
 
     // Skills
     protected final List<Skill> skills = new ArrayList<>();
@@ -386,7 +385,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
     }
 
     public boolean addItem(Item item) {
-        if (items.size() < NB_ITEMS_MAX_IN_BAG) {
+        if (items.size() < GameConstants.NB_ITEMS_MAX_IN_BAG) {
             items.add(item);
             return true;
         } else {

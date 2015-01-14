@@ -34,13 +34,18 @@ public class Game extends DatabaseResource {
     public static Game fromCursor(Cursor cursor) {
         Game game = new Game();
         game.setId(cursor.getLong(0));
-        game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(1)));
-        game.setBooksDone((Map<Integer, Integer>) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
-        if (cursor.getBlob(3) != null) {
-            game.setBook((Book) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
-        }
-        if (cursor.getBlob(4) != null) {
-            game.setDungeon((Dungeon) ByteSerializer.getObjectFromByte(cursor.getBlob(4)));
+
+        if (cursor.getColumnCount() > 1) {
+            game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(1)));
+            if (cursor.getColumnCount() > 2) {
+                game.setBooksDone((Map<Integer, Integer>) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
+                if (cursor.getBlob(3) != null) {
+                    game.setBook((Book) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
+                }
+                if (cursor.getBlob(4) != null) {
+                    game.setDungeon((Dungeon) ByteSerializer.getObjectFromByte(cursor.getBlob(4)));
+                }
+            }
         }
         return game;
     }
@@ -160,7 +165,7 @@ public class Game extends DatabaseResource {
         this.booksDone = booksDone;
     }
 
-    private enum Columns {
+    public enum Columns {
         HERO("hero"), BOOKS_DONE("books_done"), BOOK("book"), DUNGEON("dungeon");
 
         private final String columnName;

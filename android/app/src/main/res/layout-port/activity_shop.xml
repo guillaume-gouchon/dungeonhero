@@ -29,8 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="@string/game_master"
-                android:drawableLeft="@drawable/ic_riddle"
+                android:text="@string/merchant"
+                android:drawableLeft="@drawable/merchant"
                 style="@style/DiscussionName" />
 
             <View
@@ -89,6 +89,7 @@
             android:layout_marginTop="25dp">
 
             <com.glevel.dungeonhero.views.CustomTextView
+                android:id="@+id/hero_name"
                 style="@style/HeroTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

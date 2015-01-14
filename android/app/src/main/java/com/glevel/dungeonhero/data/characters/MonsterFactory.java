@@ -16,16 +16,16 @@ public class MonsterFactory {
     public static List<Monster> getAll() {
         List<Monster> lst = new ArrayList<>();
         lst.add(buildGoblin());
+        lst.add(buildOrc());
+        lst.add(buildOrcCaptain());
+        lst.add(buildTroll());
+        lst.add(buildOgre());
+        lst.add(buildOgreKing());
+        lst.add(buildGargoyle());
         lst.add(buildChaosWarrior());
         lst.add(buildChaosWizard());
         lst.add(buildDemon());
         lst.add(buildDemonKing());
-        lst.add(buildGargoyle());
-        lst.add(buildOgre());
-        lst.add(buildOgreKing());
-        lst.add(buildOrc());
-        lst.add(buildOrcCaptain());
-        lst.add(buildTroll());
         return lst;
     }
 

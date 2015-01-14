@@ -30,7 +30,10 @@ public class LoadGameFragment extends DialogFragment {
     private final ListView.OnItemClickListener mOnItemClickedListener = new ListView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            launchGame(mSavedGamesList.get(position));
+            // retrieve game whole object
+            long gameId = mSavedGamesList.get(position).getId();
+            Game game = (Game) mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getById(gameId);
+            launchGame(game);
         }
     };
 
@@ -74,7 +77,7 @@ public class LoadGameFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mSavedGamesList = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getAll();
+        mSavedGamesList = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).get(new String[]{Game.COLUMN_ID, Game.Columns.HERO.name()}, null, null, null, null);
         mAdapter = new LoadGamesAdapter(getActivity(), mSavedGamesList);
         mGamesListView.setAdapter(mAdapter);
     }
@@ -99,7 +102,7 @@ public class LoadGameFragment extends DialogFragment {
 
     private void launchGame(Game game) {
         MusicManager.playSound(getActivity().getApplicationContext(), R.raw.button_sound);
-        
+
         Intent intent;
         if (game.getDungeon() == null) {
             intent = new Intent(getActivity(), BookChooserActivity.class);

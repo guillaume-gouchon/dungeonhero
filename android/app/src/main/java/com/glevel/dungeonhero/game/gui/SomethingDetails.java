@@ -13,7 +13,7 @@ import com.glevel.dungeonhero.models.StorableResource;
 /**
  * Created by guillaume on 1/14/15.
  */
-public abstract class SomethingDetails extends Dialog {
+public class SomethingDetails extends Dialog {
 
     protected final TextView mNameTV;
     protected final Resources mResources;

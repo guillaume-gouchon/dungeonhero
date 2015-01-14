@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.characters.Hero;
-import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.items.Item;
 
 /**
@@ -20,7 +20,7 @@ public class ItemInfoInShop extends ItemInfo {
         // actions
         TextView mainActionButton = (TextView) findViewById(R.id.main_action_btn);
         mainActionButton.setText(isSelling ? context.getString(R.string.sell_item_for, item.getSellPrice()) : context.getString(R.string.buy_item_for, item.getPrice()));
-        mainActionButton.setEnabled(isSelling || hero.getGold() >= item.getPrice() && hero.getItems().size() < Unit.NB_ITEMS_MAX_IN_BAG);
+        mainActionButton.setEnabled(isSelling || hero.getGold() >= item.getPrice() && hero.getItems().size() < GameConstants.NB_ITEMS_MAX_IN_BAG);
         mainActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

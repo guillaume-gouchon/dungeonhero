@@ -30,7 +30,7 @@ public class HeroInfo extends Dialog {
         ((TextView) findViewById(R.id.dodge)).setText(context.getString(R.string.dodge) + " : " + hero.calculateDodge() + "%");
         ((TextView) findViewById(R.id.block)).setText(context.getString(R.string.block) + " : " + hero.calculateBlock() + "%");
         ((TextView) findViewById(R.id.critical)).setText(context.getString(R.string.critical) + " : " + hero.calculateCritical() + "%");
-        ((TextView) findViewById(R.id.frags)).setText(hero.getFrags() + " " + context.getString(R.string.frags));
+        ((TextView) findViewById(R.id.frags)).setText(hero.getFrags().size() + " " + context.getString(R.string.frags));
     }
 
 }

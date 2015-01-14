@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.MyDatabase;
@@ -102,7 +103,11 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
         findViewById(R.id.chooseBookMessage).startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.big_label_in_game));
 
         findViewById(R.id.shop_button).setOnClickListener(this);
-        findViewById(R.id.tavern_button).setOnClickListener(this);
+        findViewById(R.id.bestiary_button).setOnClickListener(this);
+
+        TextView heroNameTV = (TextView) findViewById(R.id.hero_name);
+        heroNameTV.setText(mGame.getHero().getHeroName());
+        heroNameTV.setCompoundDrawablesWithIntrinsicBounds(mGame.getHero().getImage(getResources()), 0, 0, 0);
     }
 
     @Override
@@ -196,9 +201,17 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.shop_button:
-                Intent intent = new Intent(this, ShopActivity.class);
+                intent = new Intent(this, ShopActivity.class);
+                intent.putExtra(Game.class.getName(), mGame);
+                startActivity(intent);
+                finish();
+                break;
+
+            case R.id.bestiary_button:
+                intent = new Intent(this, BestiaryActivity.class);
                 intent.putExtra(Game.class.getName(), mGame);
                 startActivity(intent);
                 finish();

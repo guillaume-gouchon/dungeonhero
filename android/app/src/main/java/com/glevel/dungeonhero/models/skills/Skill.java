@@ -12,8 +12,6 @@ public abstract class Skill extends StorableResource implements Levelable {
 
     private static final long serialVersionUID = -5459063916950986709L;
 
-    private static final int SKILL_MAX_LEVEL = 6;
-
     private int level;
     private final Effect effect;
 
@@ -29,7 +27,7 @@ public abstract class Skill extends StorableResource implements Levelable {
     }
 
     public boolean canBeImproved() {
-        return level <= SKILL_MAX_LEVEL;
+        return level <= GameConstants.SKILL_MAX_LEVEL;
     }
 
     public Skill improve() {
