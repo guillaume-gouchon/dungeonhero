@@ -93,8 +93,8 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
                 descriptionTV.setVisibility(View.GONE);
             }
 
-            mSkillInfoDialog.findViewById(R.id.actionButton).setVisibility(View.GONE);
-            mSkillInfoDialog.findViewById(R.id.dropButton).setVisibility(View.GONE);
+            mSkillInfoDialog.findViewById(R.id.main_action_btn).setVisibility(View.GONE);
+            mSkillInfoDialog.findViewById(R.id.secondary_action_btn).setVisibility(View.GONE);
             mSkillInfoDialog.show();
         }
     }

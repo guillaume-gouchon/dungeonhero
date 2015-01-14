@@ -12,7 +12,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="@color/bg_btn_pressed_center" />
+                <solid android:color="@color/bg_btn_center_pressed" />
             </shape>
         </clip>
     </item>

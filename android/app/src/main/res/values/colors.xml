@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_home">#55000000</color>
+    <color name="main_text_color">#eee</color>
+    <color name="secondary_text_color">#ddd</color>
 
+    <!-- Buttons -->
     <color name="bg_btn_edge">#66000000</color>
     <color name="bg_btn_edge_pressed">#99000000</color>
     <color name="bg_btn_center">#ee000000</color>
-    <color name="bg_btn_pressed_center">#aabbbbbb</color>
+    <color name="bg_btn_center_pressed">#aabbbbbb</color>
     <color name="bg_btn_disabled">#33000000</color>
+    <color name="text_radio_btn_inactive">#55ffffff</color>
+
     <color name="bg_gui">#cc000000</color>
 
     <color name="bg_popup_btn">#111</color>
@@ -15,42 +19,18 @@
     <color name="link">#aabbbbbb</color>
     <color name="link_pressed">#aa999999</color>
 
-    <color name="strength">#BAB175</color>
-    <color name="dexterity">#BAB175</color>
-    <color name="spirit">#BAB175</color>
-    <color name="hp">#C76969</color>
-    <color name="attack">#77A867</color>
-    <color name="block">#758FBA</color>
-    <color name="movement">#A88967</color>
-
-    <color name="requisitionPoints">#EDEA39</color>
+    <color name="text_discussion_answer_pressed">#77A867</color>
+    <color name="green">#84dd38</color>
     <color name="grey">#aabbbbbb</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
     <color name="red">#D10000</color>2\
     <color name="black">#000000</color>
-    <color name="orange">#FF9F38</color>
-    <color name="yellow">#EDEA39</color>
-    <color name="green">#84dd38</color>
     <color name="darkGreen">#5A9626</color>
     <color name="blue">#6BB3D6</color>
-    <color name="veteran">#ffffff</color>
-    <color name="elite">#999999</color>
     <color name="bg_game_menu">#88000000</color>
-    <color name="btn_stroke_color">#000000</color>
 
     <color name="advertisement_link_highlight">#155A73</color>
     <color name="advertisement_link">#155A73</color>
-
-    <color name="light_gray">#aaeeeeee</color>
-
-    <color name="border_in_game_pressed">#eebbbbbb</color>
-
-    <color name="bg_scroll">#BAB175</color>
-    <color name="bg_weapon">#D10000</color>
-    <color name="bg_armor">#758FBA</color>
-    <color name="bg_ring">#EDEA39</color>
-    <color name="bg_potion">#77A867</color>
-    <color name="bg_gold">#EDEA39</color>
 
     <color name="bg_level_0">#aa000000</color>
     <color name="bg_level_1">#aaEDEA39</color>

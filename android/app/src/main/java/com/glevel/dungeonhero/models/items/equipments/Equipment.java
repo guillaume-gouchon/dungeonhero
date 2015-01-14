@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.models.items.equipments;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.models.Levelable;
 import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.requirements.Requirement;
@@ -11,8 +12,10 @@ import java.util.List;
 /**
  * Created by guillaume ON 10/6/14.
  */
-public abstract class Equipment extends Item {
+public abstract class Equipment extends Item implements Levelable {
 
+    private static final long serialVersionUID = 662104930156421984L;
+    
     private final List<Effect> effects = new ArrayList<Effect>();
     private final List<Requirement> requirements = new ArrayList<Requirement>();
     protected final int level;
@@ -55,6 +58,7 @@ public abstract class Equipment extends Item {
         return requirements;
     }
 
+    @Override
     public int getLevel() {
         return level;
     }

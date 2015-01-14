@@ -102,12 +102,10 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.skipButton:
-                MusicManager.playSound(getActivity().getApplicationContext(), R.raw.button_sound);
                 dismiss();
                 break;
 
             case R.id.replayButton:
-                MusicManager.playSound(getActivity().getApplicationContext(), R.raw.button_sound);
                 startAnimation();
                 break;
         }

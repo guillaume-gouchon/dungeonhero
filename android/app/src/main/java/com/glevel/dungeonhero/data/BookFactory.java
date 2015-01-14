@@ -26,7 +26,6 @@ public class BookFactory {
         lst.add(buildBalrogQuest());
         lst.add(buildWizardQuest());
 //        lst.add(buildPartnershipQuest());
-//        lst.add(buildAleQuest());
 //        lst.add(buildDreamQuest());
         return lst;
     }
@@ -109,13 +108,8 @@ public class BookFactory {
         return book;
     }
 
-    public static Book buildAleQuest() {
-        Book book = new Book(6, "ale_quest", "initiation_intro", "initiation_outro", null);
-        return book;
-    }
-
     public static Book buildDreamQuest() {
-        Book book = new Book(7, "dream_quest", "initiation_intro", "initiation_outro", null);
+        Book book = new Book(6, "dream_quest", "initiation_intro", "initiation_outro", null);
         return book;
     }
 

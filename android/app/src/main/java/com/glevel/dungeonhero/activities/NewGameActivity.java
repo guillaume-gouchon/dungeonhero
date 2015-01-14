@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -171,7 +170,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
             }
         });
 
-        view.findViewById(R.id.okButton).setOnClickListener(new OnClickListener() {
+        view.findViewById(R.id.ok_btn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 MusicManager.playSound(getApplicationContext(), R.raw.button_sound);

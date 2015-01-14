@@ -1,14 +1,15 @@
 package com.glevel.dungeonhero.models.skills;
 
 import com.glevel.dungeonhero.game.GameConstants;
+import com.glevel.dungeonhero.models.Levelable;
 import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.effects.Effect;
 
 /**
  * Created by guillaume ON 10/6/14.
  */
-public abstract class Skill extends StorableResource {
-    
+public abstract class Skill extends StorableResource implements Levelable {
+
     private static final long serialVersionUID = -5459063916950986709L;
 
     private static final int SKILL_MAX_LEVEL = 6;
@@ -22,6 +23,7 @@ public abstract class Skill extends StorableResource {
         this.effect = effect;
     }
 
+    @Override
     public int getLevel() {
         return level;
     }

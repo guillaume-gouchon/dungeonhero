@@ -75,7 +75,7 @@
                 android:inputType="textNoSuggestions" />
 
             <com.glevel.dungeonhero.views.CustomTextView
-                android:id="@+id/okButton"
+                android:id="@+id/ok_btn"
                 style="@style/PopupButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

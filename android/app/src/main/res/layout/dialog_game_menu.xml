@@ -15,7 +15,7 @@
         android:text="@string/game_paused" />
 
     <com.glevel.dungeonhero.views.CustomButton
-        android:id="@+id/resumeGameButton"
+        android:id="@+id/resume_game_btn"
         style="@style/HomeScreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         android:text="@string/resume_game" />
 
     <com.glevel.dungeonhero.views.CustomButton
-        android:id="@+id/leaveQuestButton"
+        android:id="@+id/leave_quest_btn"
         style="@style/HomeScreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:text="@string/leave_quest" />
 
     <com.glevel.dungeonhero.views.CustomButton
-        android:id="@+id/exitButton"
+        android:id="@+id/exit_btn"
         style="@style/HomeScreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

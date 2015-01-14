@@ -3,6 +3,6 @@
 
     <item android:state_pressed="true" android:color="@color/white" />
     <item android:state_checked="true" android:color="@color/white" />
-    <item android:color="#55ffffff" />
+    <item android:color="@color/text_radio_btn_inactive" />
 
 </selector>

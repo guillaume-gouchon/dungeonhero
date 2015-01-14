@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:layout_height="1dp" />
 
-            <com.glevel.dungeonhero.views.CustomTextView
+            <com.glevel.dungeonhero.views.CustomButton
                 android:id="@+id/back_button"
                 style="@style/Button"
                 android:layout_width="80dp"
@@ -160,6 +160,5 @@
 
             <include layout="@layout/in_game_item" />
         </GridLayout>
-
     </LinearLayout>
 </FrameLayout>

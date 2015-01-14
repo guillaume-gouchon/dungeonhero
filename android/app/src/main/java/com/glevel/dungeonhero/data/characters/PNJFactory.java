@@ -128,7 +128,7 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // next target ?
-        discussion = new Discussion(new OpenRiddle(25, "tiggy_11", "gundin", new Reward(null, 0, 80)));
+        discussion = new Discussion(new OpenRiddle(25, "tiggy_11", "gundin"));
         pnj.getDiscussions().add(discussion);
 
         // wrong answer
@@ -137,7 +137,7 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // right answer
-        discussion = new Discussion("tiggy_11_right", false, new Reward(RingFactory.buildSOVRing()));
+        discussion = new Discussion("tiggy_11_right", false, new Reward(RingFactory.buildSOVRing(), 0, 80));
         discussion.addReaction(new Reaction("ok", 3));
         pnj.getDiscussions().add(discussion);
 
@@ -186,7 +186,7 @@ public class PNJFactory {
         pnj.setReward(new Reward(null, 0, 0));
 
         // riddle 1
-        Discussion discussion = new Discussion(new OpenRiddle(40, "white_wizard_1", "nothing", new Reward(null, 0, 40)));
+        Discussion discussion = new Discussion(new OpenRiddle(40, "white_wizard_1", "nothing"));
         pnj.getDiscussions().add(discussion);
 
         // wrong answer
@@ -195,11 +195,11 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // right answer
-        discussion = new Discussion("white_wizard_right", false, null, new WhiteWizardDiscussionCallback(pnj, true));
+        discussion = new Discussion("white_wizard_right", false, new Reward(null, 0, 40), new WhiteWizardDiscussionCallback(pnj, true));
         pnj.getDiscussions().add(discussion);
 
         // riddle 2
-        discussion = new Discussion(new OpenRiddle(40, "white_wizard_2", "fire", new Reward(null, 0, 60)));
+        discussion = new Discussion(new OpenRiddle(40, "white_wizard_2", "fire"));
         pnj.getDiscussions().add(discussion);
 
         // wrong answer
@@ -208,11 +208,11 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // right answer
-        discussion = new Discussion("white_wizard_right", false, null, new WhiteWizardDiscussionCallback(pnj, true));
+        discussion = new Discussion("white_wizard_right", false, new Reward(null, 0, 60), new WhiteWizardDiscussionCallback(pnj, true));
         pnj.getDiscussions().add(discussion);
 
         // riddle 3
-        discussion = new Discussion(new OpenRiddle(40, "white_wizard_3", "secret", new Reward(null, 0, 80)));
+        discussion = new Discussion(new OpenRiddle(40, "white_wizard_3", "secret"));
         pnj.getDiscussions().add(discussion);
 
         // wrong answer
@@ -221,7 +221,7 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // right answer
-        discussion = new Discussion("white_wizard_right_final", false, null, new WhiteWizardDiscussionCallback(pnj, true));
+        discussion = new Discussion("white_wizard_right_final", false, new Reward(null, 0, 80), new WhiteWizardDiscussionCallback(pnj, true));
         pnj.getDiscussions().add(discussion);
 
         return pnj;

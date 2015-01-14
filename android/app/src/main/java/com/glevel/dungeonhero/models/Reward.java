@@ -39,4 +39,8 @@ public class Reward implements Serializable {
         return xp;
     }
 
+    public boolean hasToShowPopup() {
+        return gold > 0 || item != null;
+    }
+
 }

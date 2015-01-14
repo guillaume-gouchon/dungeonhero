@@ -16,6 +16,7 @@ import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.graphics.SelectionCircle;
+import com.glevel.dungeonhero.game.gui.items.ItemInfoInGame;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -35,6 +36,7 @@ import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.items.consumables.Potion;
+import com.glevel.dungeonhero.models.items.equipments.Equipment;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
@@ -75,7 +77,7 @@ public class GameActivity extends MyBaseGameActivity {
             // TODO : used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildBerserker());
-            mGame.setBook(BookFactory.buildWizardQuest());
+            mGame.setBook(BookFactory.buildBalrogQuest());
         }
 
         if (mGame.getDungeon() == null) {
@@ -261,37 +263,58 @@ public class GameActivity extends MyBaseGameActivity {
             if (view.getTag(R.string.item) != null) {
                 Log.d(TAG, "Show item info");
                 final Item item = (Item) view.getTag(R.string.item);
-                mGUIManager.showItemInfo(mHero, item, new OnActionExecuted() {
+                mGUIManager.showItemInfo(item, new ItemInfoInGame.OnItemActionSelected() {
                     @Override
-                    public void onActionDone(boolean success) {
-                        mActionDispatcher.dropItem(item);
+                    public void onActionExecuted(ItemInfoInGame.ItemActionsInGame action) {
+                        switch (action) {
+                            case UNEQUIP:
+                                mHero.removeEquipment((Equipment) item);
+                                mGUIManager.updateBag(mHero);
+                                break;
+
+                            case EQUIP:
+                                mHero.equip((Equipment) item);
+                                mGUIManager.updateBag(mHero);
+                                break;
+
+                            case DROP:
+                                mHero.drop(item);
+                                mGUIManager.updateBag(mHero);
+                                mActionDispatcher.dropItem(item);
+                                break;
+
+                            case DRINK:
+                                mGUIManager.hideBag();
+                                drinkPotion((Potion) item);
+                                break;
+                        }
                     }
                 });
             } else if (view.getTag(R.string.show_skill) != null) {
-                Log.d(TAG, "Show skill");
                 if (mActionDispatcher.getActivatedSkill() == view.getTag(R.string.show_skill)) {
-                    // cancel skill
+                    Log.d(TAG, "Cancel skill");
                     mActionDispatcher.setActivatedSkill((ActiveSkill) view.getTag(R.string.show_skill));
                 } else {
+                    Log.d(TAG, "Show skill");
                     mGUIManager.showUseSkillInfo((Skill) view.getTag(R.string.show_skill));
                 }
             } else if (view.getTag(R.string.use_skill) != null) {
                 Log.d(TAG, "Use skill");
                 mActionDispatcher.setActivatedSkill((ActiveSkill) view.getTag(R.string.use_skill));
             }
-
-            if (view.getTag(R.string.potion) != null) {
-                Log.d(TAG, "Drink potion");
-                final Potion potion = (Potion) view.getTag(R.string.potion);
-                mHero.use(potion);
-                playSound("magic", false);
-                mActionDispatcher.applyEffect(potion.getEffect(), mHero.getTilePosition(), false);
-            }
         }
 
         if (view.getTag(R.string.skill) != null) {
-            mGUIManager.showSkillInfo((com.glevel.dungeonhero.models.skills.Skill) view.getTag(R.string.skill));
+            Log.d(TAG, "Show improve skill dialog");
+            mGUIManager.showImproveSkillDialog((com.glevel.dungeonhero.models.skills.Skill) view.getTag(R.string.skill));
         }
+    }
+
+    public void drinkPotion(Potion potion) {
+        Log.d(TAG, "Drink potion");
+        mHero.use(potion);
+        playSound("magic", false);
+        mActionDispatcher.applyEffect(potion.getEffect(), mHero.getTilePosition(), false);
     }
 
     public Unit getActiveCharacter() {

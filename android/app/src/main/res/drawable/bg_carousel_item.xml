@@ -3,17 +3,17 @@
 
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <stroke android:width="3dp" android:color="@color/grey" />
+            <stroke android:width="@dimen/carousel_item_stroke_width" android:color="@color/grey" />
 
-            <corners android:radius="4dp" />
+            <corners android:radius="@dimen/carousel_item_radius" />
 
             <solid android:color="@color/bg_btn_edge_pressed" />
         </shape>
     </item>
+
     <item>
         <shape android:shape="rectangle">
-
-            <corners android:radius="4dp" />
+            <corners android:radius="@dimen/carousel_item_radius" />
 
             <solid android:color="@color/bg_btn_edge" />
         </shape>

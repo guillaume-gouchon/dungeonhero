@@ -58,7 +58,7 @@
     <style name="RadioButton">
         <item name="android:textSize">14sp</item>
         <item name="android:background">@drawable/bg_radio_btn</item>
-        <item name="android:textColor">@drawable/text_radio_btn</item>
+        <item name="android:textColor">@drawable/text_color_radio_btn</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">12dp</item>
@@ -106,7 +106,7 @@
 
     <style name="AlertDialogButton">
         <item name="android:background">@drawable/bg_alert_dialog_btn</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">12sp</item>
     </style>
 
@@ -118,16 +118,19 @@
         <item name="android:shadowDx">8</item>
         <item name="android:shadowDy">4</item>
         <item name="android:shadowRadius">8</item>
+        <item name="android:textColor">@color/main_text_color</item>
     </style>
 
     <style name="HeroTitle">
         <item name="android:textSize">22sp</item>
         <item name="android:padding">6dp</item>
         <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textColor">@color/main_text_color</item>
     </style>
 
     <style name="HeroDescription">
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
     </style>
 
     <style name="HeroStat">
@@ -135,7 +138,7 @@
         <item name="android:padding">4dp</item>
         <item name="android:drawablePadding">4dp</item>
         <item name="android:gravity">left|center_vertical</item>
-
+        <item name="android:textColor">@color/main_text_color</item>
     </style>
 
     <style name="BookTitle">
@@ -145,7 +148,7 @@
         <item name="android:shadowDx">8</item>
         <item name="android:shadowDy">4</item>
         <item name="android:shadowRadius">8</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
     </style>
 
     <style name="BookSummary">
@@ -157,11 +160,12 @@
         <item name="android:shadowRadius">8</item>
         <item name="android:maxLines">5</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
     </style>
 
     <!-- STORY -->
     <style name="StoryText">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:gravity">left</item>
         <item name="android:textSize">28sp</item>
         <item name="android:shadowColor">@color/black</item>
@@ -171,7 +175,7 @@
     </style>
 
     <style name="GameOverTitle">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">50sp</item>
         <item name="android:padding">15dp</item>
         <item name="android:shadowColor">@color/black</item>
@@ -182,7 +186,7 @@
 
     <!-- IN GAME -->
     <style name="LoadingTitle">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">50sp</item>
         <item name="android:padding">15dp</item>
         <item name="android:shadowColor">@color/black</item>
@@ -192,7 +196,7 @@
     </style>
 
     <style name="DiscussionName">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">14sp</item>
         <item name="android:padding">10dp</item>
         <item name="android:drawablePadding">8dp</item>
@@ -200,7 +204,7 @@
     </style>
 
     <style name="DiscussionMessage">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">18sp</item>
         <item name="android:paddingTop">15dp</item>
         <item name="android:paddingBottom">5dp</item>
@@ -210,7 +214,7 @@
 
     <style name="PopupMessage">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">20sp</item>
         <item name="android:padding">15dp</item>
         <item name="android:drawablePadding">10dp</item>
@@ -218,7 +222,7 @@
 
     <style name="PopupDescription">
         <item name="android:gravity">left</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
         <item name="android:textSize">15sp</item>
         <item name="android:padding">5dp</item>
     </style>
@@ -235,7 +239,7 @@
     </style>
 
     <style name="Reply">
-        <item name="android:textColor">@drawable/text_color_reply</item>
+        <item name="android:textColor">@drawable/text_color_discussion_answer</item>
         <item name="android:textSize">18sp</item>
         <item name="android:padding">10dp</item>
         <item name="android:gravity">left|center_vertical</item>

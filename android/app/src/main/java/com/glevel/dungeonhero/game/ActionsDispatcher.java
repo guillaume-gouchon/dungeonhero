@@ -203,9 +203,9 @@ public class ActionsDispatcher implements UserActionListener {
             @Override
             public void run() {
                 if (((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
-                    mGUIManager.showFinishQuestDialog();
+                    mGUIManager.showFinishQuestConfirmDialog();
                 } else {
-                    mGUIManager.showLeaveQuestDialog();
+                    mGUIManager.showLeaveQuestConfirmDialog();
                 }
             }
         });

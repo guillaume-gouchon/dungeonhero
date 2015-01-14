@@ -20,7 +20,7 @@
         android:orientation="vertical"
         android:layout_margin="10dp"
         android:padding="20dp"
-        android:background="@drawable/bg_carousel"
+        android:background="@drawable/bg_carousel_item"
         android:gravity="top|center">
 
         <com.glevel.dungeonhero.views.CustomTextView

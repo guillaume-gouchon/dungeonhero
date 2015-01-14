@@ -1,7 +1,5 @@
 package com.glevel.dungeonhero.models.discussions.riddles;
 
-import com.glevel.dungeonhero.models.Reward;
-
 /**
  * Created by guillaume on 12/2/14.
  */
@@ -11,8 +9,8 @@ public class OpenRiddle extends Riddle {
 
     private final String correctAnswer;
 
-    public OpenRiddle(int timer, String question, String correctAnswer, Reward reward) {
-        super(timer, question, reward);
+    public OpenRiddle(int timer, String question, String correctAnswer) {
+        super(timer, question);
         this.correctAnswer = correctAnswer;
     }
 

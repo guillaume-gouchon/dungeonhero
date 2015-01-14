@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.models;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Event;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
@@ -18,8 +19,6 @@ public class Chapter implements Serializable {
     private static final long serialVersionUID = 1484748281734643544L;
 
     private static final String TAG = "Chapter";
-
-    private static final int DUNGEON_SIZE = 3;
 
     private final List<Event> initialEvents;
 
@@ -50,7 +49,7 @@ public class Chapter implements Serializable {
     }
 
     public void createDungeon() {
-        dungeon = new Dungeon(DUNGEON_SIZE, DUNGEON_SIZE, events);
+        dungeon = new Dungeon(GameConstants.DUNGEON_SIZE, GameConstants.DUNGEON_SIZE, events);
     }
 
     public Dungeon getDungeon() {

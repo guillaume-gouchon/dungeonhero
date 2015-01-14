@@ -89,19 +89,21 @@
         android:layout_marginTop="10dp">
 
         <com.glevel.dungeonhero.views.CustomTextView
-            android:id="@+id/actionButton"
+            android:id="@+id/main_action_btn"
             style="@style/PopupButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/placeholder" />
+            android:text="@string/placeholder"
+            android:visibility="gone" />
 
         <com.glevel.dungeonhero.views.CustomTextView
-            android:id="@+id/dropButton"
+            android:id="@+id/secondary_action_btn"
             style="@style/PopupButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/drop"
-            android:layout_marginLeft="20dp" />
+            android:text="@string/placeholder"
+            android:layout_marginLeft="20dp"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

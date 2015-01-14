@@ -32,13 +32,13 @@ public class CustomAlertDialog extends Dialog implements OnClickListener {
         TextView reactionTV;
 
         reactionTV = (TextView) inflater.inflate(R.layout.in_game_discussion_reply, null);
-        reactionTV.setId(R.id.okButton);
+        reactionTV.setId(R.id.ok_btn);
         reactionTV.setText(R.string.yes);
         reactionTV.setOnClickListener(this);
         reactionsLayout.addView(reactionTV);
 
         reactionTV = (TextView) inflater.inflate(R.layout.in_game_discussion_reply, null);
-        reactionTV.setId(R.id.cancelButton);
+        reactionTV.setId(R.id.cancel_btn);
         reactionTV.setText(R.string.no);
         reactionTV.setOnClickListener(this);
         reactionsLayout.addView(reactionTV);

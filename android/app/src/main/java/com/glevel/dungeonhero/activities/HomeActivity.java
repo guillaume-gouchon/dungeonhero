@@ -104,35 +104,28 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         if (v.isShown()) {
             switch (v.getId()) {
                 case R.id.newGameButton:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                     startActivity(new Intent(this, NewGameActivity.class));
                     finish();
                     break;
                 case R.id.loadGameButton:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                     ApplicationUtils.openDialogFragment(this, new LoadGameFragment(), null);
                     hideMainHomeButtons();
                     mBackButton.setVisibility(View.GONE);
                     mBackButton.setAnimation(null);
                     break;
                 case R.id.settingsButton:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                     showSettings();
                     break;
                 case R.id.backButton:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                     onBackPressed();
                     break;
                 case R.id.aboutButton:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                     openAboutDialog();
                     break;
                 case R.id.rateButton:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                     ApplicationUtils.rateTheApp(this);
                     break;
                 case R.id.shareButton:
-                    MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                     ApplicationUtils.startSharing(this, getString(R.string.share_subject, getString(R.string.app_name)),
                             getString(R.string.share_message, getPackageName()), 0);
                     break;

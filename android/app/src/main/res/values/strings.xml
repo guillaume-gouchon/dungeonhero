@@ -130,7 +130,7 @@
     <string name="close">Close</string>
     <string name="use">Use</string>
     <string name="equip">Equip</string>
-    <string name="remove">Remove</string>
+    <string name="unequip">Remove</string>
     <string name="drop">Drop</string>
     <string name="gold_coins">Gold Coins</string>
     <string name="bag_full">Your bag is full, the object has been dropped on the ground</string>
@@ -155,6 +155,9 @@
     <string name="drink">Drink</string>
     <string name="sleep_effect">zzz</string>
     <string name="chance_stun">Bonus to stun target</string>
+    <string name="two_handed">Two-handed</string>
+    <string name="two_handed_description">Both hands are needed to use this item</string>
+    <string name="thing_name_with_level">%1$s (lvl %2$s)</string>
 
     <!-- Discussions -->
     <string name="yes">Yes</string>

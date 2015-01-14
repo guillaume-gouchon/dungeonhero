@@ -3,22 +3,24 @@
 
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <corners android:radius="5dp" />
+            <corners android:radius="@dimen/main_btn_radius" />
             <solid android:color="@color/bg_btn_disabled" />
         </shape>
     </item>
+
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <stroke android:width="2dp" android:color="@color/grey" />
+            <stroke android:width="@dimen/main_btn_stroke_width_pressed" android:color="@color/grey" />
 
-            <corners android:radius="5dp" />
+            <corners android:radius="@dimen/main_btn_radius" />
 
             <solid android:color="@color/bg_btn_edge_pressed" />
         </shape>
     </item>
+
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="5dp" />
+            <corners android:radius="@dimen/main_btn_radius" />
 
             <gradient android:endColor="@color/bg_btn_edge" android:gradientRadius="180" android:startColor="@color/bg_btn_center" android:type="radial" />
         </shape>

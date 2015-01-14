@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_margin="10dp"
         android:padding="15dp"
-        android:background="@drawable/bg_carousel">
+        android:background="@drawable/bg_carousel_item">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +72,6 @@
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_strength"
                 custom:textHint="@string/strength"
-                custom:linkTextColorToDrawable="true"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
@@ -81,7 +80,6 @@
                 android:id="@+id/dexterity"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_dexterity"
-                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/dexterity"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -91,7 +89,6 @@
                 android:id="@+id/spirit"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_spirit"
-                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/spirit"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -108,7 +105,6 @@
                 android:id="@+id/hp"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_health"
-                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/hp"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -118,7 +114,6 @@
                 android:id="@+id/movement"
                 style="@style/HeroStat"
                 android:drawableLeft="@drawable/ic_move"
-                custom:linkTextColorToDrawable="true"
                 custom:textHint="@string/movement"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -141,7 +136,7 @@
             android:text="@string/skills"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/main_text_color"
             android:textSize="14sp"
             android:layout_marginTop="15dp" />
 

@@ -3,4 +3,11 @@
 
     <dimen name="in_game_button_size">55dp</dimen>
 
+    <dimen name="main_btn_radius">5dp</dimen>
+    <dimen name="main_btn_stroke_width_pressed">2dp</dimen>
+
+    <dimen name="carousel_item_radius">4dp</dimen>
+    <dimen name="carousel_item_stroke_width">3dp</dimen>
+    <dimen name="carousel_pagination_dot_size">10dp</dimen>
+
 </resources>

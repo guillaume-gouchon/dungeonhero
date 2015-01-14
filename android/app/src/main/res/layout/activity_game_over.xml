@@ -49,7 +49,7 @@
             android:layout_marginRight="80dp" />
 
         <com.glevel.dungeonhero.views.CustomButton
-            android:id="@+id/exitButton"
+            android:id="@+id/exit_btn"
             style="@style/BackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

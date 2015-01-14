@@ -18,22 +18,12 @@ import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.items.ItemFactory;
 import com.glevel.dungeonhero.data.items.PotionFactory;
+import com.glevel.dungeonhero.game.gui.items.ItemInfoInShop;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
-import com.glevel.dungeonhero.models.characters.Unit;
-import com.glevel.dungeonhero.models.effects.Effect;
-import com.glevel.dungeonhero.models.effects.PermanentEffect;
-import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Item;
-import com.glevel.dungeonhero.models.items.equipments.Armor;
-import com.glevel.dungeonhero.models.items.equipments.Equipment;
-import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
-import com.glevel.dungeonhero.models.items.requirements.Requirement;
-import com.glevel.dungeonhero.models.items.requirements.StatRequirement;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
-import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
-import com.glevel.dungeonhero.views.HintTextView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -52,6 +42,7 @@ public class ShopActivity extends MyActivity implements OnClickListener {
     private static final String LAST_TIME_SHOP_VISITED_PREFS = "LAST_TIME_SHOP_VISITED_PREFS";
     private static final String FILENAME_SHOP_ITEMS = "shop_items";
     private static final int NUMBER_OFFERS = 8;
+    private static final int REFRESH_SHOP_PERIOD = 10 * 3600 * 1000;
 
     private Game mGame;
     private List<Item> mItemsOffered = new ArrayList<>(8);
@@ -121,15 +112,14 @@ public class ShopActivity extends MyActivity implements OnClickListener {
 
     @Override
     public void onBackPressed() {
-        goToBookChooser();
+        goBackToBookChooser();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_button:
-                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                goToBookChooser();
+                goBackToBookChooser();
                 break;
         }
 
@@ -140,7 +130,7 @@ public class ShopActivity extends MyActivity implements OnClickListener {
         }
     }
 
-    private void goToBookChooser() {
+    private void goBackToBookChooser() {
         mDiscussionShop.setText(R.string.shop_outro);
         new Timer().schedule(new TimerTask() {
             @Override
@@ -150,11 +140,11 @@ public class ShopActivity extends MyActivity implements OnClickListener {
                 startActivity(intent);
                 finish();
             }
-        }, 300);
+        }, 200);
     }
 
     private void getOffers() {
-        if (mSharedPrefs.getLong(LAST_TIME_SHOP_VISITED_PREFS, 0) == 0 || mSharedPrefs.getLong(LAST_TIME_SHOP_VISITED_PREFS, 0) - System.currentTimeMillis() > 10 * 3600 * 1000) {
+        if (mSharedPrefs.getLong(LAST_TIME_SHOP_VISITED_PREFS, 0) == 0 || mSharedPrefs.getLong(LAST_TIME_SHOP_VISITED_PREFS, 0) - System.currentTimeMillis() > REFRESH_SHOP_PERIOD) {
             Log.d(TAG, "Creating new offers");
             Item item;
             for (int n = 0; n < NUMBER_OFFERS; n++) {
@@ -243,85 +233,21 @@ public class ShopActivity extends MyActivity implements OnClickListener {
 
     public void showItemInfo(final Item item, final boolean isSelling) {
         if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
-            mItemInfoDialog = new Dialog(this, R.style.DialogNoAnimation);
-            mItemInfoDialog.setContentView(R.layout.in_game_item_info);
-            mItemInfoDialog.setCancelable(true);
-
-            TextView nameTV = (TextView) mItemInfoDialog.findViewById(R.id.name);
-            if (item instanceof Equipment) {
-                nameTV.setText(getString(item.getName(getResources())) + " (lvl " + ((Equipment) item).getLevel() + ")");
-            } else {
-                nameTV.setText(item.getName(getResources()));
-            }
-            nameTV.setCompoundDrawablesWithIntrinsicBounds(item.getImage(getResources()), 0, 0, 0);
-
-            TextView descriptionTV = (TextView) mItemInfoDialog.findViewById(R.id.description);
-            if (item.getDescription(getResources()) > 0) {
-                descriptionTV.setText(item.getDescription(getResources()));
-            } else {
-                descriptionTV.setVisibility(View.GONE);
-            }
-
-            TextView dropButton = (TextView) mItemInfoDialog.findViewById(R.id.dropButton);
-            dropButton.setVisibility(View.GONE);
-
-            ViewGroup statsLayout = (ViewGroup) mItemInfoDialog.findViewById(R.id.stats);
-            ViewGroup requirementsLayout = (ViewGroup) mItemInfoDialog.findViewById(R.id.requirements);
-            int indexStats = 0, indexRequirements = 0;
-
-            if (item instanceof Equipment) {
-                final Equipment equipment = (Equipment) item;
-                if (!mGame.getHero().canEquipItem(equipment)) {
-                    nameTV.setTextColor(getResources().getColor(R.color.red));
-                }
-
-                // add unique stats
-                if (item instanceof Weapon) {
-                    Weapon weapon = (Weapon) item;
-                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), weapon.getMinDamage() + " - " + (weapon.getMinDamage() + weapon.getDeltaDamage()), R.drawable.ic_damage, R.string.damage, R.color.white);
-                } else if (item instanceof Armor) {
-                    Armor armor = (Armor) item;
-                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), "+" + armor.getProtection(), R.drawable.ic_armor, R.string.protection, R.color.green);
-                }
-
-                // add buffs
-                for (Effect buff : equipment.getEffects()) {
-                    if (buff instanceof PermanentEffect) {
-                        addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.green : R.color.red);
-                    } else if (buff instanceof StunEffect) {
-                        addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), R.drawable.ic_stun, R.string.chance_stun, buff.getValue() > 0 ? R.color.green : R.color.red);
-                    }
-                }
-
-                // add requirements
-                for (Requirement requirement : equipment.getRequirements()) {
-                    if (requirement instanceof StatRequirement) {
-                        StatRequirement statRequirement = (StatRequirement) requirement;
-                        addStatToItemLayout(requirementsLayout.getChildAt(indexRequirements++), getString(R.string.minimum, statRequirement.getValue()), statRequirement.getTarget().getImage(), statRequirement.getTarget().getName(), R.color.white);
-                    }
-                }
-            }
-
-            TextView actionButton = (TextView) mItemInfoDialog.findViewById(R.id.actionButton);
-            actionButton.setText(isSelling ? getString(R.string.sell_item_for, item.getSellPrice()) : getString(R.string.buy_item_for, item.getPrice()));
-            actionButton.setEnabled(isSelling || mGame.getHero().getGold() >= item.getPrice() && mGame.getHero().getItems().size() < Unit.NB_ITEMS_MAX_IN_BAG);
-            actionButton.setOnClickListener(new OnClickListener() {
+            mItemInfoDialog = new ItemInfoInShop(this, item, mGame.getHero(), isSelling, new ItemInfoInShop.OnItemActionSelected() {
                 @Override
-                public void onClick(View v) {
+                public void onActionExecuted(ItemInfoInShop.ItemActionsInShop action) {
                     Dialog confirmationDialog = new CustomAlertDialog(ShopActivity.this, R.style.Dialog, getString(R.string.transaction_confirmation), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (which == R.id.okButton) {
-                                dialog.dismiss();
+                            dialog.dismiss();
+                            if (which == R.id.ok_btn) {
                                 if (isSelling) {
                                     sellItem(item);
                                 } else {
                                     buyItem(item);
                                 }
-                            } else {
-                                dialog.dismiss();
+                                mItemInfoDialog.dismiss();
                             }
-                            mItemInfoDialog.dismiss();
                         }
                     });
                     confirmationDialog.show();
@@ -330,16 +256,6 @@ public class ShopActivity extends MyActivity implements OnClickListener {
 
             mItemInfoDialog.show();
         }
-    }
-
-    private void addStatToItemLayout(View view, String text, int image, int hint, int color) {
-        HintTextView statView = (HintTextView) view;
-        statView.setText(text);
-        statView.setTextHint(hint);
-        statView.setCompoundDrawablesWithIntrinsicBounds(image, 0, 0, 0);
-        int colorResource = getResources().getColor(color);
-        statView.setTextColor(colorResource);
-        statView.setVisibility(View.VISIBLE);
     }
 
     private void buyItem(Item item) {

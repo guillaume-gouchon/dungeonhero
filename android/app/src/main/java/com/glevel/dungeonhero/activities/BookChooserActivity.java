@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
@@ -18,6 +17,7 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.BooksAdapter;
 import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.game.GameConstants;
+import com.glevel.dungeonhero.game.gui.GameMenu;
 import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
@@ -156,7 +156,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
             public void onClick(DialogInterface dialog, int which) {
                 MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
 
-                if (which == R.id.okButton) {
+                if (which == R.id.ok_btn) {
                     // go to tutorial
                     dialog.dismiss();
                     onBookSelected(mLstBooks.get(0));
@@ -171,35 +171,15 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     }
 
     private void openGameMenu() {
-        mGameMenuDialog = new Dialog(this, R.style.FullScreenDialog);
-        mGameMenuDialog.setContentView(R.layout.dialog_game_menu);
-        mGameMenuDialog.setCancelable(true);
-        Animation menuButtonAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_in);
-
-        // resume game button
-        mGameMenuDialog.findViewById(R.id.resumeGameButton).setAnimation(menuButtonAnimation);
-        mGameMenuDialog.findViewById(R.id.resumeGameButton).setOnClickListener(new OnClickListener() {
+        mGameMenuDialog = new GameMenu(this, null, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
-                mGameMenuDialog.dismiss();
-            }
-        });
-
-        mGameMenuDialog.findViewById(R.id.leaveQuestButton).setVisibility(View.GONE);
-
-        // exit button
-        mGameMenuDialog.findViewById(R.id.exitButton).setAnimation(menuButtonAnimation);
-        mGameMenuDialog.findViewById(R.id.exitButton).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 startActivity(new Intent(BookChooserActivity.this, HomeActivity.class));
                 finish();
             }
         });
+
         mGameMenuDialog.show();
-        menuButtonAnimation.start();
     }
 
     private void onBookSelected(Book selectedBook) {
@@ -218,7 +198,6 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shop_button:
-                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 Intent intent = new Intent(this, ShopActivity.class);
                 intent.putExtra(Game.class.getName(), mGame);
                 startActivity(intent);

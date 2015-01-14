@@ -46,7 +46,7 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
         retryButton.setOnClickListener(this);
         retryButton.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_in));
 
-        View exitButton = findViewById(R.id.exitButton);
+        View exitButton = findViewById(R.id.exit_btn);
         exitButton.setOnClickListener(this);
         exitButton.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_in));
 
@@ -76,14 +76,12 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.retryButton:
-                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra(Game.class.getName(), mGame);
                 startActivity(intent);
                 finish();
                 break;
-            case R.id.exitButton:
-                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
+            case R.id.exit_btn:
                 startActivity(new Intent(this, HomeActivity.class));
                 finish();
                 break;

@@ -15,7 +15,7 @@
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.5" />
+            android:alpha="0.4" />
 
         <ImageView
             android:id="@+id/image"

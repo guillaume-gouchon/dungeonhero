@@ -21,7 +21,7 @@
     </item>
     <item>
         <shape android:shape="rectangle">
-            <stroke android:width="0dp" android:color="@color/bg_btn_pressed_center" />
+            <stroke android:width="0dp" android:color="@color/bg_btn_center_pressed" />
 
             <corners android:radius="2dp" />
 
