@@ -81,7 +81,8 @@ public class MusicManager {
 
     public static void playSound(Context context, int sound) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (sharedPrefs.getInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, GameConstants.MusicStates.OFF.ordinal()) == GameConstants.MusicStates.ON.ordinal()) {
+        if (sharedPrefs.getInt(GameConstants.GAME_PREFS_KEY_MUSIC_VOLUME, GameConstants.MusicStates.ON.ordinal()) == GameConstants.MusicStates.ON.ordinal()) {
+            Log.d(TAG, "play sound");
             MediaPlayer mp = MediaPlayer.create(context, sound);
             mp.start();
             mp.setOnCompletionListener(new OnCompletionListener() {

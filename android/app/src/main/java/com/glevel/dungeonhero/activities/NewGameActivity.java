@@ -70,12 +70,14 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
         buyHeroButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                MusicManager.playSound(NewGameActivity.this, R.raw.button_sound);
                 mInAppBillingHelper.purchaseItem(selectedHero);
             }
         });
         mBuyDialog.findViewById(R.id.buy_all_heroes).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                MusicManager.playSound(NewGameActivity.this, R.raw.button_sound);
                 mInAppBillingHelper.purchaseItem(InAppBillingHelper.BUY_ALL_HEROES_IN_APP_ID);
             }
         });

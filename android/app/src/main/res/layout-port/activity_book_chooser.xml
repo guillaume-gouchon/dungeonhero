@@ -33,19 +33,15 @@
                 <com.glevel.dungeonhero.views.CustomTextView
                     android:id="@+id/hero_name"
                     style="@style/HeroTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/placeholder"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="12dp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:textSize="15sp"
+                    android:layout_marginLeft="10dp" />
 
                 <com.glevel.dungeonhero.views.CustomTextView
                     android:id="@+id/bestiary_button"

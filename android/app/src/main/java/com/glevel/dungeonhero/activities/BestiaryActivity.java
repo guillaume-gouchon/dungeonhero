@@ -50,12 +50,6 @@ public class BestiaryActivity extends MyActivity {
         ListView monstersList = (ListView) findViewById(R.id.monsters);
         MonsterAdapter monstersAdapter = new MonsterAdapter(this, R.layout.monster_item, mLstMonsters, mGame.getHero());
         monstersList.setAdapter(monstersAdapter);
-        monstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MusicManager.playSound(getApplicationContext(), R.raw.damage_monster);
-            }
-        });
     }
 
     @Override

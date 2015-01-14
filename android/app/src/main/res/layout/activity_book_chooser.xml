@@ -38,7 +38,7 @@
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_marginLeft="12dp" />
 
                 <View
@@ -68,7 +68,7 @@
                     android:drawablePadding="10dp"
                     android:textSize="18sp"
                     android:drawableLeft="@drawable/ic_coin"
-                    android:layout_marginRight="8dp" />
+                    android:layout_marginRight="18dp" />
             </LinearLayout>
 
             <com.glevel.dungeonhero.views.CustomCarousel

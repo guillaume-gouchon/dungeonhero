@@ -7,6 +7,8 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.glevel.dungeonhero.game.gui.SomethingDetails;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.models.skills.Skill;
+import com.glevel.dungeonhero.utils.MusicManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +28,7 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
     private final Activity mActivity;
     private final Hero mHero;
     private final Resources mResources;
+    private final Animation mBounceAnimation;
     private Dialog mSkillInfoDialog;
 
     public MonsterAdapter(Activity activity, int layoutResource, List<Monster> dataList, Hero hero) {
@@ -32,6 +36,7 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
         mActivity = activity;
         mResources = activity.getResources();
         mHero = hero;
+        mBounceAnimation = AnimationUtils.loadAnimation(activity.getApplicationContext(), R.anim.bounce_monster);
     }
 
     @Override
@@ -42,7 +47,7 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
         return layout;
     }
 
-    private void bindMonsterToView(Monster monster, View layout) {
+    private void bindMonsterToView(Monster monster, final View layout) {
         ((TextView) layout.findViewById(R.id.name)).setText(monster.getName(mResources));
         ((ImageView) layout.findViewById(R.id.image)).setImageResource(monster.getImage(mResources));
 
@@ -54,6 +59,14 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
 
         int nbFrags = Collections.frequency(mHero.getFrags(), monster.getIdentifier());
         ((TextView) layout.findViewById(R.id.frags)).setText("" + nbFrags);
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MusicManager.playSound(getContext(), R.raw.monster);
+                layout.findViewById(R.id.image).startAnimation(mBounceAnimation);
+            }
+        });
     }
 
     private void showSkills(View rootLayout, Monster monster) {

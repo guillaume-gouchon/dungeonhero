@@ -154,6 +154,28 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
         mInAppBillingHelper.doIOwn(mLstBooks);
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.shop_button:
+                MusicManager.playSound(this, R.raw.button_sound);
+                intent = new Intent(this, ShopActivity.class);
+                intent.putExtra(Game.class.getName(), mGame);
+                startActivity(intent);
+                finish();
+                break;
+
+            case R.id.bestiary_button:
+                MusicManager.playSound(this, R.raw.button_sound);
+                intent = new Intent(this, BestiaryActivity.class);
+                intent.putExtra(Game.class.getName(), mGame);
+                startActivity(intent);
+                finish();
+                break;
+        }
+    }
+
     private void showTutorialDialog(final Book selectedBook) {
         // ask user if he wants to do the tutorial as he is a noob
         mTutorialDialog = new CustomAlertDialog(this, R.style.Dialog, getString(R.string.ask_tutorial), new DialogInterface.OnClickListener() {
@@ -196,26 +218,6 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
             finish();
         } else {
             mInAppBillingHelper.purchaseItem(selectedBook);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent;
-        switch (v.getId()) {
-            case R.id.shop_button:
-                intent = new Intent(this, ShopActivity.class);
-                intent.putExtra(Game.class.getName(), mGame);
-                startActivity(intent);
-                finish();
-                break;
-
-            case R.id.bestiary_button:
-                intent = new Intent(this, BestiaryActivity.class);
-                intent.putExtra(Game.class.getName(), mGame);
-                startActivity(intent);
-                finish();
-                break;
         }
     }
 

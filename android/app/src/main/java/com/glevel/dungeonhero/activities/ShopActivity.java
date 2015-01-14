@@ -23,6 +23,7 @@ import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
+import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 
 import java.io.FileInputStream;
@@ -121,6 +122,7 @@ public class ShopActivity extends MyActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_button:
+                MusicManager.playSound(this, R.raw.button_sound);
                 goBackToBookChooser();
                 break;
         }
