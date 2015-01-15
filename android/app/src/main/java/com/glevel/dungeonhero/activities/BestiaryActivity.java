@@ -54,13 +54,14 @@ public class BestiaryActivity extends MyActivity implements View.OnClickListener
         // init list view
         ListView monstersList = (ListView) findViewById(R.id.monsters);
         MonsterAdapter monstersAdapter = new MonsterAdapter(this, R.layout.monster_item, mLstMonsters, mGame.getHero());
-        monstersList.setAdapter(monstersAdapter);
 
         // add empty header view
         LinearLayout viewHeader = new LinearLayout(getApplicationContext());
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ApplicationUtils.convertDpToPixels(getApplicationContext(), 50));
         viewHeader.setLayoutParams(lp);
         monstersList.addHeaderView(viewHeader, null, false);
+
+        monstersList.setAdapter(monstersAdapter);
     }
 
     @Override

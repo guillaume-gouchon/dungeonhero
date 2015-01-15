@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
             android:drawablePadding="6dp"
+            android:textSize="16sp"
             android:layout_marginRight="10dp" />
 
         <com.glevel.dungeonhero.views.CustomTextView
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:text="@string/buy_all_heroes"
             android:drawablePadding="6dp"
+            android:textSize="16sp"
             android:drawableTop="@drawable/ic_all_heroes" />
     </LinearLayout>
 

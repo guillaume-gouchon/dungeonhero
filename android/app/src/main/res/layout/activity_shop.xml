@@ -12,154 +12,159 @@
         android:src="@drawable/bg_village"
         android:tint="#cc000000" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="@string/merchant"
+                    android:drawableLeft="@drawable/merchant"
+                    style="@style/DiscussionName" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="1dp" />
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    android:id="@+id/back_button"
+                    style="@style/Button"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exit"
+                    android:padding="5dp"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <com.glevel.dungeonhero.views.CustomTextView
+                android:id="@+id/discussion_shop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/shop_intro"
+                style="@style/DiscussionName"
+                android:background="@color/bg_btn_edge_pressed" />
+
+            <GridLayout
+                android:id="@+id/shop_offers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="@string/merchant"
-                android:drawableLeft="@drawable/merchant"
-                style="@style/DiscussionName" />
+                android:layout_marginTop="15dp"
+                android:columnCount="8">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="1dp" />
+                <include layout="@layout/in_game_item" />
 
-            <com.glevel.dungeonhero.views.CustomTextView
-                android:id="@+id/back_button"
-                style="@style/Button"
-                android:layout_width="80dp"
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+            </GridLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/exit"
-                android:padding="5dp"
-                android:textSize="18sp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp">
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    android:id="@+id/hero_name"
+                    style="@style/HeroTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/your_bag"
+                    android:drawablePadding="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/ic_bag" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="1dp" />
+
+                <com.glevel.dungeonhero.views.CustomTextView
+                    style="@style/HeroTitle"
+                    android:id="@+id/gold_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:drawablePadding="10dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/ic_coin" />
+            </LinearLayout>
+
+            <GridLayout
+                android:id="@+id/bag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="10">
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
+            </GridLayout>
         </LinearLayout>
-
-        <com.glevel.dungeonhero.views.CustomTextView
-            android:id="@+id/discussion_shop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/shop_intro"
-            style="@style/DiscussionName"
-            android:background="@color/bg_btn_edge_pressed" />
-
-        <GridLayout
-            android:id="@+id/shop_offers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:columnCount="8">
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-        </GridLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="20dp">
-
-            <com.glevel.dungeonhero.views.CustomTextView
-                android:id="@+id/hero_name"
-                style="@style/HeroTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/your_bag"
-                android:drawablePadding="10dp"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:drawableLeft="@drawable/ic_bag" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="1dp" />
-
-            <com.glevel.dungeonhero.views.CustomTextView
-                style="@style/HeroTitle"
-                android:id="@+id/gold_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder"
-                android:drawablePadding="10dp"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:drawableLeft="@drawable/ic_coin" />
-        </LinearLayout>
-
-        <GridLayout
-            android:id="@+id/bag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:columnCount="10">
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-
-            <include layout="@layout/in_game_item" />
-        </GridLayout>
-    </LinearLayout>
+    </ScrollView>
 </FrameLayout>

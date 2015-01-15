@@ -170,6 +170,9 @@ public class GameActivity extends MyBaseGameActivity {
             }
         }
 
+        mHero.updateSprite();
+        mGUIManager.setData(mHero);
+
         // show book intro story if needed
         if (mGame.getBook().getIntroText(getResources()) > 0) {
             Bundle args = new Bundle();
@@ -192,9 +195,6 @@ public class GameActivity extends MyBaseGameActivity {
 
         Log.d(TAG, "sort children by z-index");
         mScene.sortChildren();
-
-        mHero.updateSprite();
-        mGUIManager.setData(mHero);
 
         startGame();
     }

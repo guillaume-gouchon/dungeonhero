@@ -12,13 +12,20 @@
         android:src="@drawable/bg_village"
         android:tint="#cc000000" />
 
-    <com.glevel.dungeonhero.views.CustomTextView
-        style="@style/StoryText"
-        android:id="@+id/story"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp" />
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:overScrollMode="never">
+
+        <com.glevel.dungeonhero.views.CustomTextView
+            style="@style/StoryText"
+            android:id="@+id/story"
+            android:layout_width="match_parent"
+            android:layout_height="2000dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
+    </ScrollView>
 
     <com.glevel.dungeonhero.views.CustomButton
         android:id="@+id/replayButton"

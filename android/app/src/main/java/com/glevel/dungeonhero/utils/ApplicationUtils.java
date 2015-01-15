@@ -49,7 +49,7 @@ public class ApplicationUtils {
     public static final String PREFS_RATE_DIALOG_IN = "rate_dialog_in";
     public static final int NB_LAUNCHES_RATE_DIALOG_APPEARS = 5;
     public static final int NB_LAUNCHES_WITH_SPLASHSCREEN = 8;
-    public static final int NB_LAUNCHES_ADVERTISEMENT_1 = 3;
+    public static final int NB_LAUNCHES_ADVERTISEMENT_1 = 4;
     public static final int NB_LAUNCHES_ADVERTISEMENT_2 = 7;
 
     public static void showRateDialogIfNeeded(final Activity activity) {

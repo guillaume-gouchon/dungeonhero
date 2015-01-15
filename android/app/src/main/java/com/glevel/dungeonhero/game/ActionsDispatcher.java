@@ -650,7 +650,7 @@ public class ActionsDispatcher implements UserActionListener {
 
         // draw damage and fight result text
         if (fightResult.getState() == FightResult.States.DAMAGE || fightResult.getState() == FightResult.States.CRITICAL) {
-            showDamage(target, "-" + fightResult.getDamage());
+            showAnimatedText(target, "-" + fightResult.getDamage());
         }
         if (fightResult.getState() != FightResult.States.DAMAGE) {
             mGameActivity.drawAnimatedText(targetSprite.getX() + GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE, fightResult.getState().name().toLowerCase(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
@@ -696,8 +696,8 @@ public class ActionsDispatcher implements UserActionListener {
         mScene.registerUpdateHandler(animationHandler);
     }
 
-    private void showDamage(Unit target, String damageMessage) {
-        mGameActivity.drawAnimatedText(target.getSprite().getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE, damageMessage, damageMessage.startsWith("-") ? FightResult.States.DAMAGE.getColor() : FightResult.States.DODGE.getColor(), 0.2f, 40, -0.15f);
+    private void showAnimatedText(Unit target, String message) {
+        mGameActivity.drawAnimatedText(target.getSprite().getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE, message, message.startsWith("-") ? FightResult.States.DAMAGE.getColor() : FightResult.States.DODGE.getColor(), 0.2f, 40, -0.15f);
     }
 
     public void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
@@ -855,10 +855,11 @@ public class ActionsDispatcher implements UserActionListener {
                 mGUIManager.updateSkillButtons();
             } else if (effect.getTarget() == Characteristics.HP) {
                 // damage or heal
-                showDamage(target, effect.getValue() > 0 ? "+" + Math.min(target.getHp() - target.getCurrentHP(), effect.getValue()) : "" + effect.getValue());
+                showAnimatedText(target, effect.getValue() > 0 ? "+" + Math.min(target.getHp() - target.getCurrentHP(), effect.getValue()) : "" + effect.getValue());
                 target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + effect.getValue()));
             } else {
                 // special effects
+                showAnimatedText(target, (effect.getValue() > 0 ? "+" + effect.getValue() : "" + effect.getValue()) + " " + effect.getTarget().name());
                 target.getBuffs().add(effect);
             }
 

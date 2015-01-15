@@ -61,6 +61,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
             } else {
                 onBookSelected(selectedBook);
             }
+            mSharedPrefs.edit().putInt(GameConstants.TUTORIAL_DONE, 1).apply();
         }
     };
 
@@ -194,7 +195,6 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
             }
         });
         mTutorialDialog.show();
-        mSharedPrefs.edit().putInt(GameConstants.TUTORIAL_DONE, 1).apply();
     }
 
     private void openGameMenu() {

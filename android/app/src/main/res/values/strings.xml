@@ -235,7 +235,7 @@
     <string name="breast_plate">Breast Plate</string>
 
     <!-- Potions -->
-    <string name="force_potion">Force Potion</string>
+    <string name="force_potion">Potion of Force</string>
     <string name="force_potion_description">Boost up your strength for a limited amount of time.</string>
     <string name="greater_healing_potion">Greater Healing Potion</string>
     <string name="greater_healing_potion_description">Makes recover 30 health points.</string>
@@ -243,15 +243,15 @@
     <string name="healing_potion_description">Makes recover 10 health points.</string>
     <string name="heroic_potion">Heroic Potion</string>
     <string name="heroic_potion_description">Once drunk, this potion makes you feeling heroic. You can play twice in a row.</string>
-    <string name="invisibility_potion">Invisibility Potion</string>
+    <string name="invisibility_potion">Potion of Invisibility</string>
     <string name="invisibility_potion_description">This grey liquid turns you invisible for a limited amount of time.</string>
     <string name="luck_potion">Potion of Luck</string>
     <string name="luck_potion_description">You are feeling lucky; it is easier for you to avoid attacks.</string>
-    <string name="magic_shield_potion">Magic shield Potion</string>
+    <string name="magic_shield_potion">Potion of Magic Shield</string>
     <string name="magic_shield_potion_description">If you drink this mixture, an invisible magic shield will appear around you and will protect you for a limited amount of time.</string>
-    <string name="recovery_potion">Recovery Potion</string>
+    <string name="recovery_potion">Potion of Recovery</string>
     <string name="recovery_potion_description">Restores all your skills.</string>
-    <string name="speed_potion">Speed Potion</string>
+    <string name="speed_potion">Potion of Speed</string>
     <string name="speed_potion_description">This sparkling potion will make you light as a feather, increasing your movement for a limited amount of time.</string>
     <string name="unknown_liquid">Unknown Liquid</string>
     <string name="unknown_liquid_description">Who knows what it is...</string>
@@ -259,9 +259,9 @@
     <!-- Rings -->
     <string name="dodge_ring">Blurred Ring</string>
     <string name="dodge_ring_description">This ring makes the wearer looking blurry, dodging attacks more easily.</string>
-    <string name="speed_ring">Haste Ring</string>
+    <string name="speed_ring">Ring of Haste</string>
     <string name="speed_ring_description">The wearer feels lighter.</string>
-    <string name="protection_ring">Fire Shield Ring</string>
+    <string name="protection_ring">Ring of Fire</string>
     <string name="protection_ring_description">A shield of fire surrounds the wearer.</string>
     <string name="critical_ring">Harmful Ring</string>
     <string name="critical_ring_description">The wearer can detect more easily the weaknesses of its opponents.</string>
