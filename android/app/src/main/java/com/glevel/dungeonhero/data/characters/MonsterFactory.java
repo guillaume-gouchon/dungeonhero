@@ -4,6 +4,7 @@ import com.glevel.dungeonhero.data.items.ArmorFactory;
 import com.glevel.dungeonhero.data.items.RingFactory;
 import com.glevel.dungeonhero.data.items.WeaponFactory;
 import com.glevel.dungeonhero.models.characters.Monster;
+import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,14 +66,14 @@ public class MonsterFactory {
 
     public static Monster buildOgreKing() {
         Monster monster = new Monster("ogre_king", 20, 20, 15, 10, 10, 4);
-        monster.equip(WeaponFactory.buildMorgenstern(1));
+        monster.equip(WeaponFactory.buildBattleAxe(1));
         monster.equip(ArmorFactory.buildChainMail(0));
         return monster;
     }
 
     public static Monster buildGargoyle() {
         Monster monster = new Monster("gargoyle", 22, 22, 15, 8, 12, 5);
-        monster.equip(WeaponFactory.buildBroadSword(1));
+        monster.equip(new Weapon("claws", 3, 10, 0, 0));
         monster.equip(ArmorFactory.buildLeatherPlastron(1));
         monster.getSkills().add(SkillFactory.buildFatalBlow());
         return monster;
@@ -98,12 +99,16 @@ public class MonsterFactory {
 
     public static Monster buildDemon() {
         Monster monster = new Monster("demon", 18, 18, 16, 11, 14, 5);
+        monster.equip(new Weapon("claws", 4, 15, 0, 0));
+        monster.equip(ArmorFactory.buildLamellar(3));
         monster.getSkills().add(SkillFactory.buildRage().improve());
         return monster;
     }
 
     public static Monster buildDemonKing() {
         Monster monster = new Monster("demon_king", 26, 26, 17, 12, 16, 5);
+        monster.equip(new Weapon("claws", 4, 15, 0, 0));
+        monster.equip(ArmorFactory.buildBreastPlate(3));
         monster.getSkills().add(SkillFactory.buildFireball().improve());
         monster.getSkills().add(SkillFactory.buildRage().improve().improve().improve());
         return monster;

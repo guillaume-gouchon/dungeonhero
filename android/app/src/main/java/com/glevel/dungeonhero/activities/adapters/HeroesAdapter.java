@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.game.gui.SomethingDetails;
+import com.glevel.dungeonhero.game.gui.ElementDetails;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.views.CustomCarousel;
@@ -79,7 +79,7 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
 
     public void showSkillInfo(Skill skill) {
         if (mSkillInfoDialog == null || !mSkillInfoDialog.isShowing()) {
-            mSkillInfoDialog = new SomethingDetails(mActivity, skill);
+            mSkillInfoDialog = new ElementDetails(mActivity, skill);
             mSkillInfoDialog.show();
         }
     }

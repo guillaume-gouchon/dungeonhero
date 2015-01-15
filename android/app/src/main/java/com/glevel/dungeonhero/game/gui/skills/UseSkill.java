@@ -5,14 +5,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.game.gui.SomethingDetails;
+import com.glevel.dungeonhero.game.gui.ElementDetails;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
 
 /**
  * Created by guillaume on 1/14/15.
  */
-public class UseSkill extends SomethingDetails {
+public class UseSkill extends ElementDetails {
 
     public UseSkill(Context context, Skill skill, final View.OnClickListener onMainButtonClicked) {
         super(context, skill);

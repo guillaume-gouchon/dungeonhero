@@ -81,6 +81,9 @@
     <string name="bestiary">Bestiary</string>
     <string name="tavern">Tavern</string>
 
+    <!-- Bestiary -->
+    <string name="bestiary_header">My trophees !</string>
+
     <!-- Story -->
     <string name="skip">Skip</string>
     <string name="replay">Replay</string>
@@ -200,7 +203,7 @@
     <string name="ogre_king">Ogre King</string>
     <string name="orc_captain">Orc Captain</string>
     <string name="gargoyle">Gargoyle</string>
-    <string name="demon_king">High Demon</string>
+    <string name="demon_king">Master Demon</string>
 
     <!-- Weapons -->
     <string name="axe">Axe</string>
@@ -221,6 +224,7 @@
     <string name="spiked_mace">Morgenstern</string>
     <string name="throwing_daggers">Throwing Daggers</string>
     <string name="wizard_staff">Wizard Staff</string>
+    <string name="claws">Claws</string>
 
     <!-- Armors -->
     <string name="robe">Robe</string>
@@ -441,9 +445,6 @@
 
     <!-- The Partnership -->
     <string name="partnership_quest">Brothers in Arms</string>
-
-    <!-- The Blonde Ale's Revenge -->
-    <string name="ale_quest">The Blonde Ale\'s Revenge</string>
 
     <!-- The Dreamer must awake -->
     <string name="dream_quest">The Dreamer must awake</string>

@@ -50,7 +50,8 @@
                 android:id="@+id/image"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:layout_marginRight="20dp" />
 
             <View
                 android:layout_width="0dp"
@@ -62,6 +63,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:columnCount="5">
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
 
                 <include layout="@layout/in_game_item" />
 

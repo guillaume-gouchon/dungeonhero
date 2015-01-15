@@ -124,6 +124,10 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         return (float) currentHP / (float) hp;
     }
 
+    public Equipment[] getEquipments() {
+        return equipments;
+    }
+
     public FightResult attack(Unit target) {
         FightResult fightResult;
 

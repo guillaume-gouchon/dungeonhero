@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.game.gui.SomethingDetails;
+import com.glevel.dungeonhero.game.gui.ElementDetails;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.effects.PermanentEffect;
@@ -22,7 +22,7 @@ import com.glevel.dungeonhero.views.HintTextView;
 /**
  * Created by guillaume on 1/14/15.
  */
-public class ItemInfo extends SomethingDetails {
+public class ItemInfo extends ElementDetails {
 
     public ItemInfo(Context context, Item item, Hero hero) {
         super(context, item);

@@ -14,11 +14,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:layout_height="match_parent">
 
         <ListView
+            android:layout_alignParentTop="true"
             android:id="@+id/monsters"
             android:divider="@null"
             android:layout_width="match_parent"
@@ -28,5 +27,42 @@
             android:listSelector="@android:color/transparent"
             android:overScrollMode="never"
             android:scrollbars="none" />
+
+        <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/hero_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp" />
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                style="@style/DiscussionName"
+                android:text="@string/bestiary_header"
+                android:background="@color/bg_btn_edge_pressed" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="1dp" />
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                android:id="@+id/back_button"
+                style="@style/Button"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/exit"
+                android:padding="5dp"
+                android:textSize="18sp" />
+        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

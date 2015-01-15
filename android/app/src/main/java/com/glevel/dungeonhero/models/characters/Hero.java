@@ -90,10 +90,6 @@ public class Hero extends Unit implements InAppProduct {
         gold += goldAmount;
     }
 
-    public Equipment[] getEquipments() {
-        return equipments;
-    }
-
     public boolean addXP(int xpAmount) {
         if (level == GameConstants.HERO_LEVEL_MAX) {
             return false;

@@ -14,10 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.game.gui.SomethingDetails;
+import com.glevel.dungeonhero.game.gui.ElementDetails;
+import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.characters.Monster;
-import com.glevel.dungeonhero.models.skills.Skill;
 import com.glevel.dungeonhero.utils.MusicManager;
 
 import java.util.Collections;
@@ -51,11 +51,7 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
         ((TextView) layout.findViewById(R.id.name)).setText(monster.getName(mResources));
         ((ImageView) layout.findViewById(R.id.image)).setImageResource(monster.getImage(mResources));
 
-        if (monster.getSkills().size() > 0) {
-            showSkills(layout, monster);
-        } else {
-            layout.findViewById(R.id.skills).setVisibility(View.GONE);
-        }
+        addMonsterInfo(layout, monster);
 
         int nbFrags = Collections.frequency(mHero.getFrags(), monster.getIdentifier());
         ((TextView) layout.findViewById(R.id.frags)).setText("" + nbFrags);
@@ -69,35 +65,46 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
         });
     }
 
-    private void showSkills(View rootLayout, Monster monster) {
+    private void addMonsterInfo(View rootLayout, Monster monster) {
         ViewGroup skillLayout = (ViewGroup) rootLayout.findViewById(R.id.skills);
-        for (int n = 0; n < skillLayout.getChildCount(); n++) {
-            if (n < monster.getSkills().size()) {
-                updateSkillLayout(skillLayout.getChildAt(n), monster.getSkills().get(n));
+
+        int index = 0;
+
+        // main weapon
+        bindElementToView(skillLayout.getChildAt(index++), monster.getEquipments()[0]);
+
+        // armor
+        if (monster.getEquipments()[2] != null) {
+            bindElementToView(skillLayout.getChildAt(index++), monster.getEquipments()[2]);
+        }
+
+        // skills
+        for (int n = index; n < skillLayout.getChildCount(); n++) {
+            if (n - index < monster.getSkills().size()) {
+                bindElementToView(skillLayout.getChildAt(n), monster.getSkills().get(n - index));
             } else {
                 skillLayout.getChildAt(n).setVisibility(View.GONE);
             }
         }
     }
 
-    private void updateSkillLayout(View itemView, Skill skill) {
+    private void bindElementToView(View itemView, StorableResource element) {
         ImageView image = (ImageView) itemView.findViewById(R.id.image);
+        image.setImageResource(element.getImage(mResources));
 
-        itemView.setTag(R.string.skill, skill);
         itemView.setAlpha(0.6f);
-
-        image.setImageResource(skill.getImage(mResources));
+        itemView.setTag(R.string.item, element);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSkillInfo((Skill) v.getTag(R.string.skill));
+                showElementInfo((StorableResource) v.getTag(R.string.item));
             }
         });
     }
 
-    public void showSkillInfo(Skill skill) {
+    private void showElementInfo(StorableResource element) {
         if (mSkillInfoDialog == null || !mSkillInfoDialog.isShowing()) {
-            mSkillInfoDialog = new SomethingDetails(mActivity, skill);
+            mSkillInfoDialog = new ElementDetails(mActivity, element);
             mSkillInfoDialog.show();
         }
     }

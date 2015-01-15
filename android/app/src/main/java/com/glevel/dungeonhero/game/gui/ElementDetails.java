@@ -13,12 +13,12 @@ import com.glevel.dungeonhero.models.StorableResource;
 /**
  * Created by guillaume on 1/14/15.
  */
-public class SomethingDetails extends Dialog {
+public class ElementDetails extends Dialog {
 
     protected final TextView mNameTV;
     protected final Resources mResources;
 
-    public SomethingDetails(Context context, StorableResource thing) {
+    public ElementDetails(Context context, StorableResource element) {
         super(context, R.style.DialogNoAnimation);
         setContentView(R.layout.in_game_item_info);
         setCancelable(true);
@@ -28,17 +28,17 @@ public class SomethingDetails extends Dialog {
         // name
         mNameTV = (TextView) findViewById(R.id.name);
         String name;
-        if (thing instanceof Levelable) {
-            name = context.getString(R.string.thing_name_with_level, context.getString(thing.getName(mResources)), ((Levelable) thing).getLevel());
+        if (element instanceof Levelable) {
+            name = context.getString(R.string.thing_name_with_level, context.getString(element.getName(mResources)), ((Levelable) element).getLevel());
         } else {
-            name = context.getString(thing.getName(mResources));
+            name = context.getString(element.getName(mResources));
         }
         mNameTV.setText(name);
-        mNameTV.setCompoundDrawablesWithIntrinsicBounds(thing.getImage(mResources), 0, 0, 0);
+        mNameTV.setCompoundDrawablesWithIntrinsicBounds(element.getImage(mResources), 0, 0, 0);
 
         // description
         TextView descriptionTV = (TextView) findViewById(R.id.description);
-        int description = thing.getDescription(mResources);
+        int description = element.getDescription(mResources);
         if (description > 0) {
             descriptionTV.setText(description);
         } else {
