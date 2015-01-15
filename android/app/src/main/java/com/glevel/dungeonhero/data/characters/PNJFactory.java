@@ -12,6 +12,7 @@ import com.glevel.dungeonhero.models.discussions.Discussion;
 import com.glevel.dungeonhero.models.discussions.Reaction;
 import com.glevel.dungeonhero.models.discussions.callbacks.DeathDiscussionCallback;
 import com.glevel.dungeonhero.models.discussions.callbacks.EnemyDiscussionCallback;
+import com.glevel.dungeonhero.models.discussions.callbacks.StopDiscussionCallback;
 import com.glevel.dungeonhero.models.discussions.callbacks.WhiteWizardDiscussionCallback;
 import com.glevel.dungeonhero.models.discussions.riddles.OpenRiddle;
 
@@ -147,7 +148,7 @@ public class PNJFactory {
         pnj.getDiscussions().add(discussion);
 
         // business
-        discussion = new Discussion("tiggy_13", false, null);
+        discussion = new Discussion("tiggy_13", false, null, new StopDiscussionCallback(pnj));
         discussion.addReaction(new Reaction("ok", 0));
         pnj.getDiscussions().add(discussion);
 
@@ -321,6 +322,112 @@ public class PNJFactory {
         // hello
         Discussion discussion = new Discussion("montaron_1", false, null, new EnemyDiscussionCallback(pnj));
         discussion.addReaction(new Reaction("montaron_1_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildLink() {
+        Pnj pnj = new Pnj("link", Ranks.ALLY, 26, 26, 13, 14, 9, 4, 0, 4, Hero.HeroTypes.STR_DEX, true);
+        pnj.equip(WeaponFactory.buildLongSword(2));
+        pnj.equip(WeaponFactory.buildRoundShield(2));
+        pnj.equip(ArmorFactory.buildLeatherVest(2));
+        pnj.getSkills().add(SkillFactory.buildDodgeMaster().improve().improve());
+
+        pnj.setReward(new Reward(null, 220, 160));
+
+        // hello
+        Discussion discussion = new Discussion("link_1", false, null, new StopDiscussionCallback(pnj));
+        discussion.addReaction(new Reaction("link_1_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        // thank for the help
+        discussion = new Discussion("link_2", true, null);
+        discussion.addReaction(new Reaction("link_2_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildLinkLoot() {
+        Pnj pnj = buildLink();
+        pnj.getDiscussions().remove(0);
+        pnj.getDiscussions().remove(0);
+
+        // I already looted everything
+        Discussion discussion = new Discussion("link_3", true, null);
+        discussion.addReaction(new Reaction("link_3_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildZelda() {
+        Pnj pnj = new Pnj("zelda", Ranks.NEUTRAL, 13, 13, 7, 12, 9, 5, 0, 1, Hero.HeroTypes.DEX_SPI, false);
+        pnj.equip(WeaponFactory.buildDagger(3));
+        pnj.getSkills().add(SkillFactory.buildCharm().improve().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildCharm().improve().improve().improve());
+
+        pnj.setReward(new Reward(null, 200, 80));
+
+        // save me
+        Discussion discussion = new Discussion("zelda_1", false, null);
+        discussion.addReaction(new Reaction("zelda_1_answer_1", 0));
+        discussion.addReaction(new Reaction("zelda_1_answer_2", 1));
+        pnj.getDiscussions().add(discussion);
+
+        // kiss
+        discussion = new Discussion("zelda_11", false, null);
+        discussion.addReaction(new Reaction("zelda_11_answer_1", 1));
+        pnj.getDiscussions().add(discussion);
+
+        // I prefer gold coins
+        discussion = new Discussion("zelda_12", false, new Reward(null, 200, 0));
+        discussion.addReaction(new Reaction("zelda_12_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+
+        return pnj;
+    }
+
+    public static Pnj buildLinkLast() {
+        Pnj pnj = buildLink();
+        pnj.setAutoTalk(false);
+        pnj.getDiscussions().remove(0);
+        pnj.getDiscussions().remove(0);
+
+        // it was cool
+        Discussion discussion = new Discussion("link_4", false, null);
+        discussion.addReaction(new Reaction("link_4_answer_1", 0));
+        discussion.addReaction(new Reaction("link_4_answer_2", 1));
+        pnj.getDiscussions().add(discussion);
+
+        // see you at the tavern
+        discussion = new Discussion("link_41", true, null);
+        pnj.getDiscussions().add(discussion);
+
+        // attack
+        discussion = new Discussion("link_42", false, null, new EnemyDiscussionCallback(pnj));
+        discussion.addReaction(new Reaction("link_42_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
+
+    public static Pnj buildDoomLord() {
+        Pnj pnj = new Pnj("doom_lord", Ranks.ENEMY, 30, 30, 15, 8, 11, 3, 0, 5, Hero.HeroTypes.STR, true);
+        pnj.equip(WeaponFactory.buildLongSword(3));
+        pnj.equip(ArmorFactory.buildBreastPlate(2));
+        pnj.getSkills().add(SkillFactory.buildFatalBlow().improve());
+        pnj.getSkills().add(SkillFactory.buildFrostArrow().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildTerror().improve());
+
+        pnj.setReward(new Reward(null, 120, 190));
+
+        // hello
+        Discussion discussion = new Discussion("doom_lord_1", false, null);
+        discussion.addReaction(new Reaction("doom_lord_1_answer_1", 0));
+        discussion.addReaction(new Reaction("doom_lord_1_answer_2", 0));
         pnj.getDiscussions().add(discussion);
 
         return pnj;

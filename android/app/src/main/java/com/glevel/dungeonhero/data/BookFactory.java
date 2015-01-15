@@ -25,7 +25,7 @@ public class BookFactory {
         lst.add(buildVanarkBook());
         lst.add(buildBalrogQuest());
         lst.add(buildWizardQuest());
-//        lst.add(buildPartnershipQuest());
+        lst.add(buildPartnershipQuest());
 //        lst.add(buildDreamQuest());
         return lst;
     }
@@ -104,7 +104,24 @@ public class BookFactory {
     }
 
     public static Book buildPartnershipQuest() {
-        Book book = new Book(5, "partnership_quest", "initiation_intro", "initiation_outro", null);
+        Book book = new Book(5, "partnership_quest", "partnership_intro", "", null);
+
+        // chapter 1
+        List<Event> events = new ArrayList<>();
+        events.add(new Event.Builder(false).addPnj(PNJFactory.buildLink()).addMonster(MonsterFactory.buildGargoyle()).addMonster(MonsterFactory.buildGargoyle()).build());
+        events.add(new Event.Builder(false).addPnj(PNJFactory.buildLink()).addMonster(MonsterFactory.buildOgre()).addMonster(MonsterFactory.buildOgre()).build());
+        events.add(new Event.Builder(false).addPnj(PNJFactory.buildLink()).addMonster(MonsterFactory.buildTroll()).addMonster(MonsterFactory.buildTroll()).build());
+        events.add(new Event.Builder(true).build());
+        book.addChapter(new Chapter("partnership_chapter_1_intro", "", events));
+
+        // chapter 2
+        events = new ArrayList<>();
+        events.add(new Event.Builder(false).addPnj(PNJFactory.buildLinkLoot()).addReward(new Reward(null, 7, 0)).build());
+        events.add(new Event.Builder(false).addPnj(PNJFactory.buildLinkLoot()).addReward(new Reward(null, 3, 0)).build());
+        events.add(new Event.Builder(false).addPnj(PNJFactory.buildZelda()).build());
+        events.add(new Event.Builder(true).addPnj(PNJFactory.buildDoomLord()).addPnj(PNJFactory.buildLinkLast()).addMonster(MonsterFactory.buildChaosWarrior()).build());
+        book.addChapter(new Chapter("", "partnership_chapter_2_outro", events));
+
         return book;
     }
 

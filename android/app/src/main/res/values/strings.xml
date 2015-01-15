@@ -152,7 +152,7 @@
     <string name="exit_stairs">Exit Stairs</string>
     <string name="entrance_stairs">Entrance stairs</string>
     <string name="go_to_next_floor">Go to next floor</string>
-    <string name="finish_adventure">Finish adventure</string>
+    <string name="finish_adventure">Finish the adventure</string>
     <string name="use_skill_on">preparing %s...</string>
     <string name="use_skill_off">cancel %s</string>
     <string name="secondary_stats">Secondary stats</string>
@@ -257,7 +257,7 @@
     <string name="unknown_liquid_description">Who knows what it is...</string>
 
     <!-- Rings -->
-    <string name="dodge_ring">Blurred Ring</string>
+    <string name="dodge_ring">Ring of Evasion</string>
     <string name="dodge_ring_description">This ring makes the wearer looking blurry, dodging attacks more easily.</string>
     <string name="speed_ring">Ring of Haste</string>
     <string name="speed_ring_description">The wearer feels lighter.</string>
@@ -445,6 +445,35 @@
 
     <!-- The Partnership -->
     <string name="partnership_quest">Brothers in Arms</string>
+    <string name="partnership_intro">You were just arriving at the inn when a tavern fight occured. Not this time, you told to yourself, and you headed directly to the bar.\n\nSuddendly a man rushed at you but you managed to get him on the ground.\n\'Damn, you are the kind of person I need ! Nice to meet you, I am Link\', he told you.\nHe then convinced you, in exchange of some ales, to follow him into the dungeon of the Lord of Doom, a powerful undead creature.\n\nYou finally agreed on a 50-50 deal on the loot and started the adventure...</string>
+    <string name="partnership_outro"></string>
+    <string name="partnership_chapter_1_intro">It is just the start of the quest, and Link has already gone solo... Let\'s find him !</string>
+    <string name="partnership_chapter_2_outro">Next time I\'ll do it on my own, I have done the most part of the job !</string>
+    <string name="link">Link</string>
+    <string name="link_1">Come help me ! I am out-numbered !</string>
+    <string name="link_1_answer_1">I am here !</string>
+    <string name="link_2">Thanks for the little help !</string>
+    <string name="link_2_answer_1">No worries...</string>
+    <string name="link_3">Sorry I have already emptied this treasure chest ! You\'ll take the next one (if any...)</string>
+    <string name="link_3_answer_1">...</string>
+    <string name="link_4">It was a cool Quest, no\u00A0? Did you enjoy it\u00A0?</string>
+    <string name="link_4_answer_1">All the dungeons look alike...</string>
+    <string name="link_4_answer_2">I\'ll better enjoy your death\u00A0!</string>
+    <string name="link_41">Ok then, see you at the tavern\u00A0!</string>
+    <string name="link_42">Why are people so evil\u00A0?</string>
+    <string name="link_42_answer_1">You should have shared the loot\u00A0!</string>
+    <string name="zelda">Princess</string>
+    <string name="zelda_1">Free me and I give you a kiss\u00A0!</string>
+    <string name="zelda_1_answer_1">Fine for me\u00A0!</string>
+    <string name="zelda_1_answer_2">I prefer gold coins</string>
+    <string name="zelda_11"><i>(the princess gives you a kiss)</i>\n\nIt is always working with adventurers\u00A0!\nNo need to propose them gold.</string>
+    <string name="zelda_11_answer_1">Damn...</string>
+    <string name="zelda_12">Oh... you are far more clever than the other guy who keeps saving me usually...\n\nYou are right, nothing is free in this world, here is your gold.</string>
+    <string name="zelda_12_answer_1">The poor Princess trick cannot work all the time ! Please stay safe for once.</string>
+    <string name="doom_lord">Lord of Doom</string>
+    <string name="doom_lord_1">Eatiiiiiing... Braaaaaaaain...</string>
+    <string name="doom_lord_1_answer_1">I have none of this ! Charge !</string>
+    <string name="doom_lord_1_answer_2">It is not good for the breath...</string>
 
     <!-- The Dreamer must awake -->
     <string name="dream_quest">The Dreamer must awake</string>

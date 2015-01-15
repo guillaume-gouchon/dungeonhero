@@ -125,7 +125,7 @@ public class SkillFactory {
 
     public static Skill buildThunderStorm() {
         Effect effect = new DamageEffect("fireball.png", -7, null, 0);
-        return new ActiveSkill("thunder_storm", 0, false, 2, effect);
+        return new ActiveSkill("thunder_storm", 0, false, 1, effect);
     }
 
     public static Skill buildStoneSkin() {
@@ -136,7 +136,7 @@ public class SkillFactory {
     public static Skill buildTerror() {
         Effect extra = new StunEffect("curse.png", Characteristics.SPIRIT, 1, 0);
         Effect effect = new PoisonEffect("curse.png", -3, 3, extra, 0);
-        return new ActiveSkill("terror", 0, false, 3, effect);
+        return new ActiveSkill("terror", 0, false, 2, effect);
     }
 
 }

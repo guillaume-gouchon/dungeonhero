@@ -51,6 +51,7 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.util.color.Color;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -77,7 +78,7 @@ public class GameActivity extends MyBaseGameActivity {
             // TODO : used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildBerserker());
-            mGame.setBook(BookFactory.buildBalrogQuest());
+            mGame.setBook(BookFactory.buildPartnershipQuest());
         }
 
         if (mGame.getDungeon() == null) {
@@ -337,7 +338,7 @@ public class GameActivity extends MyBaseGameActivity {
 
         // auto-talk
         for (GameElement element : mRoom.getObjects()) {
-            if (element instanceof Pnj && ((Pnj) element).isAutoTalk()) {
+            if (element instanceof Pnj && ((Pnj) element).isAutoTalk() && ((Pnj) element).getDiscussions().size() > 0 && !((Pnj) element).getDiscussions().get(0).isPermanent()) {
                 mActionDispatcher.talkTo((Pnj) element);
                 return;
             }
@@ -504,7 +505,7 @@ public class GameActivity extends MyBaseGameActivity {
 
                 if (skipTurn) {
                     nextTurn();
-                } else if (mActiveCharacter.isEnemy(mHero)) {
+                } else if (mActiveCharacter.isEnemy(mHero) || mActiveCharacter.getRank() == Ranks.ALLY) {
                     Log.d(TAG, "AI turn");
                     new Timer().schedule(new TimerTask() {
                         @Override
@@ -512,14 +513,28 @@ public class GameActivity extends MyBaseGameActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ActiveSkill availableSkill = mActiveCharacter.getAvailableSkill();
-                                    if (availableSkill != null && Math.random() < 0.7) {
-                                        mActionDispatcher.setActivatedSkill(availableSkill);
-                                        if (!availableSkill.isPersonal()) {
-                                            mActionDispatcher.useSkill(mHero.getTilePosition());
+                                    // find target
+                                    Unit target = null;
+                                    Collections.shuffle(mRoom.getObjects());
+                                    for (GameElement gameElement : mRoom.getObjects()) {
+                                        if (gameElement instanceof Unit && gameElement.isEnemy(mActiveCharacter)) {
+                                            target = (Unit) gameElement;
+                                            break;
                                         }
+                                    }
+
+                                    if (target == null) {
+                                        nextTurn();
                                     } else {
-                                        mActionDispatcher.attack(mHero.getTilePosition());
+                                        ActiveSkill availableSkill = mActiveCharacter.getAvailableSkill();
+                                        if (availableSkill != null && Math.random() < 0.7) {
+                                            mActionDispatcher.setActivatedSkill(availableSkill);
+                                            if (!availableSkill.isPersonal()) {
+                                                mActionDispatcher.useSkill(target.getTilePosition());
+                                            }
+                                        } else {
+                                            mActionDispatcher.attack(target.getTilePosition());
+                                        }
                                     }
                                 }
                             });

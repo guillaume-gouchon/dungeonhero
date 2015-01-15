@@ -15,7 +15,9 @@ public class Pnj extends Hero {
 
     private final List<Discussion> discussions = new ArrayList<>();
     private DiscussionCallback onDiscussionOver = null;
-    private final boolean isAutoTalk;
+
+
+    private boolean isAutoTalk;
 
     public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType, boolean isAutoTalk) {
         super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement, null, xp, level, heroType);
@@ -44,6 +46,10 @@ public class Pnj extends Hero {
 
     public boolean isAutoTalk() {
         return isAutoTalk;
+    }
+
+    public void setAutoTalk(boolean isAutoTalk) {
+        this.isAutoTalk = isAutoTalk;
     }
 
 }

@@ -59,8 +59,6 @@ public abstract class GameElement extends StorableResource implements GraphicHol
         switch (rank) {
             case ENEMY:
                 return new Color(1.0f, 0.0f, 0.0f, 0.7f);
-            case ALLY:
-                return new Color(0.0f, 1.0f, 0.0f, 0.7f);
             default:
                 return new Color(1.0f, 1.0f, 1.0f, 0.7f);
         }

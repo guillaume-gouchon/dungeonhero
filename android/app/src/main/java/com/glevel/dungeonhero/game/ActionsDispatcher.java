@@ -31,6 +31,7 @@ import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
 import com.glevel.dungeonhero.models.effects.BuffEffect;
 import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.effects.RecoveryEffect;
+import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
@@ -369,7 +370,7 @@ public class ActionsDispatcher implements UserActionListener {
                     for (int n = 0; n < next; n++) {
                         pnj.getDiscussions().remove(0);
                     }
-                    if (next >= 0 && pnj.getDiscussions().size() > 0 && !pnj.getDiscussions().get(0).isPermanent() && !(pnj.getDiscussionCallback() instanceof StopDiscussionCallback)) {
+                    if (next >= 0 && pnj.getDiscussions().size() > 0 && !(pnj.getDiscussionCallback() instanceof StopDiscussionCallback)) {
                         // go to next discussion
                         talkTo(pnj);
                     } else {
@@ -706,7 +707,7 @@ public class ActionsDispatcher implements UserActionListener {
         mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.3f, 1.0f, 0, true, 10, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                if (target instanceof Monster || target instanceof Pnj) {
+                if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && (target instanceof Monster || target instanceof Pnj)) {
                     animateFightReward(target, onActionExecuted);
                 } else {
                     onActionExecuted.onActionDone(true);
@@ -859,8 +860,11 @@ public class ActionsDispatcher implements UserActionListener {
                 target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + effect.getValue()));
             } else {
                 // special effects
-                showAnimatedText(target, (effect.getValue() > 0 ? "+" + effect.getValue() : "" + effect.getValue()) + " " + effect.getTarget().name());
                 target.getBuffs().add(effect);
+
+                if (!(effect instanceof StunEffect) && effect.getTarget() != null) {
+                    showAnimatedText(target, (effect.getValue() > 0 ? "+" + effect.getValue() : "" + effect.getValue()) + " " + effect.getTarget().name());
+                }
             }
 
             if (addExtra && effect.getSpecial() != null) {
