@@ -455,7 +455,7 @@
     <string name="link_2">Thanks for the little help !</string>
     <string name="link_2_answer_1">No worries...</string>
     <string name="link_3">Sorry I have already emptied this treasure chest ! You\'ll take the next one (if any...)</string>
-    <string name="link_3_answer_1">...</string>
+    <string name="link_3_answer_1"><i>(get angry)</i></string>
     <string name="link_4">It was a cool Quest, no\u00A0? Did you enjoy it\u00A0?</string>
     <string name="link_4_answer_1">All the dungeons look alike...</string>
     <string name="link_4_answer_2">I\'ll better enjoy your death\u00A0!</string>
@@ -471,11 +471,19 @@
     <string name="zelda_12">Oh... you are far more clever than the other guy who keeps saving me usually...\n\nYou are right, nothing is free in this world, here is your gold.</string>
     <string name="zelda_12_answer_1">The poor Princess trick cannot work all the time ! Please stay safe for once.</string>
     <string name="doom_lord">Lord of Doom</string>
-    <string name="doom_lord_1">Eatiiiiiing... Braaaaaaaain...</string>
+    <string name="doom_lord_1">Eaaaattttiiiiiing... Braaaaaaaain...</string>
     <string name="doom_lord_1_answer_1">I have none of this ! Charge !</string>
     <string name="doom_lord_1_answer_2">It is not good for the breath...</string>
 
     <!-- The Dreamer must awake -->
-    <string name="dream_quest">The Dreamer must awake</string>
-
+    <string name="dreamer_quest">The Dreamer must awake</string>
+    <string name="dreamer_intro">You are awakening in a jail surrounded of glass.\n\nA few seconds later, you are in a dungeon which looks familiar to you...\n\nThen, people you may know arrive silently around you and disappear... What is it all about ?</string>
+    <string name="dreamer_outro">You finally awaken at the table of the inn, your half empty glass of beer waiting for you.\n\nIt was just a dream, yes, only a strange dream...\n\nLastly, you take the decision not to drink this type of Ale anymore !</string>
+    <string name="dreamer_chapter_1_intro">I must escape this dream.\nI can feel something strange in it... maybe magic.</string>
+    <string name="dreamer_chapter_2_intro">When would I wake up ?</string>
+    <string name="dreamer_ghost_1">...</string>
+    <string name="dreamer_ghost_1_answer_1">...</string>
+    <string name="zangdar">Zangdar the Great</string>
+    <string name="zangdar_1">You are the first one to go as deep into its own nightmare.\n\nYou are asleep now, do you really think you can beat me\u00A0?</string>
+    <string name="zangdar_1_answer_1">Go away from my mind, evil wizard !</string>
 </resources>

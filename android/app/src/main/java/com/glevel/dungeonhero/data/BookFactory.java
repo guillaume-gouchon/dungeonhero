@@ -7,6 +7,9 @@ import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.characters.Pnj;
+import com.glevel.dungeonhero.models.discussions.Discussion;
+import com.glevel.dungeonhero.models.discussions.Reaction;
+import com.glevel.dungeonhero.models.discussions.callbacks.EnemyDiscussionCallback;
 import com.glevel.dungeonhero.models.dungeons.Event;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ public class BookFactory {
         lst.add(buildBalrogQuest());
         lst.add(buildWizardQuest());
         lst.add(buildPartnershipQuest());
-//        lst.add(buildDreamQuest());
+        lst.add(buildDreamQuest());
         return lst;
     }
 
@@ -126,8 +129,42 @@ public class BookFactory {
     }
 
     public static Book buildDreamQuest() {
-        Book book = new Book(6, "dream_quest", "initiation_intro", "initiation_outro", null);
+        Book book = new Book(6, "dreamer_quest", "dreamer_intro", "dreamer_outro", null);
+
+        // chapter 1
+        List<Event> events = new ArrayList<>();
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildTutorialPNJ())).build());
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildInitiationQuestGirl())).build());
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildTiggy())).build());
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildVanark())).build());
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildBalrog())).build());
+        events.add(new Event.Builder(true).addPnj(turnPnjToGhost(PNJFactory.buildXsar())).build());
+        book.addChapter(new Chapter("dreamer_chapter_1_intro", "", events));
+
+        // chapter 2
+        events = new ArrayList<>();
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildMinsk())).build());
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildMontaron())).build());
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildLink())).build());
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildZelda())).build());
+        events.add(new Event.Builder(false).addPnj(turnPnjToGhost(PNJFactory.buildDoomLord())).build());
+        events.add(new Event.Builder(true).addPnj(PNJFactory.buildZangdar()).addMonster(MonsterFactory.buildGargoyle()).build());
+        book.addChapter(new Chapter("dreamer_chapter_2_intro", "dreamer_chapter_2_outro", events));
+
         return book;
+    }
+
+    private static Pnj turnPnjToGhost(Pnj pnj) {
+        pnj.setAutoTalk(true);
+        while (pnj.getDiscussions().size() > 0) {
+            pnj.getDiscussions().remove(0);
+        }
+
+        Discussion discussion = new Discussion("dreamer_ghost_1", false, null, new EnemyDiscussionCallback(pnj));
+        discussion.addReaction(new Reaction("dreamer_ghost_1_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
     }
 
 }

@@ -75,7 +75,7 @@ public class PNJFactory {
         Pnj pnj = new Pnj("initiation_quest_girl", Ranks.NEUTRAL, 7, 7, 4, 10, 10, 5, 0, 1, Hero.HeroTypes.SPI, false);
         pnj.equip(WeaponFactory.buildDagger(0));
 
-        pnj.setReward(new Reward(null, 5, 0));
+        pnj.setReward(new Reward(null, 5, 10));
 
         // who are you ?
         Discussion discussion = new Discussion("initiation_girl_1", false, null);
@@ -427,10 +427,29 @@ public class PNJFactory {
         // hello
         Discussion discussion = new Discussion("doom_lord_1", false, null);
         discussion.addReaction(new Reaction("doom_lord_1_answer_1", 0));
-        discussion.addReaction(new Reaction("doom_lord_1_answer_2", 0));
         pnj.getDiscussions().add(discussion);
 
         return pnj;
     }
 
+    public static Pnj buildZangdar() {
+        Pnj pnj = new Pnj("zangdar", Ranks.ENEMY, 26, 26, 11, 14, 25, 5, 0, 5, Hero.HeroTypes.SPI, true);
+        pnj.equip(WeaponFactory.buildWizardStaff(5));
+        pnj.equip(ArmorFactory.buildRobe(5));
+        pnj.equip(RingFactory.getRandomRing(5));
+        pnj.equip(RingFactory.getRandomRing(5));
+        pnj.getSkills().add(SkillFactory.buildSleep().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildSleep().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildSleep().improve().improve());
+        pnj.getSkills().add(SkillFactory.buildSleep().improve().improve());
+
+        pnj.setReward(new Reward(null, 180, 250));
+
+        // hello
+        Discussion discussion = new Discussion("zangdar_1", false, null);
+        discussion.addReaction(new Reaction("zangdar_1_answer_1", 0));
+        pnj.getDiscussions().add(discussion);
+
+        return pnj;
+    }
 }

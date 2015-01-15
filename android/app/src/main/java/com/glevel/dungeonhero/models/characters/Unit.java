@@ -403,6 +403,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
 
     public boolean testCharacteristic(Characteristics target, int value) {
         int dice = (int) (Math.random() * 20);
+        Log.d(TAG, "characteristic dice result = " + dice);
         return dice == 1 || dice < getCharacteristic(target) - value;
     }
 

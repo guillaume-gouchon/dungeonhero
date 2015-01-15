@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-//        debug {
-//            keyAlias 'dungeon'
-//            keyPassword 'putain'
-//            storeFile file('/home/guillaume/dungeon_debug.jks')
-//            storePassword 'putain'
-//        }
+        debug {
+            keyAlias 'dungeon'
+            keyPassword 'putain'
+            storeFile file('/home/guillaume/dungeon_debug.jks')
+            storePassword 'putain'
+        }
     }
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -15,13 +15,13 @@ android {
         applicationId "com.glevel.dungeonhero"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 7
+        versionCode 8
         versionName "1.0.0"
     }
     buildTypes {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
         }
     }
     productFlavors {

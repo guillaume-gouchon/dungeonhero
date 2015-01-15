@@ -78,7 +78,7 @@ public class GameActivity extends MyBaseGameActivity {
             // TODO : used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildBerserker());
-            mGame.setBook(BookFactory.buildPartnershipQuest());
+            mGame.setBook(BookFactory.buildDreamQuest());
         }
 
         if (mGame.getDungeon() == null) {
