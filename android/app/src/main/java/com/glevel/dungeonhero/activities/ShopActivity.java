@@ -18,6 +18,7 @@ import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.items.ItemFactory;
 import com.glevel.dungeonhero.data.items.PotionFactory;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.gui.items.ItemInfoInShop;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -66,7 +67,6 @@ public class ShopActivity extends MyActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
-
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         mGame = (Game) getIntent().getExtras().getSerializable(Game.class.getName());
@@ -100,7 +100,11 @@ public class ShopActivity extends MyActivity implements OnClickListener {
 
     @Override
     protected int[] getMusicResource() {
-        return new int[]{R.raw.main_menu};
+        if (mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_METAL_MUSIC, false)) {
+            return new int[]{R.raw.main_menu_metal};
+        } else {
+            return new int[]{R.raw.main_menu};
+        }
     }
 
     @Override

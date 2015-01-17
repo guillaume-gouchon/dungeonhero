@@ -119,7 +119,11 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
 
     @Override
     protected int[] getMusicResource() {
-        return new int[]{R.raw.main_menu};
+        if (mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_METAL_MUSIC, false)) {
+            return new int[]{R.raw.main_menu_metal};
+        } else {
+            return new int[]{R.raw.main_menu};
+        }
     }
 
     @Override

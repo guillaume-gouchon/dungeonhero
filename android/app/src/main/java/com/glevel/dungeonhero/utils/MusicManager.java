@@ -45,6 +45,7 @@ public class MusicManager {
         int musicIndex = (int) (Math.random() * musicResources.length);
         Log.d(TAG, "playing music index = " + musicIndex);
         sMediaPlayer = MediaPlayer.create(context, musicResources[musicIndex]);
+        sMediaPlayer.setVolume(0.8f, 0.8f);
         if (sMediaPlayer == null) {
             Log.e(TAG, "player was not created successfully");
         } else {

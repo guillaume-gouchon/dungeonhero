@@ -30,7 +30,7 @@
 
     <!-- About Dialog -->
     <string name="about_title">About Dungeon Hero</string>
-    <string name="about_credits">Game and Music by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nPropose your own quests\non the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a>.</string>
+    <string name="about_credits">Game and Music by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nMetal Music by Outsider, listen <a href="http://music.gouchon.com">here</a>.\n\nYou can propose your own quests\non the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a>.</string>
     <string name="about_contact"><a href="mailto:guillaume.gouchon@gmail.com">Contact me</a> if you have any issue or question.</string>
     <string name="about_other_sources">The game is using AndEngine by Nicolas Gramlich.\nVarious icons by <a href="http://game-icons.net">game-icons.net</a>.\nBackground art by Q_x.</string>
     <string name="about_version">Version : %s</string>
@@ -65,6 +65,9 @@
     <string name="screen_orientation">Screen orientation in game</string>
     <string name="landscape">Landscape</string>
     <string name="portrait">Portrait</string>
+    <string name="music_type">Type of Music</string>
+    <string name="symphonic">Symphonic</string>
+    <string name="metal">Metal</string>
 
     <!-- New Game -->
     <string name="choose_hero_message">Choose a Hero</string>

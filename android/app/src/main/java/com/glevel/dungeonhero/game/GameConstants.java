@@ -9,6 +9,7 @@ public class GameConstants {
      */
     public static final String GAME_PREFS_KEY_MUSIC_VOLUME = "game_music_volume";
     public static final String GAME_PREFS_LANDSCAPE = "game_landscape";
+    public static final String GAME_PREFS_METAL_MUSIC = "metal_music";
     public static final String TUTORIAL_DONE = "tutorial_done";
 
     public static enum MusicStates {

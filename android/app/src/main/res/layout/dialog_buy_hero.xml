@@ -36,7 +36,7 @@
             android:drawableTop="@drawable/ic_all_heroes" />
     </LinearLayout>
 
-    <TextView
+    <com.glevel.dungeonhero.views.CustomTextView
         style="@style/PopupMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

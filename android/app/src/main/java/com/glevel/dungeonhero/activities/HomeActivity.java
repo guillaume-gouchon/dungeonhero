@@ -234,6 +234,24 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
             }
         });
 
+        // type of music
+        RadioGroup musicTypeRadioGroup = (RadioGroup) findViewById(R.id.musicType);
+        // update radio buttons states according to the preferences
+        boolean isMetal = mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_METAL_MUSIC, false);
+        index = isMetal ? 1 : 0;
+        ((RadioButton) musicTypeRadioGroup.getChildAt(index)).setChecked(true);
+        musicTypeRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // enable / disable sound in preferences
+                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
+                boolean isMetal = checkedId == R.id.metal;
+                Editor editor = mSharedPrefs.edit();
+                editor.putBoolean(GameConstants.GAME_PREFS_METAL_MUSIC, isMetal);
+                editor.apply();
+            }
+        });
+
         // settings buttons
         findViewById(R.id.aboutButton).setOnClickListener(this);
         findViewById(R.id.shareButton).setOnClickListener(this);
@@ -338,7 +356,11 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
 
     @Override
     protected int[] getMusicResource() {
-        return new int[]{R.raw.main_menu};
+        if (mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_METAL_MUSIC, false)) {
+            return new int[]{R.raw.main_menu_metal};
+        } else {
+            return new int[]{R.raw.main_menu};
+        }
     }
 
     private void hideSettings() {

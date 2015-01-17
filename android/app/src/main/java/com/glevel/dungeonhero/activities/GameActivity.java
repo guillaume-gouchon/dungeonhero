@@ -226,7 +226,11 @@ public class GameActivity extends MyBaseGameActivity {
 
     @Override
     protected int[] getMusicResource() {
-        return new int[]{R.raw.adventure1, R.raw.adventure1, R.raw.adventure1};
+        if (mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_METAL_MUSIC, false)) {
+            return new int[]{R.raw.adventure1_metal, R.raw.adventure2_metal, R.raw.adventure3_metal, R.raw.adventure4};
+        } else {
+            return new int[]{R.raw.adventure1, R.raw.adventure2, R.raw.adventure3, R.raw.adventure4};
+        }
     }
 
     @Override

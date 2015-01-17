@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.HeroesAdapter;
 import com.glevel.dungeonhero.data.characters.HeroFactory;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
@@ -34,6 +37,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
 
     private InAppBillingHelper mInAppBillingHelper;
     private List<Hero> mLstHeroes;
+    private SharedPreferences mSharedPrefs;
 
     /**
      * UI
@@ -87,10 +91,11 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_game);
+        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         mLstHeroes = HeroFactory.getAll();
 
-        setContentView(R.layout.activity_new_game);
         setupUI();
 
         mInAppBillingHelper = new InAppBillingHelper(this, this);
@@ -116,7 +121,11 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
 
     @Override
     protected int[] getMusicResource() {
-        return new int[]{R.raw.main_menu};
+        if (mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_METAL_MUSIC, false)) {
+            return new int[]{R.raw.main_menu_metal};
+        } else {
+            return new int[]{R.raw.main_menu};
+        }
     }
 
     @Override

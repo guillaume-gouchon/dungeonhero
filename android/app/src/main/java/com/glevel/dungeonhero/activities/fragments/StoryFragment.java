@@ -16,7 +16,6 @@ import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
-import com.glevel.dungeonhero.utils.MusicManager;
 
 public class StoryFragment extends DialogFragment implements View.OnClickListener {
 
@@ -51,7 +50,7 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.dialog_story_fragment, container, false);
+        View layout = inflater.inflate(R.layout.dialog_fragment_story, container, false);
 
         mStormsBg = (ImageView) layout.findViewById(R.id.storms);
 

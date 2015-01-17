@@ -1,7 +1,9 @@
 package com.glevel.dungeonhero.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -12,6 +14,7 @@ import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.MonsterAdapter;
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.characters.Monster;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
@@ -25,6 +28,7 @@ public class BestiaryActivity extends MyActivity implements View.OnClickListener
 
     private Game mGame;
     private List<Monster> mLstMonsters;
+    private SharedPreferences mSharedPrefs;
 
     /**
      * UI
@@ -36,6 +40,7 @@ public class BestiaryActivity extends MyActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bestiary);
+        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         mGame = (Game) getIntent().getExtras().getSerializable(Game.class.getName());
 
@@ -72,7 +77,11 @@ public class BestiaryActivity extends MyActivity implements View.OnClickListener
 
     @Override
     protected int[] getMusicResource() {
-        return new int[]{R.raw.main_menu};
+        if (mSharedPrefs.getBoolean(GameConstants.GAME_PREFS_METAL_MUSIC, false)) {
+            return new int[]{R.raw.main_menu_metal};
+        } else {
+            return new int[]{R.raw.main_menu};
+        }
     }
 
     @Override
