@@ -222,7 +222,7 @@ public class WeaponFactory {
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, 0));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, 5, null, 0));
-        item.addEffect(new PoisonEffect("elec.png", -2, 2, null, 0));
+        item.addEffect(new PoisonEffect("elec.png", -2, 1, null, 0));
         return item;
     }
 
@@ -236,7 +236,20 @@ public class WeaponFactory {
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.DEXTERITY, 10, 0));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, -20, null, 0));
-        item.addEffect(new PoisonEffect("poison.png", -3, 3, null, 0));
+        item.addEffect(new PoisonEffect("poison.png", -2, 2, null, 0));
+        return item;
+    }
+
+    public static Equipment buildDarkElvenDagger() {
+        Weapon item = new Weapon("dark_elven_dagger", 3, 3, 0, 400);
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
+        item.addEffect(new PermanentEffect(Characteristics.CRITICAL, 10, null, 0));
+        item.addEffect(new PoisonEffect("poison.png", -2, 3, null, 0));
         return item;
     }
 

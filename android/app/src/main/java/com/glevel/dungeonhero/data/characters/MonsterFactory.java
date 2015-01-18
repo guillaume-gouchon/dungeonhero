@@ -4,6 +4,8 @@ import com.glevel.dungeonhero.data.items.ArmorFactory;
 import com.glevel.dungeonhero.data.items.RingFactory;
 import com.glevel.dungeonhero.data.items.WeaponFactory;
 import com.glevel.dungeonhero.models.characters.Monster;
+import com.glevel.dungeonhero.models.effects.Effect;
+import com.glevel.dungeonhero.models.effects.PoisonEffect;
 import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class MonsterFactory {
     }
 
     public static Monster buildGoblin() {
-        Monster monster = new Monster("goblin", 5, 5, 6, 13, 5, 5);
+        Monster monster = new Monster("goblin", 5, 5, 6, 13, 6, 5);
         monster.equip(WeaponFactory.buildDagger(0));
         return monster;
     }
@@ -52,35 +54,37 @@ public class MonsterFactory {
     }
 
     public static Monster buildTroll() {
-        Monster monster = new Monster("troll", 20, 20, 14, 7, 2, 3);
-        monster.equip(WeaponFactory.buildMorgenstern(0));
+        Monster monster = new Monster("troll", 22, 22, 15, 7, 2, 3);
+        monster.equip(new Weapon("claws", 3, 10, 0, 0));
+        monster.getSkills().add(SkillFactory.buildFatalBlow());
+        monster.getBuffs().add(new PoisonEffect("poison.png", 2, Effect.INFINITE_EFFECT, null, 0));
         return monster;
     }
 
     public static Monster buildOgre() {
-        Monster monster = new Monster("ogre", 15, 15, 13, 8, 5, 3);
+        Monster monster = new Monster("ogre", 24, 24, 14, 8, 5, 3);
         monster.equip(WeaponFactory.buildMorgenstern(0));
         monster.equip(ArmorFactory.buildLeatherPlastron(0));
         return monster;
     }
 
     public static Monster buildOgreKing() {
-        Monster monster = new Monster("ogre_king", 20, 20, 15, 10, 10, 4);
+        Monster monster = new Monster("ogre_king", 28, 28, 16, 10, 10, 4);
         monster.equip(WeaponFactory.buildBattleAxe(1));
         monster.equip(ArmorFactory.buildChainMail(0));
         return monster;
     }
 
     public static Monster buildGargoyle() {
-        Monster monster = new Monster("gargoyle", 22, 22, 15, 8, 12, 5);
-        monster.equip(new Weapon("claws", 3, 10, 0, 0));
+        Monster monster = new Monster("gargoyle", 30, 30, 20, 8, 12, 5);
+        monster.equip(new Weapon("claws", 3, 10, 1, 0));
         monster.equip(ArmorFactory.buildLeatherPlastron(1));
         monster.getSkills().add(SkillFactory.buildFatalBlow());
         return monster;
     }
 
     public static Monster buildChaosWarrior() {
-        Monster monster = new Monster("chaos_warrior", 21, 21, 12, 9, 10, 4);
+        Monster monster = new Monster("chaos_warrior", 26, 26, 17, 13, 10, 4);
         monster.equip(WeaponFactory.buildLongSword(1));
         monster.equip(WeaponFactory.buildLargeShield(1));
         monster.equip(ArmorFactory.buildLamellar(1));
@@ -88,7 +92,7 @@ public class MonsterFactory {
     }
 
     public static Monster buildChaosWizard() {
-        Monster monster = new Monster("chaos_wizard", 19, 19, 8, 7, 13, 4);
+        Monster monster = new Monster("chaos_wizard", 19, 19, 9, 11, 17, 4);
         monster.equip(WeaponFactory.buildWizardStaff(2));
         monster.equip(ArmorFactory.buildRobe(2));
         monster.equip(RingFactory.getRandomRing(2));
@@ -98,16 +102,16 @@ public class MonsterFactory {
     }
 
     public static Monster buildDemon() {
-        Monster monster = new Monster("demon", 18, 18, 16, 11, 14, 5);
-        monster.equip(new Weapon("claws", 4, 15, 0, 0));
+        Monster monster = new Monster("demon", 28, 28, 24, 15, 15, 5);
+        monster.equip(new Weapon("claws", 4, 15, 1, 0));
         monster.equip(ArmorFactory.buildLamellar(3));
         monster.getSkills().add(SkillFactory.buildRage().improve());
         return monster;
     }
 
     public static Monster buildDemonKing() {
-        Monster monster = new Monster("demon_king", 26, 26, 17, 12, 16, 5);
-        monster.equip(new Weapon("claws", 4, 15, 0, 0));
+        Monster monster = new Monster("demon_king", 36, 36, 27, 18, 19, 5);
+        monster.equip(new Weapon("claws", 4, 15, 1, 0));
         monster.equip(ArmorFactory.buildBreastPlate(3));
         monster.getSkills().add(SkillFactory.buildFireball().improve());
         monster.getSkills().add(SkillFactory.buildRage().improve().improve().improve());

@@ -96,7 +96,7 @@ public class SkillFactory {
     }
 
     public static Skill buildHealingHerbs() {
-        Effect effect = new DamageEffect(null, 12, null, 0);
+        Effect effect = new PoisonEffect("frost.png", 5, 3, null, 0);
         return new ActiveSkill("healing_plants", 0, true, 0, effect);
     }
 

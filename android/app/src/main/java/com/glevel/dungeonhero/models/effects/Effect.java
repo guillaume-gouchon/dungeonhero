@@ -33,8 +33,7 @@ public abstract class Effect implements Serializable, Cloneable {
     public boolean consume() {
         if (duration == INSTANT_EFFECT) {
             return true;
-        }
-        if (duration != INFINITE_EFFECT) {
+        } else if (duration != INFINITE_EFFECT) {
             duration--;
             if (duration == 0) {
                 return true;
@@ -47,7 +46,7 @@ public abstract class Effect implements Serializable, Cloneable {
         if (target == Characteristics.MOVEMENT) {
             return value + level / 2;
         }
-        return (int) Math.max(value + 0.15 * value * level, value + level);
+        return (int) Math.max(value + 0.2 * value * level, value + level);
     }
 
     public Characteristics getTarget() {

@@ -161,7 +161,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         if (isInvisible || dice < critical) {
             int criticalDamage = Math.max(0, calculateDamageNaturalBonus() + getBonusesFromBuffsAndEquipments(Characteristics.DAMAGE)
                     + (equipments[0] != null ? calculateCriticalDamage((Weapon) equipments[0]) : 0) + (equipments[1] != null ? calculateCriticalDamage((Weapon) equipments[1]) / 2 : 0));
-            fightResult = new FightResult(FightResult.States.CRITICAL, (int) Math.max(0, criticalDamage * 1.5f - target.calculateProtection()));
+            fightResult = new FightResult(FightResult.States.CRITICAL, (int) Math.max(0, criticalDamage * 1.3f - target.calculateProtection()));
         } else if (dice >= 95) {
             fightResult = new FightResult(FightResult.States.MISS, 0);
         } else if (dice > 95 - target.calculateBlock()) {
@@ -182,11 +182,13 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         target.takeDamage(fightResult.getDamage());
 
         // add weapons special effects
-        if (equipments[0] != null) {
-            applyWeaponEffect(equipments[0], target);
-        }
-        if (equipments[1] != null) {
-            applyWeaponEffect(equipments[1], target);
+        if (fightResult.getDamage() > 0) {
+            if (equipments[0] != null) {
+                applyWeaponEffect(equipments[0], target);
+            }
+            if (equipments[1] != null) {
+                applyWeaponEffect(equipments[1], target);
+            }
         }
 
         return fightResult;

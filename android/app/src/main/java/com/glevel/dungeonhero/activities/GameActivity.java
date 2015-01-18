@@ -476,6 +476,8 @@ public class GameActivity extends MyBaseGameActivity {
                 boolean skipTurn = false;
                 List<Effect> copy = new ArrayList<>(mActiveCharacter.getBuffs());
                 for (Effect effect : copy) {
+                    if (mActiveCharacter.isDead()) break;
+
                     if (effect instanceof PoisonEffect) {
                         Log.d(TAG, "got poison effect");
                         mActionDispatcher.applyEffect(effect, mActiveCharacter.getTilePosition(), false);

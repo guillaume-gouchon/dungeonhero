@@ -115,11 +115,12 @@ public class PNJFactory {
 
     public static Pnj buildTiggy() {
         Pnj pnj = new Pnj("tiggy", Ranks.NEUTRAL, 18, 18, 8, 16, 11, 5, 0, 3, Hero.HeroTypes.DEX, true);
-        pnj.equip(WeaponFactory.buildShortSword(2));
+        pnj.equip(WeaponFactory.buildDarkElvenDagger());
+        pnj.equip(WeaponFactory.buildDarkElvenDagger());
         pnj.getSkills().add(SkillFactory.buildDodgeMaster().improve().improve());
         pnj.getSkills().add(SkillFactory.buildFatalBlow().improve());
 
-        pnj.setReward(new Reward(WeaponFactory.buildShortSword(2), 0, 70));
+        pnj.setReward(new Reward(WeaponFactory.buildDarkElvenDagger(), 0, 70));
 
         // who are you ?
         Discussion discussion = new Discussion("tiggy_1", false, null);

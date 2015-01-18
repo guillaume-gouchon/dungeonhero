@@ -15,8 +15,8 @@ public class Monster extends Unit {
 
     @Override
     public Reward getReward() {
-        int gold = (int) (Math.random() * 5) * (5 + 10 * skills.size());
-        return new Reward(null, gold, hp + (equipments[0] != null ? equipments[0].getLevel() + 1 : 0) * 5 + (equipments[2] != null ? equipments[2].getLevel() * 5 : 0) + 15 * skills.size());
+        int gold = (int) (Math.random() * 5) * (5 + 15 * skills.size());
+        return new Reward(null, gold, 2 * hp + (equipments[0] != null ? equipments[0].getLevel() + 1 : 0) * 5 + (equipments[2] != null ? equipments[2].getLevel() * 5 : 0) + 15 * skills.size());
     }
 
 }
