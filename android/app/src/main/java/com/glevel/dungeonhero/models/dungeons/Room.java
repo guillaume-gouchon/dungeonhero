@@ -139,7 +139,7 @@ public class Room implements Serializable {
             }
 
             for (Reward reward : event.getRewards()) {
-                addGameElement(new TreasureChest(reward), getRandomFreeTile());
+                addGameElement(DecorationFactory.buildSmallChest(reward), getRandomFreeTile());
                 nbFreeTiles--;
             }
         }
@@ -244,8 +244,7 @@ public class Room implements Serializable {
     public void moveIn(List<Unit> heroes, Directions from) {
         Log.d(TAG, "moving into room from direction = " + from.name() + ", " + heroes.size() + " units");
         Tile doorPosition = doors.get(from);
-        int factor = from == Directions.SOUTH ? 2 : 1;
-        Tile tile = tiles[doorPosition.getY() + factor * from.getDy()][doorPosition.getX() - factor * from.getDx()];
+        Tile tile = tiles[doorPosition.getY() + from.getDy()][doorPosition.getX() - from.getDx()];
         if (tile.getContent() != null) {
             // move previous content if any
             Log.d(TAG, "there is already something at the entrance");

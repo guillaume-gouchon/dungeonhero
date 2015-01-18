@@ -32,7 +32,7 @@
     <string name="about_title">About Dungeon Hero</string>
     <string name="about_credits">Game and Music by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nMetal Music by Outsider, listen <a href="http://music.gouchon.com">here</a>.\n\nYou can propose your own quests\non the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a>.</string>
     <string name="about_contact"><a href="mailto:guillaume.gouchon@gmail.com">Contact me</a> if you have any issue or question.</string>
-    <string name="about_other_sources">The game is using AndEngine by Nicolas Gramlich.\nVarious icons by <a href="http://game-icons.net">game-icons.net</a>.\nBackground art by Q_x.</string>
+    <string name="about_other_sources">The game is using AndEngine by Nicolas Gramlich.\nVarious icons by <a href="http://game-icons.net">game-icons.net</a>.\nBackground art by Q_x.\nLauncher icon by <a href="http://sonialahcene.com">Sonia Lahcene</a>.\nDungeon tileset by <a href="http://www.lostgarden.com/2006/07/more-free-game-graphics.html">Daniel Cook</a>.  </string>
     <string name="about_version">Version : %s</string>
 
     <!-- Google Game Services Integration -->
@@ -191,9 +191,10 @@
     <!-- Decorations -->
     <string name="light">Candlestick</string>
     <string name="treasure_chest">Treasure Chest</string>
-    <string name="box">Box</string>
-    <string name="barrel">Barrel</string>
+    <string name="table">Table</string>
+    <string name="pot">Container</string>
     <string name="small_chest">Small Chest</string>
+    <string name="statue">Statue</string>
 
     <!-- Monsters -->
     <string name="goblin">Goblin</string>

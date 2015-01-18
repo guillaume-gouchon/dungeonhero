@@ -10,7 +10,7 @@ public class SelectionCircle extends CenteredSprite {
 
     public SelectionCircle(VertexBufferObjectManager pVertexBufferObjectManager) {
         super(0, 0, GraphicsManager.sGfxMap.get("selection.png"), pVertexBufferObjectManager);
-        setScale(0.25f);
+        setScale(0.5f);
         setZIndex(5);
         setVisible(false);
     }

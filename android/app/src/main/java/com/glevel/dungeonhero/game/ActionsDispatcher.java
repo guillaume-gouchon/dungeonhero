@@ -612,7 +612,7 @@ public class ActionsDispatcher implements UserActionListener {
                             interrupt = false;
                         }
                     } else {
-                        sprite.setPosition(sprite.getX() + direction.getDx(), sprite.getY() - direction.getDy());
+                        sprite.setPosition(sprite.getX() + 2 * direction.getDx(), sprite.getY() - 2 * direction.getDy());
                         mInputManager.checkAutoScrolling(sprite.getX(), sprite.getY());
                     }
                 }
@@ -654,7 +654,7 @@ public class ActionsDispatcher implements UserActionListener {
             showAnimatedText(target, "-" + fightResult.getDamage());
         }
         if (fightResult.getState() != FightResult.States.DAMAGE) {
-            mGameActivity.drawAnimatedText(targetSprite.getX() + GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE, fightResult.getState().name().toLowerCase(), fightResult.getState().getColor(), 0.2f, 40, -0.15f);
+            mGameActivity.drawAnimatedText(targetSprite.getX() + GameConstants.PIXEL_BY_TILE / 3, targetSprite.getY() - GameConstants.PIXEL_BY_TILE, fightResult.getState().name().toLowerCase(), fightResult.getState().getColor(), 0.4f, 40, -0.15f);
         }
 
         // animate characters
@@ -664,8 +664,8 @@ public class ActionsDispatcher implements UserActionListener {
 
             private static final int DURATION_IN_FRAMES = 20;
             private static final int OFFSET = 5;
-            private static final float ATTACKER_SPEED = 1.5f;
-            private static final float TARGET_SPEED = 0.6f;
+            private static final float ATTACKER_SPEED = 3f;
+            private static final float TARGET_SPEED = 1.2f;
 
             private int offset = OFFSET;
 
@@ -698,13 +698,13 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void showAnimatedText(Unit target, String message) {
-        mGameActivity.drawAnimatedText(target.getSprite().getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE, message, message.startsWith("-") ? FightResult.States.DAMAGE.getColor() : FightResult.States.DODGE.getColor(), 0.2f, 40, -0.15f);
+        mGameActivity.drawAnimatedText(target.getSprite().getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE, message, message.startsWith("-") ? FightResult.States.DAMAGE.getColor() : FightResult.States.DODGE.getColor(), 0.4f, 40, -0.15f);
     }
 
     public void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating death");
         Sprite sprite = target.getSprite();
-        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.3f, 1.0f, 0, true, 10, new OnActionExecuted() {
+        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.6f, 1.0f, 0, true, 10, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
                 if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && (target instanceof Monster || target instanceof Pnj)) {
@@ -716,16 +716,16 @@ public class ActionsDispatcher implements UserActionListener {
         });
         mGameActivity.playSound("death", false);
         sprite.setRotation(90);
-        sprite.setPosition(sprite.getX() + 5, sprite.getY() + 5);
+        sprite.setPosition(sprite.getX() + 10, sprite.getY() + 10);
     }
 
     private void animateReward(Reward reward) {
         if (reward.getGold() > 0) {
             mGameActivity.playSound("coins", false);
-            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() - 4 * GameConstants.PIXEL_BY_TILE / 3, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getGold() + " gold", Color.YELLOW, 0.2f, 50, -0.15f);
+            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() - 4 * GameConstants.PIXEL_BY_TILE / 3, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getGold() + " gold", Color.YELLOW, 0.4f, 50, -0.15f);
         }
         if (reward.getXp() > 0) {
-            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() + GameConstants.PIXEL_BY_TILE / 2, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.2f, 50, -0.15f);
+            mGameActivity.drawAnimatedText(mGameActivity.getHero().getSprite().getX() + GameConstants.PIXEL_BY_TILE / 2, mGameActivity.getHero().getSprite().getY() - GameConstants.PIXEL_BY_TILE, "+" + reward.getXp() + "xp", new Color(1.0f, 1.0f, 1.0f), 0.4f, 50, -0.15f);
         }
     }
 
@@ -886,7 +886,7 @@ public class ActionsDispatcher implements UserActionListener {
 
         // animate
         if (effect.getSpriteName() != null) {
-            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
+            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), effect.getSpriteName(), 50, 0.6f, 1.0f, 0, true, 100, null);
         }
 
         mGUIManager.updateActiveHeroLayout();
@@ -911,7 +911,7 @@ public class ActionsDispatcher implements UserActionListener {
                 public void run() {
                     sprite.walk(Directions.values()[n % 4]);
                     tile = tileIterator.next();
-                    mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), "slash.png", 70, 0.3f, 0.6f, 0, true, 100, null);
+                    mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), "slash.png", 70, 0.6f, 0.7f, 0, true, 100, null);
                     n--;
                     if (n < 0) {
                         sprite.stand();
@@ -928,10 +928,10 @@ public class ActionsDispatcher implements UserActionListener {
 
                 @Override
                 public void run() {
-                    sprite.setScale((float) (0.25 + 0.03 * (n % 3)));
+                    sprite.setScale((float) (0.5 + 0.03 * (n % 3)));
                     n--;
                     if (n < 0) {
-                        sprite.setScale(0.25f);
+                        sprite.setScale(0.5f);
                         cancel();
                         callback.onActionDone(true);
                     }
@@ -1040,11 +1040,11 @@ public class ActionsDispatcher implements UserActionListener {
 
                 @Override
                 public void run() {
-                    sprite.setScale((float) (0.25 + 0.07 * Math.sin(n * Math.PI / 7)));
+                    sprite.setScale((float) (0.5 + 0.07 * Math.sin(n * Math.PI / 7)));
 
                     n--;
                     if (n < 0) {
-                        sprite.setScale(0.25f);
+                        sprite.setScale(0.5f);
                         cancel();
                         callback.onActionDone(true);
                     }

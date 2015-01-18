@@ -34,6 +34,7 @@ public class Searchable extends Decoration {
     @Override
     public void createSprite(VertexBufferObjectManager vertexBufferObjectManager) {
         sprite = new GameElementSprite(this, vertexBufferObjectManager);
+        sprite.setScale(0.6f);
     }
 
 }

@@ -8,7 +8,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class GameElementSprite extends CenteredSprite {
 
-    public static final int Y_OFFSET = 6;
+    public static final int Y_OFFSET = 12;
 
     public GameElementSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager) {
         super(gameElement.getTilePosition().getTileX(), gameElement.getTilePosition().getTileY(), GraphicsManager.sGfxMap.get(gameElement.getSpriteName()), vertexBufferObjectManager);

@@ -5,7 +5,6 @@ import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.dungeons.decorations.Decoration;
 import com.glevel.dungeonhero.models.dungeons.decorations.Light;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
-import com.glevel.dungeonhero.models.dungeons.decorations.TreasureChest;
 import com.glevel.dungeonhero.models.items.Item;
 
 import java.util.ArrayList;
@@ -19,10 +18,10 @@ public class DecorationFactory {
     public static List<Decoration> getAll() {
         List<Decoration> lst = new ArrayList<>();
         lst.add(buildLight());
-        lst.add(buildBox(null));
-        lst.add(buildBarrel(null));
+        lst.add(buildTable(null));
+        lst.add(buildPot(null));
         lst.add(buildSmallChest(null));
-        lst.add(buildTreasureChest(null));
+        lst.add(buildStatue(null));
         return lst;
     }
 
@@ -30,20 +29,20 @@ public class DecorationFactory {
         return new Light("light");
     }
 
-    public static Decoration buildTreasureChest(Reward reward) {
-        return new TreasureChest(reward);
+    public static Decoration buildPot(Reward reward) {
+        return new Searchable("pot", reward, 18, 16, 1, 1);
     }
 
-    public static Decoration buildBarrel(Reward reward) {
-        return new Searchable("barrel", reward, 13, 16, 1, 1);
-    }
-
-    public static Decoration buildBox(Reward reward) {
-        return new Searchable("box", reward, 18, 24, 1, 1);
+    public static Decoration buildTable(Reward reward) {
+        return new Searchable("table", reward, 85, 70, 1, 1);
     }
 
     public static Decoration buildSmallChest(Reward reward) {
-        return new Searchable("small_chest", reward, 9, 12, 1, 1);
+        return new Searchable("small_chest", reward, 37, 34, 1, 1);
+    }
+
+    public static Decoration buildStatue(Reward reward) {
+        return new Searchable("statue", reward, 40, 82, 1, 1);
     }
 
     public static List<Decoration> getRoomContent(int threatLevel) {
@@ -61,7 +60,7 @@ public class DecorationFactory {
         int gold = 0;
         Item item = ItemFactory.getRandomItem(threatLevel);
         if (item == null) {
-            gold = (int) (threatLevel* 25 * (int) (Math.random() * 4));
+            gold = (int) (threatLevel * 25 * (int) (Math.random() * 4));
         }
         if (item != null || gold > 0) {
             reward = new Reward(item, gold, 0);
@@ -72,11 +71,11 @@ public class DecorationFactory {
             case 0:
                 return buildSmallChest(reward);
             case 1:
-                return buildBox(reward);
+                return buildTable(reward);
             case 2:
-                return buildBarrel(reward);
+                return buildStatue(reward);
             default:
-                return buildTreasureChest(reward);
+                return buildPot(reward);
         }
     }
 

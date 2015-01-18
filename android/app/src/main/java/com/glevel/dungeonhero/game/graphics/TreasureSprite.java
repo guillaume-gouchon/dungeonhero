@@ -11,6 +11,7 @@ public class TreasureSprite extends GameElementSprite {
 
     public TreasureSprite(TreasureChest treasureChest, VertexBufferObjectManager vertexBufferObjectManager) {
         super(treasureChest, vertexBufferObjectManager);
+        setScale(2.0f);
         if (treasureChest.isEmpty()) {
             open();
         }

@@ -53,6 +53,7 @@ import org.andengine.util.color.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -78,7 +79,7 @@ public class GameActivity extends MyBaseGameActivity {
             // TODO : used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildBerserker());
-            mGame.setBook(BookFactory.buildDreamQuest());
+            mGame.setBook(BookFactory.buildVanarkBook());
         }
 
         if (mGame.getDungeon() == null) {
@@ -431,14 +432,14 @@ public class GameActivity extends MyBaseGameActivity {
                             isHeroic = true;
                             // animate heroic
                             if (effect.getSpriteName() != null) {
-                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.6f, 1.0f, 0, true, 100, null);
                             }
                         } else if (effect instanceof CamouflageEffect) {
                             Log.d(TAG, "character is invisible");
                             isHidden = true;
                             // animate invisible
                             if (effect.getSpriteName() != null) {
-                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.6f, 1.0f, 0, true, 100, null);
                             }
                             // test if character is still invisible
                             for (GameElement element : mRoom.getObjects()) {
@@ -452,7 +453,7 @@ public class GameActivity extends MyBaseGameActivity {
                                         mActiveCharacter.getBuffs().remove(effect);
                                         // animate end of invisibility
                                         if (effect.getSpriteName() != null) {
-                                            drawAnimatedSprite(element.getTilePosition().getTileX(), element.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.3f, 1.0f, 0, true, 100, null);
+                                            drawAnimatedSprite(element.getTilePosition().getTileX(), element.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.6f, 1.0f, 0, true, 100, null);
                                         }
                                         break;
                                     }
@@ -489,7 +490,7 @@ public class GameActivity extends MyBaseGameActivity {
                         } else {
                             Log.d(TAG, "skip turn");
                             skipTurn = true;
-                            drawAnimatedText(mActiveCharacter.getSprite().getX() + GameConstants.PIXEL_BY_TILE / 3, mActiveCharacter.getSprite().getY() - 2 * GameConstants.PIXEL_BY_TILE / 3, getString(R.string.sleep_effect), new Color(0.0f, 1.0f, 0.0f), 0.2f, 50, -0.15f);
+                            drawAnimatedText(mActiveCharacter.getSprite().getX() + GameConstants.PIXEL_BY_TILE / 3, mActiveCharacter.getSprite().getY() - 2 * GameConstants.PIXEL_BY_TILE / 3, getString(R.string.sleep_effect), new Color(0.0f, 1.0f, 0.0f), 0.4f, 50, -0.15f);
                         }
                     }
                 }
@@ -521,11 +522,24 @@ public class GameActivity extends MyBaseGameActivity {
                                 public void run() {
                                     // find target
                                     Unit target = null;
-                                    Collections.shuffle(mRoom.getObjects());
-                                    for (GameElement gameElement : mRoom.getObjects()) {
-                                        if (gameElement instanceof Unit && gameElement.isEnemy(mActiveCharacter)) {
-                                            target = (Unit) gameElement;
+
+                                    // prioritize adjacent tiles
+                                    Set<Tile> adjacentTiles = MathUtils.getAdjacentNodes(mRoom.getTiles(), mActiveCharacter.getTilePosition(), 1, false, null);
+                                    for (Tile tile : adjacentTiles) {
+                                        if (tile.getContent() instanceof Unit && tile.getContent().isEnemy(mActiveCharacter)) {
+                                            target = (Unit) tile.getContent();
                                             break;
+                                        }
+                                    }
+
+                                    // then, search in whole room
+                                    if (target == null) {
+                                        Collections.shuffle(mRoom.getObjects());
+                                        for (GameElement gameElement : mRoom.getObjects()) {
+                                            if (gameElement instanceof Unit && gameElement.isEnemy(mActiveCharacter)) {
+                                                target = (Unit) gameElement;
+                                                break;
+                                            }
                                         }
                                     }
 

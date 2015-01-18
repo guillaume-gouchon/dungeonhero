@@ -126,7 +126,7 @@ public class Game extends DatabaseResource {
         toLoad.add(new SpriteHolder("stairs.png", 30, 30, 2, 1));
         toLoad.add(new SpriteHolder("selection.png", 64, 64, 1, 1));
         toLoad.add(new SpriteHolder("blood.png", 300, 50, 6, 1));
-        toLoad.add(new SpriteHolder("item_on_ground.png", 12, 12, 1, 1));
+        toLoad.add(new SpriteHolder("item_on_ground.png", 18, 16, 1, 1));
         toLoad.add(new SpriteHolder("slash.png", 250, 50, 5, 1));
         toLoad.add(new SpriteHolder("poison.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("frost.png", 300, 50, 6, 1));

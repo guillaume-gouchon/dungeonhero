@@ -14,6 +14,7 @@ public class LightSprite extends GameElementSprite {
 
     public LightSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager) {
         super(gameElement, vertexBufferObjectManager);
+        setScale(2.0f);
         animate();
     }
 
