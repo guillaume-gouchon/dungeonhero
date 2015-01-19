@@ -12,7 +12,7 @@ body {
 
 #bg {
 	z-index: -1;
-	position: absolute;
+	position: fixed;
 	height: 100%;
 	width: 100%;
 	top: 0px;
@@ -22,7 +22,7 @@ body {
 #main-content {
 	margin: 20px;
 	padding: 20px 30px;
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(0, 0, 0, 0.6);
 	border-radius: 5px;
 	text-shadow: 2px 2px black;
 	text-align: center;
@@ -74,11 +74,4 @@ body {
 	position: absolute!important;
 	top: 35px;
 	right: 35px;
-}
-
-footer {
-	position: absolute;
-	right: 20px;
-	bottom: 10px;
-	opacity: 0.2;
 }
