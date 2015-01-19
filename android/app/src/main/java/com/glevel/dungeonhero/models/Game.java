@@ -135,7 +135,6 @@ public class Game extends DatabaseResource {
         toLoad.add(new SpriteHolder("ground_slam.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("charm.png", 300, 50, 6, 1));
         toLoad.add(new SpriteHolder("fireball.png", 200, 100, 4, 2));
-        toLoad.add(new SpriteHolder("starfall.png", 200, 100, 4, 2));
 
         return toLoad;
     }

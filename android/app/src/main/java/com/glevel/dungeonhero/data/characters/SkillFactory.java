@@ -85,8 +85,8 @@ public class SkillFactory {
     }
 
     public static Skill buildStarFall() {
-        Effect effect = new DamageEffect("starfall.png", -10, null, 0);
-        return new ActiveSkill("star_fall", 0, false, 2, effect);
+        Effect effect = new DamageEffect("fireball.png", -10, null, 0);
+        return new ActiveSkill("star_fall", 0, false, 1, effect);
     }
 
     public static Skill buildParalysingPlants() {
