@@ -39,7 +39,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildLeatherVest(int level) {
-        Armor item = new Armor("leather_vest", 2, level, 220);
+        Armor item = new Armor("leather_vest", 1, level, 220);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
@@ -49,7 +49,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildLeatherPlastron(int level) {
-        Armor item = new Armor("leather_plastron", 3, level, 280);
+        Armor item = new Armor("leather_plastron", 2, level, 280);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
@@ -60,7 +60,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildChainMail(int level) {
-        Armor item = new Armor("chain_mail", 4, level, 350);
+        Armor item = new Armor("chain_mail", 3, level, 350);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, level));
@@ -68,7 +68,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildLamellar(int level) {
-        Armor item = new Armor("lamellar", 5, level, 300);
+        Armor item = new Armor("lamellar", 4, level, 300);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 12, level));
@@ -77,7 +77,7 @@ public class ArmorFactory {
     }
 
     public static Armor buildBreastPlate(int level) {
-        Armor item = new Armor("breast_plate", 6, level, 450);
+        Armor item = new Armor("breast_plate", 5, level, 450);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 15, level));
         item.addEffect(new PermanentEffect(Characteristics.DODGE, -20, null, level));

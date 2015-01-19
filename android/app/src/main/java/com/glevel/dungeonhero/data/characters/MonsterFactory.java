@@ -49,7 +49,7 @@ public class MonsterFactory {
         Monster monster = new Monster("orc_captain", 13, 13, 12, 8, 8, 4);
         monster.equip(WeaponFactory.buildShortSword(0));
         monster.equip(WeaponFactory.buildRoundShield(0));
-        monster.equip(ArmorFactory.buildLeatherPlastron(0));
+        monster.equip(ArmorFactory.buildLeatherVest(0));
         return monster;
     }
 

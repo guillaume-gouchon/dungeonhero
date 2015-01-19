@@ -45,7 +45,14 @@ public abstract class Effect implements Serializable, Cloneable {
     public int getValue() {
         if (target == Characteristics.MOVEMENT) {
             return value + level / 2;
+        } else if (this instanceof DamageEffect) {
+            if (value > 0) {
+                return (int) Math.max(value + 0.2 * value * level, value + level);
+            } else {
+                return (int) Math.min(value + 0.2 * value * level, value - level);
+            }
         }
+
         return (int) Math.max(value + 0.2 * value * level, value + level);
     }
 

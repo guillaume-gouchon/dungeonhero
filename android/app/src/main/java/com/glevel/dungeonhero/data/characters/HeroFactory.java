@@ -58,7 +58,7 @@ public class HeroFactory {
 
     public static Hero buildWizard() {
         Hero hero = new Hero("wizard", Ranks.ME, 14, 14, 6, 10, 14, 4, "wizard", 0, 1, Hero.HeroTypes.SPI);
-        hero.equip(WeaponFactory.buildDagger(0));
+        hero.equip(WeaponFactory.buildWizardStaff(0));
         hero.equip(ArmorFactory.buildRobe(0));
         hero.getSkills().add(SkillFactory.buildFireball());
         hero.getSkills().add(SkillFactory.buildSleep());
