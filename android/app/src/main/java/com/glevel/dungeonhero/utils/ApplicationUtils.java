@@ -10,7 +10,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
@@ -38,12 +41,11 @@ import com.glevel.dungeonhero.R;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class ApplicationUtils {
-
-    private static final String TAG = "ApplicationUtils";
 
     public static final String PREFS_NB_LAUNCHES = "nb_launches";
     public static final String PREFS_RATE_DIALOG_IN = "rate_dialog_in";
@@ -51,6 +53,7 @@ public class ApplicationUtils {
     public static final int NB_LAUNCHES_WITH_SPLASHSCREEN = 8;
     public static final int NB_LAUNCHES_ADVERTISEMENT_1 = 4;
     public static final int NB_LAUNCHES_ADVERTISEMENT_2 = 7;
+    private static final String TAG = "ApplicationUtils";
 
     public static void showRateDialogIfNeeded(final Activity activity) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
@@ -254,6 +257,18 @@ public class ApplicationUtils {
         }
 
         return null;
+    }
+
+    public static Bitmap getBitmapFromAsset(Context context, String imageName) {
+        AssetManager assetManager = context.getAssets();
+        InputStream istr = null;
+        try {
+            istr = assetManager.open(imageName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+        return bitmap;
     }
 
 }

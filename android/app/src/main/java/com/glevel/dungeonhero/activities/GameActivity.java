@@ -432,14 +432,14 @@ public class GameActivity extends MyBaseGameActivity {
                             isHeroic = true;
                             // animate heroic
                             if (effect.getSpriteName() != null) {
-                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.6f, 1.0f, 0, true, 100, null);
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, GameConstants.ANIMATED_SPRITE_ALPHA, 1.0f, 0, true, 100, null);
                             }
                         } else if (effect instanceof CamouflageEffect) {
                             Log.d(TAG, "character is invisible");
                             isHidden = true;
                             // animate invisible
                             if (effect.getSpriteName() != null) {
-                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.6f, 1.0f, 0, true, 100, null);
+                                drawAnimatedSprite(mActiveCharacter.getTilePosition().getTileX(), mActiveCharacter.getTilePosition().getTileY(), effect.getSpriteName(), 50, GameConstants.ANIMATED_SPRITE_ALPHA, 1.0f, 0, true, 100, null);
                             }
                             // test if character is still invisible
                             for (GameElement element : mRoom.getObjects()) {
@@ -453,7 +453,7 @@ public class GameActivity extends MyBaseGameActivity {
                                         mActiveCharacter.getBuffs().remove(effect);
                                         // animate end of invisibility
                                         if (effect.getSpriteName() != null) {
-                                            drawAnimatedSprite(element.getTilePosition().getTileX(), element.getTilePosition().getTileY(), effect.getSpriteName(), 50, 0.6f, 1.0f, 0, true, 100, null);
+                                            drawAnimatedSprite(element.getTilePosition().getTileX(), element.getTilePosition().getTileY(), effect.getSpriteName(), 50, GameConstants.ANIMATED_SPRITE_ALPHA, 1.0f, 0, true, 100, null);
                                         }
                                         break;
                                     }
@@ -631,7 +631,7 @@ public class GameActivity extends MyBaseGameActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "playMusic animation to direction " + doorDirection.name());
+                Log.d(TAG, "start animation to direction " + doorDirection.name());
                 int n = 30;
                 mScene.setX(mScene.getX() + 30 * doorDirection.getDx());
                 mScene.setY(mScene.getY() - 30 * doorDirection.getDy());

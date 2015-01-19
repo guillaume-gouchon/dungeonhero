@@ -28,6 +28,8 @@ public class GameConstants {
     public static final int NB_ITEMS_MAX_IN_BAG = 15;
     public static final int DUNGEON_SIZE = 3;
 
+    public static final float ANIMATED_SPRITE_ALPHA = 0.6f;
+
     public static int getLevelColor(int level) {
         switch (level) {
             case 0:

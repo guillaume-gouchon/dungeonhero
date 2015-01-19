@@ -704,7 +704,7 @@ public class ActionsDispatcher implements UserActionListener {
     public void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating death");
         Sprite sprite = target.getSprite();
-        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, 0.6f, 1.0f, 0, true, 10, new OnActionExecuted() {
+        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, GameConstants.ANIMATED_SPRITE_ALPHA, 1.0f, 0, true, 10, new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
                 if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && (target instanceof Monster || target instanceof Pnj)) {
@@ -886,7 +886,7 @@ public class ActionsDispatcher implements UserActionListener {
 
         // animate
         if (effect.getSpriteName() != null) {
-            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), effect.getSpriteName(), 50, 0.6f, 1.0f, 0, true, 100, null);
+            mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), effect.getSpriteName(), 50, GameConstants.ANIMATED_SPRITE_ALPHA, 1.0f, 0, true, 100, null);
         }
 
         mGUIManager.updateActiveHeroLayout();
@@ -911,7 +911,7 @@ public class ActionsDispatcher implements UserActionListener {
                 public void run() {
                     sprite.walk(Directions.values()[n % 4]);
                     tile = tileIterator.next();
-                    mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), "slash.png", 70, 0.6f, 0.7f, 0, true, 100, null);
+                    mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), "slash.png", 70, GameConstants.ANIMATED_SPRITE_ALPHA, 0.7f, 0, true, 100, null);
                     n--;
                     if (n < 0) {
                         sprite.stand();

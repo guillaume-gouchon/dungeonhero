@@ -84,7 +84,7 @@ public class SplashActivity extends MyActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // playMusic next letter animation and the general bounce effect
+                // start next letter animation and the general bounce effect
                 startNextFallingLetterAnimation();
                 mTitleLayout.startAnimation(mBounceAnimation);
             }

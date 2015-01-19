@@ -13,4 +13,8 @@
     <declare-styleable name="LifeBar">
         <attr name="lifeColor" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="SpriteView">
+        <attr name="spriteName" format="string" />
+    </declare-styleable>
 </resources> 

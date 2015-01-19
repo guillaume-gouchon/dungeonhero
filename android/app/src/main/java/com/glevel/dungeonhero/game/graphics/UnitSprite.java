@@ -10,10 +10,10 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class UnitSprite extends GameElementSprite {
 
+    public static final int SPRITE_ANIM_X = 3, SPRITE_ANIM_Y = 4;
     private static final int STAND_ANIMATION_DURATION = 300;
-    private static final int WALK_ANIMATION_DURATION = 120;
-    private static final int NB_ANIMATIONS = 3;
     private static final long[] STAND_DURATIONS = new long[]{STAND_ANIMATION_DURATION, STAND_ANIMATION_DURATION, STAND_ANIMATION_DURATION, STAND_ANIMATION_DURATION};
+    private static final int WALK_ANIMATION_DURATION = 100;
     private static final long[] WALK_DURATIONS = new long[]{WALK_ANIMATION_DURATION, WALK_ANIMATION_DURATION};
 
     public UnitSprite(GameElement gameElement, VertexBufferObjectManager vertexBufferObjectManager) {
@@ -24,7 +24,7 @@ public class UnitSprite extends GameElementSprite {
 
     public void walk(Directions direction) {
         stopAnimation();
-        animate(WALK_DURATIONS, new int[]{direction.ordinal() * NB_ANIMATIONS, direction.ordinal() * NB_ANIMATIONS + 2}, true);
+        animate(WALK_DURATIONS, new int[]{direction.ordinal() * SPRITE_ANIM_X, direction.ordinal() * SPRITE_ANIM_X + 2}, true);
     }
 
     public void stand() {
@@ -33,6 +33,7 @@ public class UnitSprite extends GameElementSprite {
 
     public void changeOrientation(Directions direction) {
         stopAnimation();
-        animate(STAND_DURATIONS, new int[]{direction.ordinal() * NB_ANIMATIONS, direction.ordinal() * NB_ANIMATIONS + 1, direction.ordinal() * NB_ANIMATIONS, direction.ordinal() * NB_ANIMATIONS + 2}, true);
+        animate(STAND_DURATIONS, new int[]{direction.ordinal() * SPRITE_ANIM_X, direction.ordinal() * SPRITE_ANIM_X + 1, direction.ordinal() * SPRITE_ANIM_X, direction.ordinal() * SPRITE_ANIM_X + 2}, true);
     }
+
 }

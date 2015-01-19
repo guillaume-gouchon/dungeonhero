@@ -100,7 +100,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
         CustomCarousel.Adapter adapter = new BooksAdapter(getApplicationContext(), R.layout.book_chooser_item, mLstBooks, mOnStorySelectedListener);
         carousel.setAdapter(adapter);
 
-        // playMusic message animation
+        // start big message animation
         findViewById(R.id.chooseBookMessage).startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.big_label_in_game));
 
         findViewById(R.id.shop_button).setOnClickListener(this);

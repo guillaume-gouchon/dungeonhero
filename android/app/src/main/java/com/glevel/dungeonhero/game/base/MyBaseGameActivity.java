@@ -86,7 +86,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
         // init game element factory
-        mGraphicsManager = new GraphicsManager(this, getVertexBufferObjectManager(), getTextureManager());
+        mGraphicsManager = new GraphicsManager(this, getTextureManager());
         mGraphicsManager.initGraphics(mGame);
 
         // init sound manager

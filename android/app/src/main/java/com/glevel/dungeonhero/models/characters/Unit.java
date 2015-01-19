@@ -60,7 +60,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
     private Reward reward;
 
     public Unit(String identifier, Ranks rank, int hp, int currentHP, int strength, int dexterity, int spirit, int movement) {
-        super(identifier, rank, 210, 400, 3, 4);
+        super(identifier, rank, 210, 400, UnitSprite.SPRITE_ANIM_X, UnitSprite.SPRITE_ANIM_Y);
         this.hp = hp;
         this.currentHP = currentHP;
         this.strength = strength;

@@ -10,7 +10,6 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,19 +17,17 @@ import java.util.List;
 public class GraphicsManager {
 
     private static final String ASSETS_PATH = "gfx/";
-
+    public static HashMap<String, TiledTextureRegion> sGfxMap = new HashMap<String, TiledTextureRegion>();
     private Context mContext;
     private TextureManager mTextureManager;
 
-    public static HashMap<String, TiledTextureRegion> sGfxMap = new HashMap<String, TiledTextureRegion>();
-
-    public GraphicsManager(Context context, VertexBufferObjectManager vertexBufferObjectManager, TextureManager textureManager) {
+    public GraphicsManager(Context context, TextureManager textureManager) {
         mContext = context;
         mTextureManager = textureManager;
     }
 
     public void initGraphics(Game game) {
-        sGfxMap = new HashMap<String, TiledTextureRegion>();
+        sGfxMap = new HashMap<>();
 
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(ASSETS_PATH);
 

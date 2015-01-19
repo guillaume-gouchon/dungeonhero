@@ -173,13 +173,13 @@ public class Room implements Serializable {
     }
 
     private int getFreeTilesTotal() {
-        return (tiles.length - 7) * (tiles[0].length - 4) - 1;
+        return (tiles.length - 6) * (tiles[0].length - 4) - 1;
     }
 
     public Tile getRandomFreeTile() {
         Tile freeTile;
         do {
-            freeTile = tiles[(int) (3 + Math.random() * (tiles.length - 7))][(int) (2 + Math.random() * (tiles[0].length - 4))];
+            freeTile = tiles[(int) (3 + Math.random() * (tiles.length - 6))][(int) (2 + Math.random() * (tiles[0].length - 4))];
         }
         while (freeTile.getGround() == null || freeTile.getContent() != null || freeTile.getSubContent().size() > 0);
         return freeTile;

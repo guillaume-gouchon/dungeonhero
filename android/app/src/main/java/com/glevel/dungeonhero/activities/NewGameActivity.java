@@ -109,7 +109,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
         CustomCarousel.Adapter heroesAdapter = new HeroesAdapter(this, R.layout.hero_chooser_item, mLstHeroes, mOnHeroSelectedListener);
         heroesCarousel.setAdapter(heroesAdapter);
 
-        // playMusic message animation
+        // start message animation
         findViewById(R.id.chooseHeroMessage).startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.big_label_in_game));
     }
 
