@@ -1,0 +1,84 @@
+@import "compass";
+
+@include font-face("main", font-files("main_font.ttf"));
+
+body {
+	font-family: 'main';
+	color: #eee;
+	padding: 0;
+	margin: 0;
+	background: black;
+}
+
+#bg {
+	z-index: -1;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+}
+
+#main-content {
+	margin: 20px;
+	padding: 20px 30px;
+	background: rgba(0, 0, 0, 0.4);
+	border-radius: 5px;
+	text-shadow: 2px 2px black;
+	text-align: center;
+
+	h1 {
+		font-size: 5.5em;
+		color: white;
+		margin-top: 10px;
+		margin-bottom: 20px;
+		text-shadow: 4px 4px black;
+	}
+
+	img {
+
+		&:hover {
+			opacity: 0.5;
+		}
+	}
+
+	a {
+		text-decoration: none;
+		color: #608fbf;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	#credits {
+		margin-top: 50px;
+	}
+
+	#facebook-page {
+		font-size: 1.7em;
+		margin-top: 40px;
+
+		a:hover > img {
+			opacity: 0.5;
+		}
+
+		img {
+			vertical-align: middle;
+			margin-left: 5px;
+		}
+	}
+}
+
+.fb-like {
+	position: absolute!important;
+	top: 35px;
+	right: 35px;
+}
+
+footer {
+	position: absolute;
+	right: 20px;
+	bottom: 10px;
+	opacity: 0.2;
+}

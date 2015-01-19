@@ -1,0 +1,38 @@
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-width : 320px) 
+and (max-width : 768px) {
+
+  .hide-phone {
+    display: none!important;
+  }
+
+  #bg {
+  	height: 100%;
+  	width: auto;
+  	left: -400px;
+  }
+
+  #main-content {
+
+  	h1 {
+  		font-size: 4em!important;
+  		margin-top: 40px!important;
+  	}
+
+  	#play-store-btn img {
+  		height: auto;
+  		width: 200px;
+  	}
+  }
+
+  #credits {
+  	line-height: 20px;
+  }
+
+  #facebook-page {
+  	font-size: 1.4em!important;
+  	line-height: 40px;
+  }
+
+}
