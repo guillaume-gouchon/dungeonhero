@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.game.gui.ElementDetails;
+import com.glevel.dungeonhero.models.Levelable;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.effects.Effect;
 import com.glevel.dungeonhero.models.effects.PermanentEffect;
@@ -26,6 +27,10 @@ public class ItemInfo extends ElementDetails {
 
     public ItemInfo(Context context, Item item, Hero hero) {
         super(context, item);
+
+        if (item instanceof Levelable) {
+            mNameTV.setText(context.getString(item.getName(mResources)) + (((Levelable) item).getLevel() > 0 ? " +" + ((Levelable) item).getLevel() : ""));
+        }
 
         ViewGroup statsLayout = (ViewGroup) findViewById(R.id.stats);
         ViewGroup requirementsLayout = (ViewGroup) findViewById(R.id.requirements);
