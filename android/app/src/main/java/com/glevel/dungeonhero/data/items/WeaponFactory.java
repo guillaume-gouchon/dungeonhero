@@ -80,6 +80,8 @@ public class WeaponFactory {
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.DEXTERITY, 13, level));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, -20, null, level));
         item.addEffect(new StunEffect("stun.png", Characteristics.STRENGTH, 0, level));
@@ -132,6 +134,7 @@ public class WeaponFactory {
     public static Equipment buildLargeShield(int level) {
         Weapon item = new Weapon("large_shield", 1, 2, level, 220);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 12, level));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, 25, null, level));
         return item;
@@ -141,6 +144,7 @@ public class WeaponFactory {
         Weapon item = new Weapon("long_sword", 3, 6, level, 250);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, level));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, 5, null, level));
         return item;
@@ -170,6 +174,7 @@ public class WeaponFactory {
     public static Equipment buildShuriken(int level) {
         RangeWeapon item = new RangeWeapon("shuriken", 2, 3, level, 160);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
         item.addRequirement(new StatRequirement(Characteristics.DEXTERITY, 12, level));
         item.addEffect(new PermanentEffect(Characteristics.BLOCK, -20, null, level));
         item.addEffect(new PermanentEffect(Characteristics.CRITICAL, 20, null, level));
@@ -226,7 +231,7 @@ public class WeaponFactory {
         return item;
     }
 
-    public static Equipment buildElvenThrowingDagger() {
+    public static Equipment buildElvenThrowingDaggers() {
         Weapon item = new RangeWeapon("elven_throwing_daggers", 2, 5, 0, 500);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.SPI));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));

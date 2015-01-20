@@ -46,7 +46,7 @@ public class HeroFactory {
     }
 
     public static Hero buildElfRanger() {
-        Hero hero = new Hero("elf_ranger", Ranks.ME, 14, 14, 6, 13, 11, 5, "elf_ranger", 0, 1, Hero.HeroTypes.DEX_SPI);
+        Hero hero = new Hero("elf_ranger", Ranks.ME, 16, 16, 6, 13, 11, 5, "elf_ranger", 0, 1, Hero.HeroTypes.DEX_SPI);
         hero.equip(WeaponFactory.buildBow(0));
         hero.equip(ArmorFactory.buildLeatherVest(0));
         hero.getSkills().add(SkillFactory.buildFrostArrow());
@@ -57,7 +57,7 @@ public class HeroFactory {
     }
 
     public static Hero buildWizard() {
-        Hero hero = new Hero("wizard", Ranks.ME, 14, 14, 6, 10, 14, 4, "wizard", 0, 1, Hero.HeroTypes.SPI);
+        Hero hero = new Hero("wizard", Ranks.ME, 16, 16, 6, 10, 14, 4, "wizard", 0, 1, Hero.HeroTypes.SPI);
         hero.equip(WeaponFactory.buildWizardStaff(0));
         hero.equip(ArmorFactory.buildRobe(0));
         hero.getSkills().add(SkillFactory.buildFireball());
@@ -69,7 +69,7 @@ public class HeroFactory {
     }
 
     public static Hero buildDruid() {
-        Hero hero = new Hero("druid", Ranks.ME, 17, 17, 11, 8, 11, 4, "druid", 0, 1, Hero.HeroTypes.STR_SPI);
+        Hero hero = new Hero("druid", Ranks.ME, 18, 18, 11, 8, 11, 4, "druid", 0, 1, Hero.HeroTypes.STR_SPI);
         hero.equip(WeaponFactory.buildWizardStaff(0));
         hero.equip(ArmorFactory.buildLeatherVest(0));
         hero.getSkills().add(SkillFactory.buildParalysingPlants());
@@ -80,7 +80,7 @@ public class HeroFactory {
     }
 
     public static Hero buildThief() {
-        Hero hero = new Hero("thief", Ranks.ME, 18, 18, 8, 14, 8, 5, "thief", 0, 1, Hero.HeroTypes.DEX);
+        Hero hero = new Hero("thief", Ranks.ME, 20, 20, 8, 14, 8, 5, "thief", 0, 1, Hero.HeroTypes.DEX);
         hero.equip(WeaponFactory.buildDagger(0));
         hero.equip(ArmorFactory.buildLeatherVest(0));
         hero.getSkills().add(SkillFactory.buildCamouflage());

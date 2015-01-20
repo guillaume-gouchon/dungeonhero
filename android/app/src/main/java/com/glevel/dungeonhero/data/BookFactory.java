@@ -99,7 +99,7 @@ public class BookFactory {
 
         // chapter 2
         events = new ArrayList<>();
-        events.add(new Event.Builder(false).addReward(new Reward(WeaponFactory.buildElvenThrowingDagger())).build());
+        events.add(new Event.Builder(false).addReward(new Reward(WeaponFactory.buildElvenThrowingDaggers())).build());
         events.add(new Event.Builder(true).addPnj(PNJFactory.buildXsar()).addMonster(MonsterFactory.buildTroll()).build());
         book.addChapter(new Chapter("wizard_chapter_2_intro", "wizard_chapter_2_outro", events));
 

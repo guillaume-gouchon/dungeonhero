@@ -69,6 +69,7 @@ public class GameActivity extends MyBaseGameActivity {
     private Room mRoom;
     private Unit mActiveCharacter;
     private ActionsDispatcher mActionDispatcher;
+    private Tile mTurnStartTile;
 
     @Override
     protected void initGameActivity() {
@@ -281,6 +282,8 @@ public class GameActivity extends MyBaseGameActivity {
                             case EQUIP:
                                 mHero.equip((Equipment) item);
                                 mGUIManager.updateBag(mHero);
+                                // update reachable targets
+                                updateActionTiles();
                                 break;
 
                             case DROP:
@@ -292,6 +295,7 @@ public class GameActivity extends MyBaseGameActivity {
                             case DRINK:
                                 mGUIManager.hideBag();
                                 drinkPotion((Potion) item);
+                                updateActionTiles();
                                 break;
                         }
                     }
@@ -504,6 +508,7 @@ public class GameActivity extends MyBaseGameActivity {
                     return;
                 }
 
+                mTurnStartTile = mActiveCharacter.getTilePosition();
                 updateActionTiles();
                 mActionDispatcher.hideElementInfo();
                 mGUIManager.updateActiveHeroLayout();
@@ -575,9 +580,9 @@ public class GameActivity extends MyBaseGameActivity {
                 mActionDispatcher.hideActionTiles();
 
                 if (mRoom.isSafe()) {
-                    mActionDispatcher.showActions();
+                    mActionDispatcher.showSpecialActions();
                 } else {
-                    mActionDispatcher.showMovement();
+                    mActionDispatcher.showAllActions(mTurnStartTile);
                 }
                 Log.d(TAG, "updating action tiles is done");
                 mActionDispatcher.setInputEnabled(!mActiveCharacter.isEnemy(mHero));

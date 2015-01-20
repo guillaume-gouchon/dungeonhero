@@ -71,7 +71,7 @@ public class MonsterFactory {
     public static Monster buildOgreKing() {
         Monster monster = new Monster("ogre_king", 28, 28, 16, 10, 10, 4);
         monster.equip(WeaponFactory.buildBattleAxe(1));
-        monster.equip(ArmorFactory.buildChainMail(0));
+        monster.equip(ArmorFactory.buildChainmail(0));
         return monster;
     }
 

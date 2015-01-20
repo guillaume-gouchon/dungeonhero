@@ -56,7 +56,7 @@ public class PotionFactory {
     }
 
     public static Potion buildHealingPotion() {
-        Potion item = new Potion("healing_potion", new DamageEffect(null, 10, 0), 50);
+        Potion item = new Potion("healing_potion", new DamageEffect(null, 15, 0), 50);
         return item;
     }
 

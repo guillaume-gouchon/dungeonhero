@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.models.characters;
 
 
 import com.glevel.dungeonhero.data.items.PotionFactory;
+import com.glevel.dungeonhero.data.items.WeaponFactory;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;

@@ -119,7 +119,7 @@ public class ActionsDispatcher implements UserActionListener {
                             @Override
                             public void run() {
                                 hideActionTiles();
-                                showActions();
+                                showSpecialActions();
                                 selectTile(null);
                             }
                         });
@@ -182,7 +182,7 @@ public class ActionsDispatcher implements UserActionListener {
                             enterStairs();
                         } else if (mGameActivity.getRoom().isSafe()) {
                             hideActionTiles();
-                            showActions();
+                            showSpecialActions();
                         }
                     }
                 }
@@ -198,7 +198,7 @@ public class ActionsDispatcher implements UserActionListener {
 
     private void enterStairs() {
         hideActionTiles();
-        showActions();
+        showSpecialActions();
 
         mGameActivity.runOnUiThread(new Runnable() {
             @Override
@@ -478,6 +478,77 @@ public class ActionsDispatcher implements UserActionListener {
         }
     }
 
+    private void showElementInfo(GameElement gameElement) {
+        mSelectedElement = gameElement;
+        mGameActivity.mSelectionCircle.attachToGameElement(gameElement);
+        mGUIManager.showGameElementInfo(gameElement);
+    }
+
+    public void hideElementInfo() {
+        mSelectedElement = null;
+        mGameActivity.mSelectionCircle.unAttach();
+        mGUIManager.hideGameElementInfo(mGameActivity.getRoom().isSafe());
+        selectTile(null);
+    }
+
+    public void showAllActions(Tile fromTile) {
+        Unit activeCharacter = mGameActivity.getActiveCharacter();
+
+        // get reachable tiles
+        Set<Tile> reachableTiles = new HashSet<>();
+        Tile t;
+        for (Tile[] hTile : mGameActivity.getRoom().getTiles()) {
+            for (Tile tile : hTile) {
+                if (tile != null && !reachableTiles.contains(tile) && MathUtils.calcManhattanDistance(tile, fromTile) <= activeCharacter.calculateMovement()
+                        && activeCharacter.canMoveIn(tile)) {
+                    List<Tile> path = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), fromTile, tile, false, activeCharacter);
+                    if (path != null) {
+                        for (int n = 0; n < path.size(); n++) {
+                            t = path.get(n);
+                            if (n <= activeCharacter.calculateMovement()) {
+                                reachableTiles.add(t);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // add movement tiles
+        ActionTile c;
+        for (Tile tile : reachableTiles) {
+            tile.setAction(Actions.MOVE);
+            c = new ActionTile(Actions.MOVE, tile, mGameActivity.getVertexBufferObjectManager(), activeCharacter.getRank() != Ranks.ME);
+            mGameActivity.mGroundLayer.attachChild(c);
+        }
+
+        // add special actions
+        if (activeCharacter.getRank() == Ranks.ME) {
+            showSpecialActions();
+        }
+    }
+
+    public void showSpecialActions() {
+        for (GameElement gameElement : mGameActivity.getRoom().getObjects()) {
+            if (mGameActivity.getActiveCharacter() != gameElement
+                    && ((mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement() + 1)
+                    || mGameActivity.getActiveCharacter().isRangeAttack() && gameElement.isEnemy(mGameActivity.getActiveCharacter()))) {
+                addAvailableAction(gameElement);
+            }
+        }
+    }
+
+    public void hideActionTiles() {
+        mSelectedTile = null;
+        ActionTile actionTile;
+        for (int n = 0; n < mGameActivity.mGroundLayer.getChildCount(); n++) {
+            actionTile = (ActionTile) mGameActivity.mGroundLayer.getChildByIndex(n);
+            actionTile.getTile().setAction(null);
+            actionTile.getTile().setSelected(false);
+        }
+        mGameActivity.mGroundLayer.detachChildren();
+    }
+
     private void addAvailableAction(GameElement gameElement) {
         boolean isActionPossible = mGameActivity.getRoom().isSafe() || mGameActivity.getActiveCharacter().isNextTo(gameElement.getTilePosition())
                 || mGameActivity.getActiveCharacter().isRangeAttack() && gameElement.isEnemy(mGameActivity.getActiveCharacter());
@@ -506,73 +577,6 @@ public class ActionsDispatcher implements UserActionListener {
         ActionTile actionTile = new ActionTile(action, tile, mGameActivity.getVertexBufferObjectManager(), false);
         tile.setAction(action);
         mGameActivity.mGroundLayer.attachChild(actionTile);
-    }
-
-    private void showElementInfo(GameElement gameElement) {
-        mSelectedElement = gameElement;
-        mGameActivity.mSelectionCircle.attachToGameElement(gameElement);
-        mGUIManager.showGameElementInfo(gameElement);
-    }
-
-    public void hideElementInfo() {
-        mSelectedElement = null;
-        mGameActivity.mSelectionCircle.unAttach();
-        mGUIManager.hideGameElementInfo(mGameActivity.getRoom().isSafe());
-        selectTile(null);
-    }
-
-    public void showMovement() {
-        // get reachable tiles
-        Set<Tile> reachableTiles = new HashSet<>();
-        Tile t;
-        for (Tile[] hTile : mGameActivity.getRoom().getTiles()) {
-            for (Tile tile : hTile) {
-                if (tile != null && !reachableTiles.contains(tile) && MathUtils.calcManhattanDistance(tile, mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement()
-                        && mGameActivity.getActiveCharacter().canMoveIn(tile)) {
-                    List<Tile> path = new AStar<Tile>().search(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), tile, false, mGameActivity.getActiveCharacter());
-                    if (path != null) {
-                        for (int n = 0; n < path.size(); n++) {
-                            t = path.get(n);
-                            if (n <= mGameActivity.getActiveCharacter().calculateMovement()) {
-                                reachableTiles.add(t);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        ActionTile c;
-        for (Tile tile : reachableTiles) {
-            tile.setAction(Actions.MOVE);
-            c = new ActionTile(Actions.MOVE, tile, mGameActivity.getVertexBufferObjectManager(), mGameActivity.getActiveCharacter().getRank() != Ranks.ME);
-            mGameActivity.mGroundLayer.attachChild(c);
-        }
-
-        if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
-            showActions();
-        }
-    }
-
-    public void showActions() {
-        for (GameElement gameElement : mGameActivity.getRoom().getObjects()) {
-            if (mGameActivity.getActiveCharacter() != gameElement
-                    && ((mGameActivity.getRoom().isSafe() || MathUtils.calcManhattanDistance(gameElement.getTilePosition(), mGameActivity.getActiveCharacter().getTilePosition()) <= mGameActivity.getActiveCharacter().calculateMovement() + 1)
-                    || mGameActivity.getActiveCharacter().isRangeAttack() && gameElement.isEnemy(mGameActivity.getActiveCharacter()))) {
-                addAvailableAction(gameElement);
-            }
-        }
-    }
-
-    public void hideActionTiles() {
-        mSelectedTile = null;
-        ActionTile actionTile;
-        for (int n = 0; n < mGameActivity.mGroundLayer.getChildCount(); n++) {
-            actionTile = (ActionTile) mGameActivity.mGroundLayer.getChildByIndex(n);
-            actionTile.getTile().setAction(null);
-            actionTile.getTile().setSelected(false);
-        }
-        mGameActivity.mGroundLayer.detachChildren();
     }
 
     private void animateMove(List<Tile> path, final OnActionExecuted callback) {

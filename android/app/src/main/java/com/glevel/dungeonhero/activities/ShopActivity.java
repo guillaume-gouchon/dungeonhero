@@ -244,20 +244,22 @@ public class ShopActivity extends MyActivity implements OnClickListener {
             mItemInfoDialog = new ItemInfoInShop(this, item, mGame.getHero(), isSelling, new ItemInfoInShop.OnItemActionSelected() {
                 @Override
                 public void onActionExecuted(ItemInfoInShop.ItemActionsInShop action) {
-                    Dialog confirmationDialog = new CustomAlertDialog(ShopActivity.this, R.style.Dialog, getString(R.string.transaction_confirmation), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            if (which == R.id.ok_btn) {
-                                if (isSelling) {
-                                    sellItem(item);
-                                } else {
-                                    buyItem(item);
+                    Dialog confirmationDialog = new CustomAlertDialog(ShopActivity.this, R.style.Dialog,
+                            getString(R.string.transaction_confirmation, getString(isSelling ? R.string.sell : R.string.buy), getString(item.getName(getResources()))),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    if (which == R.id.ok_btn) {
+                                        if (isSelling) {
+                                            sellItem(item);
+                                        } else {
+                                            buyItem(item);
+                                        }
+                                        mItemInfoDialog.dismiss();
+                                    }
                                 }
-                                mItemInfoDialog.dismiss();
-                            }
-                        }
-                    });
+                            });
                     confirmationDialog.show();
                 }
             });

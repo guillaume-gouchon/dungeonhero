@@ -173,7 +173,7 @@ public class GUIManager {
                             // show outro text
                             if (activeBook.getActiveChapter().getOutroText(mResources) > 0) {
                                 showIntrospection(mGameActivity.getGame().getBook().getActiveChapter().getOutroText(mResources),
-                                        hasNextChapter ? R.string.go_to_next_floor : R.string.finish_adventure,
+                                        hasNextChapter ? R.string.go_to_next_floor : R.string.finish_quest,
                                         new OnActionExecuted() {
                                             @Override
                                             public void onActionDone(boolean success) {

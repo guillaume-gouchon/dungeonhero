@@ -22,7 +22,7 @@ public class ArmorFactory {
             case 2:
                 return buildLeatherPlastron(level);
             case 3:
-                return buildChainMail(level);
+                return buildChainmail(level);
             case 4:
                 return buildLamellar(level);
             default:
@@ -59,10 +59,12 @@ public class ArmorFactory {
         return item;
     }
 
-    public static Armor buildChainMail(int level) {
-        Armor item = new Armor("chain_mail", 3, level, 350);
+    public static Armor buildChainmail(int level) {
+        Armor item = new Armor("chainmail", 3, level, 350);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 10, level));
         return item;
     }
@@ -79,6 +81,7 @@ public class ArmorFactory {
     public static Armor buildBreastPlate(int level) {
         Armor item = new Armor("breast_plate", 5, level, 450);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
+        item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 15, level));
         item.addEffect(new PermanentEffect(Characteristics.DODGE, -20, null, level));
         item.addEffect(new PermanentEffect(Characteristics.MOVEMENT, -1, null, level));
