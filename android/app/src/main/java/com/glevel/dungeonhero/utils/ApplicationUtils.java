@@ -202,7 +202,7 @@ public class ApplicationUtils {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         int nbLaunches = prefs.getInt(PREFS_NB_LAUNCHES, 0);
         Log.d(TAG, "nb launches = " + nbLaunches);
-        if ((nbLaunches == NB_LAUNCHES_ADVERTISEMENT_1 || nbLaunches == NB_LAUNCHES_ADVERTISEMENT_2) && !isAppInstalled(activity, "com.giggs.apps.chaos")) {
+        if (nbLaunches == NB_LAUNCHES_ADVERTISEMENT_1 || nbLaunches == NB_LAUNCHES_ADVERTISEMENT_2) {
             Log.d(TAG, "show advertisement");
             Dialog mAdvertisementDialog = new Dialog(activity, R.style.Dialog);
             mAdvertisementDialog.setCancelable(true);

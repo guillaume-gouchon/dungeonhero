@@ -16,8 +16,8 @@
     <color name="bg_popup_btn">#111</color>
     <color name="bg_popup_btn_pressed">#222</color>
 
-    <color name="link">#aabbbbbb</color>
-    <color name="link_pressed">#aa999999</color>
+    <color name="link">#155A73</color>
+    <color name="link_pressed">#aa155A73</color>
 
     <color name="text_discussion_answer_pressed">#77A867</color>
     <color name="green">#84dd38</color>
@@ -28,9 +28,6 @@
     <color name="darkGreen">#5A9626</color>
     <color name="blue">#6BB3D6</color>
     <color name="bg_game_menu">#aa000000</color>
-
-    <color name="advertisement_link_highlight">#155A73</color>
-    <color name="advertisement_link">#155A73</color>
 
     <color name="bg_level_0">#aa000000</color>
     <color name="bg_level_1">#aaEDEA39</color>

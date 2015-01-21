@@ -120,7 +120,7 @@
     <string name="game_paused">Pause</string>
     <string name="resume_game">Resume Game</string>
     <string name="leave_quest">Leave Quest</string>
-    <string name="confirm_leave_quest">Are you sure you want to leave this quest ?\n\n<i>(you will come back to the adventure screen)</i></string>
+    <string name="confirm_leave_quest">Are you sure you want to leave this quest\u00A0?\n\n<i>(you will come back to the adventure screen)</i></string>
     <string name="confirm_finish_quest">Are you sure you want to leave this dungeon floor\u00A0?</string>
     <string name="riddle_answer_input">your answer...</string>
     <string name="game_master">Game Master</string>
@@ -336,7 +336,7 @@
     <string name="initiation_tutorial_movement">When there are no enemies, tap on any tile to move to it.\nDuring fight mode, the reachable tiles are enlightened in green; you have to tap on your character to finish your turn.</string>
     <string name="initiation_tutorial_search">To search for treasures, to talk to characters, or to attack an enemy, you\'ll first need to select your target and then to tap on it again to validate the interaction.\nIn fight mode, it will end your turn.</string>
     <string name="initiation_tutorial_fight">Tap the bag button to show your inventory. Equipments are from level 0 to level 6, each level has its own color following this order : black, yellow, orange, red, green, blue, and purple.\n\nUse the best equipment you find and don\'t forget to use your potions in order to fight evil safely.\n\nFinally, some items may not be suitable with the type of your hero and so would be written in red.</string>
-    <string name="initiation_tutorial_skills">You also have skills to help you in your quests.\nLike equipment, skills have levels and colors corresponding to it.\nSkills can only be used once every dungeon floor, try to keep them for the most dangerous room...\n\nDo you want I tell you some more tips ?</string>
+    <string name="initiation_tutorial_skills">You also have skills to help you in your quests.\nLike equipment, skills have levels and colors corresponding to it.\nSkills can only be used once every dungeon floor, try to keep them for the most dangerous room...\n\nDo you want I tell you some more tips\u00A0?</string>
     <string name="initiation_tutorial_tips">Experience is primordial : new levels will increase your health points, characteristics and will give you skill points to improve or to learn new skills.\n\nConcerning weapons, remember not to fight with range weapons in close combat, and try to use a shield with your second arm cause a weapon will deal less damage with this arm.</string>
     <string name="initiation_tutorial_outro">Aaargh, so it is time for me now...</string>
     <string name="initiation_tutorial_outro_reward">Thanks for that... Take this Potion of Force to help you in your next fights... May the force be with you... Aaaaargh...</string>
@@ -345,8 +345,8 @@
     <string name="initiation_die_weak">Die, you are so weak compared to me\u00A0!\n<i>(finish him)</i></string>
     <string name="initiation_pray">I\'ll pray for you, mighty warrior.</string>
     <string name="initiation_quest_girl">Lubrice</string>
-    <string name="initiation_girl_1">Who are you ? Are you here to save me ?</string>
-    <string name="initiation_girl_1_answer_1">Why would I save you ?</string>
+    <string name="initiation_girl_1">Who are you\u00A0? Are you here to save me\u00A0?</string>
+    <string name="initiation_girl_1_answer_1">Why would I save you\u00A0?</string>
     <string name="initiation_girl_1_answer_2">Yes, your father sent me here to rescue you</string>
     <string name="initiation_girl_1_answer_3">No, I\'ll just steal your gold and leave\u00A0!</string>
     <string name="initiation_girl_11">We are poor farmers, we don\'t have much to give you...</string>
@@ -363,16 +363,16 @@
 
     <!-- Sons of Vanark -->
     <string name="sons_quest">Sons of Vanark</string>
-    <string name="sons_intro">A group of bandits known as Sons of Vanark is terrorizing the village of Gundin. Led by Vanark, a mighty chaos warrior, they regularly attack and rob the villagers, riding some tall and noisy horses.\n\nGundin\'s mayor offered you 250 gold coins if you manage to put them out of harm.\n\nAfter a few hours of walking through the nearby forests, you finally find the entrance of their lair, ready to stop their dreadful wrongdoing.</string>
+    <string name="sons_intro">A group of bandits known as Sons of Vanark is terrorizing the village of Gundin. Led by Vanark, a mighty chaos warrior, they regularly attack and rob the villagers, riding some tall and noisy horses.\n\nGundin\'s mayor is offering you 250 gold coins if you manage to put them out of harm.\n\nAfter a few hours of walking through the nearby forests, you finally find the entrance of their lair, ready to stop their dreadful wrongdoing.</string>
     <string name="sons_outro">The town of Gundin is now safe thanks to you\u00A0!\n\nThe mayor gave you the 250 gold coins at your return, advising you to not spend everything at the tavern\u00A0!</string>
     <string name="tiggy">Tiggy</string>
     <string name="dark_elven_dagger">Dark Elven Dagger</string>
     <string name="dark_elven_dagger_description">A Dark Elven poisonous black blade.</string>
     <string name="tiggy_1">Who the hell are you\u00A0?</string>
     <string name="tiggy_1_answer_1">I am the new mechanician</string>
-    <string name="tiggy_1_answer_2">I am your deepest fear !</string>
+    <string name="tiggy_1_answer_2">I am your deepest fear\u00A0!</string>
     <string name="tiggy_1_answer_3">I am here for business. Where is your boss\u00A0?</string>
-    <string name="tiggy_11">Ah ? Alright so you must be able to tell me which village is our next target\u00A0?</string>
+    <string name="tiggy_11">Ah\u00A0? Alright so you must be able to tell me which village is our next target\u00A0?</string>
     <string name="tiggy_11_wrong">Ahah, such a bad liar\u00A0! Prepare to die\u00A0!</string>
     <string name="tiggy_11_wrong_answer_1">You first</string>
     <string name="tiggy_11_right">Good, take that and bring it to Vanark. He is waiting for you downstairs.</string>
@@ -387,32 +387,32 @@
     <string name="sons_chapter_1_outro">I am missing the tavern...\nLet\'s finish this quest quickly\u00A0!</string>
     <string name="sons_chapter_2_outro">Nothing can stop me\u00A0!\nLet\'s head back to Gundin.</string>
     <string name="vanark">Vanark</string>
-    <string name="vanark_1">Who dares disturbing Vanark the Great\'s rest ? Get you ass ready to be kicked\u00A0!</string>
-    <string name="vanark_1_answer_1">For Gundin !</string>
-    <string name="vanark_1_answer_2">For the Greater Good !</string>
-    <string name="vanark_1_answer_3">For the Profit !</string>
+    <string name="vanark_1">Who dares disturbing the rest of  Vanark the Great\u00A0? Get you ass ready to be kicked\u00A0!</string>
+    <string name="vanark_1_answer_1">For Gundin\u00A0!</string>
+    <string name="vanark_1_answer_2">For the Greater Good\u00A0!</string>
+    <string name="vanark_1_answer_3">For the Profit\u00A0!</string>
 
     <!-- The Balrog -->
     <string name="balrog_quest">The Balrog\'s Lair</string>
-    <string name="balrog_intro">Last night at the tavern, you were as usual playing dice and losing all your gold when one of your opponents proposed you a deal to get back what was yours (including your sword and your horse... yes, you lost a lot !).\n\n"All you have to do is to get rid of a monster living in a cave nearby Gundin" did he tell you, an easy task for you !\nThe problem is that you accepted the deal before the bar tenant warns you that the monster was a  mighty Balrog...</string>
-    <string name="balrog_outro">Happy to be still alive, you went back to Gundin and celebrated your victory over evil (and what a victory) at the tavern. Will you play dice again ?</string>
+    <string name="balrog_intro">Last night at the tavern, you were as usual playing dice and losing all your gold when one of your opponents proposed you a deal to get back what was yours (including your sword and your horse... yes, you lost a lot that night\u00A0!).\n\n\'All you have to do is to get rid of a monster living in a cave not far from here\' did he tell you, an easy task for you\u00A0!\nThe problem is that you accepted the deal before the bar tenant warns you that the monster was a  mighty Balrog...</string>
+    <string name="balrog_outro">Happy to be still alive, you went back to Gundin and celebrated your victory over evil (and what a victory) at the tavern. Will you play dice again\u00A0?</string>
     <string name="white_wizard">The White Wizard</string>
-    <string name="white_wizard_1">What is greater than God,\nmore evil than the devil,\nthe poor have it,\nthe rich need it,\nand if you eat it, you\'ll die?</string>
+    <string name="white_wizard_1">What is greater than God,\nmore evil than the devil,\nthe poor have it,\nthe rich need it,\nand if you eat it, you\'ll die\u00A0?</string>
     <string name="white_wizard_2">Feed me and I live, yet give me a drink and I die.\n\nWho am I\u00A0?</string>
-    <string name="white_wizard_3">If you have me, you want to share me.\nIf you share me, you haven\'t got me.\n\nWhat am I?</string>
+    <string name="white_wizard_3">If you have me, you want to share me.\nIf you share me, you haven\'t got me.\n\nWhat am I\u00A0?</string>
     <string name="white_wizard_right">Good. Find the other me.</string>
     <string name="white_wizard_wrong">You are wrong my friend... Farewell</string>
     <string name="white_wizard_right_final">Good answer. I have no more riddle to ask you...</string>
-    <string name="white_wizard_right_reward">It appears that you succeeded at all my riddles. Take this as a reward. I hope this item will help you during your next adventures.</string>
+    <string name="white_wizard_right_reward">It appears that you have answered right to all my riddles. Take this as a reward. I hope this item will help you during your next adventures.</string>
     <string name="white_wizard_wrong_answer">Damn\u00A0!</string>
     <string name="mithril_armor">Mithril Armor</string>
     <string name="mithril_armor_description">A mithril armor forged by the dwarves a few centuries ago. It is light and very protective.</string>
-    <string name="balrog_chapter_1_intro">Do I really have to do this quest ?\nBalrogs are for adventurers which are at least level 200 !</string>
+    <string name="balrog_chapter_1_intro">Do I really have to accomplish this quest\u00A0?\nBalrogs are for adventurers which are at least level 200\u00A0!</string>
     <string name="balrog_chapter_1_outro">Such a strange White Wizard, I am sure I have already seen him somewhere...</string>
     <string name="balrog_chapter_2_intro">I can smell the Balrog\'s magic from there...</string>
-    <string name="balrog_chapter_2_outro">Ok, let\'s tell everyone that I defeated a real Balrog... Maybe should I fake some scares on my face ?</string>
+    <string name="balrog_chapter_2_outro">Ok, let\'s tell everyone that I defeated a real Balrog... Maybe should I fake some scares on my face\u00A0?</string>
     <string name="balrog">Balrog the Goblin</string>
-    <string name="balrog_1">Waaaaaaaaaagh\u00A0!\n\nWhat ? What did you expect ? The developer did not have the budget for a Balrog sprite... you know what it is, indie gaming... \n\nI am Balrog the goblin, what can I do for you\u00A0?</string>
+    <string name="balrog_1">Waaaaaaaaaagh\u00A0!\n\nWhat\u00A0? What did you expect\u00A0? The developer did not have the budget for a Balrog sprite... you know what it is, indie gaming... \n\nI am Balrog the goblin, what can I do for you\u00A0?</string>
     <string name="balrog_1_answer_1">Die mighty demon\u00A0!</string>
     <string name="balrog_1_answer_2">I heard that goblins know how to play tavern games...</string>
     <string name="balrog_12">You\'re right\u00A0! I am the best dice player of all the area, that\'s why tavern people hate me\u00A0!\n\nI hope you were not sent there by some angry losers to kill me, were you\u00A0?</string>
@@ -428,35 +428,35 @@
 
     <!-- Old Wizard's Quest -->
     <string name="wizard_quest">The Quest of the Strange Old Man</string>
-    <string name="wizard_intro">As your are finishing your pint and hailing the innkeeper for the next one, a strange old man wearing a long black cloak is sitting at your table.\n\nAfter some talking, it appears that he is Xsar, the famous wizard, and that he is looking for some special ingredients, a rare species of mushrooms, in order to brew a potion.\n\nAfter pointing out on your map the location, he proposes you 200 gold coins for this simple quest.</string>
+    <string name="wizard_intro">As you are finishing your pint and hailing the innkeeper for the next one, a strange old man wearing a long black cloak is sitting at your table.\n\nAfter some talking, it appears that he is Xsar, the famous wizard, and that he is looking for some special ingredients, a rare species of mushrooms, in order to brew a potion.\n\nAfter pointing out on your map the location, he proposes you 200 gold coins for this simple quest.</string>
     <string name="wizard_outro"></string>
     <string name="wizard_chapter_1_intro">A strange place to find some mushrooms...</string>
     <string name="wizard_chapter_1_outro">There must be rare species of mushrooms in this cave. Everyone seems to be looking for them.</string>
-    <string name="wizard_chapter_2_outro">Why do I only meet insane people in this village ?</string>
+    <string name="wizard_chapter_2_outro">Why do I only meet insane people in this village\u00A0?</string>
     <string name="elven_throwing_daggers">Elven Throwing Dagger</string>
     <string name="elven_throwing_daggers_description">This dagger is soaked with a powerful poison.</string>
     <string name="minsk">Minsk</string>
     <string name="minsk_1">Another adventurer here\u00A0? This is MY quest\u00A0!</string>
     <string name="minsk_1_answer_1">Ok, let\'s fight then...</string>
     <string name="montaron">Montaron</string>
-    <string name="montaron_1">Ahah ! You really thought I was not violent and crazy\u00A0?</string>
+    <string name="montaron_1">Ahah\u00A0! You really thought I was not violent and crazy\u00A0?</string>
     <string name="montaron_1_answer_1">I just wanted to talk...</string>
     <string name="xsar">Xsar the Fool</string>
-    <string name="xsar_1">Good evening adventurer !\nIn fact, I was not looking for mushrooms as my special recipe; YOU will be my special recipe\u00A0!</string>
+    <string name="xsar_1">Good evening adventurer\u00A0!\nIn fact, I was not looking for mushrooms as my special recipe; YOU will be my special recipe\u00A0!</string>
     <string name="xsar_1_answer_1">Reminder for myself : avoid this kind of mushrooms...</string>
 
     <!-- The Partnership -->
     <string name="partnership_quest">Brothers in Arms</string>
-    <string name="partnership_intro">You were just arriving at the inn when a tavern fight occured. Not this time, you told to yourself, and you headed directly to the bar.\n\nSuddendly a man rushed at you but you managed to get him on the ground.\n\'Damn, you are the kind of person I need ! Nice to meet you, I am Link\', he told you.\nHe then convinced you, in exchange of some ales, to follow him into the dungeon of the Lord of Doom, a powerful undead creature.\n\nYou finally agreed on a 50-50 deal on the loot and started the adventure...</string>
+    <string name="partnership_intro">You were just arriving at the inn when a tavern fight occured. Not this time, you told to yourself, and you headed directly to the bar.\n\nSuddenly a man rushed at you but you managed to get him on the ground.\n\'Damn, you are the kind of person I need\u00A0! Nice to meet you, I am Link\', he told you.\nHe then convinced you, in exchange of some ales, to follow him into the dungeon of the Lord of Doom, a powerful undead creature.\n\nYou finally agreed on a 50-50 deal on the loot and started the adventure...</string>
     <string name="partnership_outro"></string>
-    <string name="partnership_chapter_1_intro">It is just the start of the quest, and Link has already gone solo... Let\'s find him !</string>
-    <string name="partnership_chapter_2_outro">Next time I\'ll do it on my own, I have done the most part of the job !</string>
+    <string name="partnership_chapter_1_intro">It is just the start of the quest, and Link has already gone solo... Let\'s find him\u00A0!</string>
+    <string name="partnership_chapter_2_outro">Next time I\'ll do it on my own, I have done the most part of the job\u00A0!</string>
     <string name="link">Link</string>
-    <string name="link_1">Come help me ! I am out-numbered !</string>
-    <string name="link_1_answer_1">I am here !</string>
-    <string name="link_2">Thanks for the little help !</string>
+    <string name="link_1">Come help me\u00A0! I am out-numbered\u00A0!</string>
+    <string name="link_1_answer_1">I am here\u00A0!</string>
+    <string name="link_2">Thanks for the little help\u00A0!</string>
     <string name="link_2_answer_1">No worries...</string>
-    <string name="link_3">Sorry I have already emptied this treasure chest ! You\'ll take the next one (if any...)</string>
+    <string name="link_3">Sorry I have already emptied this treasure chest\u00A0! You\'ll take the next one (if any...)</string>
     <string name="link_3_answer_1"><i>(get angry)</i></string>
     <string name="link_4">It was a cool Quest, no\u00A0? Did you enjoy it\u00A0?</string>
     <string name="link_4_answer_1">All the dungeons look alike...</string>
@@ -471,21 +471,21 @@
     <string name="zelda_11"><i>(the princess gives you a kiss)</i>\n\nIt is always working with adventurers\u00A0!\nNo need to propose them gold.</string>
     <string name="zelda_11_answer_1">Damn...</string>
     <string name="zelda_12">Oh... you are far more clever than the other guy who keeps saving me usually...\n\nYou are right, nothing is free in this world, here is your gold.</string>
-    <string name="zelda_12_answer_1">The poor Princess trick cannot work all the time ! Please stay safe for once.</string>
+    <string name="zelda_12_answer_1">The poor Princess trick cannot work all the time\u00A0! Please stay safe for once.</string>
     <string name="doom_lord">Lord of Doom</string>
     <string name="doom_lord_1">Eaaaattttiiiiiing... Braaaaaaaain...</string>
-    <string name="doom_lord_1_answer_1">I have none of this ! Charge !</string>
+    <string name="doom_lord_1_answer_1">I have none of this\u00A0! Charge\u00A0!</string>
     <string name="doom_lord_1_answer_2">It is not good for the breath...</string>
 
     <!-- The Dreamer must awake -->
     <string name="dreamer_quest">The Dreamer must awake</string>
-    <string name="dreamer_intro">You are awakening in a jail surrounded of glass.\n\nA few seconds later, you are in a dungeon which looks familiar to you...\n\nThen, people you may know arrive silently around you and disappear... What is it all about ?</string>
-    <string name="dreamer_outro">You finally awaken at the table of the inn, your half empty glass of beer waiting for you.\n\nIt was just a dream, yes, only a strange dream...\n\nLastly, you take the decision not to drink this type of Ale anymore !</string>
+    <string name="dreamer_intro">You are awakening in a jail surrounded of glass.\n\nA few seconds later, you are in a dungeon which looks familiar to you...\n\nThen, people you may know arrive silently around you and disappear... What is it all about\u00A0?</string>
+    <string name="dreamer_outro">You finally awaken at the table of the inn, your half empty glass of beer waiting for you.\n\nIt was just a dream, yes, only a strange dream...\n\nLastly, you take the decision not to drink this type of Ale anymore\u00A0!</string>
     <string name="dreamer_chapter_1_intro">I must escape this dream.\nI can feel something strange in it... maybe magic.</string>
-    <string name="dreamer_chapter_2_intro">When would I wake up ?</string>
+    <string name="dreamer_chapter_2_intro">When would I wake up\u00A0?</string>
     <string name="dreamer_ghost_1">...</string>
     <string name="dreamer_ghost_1_answer_1">...</string>
     <string name="zangdar">Zangdar the Great</string>
     <string name="zangdar_1">You are the first one to go as deep into its own nightmare.\n\nYou are asleep now, do you really think you can beat me\u00A0?</string>
-    <string name="zangdar_1_answer_1">Go away from my mind, evil wizard !</string>
+    <string name="zangdar_1_answer_1">Go away from my mind, evil wizard\u00A0!</string>
 </resources>

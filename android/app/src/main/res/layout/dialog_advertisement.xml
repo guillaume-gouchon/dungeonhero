@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/advertisement"
-        android:textColorHighlight="@color/advertisement_link_highlight"
-        android:textColorLink="@color/advertisement_link"
+        android:textColorHighlight="@color/link_pressed"
+        android:textColorLink="@color/link"
         android:drawablePadding="10dp"
         android:textSize="20sp"
-        android:drawableTop="@drawable/ic_advert" />
+        android:drawableTop="@drawable/ic_advert"
+        android:drawableBottom="@drawable/ic_facebook" />
 </RelativeLayout>
