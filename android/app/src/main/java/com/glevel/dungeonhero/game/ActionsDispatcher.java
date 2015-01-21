@@ -664,9 +664,9 @@ public class ActionsDispatcher implements UserActionListener {
         // animate characters
         final Directions direction = Directions.from(targetSprite.getX() - attackerSprite.getX(), targetSprite.getY() - attackerSprite.getY());
         attackerSprite.changeOrientation(Directions.from(targetSprite.getX() - attackerSprite.getX(), attackerSprite.getY() - targetSprite.getY()));
-        animationHandler = new TimerHandler(1.0f / 45, true, new ITimerCallback() {
+        animationHandler = new TimerHandler(1.0f / 50, true, new ITimerCallback() {
 
-            private static final int DURATION_IN_FRAMES = 20;
+            private static final int DURATION_IN_FRAMES = 17;
             private static final int OFFSET = 5;
             private static final float ATTACKER_SPEED = 3f;
             private static final float TARGET_SPEED = 1.2f;
