@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="30dp">
 
         <com.glevel.dungeonhero.views.CustomButton
             android:id="@+id/retry_btn"

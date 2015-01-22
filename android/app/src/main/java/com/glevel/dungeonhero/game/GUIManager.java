@@ -150,7 +150,6 @@ public class GUIManager {
                             Intent intent = new Intent(mGameActivity, BookChooserActivity.class);
                             mGameActivity.getGame().setHero(mHero);
                             intent.putExtra(Game.class.getName(), mGameActivity.getGame());
-
                             mGameActivity.startActivity(intent);
                             mGameActivity.finish();
                         }

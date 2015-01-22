@@ -91,7 +91,7 @@
     <string name="replay">Replay</string>
 
     <!-- Game Over -->
-    <string name="retry">Retry</string>
+    <string name="retry">Retry floor</string>
     <string name="exit">Exit</string>
     <string name="game_over_title">Game Over</string>
 

@@ -11,7 +11,6 @@ import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
-import com.glevel.dungeonhero.utils.MusicManager;
 
 public class GameOverActivity extends MyActivity implements View.OnClickListener {
 
@@ -42,7 +41,7 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
     private void setupUI() {
         mStormsBg = (ImageView) findViewById(R.id.storms);
 
-        View retryButton = findViewById(R.id.retryButton);
+        View retryButton = findViewById(R.id.retry_btn);
         retryButton.setOnClickListener(this);
         retryButton.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bottom_in));
 
@@ -74,15 +73,18 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
-            case R.id.retryButton:
-                Intent intent = new Intent(this, GameActivity.class);
+            case R.id.retry_btn:
+                intent = new Intent(this, GameActivity.class);
                 intent.putExtra(Game.class.getName(), mGame);
                 startActivity(intent);
                 finish();
                 break;
             case R.id.exit_btn:
-                startActivity(new Intent(this, HomeActivity.class));
+                intent = new Intent(this, BookChooserActivity.class);
+                intent.putExtra(Game.class.getName(), mGame);
+                startActivity(intent);
                 finish();
                 break;
         }
