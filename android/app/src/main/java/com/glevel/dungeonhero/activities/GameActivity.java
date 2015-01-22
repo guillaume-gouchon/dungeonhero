@@ -79,7 +79,7 @@ public class GameActivity extends MyBaseGameActivity {
         } else {
             // TODO : used fot testing only
             mGame = new Game();
-            mGame.setHero(HeroFactory.buildElfRanger());
+            mGame.setHero(HeroFactory.buildDwarfWarrior());
             mGame.setBook(BookFactory.buildVanarkBook());
         }
 

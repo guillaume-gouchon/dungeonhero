@@ -157,7 +157,9 @@ public class ShopActivity extends MyActivity implements OnClickListener {
             Item item;
             for (int n = 0; n < NUMBER_OFFERS; n++) {
                 do {
-                    if (n >= NUMBER_OFFERS - 2) {
+                    if (n >= NUMBER_OFFERS - 1) {
+                        item = PotionFactory.buildHealingPotion();
+                    } else if (n >= NUMBER_OFFERS - 2) {
                         item = PotionFactory.getRandomPotion();
                     } else {
                         item = ItemFactory.getRandomItem(mGame.getHero().getLevel());

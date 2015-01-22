@@ -66,142 +66,150 @@
                 android:text="@string/settings" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/settingsLayout"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:focusable="false"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:layout_centerInParent="true">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:id="@+id/settingsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
-                <com.glevel.dungeonhero.views.CustomButton
-                    android:id="@+id/aboutButton"
-                    style="@style/SettingsButton"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:text="@string/about" />
+                    android:orientation="vertical">
 
-                <com.glevel.dungeonhero.views.CustomButton
-                    android:id="@+id/rateButton"
-                    style="@style/SettingsButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:text="@string/rate_app" />
+                    <com.glevel.dungeonhero.views.CustomButton
+                        android:id="@+id/aboutButton"
+                        style="@style/SettingsButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="@string/about" />
 
-                <com.glevel.dungeonhero.views.CustomButton
-                    android:id="@+id/shareButton"
-                    style="@style/SettingsButton"
-                    android:layout_width="match_parent"
+                    <com.glevel.dungeonhero.views.CustomButton
+                        android:id="@+id/rateButton"
+                        style="@style/SettingsButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="@string/rate_app" />
+
+                    <com.glevel.dungeonhero.views.CustomButton
+                        android:id="@+id/shareButton"
+                        style="@style/SettingsButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="@string/share" />
+                </LinearLayout>
+
+                <com.glevel.dungeonhero.views.CustomTitle
+                    style="@style/SettingsLabel"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:text="@string/share" />
+                    android:layout_marginTop="12dp"
+                    android:text="@string/music_volume" />
+
+                <RadioGroup
+                    android:id="@+id/musicVolume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.glevel.dungeonhero.views.CustomRadioButton
+                        android:id="@+id/musicOff"
+                        style="@style/RadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:text="@string/music_off" />
+
+                    <com.glevel.dungeonhero.views.CustomRadioButton
+                        android:id="@+id/musicOn"
+                        style="@style/RadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/music_on" />
+                </RadioGroup>
+
+                <com.glevel.dungeonhero.views.CustomTitle
+                    style="@style/SettingsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/screen_orientation" />
+
+                <RadioGroup
+                    android:id="@+id/landscapeMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.glevel.dungeonhero.views.CustomRadioButton
+                        android:id="@+id/portrait"
+                        style="@style/RadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:text="@string/portrait" />
+
+                    <com.glevel.dungeonhero.views.CustomRadioButton
+                        android:id="@+id/landcape"
+                        style="@style/RadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/landscape" />
+                </RadioGroup>
+
+                <com.glevel.dungeonhero.views.CustomTitle
+                    style="@style/SettingsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/music_type" />
+
+                <RadioGroup
+                    android:id="@+id/musicType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.glevel.dungeonhero.views.CustomRadioButton
+                        android:id="@+id/symphonic"
+                        style="@style/RadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:text="@string/symphonic" />
+
+                    <com.glevel.dungeonhero.views.CustomRadioButton
+                        android:id="@+id/metal"
+                        style="@style/RadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/metal" />
+                </RadioGroup>
             </LinearLayout>
-
-            <com.glevel.dungeonhero.views.CustomTitle
-                style="@style/SettingsLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/music_volume" />
-
-            <RadioGroup
-                android:id="@+id/musicVolume"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <com.glevel.dungeonhero.views.CustomRadioButton
-                    android:id="@+id/musicOff"
-                    style="@style/RadioButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:text="@string/music_off" />
-
-                <com.glevel.dungeonhero.views.CustomRadioButton
-                    android:id="@+id/musicOn"
-                    style="@style/RadioButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/music_on" />
-            </RadioGroup>
-
-            <com.glevel.dungeonhero.views.CustomTitle
-                style="@style/SettingsLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/screen_orientation" />
-
-            <RadioGroup
-                android:id="@+id/landscapeMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <com.glevel.dungeonhero.views.CustomRadioButton
-                    android:id="@+id/portrait"
-                    style="@style/RadioButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:text="@string/portrait" />
-
-                <com.glevel.dungeonhero.views.CustomRadioButton
-                    android:id="@+id/landcape"
-                    style="@style/RadioButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/landscape" />
-            </RadioGroup>
-
-            <com.glevel.dungeonhero.views.CustomTitle
-                style="@style/SettingsLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/music_type" />
-
-            <RadioGroup
-                android:id="@+id/musicType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <com.glevel.dungeonhero.views.CustomRadioButton
-                    android:id="@+id/symphonic"
-                    style="@style/RadioButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:text="@string/symphonic" />
-
-                <com.glevel.dungeonhero.views.CustomRadioButton
-                    android:id="@+id/metal"
-                    style="@style/RadioButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/metal" />
-            </RadioGroup>
-        </LinearLayout>
+        </ScrollView>
 
         <com.glevel.dungeonhero.views.CustomButton
             android:id="@+id/backButton"
