@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Reward;
+import com.glevel.dungeonhero.models.items.equipments.Equipment;
 
 /**
  * Created by guillaume on 1/14/15.
@@ -33,7 +34,12 @@ public class RewardDialog extends Dialog {
         } else {
             if (reward.getItem() != null) {
                 // add item
-                String itemName = context.getString(reward.getItem().getName(context.getResources()));
+                String itemName;
+                if (reward.getItem() instanceof Equipment) {
+                    itemName = ((Equipment) reward.getItem()).getNameWithLevel(context);
+                } else {
+                    itemName = context.getString(reward.getItem().getName(context.getResources()));
+                }
                 boolean isAn = itemName.startsWith("a") || itemName.startsWith("e") || itemName.startsWith("i") || itemName.startsWith("o") || itemName.startsWith("u");
                 itemTV.setText(context.getString(isAn ? R.string.found_item_an : R.string.found_item_a, itemName));
                 itemTV.setCompoundDrawablesWithIntrinsicBounds(0, reward.getItem().getImage(context.getResources()), 0, 0);

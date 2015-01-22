@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.models.items.equipments;
 
+import android.content.Context;
+
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Levelable;
 import com.glevel.dungeonhero.models.effects.Effect;
@@ -15,7 +17,7 @@ import java.util.List;
 public abstract class Equipment extends Item implements Levelable {
 
     private static final long serialVersionUID = 662104930156421984L;
-    
+
     private final List<Effect> effects = new ArrayList<Effect>();
     private final List<Requirement> requirements = new ArrayList<Requirement>();
     protected final int level;
@@ -61,6 +63,10 @@ public abstract class Equipment extends Item implements Levelable {
     @Override
     public int getLevel() {
         return level;
+    }
+
+    public String getNameWithLevel(Context context) {
+        return context.getString(getName(context.getResources())) + (level > 0 ? "\u00A0+" + level : "");
     }
 
 }
