@@ -56,8 +56,10 @@ public class LoadGamesAdapter extends CursorAdapter {
             @Override
             protected void onPostExecute(Game game) {
                 super.onPostExecute(game);
-                viewHolder.title.setText(game.getHero().getHeroName());
-                viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(mContext.getResources()), 0, 0, 0);
+                if (game != null) {
+                    viewHolder.title.setText(game.getHero().getHeroName());
+                    viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(mContext.getResources()), 0, 0, 0);
+                }
             }
         }.execute();
     }
@@ -67,7 +69,7 @@ public class LoadGamesAdapter extends CursorAdapter {
         if (cursor != null && cursor.moveToPosition(position)) {
             return Game.fromCursor(cursor);
         }
-        throw new ArrayIndexOutOfBoundsException();
+        return null;
     }
 
 }
