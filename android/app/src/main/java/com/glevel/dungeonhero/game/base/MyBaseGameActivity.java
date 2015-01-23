@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
-import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.game.GUIManager;
 import com.glevel.dungeonhero.game.GameConstants;
@@ -16,7 +15,7 @@ import com.glevel.dungeonhero.game.andengine.custom.CustomZoomCamera;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.UserActionListener;
 import com.glevel.dungeonhero.models.Game;
-import com.glevel.dungeonhero.utils.database.DatabaseHelper;
+import com.glevel.dungeonhero.providers.MyContentProvider;
 
 import org.andengine.engine.camera.ZoomCamera;
 import org.andengine.engine.handler.IUpdateHandler;
@@ -35,7 +34,6 @@ import org.andengine.util.color.Color;
 
 public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implements UserActionListener, View.OnClickListener {
 
-    protected DatabaseHelper mDbHelper;
     protected SharedPreferences mSharedPrefs;
 
     protected boolean mDoSaveGame = true;
@@ -66,7 +64,6 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        mDbHelper = new MyDatabase(getApplicationContext());
 
         // init GUI
         mGUIManager = new GUIManager(this);
@@ -148,15 +145,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
             mSoundEffectManager.onPause();
         }
         if (mDoSaveGame) {
-            mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).save(mGame);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mDbHelper != null) {
-            mDbHelper.close();
+            getContentResolver().insert(MyContentProvider.URI_GAMES, mGame.toContentValues());
         }
     }
 

@@ -1,9 +1,11 @@
 package com.glevel.dungeonhero.activities;
 
 import android.app.Dialog;
+import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -13,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.MyActivity;
-import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.BooksAdapter;
 import com.glevel.dungeonhero.data.BookFactory;
@@ -21,11 +22,11 @@ import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.gui.GameMenu;
 import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.providers.MyContentProvider;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.utils.billing.InAppBillingHelper;
 import com.glevel.dungeonhero.utils.billing.OnBillingServiceConnectedListener;
-import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.CustomCarousel;
 
@@ -34,7 +35,6 @@ import java.util.List;
 public class BookChooserActivity extends MyActivity implements OnBillingServiceConnectedListener, OnClickListener {
 
     private Game mGame;
-    private DatabaseHelper mDbHelper;
     private InAppBillingHelper mInAppBillingHelper;
     private List<Book> mLstBooks;
     private SharedPreferences mSharedPrefs;
@@ -71,13 +71,12 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
         setContentView(R.layout.activity_book_chooser);
 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        mDbHelper = new MyDatabase(getApplicationContext());
 
         // retrieve active game
         mGame = (Game) getIntent().getExtras().getSerializable(Game.class.getName());
         mGame.setDungeon(null);
-        long gameId = mDbHelper.getRepository(MyDatabase.Repositories.GAME.toString()).save(mGame);
-        mGame.setId(gameId);
+        Uri gameUri = getContentResolver().insert(MyContentProvider.URI_GAMES, mGame.toContentValues());
+        mGame.setId(ContentUris.parseId(gameUri));
 
         // retrieve books
         mLstBooks = BookFactory.getAll();
@@ -130,7 +129,7 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     protected void onPause() {
         super.onPause();
 
-        mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).save(mGame);
+        getContentResolver().insert(MyContentProvider.URI_GAMES, mGame.toContentValues());
 
         mStormsBg.removeCallbacks(mStormEffect);
 

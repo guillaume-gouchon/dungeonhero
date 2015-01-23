@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,21 +22,17 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.MyActivity;
-import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.fragments.LoadGameFragment;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.providers.MyContentProvider;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
-import com.glevel.dungeonhero.utils.database.DatabaseHelper;
 
-import java.util.List;
-
-public class HomeActivity extends MyActivity implements OnClickListener, LoadGameFragment.OnFragmentClosed {
+public class HomeActivity extends MyActivity implements OnClickListener, LoadGameFragment.FragmentCallbacks {
 
     private SharedPreferences mSharedPrefs;
-    private DatabaseHelper mDbHelper;
 
     /**
      * UI
@@ -58,7 +55,6 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         setContentView(R.layout.activity_home);
 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        mDbHelper = new MyDatabase(getApplicationContext());
 
         setupUI();
 
@@ -69,16 +65,16 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
     }
 
     private void retrieveLoadGames() {
-        new AsyncTask<Void, Void, List<Game>>() {
+        new AsyncTask<Void, Void, Cursor>() {
             @Override
-            protected List<Game> doInBackground(Void... params) {
-                return mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).get(new String[]{Game.COLUMN_ID}, null, null, null, "1");
+            protected Cursor doInBackground(Void... params) {
+                return getContentResolver().query(MyContentProvider.URI_GAMES, new String[]{Game.COLUMN_ID}, null, null, Game.COLUMN_ID + " LIMIT 1");
             }
 
             @Override
-            protected void onPostExecute(List<Game> games) {
+            protected void onPostExecute(Cursor games) {
                 super.onPostExecute(games);
-                mLoadGameButton.setEnabled(games.size() > 0);
+                mLoadGameButton.setEnabled(games.getCount() > 0);
             }
         }.execute();
     }
@@ -91,12 +87,6 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         if (mAboutDialog != null) {
             mAboutDialog.dismiss();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mDbHelper.close();
     }
 
     @Override

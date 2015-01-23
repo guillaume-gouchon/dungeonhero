@@ -54,6 +54,7 @@
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="achievements">Trophees</string>
+    <string name="loading_saved_games">Loading...</string>
 
     <!-- Settings -->
     <string name="music_volume">Music / Sound</string>

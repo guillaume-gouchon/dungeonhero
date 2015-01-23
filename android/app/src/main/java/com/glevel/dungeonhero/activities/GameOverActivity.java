@@ -7,15 +7,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.glevel.dungeonhero.MyActivity;
-import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.providers.MyContentProvider;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 public class GameOverActivity extends MyActivity implements View.OnClickListener {
 
     private Game mGame;
-    private MyDatabase mDbHelper;
 
     /**
      * UI
@@ -30,12 +29,14 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
 
         setupUI();
 
-        mDbHelper = new MyDatabase(getApplicationContext());
-
         mGame = (Game) getIntent().getSerializableExtra(Game.class.getName());
+
+        // reset game to start of this chapter
         mGame.setDungeon(null);
         mGame.getBook().getActiveChapter().resetChapter();
-        mDbHelper.getRepository(MyDatabase.Repositories.GAME.toString()).save(mGame);
+
+        // save game
+        getContentResolver().insert(MyContentProvider.URI_GAMES, mGame.toContentValues());
     }
 
     private void setupUI() {

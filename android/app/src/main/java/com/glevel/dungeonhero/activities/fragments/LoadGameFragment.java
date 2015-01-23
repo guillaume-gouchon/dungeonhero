@@ -1,28 +1,34 @@
 package com.glevel.dungeonhero.activities.fragments;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.glevel.dungeonhero.MyDatabase;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.adapters.LoadGamesAdapter;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.providers.MyContentProvider;
 import com.glevel.dungeonhero.utils.MusicManager;
 
-import java.util.List;
+public class LoadGameFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-public class LoadGameFragment extends DialogFragment {
+    private static final String TAG = "LoadGameFragment";
+    private static final int GET_LOAD_GAMES = 1;
 
     /**
      * Callbacks
@@ -30,30 +36,25 @@ public class LoadGameFragment extends DialogFragment {
     private final ListView.OnItemClickListener mOnItemClickedListener = new ListView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            // retrieve game whole object
-            long gameId = mSavedGamesList.get(position).getId();
-            Game game = (Game) mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).getById(gameId);
+            Game game = Game.fromCursor(getActivity().getContentResolver().query(MyContentProvider.URI_GAMES, null, Game.COLUMN_ID + "=?", new String[]{"" + mAdapter.getElementAt(position).getId()}, null));
             launchGame(game);
         }
     };
 
-    private OnFragmentClosed mListener;
     private ListView mGamesListView;
+    private FragmentCallbacks mListener;
     private LoadGamesAdapter mAdapter;
-    private MyDatabase mDbHelper;
-    private List<com.glevel.dungeonhero.models.Game> mSavedGamesList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_TITLE, 0); // remove title from dialog fragment
-        mDbHelper = new MyDatabase(getActivity());
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mListener = (OnFragmentClosed) activity;
+        mListener = (FragmentCallbacks) activity;
     }
 
     @Override
@@ -77,8 +78,7 @@ public class LoadGameFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mSavedGamesList = mDbHelper.getRepository(MyDatabase.Repositories.GAME.name()).get(new String[]{Game.COLUMN_ID, Game.Columns.HERO.name()}, null, null, null, null);
-        mAdapter = new LoadGamesAdapter(getActivity(), mSavedGamesList);
+        mAdapter = new LoadGamesAdapter(getActivity());
         mGamesListView.setAdapter(mAdapter);
     }
 
@@ -89,15 +89,34 @@ public class LoadGameFragment extends DialogFragment {
         mGamesListView = (ListView) layout.findViewById(R.id.gamesList);
         mGamesListView.setOnItemClickListener(mOnItemClickedListener);
 
+        getLoaderManager().initLoader(GET_LOAD_GAMES, null, this);
+
         return layout;
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // null out the group cursor. This will cause the group cursor and all
-        // of the child cursors to be closed.
-        mAdapter = null;
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case GET_LOAD_GAMES:
+                return new CursorLoader(getActivity().getApplicationContext(), MyContentProvider.URI_GAMES, new String[]{Game.COLUMN_ID, Game.Columns.HERO.name()}, null, null, null);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        Log.d(TAG, "Loader finished");
+        if (mAdapter != null && cursor != null) {
+            mAdapter.swapCursor(cursor);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        Log.d(TAG, "Loader reset");
+        if (mAdapter != null) {
+            mAdapter.swapCursor(null);
+        }
     }
 
     private void launchGame(Game game) {
@@ -114,8 +133,10 @@ public class LoadGameFragment extends DialogFragment {
         getActivity().finish();
     }
 
-    public static interface OnFragmentClosed {
+    public static interface FragmentCallbacks {
+
         public void OnFragmentClosed();
+
     }
 
 }

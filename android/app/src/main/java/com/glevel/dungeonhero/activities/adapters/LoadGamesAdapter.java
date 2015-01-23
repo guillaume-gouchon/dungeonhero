@@ -1,48 +1,73 @@
 package com.glevel.dungeonhero.activities.adapters;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Game;
 
-import java.util.List;
-
-public class LoadGamesAdapter extends ArrayAdapter<Game> {
+public class LoadGamesAdapter extends CursorAdapter {
 
     private Context mContext;
     private final LayoutInflater mInflater;
-    private List<Game> mSavedGames;
 
-    public LoadGamesAdapter(FragmentActivity activity, List<Game> savedCampaigns) {
-        super(activity, R.layout.load_game_list_item);
-        mContext = activity.getApplicationContext();
-        mSavedGames = savedCampaigns;
-        mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public LoadGamesAdapter(Context context) {
+        super(context, null, 0);
+        mContext = context;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public int getCount() {
-        return mSavedGames.size();
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return mInflater.inflate(R.layout.load_game_list_item, parent, false);
+    }
+
+    private static class ViewHolder {
+        TextView title;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.load_game_list_item, null);
+    public void bindView(View view, Context context, Cursor cursor) {
+        final ViewHolder viewHolder;
+        if (view.getTag(R.string.viewholder) == null) {
+            viewHolder = new ViewHolder();
+            viewHolder.title = (TextView) view.findViewById(R.id.text);
+            view.setTag(R.string.viewholder, viewHolder);
+        } else {
+            viewHolder = (ViewHolder) view.getTag(R.string.viewholder);
         }
 
-        Game game = mSavedGames.get(position);
+        viewHolder.title.setText(R.string.loading_saved_games);
+        viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_loading, 0, 0, 0);
 
-        TextView title = (TextView) convertView.findViewById(R.id.text);
-        title.setText(game.getHero().getHeroName());
-        title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(mContext.getResources()), 0, 0, 0);
-        return convertView;
+        final int position = cursor.getPosition();
+        new AsyncTask<Void, Void, Game>() {
+            @Override
+            protected Game doInBackground(Void... params) {
+                return getElementAt(position);
+            }
+
+            @Override
+            protected void onPostExecute(Game game) {
+                super.onPostExecute(game);
+                viewHolder.title.setText(game.getHero().getHeroName());
+                viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(mContext.getResources()), 0, 0, 0);
+            }
+        }.execute();
+    }
+
+    public Game getElementAt(int position) {
+        Cursor cursor = getCursor();
+        if (cursor.moveToPosition(position)) {
+            return Game.fromCursor(cursor);
+        }
+        throw new ArrayIndexOutOfBoundsException();
     }
 
 }

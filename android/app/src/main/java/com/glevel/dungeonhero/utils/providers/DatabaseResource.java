@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.utils.database;
+package com.glevel.dungeonhero.utils.providers;
 
 import android.content.ContentValues;
 
@@ -22,6 +22,6 @@ public abstract class DatabaseResource implements Serializable {
         this.id = id;
     }
 
-    public abstract ContentValues getContentValues();
+    public abstract ContentValues toContentValues();
 
 }

@@ -6,7 +6,6 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -213,8 +212,7 @@ public class GUIManager {
                 Bundle args = new Bundle();
                 args.putInt(StoryFragment.ARGUMENT_STORY, activeBook.getOutroText(mResources));
                 args.putBoolean(StoryFragment.ARGUMENT_IS_OUTRO, true);
-                DialogFragment storyFragment = new StoryFragment();
-                ApplicationUtils.openDialogFragment(mGameActivity, storyFragment, args);
+                ApplicationUtils.openDialogFragment(mGameActivity, new StoryFragment(), args);
             } else {
                 // go directly to the book chooser
                 Intent intent = new Intent(mGameActivity, BookChooserActivity.class);

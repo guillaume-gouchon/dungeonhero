@@ -10,8 +10,8 @@ import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.game.graphics.SpriteHolder;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
-import com.glevel.dungeonhero.utils.database.ByteSerializer;
-import com.glevel.dungeonhero.utils.database.DatabaseResource;
+import com.glevel.dungeonhero.utils.providers.ByteSerializerHelper;
+import com.glevel.dungeonhero.utils.providers.DatabaseResource;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +25,8 @@ import java.util.Map;
 public class Game extends DatabaseResource {
 
     public static final String TABLE_NAME = "game";
+    public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY, " + Columns.HERO + " BLOB, " + Columns.BOOKS_DONE +
+            " BLOB, " + Columns.BOOK + " BLOB, " + Columns.DUNGEON + " BLOB);";
 
     private Book book;
     private Map<Integer, Integer> booksDone = new HashMap<>();
@@ -36,38 +38,30 @@ public class Game extends DatabaseResource {
         game.setId(cursor.getLong(0));
 
         if (cursor.getColumnCount() > 1) {
-            game.setHero((Hero) ByteSerializer.getObjectFromByte(cursor.getBlob(1)));
+            game.setHero((Hero) ByteSerializerHelper.getObjectFromByte(cursor.getBlob(1)));
             if (cursor.getColumnCount() > 2) {
-                game.setBooksDone((Map<Integer, Integer>) ByteSerializer.getObjectFromByte(cursor.getBlob(2)));
+                game.setBooksDone((Map<Integer, Integer>) ByteSerializerHelper.getObjectFromByte(cursor.getBlob(2)));
                 if (cursor.getBlob(3) != null) {
-                    game.setBook((Book) ByteSerializer.getObjectFromByte(cursor.getBlob(3)));
+                    game.setBook((Book) ByteSerializerHelper.getObjectFromByte(cursor.getBlob(3)));
                 }
                 if (cursor.getBlob(4) != null) {
-                    game.setDungeon((Dungeon) ByteSerializer.getObjectFromByte(cursor.getBlob(4)));
+                    game.setDungeon((Dungeon) ByteSerializerHelper.getObjectFromByte(cursor.getBlob(4)));
                 }
             }
         }
         return game;
     }
 
-    public static String[] getDatabaseCreationStatements() {
-        return new String[]{
-                "DROP TABLE IF EXISTS " + TABLE_NAME + ";",
-                "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY, " + Columns.HERO + " BLOB, " + Columns.BOOKS_DONE +
-                        " BLOB, " + Columns.BOOK + " BLOB, " + Columns.DUNGEON + " BLOB);"
-        };
-    }
-
     @Override
-    public ContentValues getContentValues() {
+    public ContentValues toContentValues() {
         ContentValues content = new ContentValues(Columns.values().length + 1);
         if (id > 0) {
             content.put(Game.COLUMN_ID, id);
         }
-        content.put(Columns.HERO.toString(), ByteSerializer.toByteArray(hero));
-        content.put(Columns.BOOKS_DONE.toString(), ByteSerializer.toByteArray((Serializable) booksDone));
-        content.put(Columns.BOOK.toString(), ByteSerializer.toByteArray(book));
-        content.put(Columns.DUNGEON.toString(), ByteSerializer.toByteArray(dungeon));
+        content.put(Columns.HERO.toString(), ByteSerializerHelper.toByteArray(hero));
+        content.put(Columns.BOOKS_DONE.toString(), ByteSerializerHelper.toByteArray((Serializable) booksDone));
+        content.put(Columns.BOOK.toString(), ByteSerializerHelper.toByteArray(book));
+        content.put(Columns.DUNGEON.toString(), ByteSerializerHelper.toByteArray(dungeon));
         return content;
     }
 
@@ -96,7 +90,7 @@ public class Game extends DatabaseResource {
     }
 
     public void finishBook() {
-        // if score is better
+        // update score if better
         if (booksDone.get(book.getId()) == null || book.getCurrentScore() > booksDone.get(book.getId())) {
             booksDone.put(book.getId(), book.getCurrentScore());
         }

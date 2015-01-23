@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.utils.database;
+package com.glevel.dungeonhero.utils.providers;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,7 +8,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class ByteSerializer {
+public class ByteSerializerHelper {
 
     /**
      * Gets an object from a byte array.
