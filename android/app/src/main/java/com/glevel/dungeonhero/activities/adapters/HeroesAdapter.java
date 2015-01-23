@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.game.base.GraphicsManager;
 import com.glevel.dungeonhero.game.gui.ElementDetails;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.skills.Skill;
@@ -38,7 +39,7 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
 
         ((TextView) layout.findViewById(R.id.name)).setText(hero.getName(mResources));
         ((SpriteView) layout.findViewById(R.id.image)).setImageResource(hero.getImage(mResources));
-        ((SpriteView) layout.findViewById(R.id.image)).setSpriteName("gfx/" + hero.getIdentifier() + ".png");
+        ((SpriteView) layout.findViewById(R.id.image)).setSpriteName(GraphicsManager.ASSETS_PATH + hero.getIdentifier() + ".png");
         ((TextView) layout.findViewById(R.id.description)).setText(hero.getDescription(mResources));
         ((TextView) layout.findViewById(R.id.strength)).setText("" + hero.getStrength());
         ((TextView) layout.findViewById(R.id.dexterity)).setText("" + hero.getDexterity());

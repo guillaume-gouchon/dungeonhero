@@ -64,7 +64,7 @@ public class LoadGamesAdapter extends CursorAdapter {
 
     public Game getElementAt(int position) {
         Cursor cursor = getCursor();
-        if (cursor.moveToPosition(position)) {
+        if (cursor != null && cursor.moveToPosition(position)) {
             return Game.fromCursor(cursor);
         }
         throw new ArrayIndexOutOfBoundsException();

@@ -13,16 +13,20 @@ public class CustomEditText extends EditText {
 
     public CustomEditText(Context context) {
         super(context);
-        setTypeface(font);
+        init();
     }
 
     public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setTypeface(font);
+        init();
     }
 
     public CustomEditText(Context context, AttributeSet attrs, int style) {
         super(context, attrs, style);
+        init();
+    }
+
+    private void init() {
         setTypeface(font);
     }
 

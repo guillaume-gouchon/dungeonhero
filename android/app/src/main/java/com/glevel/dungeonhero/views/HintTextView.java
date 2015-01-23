@@ -21,15 +21,15 @@ public class HintTextView extends TextView implements View.OnClickListener {
 
     public HintTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0);
+        init(context, attrs);
     }
 
     public HintTextView(Context context, AttributeSet attrs, int style) {
         super(context, attrs, style);
-        init(context, attrs, style);
+        init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs, int style) {
+    private void init(Context context, AttributeSet attrs) {
         setTypeface(font);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HintTextView);

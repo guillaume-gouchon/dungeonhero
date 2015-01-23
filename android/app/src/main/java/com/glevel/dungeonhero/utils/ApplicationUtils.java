@@ -39,6 +39,8 @@ import com.glevel.dungeonhero.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -193,6 +195,7 @@ public class ApplicationUtils {
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
+            Log.d(TAG, "cannot find application " + uri);
         }
         return false;
     }
@@ -260,14 +263,41 @@ public class ApplicationUtils {
 
     public static Bitmap getBitmapFromAsset(Context context, String imageName) {
         AssetManager assetManager = context.getAssets();
-        InputStream istr = null;
+        InputStream inputStream = null;
         try {
-            istr = assetManager.open(imageName);
+            inputStream = assetManager.open(imageName);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Bitmap bitmap = BitmapFactory.decodeStream(istr);
-        return bitmap;
+        return BitmapFactory.decodeStream(inputStream);
+    }
+
+    public static void saveToLocalFile(Context context, String filename, Object content) {
+        try {
+            FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(content);
+            oos.flush();
+            oos.close();
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object readFromLocalFile(Context context, String fileName) {
+        try {
+            FileInputStream fis = context.openFileInput(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Object object = ois.readObject();
+            ois.close();
+            fis.close();
+            return object;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

@@ -77,7 +77,7 @@ public class GameActivity extends MyBaseGameActivity {
         if (extras != null && extras.getSerializable(Game.class.getName()) != null) {
             mGame = (Game) extras.getSerializable(Game.class.getName());
         } else {
-            // TODO : used fot testing only
+            // used fot testing only
             mGame = new Game();
             mGame.setHero(HeroFactory.buildDwarfWarrior());
             mGame.setBook(BookFactory.buildVanarkBook());
@@ -91,7 +91,7 @@ public class GameActivity extends MyBaseGameActivity {
             chapter.createDungeon();
             mGame.setDungeon(chapter.getDungeon());
 
-            // copy hero object for reset dungeon after gameover
+            // copy hero object for reset dungeon after game-over
             mHero = (Hero) ApplicationUtils.deepCopy(mGame.getHero());
 
             mDungeon = mGame.getDungeon();
@@ -360,6 +360,7 @@ public class GameActivity extends MyBaseGameActivity {
         OnActionExecuted callback = new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
+                // in the introduction quest
                 if (mGame.getBook().getActiveChapter().getIntroText(getResources()) > 0) {
                     OnActionExecuted callback = new OnActionExecuted() {
                         @Override
@@ -373,7 +374,10 @@ public class GameActivity extends MyBaseGameActivity {
                                         break;
                                     }
                                 }
-                                mActionDispatcher.talk(tutoCharacter.getTilePosition());
+                                
+                                if (tutoCharacter != null) {
+                                    mActionDispatcher.talk(tutoCharacter.getTilePosition());
+                                }
                             }
                         }
                     };

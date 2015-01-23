@@ -13,11 +13,15 @@ public class CustomRadioButton extends RadioButton {
 
     public CustomRadioButton(Context context) {
         super(context);
-        setTypeface(font);
+        init();
     }
 
     public CustomRadioButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    private void init() {
         setTypeface(font);
     }
 

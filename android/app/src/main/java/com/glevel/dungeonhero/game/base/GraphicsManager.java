@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GraphicsManager {
 
-    private static final String ASSETS_PATH = "gfx/";
+    public static final String ASSETS_PATH = "gfx/";
     public static HashMap<String, TiledTextureRegion> sGfxMap = new HashMap<String, TiledTextureRegion>();
     private Context mContext;
     private TextureManager mTextureManager;

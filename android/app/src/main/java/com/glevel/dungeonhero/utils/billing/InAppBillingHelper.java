@@ -118,7 +118,7 @@ public class InAppBillingHelper {
                 PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
                 if (pendingIntent != null) {
                     mActivity.startIntentSenderForResult(pendingIntent.getIntentSender(), BILLING_REQUEST_CODE,
-                            new Intent(), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0));
+                            new Intent(), 0, 0, 0);
                 } else {
                     Log.d(TAG, "pendingIntent is null");
                 }

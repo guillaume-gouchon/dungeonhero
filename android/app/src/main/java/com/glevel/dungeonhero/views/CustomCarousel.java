@@ -89,9 +89,8 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
     @Override
     public void onPageSelected(int position) {
-        int realPosition = position;
         for (int n = 0; n < mPaginationDots.length; n++) {
-            if (realPosition == n || realPosition >= mPaginationDots.length && n == mPaginationDots.length - 1) {
+            if (position == n || position >= mPaginationDots.length && n == mPaginationDots.length - 1) {
                 mPaginationDots[n].setAlpha(ALPHA_ACTIVE_DOT);
             } else {
                 mPaginationDots[n].setAlpha(ALPHA_PASSIVE_DOT);
@@ -169,7 +168,7 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager) container).removeView((View) object);
+            container.removeView((View) object);
         }
 
     }

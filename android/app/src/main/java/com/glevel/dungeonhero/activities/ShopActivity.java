@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -27,11 +28,6 @@ import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -75,8 +71,20 @@ public class ShopActivity extends MyActivity implements OnClickListener {
 
         updateGoldAmount();
         updateBag();
-        getOffers();
-        updateOffers();
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                getOffers();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                updateOffers();
+            }
+        }.execute();
     }
 
     private void setupUI() {
@@ -168,31 +176,12 @@ public class ShopActivity extends MyActivity implements OnClickListener {
                 mItemsOffered.add(item);
             }
             mSharedPrefs.edit().putLong(LAST_TIME_SHOP_VISITED_PREFS, System.currentTimeMillis()).apply();
-            saveItemsToFile();
+            ApplicationUtils.saveToLocalFile(getApplicationContext(), FILENAME_SHOP_ITEMS, mItemsOffered);
         } else {
             // get items list from the file
-            Log.d(TAG, "Getting existing offers");
-            try {
-                FileInputStream fis = openFileInput(FILENAME_SHOP_ITEMS);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                mItemsOffered = (List<Item>) ois.readObject();
-                Log.d(TAG, "Found " + mItemsOffered.size() + " existing offers");
-                fis.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void saveItemsToFile() {
-        try {
-            FileOutputStream fos = openFileOutput(FILENAME_SHOP_ITEMS, MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(mItemsOffered);
-            oos.flush();
-            oos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Log.d(TAG, "Getting existing offers from local file");
+            mItemsOffered = (List<Item>) ApplicationUtils.readFromLocalFile(getApplicationContext(), FILENAME_SHOP_ITEMS);
+            Log.d(TAG, "Found " + mItemsOffered.size() + " existing offers");
         }
     }
 
@@ -274,7 +263,7 @@ public class ShopActivity extends MyActivity implements OnClickListener {
         mGame.getHero().addGold(-item.getPrice());
         mGame.getHero().getItems().add(item);
         mItemsOffered.set(mItemsOffered.indexOf(item), null);
-        saveItemsToFile();
+        ApplicationUtils.saveToLocalFile(getApplicationContext(), FILENAME_SHOP_ITEMS, mItemsOffered);
         updateGoldAmount();
         updateBag();
         updateOffers();

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.game.base.GraphicsManager;
 import com.glevel.dungeonhero.game.gui.ElementDetails;
 import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -51,7 +52,7 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
     private void bindMonsterToView(Monster monster, final View layout) {
         ((TextView) layout.findViewById(R.id.name)).setText(monster.getName(mResources));
         ((ImageView) layout.findViewById(R.id.image)).setImageResource(monster.getImage(mResources));
-        ((SpriteView) layout.findViewById(R.id.image)).setSpriteName("gfx/" + monster.getIdentifier() + ".png");
+        ((SpriteView) layout.findViewById(R.id.image)).setSpriteName(GraphicsManager.ASSETS_PATH + monster.getIdentifier() + ".png");
 
         addMonsterInfo(layout, monster);
 
