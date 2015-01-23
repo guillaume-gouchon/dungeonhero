@@ -20,8 +20,8 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
     private static final String TAG = "InputManager";
 
     private static final int DRAG_MINIMUM_DISTANCE = 400;// in pixels ^2
-    private static final int AUTO_SCROLLING_THRESHOLD = 20;// in pixels
-    private static final int AUTO_SCROLLING_SPEED = 1;// in pixels
+    private static final int AUTO_SCROLLING_THRESHOLD = 40;// in pixels
+    private static final int AUTO_SCROLLING_SPEED = 2;// in pixels
 
     private final ZoomCamera mCamera;
     private final UserActionListener mUserActionListener;
