@@ -10,6 +10,7 @@ import com.glevel.dungeonhero.models.items.equipments.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by guillaume ON 10/6/14.
@@ -69,14 +70,14 @@ public class MonsterFactory {
     }
 
     public static Monster buildOgreKing() {
-        Monster monster = new Monster("ogre_king", 28, 28, 16, 10, 10, 4);
-        monster.equip(WeaponFactory.buildBattleAxe(1));
+        Monster monster = new Monster("ogre_king", 28, 28, 15, 9, 9, 4);
+        monster.equip(WeaponFactory.buildBattleAxe(0));
         monster.equip(ArmorFactory.buildChainmail(0));
         return monster;
     }
 
     public static Monster buildGargoyle() {
-        Monster monster = new Monster("gargoyle", 30, 30, 20, 8, 12, 5);
+        Monster monster = new Monster("gargoyle", 30, 30, 19, 8, 12, 5);
         monster.equip(new Weapon("claws", 3, 10, 1, 0));
         monster.equip(ArmorFactory.buildLeatherPlastron(1));
         monster.getSkills().add(SkillFactory.buildFatalBlow());
@@ -102,7 +103,7 @@ public class MonsterFactory {
     }
 
     public static Monster buildDemon() {
-        Monster monster = new Monster("demon", 28, 28, 24, 15, 15, 5);
+        Monster monster = new Monster("demon", 28, 28, 20, 15, 15, 5);
         monster.equip(new Weapon("claws", 4, 15, 1, 0));
         monster.equip(ArmorFactory.buildLamellar(3));
         monster.getSkills().add(SkillFactory.buildRage().improve());
@@ -110,7 +111,7 @@ public class MonsterFactory {
     }
 
     public static Monster buildDemonKing() {
-        Monster monster = new Monster("demon_king", 36, 36, 27, 18, 19, 5);
+        Monster monster = new Monster("demon_king", 36, 36, 24, 18, 19, 5);
         monster.equip(new Weapon("claws", 4, 15, 1, 0));
         monster.equip(ArmorFactory.buildBreastPlate(3));
         monster.getSkills().add(SkillFactory.buildFireball().improve());
@@ -121,7 +122,8 @@ public class MonsterFactory {
     public static List<Monster> getRoomContent(int threatLevel) {
         List<Monster> l = new ArrayList<>();
         int nbMonsters;
-        int random = (int) (Math.random() * 10);
+        Random r = new Random();
+        int random = r.nextInt(10);
         if (random < 1) {
             nbMonsters = 0;
         } else if (random < 5) {
@@ -138,7 +140,8 @@ public class MonsterFactory {
     }
 
     public static Monster getRandomMonster(int threatLevel) {
-        int diceRoll = (int) (2 + Math.random() * 11);
+        Random r = new Random();
+        int diceRoll = 2 + r.nextInt(11);
         switch (threatLevel) {
             case 1:
                 switch (diceRoll) {

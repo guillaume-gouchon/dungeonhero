@@ -242,7 +242,7 @@
     <string name="healing_potion">Healing Potion</string>
     <string name="healing_potion_description">Makes recover 15 health points.</string>
     <string name="heroic_potion">Heroic Potion</string>
-    <string name="heroic_potion_description">Once drunk, this potion makes you feeling heroic. You can play twice in a row.</string>
+    <string name="heroic_potion_description">Once drunk, this potion makes you feel heroic. You can play twice in a row.</string>
     <string name="invisibility_potion">Potion of Invisibility</string>
     <string name="invisibility_potion_description">This grey liquid turns you invisible for a small amount of time.</string>
     <string name="luck_potion">Potion of Luck</string>
@@ -258,7 +258,7 @@
 
     <!-- Rings -->
     <string name="dodge_ring">Ring of Evasion</string>
-    <string name="dodge_ring_description">This ring makes the wearer looking blurry, dodging attacks more easily.</string>
+    <string name="dodge_ring_description">This ring makes the wearer look blurry, dodging attacks more easily.</string>
     <string name="speed_ring">Ring of Haste</string>
     <string name="speed_ring_description">The wearer feels lighter.</string>
     <string name="protection_ring">Ring of Fire</string>
@@ -316,7 +316,7 @@
     <string name="fireball">Fireball</string>
     <string name="fireball_description">You cast a fireball on your enemies, dealing damages and burning them over time.</string>
     <string name="sleep">Sleep</string>
-    <string name="sleep_description">You make one target sleeping deeply.</string>
+    <string name="sleep_description">You make one target sleep deeply.</string>
     <string name="thunder_storm">Thunder Storm</string>
     <string name="thunder_storm_description">You invoke a thunder storm on your opponents, dealing electrical damages to them.</string>
     <string name="stone_skin">Stone Skin</string>
