@@ -31,7 +31,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <com.glevel.dungeonhero.views.StarRatingView
                 android:id="@+id/rating"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
             android:layout_marginTop="15dp"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <ImageView
