@@ -39,7 +39,7 @@ public class LoadGameFragment extends DialogFragment implements LoaderManager.Lo
     private final ListView.OnItemClickListener mOnItemClickedListener = new ListView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            Game game = Game.fromCursor(getActivity().getContentResolver().query(MyContentProvider.URI_GAMES, null, Game.COLUMN_ID + "=?", new String[]{"" + mAdapter.getElementAt(position).getId()}, null));
+            Game game = Game.fromCursor(getActivity().getContentResolver().query(MyContentProvider.URI_GAMES, null, Game.COLUMN_ID + "=?", new String[]{"" + view.getTag(R.string.id)}, null));
             launchGame(game);
         }
     };

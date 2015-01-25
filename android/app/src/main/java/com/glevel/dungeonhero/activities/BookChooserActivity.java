@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
@@ -18,24 +19,25 @@ import com.glevel.dungeonhero.MyActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.BooksAdapter;
 import com.glevel.dungeonhero.data.BookFactory;
+import com.glevel.dungeonhero.data.characters.HeroFactory;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.gui.GameMenu;
 import com.glevel.dungeonhero.models.Book;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.providers.MyContentProvider;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
-import com.glevel.dungeonhero.utils.billing.InAppBillingHelper;
-import com.glevel.dungeonhero.utils.billing.OnBillingServiceConnectedListener;
 import com.glevel.dungeonhero.views.CustomAlertDialog;
 import com.glevel.dungeonhero.views.CustomCarousel;
 
 import java.util.List;
 
-public class BookChooserActivity extends MyActivity implements OnBillingServiceConnectedListener, OnClickListener {
+public class BookChooserActivity extends MyActivity implements OnClickListener {
+
+    private static final String TAG = "BookChooserActivity";
 
     private Game mGame;
-    private InAppBillingHelper mInAppBillingHelper;
     private List<Book> mLstBooks;
     private SharedPreferences mSharedPrefs;
 
@@ -80,13 +82,42 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
 
         // retrieve books
         mLstBooks = BookFactory.getAll();
+        boolean hasFinishedTheGame = true;
+        int score;
         for (Book book : mLstBooks) {
             if (mGame.getBooksDone().get(book.getId()) != null) {
-                book.setBestScore(mGame.getBooksDone().get(book.getId()));
+                score = mGame.getBooksDone().get(book.getId());
+                book.setBestScore(score);
+                Log.d(TAG, "book " + book.getId() + ", score =" + score);
+                if (score < 3) {
+                    hasFinishedTheGame = false;
+                }
+            } else {
+                hasFinishedTheGame = false;
             }
         }
 
-        mInAppBillingHelper = new InAppBillingHelper(this, this);
+        // unblock next character
+        if (hasFinishedTheGame) {
+            Log.d(TAG, "congratulations ! Game is finished");
+            List<Hero> heroes = HeroFactory.getAll();
+            for (int n = 0; n < heroes.size(); n++) {
+                if (heroes.get(n).getIdentifier().equals(mGame.getHero().getIdentifier()) && n + 1 < heroes.size()) {
+                    Hero unblockedHero = heroes.get(n + 1);
+                    if (mSharedPrefs.getString(unblockedHero.getProductId(), null) == null) {
+                        Dialog dialog = new Dialog(this, R.style.Dialog);
+                        dialog.setContentView(R.layout.dialog_unlock_hero);
+                        TextView title = (TextView) dialog.findViewById(R.id.title);
+                        title.setText(getString(R.string.congratulations_unlock, getString(unblockedHero.getName(getResources()))));
+                        title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_three_stars, 0, unblockedHero.getImage(getResources()));
+                        dialog.show();
+                    }
+
+                    mSharedPrefs.edit().putString(unblockedHero.getProductId(), "got it !").apply();
+                    break;
+                }
+            }
+        }
 
         setupUI();
     }
@@ -143,19 +174,8 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mInAppBillingHelper.onDestroy();
-    }
-
-    @Override
     public void onBackPressed() {
         openGameMenu();
-    }
-
-    @Override
-    public void onBillingServiceConnected() {
-        mInAppBillingHelper.doIOwn(mLstBooks);
     }
 
     @Override
@@ -213,15 +233,11 @@ public class BookChooserActivity extends MyActivity implements OnBillingServiceC
     }
 
     private void onBookSelected(Book selectedBook) {
-        if (selectedBook.isAvailable()) {
-            mGame.setBook(selectedBook);
-            Intent intent = new Intent(this, GameActivity.class);
-            intent.putExtra(Game.class.getName(), mGame);
-            startActivity(intent);
-            finish();
-        } else {
-            mInAppBillingHelper.purchaseItem(selectedBook);
-        }
+        mGame.setBook(selectedBook);
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra(Game.class.getName(), mGame);
+        startActivity(intent);
+        finish();
     }
 
 }

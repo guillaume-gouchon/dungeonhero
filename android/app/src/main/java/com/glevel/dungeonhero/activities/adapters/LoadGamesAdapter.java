@@ -51,7 +51,7 @@ public class LoadGamesAdapter extends CursorAdapter {
         long gameId = cursor.getLong(cursor.getColumnIndex(Game.COLUMN_ID));
         Game game = mCache.get(gameId);
         if (game == null) {
-            // if not in cache, de-serialize game
+            // if not in cache, de-serialize game object
             new AsyncTask<Object, Void, Game>() {
                 @Override
                 protected Game doInBackground(Object... params) {
@@ -76,14 +76,8 @@ public class LoadGamesAdapter extends CursorAdapter {
             viewHolder.title.setText(game.getHero().getHeroName());
             viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(mContext.getResources()), 0, 0, 0);
         }
-    }
 
-    public Game getElementAt(int position) {
-        Cursor cursor = getCursor();
-        if (cursor != null && cursor.moveToPosition(position)) {
-            return Game.fromCursor(cursor);
-        }
-        return null;
+        view.setTag(R.string.id, gameId);
     }
 
     private static class ViewHolder {

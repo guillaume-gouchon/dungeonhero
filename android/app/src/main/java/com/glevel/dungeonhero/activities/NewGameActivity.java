@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,30 +64,6 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
             }
         }
     };
-
-    private void showBuyHeroPopup(final Hero selectedHero) {
-        mBuyDialog = new Dialog(this, R.style.Dialog);
-        mBuyDialog.setCancelable(true);
-        mBuyDialog.setContentView(R.layout.dialog_buy_hero);
-        TextView buyHeroButton = (TextView) mBuyDialog.findViewById(R.id.buy_hero);
-        buyHeroButton.setText(getString(R.string.buy_hero, getString(selectedHero.getName(getResources()))));
-        buyHeroButton.setCompoundDrawablesWithIntrinsicBounds(0, selectedHero.getImage(getResources()), 0, 0);
-        buyHeroButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicManager.playSound(NewGameActivity.this, R.raw.button_sound);
-                mInAppBillingHelper.purchaseItem(selectedHero);
-            }
-        });
-        mBuyDialog.findViewById(R.id.buy_all_heroes).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicManager.playSound(NewGameActivity.this, R.raw.button_sound);
-                mInAppBillingHelper.purchaseItem(InAppBillingHelper.BUY_ALL_HEROES_IN_APP_ID);
-            }
-        });
-        mBuyDialog.show();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +187,42 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
         intent.putExtra(Game.class.getName(), game);
         startActivity(intent);
         finish();
+    }
+
+
+    private void showBuyHeroPopup(final Hero selectedHero) {
+        mBuyDialog = new Dialog(this, R.style.Dialog);
+        mBuyDialog.setCancelable(true);
+        mBuyDialog.setContentView(R.layout.dialog_buy_hero);
+
+        TextView buyHeroButton = (TextView) mBuyDialog.findViewById(R.id.buy_hero);
+        buyHeroButton.setText(getString(R.string.buy_hero, getString(selectedHero.getName(getResources()))));
+        buyHeroButton.setCompoundDrawablesWithIntrinsicBounds(0, selectedHero.getImage(getResources()), 0, 0);
+        buyHeroButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MusicManager.playSound(NewGameActivity.this, R.raw.button_sound);
+                mInAppBillingHelper.purchaseItem(selectedHero);
+            }
+        });
+
+        mBuyDialog.findViewById(R.id.buy_all_heroes).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MusicManager.playSound(NewGameActivity.this, R.raw.button_sound);
+                mInAppBillingHelper.purchaseItem(InAppBillingHelper.BUY_ALL_HEROES_IN_APP_ID);
+            }
+        });
+
+        for (int n = 0; n < mLstHeroes.size(); n++) {
+            if (mLstHeroes.get(n) == selectedHero) {
+                ((TextView) mBuyDialog.findViewById(R.id.buy_option)).setText(getString(R.string.unblock_hero, getString(mLstHeroes.get(n - 1).getName(getResources()))));
+                break;
+            }
+        }
+
+
+        mBuyDialog.show();
     }
 
 }

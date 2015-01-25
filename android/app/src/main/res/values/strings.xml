@@ -77,6 +77,7 @@
     <string name="buy_hero">Buy the %s</string>
     <string name="buy_all_heroes">Buy all 5 Heroes\n(30% discount\u00A0!)</string>
     <string name="buy_reminder"><i>(by buying a hero, you will fill my fridge with one more beer)</i></string>
+    <string name="unblock_hero">Get 3 stars at all the quests with the %s\n\nor</string>
 
     <!-- Book Chooser -->
     <string name="choose_book_message">Choose a Quest</string>
@@ -85,6 +86,7 @@
     <string name="shop">Shop</string>
     <string name="bestiary">Bestiary</string>
     <string name="enter_quest">Enter Quest</string>
+    <string name="congratulations_unlock">Congratulations !\n\nYou have unlocked\nthe %s !</string>
 
     <!-- Bestiary -->
     <string name="bestiary_header">My trophees\u00A0!</string>

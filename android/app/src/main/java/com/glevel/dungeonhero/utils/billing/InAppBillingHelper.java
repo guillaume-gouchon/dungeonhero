@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.android.vending.billing.IInAppBillingService;
@@ -20,9 +22,8 @@ import java.util.List;
 public class InAppBillingHelper {
 
     public static final int BILLING_REQUEST_CODE = 3000;
-
+    public static final String BUY_ALL_HEROES_IN_APP_ID = "all_heroes";
     private static final String TAG = "InAppBillingHelper";
-
     private static final int API_VERSION = 3;
     private static final String IN_APP_PURCHASE_TYPE = "inapp";
     private static final String DEVELOPER_PAYLOAD = "doobiididadoobiiidoodidadoodidaaaaaa";
@@ -30,15 +31,14 @@ public class InAppBillingHelper {
     private static final String RESPONSE_CODE_KEY = "RESPONSE_CODE";
     private static final String RESPONSE_PURCHASE_ITEMS_KEY = "INAPP_PURCHASE_ITEM_LIST";
     private static final int RESPONSE_SUCCESS = 0;
-
-    public static final String BUY_ALL_HEROES_IN_APP_ID = "all_heroes";
-
     private Activity mActivity;
+    private SharedPreferences mPrefs;
     private IInAppBillingService mService;
     private ServiceConnection mServiceConnection;
 
     public InAppBillingHelper(Activity activity, final OnBillingServiceConnectedListener callback) {
         mActivity = activity;
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
         mServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceDisconnected(ComponentName name) {
@@ -64,12 +64,13 @@ public class InAppBillingHelper {
             int responseCode = response.getInt(RESPONSE_CODE_KEY);
             if (responseCode == RESPONSE_SUCCESS) {
                 ArrayList<String> ownedItems = response.getStringArrayList(RESPONSE_PURCHASE_ITEMS_KEY);
+                // TODO : beta testing
                 boolean hasAll = true || ownedItems.contains(BUY_ALL_HEROES_IN_APP_ID);
                 Log.d(TAG, "has all heroes ? " + hasAll);
                 for (InAppProduct inAppProduct : inAppProducts) {
                     if (!inAppProduct.isAvailable()) {
                         inAppProduct.setHasBeenBought(false);
-                        if (hasAll) {
+                        if (hasAll || mPrefs.getString(inAppProduct.getProductId(), null) != null) {
                             inAppProduct.setHasBeenBought(true);
                         } else {
                             for (String productId : ownedItems) {

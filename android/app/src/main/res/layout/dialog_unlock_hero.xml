@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="@drawable/bg_gui"
+    android:gravity="center">
+
+    <com.glevel.dungeonhero.views.CustomTextView
+        android:drawableTop="@drawable/ic_three_stars"
+        android:drawablePadding="10dp"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textColor="@color/white" />
+</LinearLayout>

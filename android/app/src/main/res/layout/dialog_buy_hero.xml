@@ -4,8 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp"
+    android:padding="6dp"
+    android:background="@color/bg_btn_center"
     android:gravity="center">
+
+    <com.glevel.dungeonhero.views.CustomTextView
+        android:drawableTop="@drawable/ic_three_stars"
+        android:drawablePadding="10dp"
+        android:id="@+id/buy_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +34,7 @@
             android:text="@string/placeholder"
             android:drawablePadding="6dp"
             android:textSize="16sp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="8dp" />
 
         <com.glevel.dungeonhero.views.CustomTextView
             style="@style/PopupButton"
@@ -42,7 +54,6 @@
         android:layout_height="wrap_content"
         android:text="@string/buy_reminder"
         android:textSize="12sp"
-        android:background="@color/black"
-        android:alpha="0.5"
+        android:textColor="@color/grey"
         android:layout_marginTop="10dp" />
 </LinearLayout>
