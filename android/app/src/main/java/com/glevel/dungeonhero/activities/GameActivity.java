@@ -62,7 +62,7 @@ public class GameActivity extends MyBaseGameActivity {
 
     private static final String TAG = "GameActivity";
     private static final int MINIMAP_RECTANGLE_SIZE = 30;
-    private static final float MINIMAP_ALPHA = 0.4f;
+    private static final float MINIMAP_ALPHA = 0.2f;
     public SelectionCircle mSelectionCircle;
     public Entity mGroundLayer, mMinimapLayer;
     public TMXTiledMap mTmxTiledMap;
@@ -372,7 +372,7 @@ public class GameActivity extends MyBaseGameActivity {
         for (int i = 0; i < rooms.length; i++) {
             for (int j = 0; j < rooms[0].length; j++) {
                 room = rooms[i][j];
-                if (room.isVisited()) {
+                if (room.isVisited() && room.getDoors() != null) {
                     roomRectangle = new Rectangle((MINIMAP_RECTANGLE_SIZE * 5 / 3) * j, (MINIMAP_RECTANGLE_SIZE * 5 / 3) * i, MINIMAP_RECTANGLE_SIZE, MINIMAP_RECTANGLE_SIZE, getVertexBufferObjectManager());
                     roomRectangle.setColor(mRoom == room ? Color.GREEN : Color.WHITE);
                     roomRectangle.setAlpha(MINIMAP_ALPHA);
@@ -387,8 +387,8 @@ public class GameActivity extends MyBaseGameActivity {
                     }
                 }
             }
-            centerMinimap();
         }
+        centerMinimap();
 
         mGUIManager.hideLoadingScreen();
         mGUIManager.updateSkillButtons();
