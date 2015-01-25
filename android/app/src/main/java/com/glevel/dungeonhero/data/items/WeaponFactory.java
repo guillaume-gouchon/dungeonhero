@@ -132,11 +132,11 @@ public class WeaponFactory {
     }
 
     public static Equipment buildLargeShield(int level) {
-        Weapon item = new Weapon("large_shield", 1, 2, level, 220);
+        Weapon item = new Weapon("large_shield", 1, 1, level, 220);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 12, level));
-        item.addEffect(new PermanentEffect(Characteristics.BLOCK, 25, null, level));
+        item.addEffect(new PermanentEffect(Characteristics.BLOCK, 15, null, level));
         return item;
     }
 
@@ -155,7 +155,7 @@ public class WeaponFactory {
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new StatRequirement(Characteristics.STRENGTH, 7, level));
-        item.addEffect(new PermanentEffect(Characteristics.BLOCK, 15, null, level));
+        item.addEffect(new PermanentEffect(Characteristics.BLOCK, 10, null, level));
         return item;
     }
 

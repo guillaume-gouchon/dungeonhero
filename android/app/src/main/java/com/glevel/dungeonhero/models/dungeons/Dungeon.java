@@ -81,7 +81,7 @@ public class Dungeon implements Serializable {
 
     public void moveIn(TMXTiledMap tmxTiledMap, List<Unit> heroes) {
         Room currentRoom = getCurrentRoom();
-        if (currentRoom.getTiles() == null) {
+        if (!currentRoom.isVisited()) {
             nbRoomVisited++;
         }
 
@@ -98,7 +98,7 @@ public class Dungeon implements Serializable {
             // add stairs
             currentRoom.prepareStartRoom(heroes);
             return;
-        } else if (currentRoom.getTiles() == null && events.size() > 0 && (nbRoomsLeft < events.size() || nbRoomVisited > 2 && Math.random() * 100 < nbRoomVisited * 2)) {
+        } else if (!currentRoom.isVisited() && events.size() > 0 && (nbRoomsLeft < events.size() || nbRoomVisited > 2 && Math.random() * 100 < nbRoomVisited * 2)) {
             // the room may contain an event
             event = events.get((int) (events.size() * Math.random()));
             events.remove(event);
@@ -110,6 +110,11 @@ public class Dungeon implements Serializable {
 
     public boolean isFirstRoom() {
         return currentDirection == null;
+    }
+
+
+    public Room[][] getRooms() {
+        return rooms;
     }
 
 }

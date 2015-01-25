@@ -185,7 +185,6 @@ public class MonsterFactory {
                         return buildOrc();
                     case 4:
                     case 11:
-                    case 12:
                         return buildOrcCaptain();
                     case 5:
                     case 7:
@@ -193,6 +192,7 @@ public class MonsterFactory {
                         return buildTroll();
                     case 8:
                     case 9:
+                    case 12:
                         return buildOgre();
                     case 10:
                         return buildOgreKing();
@@ -201,20 +201,19 @@ public class MonsterFactory {
                 switch (diceRoll) {
                     case 2:
                     case 3:
-                        return buildOrcCaptain();
                     case 4:
+                        return buildOgre();
                     case 11:
                     case 12:
                     case 5:
-                        return buildOgre();
+                        return buildOgreKing();
                     case 7:
                     case 6:
                     case 8:
-                        return buildOgreKing();
-                    case 9:
-                        return buildTroll();
-                    case 10:
                         return buildGargoyle();
+                    case 9:
+                    case 10:
+                        return buildChaosWarrior();
                 }
             case 5:
                 switch (diceRoll) {
@@ -223,13 +222,13 @@ public class MonsterFactory {
                         return buildOgre();
                     case 4:
                     case 11:
-                    case 12:
                     case 5:
                         return buildOgreKing();
                     case 7:
                     case 6:
                         return buildGargoyle();
                     case 9:
+                    case 12:
                         return buildChaosWizard();
                     case 10:
                     case 8:
@@ -240,29 +239,29 @@ public class MonsterFactory {
                     case 2:
                     case 3:
                     case 4:
-                    case 8:
-                    case 10:
                         return buildChaosWarrior();
                     case 11:
                     case 12:
-                    case 5:
                         return buildGargoyle();
                     case 7:
                     case 6:
                         return buildChaosWizard();
                     case 9:
+                    case 8:
+                    case 5:
                         return buildDemon();
+                    case 10:
+                        return buildDemonKing();
                 }
             case 7:
                 switch (diceRoll) {
                     case 2:
-                    case 3:
                     case 4:
                         return buildChaosWarrior();
-                    case 11:
                     case 12:
                         return buildGargoyle();
                     case 7:
+                    case 11:
                     case 6:
                         return buildChaosWizard();
                     case 9:
@@ -270,6 +269,7 @@ public class MonsterFactory {
                     case 10:
                         return buildDemon();
                     case 5:
+                    case 3:
                         buildDemonKing();
                 }
             default:

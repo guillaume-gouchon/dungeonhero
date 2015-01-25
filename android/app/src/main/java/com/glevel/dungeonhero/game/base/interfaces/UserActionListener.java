@@ -5,10 +5,12 @@ package com.glevel.dungeonhero.game.base.interfaces;
  */
 public interface UserActionListener {
 
-    public void onTouch(float x, float y);
+    public void onMove(float x, float y);
 
     public void onTap(float x, float y);
 
     public void onCancel(float x, float y);
-    
+
+    public void onPinchZoom(float zoomFactor);
+
 }

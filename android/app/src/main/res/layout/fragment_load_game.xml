@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <ListView
         android:id="@+id/gamesList"
@@ -14,6 +15,7 @@
         android:dividerHeight="0dp"
         android:choiceMode="singleChoice"
         android:drawSelectorOnTop="false"
+        android:scrollbars="none"
         android:divider="@android:color/transparent"
         android:listSelector="@android:color/transparent"
         android:overScrollMode="never"></ListView>

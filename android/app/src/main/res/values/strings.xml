@@ -5,7 +5,7 @@
     <string name="id">id</string>
     <string name="item">item</string>
     <string name="placeholder">placeholder</string>
-    <string name="viewholder">viewholder</string>
+    <string name="view_holder">viewholder</string>
     <string name="cancel">Cancel</string>
     <string name="coming_soon">Coming soon&#8230;</string>
     <string name="show_skill">show_skill</string>
@@ -71,6 +71,7 @@
     <string name="metal">Death Metal</string>
 
     <!-- New Game -->
+    <string name="hint_carousel">Swipe right</string>
     <string name="choose_hero_message">Choose a Hero</string>
     <string name="hero_name_input">Enter your hero name...</string>
     <string name="buy_hero">Buy the %s</string>
@@ -83,6 +84,7 @@
     <string name="visit_shop">Visit the Shop</string>
     <string name="shop">Shop</string>
     <string name="bestiary">Bestiary</string>
+    <string name="enter_quest">Enter Quest</string>
 
     <!-- Bestiary -->
     <string name="bestiary_header">My trophees\u00A0!</string>
@@ -142,7 +144,7 @@
     <string name="unequip">Remove</string>
     <string name="drop">Drop</string>
     <string name="gold_coins">Gold Coins</string>
-    <string name="bag_full">Your bag is full, the item has been dropped on the ground</string>
+    <string name="bag_full">Your bag is full, the %s has been dropped on the ground</string>
     <string name="damage">Damage</string>
     <string name="protection">Armor</string>
     <string name="dodge">Dodge</string>
@@ -391,7 +393,7 @@
     <string name="vanark_1">Who dares disturbing the rest of  Vanark the Great\u00A0? Get you ass ready to be kicked\u00A0!</string>
     <string name="vanark_1_answer_1">For Gundin\u00A0!</string>
     <string name="vanark_1_answer_2">For the Greater Good\u00A0!</string>
-    <string name="vanark_1_answer_3">For the Profit\u00A0!</string>
+    <string name="vanark_1_answer_3">For Profit\u00A0!</string>
 
     <!-- The Balrog -->
     <string name="balrog_quest">The Balrog\'s Lair</string>
@@ -487,6 +489,6 @@
     <string name="dreamer_ghost_1">...</string>
     <string name="dreamer_ghost_1_answer_1">...</string>
     <string name="zangdar">Zangdar the Great</string>
-    <string name="zangdar_1">You are the first one to go as deep into its own nightmare.\n\nYou are asleep now, do you really think you can beat me\u00A0?</string>
-    <string name="zangdar_1_answer_1">Go away from my mind, evil wizard\u00A0!</string>
+    <string name="zangdar_1">You are the first one to go this deep into his own nightmare.\n\nDo you really think you can beat me while are you asleep\u00A0?</string>
+    <string name="zangdar_1_answer_1">Be gone from my mind, evil wizard\u00A0!</string>
 </resources>

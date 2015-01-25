@@ -70,7 +70,7 @@ public class SplashActivity extends MyActivity {
     private void setupUI() {
         mTitleLayout = (ViewGroup) findViewById(R.id.title);
 
-        mBounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce_effect);
+        mBounceAnimation = AnimationUtils.loadAnimation(this, R.anim.splash_bounce_effect);
 
         mLetterAnimation = AnimationUtils.loadAnimation(this, R.anim.falling_letter);
         mLetterAnimation.setAnimationListener(new AnimationListener() {

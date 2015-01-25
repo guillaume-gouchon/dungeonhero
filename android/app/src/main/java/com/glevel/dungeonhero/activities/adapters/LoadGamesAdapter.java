@@ -11,16 +11,23 @@ import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Game;
+import com.glevel.dungeonhero.models.characters.Hero;
+import com.glevel.dungeonhero.utils.providers.ByteSerializerHelper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoadGamesAdapter extends CursorAdapter {
 
-    private Context mContext;
+    private final Context mContext;
     private final LayoutInflater mInflater;
+    private final Map<Long, Game> mCache;
 
     public LoadGamesAdapter(Context context) {
         super(context, null, 0);
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mCache = new HashMap<>();
     }
 
     @Override
@@ -28,40 +35,47 @@ public class LoadGamesAdapter extends CursorAdapter {
         return mInflater.inflate(R.layout.load_game_list_item, parent, false);
     }
 
-    private static class ViewHolder {
-        TextView title;
-    }
-
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        final ViewHolder viewHolder;
-        if (view.getTag(R.string.viewholder) == null) {
-            viewHolder = new ViewHolder();
-            viewHolder.title = (TextView) view.findViewById(R.id.text);
-            view.setTag(R.string.viewholder, viewHolder);
+        ViewHolder viewHolder;
+        if (view.getTag(R.string.view_holder) == null) {
+            viewHolder = new ViewHolder(view);
+            view.setTag(R.string.view_holder, viewHolder);
         } else {
-            viewHolder = (ViewHolder) view.getTag(R.string.viewholder);
+            viewHolder = (ViewHolder) view.getTag(R.string.view_holder);
         }
 
         viewHolder.title.setText(R.string.loading_saved_games);
         viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_loading, 0, 0, 0);
 
-        final int position = cursor.getPosition();
-        new AsyncTask<Void, Void, Game>() {
-            @Override
-            protected Game doInBackground(Void... params) {
-                return getElementAt(position);
-            }
-
-            @Override
-            protected void onPostExecute(Game game) {
-                super.onPostExecute(game);
-                if (game != null) {
-                    viewHolder.title.setText(game.getHero().getHeroName());
-                    viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(mContext.getResources()), 0, 0, 0);
+        long gameId = cursor.getLong(cursor.getColumnIndex(Game.COLUMN_ID));
+        Game game = mCache.get(gameId);
+        if (game == null) {
+            // if not in cache, de-serialize game
+            new AsyncTask<Object, Void, Game>() {
+                @Override
+                protected Game doInBackground(Object... params) {
+                    long gameId = (long) params[0];
+                    byte[] blob = (byte[]) params[1];
+                    Game game = new Game();
+                    game.setId(gameId);
+                    game.setHero((Hero) ByteSerializerHelper.getObjectFromByte(blob));
+                    mCache.put(gameId, game);
+                    return game;
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(Game game) {
+                    super.onPostExecute(game);
+                    notifyDataSetChanged();
+                }
+            }.execute(gameId, cursor.getBlob(cursor.getColumnIndex(Game.Columns.HERO.toString())));
+            mCache.put(gameId, new Game());
+        } else if (game.getHero() != null) {
+            // game has already been retrieved and is in cache
+            viewHolder.title.setText(game.getHero().getHeroName());
+            viewHolder.title.setCompoundDrawablesWithIntrinsicBounds(game.getHero().getImage(mContext.getResources()), 0, 0, 0);
+        }
     }
 
     public Game getElementAt(int position) {
@@ -70,6 +84,14 @@ public class LoadGamesAdapter extends CursorAdapter {
             return Game.fromCursor(cursor);
         }
         return null;
+    }
+
+    private static class ViewHolder {
+        public TextView title;
+
+        public ViewHolder(View itemView) {
+            title = (TextView) itemView.findViewById(R.id.text);
+        }
     }
 
 }

@@ -34,7 +34,7 @@ public class BookFactory {
     }
 
     public static Book buildInitiationBook() {
-        Book book = new Book(TUTORIAL_BOOK_ID, "initiation_quest", "initiation_intro", "initiation_outro", null);
+        Book book = new Book(TUTORIAL_BOOK_ID, "initiation_quest", "initiation_intro", "initiation_outro", null, 0);
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -50,7 +50,7 @@ public class BookFactory {
     }
 
     public static Book buildVanarkBook() {
-        Book book = new Book(2, "sons_quest", "sons_intro", "sons_outro", null);
+        Book book = new Book(2, "sons_quest", "sons_intro", "sons_outro", null, 1);
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -68,7 +68,7 @@ public class BookFactory {
     }
 
     public static Book buildBalrogQuest() {
-        Book book = new Book(3, "balrog_quest", "balrog_intro", "balrog_outro", null);
+        Book book = new Book(3, "balrog_quest", "balrog_intro", "balrog_outro", null, 1);
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -88,7 +88,7 @@ public class BookFactory {
     }
 
     public static Book buildWizardQuest() {
-        Book book = new Book(4, "wizard_quest", "wizard_intro", "", null);
+        Book book = new Book(4, "wizard_quest", "wizard_intro", "", null, 2);
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -107,7 +107,7 @@ public class BookFactory {
     }
 
     public static Book buildPartnershipQuest() {
-        Book book = new Book(5, "partnership_quest", "partnership_intro", "", null);
+        Book book = new Book(5, "partnership_quest", "partnership_intro", "", null, 2);
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -129,7 +129,7 @@ public class BookFactory {
     }
 
     public static Book buildDreamQuest() {
-        Book book = new Book(6, "dreamer_quest", "dreamer_intro", "dreamer_outro", null);
+        Book book = new Book(6, "dreamer_quest", "dreamer_intro", "dreamer_outro", null, 3);
 
         // chapter 1
         List<Event> events = new ArrayList<>();

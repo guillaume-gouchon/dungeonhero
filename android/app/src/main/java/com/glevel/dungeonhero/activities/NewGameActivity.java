@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
     private InAppBillingHelper mInAppBillingHelper;
     private List<Hero> mLstHeroes;
     private SharedPreferences mSharedPrefs;
+    private HeroesAdapter mHeroesAdapter;
 
     /**
      * UI
@@ -106,8 +108,8 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
 
         // init carousel
         CustomCarousel heroesCarousel = (CustomCarousel) findViewById(R.id.heroes);
-        CustomCarousel.Adapter heroesAdapter = new HeroesAdapter(this, R.layout.hero_chooser_item, mLstHeroes, mOnHeroSelectedListener);
-        heroesCarousel.setAdapter(heroesAdapter);
+        mHeroesAdapter = new HeroesAdapter(this, R.layout.hero_chooser_item, mLstHeroes, mOnHeroSelectedListener);
+        heroesCarousel.setAdapter(mHeroesAdapter);
 
         // start message animation
         findViewById(R.id.chooseHeroMessage).startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.big_label_in_game));
@@ -157,6 +159,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
     @Override
     public void onBillingServiceConnected() {
         mInAppBillingHelper.doIOwn(mLstHeroes);
+        mHeroesAdapter.notifyDataSetChanged();
     }
 
     private void showNameInputDialog(final Hero selectedHero) {

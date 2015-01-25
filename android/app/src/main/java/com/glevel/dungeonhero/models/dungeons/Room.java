@@ -12,8 +12,8 @@ import com.glevel.dungeonhero.models.characters.Pnj;
 import com.glevel.dungeonhero.models.characters.Ranks;
 import com.glevel.dungeonhero.models.characters.Unit;
 import com.glevel.dungeonhero.models.dungeons.decorations.Decoration;
+import com.glevel.dungeonhero.models.dungeons.decorations.Light;
 import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
-import com.glevel.dungeonhero.models.dungeons.decorations.TreasureChest;
 
 import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXTile;
@@ -38,7 +38,6 @@ public class Room implements Serializable {
 
     private final String tmxName;
     private Tile[][] tiles = null;
-
     private transient Map<Directions, Tile> doors;
     private transient List<GameElement> objects;
     private List<Unit> queue = new ArrayList<>();
@@ -164,7 +163,7 @@ public class Room implements Serializable {
             }
         }
 
-        for (int n = 0; n < Math.round(Math.random() * 2); n++) {
+        for (int n = 1; n < 1 + Math.random() * 2; n++) {
             if (nbFreeTiles > 0) {
                 addGameElement(DecorationFactory.buildLight(), getRandomFreeTile());
                 nbFreeTiles--;
@@ -221,6 +220,10 @@ public class Room implements Serializable {
         return tiles;
     }
 
+    public boolean isVisited() {
+        return tiles != null;
+    }
+
     public String getTmxName() {
         return tmxName;
     }
@@ -273,6 +276,19 @@ public class Room implements Serializable {
         for (Unit unit : lstUnitsToMoveIn) {
             addGameElement(unit, stairTile);
         }
+    }
+
+    public boolean hasLight() {
+        for (GameElement gameElement : objects) {
+            if (gameElement instanceof Light && ((Light) gameElement).isOn()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Map<Directions, Tile> getDoors() {
+        return doors;
     }
 
 }

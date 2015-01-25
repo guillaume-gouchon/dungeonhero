@@ -20,6 +20,7 @@ public class Book extends StorableResource implements InAppProduct {
     private static final String TAG = "Book";
 
     private final int id;
+    private final int level;
     private final String outroText;
     private final List<Chapter> chapters = new ArrayList<>();
     private final List<GraphicHolder> resourcesToLoad = new ArrayList<>();
@@ -29,7 +30,7 @@ public class Book extends StorableResource implements InAppProduct {
     private int bestScore;
     private int currentScore;
 
-    public Book(int id, String identifier, String introText, String outroText, String productId) {
+    public Book(int id, String identifier, String introText, String outroText, String productId, int level) {
         super(identifier);
         this.id = id;
         this.introText = introText;
@@ -37,6 +38,7 @@ public class Book extends StorableResource implements InAppProduct {
         this.productId = productId;
         this.bestScore = 0;
         this.currentScore = 3;
+        this.level = level;
     }
 
     @Override
@@ -142,4 +144,7 @@ public class Book extends StorableResource implements InAppProduct {
         Log.d(TAG, "updating score to " + currentScore);
     }
 
+    public int getLevel() {
+        return level;
+    }
 }

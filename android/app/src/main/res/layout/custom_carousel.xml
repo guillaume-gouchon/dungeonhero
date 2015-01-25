@@ -1,22 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/carousel"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:overScrollMode="never" />
-
     <LinearLayout
-        android:id="@+id/pagination"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:gravity="center"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never" />
+
+        <LinearLayout
+            android:id="@+id/pagination"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:orientation="horizontal"></LinearLayout>
+    </LinearLayout>
+
+    <com.glevel.dungeonhero.views.CustomTextView
+        android:id="@+id/hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:text="@string/hint_carousel"
+        android:background="@color/bg_btn_center"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:drawablePadding="5dp"
+        android:textColor="@color/white"
+        android:drawableBottom="@drawable/ic_hint_carousel" />
+</RelativeLayout>

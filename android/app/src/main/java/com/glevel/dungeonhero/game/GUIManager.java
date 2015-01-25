@@ -82,6 +82,7 @@ public class GUIManager {
         mActiveHeroLayout.setOnClickListener(mGameActivity);
 
         mGameActivity.findViewById(R.id.bag).setOnClickListener(mGameActivity);
+        mGameActivity.findViewById(R.id.map).setOnClickListener(mGameActivity);
 
         // setup big label TV
         mBigLabelAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.big_label_in_game);

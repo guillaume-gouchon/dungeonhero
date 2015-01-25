@@ -26,6 +26,7 @@ import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.GroundTypes;
 import com.glevel.dungeonhero.models.dungeons.Tile;
 import com.glevel.dungeonhero.models.dungeons.decorations.ItemOnGround;
+import com.glevel.dungeonhero.models.dungeons.decorations.Light;
 import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
 import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
 import com.glevel.dungeonhero.models.effects.BuffEffect;
@@ -69,7 +70,7 @@ public class ActionsDispatcher implements UserActionListener {
     private GameElement mSelectedElement;
     private Tile mSelectedTile = null;
     private boolean isMoving = false;
-    private boolean interrupt = false;
+    private Tile mNextTile = null;
     private boolean inputDisabled = false;
     private TimerHandler animationHandler;
     private ActiveSkill activatedSkill = null;
@@ -82,7 +83,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     @Override
-    public void onTouch(float x, float y) {
+    public void onMove(float x, float y) {
         Tile tile = getTileAtCoordinates(x, y);
         if (tile != null && tile.getAction() != null && mGameActivity.getActiveCharacter().getRank() == Ranks.ME) {
             selectTile(tile);
@@ -113,20 +114,23 @@ public class ActionsDispatcher implements UserActionListener {
                         && tile.getSubContent().get(0) instanceof Stairs) {
                     enterStairs();
                 } else if (mGameActivity.getRoom().isSafe()) {
-                    if (isMoving) {
-                        interrupt = true;
-                        mGameActivity.runOnUpdateThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                hideActionTiles();
-                                showSpecialActions();
-                                selectTile(null);
-                            }
-                        });
-                    } else if (mGameActivity.getActiveCharacter().canMoveIn(tile)) {
-                        selectTile(tile);
-                        addActionToTile(Actions.NONE, tile);
-                        move(tile);
+                    if (mGameActivity.getActiveCharacter().canMoveIn(tile)) {
+                        if (isMoving) {
+                            mNextTile = tile;
+                            mGameActivity.runOnUpdateThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    hideActionTiles();
+                                    showSpecialActions();
+                                    selectTile(mNextTile);
+                                    addActionToTile(Actions.NONE, mNextTile);
+                                }
+                            });
+                        } else {
+                            selectTile(tile);
+                            addActionToTile(Actions.NONE, tile);
+                            move(tile);
+                        }
                     }
                 }
             }
@@ -136,6 +140,10 @@ public class ActionsDispatcher implements UserActionListener {
     @Override
     public void onCancel(float x, float y) {
         selectTile(null);
+    }
+
+    @Override
+    public void onPinchZoom(float zoomFactor) {
     }
 
     private void executeAction(Tile tile) {
@@ -153,7 +161,25 @@ public class ActionsDispatcher implements UserActionListener {
             case SEARCH:
                 search(tile);
                 break;
+            case LIGHT:
+                switchLight(tile);
+                break;
         }
+    }
+
+    private void switchLight(final Tile tile) {
+        goCloserTo(tile, new OnActionExecuted() {
+            @Override
+            public void onActionDone(boolean success) {
+                if (success) {
+                    Light light = (Light) tile.getContent();
+                    light.switchLight();
+                    mGameActivity.updateLightAtmoshphere();
+                }
+                isMoving = false;
+                mGameActivity.nextTurn();
+            }
+        });
     }
 
     private void move(Tile tile) {
@@ -306,13 +332,13 @@ public class ActionsDispatcher implements UserActionListener {
         });
     }
 
-    private void getItemOrDropIt(Item item) {
+    public void getItemOrDropIt(final Item item) {
         boolean success = mGameActivity.getHero().addItem(item);
         if (!success) {
             mGameActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ApplicationUtils.showToast(mGameActivity, R.string.bag_full, Toast.LENGTH_LONG);
+                    ApplicationUtils.showToast(mGameActivity, mGameActivity.getString(R.string.bag_full, item.getName(mGameActivity.getResources())), Toast.LENGTH_LONG);
                 }
             });
             dropItem(item);
@@ -569,6 +595,8 @@ public class ActionsDispatcher implements UserActionListener {
                 addActionToTile(Actions.TALK, gameElement.getTilePosition());
             } else if (gameElement instanceof Searchable) {
                 addActionToTile(Actions.SEARCH, gameElement.getTilePosition());
+            } else if (gameElement instanceof Light) {
+                addActionToTile(Actions.LIGHT, gameElement.getTilePosition());
             }
         }
     }
@@ -605,15 +633,15 @@ public class ActionsDispatcher implements UserActionListener {
                         sprite.setPosition(nextTile.getTileX(), nextTile.getTileY());
                         Log.d(TAG, "character is z-index = " + sprite.getZIndex());
 
-                        if (!interrupt) {
+                        if (mNextTile == null) {
                             mScene.sortChildren();
                             animateMove(p, callback);
                         } else {
-                            Log.d(TAG, "interrupt movement");
+                            Log.d(TAG, "go to next tile");
                             mScene.sortChildren();
                             sprite.stand();
-                            callback.onActionDone(false);
-                            interrupt = false;
+                            move(mNextTile);
+                            mNextTile = null;
                         }
                     } else {
                         sprite.setPosition(sprite.getX() + 2 * direction.getDx(), sprite.getY() - 2 * direction.getDy());

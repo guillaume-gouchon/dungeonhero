@@ -43,6 +43,7 @@ import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.pathfinding.MathUtils;
 
 import org.andengine.entity.Entity;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.tmx.TMXLayer;
 import org.andengine.extension.tmx.TMXLoader;
@@ -60,9 +61,10 @@ import java.util.TimerTask;
 public class GameActivity extends MyBaseGameActivity {
 
     private static final String TAG = "GameActivity";
-
+    private static final int MINIMAP_RECTANGLE_SIZE = 30;
+    private static final float MINIMAP_ALPHA = 0.4f;
     public SelectionCircle mSelectionCircle;
-    public Entity mGroundLayer;
+    public Entity mGroundLayer, mMinimapLayer;
     public TMXTiledMap mTmxTiledMap;
     private Dungeon mDungeon;
     private Hero mHero;
@@ -70,6 +72,7 @@ public class GameActivity extends MyBaseGameActivity {
     private Unit mActiveCharacter;
     private ActionsDispatcher mActionDispatcher;
     private Tile mTurnStartTile;
+    private boolean mIsMinimapVisible = false;
 
     @Override
     protected void initGameActivity() {
@@ -135,6 +138,11 @@ public class GameActivity extends MyBaseGameActivity {
         mGroundLayer = new Entity();
         mGroundLayer.setZIndex(2);
         mScene.attachChild(mGroundLayer);
+
+        mMinimapLayer = new Entity();
+        mMinimapLayer.setZIndex(1000);
+        mMinimapLayer.setVisible(mIsMinimapVisible);
+        mScene.attachChild(mMinimapLayer);
 
         mSelectionCircle = new SelectionCircle(getVertexBufferObjectManager());
         mScene.attachChild(mSelectionCircle);
@@ -241,13 +249,18 @@ public class GameActivity extends MyBaseGameActivity {
     }
 
     @Override
-    public void onTouch(float x, float y) {
-        mActionDispatcher.onTouch(x, y);
+    public void onMove(float x, float y) {
+        mActionDispatcher.onMove(x, y);
     }
 
     @Override
     public void onCancel(float x, float y) {
         mActionDispatcher.onCancel(x, y);
+    }
+
+    @Override
+    public void onPinchZoom(float zoomFactor) {
+        mActionDispatcher.onPinchZoom(zoomFactor);
     }
 
     @Override
@@ -275,12 +288,18 @@ public class GameActivity extends MyBaseGameActivity {
                     public void onActionExecuted(ItemInfoInGame.ItemActionsInGame action) {
                         switch (action) {
                             case UNEQUIP:
-                                mHero.removeEquipment((Equipment) item);
+                                boolean success = mHero.removeEquipment((Equipment) item);
+                                if (!success) {
+                                    mActionDispatcher.getItemOrDropIt(item);
+                                }
                                 mGUIManager.updateBag(mHero);
                                 break;
 
                             case EQUIP:
-                                mHero.equip((Equipment) item);
+                                Item dropItem = mHero.equip((Equipment) item);
+                                if (dropItem != null) {
+                                    mActionDispatcher.getItemOrDropIt(item);
+                                }
                                 mGUIManager.updateBag(mHero);
                                 // update reachable targets
                                 updateActionTiles();
@@ -318,6 +337,10 @@ public class GameActivity extends MyBaseGameActivity {
             Log.d(TAG, "Show improve skill dialog");
             mGUIManager.showImproveSkillDialog((com.glevel.dungeonhero.models.skills.Skill) view.getTag(R.string.skill));
         }
+
+        if (view.getId() == R.id.map) {
+            toggleMinimap();
+        }
     }
 
     public void drinkPotion(Potion potion) {
@@ -342,6 +365,31 @@ public class GameActivity extends MyBaseGameActivity {
     public void startGame() {
         mCamera.setCenter(mHero.getSprite().getX(), mHero.getSprite().getY());
 
+        // update minimap
+        Room[][] rooms = mDungeon.getRooms();
+        Rectangle roomRectangle, doorRectangle;
+        Room room;
+        for (int i = 0; i < rooms.length; i++) {
+            for (int j = 0; j < rooms[0].length; j++) {
+                room = rooms[i][j];
+                if (room.isVisited()) {
+                    roomRectangle = new Rectangle((MINIMAP_RECTANGLE_SIZE * 5 / 3) * j, (MINIMAP_RECTANGLE_SIZE * 5 / 3) * i, MINIMAP_RECTANGLE_SIZE, MINIMAP_RECTANGLE_SIZE, getVertexBufferObjectManager());
+                    roomRectangle.setColor(mRoom == room ? Color.GREEN : Color.WHITE);
+                    roomRectangle.setAlpha(MINIMAP_ALPHA);
+                    mMinimapLayer.attachChild(roomRectangle);
+                    for (Directions direction : room.getDoors().keySet()) {
+                        doorRectangle = new Rectangle((MINIMAP_RECTANGLE_SIZE * 5 / 3) * j + (direction.getDx() * 2 + 1) * MINIMAP_RECTANGLE_SIZE / 3,
+                                (MINIMAP_RECTANGLE_SIZE * 5 / 3) * i + (-direction.getDy() * 2 + 1) * MINIMAP_RECTANGLE_SIZE / 3,
+                                MINIMAP_RECTANGLE_SIZE / 3, MINIMAP_RECTANGLE_SIZE / 3, getVertexBufferObjectManager());
+                        doorRectangle.setColor(mRoom == room ? Color.GREEN : Color.WHITE);
+                        doorRectangle.setAlpha(MINIMAP_ALPHA);
+                        mMinimapLayer.attachChild(doorRectangle);
+                    }
+                }
+            }
+            centerMinimap();
+        }
+
         mGUIManager.hideLoadingScreen();
         mGUIManager.updateSkillButtons();
 
@@ -354,6 +402,18 @@ public class GameActivity extends MyBaseGameActivity {
         }
 
         nextTurn();
+    }
+
+    public void toggleMinimap() {
+        Log.d(TAG, "toggle minimap");
+        centerMinimap();
+        mIsMinimapVisible = !mIsMinimapVisible;
+        mMinimapLayer.setVisible(mIsMinimapVisible);
+    }
+
+    public void centerMinimap() {
+        mMinimapLayer.setPosition(mCamera.getCenterX() - MINIMAP_RECTANGLE_SIZE * 5 / 3 * mDungeon.getRooms()[0].length / 2,
+                mCamera.getCenterY() - MINIMAP_RECTANGLE_SIZE * 5 / 3 * mDungeon.getRooms().length / 2);
     }
 
     public void showChapterIntro() {
@@ -374,7 +434,7 @@ public class GameActivity extends MyBaseGameActivity {
                                         break;
                                     }
                                 }
-                                
+
                                 if (tutoCharacter != null) {
                                     mActionDispatcher.talk(tutoCharacter.getTilePosition());
                                 }
@@ -622,6 +682,7 @@ public class GameActivity extends MyBaseGameActivity {
                             @Override
                             public void onPopulateSceneFinished() {
                                 mEngine.start();
+                                updateLightAtmoshphere();
                                 animateRoomSwitch(doorDirection);
                                 mScene.sortChildren(true);
                             }
@@ -657,6 +718,19 @@ public class GameActivity extends MyBaseGameActivity {
                 Log.d(TAG, "animation is over");
                 mScene.setX(0);
                 mScene.setY(0);
+            }
+        });
+    }
+
+    public void updateLightAtmoshphere() {
+        setForeground(mRoom.hasLight() ? android.R.color.transparent : R.color.red);
+    }
+
+    public void setForeground(final int color) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.foreground_view).setBackgroundColor(color);
             }
         });
     }

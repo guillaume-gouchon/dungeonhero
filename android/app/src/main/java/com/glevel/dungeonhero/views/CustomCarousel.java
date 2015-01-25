@@ -1,13 +1,17 @@
 package com.glevel.dungeonhero.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import com.glevel.dungeonhero.R;
@@ -22,6 +26,14 @@ import java.util.TimerTask;
  */
 public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChangeListener {
 
+    private static final String TAG = "CustomCarousel";
+
+    /**
+     * Hint
+     */
+    private static final String CAROUSEL_HINT_PREFS = "carousel_hint_prefs";
+    private static final int SHOW_HINT_NUMBER_TIME = 3;
+
     private static final int DEFAULT_NB_COLUMNS = 1;
     private static final float ALPHA_ACTIVE_DOT = 0.65f;
     private static final float ALPHA_PASSIVE_DOT = 0.15f;
@@ -32,9 +44,13 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
     private Context mContext;
     private Adapter mAdapter;
 
+    /**
+     * UI
+     */
     private ViewPager mViewPager;
     private ViewGroup mPagination;
     private View[] mPaginationDots;
+    private View mHint;
 
     public CustomCarousel(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -42,6 +58,22 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.custom_carousel, this, true);
+
+        // show or not the hint
+        mHint = findViewById(R.id.hint);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int nbCarouselHintShow = prefs.getInt(CAROUSEL_HINT_PREFS, 0);
+        Log.d(TAG, "carousel hint show number = " + nbCarouselHintShow);
+        if (nbCarouselHintShow < SHOW_HINT_NUMBER_TIME) {
+            Log.d(TAG, "show hint");
+
+            // update prefs
+            prefs.edit().putInt(CAROUSEL_HINT_PREFS, nbCarouselHintShow + 1).apply();
+
+            // show hint
+            mHint.startAnimation(AnimationUtils.loadAnimation(context, R.anim.loading_dots));
+            mHint.setVisibility(View.VISIBLE);
+        }
 
         mViewPager = (ViewPager) findViewById(R.id.carousel);
         mViewPager.setOnPageChangeListener(this);
@@ -85,6 +117,10 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (positionOffset > 0.5) {
+            mHint.setVisibility(View.GONE);
+            mHint.setAnimation(null);
+        }
     }
 
     @Override

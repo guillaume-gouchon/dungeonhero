@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.activities.adapters;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +21,8 @@ import java.util.List;
 
 public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
 
+    private static final String TAG = "HeroesAdapter";
+
     private Activity mActivity;
     private Resources mResources;
     private Dialog mSkillInfoDialog;
@@ -32,6 +35,8 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        Log.d(TAG, "instantiate item " + position);
+
         View layout = (View) super.instantiateItem(container, position);
         layout.setTag(R.string.id, position);
 
@@ -52,6 +57,11 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
         showSkills(layout, hero);
 
         return layout;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
     private void showSkills(View rootLayout, Hero hero) {
@@ -80,7 +90,7 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
         });
     }
 
-    public void showSkillInfo(Skill skill) {
+    private void showSkillInfo(Skill skill) {
         if (mSkillInfoDialog == null || !mSkillInfoDialog.isShowing()) {
             mSkillInfoDialog = new ElementDetails(mActivity, skill);
             mSkillInfoDialog.show();

@@ -5,15 +5,6 @@
 
     <!-- Margin in ViewPager caused the view to be too large. This manual margin fixes it. -->
 
-    <ImageView
-        android:id="@+id/score"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="25dp"
-        android:visibility="gone" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,15 +17,28 @@
         android:background="@drawable/bg_carousel_item"
         android:gravity="top|center">
 
-        <com.glevel.dungeonhero.views.CustomTextView
-            style="@style/BookTitle"
-            android:id="@+id/name"
-            android:drawablePadding="15dp"
-            android:drawableLeft="@drawable/ic_book"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/placeholder"
-            android:textSize="26sp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dp">
+
+            <com.glevel.dungeonhero.views.CustomTextView
+                style="@style/BookTitle"
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:textSize="24sp" />
+
+            <com.glevel.dungeonhero.views.StarRatingView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8" />
+        </LinearLayout>
 
         <View
             android:layout_marginTop="10dp"
@@ -62,5 +66,35 @@
         android:layout_margin="25dp"
         android:layout_alignParentRight="true"
         android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/enter_quest_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+
+        <com.glevel.dungeonhero.views.SpriteView
+            android:id="@+id/monster1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="8dp" />
+
+        <com.glevel.dungeonhero.views.CustomButton
+            android:id="@+id/enter_quest_btn"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_quest"
+            android:layout_marginRight="8dp" />
+
+        <com.glevel.dungeonhero.views.SpriteView
+            android:id="@+id/monster2"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
 
 </RelativeLayout>

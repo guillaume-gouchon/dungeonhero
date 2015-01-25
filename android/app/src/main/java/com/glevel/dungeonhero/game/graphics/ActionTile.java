@@ -22,7 +22,12 @@ public class ActionTile extends Rectangle {
         mTile = tile;
         mAction = action;
         setColor(action.getColor());
-        setAlpha(mAction == Actions.MOVE || mAction == Actions.NONE ? INACTIVE_ALPHA : ACTIVE_ALPHA);
+        if (mAction == Actions.LIGHT) {
+            setAlpha(0);
+        } else {
+            setAlpha(mAction == Actions.MOVE || mAction == Actions.NONE ? INACTIVE_ALPHA : ACTIVE_ALPHA);
+        }
+
         setScale(MAX_SCALE);
 
         if (isEnemyTurn) {

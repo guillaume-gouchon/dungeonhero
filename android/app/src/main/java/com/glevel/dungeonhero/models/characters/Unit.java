@@ -43,13 +43,11 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
 
     // Skills
     protected final List<Skill> skills = new ArrayList<>();
-    protected List<Effect> buffs = new ArrayList<>();
-
-    // Possessions
-    protected int gold;
     protected final List<Item> items = new ArrayList<>();
     protected final Equipment[] equipments = new Equipment[5];
-
+    protected List<Effect> buffs = new ArrayList<>();
+    // Possessions
+    protected int gold;
     // Characteristics
     protected int hp;
     protected int currentHP;
@@ -68,6 +66,14 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         this.spirit = spirit;
         this.movement = movement;
         this.gold = 0;
+    }
+
+    private static void applyWeaponEffect(Equipment equipment, Unit target) {
+        for (Effect effect : equipment.getEffects()) {
+            if (!(effect instanceof PermanentEffect)) {
+                target.getBuffs().add(effect);
+            }
+        }
     }
 
     public int getHp() {
@@ -194,14 +200,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         return fightResult;
     }
 
-    private static void applyWeaponEffect(Equipment equipment, Unit target) {
-        for (Effect effect : equipment.getEffects()) {
-            if (!(effect instanceof PermanentEffect)) {
-                target.getBuffs().add(effect);
-            }
-        }
-    }
-
     public String getReadableDamage() {
         int weapon1Min = (equipments[0] != null ? ((Weapon) equipments[0]).getMinDamage() : 0);
         int weapon2Min = (equipments[1] != null ? ((Weapon) equipments[1]).getMinDamage() / 2 : 0);
@@ -325,18 +323,27 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         }
     }
 
-    public void equip(Equipment equipment) {
+    /**
+     * @param equipment
+     * @return item to drop
+     */
+    public Item equip(Equipment equipment) {
+        Item itemToDrop = null;
+        items.remove(equipment);
         if (equipment instanceof Armor) {
-            if (equipments[2] != null) {
-                removeEquipment(2);
-            }
+            removeEquipment(2);
             equipments[2] = equipment;
         } else if (equipment instanceof TwoHandedWeapon) {
             if (equipments[0] != null) {
                 removeEquipment(0);
             }
-            if (equipments[1] != null) {
-                removeEquipment(1);
+
+            Equipment equipment1 = equipments[1];
+            if (equipment1 != null) {
+                boolean success = removeEquipment(1);
+                if (!success) {
+                    itemToDrop = equipment1;
+                }
             }
             equipments[0] = equipment;
         } else if (equipment instanceof Weapon) {
@@ -358,7 +365,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
                 equipments[4] = equipment;
             }
         }
-        items.remove(equipment);
+        return itemToDrop;
     }
 
     public boolean isEquipped(Equipment equipment) {
@@ -372,22 +379,23 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         return false;
     }
 
-    public void removeEquipment(Equipment equipment) {
+    public boolean removeEquipment(Equipment equipment) {
         Equipment e;
         for (int n = 0; n < equipments.length; n++) {
             e = equipments[n];
             if (e == equipment) {
-                removeEquipment(n);
-                return;
+                return removeEquipment(n);
             }
         }
+        return true;
     }
 
-    private void removeEquipment(int index) {
+    private boolean removeEquipment(int index) {
         boolean success = addItem(equipments[index]);
         if (success) {
             equipments[index] = null;
         }
+        return success;
     }
 
     public boolean addItem(Item item) {

@@ -356,7 +356,7 @@ public class PNJFactory {
         pnj.getDiscussions().remove(0);
 
         // I already looted everything
-        Discussion discussion = new Discussion("link_3", true, null);
+        Discussion discussion = new Discussion("link_3", true, null, new StopDiscussionCallback(pnj));
         discussion.addReaction(new Reaction("link_3_answer_1", 0));
         pnj.getDiscussions().add(discussion);
 

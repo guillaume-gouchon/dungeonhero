@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.glevel.dungeonhero.R;
@@ -23,6 +25,7 @@ import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.adapters.LoadGamesAdapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.providers.MyContentProvider;
+import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 
 public class LoadGameFragment extends DialogFragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -80,16 +83,22 @@ public class LoadGameFragment extends DialogFragment implements LoaderManager.Lo
         super.onResume();
         mAdapter = new LoadGamesAdapter(getActivity());
         mGamesListView.setAdapter(mAdapter);
+
+        getLoaderManager().initLoader(GET_LOAD_GAMES, null, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.load_game_fragment, container, false);
+        View layout = inflater.inflate(R.layout.fragment_load_game, container, false);
 
         mGamesListView = (ListView) layout.findViewById(R.id.gamesList);
         mGamesListView.setOnItemClickListener(mOnItemClickedListener);
 
-        getLoaderManager().initLoader(GET_LOAD_GAMES, null, this);
+        // add empty header view
+        LinearLayout viewHeader = new LinearLayout(getActivity().getApplicationContext());
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ApplicationUtils.convertDpToPixels(getActivity().getApplicationContext(), 20));
+        viewHeader.setLayoutParams(lp);
+        mGamesListView.addHeaderView(viewHeader, null, false);
 
         return layout;
     }

@@ -19,8 +19,8 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
 
     private static final String TAG = "InputManager";
 
-    private static final int DRAG_MINIMUM_DISTANCE = 400;// in pixels ^2
-    private static final int AUTO_SCROLLING_THRESHOLD = 40;// in pixels
+    private static final int DRAG_MINIMUM_DISTANCE = 1600;// in pixels ^2
+    private static final int AUTO_SCROLLING_THRESHOLD = 20;// in pixels
     private static final int AUTO_SCROLLING_SPEED = 2;// in pixels
 
     private final ZoomCamera mCamera;
@@ -106,10 +106,10 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
                         mIsDragged = false;
                         mLastX = pSceneTouchEvent.getX();
                         mLastY = pSceneTouchEvent.getY();
-                        mUserActionListener.onTouch(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+                        mUserActionListener.onMove(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        mUserActionListener.onTouch(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+                        mUserActionListener.onMove(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
                         break;
                     case MotionEvent.ACTION_UP:
                         if (!mIsDragged) {

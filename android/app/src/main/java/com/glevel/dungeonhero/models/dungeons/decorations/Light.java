@@ -10,14 +10,24 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 public class Light extends Decoration {
 
     private static final long serialVersionUID = 5948624130900767936L;
+    private boolean mIsOn = true;
 
     public Light(String identifier) {
-        super(identifier, 21, 20, 3, 1);
+        super(identifier, 28, 20, 4, 1);
+    }
+
+    public boolean isOn() {
+        return mIsOn;
     }
 
     @Override
     public void createSprite(VertexBufferObjectManager vertexBufferObjectManager) {
         sprite = new LightSprite(this, vertexBufferObjectManager);
+    }
+
+    public void switchLight() {
+        mIsOn = !mIsOn;
+        ((LightSprite) sprite).updateSprite(mIsOn);
     }
 
 }
