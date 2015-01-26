@@ -66,6 +66,10 @@ public class Chapter implements Serializable {
         Log.d(TAG, "reset chapter = " + events.size() + " events");
     }
 
+    public boolean isFirst() {
+        return index == 0;
+    }
+
     public List<Event> getEvents() {
         return events;
     }

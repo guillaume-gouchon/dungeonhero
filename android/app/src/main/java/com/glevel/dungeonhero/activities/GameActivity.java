@@ -143,8 +143,8 @@ public class GameActivity extends MyBaseGameActivity {
             List<Unit> heroes = new ArrayList<>();
             heroes.add(mHero);
             mDungeon.moveIn(mTmxTiledMap, heroes);
-            if (mGame.getBook().getId() == 1L && mDungeon.isFirstRoom()) {
-                // add tutorial PNJ if this is the introduction quest
+            if (mGame.getBook().getId() == 1L && mGame.getBook().getActiveChapter().isFirst() && mDungeon.isFirstRoom()) {
+                // add intro PNJ if this is the introduction quest
                 final Pnj tutorialCharacter = PNJFactory.buildTutorialPNJ();
                 mRoom.addGameElement(tutorialCharacter, mRoom.getRandomFreeTile());
             }
