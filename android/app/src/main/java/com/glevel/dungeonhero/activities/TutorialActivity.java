@@ -12,6 +12,7 @@ import com.glevel.dungeonhero.data.characters.MonsterFactory;
 import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.data.items.RingFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
+import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.Reward;
@@ -139,7 +140,8 @@ public class TutorialActivity extends GameActivity {
     @Override
     public void switchRoom(Tile doorTile) {
         if (mTutorialStep == 1 || mTutorialStep == 2 || mTutorialStep == 4 || mTutorialStep == 5) {
-            gameover();
+            tutorialFailed();
+            return;
         }
         super.switchRoom(doorTile);
     }
@@ -152,7 +154,7 @@ public class TutorialActivity extends GameActivity {
                 nextTutorialStep();
             }
             if (mRoom.getQueue().size() == 1) {
-                gameover();
+                tutorialFailed();
             }
         }
 
@@ -163,6 +165,21 @@ public class TutorialActivity extends GameActivity {
         if (mTutorialStep == 4 && mHero.getItems().size() > 2) {
             nextTutorialStep();
         }
+    }
+
+    private void tutorialFailed() {
+        Log.d(TAG, "tutorial failed");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mGUIManager.showIntrospection(R.string.tutorial_failed, R.string.ok, new OnActionExecuted() {
+                    @Override
+                    public void onActionDone(boolean success) {
+                        gameover();
+                    }
+                });
+            }
+        });
     }
 
     @Override

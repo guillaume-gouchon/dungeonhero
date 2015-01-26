@@ -342,6 +342,7 @@
         <item>Perfect, you really look like a biker now !\nRemember that there are 7 levels of items and that each level has its own color code.\nSometimes, you will find items which are not suitable to your type of character; they will be written in a red color and you will not be able to equip them...\n\nMove on to the last room.</item>
         <item>Be sure to remember these last points:\n- If you are ever feeling lost, you can check the dungeon map with the button at the top of the screen.\n- You will get skills in your next adventures; these are powerful but they can only be used once a dungeon floor, so keep them for the most dangerous places.\n\nReach the stairs now to finish the tutorial.</item>
     </string-array>
+    <string name="tutorial_failed">You did not do what was expected !\n\nYou failed at the tutorial :) !</string>
 
     <!-- Initiation Quest -->
     <string name="initiation_quest">The Initiation</string>

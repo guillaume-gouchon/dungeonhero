@@ -229,7 +229,7 @@ public class GUIManager {
         showIntrospection(mGameActivity.getGame().getBook().getActiveChapter().getIntroText(mResources), R.string.ok, callback);
     }
 
-    private void showIntrospection(int text, int okButtonText, final OnActionExecuted callback) {
+    public void showIntrospection(int text, int okButtonText, final OnActionExecuted callback) {
         mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(text),
                 new DialogInterface.OnClickListener() {
                     @Override
