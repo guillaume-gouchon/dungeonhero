@@ -331,7 +331,9 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         Item itemToDrop = null;
         items.remove(equipment);
         if (equipment instanceof Armor) {
-            removeEquipment(2);
+            if (equipments[2] != null) {
+                removeEquipment(2);
+            }
             equipments[2] = equipment;
         } else if (equipment instanceof TwoHandedWeapon) {
             if (equipments[0] != null) {
@@ -392,9 +394,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
 
     private boolean removeEquipment(int index) {
         boolean success = addItem(equipments[index]);
-        if (success) {
-            equipments[index] = null;
-        }
+        equipments[index] = null;
         return success;
     }
 

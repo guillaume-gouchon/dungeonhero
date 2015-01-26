@@ -128,7 +128,7 @@ public class MonsterFactory {
             nbMonsters = 0;
         } else if (random < 5) {
             nbMonsters = 1;
-        } else if (random < 9) {
+        } else if (random < 9 || threatLevel == 1) {
             nbMonsters = 2;
         } else {
             nbMonsters = 3;
@@ -150,12 +150,12 @@ public class MonsterFactory {
                     case 4:
                     case 5:
                     case 10:
+                    case 12:
                         return buildGoblin();
                     case 6:
                     case 7:
                     case 8:
                     case 11:
-                    case 12:
                         return buildOrc();
                     case 9:
                         return buildOrcCaptain();

@@ -22,6 +22,7 @@ import android.widget.ListView;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
 import com.glevel.dungeonhero.activities.GameActivity;
+import com.glevel.dungeonhero.activities.TutorialActivity;
 import com.glevel.dungeonhero.activities.adapters.LoadGamesAdapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.providers.MyContentProvider;
@@ -39,6 +40,7 @@ public class LoadGameFragment extends DialogFragment implements LoaderManager.Lo
     private final ListView.OnItemClickListener mOnItemClickedListener = new ListView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            MusicManager.playSound(getActivity().getApplicationContext(), R.raw.button_sound);
             Game game = Game.fromCursor(getActivity().getContentResolver().query(MyContentProvider.URI_GAMES, null, Game.COLUMN_ID + "=?", new String[]{"" + view.getTag(R.string.id)}, null));
             launchGame(game);
         }
@@ -129,13 +131,11 @@ public class LoadGameFragment extends DialogFragment implements LoaderManager.Lo
     }
 
     private void launchGame(Game game) {
-        MusicManager.playSound(getActivity().getApplicationContext(), R.raw.button_sound);
-
         Intent intent;
         if (game.getDungeon() == null) {
             intent = new Intent(getActivity(), BookChooserActivity.class);
         } else {
-            intent = new Intent(getActivity(), GameActivity.class);
+            intent = new Intent(getActivity(), game.getBook() != null && game.getBook().isTutorial() ? TutorialActivity.class : GameActivity.class);
         }
         intent.putExtra(Game.class.getName(), game);
         startActivity(intent);

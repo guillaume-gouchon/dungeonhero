@@ -126,7 +126,7 @@
     <string name="resume_game">Resume Game</string>
     <string name="leave_quest">Leave Quest</string>
     <string name="confirm_leave_quest">Are you sure you want to leave this quest\u00A0?\n\n<i>(you will come back to the adventure screen)</i></string>
-    <string name="confirm_finish_quest">Are you sure you want to leave this dungeon floor\u00A0?</string>
+    <string name="confirm_finish_quest">Are you sure you want to finish this quest and leave the dungeon\u00A0?</string>
     <string name="riddle_answer_input">your answer...</string>
     <string name="game_master">Game Master</string>
     <string name="new_level_title">You reached level %s\u00A0!</string>
@@ -329,7 +329,21 @@
     <string name="terror">Terror of Blarzog</string>
     <string name="terror_description">You enters your enemies\'s mind and install terror in them, stunning your opponents and dealing damages to them over time.</string>
 
-    <!-- Tutorial Quest -->
+    <!-- Tutorial -->
+    <string name="tutorial">Tutorial</string>
+    <string name="tutorial_intro">A simple adventure in which you will learn how to move, fight, loot treasures and more...</string>
+    <string-array name="tutorial_hints">
+        <item>Welcome to the Tutorial ! You will learn here how to survive in deadly dungeons.\n\nFirst, learn how to move: when you are not in combat mode, tap on any tile to move to it.\n\nTap on the door to move on to the next room.</item>
+        <item>There is a monster in this room, that means that the game is now turn-based.\nIn fight mode, the tiles you can reach for this turn are enlightened in green.\n\nFinish your turn by tapping on your character.</item>
+        <item>This goblin looks angry, let\'s get rid of him.\n\nA red tile will appear under any monster which will be within your attack range. Tap on the monster to select it and then tap again to validate the attack.</item>
+        <item>Good work ! You have earned some gold and some experience points !\nTap on the top right-handed button to see your hero details and to check your experience level.\n\nThen, move on to the next room.</item>
+        <item>Wow, there is a treasure chest here !\nSelect the treasure chest and then open it by tapping on it again.</item>
+        <item>Awesome you found a ring, let\'s equip it now. Tap on the bag button in the bottom right-hand corner to open your bag, then select the ring and equip it.</item>
+        <item>Perfect, you really look like a biker now !\nRemember that there are 7 levels of items and that each level has its own color code.\nSometimes, you will find items which are not suitable to your type of character; they will be written in a red color and you will not be able to equip them...\n\nMove on to the last room.</item>
+        <item>Be sure to remember these last points:\n- If you are ever feeling lost, you can check the dungeon map with the button at the top of the screen.\n\n- You will get skills in your next adventures; these are powerful but they can only be used once a dungeon floor, so keep them for the most dangerous places.\n\nReach the stairs now to finish the tutorial.</item>
+    </string-array>
+
+    <!-- Initiation Quest -->
     <string name="initiation_quest">The Initiation</string>
     <string name="initiation_intro">Finally, you decided to jump ahead; you set aside your boring life to become a rootless adventurer, looking for gold and glory through the three kingdoms.\n\nOn the road to the first tavern, you met an old man asking for help.\nHis daughter Lubrice has been kidnapped by an Orc Chief from the nearby mountains, and he is begging you to bring her back alive.\n\nLooks like your first Quest begins\u00A0!</string>
     <string name="initiation_outro">Well done, your first quest is a success\u00A0!\n\nYou left the caverns straight away and arrived at the nearest village in the evening.\n\nAfter a few pints at the tavern, you had a well-deserved sleep.\n\nYour thirst for adventures has to wait until the next day.</string>
@@ -337,18 +351,14 @@
     <string name="initiation_chapter_1">Wow, this guy seems hurt to death... let\'s talk to him.</string>
     <string name="initiation_chapter_1_outro">Ah ah\u00A0! It\'s a good start\u00A0!</string>
     <string name="initiation_chapter_2">Let\'s find out where the Orc Chief is hiding and then save the girl\u00A0!</string>
-    <string name="initiation_tutorial_intro">Hey adventurer, don\'t do the same mistakes as me...\n\nI will tell you how to survive in this deadly dungeon.</string>
-    <string name="initiation_tutorial_movement">When there are no enemies, tap on any tile to move to it.\nDuring fight mode, the reachable tiles are enlightened in green; you have to tap on your character to finish your turn.</string>
-    <string name="initiation_tutorial_search">To search for treasures, to talk to characters, or to attack an enemy, you\'ll first need to select your target and then to tap on it again to validate the interaction.\nIn fight mode, it will end your turn.</string>
-    <string name="initiation_tutorial_fight">Tap the bag button to show your inventory. Equipments are from level 0 to level 6, each level has its own color following this order : black, yellow, orange, red, green, blue, and purple.\n\nUse the best equipment you find and don\'t forget to use your potions in order to fight evil safely.\n\nFinally, some items may not be suitable with the type of your hero and so would be written in red.</string>
-    <string name="initiation_tutorial_skills">You also have skills to help you in your quests.\nLike equipment, skills have levels and colors corresponding to it.\nSkills can only be used once every dungeon floor, try to keep them for the most dangerous room...\n\nDo you want I tell you some more tips\u00A0?</string>
+    <string name="initiation_tutorial_intro">Hey adventurer, don\'t do the same mistakes as me...\n\nDo you want I tell you some tips\u00A0?</string>
     <string name="initiation_tutorial_tips">Experience is primordial : new levels will increase your health points, characteristics and will give you skill points to improve or to learn new skills.\n\nConcerning weapons, remember not to fight with range weapons in close combat, and try to use a shield with your second arm cause a weapon will deal less damage with this arm.</string>
     <string name="initiation_tutorial_outro">Aaargh, so it is time for me now...</string>
     <string name="initiation_tutorial_outro_reward">Thanks for that... Take this Potion of Force to help you in your next fights... May the force be with you... Aaaaargh...</string>
     <string name="initiation_tutorial_thanks">Thanks</string>
     <string name="ok_get_it">Ok, I get it</string>
     <string name="initiation_die_weak">Die, you are so weak compared to me\u00A0!\n<i>(finish him)</i></string>
-    <string name="initiation_pray">I\'ll pray for you, mighty warrior.</string>
+    <string name="initiation_pray">I will pray for you, mighty warrior.</string>
     <string name="initiation_quest_girl">Lubrice</string>
     <string name="initiation_girl_1">Who are you\u00A0? Are you here to save me\u00A0?</string>
     <string name="initiation_girl_1_answer_1">Why would I save you\u00A0?</string>

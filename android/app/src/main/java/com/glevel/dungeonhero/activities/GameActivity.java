@@ -64,11 +64,11 @@ public class GameActivity extends MyBaseGameActivity {
     public SelectionCircle mSelectionCircle;
     public Entity mGroundLayer;
     public TMXTiledMap mTmxTiledMap;
-    private Dungeon mDungeon;
-    private Hero mHero;
-    private Room mRoom;
-    private Unit mActiveCharacter;
-    private ActionsDispatcher mActionDispatcher;
+    protected Dungeon mDungeon;
+    protected Hero mHero;
+    protected Room mRoom;
+    protected Unit mActiveCharacter;
+    protected ActionsDispatcher mActionDispatcher;
     private Tile mTurnStartTile;
 
     @Override
@@ -143,7 +143,7 @@ public class GameActivity extends MyBaseGameActivity {
             List<Unit> heroes = new ArrayList<>();
             heroes.add(mHero);
             mDungeon.moveIn(mTmxTiledMap, heroes);
-            if (mGame.getBook().isTutorialTime() && mDungeon.isFirstRoom()) {
+            if (mGame.getBook().getId() == 1L && mDungeon.isFirstRoom()) {
                 // add tutorial PNJ if this is the introduction quest
                 final Pnj tutorialCharacter = PNJFactory.buildTutorialPNJ();
                 mRoom.addGameElement(tutorialCharacter, mRoom.getRandomFreeTile());
@@ -176,7 +176,21 @@ public class GameActivity extends MyBaseGameActivity {
         mHero.updateSprite();
         mGUIManager.setData(mHero);
 
-        // show book intro story if needed
+        showBookIntro();
+
+        Log.d(TAG, "populate scene is finished");
+        pOnPopulateSceneCallback.onPopulateSceneFinished();
+
+        mActionDispatcher = new ActionsDispatcher(this, mScene);
+
+        Log.d(TAG, "sort children by z-index");
+        mScene.sortChildren();
+
+        startGame();
+    }
+
+    public void showBookIntro() {
+        // show book introduction if needed
         if (mGame.getBook().getIntroText(getResources()) > 0) {
             Bundle args = new Bundle();
             args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText(getResources()));
@@ -190,16 +204,6 @@ public class GameActivity extends MyBaseGameActivity {
                 }
             });
         }
-
-        Log.d(TAG, "populate scene is finished");
-        pOnPopulateSceneCallback.onPopulateSceneFinished();
-
-        mActionDispatcher = new ActionsDispatcher(this, mScene);
-
-        Log.d(TAG, "sort children by z-index");
-        mScene.sortChildren();
-
-        startGame();
     }
 
     public void addElementToScene(GameElement gameElement) {
@@ -377,31 +381,7 @@ public class GameActivity extends MyBaseGameActivity {
             public void onActionDone(boolean success) {
                 // in the introduction quest
                 if (mGame.getBook().getActiveChapter().getIntroText(getResources()) > 0) {
-                    OnActionExecuted callback = new OnActionExecuted() {
-                        @Override
-                        public void onActionDone(boolean success) {
-                            if (mGame.getBook().isTutorialTime()) {
-                                // auto-talk to the tutorial character
-                                Unit tutoCharacter = null;
-                                for (GameElement gameElement : mRoom.getObjects()) {
-                                    if (gameElement.getIdentifier().equals("tutorial_character")) {
-                                        tutoCharacter = (Unit) gameElement;
-                                        break;
-                                    }
-                                }
-
-                                if (tutoCharacter != null) {
-                                    mActionDispatcher.talk(tutoCharacter.getTilePosition());
-                                }
-                            }
-                        }
-                    };
-
-                    // don't show tutorial intro the second time
-                    if (mGame.getBook().getId() != BookFactory.TUTORIAL_BOOK_ID || !mGame.getBook().isDone()) {
-                        mGUIManager.showChapterIntro(callback);
-                    }
-
+                    mGUIManager.showChapterIntro(null);
                     mGame.getBook().getActiveChapter().read();
                 }
             }
@@ -415,7 +395,7 @@ public class GameActivity extends MyBaseGameActivity {
         }
     }
 
-    private void gameover() {
+    protected void gameover() {
         Log.d(TAG, "hero is dead, game over !");
         mGame.getBook().updateScore(-1);
         Intent intent = new Intent(GameActivity.this, GameOverActivity.class);

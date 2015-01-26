@@ -58,7 +58,11 @@ public class BooksAdapter extends CustomCarousel.Adapter<Book> {
         Book book = mDataList.get(position);
 
         ((TextView) layout.findViewById(R.id.name)).setText(book.getName(mResources));
-        ((TextView) layout.findViewById(R.id.summary)).setText(book.getIntroText(mResources));
+        if (book.getIntroText(mResources) > 0) {
+            ((TextView) layout.findViewById(R.id.summary)).setText(book.getIntroText(mResources));
+        } else {
+            layout.findViewById(R.id.summary).setVisibility(View.INVISIBLE);
+        }
         layout.findViewById(R.id.lock).setVisibility(book.isAvailable() ? View.GONE : View.VISIBLE);
 
         // star rating

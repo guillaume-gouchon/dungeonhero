@@ -210,7 +210,7 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
                 if (which == R.id.ok_btn) {
                     // go to tutorial
                     dialog.dismiss();
-                    onBookSelected(mLstBooks.get(0));
+                    onBookSelected(BookFactory.buildTutorial());
                 } else {
                     dialog.dismiss();
                     onBookSelected(selectedBook);
@@ -234,7 +234,7 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
 
     private void onBookSelected(Book selectedBook) {
         mGame.setBook(selectedBook);
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, selectedBook.isTutorial() ? TutorialActivity.class : GameActivity.class);
         intent.putExtra(Game.class.getName(), mGame);
         startActivity(intent);
         finish();

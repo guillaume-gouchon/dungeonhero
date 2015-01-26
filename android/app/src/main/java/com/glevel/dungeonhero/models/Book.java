@@ -108,7 +108,7 @@ public class Book extends StorableResource implements InAppProduct {
         chapter.setIndex(chapters.size());
         chapters.add(chapter);
 
-        if (id == BookFactory.TUTORIAL_BOOK_ID) {
+        if (id == 1L) {
             resourcesToLoad.add(PNJFactory.buildTutorialPNJ());
         }
 
@@ -121,10 +121,6 @@ public class Book extends StorableResource implements InAppProduct {
 
     public List<GraphicHolder> getResourcesToLoad() {
         return resourcesToLoad;
-    }
-
-    public boolean isTutorialTime() {
-        return id == BookFactory.TUTORIAL_BOOK_ID && getActiveChapter().isFirst() && !isDone();
     }
 
     public int getBestScore() {
@@ -147,4 +143,9 @@ public class Book extends StorableResource implements InAppProduct {
     public int getLevel() {
         return level;
     }
+
+    public boolean isTutorial() {
+        return id == BookFactory.TUTORIAL_BOOK_ID;
+    }
+
 }

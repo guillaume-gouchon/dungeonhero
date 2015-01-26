@@ -4,9 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.dungeons.Directions;
@@ -59,7 +57,7 @@ public class Minimap extends View {
         if (mDungeon != null) {
 
             // set size depending on the canvas size and the dungeon size
-            mRectangleSize = canvas.getWidth() * 3 / 5 / mDungeon.getRooms().length;
+            mRectangleSize = canvas.getWidth() * 3 / 5 / Math.max(mDungeon.getRooms().length, mDungeon.getRooms()[0].length);
 
             Room[][] rooms = mDungeon.getRooms();
             Room room;

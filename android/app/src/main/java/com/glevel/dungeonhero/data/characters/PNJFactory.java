@@ -26,26 +26,6 @@ public class PNJFactory {
 
         // intro
         Discussion discussion = new Discussion("initiation_tutorial_intro", false, null);
-        discussion.addReaction(new Reaction("ok", 0));
-        pnj.getDiscussions().add(discussion);
-
-        // explain movement
-        discussion = new Discussion("initiation_tutorial_movement", false, null);
-        discussion.addReaction(new Reaction("ok_get_it", 0));
-        pnj.getDiscussions().add(discussion);
-
-        // explain talk and search
-        discussion = new Discussion("initiation_tutorial_search", false, null);
-        discussion.addReaction(new Reaction("ok_get_it", 0));
-        pnj.getDiscussions().add(discussion);
-
-        // explain fighting
-        discussion = new Discussion("initiation_tutorial_fight", false, null);
-        discussion.addReaction(new Reaction("ok_get_it", 0));
-        pnj.getDiscussions().add(discussion);
-
-        // explain skills
-        discussion = new Discussion("initiation_tutorial_skills", false, null);
         discussion.addReaction(new Reaction("yes", 0));
         discussion.addReaction(new Reaction("no", 1));
         pnj.getDiscussions().add(discussion);

@@ -10,7 +10,7 @@ import com.glevel.dungeonhero.utils.providers.AbstractDatabaseHelper;
 public class MyDatabaseHelper extends AbstractDatabaseHelper {
 
     private static final String DATABASE_NAME = "dungeon_hero";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, DATABASE_VERSION);
