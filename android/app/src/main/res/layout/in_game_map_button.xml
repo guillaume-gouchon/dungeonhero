@@ -10,7 +10,7 @@
         android:layout_width="@dimen/in_game_button_size"
         android:layout_height="@dimen/in_game_button_size"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_map"
+        android:src="@drawable/bg_map"
         android:alpha="0.5"
         android:padding="3dp" />
 

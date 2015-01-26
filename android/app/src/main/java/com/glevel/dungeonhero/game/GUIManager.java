@@ -26,6 +26,7 @@ import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.game.base.interfaces.OnDiscussionReplySelected;
+import com.glevel.dungeonhero.game.gui.DungeonMap;
 import com.glevel.dungeonhero.game.gui.GameMenu;
 import com.glevel.dungeonhero.game.gui.HeroInfo;
 import com.glevel.dungeonhero.game.gui.Loading;
@@ -62,7 +63,7 @@ public class GUIManager {
     private Hero mHero;
 
     private Dialog mLoadingScreen, mGameMenuDialog, mHeroInfoDialog, mDiscussionDialog,
-            mRewardDialog, mBagDialog, mItemInfoDialog, mNewLevelDialog;
+            mRewardDialog, mBagDialog, mItemInfoDialog, mNewLevelDialog, mDungeonMapDialog;
     private TextView mBigLabel;
     private Animation mBigLabelAnimation;
     private ViewGroup mSelectedElementLayout, mActiveHeroLayout, mQueueLayout;
@@ -274,6 +275,9 @@ public class GUIManager {
         }
         if (mConfirmDialog != null) {
             mConfirmDialog.dismiss();
+        }
+        if (mDungeonMapDialog != null) {
+            mDungeonMapDialog.dismiss();
         }
     }
 
@@ -598,6 +602,13 @@ public class GUIManager {
     public void hideBag() {
         if (mBagDialog != null) {
             mBagDialog.dismiss();
+        }
+    }
+
+    public void showDungeonMap() {
+        if (mDungeonMapDialog == null || !mDungeonMapDialog.isShowing()) {
+            mDungeonMapDialog = new DungeonMap(mGameActivity, mGameActivity.getGame().getDungeon());
+            mDungeonMapDialog.show();
         }
     }
 

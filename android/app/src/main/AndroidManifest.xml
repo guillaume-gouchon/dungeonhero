@@ -41,6 +41,9 @@
         <activity
             android:name=".activities.GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"></activity>
+        <activity
+            android:name=".activities.TutorialActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"></activity>
 
         <provider
             android:name=".providers.MyContentProvider"
