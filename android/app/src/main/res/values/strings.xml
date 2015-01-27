@@ -30,7 +30,7 @@
 
     <!-- About Dialog -->
     <string name="about_title">About Dungeon Hero</string>
-    <string name="about_credits">Game and Music by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nMetal Music by Outsider, listen <a href="http://music.gouchon.com">here</a>.\n\nYou can propose your own quests\non the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a>.</string>
+    <string name="about_credits">Game and Music by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nMetal Music by Outsider, listen <a href="http://music.gouchon.com">here</a>.\n\nYou can suggest your own quests\non the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a>.</string>
     <string name="about_contact">Feel free to <a href="mailto:guillaume.gouchon@gmail.com">contact me</a> if you have any issue or question.</string>
     <string name="about_other_sources">The game uses AndEngine game engine by Nicolas Gramlich.\nGame icons by <a href="http://game-icons.net">game-icons.net</a>.\nBackground art by Q_x.\nLauncher icon by <a href="http://sonialahcene.com">Sonia Lahcene</a>.\nDungeon tileset by <a href="http://www.lostgarden.com/2006/07/more-free-game-graphics.html">Daniel Cook</a>.</string>
     <string name="about_version">Version : %s</string>
@@ -50,7 +50,7 @@
     <string name="load_game">Load Game</string>
     <string name="settings">Options</string>
     <string name="back">Back</string>
-    <string name="advertisement">If you enjoy playing this game,\nplease like the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a> and propose your own quests\u00A0!</string>
+    <string name="advertisement">If you enjoy playing this game,\nplease like the <a href="https://www.facebook.com/dungeonheroII">Facebook Page</a> and suggest your own quests\u00A0!</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="achievements">Trophees</string>
@@ -187,7 +187,7 @@
     <string name="berserker_description">You are the Berserker, a fearless tribal warrior fighting his foes with rage and fury.</string>
     <string name="dwarf_warrior_description">You are the Dwarf Warrior, a tough close-combat fighter but weak against magic.</string>
     <string name="elf_ranger_description">You are the Elf Ranger, a versatile adventurer with range attack skills as well as magical abilities.</string>
-    <string name="wizard_description">You are the Wizard, a great sorcerer specialized in offensive spells. Beware to contact fights though.</string>
+    <string name="wizard_description">You are the Wizard, a great sorcerer specialized in offensive spells. Be sure to keep your distance during fights though.</string>
     <string name="thief_description">You are the Thief, a silent but deadly adventurer who can hide herself from her enemies.</string>
     <string name="druid_description">You are the Druid, a strong spell caster who uses her knowledge of natural energies to defeat her foes.</string>
 

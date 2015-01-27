@@ -360,7 +360,7 @@ module.exports = function (grunt) {
         'ftp-deploy': {
           build: {
             auth: {
-              host: 'gouchstudio.com',
+              host: 'gouchon.com',
               port: 21,
               authKey: 'key1'
             },

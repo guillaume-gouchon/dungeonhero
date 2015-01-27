@@ -64,8 +64,7 @@ public class InAppBillingHelper {
             int responseCode = response.getInt(RESPONSE_CODE_KEY);
             if (responseCode == RESPONSE_SUCCESS) {
                 ArrayList<String> ownedItems = response.getStringArrayList(RESPONSE_PURCHASE_ITEMS_KEY);
-                // TODO : beta testing
-                boolean hasAll = true || ownedItems.contains(BUY_ALL_HEROES_IN_APP_ID);
+                boolean hasAll = ownedItems.contains(BUY_ALL_HEROES_IN_APP_ID);
                 Log.d(TAG, "has all heroes ? " + hasAll);
                 for (InAppProduct inAppProduct : inAppProducts) {
                     if (!inAppProduct.isAvailable()) {

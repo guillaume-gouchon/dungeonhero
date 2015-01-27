@@ -1,9 +1,9 @@
 @import "compass";
 
-@include font-face("main", font-files("main_font.ttf"));
+@include font-face("main-font", font-files("main_font.ttf"));
 
 body {
-	font-family: 'main';
+	font-family: 'main-font';
 	color: #eee;
 	padding: 0;
 	margin: 0;
@@ -26,6 +26,14 @@ body {
 	border-radius: 5px;
 	text-shadow: 2px 2px black;
 	text-align: center;
+
+	#launcher {
+		position: absolute;
+		top: 30px;
+		left: 30px;
+		z-index: -1;
+		opacity: 0.7;
+	}
 
 	h1 {
 		font-size: 5.5em;
