@@ -3,4 +3,13 @@
 and (min-width: 768px) 
 and (max-width: 1024px) {
   
+	#main-content {
+		text-align: center;
+		
+		.content {
+			display: inline-block;
+      margin-left: 0px!important;
+		}
+	}
+
 }

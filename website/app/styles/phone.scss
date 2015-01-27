@@ -4,47 +4,34 @@ and (min-width : 320px)
 and (max-width : 768px) {
   
   body {
-    overflow: hidden;
-  }
-
-  .hide-phone {
-    display: none!important;
+    overflow-x: hidden;
   }
 
   #bg {
-  	height: 100%;
-  	width: auto;
-  	left: -400px;
+    width: auto!important;
   }
 
   #main-content {
-    padding: 20px 20px!important;
+    text-align: center!important;
+    
+    .content {
+      margin-left: 0px!important;
+    }
 
-  	h1 {
-  		font-size: 3em!important;
-  		margin-top: 30px!important;
-  	}
+    #launcher {
+      margin-top: 15px;
+      max-width: 100%;
+    }
 
   	#play-store-btn img {
   		height: auto;
-  		width: 200px;
+  		width: 250px;
   	}
-  }
 
-  #credits {
-    margin-top: 20px!important;
-  	line-height: 20px;
+    #facebook-page {
+      margin-top: 15px!important;
+      font-size: 1.3em!important;
+      line-height: 30px;
+    }
   }
-
-  #facebook-page {
-    margin-top: 15px!important;
-  	font-size: 1.3em!important;
-  	line-height: 40px;
-  }
-
-  #launcher {
-    top: 0px!important;
-    left: 0px!important;
-  }
-
 }
