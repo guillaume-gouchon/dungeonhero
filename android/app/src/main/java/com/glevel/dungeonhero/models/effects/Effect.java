@@ -53,6 +53,11 @@ public abstract class Effect implements Serializable, Cloneable {
             }
         }
 
+        if (value < 0) {
+            // negative effects stay negative
+            return (int) Math.min(0, Math.max(value + 0.2 * value * level, value + level));
+        }
+
         return (int) Math.max(value + 0.2 * value * level, value + level);
     }
 
