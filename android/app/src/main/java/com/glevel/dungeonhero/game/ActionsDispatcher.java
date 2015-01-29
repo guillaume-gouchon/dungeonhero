@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.activities.GameActivity;
+import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.InputManager;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;

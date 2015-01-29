@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
-import com.glevel.dungeonhero.activities.GameActivity;
+import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
 import com.glevel.dungeonhero.activities.ShopActivity;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;

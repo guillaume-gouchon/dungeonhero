@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.activities;
+package com.glevel.dungeonhero.activities.games;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +31,7 @@ import org.andengine.entity.scene.Scene;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TutorialActivity extends GameActivity {
+public class TutorialQuest extends GameActivity {
 
     private static final String TAG = "TutorialActivity";
 
@@ -52,29 +52,25 @@ public class TutorialActivity extends GameActivity {
             mGame.setBook(BookFactory.buildTutorial());
         }
 
-        if (mGame.getDungeon() == null) {
-            // new dungeon
-            Chapter chapter = mGame.getBook().getActiveChapter();
-
-            // create dungeon
-            chapter.createDungeon();
-            mGame.setDungeon(chapter.getDungeon());
-
-            // copy hero object for reset dungeon after game-over
-            mHero = (Hero) ApplicationUtils.deepCopy(mGame.getHero());
-
-            mDungeon = mGame.getDungeon();
-
-            mHero.reset();
-        } else {
-            mDungeon = mGame.getDungeon();
-        }
-        mRoom = mDungeon.getCurrentRoom();
-        Log.d(TAG, "current room " + mRoom);
-
-
         mTutorialHintTV = (TextView) findViewById(R.id.tutorial_hint);
         mTutorialHints = getResources().getStringArray(R.array.tutorial_hints);
+
+        // new dungeon
+        Chapter chapter = mGame.getBook().getActiveChapter();
+
+        // create dungeon
+        chapter.createDungeon();
+        mGame.setDungeon(chapter.getDungeon());
+
+        // copy hero object for reset dungeon after game-over
+        mHero = (Hero) ApplicationUtils.deepCopy(mGame.getHero());
+
+        mDungeon = mGame.getDungeon();
+
+        mHero.reset();
+
+        mRoom = mDungeon.getCurrentRoom();
+        Log.d(TAG, "current room " + mRoom);
     }
 
     @Override
@@ -91,7 +87,8 @@ public class TutorialActivity extends GameActivity {
     }
 
     @Override
-    public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
+    public void onPopulateScene(Scene pScene, OnPopulateSceneCallback
+            pOnPopulateSceneCallback) throws Exception {
         mIsVisitedRoom = mRoom.isVisited();
         super.onPopulateScene(pScene, pOnPopulateSceneCallback);
     }

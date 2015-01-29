@@ -60,7 +60,6 @@ public class SpriteView extends ImageView {
 
                 @Override
                 protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
                     startAnimation();
                 }
             }.execute();

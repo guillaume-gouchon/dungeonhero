@@ -25,12 +25,10 @@ public class Chapter implements Serializable {
     private int index;
     private String introText, outroText;
     private transient Dungeon dungeon;
-    private boolean done;
 
     public Chapter(String introText, String outroText, List<Event> events, int dungeonWidth, int dungeonHeight) {
         this.introText = introText;
         this.outroText = outroText;
-        this.done = false;
         this.initialEvents = events;
         mDungeonWidth = dungeonWidth;
         mDungeonHeight = dungeonHeight;

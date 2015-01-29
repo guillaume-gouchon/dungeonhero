@@ -233,7 +233,7 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
 
     private void onBookSelected(Book selectedBook) {
         mGame.setBook(selectedBook);
-        Intent intent = new Intent(this, selectedBook.isTutorial() ? TutorialActivity.class : GameActivity.class);
+        Intent intent = new Intent(this, selectedBook.getActivityClass());
         intent.putExtra(Game.class.getName(), mGame);
         startActivity(intent);
         finish();

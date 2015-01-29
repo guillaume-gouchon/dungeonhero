@@ -3,8 +3,7 @@ package com.glevel.dungeonhero.models;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.glevel.dungeonhero.data.BookFactory;
-import com.glevel.dungeonhero.data.characters.PNJFactory;
+import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.models.dungeons.Event;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
@@ -17,6 +16,8 @@ import java.util.List;
  */
 public class Book extends StorableResource implements InAppProduct {
 
+    private static final long serialVersionUID = -4662020495531736056L;
+
     private static final String TAG = "Book";
 
     private final int id;
@@ -25,20 +26,22 @@ public class Book extends StorableResource implements InAppProduct {
     private final List<Chapter> chapters = new ArrayList<>();
     private final List<GraphicHolder> resourcesToLoad = new ArrayList<>();
     private final String productId;
+    private final Class activityClass;
     private String introText;
     private boolean hasBeenBought;
     private int bestScore;
     private int currentScore;
 
-    public Book(int id, String identifier, String introText, String outroText, String productId, int level) {
-        super(identifier);
-        this.id = id;
-        this.introText = introText;
-        this.outroText = outroText;
-        this.productId = productId;
+    private Book(Builder builder) {
+        super(builder.identifier);
+        this.id = builder.id;
+        this.introText = builder.intro;
+        this.outroText = builder.outro;
+        this.productId = builder.productId;
+        this.level = builder.level;
+        this.activityClass = builder.activityClass;
         this.bestScore = 0;
         this.currentScore = 3;
-        this.level = level;
     }
 
     @Override
@@ -74,10 +77,6 @@ public class Book extends StorableResource implements InAppProduct {
         return StorableResource.getResource(resources, outroText, false);
     }
 
-    public boolean isDone() {
-        return bestScore > 0;
-    }
-
     public int getId() {
         return id;
     }
@@ -108,11 +107,7 @@ public class Book extends StorableResource implements InAppProduct {
         chapter.setIndex(chapters.size());
         chapters.add(chapter);
 
-        if (id == 1L) {
-            resourcesToLoad.add(PNJFactory.buildTutorialPNJ());
-        }
-
-        // add resources
+        // add special resources
         for (Event event : chapter.getEvents()) {
             resourcesToLoad.addAll(event.getMonsters());
             resourcesToLoad.addAll(event.getPnjs());
@@ -144,8 +139,54 @@ public class Book extends StorableResource implements InAppProduct {
         return level;
     }
 
-    public boolean isTutorial() {
-        return id == BookFactory.TUTORIAL_BOOK_ID;
+    public Class getActivityClass() {
+        return activityClass;
+    }
+
+    public static class Builder {
+
+        private final int id;
+        private final String identifier;
+        private final int level;
+        private Class activityClass;
+        private String intro;
+        private String outro;
+        private String productId;
+
+        public Builder(int id, String identifier, int level) {
+            this.id = id;
+            this.identifier = identifier;
+            this.level = level;
+            this.productId = null;
+            this.intro = "";
+            this.outro = "";
+            this.activityClass = GameActivity.class;
+        }
+
+        public Builder setIntro(String intro) {
+            this.intro = intro;
+            return this;
+        }
+
+        public Builder setOutro(String outro) {
+            this.outro = outro;
+            return this;
+        }
+
+        public Builder setProductId(String productId) {
+            this.productId = productId;
+            return this;
+        }
+
+        public Builder setActivityClass(Class activityClass) {
+            this.activityClass = activityClass;
+            return this;
+        }
+
+        public Book build() {
+            return new Book(this);
+        }
+
     }
 
 }

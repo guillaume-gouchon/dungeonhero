@@ -81,8 +81,8 @@ public class ShopActivity extends MyActivity implements OnClickListener {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
                 updateOffers();
+                ApplicationUtils.saveToLocalFile(getApplicationContext(), FILENAME_SHOP_ITEMS, mItemsOffered);
             }
         }.execute();
     }
@@ -176,7 +176,6 @@ public class ShopActivity extends MyActivity implements OnClickListener {
                 mItemsOffered.add(item);
             }
             mSharedPrefs.edit().putLong(LAST_TIME_SHOP_VISITED_PREFS, System.currentTimeMillis()).apply();
-            ApplicationUtils.saveToLocalFile(getApplicationContext(), FILENAME_SHOP_ITEMS, mItemsOffered);
         } else {
             // get items list from the file
             Log.d(TAG, "Getting existing offers from local file");
