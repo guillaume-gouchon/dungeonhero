@@ -1,8 +1,6 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -10,6 +8,8 @@ ADDED from AndroidManifest.xml:2:1
 	android:versionName
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	android:versionCode
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
@@ -21,10 +21,10 @@ ADDED from AndroidManifest.xml:6:5
 		ADDED from AndroidManifest.xml:6:22
 uses-feature#0x00020000
 ADDED from AndroidManifest.xml:8:5
-	android:required
-		ADDED from AndroidManifest.xml:10:9
 	android:glEsVersion
 		ADDED from AndroidManifest.xml:9:9
+	android:required
+		ADDED from AndroidManifest.xml:10:9
 supports-gl-texture#GL_OES_compressed_ETC1_RGB8_texture
 ADDED from AndroidManifest.xml:12:5
 	android:name
@@ -36,23 +36,23 @@ MERGED from com.android.support:support-v4:21.0.0:16:5
 MERGED from android:andengine:unspecified:10:5
 	android:label
 		ADDED from AndroidManifest.xml:19:9
+	android:hardwareAccelerated
+		ADDED from AndroidManifest.xml:17:9
 	android:allowBackup
 		ADDED from AndroidManifest.xml:16:9
 	android:icon
 		ADDED from AndroidManifest.xml:18:9
 	android:theme
 		ADDED from AndroidManifest.xml:20:9
-	android:hardwareAccelerated
-		ADDED from AndroidManifest.xml:17:9
 	android:name
 		ADDED from AndroidManifest.xml:15:9
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:22:9
 MERGED from com.google.android.gms:play-services:6.5.87:21:9
-	android:name
-		ADDED from AndroidManifest.xml:23:13
 	android:value
 		ADDED from AndroidManifest.xml:24:13
+	android:name
+		ADDED from AndroidManifest.xml:23:13
 activity#com.glevel.dungeonhero.activities.SplashActivity
 ADDED from AndroidManifest.xml:26:9
 	android:noHistory
@@ -99,20 +99,26 @@ ADDED from AndroidManifest.xml:41:9
 		ADDED from AndroidManifest.xml:43:13
 	android:name
 		ADDED from AndroidManifest.xml:42:13
-activity#com.glevel.dungeonhero.activities.games.TutorialActivity
+activity#com.glevel.dungeonhero.activities.games.TutorialQuest
 ADDED from AndroidManifest.xml:44:9
 	android:configChanges
 		ADDED from AndroidManifest.xml:46:13
 	android:name
 		ADDED from AndroidManifest.xml:45:13
-provider#com.glevel.dungeonhero.providers.MyContentProvider
-ADDED from AndroidManifest.xml:48:9
-	android:exported
-		ADDED from AndroidManifest.xml:51:13
-	android:authorities
-		ADDED from AndroidManifest.xml:50:13
-	android:name
+activity#com.glevel.dungeonhero.activities.games.IntroductionQuest
+ADDED from AndroidManifest.xml:47:9
+	android:configChanges
 		ADDED from AndroidManifest.xml:49:13
+	android:name
+		ADDED from AndroidManifest.xml:48:13
+provider#com.glevel.dungeonhero.providers.MyContentProvider
+ADDED from AndroidManifest.xml:50:9
+	android:authorities
+		ADDED from AndroidManifest.xml:52:13
+	android:exported
+		ADDED from AndroidManifest.xml:53:13
+	android:name
+		ADDED from AndroidManifest.xml:51:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.google.android.gms:play-services:6.5.87:18:5
