@@ -188,23 +188,6 @@ public class GameActivity extends MyBaseGameActivity {
     protected void addSpecialGameElements() {
     }
 
-    public void showBookIntro() {
-        // show book introduction if needed
-        if (mGame.getBook().getIntroText(getResources()) > 0) {
-            Bundle args = new Bundle();
-            args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText(getResources()));
-            ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
-            mGame.getBook().read();
-        } else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    showChapterIntro();
-                }
-            });
-        }
-    }
-
     public void addElementToScene(GameElement gameElement) {
         Log.d(TAG, "add element to scene = " + gameElement.getIdentifier());
         gameElement.createSprite(getVertexBufferObjectManager());
@@ -374,11 +357,41 @@ public class GameActivity extends MyBaseGameActivity {
         nextTurn();
     }
 
+    public void showBookIntro() {
+        // show book introduction if needed
+        if (mGame.getBook().getIntroText(getResources()) > 0) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    findViewById(R.id.rootLayout).setVisibility(View.INVISIBLE);
+                }
+            });
+
+            Bundle args = new Bundle();
+            args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText(getResources()));
+            ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
+            mGame.getBook().read();
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showChapterIntro();
+                }
+            });
+        }
+    }
+
     public void showChapterIntro() {
+        Log.d(TAG, "show chapter intro");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.rootLayout).setVisibility(View.VISIBLE);
+            }
+        });
         OnActionExecuted callback = new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                // in the introduction quest
                 if (mGame.getBook().getActiveChapter().getIntroText(getResources()) > 0) {
                     mGUIManager.showChapterIntro(null);
                     mGame.getBook().getActiveChapter().read();
