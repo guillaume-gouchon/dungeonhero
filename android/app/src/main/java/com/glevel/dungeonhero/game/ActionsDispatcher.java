@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.activities.GameActivity;
+import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.InputManager;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
@@ -31,6 +31,7 @@ import com.glevel.dungeonhero.models.dungeons.decorations.Searchable;
 import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
 import com.glevel.dungeonhero.models.effects.BuffEffect;
 import com.glevel.dungeonhero.models.effects.Effect;
+import com.glevel.dungeonhero.models.effects.PoisonEffect;
 import com.glevel.dungeonhero.models.effects.RecoveryEffect;
 import com.glevel.dungeonhero.models.effects.StunEffect;
 import com.glevel.dungeonhero.models.items.Characteristics;
@@ -834,6 +835,7 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     public void useSkill(final Tile tile) {
+        setInputEnabled(false);
         mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(activatedSkill.getName(mGameActivity.getResources()))), R.color.green);
         mGameActivity.playSound("magic", false);
 
@@ -888,7 +890,11 @@ public class ActionsDispatcher implements UserActionListener {
                 mGUIManager.updateSkillButtons();
             } else if (effect.getTarget() == Characteristics.HP) {
                 // damage or heal
-                showAnimatedText(target, effect.getValue() > 0 ? "+" + Math.min(target.getHp() - target.getCurrentHP(), effect.getValue()) : "" + effect.getValue());
+                if (effect instanceof PoisonEffect && effect.getValue() > 0 && target.getHp() - target.getCurrentHP() == 0) {
+                    // do not show useless regeneration
+                } else {
+                    showAnimatedText(target, effect.getValue() > 0 ? "+" + Math.min(target.getHp() - target.getCurrentHP(), effect.getValue()) : "" + effect.getValue());
+                }
                 target.setCurrentHP(Math.min(target.getHp(), target.getCurrentHP() + effect.getValue()));
             } else {
                 // special effects

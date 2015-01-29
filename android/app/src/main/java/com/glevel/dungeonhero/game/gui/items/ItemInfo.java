@@ -61,8 +61,8 @@ public class ItemInfo extends ElementDetails {
 
             // add item effects
             for (Effect buff : equipment.getEffects()) {
-                if (buff instanceof PermanentEffect) {
-                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() >= 0 ? R.color.green : R.color.red);
+                if (buff instanceof PermanentEffect && buff.getValue() != 0) {
+                    addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), buff.getTarget().getImage(), buff.getTarget().getName(), buff.getValue() > 0 ? R.color.green : R.color.red);
                 } else if (buff instanceof StunEffect) {
                     addStatToItemLayout(statsLayout.getChildAt(indexStats++), (buff.getValue() > 0 ? "+" : "") + buff.getValue(), R.drawable.ic_stun, R.string.chance_stun, buff.getValue() >= 0 ? R.color.green : R.color.red);
                 }

@@ -77,7 +77,7 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
         Intent intent;
         switch (view.getId()) {
             case R.id.retry_btn:
-                intent = new Intent(this, mGame.getBook().isTutorial() ? TutorialActivity.class : GameActivity.class);
+                intent = new Intent(this, mGame.getBook().getActivityClass());
                 intent.putExtra(Game.class.getName(), mGame);
                 startActivity(intent);
                 finish();

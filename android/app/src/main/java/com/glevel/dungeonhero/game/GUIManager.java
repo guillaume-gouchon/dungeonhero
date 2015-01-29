@@ -18,10 +18,10 @@ import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
-import com.glevel.dungeonhero.activities.GameActivity;
 import com.glevel.dungeonhero.activities.HomeActivity;
 import com.glevel.dungeonhero.activities.ShopActivity;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
+import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.base.MyBaseGameActivity;
 import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
@@ -113,7 +113,6 @@ public class GUIManager {
             @Override
             public void run() {
                 mLoadingScreen.dismiss();
-                mGameActivity.findViewById(R.id.rootLayout).setVisibility(View.VISIBLE);
             }
         });
     }

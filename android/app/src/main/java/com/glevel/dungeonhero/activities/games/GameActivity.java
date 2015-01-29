@@ -1,4 +1,4 @@
-package com.glevel.dungeonhero.activities;
+package com.glevel.dungeonhero.activities.games;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,10 +6,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.activities.GameOverActivity;
 import com.glevel.dungeonhero.activities.fragments.StoryFragment;
 import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.data.characters.HeroFactory;
-import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.game.ActionsDispatcher;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.base.GameElement;
@@ -143,11 +143,7 @@ public class GameActivity extends MyBaseGameActivity {
             List<Unit> heroes = new ArrayList<>();
             heroes.add(mHero);
             mDungeon.moveIn(mTmxTiledMap, heroes);
-            if (mGame.getBook().getId() == 1L && mGame.getBook().getActiveChapter().isFirst() && mDungeon.isFirstRoom()) {
-                // add intro PNJ if this is the introduction quest
-                final Pnj tutorialCharacter = PNJFactory.buildTutorialPNJ();
-                mRoom.addGameElement(tutorialCharacter, mRoom.getRandomFreeTile());
-            }
+            addSpecialGameElements();
         } else {
             mRoom.initRoom(mTmxTiledMap, null, 0);
         }
@@ -189,21 +185,7 @@ public class GameActivity extends MyBaseGameActivity {
         startGame();
     }
 
-    public void showBookIntro() {
-        // show book introduction if needed
-        if (mGame.getBook().getIntroText(getResources()) > 0) {
-            Bundle args = new Bundle();
-            args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText(getResources()));
-            ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
-            mGame.getBook().read();
-        } else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    showChapterIntro();
-                }
-            });
-        }
+    protected void addSpecialGameElements() {
     }
 
     public void addElementToScene(GameElement gameElement) {
@@ -375,11 +357,41 @@ public class GameActivity extends MyBaseGameActivity {
         nextTurn();
     }
 
+    public void showBookIntro() {
+        // show book introduction if needed
+        if (mGame.getBook().getIntroText(getResources()) > 0) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    findViewById(R.id.rootLayout).setVisibility(View.INVISIBLE);
+                }
+            });
+
+            Bundle args = new Bundle();
+            args.putInt(StoryFragment.ARGUMENT_STORY, mGame.getBook().getIntroText(getResources()));
+            ApplicationUtils.openDialogFragment(this, new StoryFragment(), args);
+            mGame.getBook().read();
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showChapterIntro();
+                }
+            });
+        }
+    }
+
     public void showChapterIntro() {
+        Log.d(TAG, "show chapter intro");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.rootLayout).setVisibility(View.VISIBLE);
+            }
+        });
         OnActionExecuted callback = new OnActionExecuted() {
             @Override
             public void onActionDone(boolean success) {
-                // in the introduction quest
                 if (mGame.getBook().getActiveChapter().getIntroText(getResources()) > 0) {
                     mGUIManager.showChapterIntro(null);
                     mGame.getBook().getActiveChapter().read();

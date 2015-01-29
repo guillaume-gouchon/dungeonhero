@@ -39,12 +39,14 @@
         <activity android:name=".activities.NewGameActivity" />
         <activity android:name=".activities.BestiaryActivity" />
         <activity
-            android:name=".activities.GameActivity"
+            android:name=".activities.games.GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"></activity>
         <activity
-            android:name=".activities.TutorialActivity"
+            android:name=".activities.games.TutorialQuest"
             android:configChanges="orientation|keyboardHidden|screenSize"></activity>
-
+        <activity
+            android:name=".activities.games.IntroductionQuest"
+            android:configChanges="orientation|keyboardHidden|screenSize"></activity>
         <provider
             android:name=".providers.MyContentProvider"
             android:authorities="com.glevel.dungeonhero"

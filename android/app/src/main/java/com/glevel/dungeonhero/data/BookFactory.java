@@ -1,5 +1,7 @@
 package com.glevel.dungeonhero.data;
 
+import com.glevel.dungeonhero.activities.games.IntroductionQuest;
+import com.glevel.dungeonhero.activities.games.TutorialQuest;
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
 import com.glevel.dungeonhero.data.characters.PNJFactory;
 import com.glevel.dungeonhero.data.items.WeaponFactory;
@@ -20,8 +22,6 @@ import java.util.List;
  */
 public class BookFactory {
 
-    public static final int TUTORIAL_BOOK_ID = 0;
-
     public static List<Book> getAll() {
         List<Book> lst = new ArrayList<>();
         lst.add(buildTutorial());
@@ -35,7 +35,7 @@ public class BookFactory {
     }
 
     public static Book buildTutorial() {
-        Book book = new Book(TUTORIAL_BOOK_ID, "tutorial", "tutorial_intro", "", null, 0);
+        Book book = new Book.Builder(0, "tutorial", 0).setIntro("tutorial_intro").setActivityClass(TutorialQuest.class).build();
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -46,7 +46,7 @@ public class BookFactory {
     }
 
     public static Book buildInitiationBook() {
-        Book book = new Book(1, "initiation_quest", "initiation_intro", "initiation_outro", null, 0);
+        Book book = new Book.Builder(1, "initiation_quest", 0).setIntro("initiation_intro").setOutro("initiation_outro").setActivityClass(IntroductionQuest.class).build();
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -58,11 +58,13 @@ public class BookFactory {
         events.add(new Event.Builder(true).addMonster(MonsterFactory.buildOrcCaptain()).addPnj(PNJFactory.buildInitiationQuestGirl()).build());
         book.addChapter(new Chapter("initiation_chapter_2", "", events, 3, 3));
 
+        book.getResourcesToLoad().add(PNJFactory.buildTutorialPNJ());
+
         return book;
     }
 
     public static Book buildVanarkBook() {
-        Book book = new Book(2, "sons_quest", "sons_intro", "sons_outro", null, 1);
+        Book book = new Book.Builder(2, "sons_quest", 1).setIntro("sons_intro").setOutro("sons_outro").build();
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -80,7 +82,7 @@ public class BookFactory {
     }
 
     public static Book buildBalrogQuest() {
-        Book book = new Book(3, "balrog_quest", "balrog_intro", "balrog_outro", null, 1);
+        Book book = new Book.Builder(3, "balrog_quest", 1).setIntro("balrog_intro").setOutro("balrog_outro").build();
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -100,7 +102,7 @@ public class BookFactory {
     }
 
     public static Book buildWizardQuest() {
-        Book book = new Book(4, "wizard_quest", "wizard_intro", "", null, 2);
+        Book book = new Book.Builder(4, "wizard_quest", 2).setIntro("wizard_intro").build();
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -119,7 +121,7 @@ public class BookFactory {
     }
 
     public static Book buildPartnershipQuest() {
-        Book book = new Book(5, "partnership_quest", "partnership_intro", "", null, 2);
+        Book book = new Book.Builder(5, "partnership_quest", 2).setIntro("partnership_intro").build();
 
         // chapter 1
         List<Event> events = new ArrayList<>();
@@ -141,7 +143,7 @@ public class BookFactory {
     }
 
     public static Book buildDreamQuest() {
-        Book book = new Book(6, "dreamer_quest", "dreamer_intro", "dreamer_outro", null, 3);
+        Book book = new Book.Builder(6, "dreamer_quest", 3).setIntro("dreamer_intro").setOutro("dreamer_outro").build();
 
         // chapter 1
         List<Event> events = new ArrayList<>();

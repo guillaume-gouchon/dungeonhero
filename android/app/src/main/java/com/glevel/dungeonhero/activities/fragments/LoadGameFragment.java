@@ -21,8 +21,7 @@ import android.widget.ListView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
-import com.glevel.dungeonhero.activities.GameActivity;
-import com.glevel.dungeonhero.activities.TutorialActivity;
+import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.activities.adapters.LoadGamesAdapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.providers.MyContentProvider;
@@ -135,7 +134,7 @@ public class LoadGameFragment extends DialogFragment implements LoaderManager.Lo
         if (game.getDungeon() == null) {
             intent = new Intent(getActivity(), BookChooserActivity.class);
         } else {
-            intent = new Intent(getActivity(), game.getBook() != null && game.getBook().isTutorial() ? TutorialActivity.class : GameActivity.class);
+            intent = new Intent(getActivity(), game.getBook() != null ? game.getBook().getActivityClass() : GameActivity.class);
         }
         intent.putExtra(Game.class.getName(), game);
         startActivity(intent);
