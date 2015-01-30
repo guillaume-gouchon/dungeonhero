@@ -46,7 +46,7 @@
             android:orientation="horizontal"
             android:gravity="center">
 
-            <com.glevel.dungeonhero.views.SpriteView
+            <ImageView
                 android:id="@+id/image"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
