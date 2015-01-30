@@ -81,41 +81,27 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
 
         // retrieve books
         mLstBooks = BookFactory.getAll();
-        boolean hasFinishedTheGame = true;
+        int nbPerfectQuests = 0;
         int score;
         for (Book book : mLstBooks) {
             if (mGame.getBooksDone().get(book.getId()) != null) {
                 score = mGame.getBooksDone().get(book.getId());
                 book.setBestScore(score);
                 Log.d(TAG, "book " + book.getId() + ", score =" + score);
-                if (score < 3) {
-                    hasFinishedTheGame = false;
+                if (score == GameConstants.MAXIMAL_STARS_RATING) {
+                    nbPerfectQuests++;
                 }
-            } else {
-                hasFinishedTheGame = false;
             }
         }
 
-        // unblock next character
-        if (hasFinishedTheGame) {
-            Log.d(TAG, "congratulations ! Game is finished");
-            List<Hero> heroes = HeroFactory.getAll();
-            for (int n = 0; n < heroes.size(); n++) {
-                if (heroes.get(n).getIdentifier().equals(mGame.getHero().getIdentifier()) && n + 1 < heroes.size()) {
-                    Hero unblockedHero = heroes.get(n + 1);
-                    if (mSharedPrefs.getString(unblockedHero.getProductId(), null) == null) {
-                        Dialog dialog = new Dialog(this, R.style.Dialog);
-                        dialog.setContentView(R.layout.dialog_unlock_hero);
-                        TextView title = (TextView) dialog.findViewById(R.id.title);
-                        title.setText(getString(R.string.congratulations_unlock, getString(unblockedHero.getName(getResources()))));
-                        title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_three_stars, 0, unblockedHero.getImage(getResources()));
-                        dialog.show();
-                    }
+        Log.d(TAG, "nb perfect quests = " + nbPerfectQuests);
 
-                    mSharedPrefs.edit().putString(unblockedHero.getProductId(), "got it !").apply();
-                    break;
-                }
-            }
+        // unblock next character
+        if (nbPerfectQuests == GameConstants.NB_QUESTS) {
+            // add victory for character
+            mSharedPrefs.edit().putBoolean(GameConstants.FINISH_GAME_WITH_CHARACTER_PREFS + mGame.getHero().getIdentifier(), true).apply();
+            unblockNextCharacter();
+            showVictoryDialogIfNeeded();
         }
 
         setupUI();
@@ -237,6 +223,53 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
         intent.putExtra(Game.class.getName(), mGame);
         startActivity(intent);
         finish();
+    }
+
+    private void unblockNextCharacter() {
+        List<Hero> heroes = HeroFactory.getAll();
+        for (int n = 0; n < heroes.size(); n++) {
+            if (heroes.get(n).getIdentifier().equals(mGame.getHero().getIdentifier())) {
+                Log.d(TAG, "Congratulations ! The game is finished with character = " + mGame.getHero().getIdentifier());
+                if (n + 1 < heroes.size()) {
+                    Hero unblockedHero = heroes.get(n + 1);
+                    if (mSharedPrefs.getString(unblockedHero.getProductId(), null) == null) {
+                        Dialog dialog = new Dialog(this, R.style.Dialog);
+                        dialog.setContentView(R.layout.dialog_unlock_hero);
+                        TextView title = (TextView) dialog.findViewById(R.id.title);
+                        title.setText(getString(R.string.congratulations_unlock, getString(unblockedHero.getName(getResources()))));
+                        title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_three_stars, 0, unblockedHero.getImage(getResources()));
+                        dialog.show();
+                        mSharedPrefs.edit().putString(unblockedHero.getProductId(), "got it !").apply();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    private void showVictoryDialogIfNeeded() {
+        // check that player has finished it with all heroes
+        List<Hero> heroes = HeroFactory.getAll();
+        boolean gameOverForAllHeroes = true;
+        for (Hero hero : heroes) {
+            if (!mSharedPrefs.getBoolean(GameConstants.FINISH_GAME_WITH_CHARACTER_PREFS + hero.getIdentifier(), false)) {
+                gameOverForAllHeroes = false;
+                break;
+            }
+        }
+
+        Log.d(TAG, "game over with all characters = " + gameOverForAllHeroes);
+
+        if (gameOverForAllHeroes && mSharedPrefs.getString(GameConstants.FINISH_GAME_PREFS, null) == null) {
+            Log.d(TAG, "Congratulations ! The game is finished with all the characters !");
+            Dialog dialog = new Dialog(this, R.style.Dialog);
+            dialog.setContentView(R.layout.dialog_unlock_hero);
+            TextView title = (TextView) dialog.findViewById(R.id.title);
+            title.setText(getString(R.string.congratulations_finish_game, getString(R.string.app_name)));
+            title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_three_stars, 0, R.drawable.ic_launcher);
+            dialog.show();
+            mSharedPrefs.edit().putString(GameConstants.FINISH_GAME_PREFS, "" + GameConstants.NB_QUESTS).apply();
+        }
     }
 
 }

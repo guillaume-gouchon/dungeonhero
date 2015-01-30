@@ -23,6 +23,10 @@ public class GameConstants {
     public static final float CAMERA_ZOOM_MIN = 1.5f, CAMERA_ZOOM_MAX = 1.5f;
     public static final int PIXEL_BY_TILE = 40;
 
+    public static final String FINISH_GAME_WITH_CHARACTER_PREFS = "victory";
+    public static final String FINISH_GAME_PREFS = "final_victory";
+    public static final int MAXIMAL_STARS_RATING = 3;
+    public static final int NB_QUESTS = 7;
     public static final int HERO_LEVEL_MAX = 6;
     public static final int SKILL_MAX_LEVEL = 6;
     public static final int NB_ITEMS_MAX_IN_BAG = 15;

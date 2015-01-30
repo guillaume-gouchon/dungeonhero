@@ -50,6 +50,7 @@ public class Game extends DatabaseResource {
                 }
             }
         }
+
         return game;
     }
 

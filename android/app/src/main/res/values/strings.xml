@@ -86,7 +86,8 @@
     <string name="shop">Shop</string>
     <string name="bestiary">Bestiary</string>
     <string name="enter_quest">Enter Quest</string>
-    <string name="congratulations_unlock">Congratulations !\n\nYou have unlocked\nthe %s !</string>
+    <string name="congratulations_unlock">Congratulations\u00A0!\n\nYou have unlocked\nthe %s !</string>
+    <string name="congratulations_finish_game">Congratulations\u00A0!\n\nYou have finished the game with all the characters !\n\nThe village of Gundin is now safe and your name will be reminded for decades there.\nSee you at the next episode for new epic adventures, and thanks for playing %s\u00A0!</string>
 
     <!-- Bestiary -->
     <string name="bestiary_header">My trophees\u00A0!</string>

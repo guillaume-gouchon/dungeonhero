@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.glevel.dungeonhero.activities.games.GameActivity;
+import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.models.dungeons.Event;
 import com.glevel.dungeonhero.utils.billing.InAppProduct;
@@ -41,7 +42,7 @@ public class Book extends StorableResource implements InAppProduct {
         this.level = builder.level;
         this.activityClass = builder.activityClass;
         this.bestScore = 0;
-        this.currentScore = 3;
+        this.currentScore = GameConstants.MAXIMAL_STARS_RATING;
     }
 
     @Override
@@ -131,7 +132,7 @@ public class Book extends StorableResource implements InAppProduct {
     }
 
     public void updateScore(int delta) {
-        currentScore = Math.min(3, Math.max(1, currentScore + delta));
+        currentScore = Math.min(GameConstants.MAXIMAL_STARS_RATING, Math.max(1, currentScore + delta));
         Log.d(TAG, "updating score to " + currentScore);
     }
 
