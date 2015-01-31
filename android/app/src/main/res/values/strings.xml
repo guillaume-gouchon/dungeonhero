@@ -128,6 +128,7 @@
     <string name="leave_quest">Leave Quest</string>
     <string name="confirm_leave_quest">Are you sure you want to leave this quest\u00A0?\n\n<i>(you will come back to the adventure screen)</i></string>
     <string name="confirm_finish_quest">Are you sure you want to finish this quest and leave the dungeon\u00A0?</string>
+    <string name="go_deeper_dungeon">Are you sure you want to leave this floor and go deeper into the dungeon\u00A0?</string>
     <string name="riddle_answer_input">your answer...</string>
     <string name="game_master">Game Master</string>
     <string name="new_level_title">You reached level %s\u00A0!</string>

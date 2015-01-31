@@ -160,15 +160,13 @@ public class GUIManager {
     }
 
     public void showFinishQuestConfirmDialog() {
-        mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(R.string.confirm_finish_quest),
+        final Book activeBook = mGameActivity.getGame().getBook();
+        final boolean hasNextChapter = activeBook.hasNextChapter();
+        mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(hasNextChapter ? R.string.go_deeper_dungeon : R.string.confirm_finish_quest),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == R.id.ok_btn) {
-                            // finishing quest is confirmed
-                            final Book activeBook = mGameActivity.getGame().getBook();
-                            boolean hasNextChapter = activeBook.hasNextChapter();
-
                             // show outro text
                             if (activeBook.getActiveChapter().getOutroText(mResources) > 0) {
                                 showIntrospection(mGameActivity.getGame().getBook().getActiveChapter().getOutroText(mResources),
