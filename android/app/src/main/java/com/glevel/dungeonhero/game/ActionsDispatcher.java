@@ -339,7 +339,7 @@ public class ActionsDispatcher implements UserActionListener {
             mGameActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ApplicationUtils.showToast(mGameActivity, mGameActivity.getString(R.string.bag_full, item.getName(mGameActivity.getResources())), Toast.LENGTH_LONG);
+                    ApplicationUtils.showToast(mGameActivity, mGameActivity.getString(R.string.bag_full, mGameActivity.getString(item.getName(mGameActivity.getResources()))), Toast.LENGTH_LONG);
                 }
             });
             dropItem(item);
