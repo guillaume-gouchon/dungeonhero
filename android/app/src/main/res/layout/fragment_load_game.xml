@@ -19,5 +19,4 @@
         android:divider="@android:color/transparent"
         android:listSelector="@android:color/transparent"
         android:overScrollMode="never"></ListView>
-
 </LinearLayout>

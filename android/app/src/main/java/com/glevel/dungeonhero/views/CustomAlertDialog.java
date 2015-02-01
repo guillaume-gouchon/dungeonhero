@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
+import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 public class CustomAlertDialog extends Dialog implements OnClickListener {
 

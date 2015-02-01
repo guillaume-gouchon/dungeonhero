@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -58,11 +59,11 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <GridLayout
+            <android.support.v7.widget.GridLayout
                 android:id="@+id/skills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:columnCount="5">
+                custom:columnCount="5">
 
                 <include layout="@layout/in_game_item" />
 
@@ -75,7 +76,7 @@
                 <include layout="@layout/in_game_item" />
 
                 <include layout="@layout/in_game_item" />
-            </GridLayout>
+            </android.support.v7.widget.GridLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

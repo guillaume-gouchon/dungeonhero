@@ -13,5 +13,4 @@
         android:src="@drawable/bg_bag"
         android:alpha="0.5"
         android:padding="3dp" />
-
 </RelativeLayout>

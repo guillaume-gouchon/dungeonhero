@@ -225,11 +225,11 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
 
-        <GridLayout
+        <android.support.v7.widget.GridLayout
             android:id="@+id/skills"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="4">
+            custom:columnCount="4">
 
             <include layout="@layout/in_game_item" />
 
@@ -246,6 +246,6 @@
             <include layout="@layout/in_game_item" />
 
             <include layout="@layout/in_game_item" />
-        </GridLayout>
+        </android.support.v7.widget.GridLayout>
     </LinearLayout>
 </LinearLayout>

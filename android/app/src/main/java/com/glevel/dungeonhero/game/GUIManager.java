@@ -435,7 +435,7 @@ public class GUIManager {
         if (hero.getEquipments()[0] instanceof TwoHandedWeapon) {
             ImageView image = (ImageView) equipmentLayout.getChildAt(1).findViewById(R.id.image);
             image.setImageResource(hero.getEquipments()[0].getImage(mResources));
-            image.setAlpha(0.7f);
+            ApplicationUtils.setAlpha(image, 0.7f);
         }
     }
 
@@ -448,13 +448,13 @@ public class GUIManager {
         if (item != null) {
             background.setBackgroundColor(mResources.getColor(item.getColor()));
             image.setImageResource(item.getImage(mResources));
-            image.setAlpha(1.0f);
+            ApplicationUtils.setAlpha(image, 1.0f);
             itemView.setEnabled(true);
             itemView.setOnClickListener(mGameActivity);
         } else {
             background.setBackgroundColor(mResources.getColor(android.R.color.transparent));
             image.setImageResource(defaultImage);
-            image.setAlpha(0.2f);
+            ApplicationUtils.setAlpha(image, 0.2f);
             itemView.setEnabled(false);
             itemView.setOnClickListener(null);
         }
@@ -556,7 +556,7 @@ public class GUIManager {
                         ((ImageView) skillButton.findViewById(R.id.image)).setImageResource(skill.getImage(mResources));
                         if (skill instanceof PassiveSkill || skill instanceof ActiveSkill && ((ActiveSkill) skill).isUsed()) {
                             skillButton.findViewById(R.id.image).setEnabled(false);
-                            skillButton.setAlpha(0.5f);
+                            ApplicationUtils.setAlpha(skillButton, 0.5f);
                         }
 
                         skillButton.setOnClickListener(mGameActivity);

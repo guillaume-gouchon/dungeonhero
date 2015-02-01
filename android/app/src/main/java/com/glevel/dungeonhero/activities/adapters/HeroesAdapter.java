@@ -14,6 +14,7 @@ import com.glevel.dungeonhero.game.base.GraphicsManager;
 import com.glevel.dungeonhero.game.gui.ElementDetails;
 import com.glevel.dungeonhero.models.characters.Hero;
 import com.glevel.dungeonhero.models.skills.Skill;
+import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.views.CustomCarousel;
 import com.glevel.dungeonhero.views.SpriteView;
 
@@ -79,8 +80,7 @@ public class HeroesAdapter extends CustomCarousel.Adapter<Hero> {
         ImageView image = (ImageView) itemView.findViewById(R.id.image);
 
         itemView.setTag(R.string.skill, skill);
-        itemView.setAlpha(0.6f);
-
+        ApplicationUtils.setAlpha(image, 0.6f);
         image.setImageResource(skill.getImage(mResources));
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.glevel.dungeonhero"
-    android:installLocation="preferExternal">
+    android:installLocation="auto">
 
     <uses-permission android:name="com.android.vending.BILLING" />
 
@@ -47,6 +47,7 @@
         <activity
             android:name=".activities.games.IntroductionQuest"
             android:configChanges="orientation|keyboardHidden|screenSize"></activity>
+
         <provider
             android:name=".providers.MyContentProvider"
             android:authorities="com.glevel.dungeonhero"

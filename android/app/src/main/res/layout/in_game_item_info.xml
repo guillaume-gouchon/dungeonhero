@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_gui"
@@ -27,11 +28,11 @@
         android:layout_height="wrap_content"
         android:text="@string/placeholder" />
 
-    <GridLayout
+    <android.support.v7.widget.GridLayout
         android:id="@+id/stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="3"
+        custom:columnCount="3"
         android:padding="5dp"
         android:layout_gravity="left">
 
@@ -58,13 +59,13 @@
         <com.glevel.dungeonhero.views.HintTextView
             android:visibility="gone"
             style="@style/HeroStat" />
-    </GridLayout>
+    </android.support.v7.widget.GridLayout>
 
-    <GridLayout
+    <android.support.v7.widget.GridLayout
         android:id="@+id/requirements"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="2"
+        custom:columnCount="2"
         android:padding="5dp"
         android:layout_gravity="left">
 
@@ -79,7 +80,7 @@
         <com.glevel.dungeonhero.views.HintTextView
             android:visibility="gone"
             style="@style/HeroStat" />
-    </GridLayout>
+    </android.support.v7.widget.GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,5 +106,4 @@
             android:layout_marginLeft="20dp"
             android:visibility="gone" />
     </LinearLayout>
-
 </LinearLayout>

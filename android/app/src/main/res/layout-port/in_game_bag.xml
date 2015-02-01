@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,12 +44,12 @@
                 layout="@layout/in_game_item" />
         </LinearLayout>
 
-        <GridLayout
+        <android.support.v7.widget.GridLayout
             android:id="@+id/bag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:columnCount="5">
+            custom:columnCount="5">
 
             <include layout="@layout/in_game_item" />
 
@@ -79,7 +80,7 @@
             <include layout="@layout/in_game_item" />
 
             <include layout="@layout/in_game_item" />
-        </GridLayout>
+        </android.support.v7.widget.GridLayout>
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/gold_amount"

@@ -1,15 +1,15 @@
 package com.glevel.dungeonhero.activities.fragments;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +21,8 @@ import android.widget.ListView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.BookChooserActivity;
-import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.activities.adapters.LoadGamesAdapter;
+import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.providers.MyContentProvider;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
@@ -125,7 +125,7 @@ public class LoadGameFragment extends DialogFragment implements LoaderManager.Lo
     public void onLoaderReset(Loader<Cursor> loader) {
         Log.d(TAG, "Loader reset");
         if (mAdapter != null) {
-            mAdapter.swapCursor(null);
+            mAdapter.changeCursor(null);
         }
     }
 

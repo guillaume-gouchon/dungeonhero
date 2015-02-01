@@ -1,11 +1,7 @@
 package com.glevel.dungeonhero.utils;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -18,18 +14,20 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,14 +60,12 @@ public class ApplicationUtils {
             Log.d(TAG, "show rate dialog");
             final Editor editor = prefs.edit();
 
-            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.custom_rate_dialog, null);
-
             // Create and show custom alert dialog
-            final Dialog dialog = new AlertDialog.Builder(activity, R.style.Dialog).setView(view).create();
+            final Dialog dialog = new Dialog(activity, R.style.Dialog);
+            dialog.setContentView(R.layout.custom_rate_dialog);
 
-            ((TextView) view.findViewById(R.id.message)).setText(activity.getString(R.string.rate_message, activity.getString(R.string.app_name)));
-            view.findViewById(R.id.cancel_btn).setOnClickListener(new OnClickListener() {
+            ((TextView) dialog.findViewById(R.id.message)).setText(activity.getString(R.string.rate_message, activity.getString(R.string.app_name)));
+            dialog.findViewById(R.id.cancel_btn).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     editor.putInt(PREFS_RATE_DIALOG_IN, -1);
@@ -77,14 +73,14 @@ public class ApplicationUtils {
                     dialog.dismiss();
                 }
             });
-            view.findViewById(R.id.neutralButton).setOnClickListener(new OnClickListener() {
+            dialog.findViewById(R.id.neutralButton).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     editor.putInt(PREFS_RATE_DIALOG_IN, 5);
                     dialog.dismiss();
                 }
             });
-            view.findViewById(R.id.ok_btn).setOnClickListener(new OnClickListener() {
+            dialog.findViewById(R.id.ok_btn).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     editor.putInt(PREFS_RATE_DIALOG_IN, -1);
@@ -97,10 +93,6 @@ public class ApplicationUtils {
             dialog.setCancelable(true);
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
-
-            // Remove padding from parent
-            ViewGroup parent = (ViewGroup) view.getParent();
-            parent.setPadding(0, 0, 0, 0);
         }
     }
 
@@ -138,9 +130,9 @@ public class ApplicationUtils {
         showToast(context, context.getString(textResourceId), duration);
     }
 
-    public static void openDialogFragment(Activity activity, DialogFragment dialog, Bundle bundle) {
-        FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
-        Fragment prev = activity.getFragmentManager().findFragmentByTag("dialog");
+    public static void openDialogFragment(FragmentActivity activity, DialogFragment dialog, Bundle bundle) {
+        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+        Fragment prev = activity.getSupportFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
             ft.remove(prev);
         }
@@ -172,13 +164,6 @@ public class ApplicationUtils {
         };
         backgroundView.postDelayed(stormEffectRunnable, 200);
         return stormEffectRunnable;
-    }
-
-    public static Point getScreenDimensions(Activity activity) {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size;
     }
 
     public static void startSharing(Activity activity, String subject, String text, int image) {
@@ -298,6 +283,13 @@ public class ApplicationUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void setAlpha(View view, float alpha) {
+        AlphaAnimation anim = new AlphaAnimation(alpha, alpha);
+        anim.setDuration(0);
+        anim.setFillAfter(true);
+        view.startAnimation(anim);
     }
 
 }

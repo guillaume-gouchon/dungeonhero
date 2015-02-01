@@ -45,7 +45,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
      */
     private ImageView mStormsBg;
     private Runnable mStormEffect;
-    private AlertDialog mHeroNameDialog;
+    private Dialog mHeroNameDialog;
     private Dialog mBuyDialog;
 
     /**
@@ -138,12 +138,10 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
     }
 
     private void showNameInputDialog(final Hero selectedHero) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.dialog_hero_name_input, null);
+        mHeroNameDialog = new Dialog(this, R.style.Dialog);
+        mHeroNameDialog.setContentView(R.layout.dialog_hero_name_input);
 
-        mHeroNameDialog = new AlertDialog.Builder(this, R.style.Dialog).setView(view).create();
-
-        final EditText heroNameInput = (EditText) view.findViewById(R.id.heroNameInput);
+        final EditText heroNameInput = (EditText) mHeroNameDialog.findViewById(R.id.heroNameInput);
         heroNameInput.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         ApplicationUtils.showKeyboard(this, heroNameInput);
         heroNameInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -159,7 +157,7 @@ public class NewGameActivity extends MyActivity implements OnBillingServiceConne
             }
         });
 
-        view.findViewById(R.id.ok_btn).setOnClickListener(new OnClickListener() {
+        mHeroNameDialog.findViewById(R.id.ok_btn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 MusicManager.playSound(getApplicationContext(), R.raw.button_sound);

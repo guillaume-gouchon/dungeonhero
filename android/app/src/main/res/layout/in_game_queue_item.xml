@@ -18,5 +18,4 @@
         android:layout_below="@+id/name"
         android:layout_width="50dp"
         android:layout_height="2dp" />
-
 </LinearLayout>

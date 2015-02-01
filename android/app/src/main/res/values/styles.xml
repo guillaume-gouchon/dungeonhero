@@ -89,12 +89,14 @@
         <item name="@android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="Dialog" parent="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth">
+    <style name="Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
         <item name="@android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="DialogNoAnimation" parent="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth">
+    <style name="DialogNoAnimation" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@null</item>
         <item name="@android:windowBackground">@android:color/transparent</item>
     </style>

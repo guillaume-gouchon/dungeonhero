@@ -105,7 +105,7 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
             dot = new View(mContext);
             dot.setLayoutParams(layoutParams);
             dot.setBackgroundResource(R.drawable.pagination_dot);
-            dot.setAlpha(n == 0 ? ALPHA_ACTIVE_DOT : ALPHA_PASSIVE_DOT);
+            ApplicationUtils.setAlpha(dot, n == 0 ? ALPHA_ACTIVE_DOT : ALPHA_PASSIVE_DOT);
             mPaginationDots[n] = dot;
             mPagination.addView(dot);
         }
@@ -127,9 +127,9 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
     public void onPageSelected(int position) {
         for (int n = 0; n < mPaginationDots.length; n++) {
             if (position == n || position >= mPaginationDots.length && n == mPaginationDots.length - 1) {
-                mPaginationDots[n].setAlpha(ALPHA_ACTIVE_DOT);
+                ApplicationUtils.setAlpha(mPaginationDots[n], ALPHA_ACTIVE_DOT);
             } else {
-                mPaginationDots[n].setAlpha(ALPHA_PASSIVE_DOT);
+                ApplicationUtils.setAlpha(mPaginationDots[n], ALPHA_PASSIVE_DOT);
             }
         }
     }

@@ -39,5 +39,4 @@
             android:layout_height="wrap_content"
             layout="@layout/in_game_queue_item" />
     </LinearLayout>
-
 </LinearLayout>
