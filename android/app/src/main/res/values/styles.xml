@@ -95,10 +95,8 @@
         <item name="@android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="DialogNoAnimation" parent="@android:style/Theme.Dialog">
-        <item name="android:windowNoTitle">true</item>
+    <style name="DialogNoAnimation" parent="@style/Dialog">
         <item name="android:windowAnimationStyle">@null</item>
-        <item name="@android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="DialogAnimation">
