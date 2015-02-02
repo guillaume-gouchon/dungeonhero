@@ -27,6 +27,7 @@ import com.glevel.dungeonhero.activities.fragments.LoadGameFragment;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.providers.MyContentProvider;
+import com.glevel.dungeonhero.providers.MyDatabaseHelper;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 import com.glevel.dungeonhero.utils.MusicManager;
 
@@ -47,6 +48,7 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
     private ImageView mStormsBg;
     private ViewGroup mLoginLayout;
     private Runnable mStormEffect;
+    private Cursor mGames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,18 +67,21 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
     }
 
     private void retrieveLoadGames() {
-        new AsyncTask<Void, Void, Cursor>() {
-            @Override
-            protected Cursor doInBackground(Void... params) {
-                return getContentResolver().query(MyContentProvider.URI_GAMES, new String[]{Game.COLUMN_ID}, null, null, Game.COLUMN_ID + " LIMIT 1");
-            }
+        if (MyDatabaseHelper.isDataBaseReady(getApplicationContext())) {
+            new AsyncTask<Void, Void, Cursor>() {
+                @Override
+                protected Cursor doInBackground(Void... params) {
+                    return getContentResolver().query(MyContentProvider.URI_GAMES, new String[]{Game.COLUMN_ID}, null, null, Game.COLUMN_ID + " LIMIT 1");
+                }
 
-            @Override
-            protected void onPostExecute(Cursor games) {
-                super.onPostExecute(games);
-                mLoadGameButton.setEnabled(games.getCount() > 0);
-            }
-        }.execute();
+                @Override
+                protected void onPostExecute(Cursor games) {
+                    super.onPostExecute(games);
+                    mGames = games;
+                    mLoadGameButton.setEnabled(games.getCount() > 0);
+                }
+            }.execute();
+        }
     }
 
     @Override
@@ -315,6 +320,8 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         retrieveLoadGames();
 
         showButton(mSettingsButton, true);
+
+        mLoadGameButton.setEnabled(mGames != null && mGames.getCount() > 0);
     }
 
     private void hideMainHomeButtons() {
@@ -357,26 +364,6 @@ public class HomeActivity extends MyActivity implements OnClickListener, LoadGam
         mSettingsLayout.setVisibility(View.GONE);
         mSettingsLayout.startAnimation(mFadeOutAnimation);
     }
-
-//    @Override
-//    public void onSignInFailed() {
-//        showSignInButton();
-//    }
-//
-//    @Override
-//    public void onSignInSucceeded() {
-//        // show sign-out button, hide the sign-in button
-//        findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-//        findViewById(R.id.achievementsButton).setVisibility(View.VISIBLE);
-//        findViewById(R.id.achievementsButton).startAnimation(mFadeInAnimation);
-//        findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
-//    }
-//
-//    private void showSignInButton() {
-//        findViewById(R.id.sign_out_button).setVisibility(View.GONE);
-//        findViewById(R.id.achievementsButton).setVisibility(View.GONE);
-//        findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-//    }
 
     @Override
     public void OnFragmentClosed() {

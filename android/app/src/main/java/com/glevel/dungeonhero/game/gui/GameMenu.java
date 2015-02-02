@@ -19,6 +19,7 @@ public class GameMenu extends Dialog implements View.OnClickListener {
         super(context, R.style.FullScreenDialog);
         setContentView(R.layout.dialog_game_menu);
         setCancelable(true);
+        setCanceledOnTouchOutside(true);
 
         final Animation menuButtonAnimation = AnimationUtils.loadAnimation(context, R.anim.bottom_in);
 

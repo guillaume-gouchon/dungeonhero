@@ -406,6 +406,7 @@ public class GUIManager {
         mBagDialog = new Dialog(mGameActivity, R.style.Dialog);
         mBagDialog.setContentView(R.layout.in_game_bag);
         mBagDialog.setCancelable(true);
+        mBagDialog.setCanceledOnTouchOutside(true);
 
         updateBag(hero);
 

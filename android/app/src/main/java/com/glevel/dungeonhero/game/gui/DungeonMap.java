@@ -16,6 +16,7 @@ public class DungeonMap extends Dialog {
         super(context, R.style.Dialog);
         setContentView(R.layout.in_game_dungeon_map);
         setCancelable(true);
+        setCanceledOnTouchOutside(true);
 
         ((Minimap) findViewById(R.id.minimap)).setDungeon(dungeon);
     }

@@ -16,6 +16,7 @@ public class HeroInfo extends Dialog {
         super(context, R.style.Dialog);
         setContentView(R.layout.in_game_hero_details);
         setCancelable(true);
+        setCanceledOnTouchOutside(true);
 
         ((TextView) findViewById(R.id.name)).setText(hero.getHeroName());
         ((TextView) findViewById(R.id.description)).setText(hero.getDescription(context.getResources()));
