@@ -18,7 +18,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Nicolas Gramlich
  * @since 18:37:32 - 08.08.2010
  */
-public class TSXParser extends DefaultHandler implements TMXConstants {
+class TSXParser extends DefaultHandler implements TMXConstants {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -72,40 +72,52 @@ public class TSXParser extends DefaultHandler implements TMXConstants {
 
 	@Override
 	public void startElement(final String pUri, final String pLocalName, final String pQualifiedName, final Attributes pAttributes) throws SAXException {
-		if(pLocalName.equals(TAG_TILESET)){
-			this.mInTileset = true;
-			this.mTMXTileSet = new TMXTileSet(this.mFirstGlobalTileID, pAttributes, this.mTextureOptions);
-		} else if(pLocalName.equals(TAG_IMAGE)){
-			this.mInImage = true;
-			this.mTMXTileSet.setImageSource(this.mAssetManager, this.mTextureManager, pAttributes);
-		} else if(pLocalName.equals(TAG_TILE)) {
-			this.mInTile = true;
-			this.mLastTileSetTileID = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TILE_ATTRIBUTE_ID);
-		} else if(pLocalName.equals(TAG_PROPERTIES)) {
-			this.mInProperties = true;
-		} else if(pLocalName.equals(TAG_PROPERTY)) {
-			this.mInProperty = true;
-			this.mTMXTileSet.addTMXTileProperty(this.mLastTileSetTileID, new TMXTileProperty(pAttributes));
-		} else {
-			throw new TMXParseException("Unexpected start tag: '" + pLocalName + "'.");
-		}
+        switch (pLocalName) {
+            case TAG_TILESET:
+                this.mInTileset = true;
+                this.mTMXTileSet = new TMXTileSet(this.mFirstGlobalTileID, pAttributes, this.mTextureOptions);
+                break;
+            case TAG_IMAGE:
+                this.mInImage = true;
+                this.mTMXTileSet.setImageSource(this.mAssetManager, this.mTextureManager, pAttributes);
+                break;
+            case TAG_TILE:
+                this.mInTile = true;
+                this.mLastTileSetTileID = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TILE_ATTRIBUTE_ID);
+                break;
+            case TAG_PROPERTIES:
+                this.mInProperties = true;
+                break;
+            case TAG_PROPERTY:
+                this.mInProperty = true;
+                this.mTMXTileSet.addTMXTileProperty(this.mLastTileSetTileID, new TMXTileProperty(pAttributes));
+                break;
+            default:
+                throw new TMXParseException("Unexpected start tag: '" + pLocalName + "'.");
+        }
 	}
 
 	@Override
 	public void endElement(final String pUri, final String pLocalName, final String pQualifiedName) throws SAXException {
-		if(pLocalName.equals(TAG_TILESET)){
-			this.mInTileset = false;
-		} else if(pLocalName.equals(TAG_IMAGE)){
-			this.mInImage = false;
-		} else if(pLocalName.equals(TAG_TILE)) {
-			this.mInTile = false;
-		} else if(pLocalName.equals(TAG_PROPERTIES)) {
-			this.mInProperties = false;
-		} else if(pLocalName.equals(TAG_PROPERTY)) {
-			this.mInProperty = false;
-		} else {
-			throw new TMXParseException("Unexpected end tag: '" + pLocalName + "'.");
-		}
+        switch (pLocalName) {
+            case TAG_TILESET:
+                this.mInTileset = false;
+                break;
+            case TAG_IMAGE:
+                this.mInImage = false;
+                break;
+            case TAG_TILE:
+                this.mInTile = false;
+                break;
+            case TAG_PROPERTIES:
+                this.mInProperties = false;
+                break;
+            case TAG_PROPERTY:
+                this.mInProperty = false;
+                break;
+            default:
+                throw new TMXParseException("Unexpected end tag: '" + pLocalName + "'.");
+        }
 	}
 
 	// ===========================================================

@@ -4,9 +4,6 @@ import com.glevel.dungeonhero.game.graphics.LightSprite;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by guillaume on 10/10/14.
- */
 public class Light extends Decoration {
 
     private static final long serialVersionUID = 5948624130900767936L;

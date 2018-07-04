@@ -34,18 +34,22 @@ public class SequenceModifier<T> extends BaseModifier<T> implements IModifierLis
 	// Constructors
 	// ===========================================================
 
-	public SequenceModifier(final IModifier<T> ... pModifiers) throws IllegalArgumentException {
+	@SafeVarargs
+	protected SequenceModifier(final IModifier<T>... pModifiers) throws IllegalArgumentException {
 		this(null, null, pModifiers);
 	}
 
-	public SequenceModifier(final ISubSequenceModifierListener<T> pSubSequenceModifierListener, final IModifier<T> ... pModifiers) throws IllegalArgumentException {
+	@SafeVarargs
+	protected SequenceModifier(final ISubSequenceModifierListener<T> pSubSequenceModifierListener, final IModifier<T>... pModifiers) throws IllegalArgumentException {
 		this(pSubSequenceModifierListener, null, pModifiers);
 	}
 
-	public SequenceModifier(final IModifierListener<T> pModifierListener, final IModifier<T> ... pModifiers) throws IllegalArgumentException {
+	@SafeVarargs
+	protected SequenceModifier(final IModifierListener<T> pModifierListener, final IModifier<T>... pModifiers) throws IllegalArgumentException {
 		this(null, pModifierListener, pModifiers);
 	}
 
+	@SafeVarargs
 	public SequenceModifier(final ISubSequenceModifierListener<T> pSubSequenceModifierListener, final IModifierListener<T> pModifierListener, final IModifier<T> ... pModifiers) throws IllegalArgumentException {
 		super(pModifierListener);
 
@@ -80,7 +84,7 @@ public class SequenceModifier<T> extends BaseModifier<T> implements IModifierLis
 
 	@Override
 	public SequenceModifier<T> deepCopy() throws DeepCopyNotSupportedException{
-		return new SequenceModifier<T>(this);
+		return new SequenceModifier<>(this);
 	}
 
 	// ===========================================================
@@ -187,7 +191,7 @@ public class SequenceModifier<T> extends BaseModifier<T> implements IModifierLis
 	// ===========================================================
 
 	public interface ISubSequenceModifierListener<T> {
-		public void onSubSequenceStarted(final IModifier<T> pModifier, final T pItem, final int pIndex);
-		public void onSubSequenceFinished(final IModifier<T> pModifier, final T pItem, final int pIndex);
+		void onSubSequenceStarted(final IModifier<T> pModifier, final T pItem, final int pIndex);
+		void onSubSequenceFinished(final IModifier<T> pModifier, final T pItem, final int pIndex);
 	}
 }

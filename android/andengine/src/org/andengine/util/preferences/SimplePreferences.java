@@ -59,7 +59,7 @@ public class SimplePreferences {
 		return SimplePreferences.incrementAccessCount(pContext, pKey, 1);
 	}
 
-	public static int incrementAccessCount(final Context pContext, final String pKey, final int pIncrement) {
+	private static int incrementAccessCount(final Context pContext, final String pKey, final int pIncrement) {
 		final SharedPreferences prefs = SimplePreferences.getInstance(pContext);
 		final int accessCount = prefs.getInt(pKey, 0);
 

@@ -56,7 +56,7 @@ public class FontUtils {
 	 * @param pEnd <code>1</code> beyond the index of the last character to measure.
 	 * @return the width of pText.
 	 */
-	public static float measureText(final IFont pFont, final CharSequence pText, final int pStart, final int pEnd) {
+	private static float measureText(final IFont pFont, final CharSequence pText, final int pStart, final int pEnd) {
 		return FontUtils.measureText(pFont, pText, pStart, pEnd, null);
 	}
 
@@ -66,7 +66,7 @@ public class FontUtils {
 	 * @param pWidths (optional) If not <code>null</code>, returns the actual width measured.
 	 * @return the width of pText.
 	 */
-	public static float measureText(final IFont pFont, final CharSequence pText, final float[] pWidths) {
+	private static float measureText(final IFont pFont, final CharSequence pText, final float[] pWidths) {
 		return FontUtils.measureText(pFont, pText, 0, pText.length(), pWidths);
 	}
 
@@ -80,7 +80,7 @@ public class FontUtils {
 	 * @param pWidths (optional) If not <code>null</code>, returns the actual width after each character.
 	 * @return the width of pText.
 	 */
-	public static float measureText(final IFont pFont, final CharSequence pText, final int pStart, final int pEnd, final float[] pWidths) {
+	private static float measureText(final IFont pFont, final CharSequence pText, final int pStart, final int pEnd, final float[] pWidths) {
 		final int textLength = pEnd - pStart;
 		/* Early exits. */
 		if(pStart == pEnd) {
@@ -140,9 +140,6 @@ public class FontUtils {
 	 * @return
 	 */
 	public static <L extends List<CharSequence>> L splitLines(final IFont pFont, final CharSequence pText, final L pResult, final AutoWrap pAutoWrap, final float pAutoWrapWidth) {
-		/**
-		 * TODO In order to respect already existing linebreaks, {@link FontUtils#split(CharSequence, List)} could be leveraged and than the following methods could be called for each line.
-		 */
 		switch(pAutoWrap) {
 			case LETTERS:
 				return FontUtils.splitLinesByLetters(pFont, pText, pResult, pAutoWrapWidth);
@@ -415,9 +412,9 @@ public class FontUtils {
 		// ===========================================================
 
 		FORWARDS,
-		BACKWARDS;
+		BACKWARDS
 
-		// ===========================================================
+        // ===========================================================
 		// Constants
 		// ===========================================================
 

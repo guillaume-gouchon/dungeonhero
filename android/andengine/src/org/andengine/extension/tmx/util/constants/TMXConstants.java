@@ -14,69 +14,69 @@ public interface TMXConstants {
 	// Final Fields
 	// ===========================================================
 
-	public static final int BYTES_PER_GLOBALTILEID = 4;
+	int BYTES_PER_GLOBALTILEID = 4;
 
-	public static final String TAG_MAP = "map";
-	public static final String TAG_MAP_ATTRIBUTE_ORIENTATION = "orientation";
-	public static final String TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL = "orthogonal";
-	public static final String TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ISOMETRIC = "isometric";
-	public static final String TAG_MAP_ATTRIBUTE_WIDTH = "width";
-	public static final String TAG_MAP_ATTRIBUTE_HEIGHT = "height";
-	public static final String TAG_MAP_ATTRIBUTE_TILEWIDTH = "tilewidth";
-	public static final String TAG_MAP_ATTRIBUTE_TILEHEIGHT = "tileheight";
+	String TAG_MAP = "map";
+	String TAG_MAP_ATTRIBUTE_ORIENTATION = "orientation";
+	String TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL = "orthogonal";
+	String TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ISOMETRIC = "isometric";
+	String TAG_MAP_ATTRIBUTE_WIDTH = "width";
+	String TAG_MAP_ATTRIBUTE_HEIGHT = "height";
+	String TAG_MAP_ATTRIBUTE_TILEWIDTH = "tilewidth";
+	String TAG_MAP_ATTRIBUTE_TILEHEIGHT = "tileheight";
 
-	public static final String TAG_TILESET = "tileset";
-	public static final String TAG_TILESET_ATTRIBUTE_FIRSTGID = "firstgid";
-	public static final String TAG_TILESET_ATTRIBUTE_SOURCE = "source";
-	public static final String TAG_TILESET_ATTRIBUTE_NAME = "name";
-	public static final String TAG_TILESET_ATTRIBUTE_TILEWIDTH = "tilewidth";
-	public static final String TAG_TILESET_ATTRIBUTE_TILEHEIGHT = "tileheight";
-	public static final String TAG_TILESET_ATTRIBUTE_SPACING = "spacing";
-	public static final String TAG_TILESET_ATTRIBUTE_MARGIN = "margin";
+	String TAG_TILESET = "tileset";
+	String TAG_TILESET_ATTRIBUTE_FIRSTGID = "firstgid";
+	String TAG_TILESET_ATTRIBUTE_SOURCE = "source";
+	String TAG_TILESET_ATTRIBUTE_NAME = "name";
+	String TAG_TILESET_ATTRIBUTE_TILEWIDTH = "tilewidth";
+	String TAG_TILESET_ATTRIBUTE_TILEHEIGHT = "tileheight";
+	String TAG_TILESET_ATTRIBUTE_SPACING = "spacing";
+	String TAG_TILESET_ATTRIBUTE_MARGIN = "margin";
 
-	public static final String TAG_IMAGE = "image";
-	public static final String TAG_IMAGE_ATTRIBUTE_SOURCE = "source";
-	public static final String TAG_IMAGE_ATTRIBUTE_TRANS = "trans";
+	String TAG_IMAGE = "image";
+	String TAG_IMAGE_ATTRIBUTE_SOURCE = "source";
+	String TAG_IMAGE_ATTRIBUTE_TRANS = "trans";
 
-	public static final String TAG_TILE = "tile";
-	public static final String TAG_TILE_ATTRIBUTE_ID = "id";
-	public static final String TAG_TILE_ATTRIBUTE_GID = "gid";
+	String TAG_TILE = "tile";
+	String TAG_TILE_ATTRIBUTE_ID = "id";
+	String TAG_TILE_ATTRIBUTE_GID = "gid";
 
-	public static final String TAG_PROPERTIES = "properties";
+	String TAG_PROPERTIES = "properties";
 
-	public static final String TAG_PROPERTY = "property";
-	public static final String TAG_PROPERTY_ATTRIBUTE_NAME = "name";
-	public static final String TAG_PROPERTY_ATTRIBUTE_VALUE = "value";
+	String TAG_PROPERTY = "property";
+	String TAG_PROPERTY_ATTRIBUTE_NAME = "name";
+	String TAG_PROPERTY_ATTRIBUTE_VALUE = "value";
 
-	public static final String TAG_LAYER = "layer";
-	public static final String TAG_LAYER_ATTRIBUTE_NAME = "name";
-	public static final String TAG_LAYER_ATTRIBUTE_WIDTH = "width";
-	public static final String TAG_LAYER_ATTRIBUTE_HEIGHT = "height";
-	public static final String TAG_LAYER_ATTRIBUTE_VISIBLE = "visible";
-	public static final int TAG_LAYER_ATTRIBUTE_VISIBLE_VALUE_DEFAULT = 1;
-	public static final String TAG_LAYER_ATTRIBUTE_OPACITY = "opacity";
-	public static final float TAG_LAYER_ATTRIBUTE_OPACITY_VALUE_DEFAULT = 1.0f;
+	String TAG_LAYER = "layer";
+	String TAG_LAYER_ATTRIBUTE_NAME = "name";
+	String TAG_LAYER_ATTRIBUTE_WIDTH = "width";
+	String TAG_LAYER_ATTRIBUTE_HEIGHT = "height";
+	String TAG_LAYER_ATTRIBUTE_VISIBLE = "visible";
+	int TAG_LAYER_ATTRIBUTE_VISIBLE_VALUE_DEFAULT = 1;
+	String TAG_LAYER_ATTRIBUTE_OPACITY = "opacity";
+	float TAG_LAYER_ATTRIBUTE_OPACITY_VALUE_DEFAULT = 1.0f;
 
-	public static final String TAG_DATA = "data";
-	public static final String TAG_DATA_ATTRIBUTE_ENCODING = "encoding";
-	public static final String TAG_DATA_ATTRIBUTE_ENCODING_VALUE_BASE64 = "base64";
-	public static final String TAG_DATA_ATTRIBUTE_COMPRESSION = "compression";
-	public static final String TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_GZIP = "gzip";
-	public static final String TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_ZLIB = "zlib";
+	String TAG_DATA = "data";
+	String TAG_DATA_ATTRIBUTE_ENCODING = "encoding";
+	String TAG_DATA_ATTRIBUTE_ENCODING_VALUE_BASE64 = "base64";
+	String TAG_DATA_ATTRIBUTE_COMPRESSION = "compression";
+	String TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_GZIP = "gzip";
+	String TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_ZLIB = "zlib";
 
 
-	public static final String TAG_OBJECTGROUP = "objectgroup";
-	public static final String TAG_OBJECTGROUP_ATTRIBUTE_NAME = "name";
-	public static final String TAG_OBJECTGROUP_ATTRIBUTE_WIDTH = "width";
-	public static final String TAG_OBJECTGROUP_ATTRIBUTE_HEIGHT = "height";
+	String TAG_OBJECTGROUP = "objectgroup";
+	String TAG_OBJECTGROUP_ATTRIBUTE_NAME = "name";
+	String TAG_OBJECTGROUP_ATTRIBUTE_WIDTH = "width";
+	String TAG_OBJECTGROUP_ATTRIBUTE_HEIGHT = "height";
 
-	public static final String TAG_OBJECT = "object";
-	public static final String TAG_OBJECT_ATTRIBUTE_NAME = "name";
-	public static final String TAG_OBJECT_ATTRIBUTE_TYPE = "type";
-	public static final String TAG_OBJECT_ATTRIBUTE_X = "x";
-	public static final String TAG_OBJECT_ATTRIBUTE_Y = "y";
-	public static final String TAG_OBJECT_ATTRIBUTE_WIDTH = "width";
-	public static final String TAG_OBJECT_ATTRIBUTE_HEIGHT = "height";
+	String TAG_OBJECT = "object";
+	String TAG_OBJECT_ATTRIBUTE_NAME = "name";
+	String TAG_OBJECT_ATTRIBUTE_TYPE = "type";
+	String TAG_OBJECT_ATTRIBUTE_X = "x";
+	String TAG_OBJECT_ATTRIBUTE_Y = "y";
+	String TAG_OBJECT_ATTRIBUTE_WIDTH = "width";
+	String TAG_OBJECT_ATTRIBUTE_HEIGHT = "height";
 
 	// ===========================================================
 	// Methods

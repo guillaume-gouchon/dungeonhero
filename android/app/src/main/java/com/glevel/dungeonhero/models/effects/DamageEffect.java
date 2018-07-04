@@ -2,9 +2,6 @@ package com.glevel.dungeonhero.models.effects;
 
 import com.glevel.dungeonhero.models.items.Characteristics;
 
-/**
- * Created by guillaume on 19/10/14.
- */
 public class DamageEffect extends Effect {
 
     private static final long serialVersionUID = -8460128387814092995L;

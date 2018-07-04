@@ -12,12 +12,12 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.glevel.dungeonhero.MyActivity;
-import com.glevel.dungeonhero.MyApplication.FONTS;
+import com.glevel.dungeonhero.BaseActivity;
+import com.glevel.dungeonhero.BaseApplication.FONTS;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
-public class SplashActivity extends MyActivity {
+public class SplashActivity extends BaseActivity {
 
     private static final int DELAY_AFTER_ANIMATION = 300, DELAY_BEFORE_ANIMATION = 200;
 
@@ -35,9 +35,9 @@ public class SplashActivity extends MyActivity {
         // increase number of launches
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         int nbLaunches = prefs.getInt(ApplicationUtils.PREFS_NB_LAUNCHES, 0);
-        prefs.edit().putInt(ApplicationUtils.PREFS_NB_LAUNCHES, ++nbLaunches).commit();
+        prefs.edit().putInt(ApplicationUtils.PREFS_NB_LAUNCHES, ++nbLaunches).apply();
         int nbLaunchesBeforeRateDialog = prefs.getInt(ApplicationUtils.PREFS_RATE_DIALOG_IN, ApplicationUtils.NB_LAUNCHES_RATE_DIALOG_APPEARS);
-        prefs.edit().putInt(ApplicationUtils.PREFS_RATE_DIALOG_IN, --nbLaunchesBeforeRateDialog).commit();
+        prefs.edit().putInt(ApplicationUtils.PREFS_RATE_DIALOG_IN, --nbLaunchesBeforeRateDialog).apply();
 
         // do not show splashscreen after a few launches
         if (nbLaunches >= ApplicationUtils.NB_LAUNCHES_WITH_SPLASHSCREEN) {
@@ -59,16 +59,11 @@ public class SplashActivity extends MyActivity {
     protected void onStart() {
         super.onStart();
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startNextFallingLetterAnimation();
-            }
-        }, DELAY_BEFORE_ANIMATION);
+        handler.postDelayed(this::startNextFallingLetterAnimation, DELAY_BEFORE_ANIMATION);
     }
 
     private void setupUI() {
-        mTitleLayout = (ViewGroup) findViewById(R.id.title);
+        mTitleLayout = findViewById(R.id.title);
 
         mBounceAnimation = AnimationUtils.loadAnimation(this, R.anim.splash_bounce_effect);
 
@@ -98,7 +93,7 @@ public class SplashActivity extends MyActivity {
             char letter = appPublisher.charAt(n);
             TextView letterTV = new TextView(this);
             letterTV.setTextAppearance(this, R.style.SplashScreenTitle);
-            letterTV.setText("" + letter);
+            letterTV.setText(String.valueOf(letter));
             letterTV.setVisibility(View.GONE);
             letterTV.setTypeface(FONTS.splash);
             mTitleLayout.addView(letterTV);
@@ -118,12 +113,7 @@ public class SplashActivity extends MyActivity {
             mCurrentAnimationPlaying++;
         } else {
             Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    goToHomeScreen();
-                }
-            }, DELAY_AFTER_ANIMATION);
+            handler.postDelayed(this::goToHomeScreen, DELAY_AFTER_ANIMATION);
         }
     }
 

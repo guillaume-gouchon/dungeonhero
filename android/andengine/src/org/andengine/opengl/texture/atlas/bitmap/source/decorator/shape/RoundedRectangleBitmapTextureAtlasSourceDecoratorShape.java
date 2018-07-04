@@ -35,11 +35,11 @@ public class RoundedRectangleBitmapTextureAtlasSourceDecoratorShape implements I
 	// Constructors
 	// ===========================================================
 
-	public RoundedRectangleBitmapTextureAtlasSourceDecoratorShape() {
+	private RoundedRectangleBitmapTextureAtlasSourceDecoratorShape() {
 		this(CORNER_RADIUS_DEFAULT, CORNER_RADIUS_DEFAULT);
 	}
 
-	public RoundedRectangleBitmapTextureAtlasSourceDecoratorShape(final float pCornerRadiusX, final float pCornerRadiusY) {
+	private RoundedRectangleBitmapTextureAtlasSourceDecoratorShape(final float pCornerRadiusX, final float pCornerRadiusY) {
 		this.mCornerRadiusX = pCornerRadiusX;
 		this.mCornerRadiusY = pCornerRadiusY;
 	}

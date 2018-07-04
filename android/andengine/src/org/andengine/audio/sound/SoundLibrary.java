@@ -9,7 +9,7 @@ import org.andengine.util.adt.map.Library;
  * @author Nicolas Gramlich
  * @since 20:41:56 - 20.08.2010
  */
-public class SoundLibrary extends Library<Sound> {
+class SoundLibrary extends Library<Sound> {
 	// ===========================================================
 	// Constants
 	// ===========================================================

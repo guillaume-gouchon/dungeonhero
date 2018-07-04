@@ -2,6 +2,7 @@ package com.glevel.dungeonhero.activities.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -20,17 +21,14 @@ import java.util.List;
 
 public class BooksAdapter extends CustomCarousel.Adapter<Book> {
 
-    private Resources mResources;
-    private View.OnClickListener mItemClickedListener;
+    private final Resources mResources;
+    private final View.OnClickListener mItemClickedListener;
 
     public BooksAdapter(final Context context, int layoutResource, List<Book> dataList, View.OnClickListener itemClickedListener) {
-        super(context, layoutResource, dataList, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View enterQuestLayout = v.findViewById(R.id.enter_quest_layout);
-                enterQuestLayout.startAnimation(AnimationUtils.loadAnimation(context, R.anim.zoom_in));
-                enterQuestLayout.setVisibility(View.VISIBLE);
-            }
+        super(context, layoutResource, dataList, v -> {
+            View enterQuestLayout = v.findViewById(R.id.enter_quest_layout);
+            enterQuestLayout.startAnimation(AnimationUtils.loadAnimation(context, R.anim.zoom_in));
+            enterQuestLayout.setVisibility(View.VISIBLE);
         });
         mResources = context.getResources();
         mItemClickedListener = itemClickedListener;
@@ -40,19 +38,25 @@ public class BooksAdapter extends CustomCarousel.Adapter<Book> {
         switch (bookLevel) {
             case 0:
                 return MonsterFactory.buildGoblin();
+
             case 1:
                 return MonsterFactory.buildOrc();
+
             case 2:
                 return MonsterFactory.buildTroll();
+
             case 3:
                 return MonsterFactory.buildChaosWarrior();
+
             default:
                 return MonsterFactory.buildDemonKing();
+
         }
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View layout = (View) super.instantiateItem(container, position);
 
         Book book = mDataList.get(position);
@@ -63,12 +67,11 @@ public class BooksAdapter extends CustomCarousel.Adapter<Book> {
         } else {
             layout.findViewById(R.id.summary).setVisibility(View.INVISIBLE);
         }
-        layout.findViewById(R.id.lock).setVisibility(book.isAvailable() ? View.GONE : View.VISIBLE);
 
         // star rating
         int rating = book.getBestScore();
         if (rating >= 0) {
-            StarRatingView ratingView = (StarRatingView) layout.findViewById(R.id.rating);
+            StarRatingView ratingView = layout.findViewById(R.id.rating);
             ratingView.updateRating(rating);
         }
 
@@ -78,8 +81,8 @@ public class BooksAdapter extends CustomCarousel.Adapter<Book> {
         enterQuestButton.setTag(R.string.id, position);
 
         Monster monster = getBookMonsterSprite(book.getLevel());
-        SpriteView monsterSprite1 = (SpriteView) layout.findViewById(R.id.monster1);
-        SpriteView monsterSprite2 = (SpriteView) layout.findViewById(R.id.monster2);
+        SpriteView monsterSprite1 = layout.findViewById(R.id.monster1);
+        SpriteView monsterSprite2 = layout.findViewById(R.id.monster2);
         monsterSprite1.setImageResource(monster.getImage(mResources));
         monsterSprite1.setSpriteName(GraphicsManager.ASSETS_PATH + monster.getIdentifier() + ".png");
         monsterSprite2.setImageResource(monster.getImage(mResources));

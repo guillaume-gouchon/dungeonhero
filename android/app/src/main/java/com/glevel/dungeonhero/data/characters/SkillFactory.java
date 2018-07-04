@@ -17,7 +17,7 @@ import org.andengine.util.color.Color;
 /**
  * Created by guillaume ON 10/6/14.
  */
-public class SkillFactory {
+class SkillFactory {
 
     public static Skill buildRage() {
         BuffEffect extra = new BuffEffect(null, Characteristics.PROTECTION, -5, 4, null, 0);

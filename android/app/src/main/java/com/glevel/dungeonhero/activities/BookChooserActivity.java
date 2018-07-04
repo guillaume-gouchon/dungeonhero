@@ -2,7 +2,6 @@ package com.glevel.dungeonhero.activities;
 
 import android.app.Dialog;
 import android.content.ContentUris;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.glevel.dungeonhero.MyActivity;
+import com.glevel.dungeonhero.BaseActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.BooksAdapter;
 import com.glevel.dungeonhero.data.BookFactory;
@@ -33,7 +32,7 @@ import com.glevel.dungeonhero.views.CustomCarousel;
 
 import java.util.List;
 
-public class BookChooserActivity extends MyActivity implements OnClickListener {
+public class BookChooserActivity extends BaseActivity implements OnClickListener {
 
     private static final String TAG = "BookChooserActivity";
 
@@ -52,7 +51,7 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
     /**
      * Callbacks
      */
-    private OnClickListener mOnStorySelectedListener = new OnClickListener() {
+    private final OnClickListener mOnStorySelectedListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             int position = Integer.parseInt("" + v.getTag(R.string.id));
@@ -100,7 +99,6 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
         if (nbPerfectQuests == GameConstants.NB_QUESTS) {
             // add victory for character
             mSharedPrefs.edit().putBoolean(GameConstants.FINISH_GAME_WITH_CHARACTER_PREFS + mGame.getHero().getIdentifier(), true).apply();
-            unblockNextCharacter();
             showVictoryDialogIfNeeded();
         }
 
@@ -108,10 +106,10 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
     }
 
     private void setupUI() {
-        mStormsBg = (ImageView) findViewById(R.id.storms);
+        mStormsBg = findViewById(R.id.storms);
 
         // init carousel
-        CustomCarousel carousel = (CustomCarousel) findViewById(R.id.books);
+        CustomCarousel carousel = findViewById(R.id.books);
         CustomCarousel.Adapter adapter = new BooksAdapter(getApplicationContext(), R.layout.book_chooser_item, mLstBooks, mOnStorySelectedListener);
         carousel.setAdapter(adapter);
 
@@ -121,7 +119,7 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
         findViewById(R.id.shop_button).setOnClickListener(this);
         findViewById(R.id.bestiary_button).setOnClickListener(this);
 
-        TextView heroNameTV = (TextView) findViewById(R.id.hero_name);
+        TextView heroNameTV = findViewById(R.id.hero_name);
         heroNameTV.setText(mGame.getHero().getHeroName());
         heroNameTV.setCompoundDrawablesWithIntrinsicBounds(mGame.getHero().getImage(getResources()), 0, 0, 0);
     }
@@ -187,31 +185,25 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
 
     private void showTutorialDialog(final Book selectedBook) {
         // ask user if he wants to do the tutorial as he is a noob
-        mTutorialDialog = new CustomAlertDialog(this, R.style.Dialog, getString(R.string.ask_tutorial), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
+        mTutorialDialog = new CustomAlertDialog(this, R.style.Dialog, getString(R.string.ask_tutorial), (dialog, which) -> {
+            MusicManager.playSound(getApplicationContext(), R.raw.button_sound);
 
-                if (which == R.id.ok_btn) {
-                    // go to tutorial
-                    dialog.dismiss();
-                    onBookSelected(BookFactory.buildTutorial());
-                } else {
-                    dialog.dismiss();
-                    onBookSelected(selectedBook);
-                }
+            if (which == R.id.ok_btn) {
+                // go to tutorial
+                dialog.dismiss();
+                onBookSelected(BookFactory.buildTutorial());
+            } else {
+                dialog.dismiss();
+                onBookSelected(selectedBook);
             }
         });
         mTutorialDialog.show();
     }
 
     private void openGameMenu() {
-        mGameMenuDialog = new GameMenu(this, null, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BookChooserActivity.this, HomeActivity.class));
-                finish();
-            }
+        mGameMenuDialog = new GameMenu(this, null, v -> {
+            startActivity(new Intent(BookChooserActivity.this, HomeActivity.class));
+            finish();
         });
 
         mGameMenuDialog.show();
@@ -223,28 +215,6 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
         intent.putExtra(Game.class.getName(), mGame);
         startActivity(intent);
         finish();
-    }
-
-    private void unblockNextCharacter() {
-        List<Hero> heroes = HeroFactory.getAll();
-        for (int n = 0; n < heroes.size(); n++) {
-            if (heroes.get(n).getIdentifier().equals(mGame.getHero().getIdentifier())) {
-                Log.d(TAG, "Congratulations ! The game is finished with character = " + mGame.getHero().getIdentifier());
-                if (n + 1 < heroes.size()) {
-                    Hero unblockedHero = heroes.get(n + 1);
-                    if (mSharedPrefs.getString(unblockedHero.getProductId(), null) == null) {
-                        Dialog dialog = new Dialog(this, R.style.Dialog);
-                        dialog.setContentView(R.layout.dialog_unlock_hero);
-                        TextView title = (TextView) dialog.findViewById(R.id.title);
-                        title.setText(getString(R.string.congratulations_unlock, getString(unblockedHero.getName(getResources()))));
-                        title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_three_stars, 0, unblockedHero.getImage(getResources()));
-                        dialog.show();
-                        mSharedPrefs.edit().putString(unblockedHero.getProductId(), "got it !").apply();
-                    }
-                    break;
-                }
-            }
-        }
     }
 
     private void showVictoryDialogIfNeeded() {
@@ -264,9 +234,9 @@ public class BookChooserActivity extends MyActivity implements OnClickListener {
             Log.d(TAG, "Congratulations ! The game is finished with all the characters !");
             Dialog dialog = new Dialog(this, R.style.Dialog);
             dialog.setContentView(R.layout.dialog_unlock_hero);
-            TextView title = (TextView) dialog.findViewById(R.id.title);
+            TextView title = dialog.findViewById(R.id.title);
             title.setText(getString(R.string.congratulations_finish_game, getString(R.string.app_name)));
-            title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_three_stars, 0, R.drawable.ic_launcher);
+            title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_three_stars, 0, R.mipmap.ic_launcher);
             dialog.show();
             mSharedPrefs.edit().putString(GameConstants.FINISH_GAME_PREFS, "" + GameConstants.NB_QUESTS).apply();
         }

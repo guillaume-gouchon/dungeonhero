@@ -20,14 +20,14 @@ public abstract class BaseTripleValueParticleInitializer<T extends IEntity> exte
 	// Fields
 	// ===========================================================
 
-	protected float mMinValueC;
-	protected float mMaxValueC;
+	private final float mMinValueC;
+	private final float mMaxValueC;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseTripleValueParticleInitializer(final float pMinValueA, final float pMaxValueA, final float pMinValueB, final float pMaxValueB, final float pMinValueC, final float pMaxValueC) {
+	BaseTripleValueParticleInitializer(final float pMinValueA, final float pMaxValueA, final float pMinValueB, final float pMaxValueB, final float pMinValueC, final float pMaxValueC) {
 		super(pMinValueA, pMaxValueA, pMinValueB, pMaxValueB);
 		this.mMinValueC = pMinValueC;
 		this.mMaxValueC = pMaxValueC;
@@ -52,7 +52,7 @@ public abstract class BaseTripleValueParticleInitializer<T extends IEntity> exte
 	// Methods
 	// ===========================================================
 
-	protected float getRandomValueC() {
+	float getRandomValueC() {
 		if(this.mMinValueC == this.mMaxValueC) {
 			return this.mMaxValueC;
 		} else {

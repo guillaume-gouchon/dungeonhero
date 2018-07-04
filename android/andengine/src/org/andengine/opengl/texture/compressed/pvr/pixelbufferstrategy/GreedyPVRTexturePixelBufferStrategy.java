@@ -74,7 +74,7 @@ public class GreedyPVRTexturePixelBufferStrategy implements IPVRTexturePixelBuff
 		// Constructors
 		// ===========================================================
 
-		public GreedyPVRTexturePixelBufferStrategyBufferManager(final PVRTexture pPVRTexture) throws IOException {
+		GreedyPVRTexturePixelBufferStrategyBufferManager(final PVRTexture pPVRTexture) throws IOException {
 			this.mByteBuffer = pPVRTexture.getPVRTextureBuffer();
 		}
 

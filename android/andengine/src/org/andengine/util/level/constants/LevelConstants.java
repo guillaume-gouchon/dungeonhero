@@ -13,11 +13,11 @@ public interface LevelConstants {
 	// Constants
 	// ===========================================================
 
-	public static final String TAG_LEVEL = "level";
-	public static final String TAG_LEVEL_ATTRIBUTE_NAME = "name";
-	public static final String TAG_LEVEL_ATTRIBUTE_UID = "uid";
-	public static final String TAG_LEVEL_ATTRIBUTE_WIDTH = "width";
-	public static final String TAG_LEVEL_ATTRIBUTE_HEIGHT = "height";
+	String TAG_LEVEL = "level";
+	String TAG_LEVEL_ATTRIBUTE_NAME = "name";
+	String TAG_LEVEL_ATTRIBUTE_UID = "uid";
+	String TAG_LEVEL_ATTRIBUTE_WIDTH = "width";
+	String TAG_LEVEL_ATTRIBUTE_HEIGHT = "height";
 
 	// ===========================================================
 	// Methods

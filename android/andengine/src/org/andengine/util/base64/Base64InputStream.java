@@ -27,7 +27,7 @@ import java.io.InputStream;
 public class Base64InputStream extends FilterInputStream {
 	private final Base64.Coder coder;
 
-	private static byte[] EMPTY = new byte[0];
+	private static final byte[] EMPTY = new byte[0];
 
 	private static final int BUFFER_SIZE = 2048;
 	private boolean eof;
@@ -58,7 +58,7 @@ public class Base64InputStream extends FilterInputStream {
 	 *
 	 * @hide
 	 */
-	public Base64InputStream(final InputStream in, final int flags, final boolean encode) {
+    private Base64InputStream(final InputStream in, final int flags, final boolean encode) {
 		super(in);
 		this.eof = false;
 		this.inputBuffer = new byte[BUFFER_SIZE];

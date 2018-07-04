@@ -7,13 +7,14 @@
 
     <com.glevel.dungeonhero.views.CustomTextView
         android:id="@+id/tutorial_hint"
-        android:background="@drawable/bg_gui"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/bg_gui"
         android:padding="8dp"
         android:textSize="14sp" />
 </RelativeLayout>

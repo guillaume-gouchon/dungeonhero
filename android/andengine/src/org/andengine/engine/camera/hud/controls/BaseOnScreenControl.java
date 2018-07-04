@@ -49,7 +49,7 @@ public abstract class BaseOnScreenControl extends HUD implements IOnSceneTouchLi
 	// Constructors
 	// ===========================================================
 
-	public BaseOnScreenControl(final float pX, final float pY, final Camera pCamera, final ITextureRegion pControlBaseTextureRegion, final ITextureRegion pControlKnobTextureRegion, final float pTimeBetweenUpdates, final VertexBufferObjectManager pVertexBufferObjectManager, final IOnScreenControlListener pOnScreenControlListener) {
+	BaseOnScreenControl(final float pX, final float pY, final Camera pCamera, final ITextureRegion pControlBaseTextureRegion, final ITextureRegion pControlKnobTextureRegion, final float pTimeBetweenUpdates, final VertexBufferObjectManager pVertexBufferObjectManager, final IOnScreenControlListener pOnScreenControlListener) {
 		this.setCamera(pCamera);
 
 		this.mOnScreenControlListener = pOnScreenControlListener;
@@ -93,7 +93,7 @@ public abstract class BaseOnScreenControl extends HUD implements IOnSceneTouchLi
 		return this.mControlKnob;
 	}
 
-	public IOnScreenControlListener getOnScreenControlListener() {
+	IOnScreenControlListener getOnScreenControlListener() {
 		return this.mOnScreenControlListener;
 	}
 
@@ -127,18 +127,18 @@ public abstract class BaseOnScreenControl extends HUD implements IOnSceneTouchLi
 	/**
 	 *  When the touch happened outside of the bounds of this OnScreenControl.
 	 * */
-	protected void onHandleControlBaseLeft() {
+    private void onHandleControlBaseLeft() {
 		this.onUpdateControlKnob(0, 0);
 	}
 
 	/**
 	 * When the OnScreenControl was released.
 	 */
-	protected void onHandleControlKnobReleased() {
+    private void onHandleControlKnobReleased() {
 		this.onUpdateControlKnob(0, 0);
 	}
 
-	protected boolean onHandleControlBaseTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+	boolean onHandleControlBaseTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
 		final int pointerID = pSceneTouchEvent.getPointerID();
 
 		switch(pSceneTouchEvent.getAction()) {
@@ -180,7 +180,7 @@ public abstract class BaseOnScreenControl extends HUD implements IOnSceneTouchLi
 	 * @param pRelativeX from <code>-0.5</code> (left) to <code>0.5</code> (right).
 	 * @param pRelativeY from <code>-0.5</code> (top) to <code>0.5</code> (bottom).
 	 */
-	protected void onUpdateControlKnob(final float pRelativeX, final float pRelativeY) {
+    void onUpdateControlKnob(final float pRelativeX, final float pRelativeY) {
 		final Sprite controlBase = this.mControlBase;
 		final Sprite controlKnob = this.mControlKnob;
 
@@ -198,7 +198,7 @@ public abstract class BaseOnScreenControl extends HUD implements IOnSceneTouchLi
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IOnScreenControlListener {
+	public interface IOnScreenControlListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -212,6 +212,6 @@ public abstract class BaseOnScreenControl extends HUD implements IOnSceneTouchLi
 		 * @param pValueX between <code>-1</code> (left) to <code>1</code> (right).
 		 * @param pValueY between <code>-1</code> (up) to <code>1</code> (down).
 		 */
-		public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY);
+		void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY);
 	}
 }

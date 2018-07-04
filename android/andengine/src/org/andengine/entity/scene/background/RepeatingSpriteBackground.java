@@ -17,7 +17,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * @author Nicolas Gramlich
  * @since 15:11:10 - 19.07.2010
  */
-public class RepeatingSpriteBackground extends SpriteBackground {
+class RepeatingSpriteBackground extends SpriteBackground {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -43,7 +43,7 @@ public class RepeatingSpriteBackground extends SpriteBackground {
 		this(pCameraWidth, pCameraHeight, pTextureManager, pBitmapTextureAtlasSource, 1, pVertexBufferObjectManager);
 	}
 
-	public RepeatingSpriteBackground(final float pCameraWidth, final float pCameraHeight, final TextureManager pTextureManager, final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final float pScale, final VertexBufferObjectManager pVertexBufferObjectManager) throws IllegalArgumentException {
+	private RepeatingSpriteBackground(final float pCameraWidth, final float pCameraHeight, final TextureManager pTextureManager, final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final float pScale, final VertexBufferObjectManager pVertexBufferObjectManager) throws IllegalArgumentException {
 		super(null);
 
 		this.mScale = pScale;

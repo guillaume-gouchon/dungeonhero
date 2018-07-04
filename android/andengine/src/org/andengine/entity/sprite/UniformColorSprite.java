@@ -33,10 +33,10 @@ public class UniformColorSprite extends Sprite {
 	public static final int TEXTURECOORDINATES_INDEX_V = UniformColorSprite.TEXTURECOORDINATES_INDEX_U + 1;
 
 	public static final int VERTEX_SIZE = 2 + 2;
-	public static final int VERTICES_PER_SPRITE = 4;
-	public static final int SPRITE_SIZE = UniformColorSprite.VERTEX_SIZE * UniformColorSprite.VERTICES_PER_SPRITE;
+	private static final int VERTICES_PER_SPRITE = 4;
+	private static final int SPRITE_SIZE = UniformColorSprite.VERTEX_SIZE * UniformColorSprite.VERTICES_PER_SPRITE;
 
-	public static final VertexBufferObjectAttributes VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT = new VertexBufferObjectAttributesBuilder(2)
+	private static final VertexBufferObjectAttributes VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT = new VertexBufferObjectAttributesBuilder(2)
 		.add(ShaderProgramConstants.ATTRIBUTE_POSITION_LOCATION, ShaderProgramConstants.ATTRIBUTE_POSITION, 2, GLES20.GL_FLOAT, false)
 		.add(ShaderProgramConstants.ATTRIBUTE_TEXTURECOORDINATES_LOCATION, ShaderProgramConstants.ATTRIBUTE_TEXTURECOORDINATES, 2, GLES20.GL_FLOAT, false)
 		.build();
@@ -81,19 +81,19 @@ public class UniformColorSprite extends Sprite {
 		this(pX, pY, pWidth, pHeight, pTextureRegion, pVertexBufferObjectManager, DrawType.STATIC, pShaderProgram);
 	}
 
-	public UniformColorSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
+	private UniformColorSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
 		this(pX, pY, pWidth, pHeight, pTextureRegion, pVertexBufferObjectManager, pDrawType, PositionTextureCoordinatesUniformColorShaderProgram.getInstance());
 	}
 
-	public UniformColorSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType, final ShaderProgram pShaderProgram) {
+	private UniformColorSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType, final ShaderProgram pShaderProgram) {
 		this(pX, pY, pWidth, pHeight, pTextureRegion, new HighPerformanceUniformColorSpriteVertexBufferObject(pVertexBufferObjectManager, UniformColorSprite.SPRITE_SIZE, pDrawType, true, UniformColorSprite.VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT), pShaderProgram);
 	}
 
-	public UniformColorSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final IUniformColorSpriteVertexBufferObject pUniformColorSpriteVertexBufferObject) {
+	private UniformColorSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final IUniformColorSpriteVertexBufferObject pUniformColorSpriteVertexBufferObject) {
 		this(pX, pY, pWidth, pHeight, pTextureRegion, pUniformColorSpriteVertexBufferObject, PositionTextureCoordinatesUniformColorShaderProgram.getInstance());
 	}
 
-	public UniformColorSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final IUniformColorSpriteVertexBufferObject pUniformColorSpriteVertexBufferObject, final ShaderProgram pShaderProgram) {
+	private UniformColorSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final IUniformColorSpriteVertexBufferObject pUniformColorSpriteVertexBufferObject, final ShaderProgram pShaderProgram) {
 		super(pX, pY, pWidth, pHeight, pTextureRegion, pUniformColorSpriteVertexBufferObject, pShaderProgram);
 	}
 

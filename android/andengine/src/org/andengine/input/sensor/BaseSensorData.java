@@ -19,14 +19,14 @@ public class BaseSensorData {
 	// ===========================================================
 
 	protected final float[] mValues;
-	protected int mAccuracy;
-	protected int mDisplayRotation;
+	private int mAccuracy;
+	protected final int mDisplayRotation;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseSensorData(final int pValueCount, int pDisplayRotation) {
+	protected BaseSensorData(final int pValueCount, int pDisplayRotation) {
 		this.mValues = new float[pValueCount];
 
 		this.mDisplayRotation = pDisplayRotation;

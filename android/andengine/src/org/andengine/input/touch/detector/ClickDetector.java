@@ -36,7 +36,7 @@ public class ClickDetector extends BaseDetector {
 		this(ClickDetector.TRIGGER_CLICK_MAXIMUM_MILLISECONDS_DEFAULT, pClickDetectorListener);
 	}
 
-	public ClickDetector(final long pTriggerClickMaximumMilliseconds, final IClickDetectorListener pClickDetectorListener) {
+	private ClickDetector(final long pTriggerClickMaximumMilliseconds, final IClickDetectorListener pClickDetectorListener) {
 		this.mTriggerClickMaximumMilliseconds = pTriggerClickMaximumMilliseconds;
 		this.mClickDetectorListener = pClickDetectorListener;
 	}
@@ -104,7 +104,7 @@ public class ClickDetector extends BaseDetector {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IClickDetectorListener {
+	public interface IClickDetectorListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -113,6 +113,6 @@ public class ClickDetector extends BaseDetector {
 		// Methods
 		// ===========================================================
 
-		public void onClick(final ClickDetector pClickDetector, final int pPointerID, final float pSceneX, final float pSceneY);
+		void onClick(final ClickDetector pClickDetector, final int pPointerID, final float pSceneX, final float pSceneY);
 	}
 }

@@ -9,8 +9,9 @@ import com.glevel.dungeonhero.models.discussions.Discussion;
 
 public class WhiteWizardDiscussionCallback extends StopDiscussionCallback {
 
+    private static final String TAG = WhiteWizardDiscussionCallback.class.getName();
+
     private static final long serialVersionUID = -5747234029703099616L;
-    private static final String TAG = "WhiteWizardDiscussionCallback";
 
     private final boolean correctAnswer;
 

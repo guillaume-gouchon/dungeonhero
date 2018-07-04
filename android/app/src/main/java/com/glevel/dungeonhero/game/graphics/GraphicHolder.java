@@ -1,18 +1,15 @@
 package com.glevel.dungeonhero.game.graphics;
 
-/**
- * Created by guillaume on 10/15/14.
- */
 public interface GraphicHolder {
 
-    public String getSpriteName();
+    String getSpriteName();
 
-    public int getNbSpritesY();
+    int getNbSpritesY();
 
-    public int getSpriteWidth();
+    int getSpriteWidth();
 
-    public int getSpriteHeight();
+    int getSpriteHeight();
 
-    public int getNbSpritesX();
+    int getNbSpritesX();
 
 }

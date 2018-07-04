@@ -9,7 +9,7 @@ import org.andengine.util.time.TimeConstants;
  * @author Nicolas Gramlich
  * @since 22:48:49 - 04.04.2011
  */
-public final class TimeUtils implements TimeConstants {
+final class TimeUtils implements TimeConstants {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -34,11 +34,11 @@ public final class TimeUtils implements TimeConstants {
 	// Methods
 	// ===========================================================
 
-	public static final String formatSeconds(final int pSecondsTotal) {
+	public static String formatSeconds(final int pSecondsTotal) {
 		return formatSeconds(pSecondsTotal, new StringBuilder());
 	}
 	
-	public static final String formatSeconds(final int pSecondsTotal, final StringBuilder pStringBuilder) {
+	private static String formatSeconds(final int pSecondsTotal, final StringBuilder pStringBuilder) {
 		final int minutes = pSecondsTotal / SECONDS_PER_MINUTE;
 		final int seconds = pSecondsTotal % SECONDS_PER_MINUTE;
 		

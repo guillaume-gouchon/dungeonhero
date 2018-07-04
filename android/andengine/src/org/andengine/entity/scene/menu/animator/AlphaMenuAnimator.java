@@ -72,10 +72,9 @@ public class AlphaMenuAnimator extends BaseMenuAnimator {
 
 	@Override
 	public void buildAnimations(final ArrayList<IMenuItem> pMenuItems, final float pCameraWidth, final float pCameraHeight) {
-		final IEaseFunction easeFunction = this.mEaseFunction;
-		final int menuItemCount = pMenuItems.size();
+        final int menuItemCount = pMenuItems.size();
 		for(int i = menuItemCount - 1; i >= 0; i--) {
-			final AlphaModifier alphaModifier = new AlphaModifier(DURATION, ALPHA_FROM, ALPHA_TO, easeFunction);
+			final AlphaModifier alphaModifier = new AlphaModifier(DURATION, ALPHA_FROM, ALPHA_TO, this.mEaseFunction);
 			alphaModifier.setAutoUnregisterWhenFinished(false);
 			pMenuItems.get(i).registerEntityModifier(alphaModifier);
 		}
@@ -89,9 +88,7 @@ public class AlphaMenuAnimator extends BaseMenuAnimator {
 		final float baseX = (pCameraWidth - maximumWidth) * 0.5f;
 		final float baseY = (pCameraHeight - overallHeight) * 0.5f;
 
-		final float menuItemSpacing = this.mMenuItemSpacing;
-
-		float offsetY = 0;
+        float offsetY = 0;
 		final int menuItemCount = pMenuItems.size();
 		for(int i = 0; i < menuItemCount; i++) {
 			final IMenuItem menuItem = pMenuItems.get(i);
@@ -113,7 +110,7 @@ public class AlphaMenuAnimator extends BaseMenuAnimator {
 
 			menuItem.setAlpha(ALPHA_FROM);
 
-			offsetY += menuItem.getHeight() + menuItemSpacing;
+			offsetY += menuItem.getHeight() + this.mMenuItemSpacing;
 		}
 	}
 

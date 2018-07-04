@@ -53,7 +53,7 @@ public abstract class PoolItem {
 
 	}
 
-	protected void onObtain() {
+	void onObtain() {
 
 	}
 

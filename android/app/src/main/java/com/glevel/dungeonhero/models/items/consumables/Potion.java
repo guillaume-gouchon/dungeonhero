@@ -2,11 +2,9 @@ package com.glevel.dungeonhero.models.items.consumables;
 
 import com.glevel.dungeonhero.models.effects.Effect;
 
-/**
- * Created by guillaume ON 10/6/14.
- */
 public class Potion extends Consumable {
 
+    private static final long serialVersionUID = 317434819716374400L;
     private final Effect effect;
 
     public Potion(String identifier, Effect effect, int price) {

@@ -12,9 +12,6 @@ public class ByteSerializerHelper {
 
     /**
      * Gets an object from a byte array.
-     *
-     * @param blob
-     * @return
      */
     public static Serializable getObjectFromByte(byte[] blob) {
         try {
@@ -35,9 +32,6 @@ public class ByteSerializerHelper {
 
     /**
      * Convert any object to a byte array object.
-     *
-     * @param object
-     * @return
      */
     public static byte[] toByteArray(Serializable object) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

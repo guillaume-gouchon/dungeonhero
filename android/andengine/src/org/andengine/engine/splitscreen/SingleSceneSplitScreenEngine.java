@@ -45,11 +45,11 @@ public class SingleSceneSplitScreenEngine extends Engine {
 		return super.mCamera;
 	}
 
-	public Camera getFirstCamera() {
+	private Camera getFirstCamera() {
 		return super.mCamera;
 	}
 
-	public Camera getSecondCamera() {
+	private Camera getSecondCamera() {
 		return this.mSecondCamera;
 	}
 

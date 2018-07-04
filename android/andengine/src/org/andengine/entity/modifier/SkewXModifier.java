@@ -35,11 +35,11 @@ public class SkewXModifier extends SingleValueSpanEntityModifier {
 		super(pDuration, pFromSkewX, pToSkewX, pEntityModifierListener, EaseLinear.getInstance());
 	}
 
-	public SkewXModifier(final float pDuration, final float pFromSkewX, final float pToSkewX, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	private SkewXModifier(final float pDuration, final float pFromSkewX, final float pToSkewX, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromSkewX, pToSkewX, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected SkewXModifier(final SkewXModifier pSkewXModifier) {
+	private SkewXModifier(final SkewXModifier pSkewXModifier) {
 		super(pSkewXModifier);
 	}
 

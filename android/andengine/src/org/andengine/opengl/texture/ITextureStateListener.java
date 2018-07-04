@@ -16,6 +16,6 @@ public interface ITextureStateListener {
 	// Methods
 	// ===========================================================
 
-	public void onLoadedToHardware(final ITexture pTexture);
-	public void onUnloadedFromHardware(final ITexture pTexture);
+	void onLoadedToHardware(final ITexture pTexture);
+	void onUnloadedFromHardware(final ITexture pTexture);
 }

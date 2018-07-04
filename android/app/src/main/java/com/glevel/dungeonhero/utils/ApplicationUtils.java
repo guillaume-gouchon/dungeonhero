@@ -21,12 +21,10 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -46,13 +44,12 @@ import java.io.ObjectOutputStream;
 
 public class ApplicationUtils {
 
+    private static final String TAG = ApplicationUtils.class.getName();
+
     public static final String PREFS_NB_LAUNCHES = "nb_launches";
     public static final String PREFS_RATE_DIALOG_IN = "rate_dialog_in";
     public static final int NB_LAUNCHES_RATE_DIALOG_APPEARS = 5;
     public static final int NB_LAUNCHES_WITH_SPLASHSCREEN = 8;
-    public static final int NB_LAUNCHES_ADVERTISEMENT_1 = 4;
-    public static final int NB_LAUNCHES_ADVERTISEMENT_2 = 7;
-    private static final String TAG = "ApplicationUtils";
 
     public static void showRateDialogIfNeeded(final Activity activity) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
@@ -65,29 +62,20 @@ public class ApplicationUtils {
             dialog.setContentView(R.layout.custom_rate_dialog);
 
             ((TextView) dialog.findViewById(R.id.message)).setText(activity.getString(R.string.rate_message, activity.getString(R.string.app_name)));
-            dialog.findViewById(R.id.cancel_btn).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    editor.putInt(PREFS_RATE_DIALOG_IN, -1);
-                    editor.apply();
-                    dialog.dismiss();
-                }
+            dialog.findViewById(R.id.cancel_btn).setOnClickListener(v -> {
+                editor.putInt(PREFS_RATE_DIALOG_IN, -1);
+                editor.apply();
+                dialog.dismiss();
             });
-            dialog.findViewById(R.id.neutralButton).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    editor.putInt(PREFS_RATE_DIALOG_IN, 5);
-                    dialog.dismiss();
-                }
+            dialog.findViewById(R.id.neutralButton).setOnClickListener(v -> {
+                editor.putInt(PREFS_RATE_DIALOG_IN, 5);
+                dialog.dismiss();
             });
-            dialog.findViewById(R.id.ok_btn).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    editor.putInt(PREFS_RATE_DIALOG_IN, -1);
-                    editor.apply();
-                    rateTheApp(activity);
-                    dialog.dismiss();
-                }
+            dialog.findViewById(R.id.ok_btn).setOnClickListener(v -> {
+                editor.putInt(PREFS_RATE_DIALOG_IN, -1);
+                editor.apply();
+                rateTheApp(activity);
+                dialog.dismiss();
             });
 
             dialog.setCancelable(true);
@@ -117,7 +105,7 @@ public class ApplicationUtils {
         // setup custom toast view
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast, null);
-        TextView tv = (TextView) layout.findViewById(R.id.text);
+        TextView tv = layout.findViewById(R.id.text);
         tv.setText(text);
 
         Toast toast = new Toast(context);
@@ -185,21 +173,6 @@ public class ApplicationUtils {
         return false;
     }
 
-    public static void showAdvertisementIfNeeded(Activity activity) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-        int nbLaunches = prefs.getInt(PREFS_NB_LAUNCHES, 0);
-        Log.d(TAG, "nb launches = " + nbLaunches);
-        if (nbLaunches == NB_LAUNCHES_ADVERTISEMENT_1 || nbLaunches == NB_LAUNCHES_ADVERTISEMENT_2) {
-            Log.d(TAG, "show advertisement");
-            Dialog mAdvertisementDialog = new Dialog(activity, R.style.Dialog);
-            mAdvertisementDialog.setCancelable(true);
-            mAdvertisementDialog.setContentView(R.layout.dialog_advertisement);
-            TextView titleTV = (TextView) mAdvertisementDialog.findViewById(R.id.title);
-            titleTV.setMovementMethod(LinkMovementMethod.getInstance());
-            mAdvertisementDialog.show();
-        }
-    }
-
     public static int convertDpToPixels(Context context, int dp) {
         Resources res = context.getResources();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());
@@ -207,12 +180,9 @@ public class ApplicationUtils {
 
     public static void showKeyboard(final Context context, final View view) {
         // shows the keyboard
-        view.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                InputMethodManager keyboard = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                keyboard.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-            }
+        view.postDelayed(() -> {
+            InputMethodManager keyboard = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            keyboard.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         }, 150);
     }
 

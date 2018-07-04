@@ -21,8 +21,8 @@ public class JumpModifier extends MoveModifier {
 	// Fields
 	// ===========================================================
 
-	protected final float mJumpHeight;
-	protected final int mJumpCount;
+	private final float mJumpHeight;
+	private final int mJumpCount;
 
 	// ===========================================================
 	// Constructors
@@ -48,7 +48,7 @@ public class JumpModifier extends MoveModifier {
 		this(pDuration, pFromX, pToX, pFromY, pToY, pJumpHeight, pJumpCount, EaseLinear.getInstance());
 	}
 
-	public JumpModifier(final float pDuration, final float pFromX, final float pToX, final float pFromY, final float pToY, final float pJumpHeight, final int pJumpCount, final IEaseFunction pEaseFunction) {
+	private JumpModifier(final float pDuration, final float pFromX, final float pToX, final float pFromY, final float pToY, final float pJumpHeight, final int pJumpCount, final IEaseFunction pEaseFunction) {
 		this(pDuration, pFromX, pToX, pFromY, pToY, pJumpHeight, pJumpCount, null, pEaseFunction);
 	}
 
@@ -56,14 +56,14 @@ public class JumpModifier extends MoveModifier {
 		this(pDuration, pFromX, pToX, pFromY, pToY, pJumpHeight, pJumpCount, pEntityModifierListener, EaseLinear.getInstance());
 	}
 
-	public JumpModifier(final float pDuration, final float pFromX, final float pToX, final float pFromY, final float pToY, final float pJumpHeight, final int pJumpCount, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	private JumpModifier(final float pDuration, final float pFromX, final float pToX, final float pFromY, final float pToY, final float pJumpHeight, final int pJumpCount, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromX, pToX, pFromY, pToY, pEntityModifierListener, pEaseFunction);
 
 		this.mJumpHeight = pJumpHeight;
 		this.mJumpCount = pJumpCount;
 	}
 
-	public JumpModifier(final JumpModifier pJumpModifier) {
+	private JumpModifier(final JumpModifier pJumpModifier) {
 		super(pJumpModifier);
 
 		this.mJumpHeight = pJumpModifier.mJumpHeight;

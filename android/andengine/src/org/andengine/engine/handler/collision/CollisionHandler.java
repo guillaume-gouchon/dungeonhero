@@ -34,7 +34,7 @@ public class CollisionHandler implements IUpdateHandler {
 		this(pCollisionCallback, pCheckShape, ListUtils.toList(pTargetShape));
 	}
 
-	public CollisionHandler(final ICollisionCallback pCollisionCallback, final IShape pCheckShape, final ArrayList<? extends IShape> pTargetStaticEntities) throws IllegalArgumentException {
+	private CollisionHandler(final ICollisionCallback pCollisionCallback, final IShape pCheckShape, final ArrayList<? extends IShape> pTargetStaticEntities) throws IllegalArgumentException {
 		if (pCollisionCallback == null) {
 			throw new IllegalArgumentException( "pCollisionCallback must not be null!");
 		}

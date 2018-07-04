@@ -30,11 +30,11 @@ public class CameraScene extends Scene {
 	/**
 	 * {@link CameraScene#setCamera(Camera)} needs to be called manually. Otherwise nothing will be drawn.
 	 */
-	public CameraScene() {
+    protected CameraScene() {
 		this(null);
 	}
 
-	public CameraScene(final Camera pCamera) {
+	protected CameraScene(final Camera pCamera) {
 		this.mCamera = pCamera;
 	}
 

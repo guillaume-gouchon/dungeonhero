@@ -38,11 +38,11 @@ public class ArcBitmapTextureAtlasSourceDecoratorShape implements IBitmapTexture
 	// Constructors
 	// ===========================================================
 
-	public ArcBitmapTextureAtlasSourceDecoratorShape() {
+	private ArcBitmapTextureAtlasSourceDecoratorShape() {
 		this(STARTANGLE_DEFAULT, SWEEPANGLE_DEFAULT, USECENTER_DEFAULT);
 	}
 
-	public ArcBitmapTextureAtlasSourceDecoratorShape(final float pStartAngle, final float pSweepAngle, final boolean pUseCenter) {
+	private ArcBitmapTextureAtlasSourceDecoratorShape(final float pStartAngle, final float pSweepAngle, final boolean pUseCenter) {
 		this.mStartAngle = pStartAngle;
 		this.mSweepAngle = pSweepAngle;
 		this.mUseCenter = pUseCenter;

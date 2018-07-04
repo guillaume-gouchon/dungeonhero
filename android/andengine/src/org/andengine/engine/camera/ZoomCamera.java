@@ -29,7 +29,7 @@ public class ZoomCamera extends BoundCamera {
 	// Constructors
 	// ===========================================================
 
-	public ZoomCamera(final float pX, final float pY, final float pWidth, final float pHeight) {
+	protected ZoomCamera(final float pX, final float pY, final float pWidth, final float pHeight) {
 		super(pX, pY, pWidth, pHeight);
 	}
 

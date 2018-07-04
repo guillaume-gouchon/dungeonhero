@@ -34,7 +34,7 @@ public class Font implements IFont {
 	// Constants
 	// ===========================================================
 
-	protected static final int LETTER_TEXTURE_PADDING = 1;
+	static final int LETTER_TEXTURE_PADDING = 1;
 
 	// ===========================================================
 	// Fields
@@ -49,17 +49,17 @@ public class Font implements IFont {
 	private int mCurrentTextureY = Font.LETTER_TEXTURE_PADDING;
 	private int mCurrentTextureYHeightMax;
 
-	private final SparseArray<Letter> mManagedCharacterToLetterMap = new SparseArray<Letter>();
-	private final ArrayList<Letter> mLettersPendingToBeDrawnToTexture = new ArrayList<Letter>();
+	private final SparseArray<Letter> mManagedCharacterToLetterMap = new SparseArray<>();
+	private final ArrayList<Letter> mLettersPendingToBeDrawnToTexture = new ArrayList<>();
 
-	protected final Paint mPaint;
+	private final Paint mPaint;
 	private final Paint mBackgroundPaint;
 
-	protected final FontMetrics mFontMetrics;
+	private final FontMetrics mFontMetrics;
 
-	protected final Canvas mCanvas = new Canvas();
-	protected final Rect mTextBounds = new Rect();
-	protected final float[] mTextWidthContainer = new float[1];
+	final Canvas mCanvas = new Canvas();
+	final Rect mTextBounds = new Rect();
+	private final float[] mTextWidthContainer = new float[1];
 
 	// ===========================================================
 	// Constructors
@@ -102,14 +102,14 @@ public class Font implements IFont {
 	/**
 	 * @return the distance from the baseline to the top, which is usually negative.
 	 */
-	public float getAscent() {
+	private float getAscent() {
 		return this.mFontMetrics.ascent;
 	}
 
 	/**
 	 * @return the distance from the baseline to the bottom, which is usually positive.
 	 */
-	public float getDescent() {
+	private float getDescent() {
 		return this.mFontMetrics.descent;
 	}
 
@@ -156,12 +156,11 @@ public class Font implements IFont {
 	// ===========================================================
 
 	public synchronized void invalidateLetters() {
-		final ArrayList<Letter> lettersPendingToBeDrawnToTexture = this.mLettersPendingToBeDrawnToTexture;
 		final SparseArray<Letter> managedCharacterToLetterMap = this.mManagedCharacterToLetterMap;
 
 		/* Make all letters redraw to the texture. */
 		for(int i = managedCharacterToLetterMap.size() - 1; i >= 0; i--) {
-			lettersPendingToBeDrawnToTexture.add(managedCharacterToLetterMap.valueAt(i));
+			this.mLettersPendingToBeDrawnToTexture.add(managedCharacterToLetterMap.valueAt(i));
 		}
 	}
 
@@ -170,7 +169,7 @@ public class Font implements IFont {
 		return this.mTextWidthContainer[0];
 	}
 
-	protected Bitmap getLetterBitmap(final Letter pLetter) throws FontException {
+	private Bitmap getLetterBitmap(final Letter pLetter) throws FontException {
 		final char character = pLetter.mCharacter;
 		final String characterAsString = String.valueOf(character);
 
@@ -192,7 +191,7 @@ public class Font implements IFont {
 		return bitmap;
 	}
 
-	protected void drawLetter(final String pCharacterAsString, final float pLeft, final float pTop) {
+	void drawLetter(final String pCharacterAsString, final float pLeft, final float pTop) {
 		this.mCanvas.drawText(pCharacterAsString, pLeft + Font.LETTER_TEXTURE_PADDING, pTop + Font.LETTER_TEXTURE_PADDING, this.mPaint);
 	}
 
@@ -248,7 +247,7 @@ public class Font implements IFont {
 		return letter;
 	}
 
-	protected void updateTextBounds(final String pCharacterAsString) {
+	void updateTextBounds(final String pCharacterAsString) {
 		this.mPaint.getTextBounds(pCharacterAsString, 0, 1, this.mTextBounds);
 	}
 

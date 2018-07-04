@@ -37,23 +37,23 @@ public abstract class ZeroMemoryVertexBufferObject implements IVertexBufferObjec
 	// Fields
 	// ===========================================================
 
-	protected final int mCapacity;
-	protected final boolean mAutoDispose;
-	protected final int mUsage;
+	private final int mCapacity;
+	private final boolean mAutoDispose;
+	private final int mUsage;
 
-	protected int mHardwareBufferID = IVertexBufferObject.HARDWARE_BUFFER_ID_INVALID;
-	protected boolean mDirtyOnHardware = true;
+	private int mHardwareBufferID = IVertexBufferObject.HARDWARE_BUFFER_ID_INVALID;
+	private boolean mDirtyOnHardware = true;
 
-	protected boolean mDisposed;
+	private boolean mDisposed;
 
-	protected final VertexBufferObjectManager mVertexBufferObjectManager;
-	protected final VertexBufferObjectAttributes mVertexBufferObjectAttributes;
+	private final VertexBufferObjectManager mVertexBufferObjectManager;
+	private final VertexBufferObjectAttributes mVertexBufferObjectAttributes;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public ZeroMemoryVertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
+	ZeroMemoryVertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
 		this.mVertexBufferObjectManager = pVertexBufferObjectManager;
 		this.mCapacity = pCapacity;
 		this.mUsage = pDrawType.getUsage();
@@ -232,13 +232,13 @@ public abstract class ZeroMemoryVertexBufferObject implements IVertexBufferObjec
 	 * When a non <code>null</code> {@link ByteBuffer} is returned by this function, it is guaranteed that {@link ZeroMemoryVertexBufferObject#releaseByteBuffer(ByteBuffer)} is called.
 	 * @return a {@link ByteBuffer} to be passed to {@link ZeroMemoryVertexBufferObject#onPopulateBufferData(ByteBuffer)}.
 	 */
-	protected ByteBuffer aquireByteBuffer() {
+    ByteBuffer aquireByteBuffer() {
 		final ByteBuffer byteBuffer = BufferUtils.allocateDirectByteBuffer(this.getByteCapacity());
 		byteBuffer.order(ByteOrder.nativeOrder());
 		return byteBuffer;
 	}
 
-	protected void releaseByteBuffer(final ByteBuffer byteBuffer) {
+	void releaseByteBuffer(final ByteBuffer byteBuffer) {
 		BufferUtils.freeDirectByteBuffer(byteBuffer);
 	}
 

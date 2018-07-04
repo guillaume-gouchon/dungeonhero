@@ -36,7 +36,7 @@ public class ScaleModifier extends DoubleValueSpanEntityModifier {
 		this(pDuration, pFromScale, pToScale, pFromScale, pToScale, pEntityModifierListener, EaseLinear.getInstance());
 	}
 
-	public ScaleModifier(final float pDuration, final float pFromScale, final float pToScale, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	private ScaleModifier(final float pDuration, final float pFromScale, final float pToScale, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		this(pDuration, pFromScale, pToScale, pFromScale, pToScale, pEntityModifierListener, pEaseFunction);
 	}
 
@@ -52,11 +52,11 @@ public class ScaleModifier extends DoubleValueSpanEntityModifier {
 		super(pDuration, pFromScaleX, pToScaleX, pFromScaleY, pToScaleY, pEntityModifierListener, EaseLinear.getInstance());
 	}
 
-	public ScaleModifier(final float pDuration, final float pFromScaleX, final float pToScaleX, final float pFromScaleY, final float pToScaleY, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	ScaleModifier(final float pDuration, final float pFromScaleX, final float pToScaleX, final float pFromScaleY, final float pToScaleY, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromScaleX, pToScaleX, pFromScaleY, pToScaleY, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected ScaleModifier(final ScaleModifier pScaleModifier) {
+	ScaleModifier(final ScaleModifier pScaleModifier) {
 		super(pScaleModifier);
 	}
 

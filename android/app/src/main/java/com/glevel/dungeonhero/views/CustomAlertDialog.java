@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.utils.ApplicationUtils;
 
 public class CustomAlertDialog extends Dialog implements OnClickListener {
 
-    private OnClickListener mOnClickListener;
+    private final OnClickListener mOnClickListener;
 
     public CustomAlertDialog(Context context, int style, String message, android.content.DialogInterface.OnClickListener onClickListener) {
         super(context, style);
@@ -22,13 +21,13 @@ public class CustomAlertDialog extends Dialog implements OnClickListener {
         setContentView(R.layout.in_game_discussion);
         findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
-        TextView pnjName = (TextView) findViewById(R.id.name);
+        TextView pnjName = findViewById(R.id.name);
         pnjName.setText(R.string.game_master);
         pnjName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.white_wizard, 0, 0, 0);
 
         ((TextView) findViewById(R.id.message)).setText(message);
 
-        ViewGroup reactionsLayout = (ViewGroup) findViewById(R.id.reactions);
+        ViewGroup reactionsLayout = findViewById(R.id.reactions);
         LayoutInflater inflater = getLayoutInflater();
         TextView reactionTV;
 

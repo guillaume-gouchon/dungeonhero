@@ -16,5 +16,5 @@ public interface ParameterCallable<T> {
 	// Methods
 	// ===========================================================
 
-	public void call(final T pParameter);
+	void call(final T pParameter);
 }

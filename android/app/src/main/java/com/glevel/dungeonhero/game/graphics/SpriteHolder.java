@@ -1,8 +1,5 @@
 package com.glevel.dungeonhero.game.graphics;
 
-/**
- * Created by guillaume on 10/15/14.
- */
 public class SpriteHolder implements GraphicHolder {
 
     private final String spriteName;

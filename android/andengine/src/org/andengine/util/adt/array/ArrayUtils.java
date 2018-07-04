@@ -36,35 +36,35 @@ public final class ArrayUtils {
 	// Methods
 	// ===========================================================
 
-	public static final byte random(final byte[] pArray) {
+	public static byte random(final byte[] pArray) {
 		return pArray[MathUtils.random(0, pArray.length - 1)];
 	}
 
-	public static final short random(final short[] pArray) {
+	public static short random(final short[] pArray) {
 		return pArray[MathUtils.random(0, pArray.length - 1)];
 	}
 
-	public static final int random(final int[] pArray) {
+	public static int random(final int[] pArray) {
 		return pArray[MathUtils.random(0, pArray.length - 1)];
 	}
 
-	public static final long random(final long[] pArray) {
+	public static long random(final long[] pArray) {
 		return pArray[MathUtils.random(0, pArray.length - 1)];
 	}
 
-	public static final float random(final float[] pArray) {
+	public static float random(final float[] pArray) {
 		return pArray[MathUtils.random(0, pArray.length - 1)];
 	}
 
-	public static final double random(final double[] pArray) {
+	public static double random(final double[] pArray) {
 		return pArray[MathUtils.random(0, pArray.length - 1)];
 	}
 
-	public static final <T> T random(final T[] pArray) {
+	public static <T> T random(final T[] pArray) {
 		return pArray[MathUtils.random(0, pArray.length - 1)];
 	}
 
-	public static final void reverse(final byte[] pArray) {
+	public static void reverse(final byte[] pArray) {
 		if(pArray == null) {
 			return;
 		}
@@ -80,7 +80,7 @@ public final class ArrayUtils {
 		}
 	}
 
-	public static final void reverse(final short[] pArray) {
+	public static void reverse(final short[] pArray) {
 		if(pArray == null) {
 			return;
 		}
@@ -96,7 +96,7 @@ public final class ArrayUtils {
 		}
 	}
 
-	public static final void reverse(final int[] pArray) {
+	public static void reverse(final int[] pArray) {
 		if(pArray == null) {
 			return;
 		}
@@ -112,7 +112,7 @@ public final class ArrayUtils {
 		}
 	}
 
-	public static final void reverse(final long[] pArray) {
+	public static void reverse(final long[] pArray) {
 		if(pArray == null) {
 			return;
 		}
@@ -128,7 +128,7 @@ public final class ArrayUtils {
 		}
 	}
 
-	public static final void reverse(final float[] pArray) {
+	public static void reverse(final float[] pArray) {
 		if(pArray == null) {
 			return;
 		}
@@ -144,7 +144,7 @@ public final class ArrayUtils {
 		}
 	}
 
-	public static final void reverse(final double[] pArray) {
+	public static void reverse(final double[] pArray) {
 		if(pArray == null) {
 			return;
 		}
@@ -160,7 +160,7 @@ public final class ArrayUtils {
 		}
 	}
 
-	public static final void reverse(final Object[] pArray) {
+	public static void reverse(final Object[] pArray) {
 		if(pArray == null) {
 			return;
 		}
@@ -176,7 +176,7 @@ public final class ArrayUtils {
 		}
 	}
 
-	public static final boolean equals(final byte[] pArrayA, final int pOffsetA, final byte[] pArrayB, final int pOffsetB, final int pLength) {
+	public static boolean equals(final byte[] pArrayA, final int pOffsetA, final byte[] pArrayB, final int pOffsetB, final int pLength) {
 		final int lastIndexA = pOffsetA + pLength;
 		if(lastIndexA > pArrayA.length) {
 			throw new ArrayIndexOutOfBoundsException(pArrayA.length);
@@ -196,7 +196,7 @@ public final class ArrayUtils {
 		return true;
 	}
 
-	public static final byte[] toByteArray(final List<Byte> pItems) {
+	public static byte[] toByteArray(final List<Byte> pItems) {
 		final byte[] out = new byte[pItems.size()];
 		for(int i = out.length - 1; i >= 0; i--) {
 			out[i] = pItems.get(i);
@@ -204,7 +204,7 @@ public final class ArrayUtils {
 		return out;
 	}
 
-	public static final char[] toCharArray(final List<Character> pItems) {
+	public static char[] toCharArray(final List<Character> pItems) {
 		final char[] out = new char[pItems.size()];
 		for(int i = out.length - 1; i >= 0; i--) {
 			out[i] = pItems.get(i);
@@ -212,7 +212,7 @@ public final class ArrayUtils {
 		return out;
 	}
 
-	public static final short[] toShortArray(final List<Short> pItems) {
+	public static short[] toShortArray(final List<Short> pItems) {
 		final short[] out = new short[pItems.size()];
 		for(int i = out.length - 1; i >= 0; i--) {
 			out[i] = pItems.get(i);
@@ -220,7 +220,7 @@ public final class ArrayUtils {
 		return out;
 	}
 
-	public static final int[] toIntArray(final List<Integer> pItems) {
+	public static int[] toIntArray(final List<Integer> pItems) {
 		final int[] out = new int[pItems.size()];
 		for(int i = out.length - 1; i >= 0; i--) {
 			out[i] = pItems.get(i);
@@ -228,7 +228,7 @@ public final class ArrayUtils {
 		return out;
 	}
 
-	public static final long[] toLongArray(final List<Long> pItems) {
+	public static long[] toLongArray(final List<Long> pItems) {
 		final long[] out = new long[pItems.size()];
 		for(int i = out.length - 1; i >= 0; i--) {
 			out[i] = pItems.get(i);
@@ -236,7 +236,7 @@ public final class ArrayUtils {
 		return out;
 	}
 
-	public static final float[] toFloatArray(final List<Float> pItems) {
+	public static float[] toFloatArray(final List<Float> pItems) {
 		final float[] out = new float[pItems.size()];
 		for(int i = out.length - 1; i >= 0; i--) {
 			out[i] = pItems.get(i);
@@ -244,7 +244,7 @@ public final class ArrayUtils {
 		return out;
 	}
 
-	public static final double[] toDoubleArray(final List<Double> pItems) {
+	public static double[] toDoubleArray(final List<Double> pItems) {
 		final double[] out = new double[pItems.size()];
 		for(int i = out.length - 1; i >= 0; i--) {
 			out[i] = pItems.get(i);
@@ -252,7 +252,7 @@ public final class ArrayUtils {
 		return out;
 	}
 
-	public static final boolean contains(final byte[] pItems, final byte pItem) {
+	public static boolean contains(final byte[] pItems, final byte pItem) {
 		for(int i = pItems.length - 1; i >= 0; i--) {
 			if(pItems[i] == pItem) {
 				return true;
@@ -261,7 +261,7 @@ public final class ArrayUtils {
 		return false;
 	}
 
-	public static final boolean contains(final char[] pItems, final char pItem) {
+	public static boolean contains(final char[] pItems, final char pItem) {
 		for(int i = pItems.length - 1; i >= 0; i--) {
 			if(pItems[i] == pItem) {
 				return true;
@@ -270,7 +270,7 @@ public final class ArrayUtils {
 		return false;
 	}
 
-	public static final boolean contains(final short[] pItems, final short pItem) {
+	public static boolean contains(final short[] pItems, final short pItem) {
 		for(int i = pItems.length - 1; i >= 0; i--) {
 			if(pItems[i] == pItem) {
 				return true;
@@ -279,7 +279,7 @@ public final class ArrayUtils {
 		return false;
 	}
 
-	public static final boolean contains(final int[] pItems, final int pItem) {
+	public static boolean contains(final int[] pItems, final int pItem) {
 		for(int i = pItems.length - 1; i >= 0; i--) {
 			if(pItems[i] == pItem) {
 				return true;
@@ -288,7 +288,7 @@ public final class ArrayUtils {
 		return false;
 	}
 
-	public static final boolean contains(final long[] pItems, final long pItem) {
+	public static boolean contains(final long[] pItems, final long pItem) {
 		for(int i = pItems.length - 1; i >= 0; i--) {
 			if(pItems[i] == pItem) {
 				return true;
@@ -297,7 +297,7 @@ public final class ArrayUtils {
 		return false;
 	}
 
-	public static final boolean contains(final float[] pItems, final float pItem) {
+	public static boolean contains(final float[] pItems, final float pItem) {
 		for(int i = pItems.length - 1; i >= 0; i--) {
 			if(pItems[i] == pItem) {
 				return true;
@@ -306,7 +306,7 @@ public final class ArrayUtils {
 		return false;
 	}
 
-	public static final boolean contains(final double[] pItems, final double pItem) {
+	public static boolean contains(final double[] pItems, final double pItem) {
 		for(int i = pItems.length - 1; i >= 0; i--) {
 			if(pItems[i] == pItem) {
 				return true;
@@ -349,17 +349,16 @@ public final class ArrayUtils {
 		/* Determine length of result. */
 		final T[] result = (T[]) java.lang.reflect.Array.newInstance(pClass.getComponentType(), resultLength);
 		int offset = 0;
-		for(int i = 0; i < arrayCount; i++) {
-			final T[] array = pArrays[i];
-			if((array != null) && (array.length > 0)) {
-				System.arraycopy(array, 0, result, offset, array.length);
-				offset += array.length;
-			}
-		}
+        for (final T[] array : pArrays) {
+            if ((array != null) && (array.length > 0)) {
+                System.arraycopy(array, 0, result, offset, array.length);
+                offset += array.length;
+            }
+        }
 		return result;
 	}
 
-	public static int idealByteArraySize(final int pSize) {
+	private static int idealByteArraySize(final int pSize) {
 		for(int i = 4; i < 32; i++) {
 			if(pSize <= ((1 << i) - 12)) {
 				return (1 << i) - 12;

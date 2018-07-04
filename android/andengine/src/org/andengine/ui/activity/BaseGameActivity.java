@@ -52,11 +52,11 @@ public abstract class BaseGameActivity extends BaseActivity implements IGameInte
 	// Fields
 	// ===========================================================
 
-	protected Engine mEngine;
+	Engine mEngine;
 
 	private WakeLock mWakeLock;
 
-	protected RenderSurfaceView mRenderSurfaceView;
+	RenderSurfaceView mRenderSurfaceView;
 
 	private boolean mGamePaused;
 	private boolean mGameCreated;
@@ -119,7 +119,7 @@ public abstract class BaseGameActivity extends BaseActivity implements IGameInte
 		}
 	}
 
-	protected synchronized void onCreateGame() {
+	private synchronized void onCreateGame() {
 		if(BuildConfig.DEBUG) {
 			Debug.d(this.getClass().getSimpleName() + ".onCreateGame" + " @(Thread: '" + Thread.currentThread().getName() + "')");
 		}
@@ -350,11 +350,11 @@ public abstract class BaseGameActivity extends BaseActivity implements IGameInte
 		return this.mEngine.getShaderProgramManager();
 	}
 
-	public SoundManager getSoundManager() {
+	private SoundManager getSoundManager() {
 		return this.mEngine.getSoundManager();
 	}
 
-	public MusicManager getMusicManager() {
+	private MusicManager getMusicManager() {
 		return this.mEngine.getMusicManager();
 	}
 
@@ -375,7 +375,7 @@ public abstract class BaseGameActivity extends BaseActivity implements IGameInte
 		});
 	}
 
-	protected void onSetContentView() {
+	void onSetContentView() {
 		this.mRenderSurfaceView = new RenderSurfaceView(this);
 		this.mRenderSurfaceView.setRenderer(this.mEngine, this);
 
@@ -457,7 +457,7 @@ public abstract class BaseGameActivity extends BaseActivity implements IGameInte
 		}
 	}
 
-	protected static LayoutParams createSurfaceViewLayoutParams() {
+	private static LayoutParams createSurfaceViewLayoutParams() {
 		final LayoutParams layoutParams = new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 		layoutParams.gravity = Gravity.CENTER;
 		return layoutParams;

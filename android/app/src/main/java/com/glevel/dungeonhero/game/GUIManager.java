@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.game;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -58,8 +56,8 @@ public class GUIManager {
 
     private static final String TAG = "GUIManager";
 
-    private MyBaseGameActivity mGameActivity;
-    private Resources mResources;
+    private final MyBaseGameActivity mGameActivity;
+    private final Resources mResources;
     private Hero mHero;
 
     private Dialog mLoadingScreen, mGameMenuDialog, mHeroInfoDialog, mDiscussionDialog,
@@ -76,10 +74,10 @@ public class GUIManager {
     }
 
     public void initGUI() {
-        mQueueLayout = (ViewGroup) mGameActivity.findViewById(R.id.queue);
-        mSelectedElementLayout = (ViewGroup) mGameActivity.findViewById(R.id.selectedElement);
+        mQueueLayout = mGameActivity.findViewById(R.id.queue);
+        mSelectedElementLayout = mGameActivity.findViewById(R.id.selectedElement);
 
-        mActiveHeroLayout = (ViewGroup) mGameActivity.findViewById(R.id.hero);
+        mActiveHeroLayout = mGameActivity.findViewById(R.id.hero);
         mActiveHeroLayout.setOnClickListener(mGameActivity);
 
         mGameActivity.findViewById(R.id.bag).setOnClickListener(mGameActivity);
@@ -87,9 +85,9 @@ public class GUIManager {
 
         // setup big label TV
         mBigLabelAnimation = AnimationUtils.loadAnimation(mGameActivity, R.anim.big_label_in_game);
-        mBigLabel = (TextView) mGameActivity.findViewById(R.id.bigLabel);
+        mBigLabel = mGameActivity.findViewById(R.id.bigLabel);
 
-        mSkillButtonsLayout = (ViewGroup) mGameActivity.findViewById(R.id.skillButtonsLayout);
+        mSkillButtonsLayout = mGameActivity.findViewById(R.id.skillButtonsLayout);
     }
 
     public void setData(Hero hero) {
@@ -97,64 +95,40 @@ public class GUIManager {
     }
 
     public void displayBigLabel(final String text, final int color) {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mBigLabel.setVisibility(View.VISIBLE);
-                mBigLabel.setText("" + text);
-                mBigLabel.setTextColor(mResources.getColor(color));
-                mBigLabel.startAnimation(mBigLabelAnimation);
-            }
+        mGameActivity.runOnUiThread(() -> {
+            mBigLabel.setVisibility(View.VISIBLE);
+            mBigLabel.setText(text);
+            mBigLabel.setTextColor(mResources.getColor(color));
+            mBigLabel.startAnimation(mBigLabelAnimation);
         });
     }
 
     public void hideLoadingScreen() {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mLoadingScreen.dismiss();
-            }
-        });
+        mGameActivity.runOnUiThread(() -> mLoadingScreen.dismiss());
     }
 
     public void openGameMenu() {
-        mGameMenuDialog = new GameMenu(mGameActivity, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaveQuestConfirmDialog();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGameActivity.startActivity(new Intent(mGameActivity, HomeActivity.class));
-                mGameActivity.finish();
-            }
+        mGameMenuDialog = new GameMenu(mGameActivity, v -> showLeaveQuestConfirmDialog(), v -> {
+            mGameActivity.startActivity(new Intent(mGameActivity, HomeActivity.class));
+            mGameActivity.finish();
         });
 
-        mGameMenuDialog.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mGameActivity.resumeGame();
-            }
-        });
+        mGameMenuDialog.setOnDismissListener(dialog -> mGameActivity.resumeGame());
 
         mGameMenuDialog.show();
     }
 
     public void showLeaveQuestConfirmDialog() {
         mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(R.string.confirm_leave_quest),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == R.id.ok_btn) {
-                            Intent intent = new Intent(mGameActivity, BookChooserActivity.class);
-                            mGameActivity.getGame().setHero(mHero);
-                            intent.putExtra(Game.class.getName(), mGameActivity.getGame());
-                            mGameActivity.startActivity(intent);
-                            mGameActivity.finish();
-                        }
-                        dialog.dismiss();
+                (dialog, which) -> {
+                    if (which == R.id.ok_btn) {
+                        Intent intent = new Intent(mGameActivity, BookChooserActivity.class);
+                        mGameActivity.getGame().setHero(mHero);
+                        intent.putExtra(Game.class.getName(), mGameActivity.getGame());
+                        mGameActivity.startActivity(intent);
+                        mGameActivity.finish();
                     }
+                    dialog.dismiss();
                 });
         mConfirmDialog.show();
     }
@@ -163,26 +137,18 @@ public class GUIManager {
         final Book activeBook = mGameActivity.getGame().getBook();
         final boolean hasNextChapter = activeBook.hasNextChapter();
         mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(hasNextChapter ? R.string.go_deeper_dungeon : R.string.confirm_finish_quest),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == R.id.ok_btn) {
-                            // show outro text
-                            if (activeBook.getActiveChapter().getOutroText(mResources) > 0) {
-                                showIntrospection(mGameActivity.getGame().getBook().getActiveChapter().getOutroText(mResources),
-                                        hasNextChapter ? R.string.go_to_next_floor : R.string.finish_quest,
-                                        new OnActionExecuted() {
-                                            @Override
-                                            public void onActionDone(boolean success) {
-                                                finishQuest(activeBook);
-                                            }
-                                        });
-                            } else {
-                                finishQuest(activeBook);
-                            }
+                (dialog, which) -> {
+                    if (which == R.id.ok_btn) {
+                        // show outro text
+                        if (activeBook.getActiveChapter().getOutroText(mResources) > 0) {
+                            showIntrospection(mGameActivity.getGame().getBook().getActiveChapter().getOutroText(mResources),
+                                    hasNextChapter ? R.string.go_to_next_floor : R.string.finish_quest,
+                                    success -> finishQuest(activeBook));
+                        } else {
+                            finishQuest(activeBook);
                         }
-                        dialog.dismiss();
                     }
+                    dialog.dismiss();
                 });
         mConfirmDialog.show();
     }
@@ -228,16 +194,13 @@ public class GUIManager {
 
     public void showIntrospection(int text, int okButtonText, final OnActionExecuted callback) {
         mConfirmDialog = new CustomAlertDialog(mGameActivity, R.style.Dialog, mGameActivity.getString(text),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        if (callback != null) {
-                            callback.onActionDone(true);
-                        }
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    if (callback != null) {
+                        callback.onActionDone(true);
                     }
                 });
-        TextView nameTV = (TextView) mConfirmDialog.findViewById(R.id.name);
+        TextView nameTV = mConfirmDialog.findViewById(R.id.name);
         nameTV.setCompoundDrawablesWithIntrinsicBounds(mHero.getImage(mResources), 0, 0, 0);
         nameTV.setText(mHero.getHeroName());
         ((TextView) mConfirmDialog.findViewById(R.id.ok_btn)).setText(okButtonText);
@@ -279,81 +242,66 @@ public class GUIManager {
     }
 
     public void showLoadingScreen() {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mLoadingScreen = new Loading(mGameActivity);
-                mLoadingScreen.show();
-            }
+        mGameActivity.runOnUiThread(() -> {
+            mLoadingScreen = new Loading(mGameActivity);
+            mLoadingScreen.show();
         });
     }
 
     public void showGameElementInfo(final GameElement gameElement) {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView nameTV = (TextView) mSelectedElementLayout.findViewById(R.id.name);
-                LifeBar lifeBar = (LifeBar) mSelectedElementLayout.findViewById(R.id.life);
+        mGameActivity.runOnUiThread(() -> {
+            TextView nameTV = mSelectedElementLayout.findViewById(R.id.name);
+            LifeBar lifeBar = mSelectedElementLayout.findViewById(R.id.life);
 
-                nameTV.setText(gameElement.getName(mResources));
+            nameTV.setText(gameElement.getName(mResources));
 
-                if (gameElement instanceof Unit) {
-                    Unit unit = (Unit) gameElement;
-                    nameTV.setCompoundDrawablesWithIntrinsicBounds(unit.getImage(mResources), 0, 0, 0);
-                    lifeBar.updateLife(unit.getLifeRatio());
-                    lifeBar.setVisibility(View.VISIBLE);
-                } else {
-                    nameTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                    lifeBar.setVisibility(View.GONE);
-                }
-
-                mQueueLayout.setVisibility(View.GONE);
-                mSelectedElementLayout.setVisibility(View.VISIBLE);
+            if (gameElement instanceof Unit) {
+                Unit unit = (Unit) gameElement;
+                nameTV.setCompoundDrawablesWithIntrinsicBounds(unit.getImage(mResources), 0, 0, 0);
+                lifeBar.updateLife(unit.getLifeRatio());
+                lifeBar.setVisibility(View.VISIBLE);
+            } else {
+                nameTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                lifeBar.setVisibility(View.GONE);
             }
+
+            mQueueLayout.setVisibility(View.GONE);
+            mSelectedElementLayout.setVisibility(View.VISIBLE);
         });
     }
 
     public void hideGameElementInfo(final boolean isSafe) {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mSelectedElementLayout.setVisibility(View.GONE);
-                if (!isSafe) {
-                    mQueueLayout.setVisibility(View.VISIBLE);
-                }
+        mGameActivity.runOnUiThread(() -> {
+            mSelectedElementLayout.setVisibility(View.GONE);
+            if (!isSafe) {
+                mQueueLayout.setVisibility(View.VISIBLE);
             }
         });
     }
 
     public void updateActiveHeroLayout() {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LifeBar lifeBar = (LifeBar) mActiveHeroLayout.findViewById(R.id.life);
-                lifeBar.updateLife(mHero.getLifeRatio());
-            }
+        mGameActivity.runOnUiThread(() -> {
+            LifeBar lifeBar = mActiveHeroLayout.findViewById(R.id.life);
+            lifeBar.updateLife(mHero.getLifeRatio());
         });
     }
 
     public void updateQueue(final Unit activeCharacter, final Room room) {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (room.isSafe()) {
-                    mQueueLayout.setVisibility(View.GONE);
+        mGameActivity.runOnUiThread(() -> {
+            if (room.isSafe()) {
+                mQueueLayout.setVisibility(View.GONE);
+            } else {
+                mQueueLayout.setVisibility(View.VISIBLE);
+                updateQueueCharacter(mQueueLayout.findViewById(R.id.activeCharacter), activeCharacter);
+                if (room.getQueue().size() > 1) {
+                    updateQueueCharacter(mQueueLayout.findViewById(R.id.nextCharacter), room.getQueue().get(0));
                 } else {
-                    mQueueLayout.setVisibility(View.VISIBLE);
-                    updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.activeCharacter), activeCharacter);
-                    if (room.getQueue().size() > 1) {
-                        updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextCharacter), room.getQueue().get(0));
-                    } else {
-                        mQueueLayout.findViewById(R.id.nextCharacter).setVisibility(View.GONE);
-                    }
-                    if (room.getQueue().size() > 2) {
-                        updateQueueCharacter((ViewGroup) mQueueLayout.findViewById(R.id.nextnextCharacter), room.getQueue().get(1));
-                    } else {
-                        mQueueLayout.findViewById(R.id.nextnextCharacter).setVisibility(View.GONE);
-                    }
+                    mQueueLayout.findViewById(R.id.nextCharacter).setVisibility(View.GONE);
+                }
+                if (room.getQueue().size() > 2) {
+                    updateQueueCharacter(mQueueLayout.findViewById(R.id.nextnextCharacter), room.getQueue().get(1));
+                } else {
+                    mQueueLayout.findViewById(R.id.nextnextCharacter).setVisibility(View.GONE);
                 }
             }
         });
@@ -372,32 +320,26 @@ public class GUIManager {
     }
 
     public void showDiscussion(final Pnj pnj, final Discussion discussion, final OnDiscussionReplySelected callback) {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mDiscussionDialog == null || !mDiscussionDialog.isShowing()) {
-                    if (discussion.getRiddle() != null) {
-                        // show riddle
-                        mDiscussionDialog = new RiddleBox(mGameActivity, discussion, pnj, callback);
-                    } else {
-                        // show conversation
-                        mDiscussionDialog = new SimpleDiscussionBox(mGameActivity, discussion, pnj, callback);
-                    }
-                    mDiscussionDialog.show();
+        mGameActivity.runOnUiThread(() -> {
+            if (mDiscussionDialog == null || !mDiscussionDialog.isShowing()) {
+                if (discussion.getRiddle() != null) {
+                    // show riddle
+                    mDiscussionDialog = new RiddleBox(mGameActivity, discussion, pnj, callback);
+                } else {
+                    // show conversation
+                    mDiscussionDialog = new SimpleDiscussionBox(mGameActivity, discussion, pnj, callback);
                 }
+                mDiscussionDialog.show();
             }
         });
     }
 
     public void showReward(final Reward reward, final OnDismissListener onDismissListener) {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mRewardDialog == null || !mRewardDialog.isShowing()) {
-                    mRewardDialog = new RewardDialog(mGameActivity, reward);
-                    mRewardDialog.setOnDismissListener(onDismissListener);
-                    mRewardDialog.show();
-                }
+        mGameActivity.runOnUiThread(() -> {
+            if (mRewardDialog == null || !mRewardDialog.isShowing()) {
+                mRewardDialog = new RewardDialog(mGameActivity, reward);
+                mRewardDialog.setOnDismissListener(onDismissListener);
+                mRewardDialog.show();
             }
         });
     }
@@ -410,13 +352,13 @@ public class GUIManager {
 
         updateBag(hero);
 
-        ((TextView) mBagDialog.findViewById(R.id.gold_amount)).setText("" + hero.getGold());
+        ((TextView) mBagDialog.findViewById(R.id.gold_amount)).setText(String.valueOf(hero.getGold()));
 
         mBagDialog.show();
     }
 
     public void updateBag(Hero hero) {
-        ViewGroup bagLayout = (ViewGroup) mBagDialog.findViewById(R.id.bag);
+        ViewGroup bagLayout = mBagDialog.findViewById(R.id.bag);
         Item item;
         for (int n = 0; n < bagLayout.getChildCount(); n++) {
             item = null;
@@ -426,7 +368,7 @@ public class GUIManager {
             updateItemLayout(bagLayout.getChildAt(n), item);
         }
 
-        ViewGroup equipmentLayout = (ViewGroup) mBagDialog.findViewById(R.id.equipment);
+        ViewGroup equipmentLayout = mBagDialog.findViewById(R.id.equipment);
         Equipment equipment;
         for (int n = 0; n < hero.getEquipments().length; n++) {
             equipment = hero.getEquipments()[n];
@@ -434,7 +376,7 @@ public class GUIManager {
         }
 
         if (hero.getEquipments()[0] instanceof TwoHandedWeapon) {
-            ImageView image = (ImageView) equipmentLayout.getChildAt(1).findViewById(R.id.image);
+            ImageView image = equipmentLayout.getChildAt(1).findViewById(R.id.image);
             image.setImageResource(hero.getEquipments()[0].getImage(mResources));
             ApplicationUtils.setAlpha(image, 0.7f);
         }
@@ -442,7 +384,7 @@ public class GUIManager {
 
     private void updateEquipmentLayout(View itemView, Item item, int defaultImage) {
         View background = itemView.findViewById(R.id.background);
-        ImageView image = (ImageView) itemView.findViewById(R.id.image);
+        ImageView image = itemView.findViewById(R.id.image);
 
         itemView.setTag(R.string.item, item);
 
@@ -463,7 +405,7 @@ public class GUIManager {
 
     private void updateItemLayout(View itemView, Item item) {
         View background = itemView.findViewById(R.id.background);
-        ImageView image = (ImageView) itemView.findViewById(R.id.image);
+        ImageView image = itemView.findViewById(R.id.image);
 
         itemView.setTag(R.string.item, item);
 
@@ -498,12 +440,7 @@ public class GUIManager {
         ((TextView) mNewLevelDialog.findViewById(R.id.new_level_title)).setText(mGameActivity.getString(R.string.new_level_title, mHero.getLevel()));
 
         if (onActionExecuted != null) {
-            mNewLevelDialog.setOnDismissListener(new OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    onActionExecuted.onActionDone(true);
-                }
-            });
+            mNewLevelDialog.setOnDismissListener(dialog -> onActionExecuted.onActionDone(true));
         }
 
         mNewLevelDialog.show();
@@ -522,7 +459,7 @@ public class GUIManager {
         }
 
         Log.d(TAG, "Show " + hero.getSkills().size() + " skills");
-        ViewGroup skillLayout = (ViewGroup) dialog.findViewById(R.id.skills);
+        ViewGroup skillLayout = dialog.findViewById(R.id.skills);
         for (int n = 0; n < skillLayout.getChildCount(); n++) {
             if (n < hero.getSkills().size()) {
                 updateSkillLayout(skillLayout.getChildAt(n), hero.getSkills().get(n));
@@ -534,7 +471,7 @@ public class GUIManager {
 
     private void updateSkillLayout(View itemView, Skill skill) {
         View background = itemView.findViewById(R.id.background);
-        ImageView image = (ImageView) itemView.findViewById(R.id.image);
+        ImageView image = itemView.findViewById(R.id.image);
 
         itemView.setTag(R.string.skill, skill);
 
@@ -544,26 +481,23 @@ public class GUIManager {
     }
 
     public void updateSkillButtons() {
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LayoutInflater inflater = mGameActivity.getLayoutInflater();
-                mSkillButtonsLayout.removeAllViews();
-                View skillButton;
-                for (final Skill skill : mHero.getSkills()) {
-                    if (skill.getLevel() > 0) {
-                        skillButton = inflater.inflate(R.layout.in_game_skill_button, null);
-                        skillButton.setTag(R.string.show_skill, skill);
-                        ((ImageView) skillButton.findViewById(R.id.image)).setImageResource(skill.getImage(mResources));
-                        if (skill instanceof PassiveSkill || skill instanceof ActiveSkill && ((ActiveSkill) skill).isUsed()) {
-                            skillButton.findViewById(R.id.image).setEnabled(false);
-                            ApplicationUtils.setAlpha(skillButton, 0.5f);
-                        }
-
-                        skillButton.setOnClickListener(mGameActivity);
-
-                        mSkillButtonsLayout.addView(skillButton);
+        mGameActivity.runOnUiThread(() -> {
+            LayoutInflater inflater = mGameActivity.getLayoutInflater();
+            mSkillButtonsLayout.removeAllViews();
+            View skillButton;
+            for (final Skill skill : mHero.getSkills()) {
+                if (skill.getLevel() > 0) {
+                    skillButton = inflater.inflate(R.layout.in_game_skill_button, null);
+                    skillButton.setTag(R.string.show_skill, skill);
+                    ((ImageView) skillButton.findViewById(R.id.image)).setImageResource(skill.getImage(mResources));
+                    if (skill instanceof PassiveSkill || skill instanceof ActiveSkill && ((ActiveSkill) skill).isUsed()) {
+                        skillButton.findViewById(R.id.image).setEnabled(false);
+                        ApplicationUtils.setAlpha(skillButton, 0.5f);
                     }
+
+                    skillButton.setOnClickListener(mGameActivity);
+
+                    mSkillButtonsLayout.addView(skillButton);
                 }
             }
         });
@@ -571,12 +505,7 @@ public class GUIManager {
 
     public void showUseSkillInfo(Skill skill) {
         if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
-            mItemInfoDialog = new UseSkill(mGameActivity, skill, new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mGameActivity.onClick(v);
-                }
-            });
+            mItemInfoDialog = new UseSkill(mGameActivity, skill, mGameActivity);
 
             mItemInfoDialog.show();
         }
@@ -584,13 +513,10 @@ public class GUIManager {
 
     public void showImproveSkillDialog(final Skill skill) {
         if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
-            mItemInfoDialog = new ImproveSkill(mGameActivity, skill, mHero, new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mHero.useSkillPoint();
-                    skill.improve();
-                    showSkills(mNewLevelDialog, mHero);
-                }
+            mItemInfoDialog = new ImproveSkill(mGameActivity, skill, mHero, v -> {
+                mHero.useSkillPoint();
+                skill.improve();
+                showSkills(mNewLevelDialog, mHero);
             });
 
             mItemInfoDialog.show();

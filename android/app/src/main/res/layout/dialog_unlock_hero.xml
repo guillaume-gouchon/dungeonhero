@@ -3,19 +3,19 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp"
     android:background="@drawable/bg_gui"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <com.glevel.dungeonhero.views.CustomTextView
-        android:drawableTop="@drawable/ic_three_stars"
-        android:drawablePadding="10dp"
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:textSize="22sp"
+        android:drawablePadding="10dp"
+        android:drawableTop="@drawable/ic_three_stars"
         android:gravity="center"
-        android:textColor="@color/white" />
+        android:padding="15dp"
+        android:textColor="@color/white"
+        android:textSize="22sp" />
 </LinearLayout>

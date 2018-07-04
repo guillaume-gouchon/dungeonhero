@@ -36,10 +36,10 @@ public class TextureOptions {
 	// Fields
 	// ===========================================================
 
-	public final int mMagFilter;
+	private final int mMagFilter;
 	public final int mMinFilter;
-	public final float mWrapT;
-	public final float mWrapS;
+	private final float mWrapT;
+	private final float mWrapS;
 	public final boolean mPreMultiplyAlpha;
 
 	// ===========================================================

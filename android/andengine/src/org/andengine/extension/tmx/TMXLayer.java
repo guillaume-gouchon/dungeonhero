@@ -57,7 +57,7 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 
 	private final float[] mCullingVertices = new float[2 * Sprite.VERTICES_PER_SPRITE];
 
-	private final TMXProperties<TMXLayerProperty> mTMXLayerProperties = new TMXProperties<TMXLayerProperty>();
+	private final TMXProperties<TMXLayerProperty> mTMXLayerProperties = new TMXProperties<>();
 
 	private final int mWidth;
 	private final int mHeight;
@@ -231,12 +231,15 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 			}
 
 			if(pDataCompression != null) {
-				if(pDataCompression.equals(TMXConstants.TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_GZIP)) {
-					in = new GZIPInputStream(in);
-				} else if(pDataCompression.equals(TMXConstants.TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_ZLIB)) {
-					in = new InflaterInputStream(in);
-				} else {
-					throw new IllegalArgumentException("Supplied compression '" + pDataCompression + "' is not supported yet.");
+				switch (pDataCompression) {
+					case TMXConstants.TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_GZIP:
+						in = new GZIPInputStream(in);
+						break;
+					case TMXConstants.TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_ZLIB:
+						in = new InflaterInputStream(in);
+						break;
+					default:
+						throw new IllegalArgumentException("Supplied compression '" + pDataCompression + "' is not supported yet.");
 				}
 			}
 			dataIn = new DataInputStream(in);
@@ -258,8 +261,6 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 		final int column = this.mTilesAdded % tilesHorizontal;
 		final int row = this.mTilesAdded / tilesHorizontal;
 
-		final TMXTile[][] tmxTiles = this.mTMXTiles;
-
 		final ITextureRegion tmxTileTextureRegion;
 		if(pGlobalTileID == 0) {
 			tmxTileTextureRegion = null;
@@ -278,7 +279,7 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 			}
 		}
 		final TMXTile tmxTile = new TMXTile(pGlobalTileID, column, row, tileWidth, tileHeight, tmxTileTextureRegion);
-		tmxTiles[row][column] = tmxTile;
+		this.mTMXTiles[row][column] = tmxTile;
 
 		this.setIndex(this.getSpriteBatchIndex(column, row));
 		this.drawWithoutChecks(tmxTileTextureRegion, tmxTile.getTileX(), tmxTile.getTileY(), tileWidth, tileHeight, Color.WHITE_ABGR_PACKED_FLOAT);

@@ -36,20 +36,20 @@ public class Base64 {
 	 * Encoder flag bit to omit the padding '=' characters at the end
 	 * of the output (if any).
 	 */
-	public static final int NO_PADDING = 1;
+	private static final int NO_PADDING = 1;
 
 	/**
 	 * Encoder flag bit to omit all line terminators (i.e., the output
 	 * will be on one long line).
 	 */
-	public static final int NO_WRAP = 2;
+	private static final int NO_WRAP = 2;
 
 	/**
 	 * Encoder flag bit to indicate lines should be terminated with a
 	 * CRLF pair instead of just an LF.  Has no effect if {@code
 	 * NO_WRAP} is specified as well.
 	 */
-	public static final int CRLF = 4;
+	private static final int CRLF = 4;
 
 	/**
 	 * Encoder/decoder flag bit to indicate using the "URL and
@@ -57,7 +57,7 @@ public class Base64 {
 	 * {@code -} and {@code _} are used in place of {@code +} and
 	 * {@code /}.
 	 */
-	public static final int URL_SAFE = 8;
+	private static final int URL_SAFE = 8;
 
 	/**
 	 * Flag to pass to {@link Base64OutputStream} to indicate that it
@@ -134,7 +134,7 @@ public class Base64 {
 	 * @throws IllegalArgumentException if the input contains
 	 * incorrect padding
 	 */
-	public static byte[] decode(final byte[] input, final int flags) {
+	private static byte[] decode(final byte[] input, final int flags) {
 		return Base64.decode(input, 0, input.length, flags);
 	}
 
@@ -154,7 +154,7 @@ public class Base64 {
 	 * @throws IllegalArgumentException if the input contains
 	 * incorrect padding
 	 */
-	public static byte[] decode(final byte[] input, final int offset, final int len, final int flags) {
+	private static byte[] decode(final byte[] input, final int offset, final int len, final int flags) {
 		// Allocate space for the most data the input could represent.
 		// (It could contain less if it contains whitespace, etc.)
 		final Decoder decoder = new Decoder(flags, new byte[len*3/4]);
@@ -498,7 +498,7 @@ public class Base64 {
 	 *               Passing {@code DEFAULT} results in output that
 	 *               adheres to RFC 2045.
 	 */
-	public static byte[] encode(final byte[] input, final int flags) {
+	private static byte[] encode(final byte[] input, final int flags) {
 		return Base64.encode(input, 0, input.length, flags);
 	}
 
@@ -514,7 +514,7 @@ public class Base64 {
 	 *               Passing {@code DEFAULT} results in output that
 	 *               adheres to RFC 2045.
 	 */
-	public static byte[] encode(final byte[] input, final int offset, final int len, final int flags) {
+	private static byte[] encode(final byte[] input, final int offset, final int len, final int flags) {
 		final Encoder encoder = new Encoder(flags, null);
 
 		// Compute the exact length of the array we will produce.
@@ -553,7 +553,7 @@ public class Base64 {
 		 * a 76-character line length (the maximum allowable according to
 		 * <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>).
 		 */
-		public static final int LINE_GROUPS = 19;
+		static final int LINE_GROUPS = 19;
 
 		/**
 		 * Lookup table for turning Base64 alphabet positions (6 bits)
@@ -581,9 +581,9 @@ public class Base64 {
 		/* package */ int tailLen;
 		private int count;
 
-		final public boolean do_padding;
-		final public boolean do_newline;
-		final public boolean do_cr;
+		final boolean do_padding;
+		final boolean do_newline;
+		final boolean do_cr;
 		final private byte[] alphabet;
 
 		public Encoder(final int flags, final byte[] output) {

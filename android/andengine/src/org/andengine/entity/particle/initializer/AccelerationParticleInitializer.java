@@ -27,11 +27,11 @@ public class AccelerationParticleInitializer<T extends IEntity> extends BaseDoub
 		this(pAcceleration, pAcceleration);
 	}
 
-	public AccelerationParticleInitializer(final float pAccelerationX, final float pAccelerationY) {
+	AccelerationParticleInitializer(final float pAccelerationX, final float pAccelerationY) {
 		this(pAccelerationX, pAccelerationX, pAccelerationY, pAccelerationY);
 	}
 
-	public AccelerationParticleInitializer(final float pMinAccelerationX, final float pMaxAccelerationX, final float pMinAccelerationY, final float pMaxAccelerationY) {
+	private AccelerationParticleInitializer(final float pMinAccelerationX, final float pMaxAccelerationX, final float pMinAccelerationY, final float pMaxAccelerationY) {
 		super(pMinAccelerationX, pMaxAccelerationX, pMinAccelerationY, pMaxAccelerationY);
 	}
 

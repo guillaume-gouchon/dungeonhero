@@ -21,14 +21,14 @@ public interface IBackground extends IDrawHandler, IUpdateHandler {
 	// Methods
 	// ===========================================================
 
-	public void registerBackgroundModifier(final IModifier<IBackground> pBackgroundModifier);
-	public boolean unregisterBackgroundModifier(final IModifier<IBackground> pBackgroundModifier);
-	public void clearBackgroundModifiers();
+	void registerBackgroundModifier(final IModifier<IBackground> pBackgroundModifier);
+	boolean unregisterBackgroundModifier(final IModifier<IBackground> pBackgroundModifier);
+	void clearBackgroundModifiers();
 
-	public boolean isColorEnabled();
-	public void setColorEnabled(final boolean pColorEnabled);
+	boolean isColorEnabled();
+	void setColorEnabled(final boolean pColorEnabled);
 
-	public void setColor(final Color pColor);
-	public void setColor(final float pRed, final float pGreen, final float pBlue);
-	public void setColor(final float pRed, final float pGreen, final float pBlue, final float pAlpha);
+	void setColor(final Color pColor);
+	void setColor(final float pRed, final float pGreen, final float pBlue);
+	void setColor(final float pRed, final float pGreen, final float pBlue, final float pAlpha);
 }

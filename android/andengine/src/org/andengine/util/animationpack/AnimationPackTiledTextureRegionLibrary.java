@@ -17,7 +17,7 @@ public class AnimationPackTiledTextureRegionLibrary {
 	// Fields
 	// ===========================================================
 
-	private final HashMap<String, AnimationPackTiledTextureRegion> mAnimationPackTiledTextureRegionMapping = new HashMap<String, AnimationPackTiledTextureRegion>();
+	private final HashMap<String, AnimationPackTiledTextureRegion> mAnimationPackTiledTextureRegionMapping = new HashMap<>();
 
 	// ===========================================================
 	// Constructors

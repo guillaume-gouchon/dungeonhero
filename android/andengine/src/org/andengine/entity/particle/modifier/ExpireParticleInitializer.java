@@ -32,7 +32,7 @@ public class ExpireParticleInitializer<T extends IEntity> implements IParticleIn
 		this(pLifeTime, pLifeTime);
 	}
 
-	public ExpireParticleInitializer(final float pMinLifeTime, final float pMaxLifeTime) {
+	private ExpireParticleInitializer(final float pMinLifeTime, final float pMaxLifeTime) {
 		this.mMinLifeTime = pMinLifeTime;
 		this.mMaxLifeTime = pMaxLifeTime;
 	}

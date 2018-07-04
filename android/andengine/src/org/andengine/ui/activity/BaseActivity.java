@@ -47,7 +47,7 @@ public abstract class BaseActivity extends Activity {
 		this.toastOnUIThread(pText, Toast.LENGTH_LONG);
 	}
 
-	public void toastOnUIThread(final CharSequence pText, final int pDuration) {
+	private void toastOnUIThread(final CharSequence pText, final int pDuration) {
 		if(Looper.getMainLooper().getThread() == Thread.currentThread()) {
 			Toast.makeText(BaseActivity.this, pText, pDuration).show();
 		} else {
@@ -67,7 +67,6 @@ public abstract class BaseActivity extends Activity {
 	 * @param <T>
 	 * @param pTitleResourceID
 	 * @param pMessageResourceID
-	 * @param pErrorMessageResourceID
 	 * @param pCallable
 	 * @param pCallback
 	 */
@@ -82,12 +81,11 @@ public abstract class BaseActivity extends Activity {
 	 * @param <T>
 	 * @param pTitleResourceID
 	 * @param pMessageResourceID
-	 * @param pErrorMessageResourceID
 	 * @param pCallable
 	 * @param pCallback
 	 * @param pExceptionCallback
 	 */
-	protected <T> void doAsync(final int pTitleResourceID, final int pMessageResourceID, final Callable<T> pCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
+	private <T> void doAsync(final int pTitleResourceID, final int pMessageResourceID, final Callable<T> pCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
 		ActivityUtils.doAsync(this, pTitleResourceID, pMessageResourceID, pCallable, pCallback, pExceptionCallback);
 	}
 
@@ -97,9 +95,6 @@ public abstract class BaseActivity extends Activity {
 	 * 
 	 * @param <T>
 	 * @param pTitleResourceID
-	 * @param pMessageResourceID
-	 * @param pErrorMessageResourceID
-	 * @param pAsyncCallable
 	 * @param pCallback
 	 */
 	protected <T> void doProgressAsync(final int pTitleResourceID, final int pIconResourceID, final ProgressCallable<T> pCallable, final Callback<T> pCallback) {
@@ -112,13 +107,10 @@ public abstract class BaseActivity extends Activity {
 	 * 
 	 * @param <T>
 	 * @param pTitleResourceID
-	 * @param pMessageResourceID
-	 * @param pErrorMessageResourceID
-	 * @param pAsyncCallable
 	 * @param pCallback
 	 * @param pExceptionCallback
 	 */
-	protected <T> void doProgressAsync(final int pTitleResourceID, final int pIconResourceID, final ProgressCallable<T> pCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
+	private <T> void doProgressAsync(final int pTitleResourceID, final int pIconResourceID, final ProgressCallable<T> pCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
 		ActivityUtils.doProgressAsync(this, pTitleResourceID, pIconResourceID, pCallable, pCallback, pExceptionCallback);
 	}
 
@@ -129,7 +121,6 @@ public abstract class BaseActivity extends Activity {
 	 * @param <T>
 	 * @param pTitleResourceID
 	 * @param pMessageResourceID
-	 * @param pErrorMessageResourceID
 	 * @param pAsyncCallable
 	 * @param pCallback
 	 * @param pExceptionCallback

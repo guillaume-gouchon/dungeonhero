@@ -2,7 +2,6 @@ package com.glevel.dungeonhero.models.characters;
 
 
 import com.glevel.dungeonhero.data.items.PotionFactory;
-import com.glevel.dungeonhero.data.items.WeaponFactory;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.models.items.Characteristics;
 import com.glevel.dungeonhero.models.items.Item;
@@ -13,30 +12,23 @@ import com.glevel.dungeonhero.models.items.requirements.Requirement;
 import com.glevel.dungeonhero.models.items.requirements.StatRequirement;
 import com.glevel.dungeonhero.models.skills.ActiveSkill;
 import com.glevel.dungeonhero.models.skills.Skill;
-import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by guillaume ON 10/2/14.
- */
-public class Hero extends Unit implements InAppProduct {
+public class Hero extends Unit {
 
     private static final long serialVersionUID = -5970005172767341685L;
 
-    private final String productId;
     private final HeroTypes heroType;
-    protected boolean mHasBeenBought = false;
-    protected List<String> frags = new ArrayList<>();
+    private final List<String> frags = new ArrayList<>();
     private int xp;
     private int level;
     private String heroName;
     private int skillPoints;
 
-    public Hero(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, String productId, int xp, int level, HeroTypes heroType) {
+    public Hero(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType) {
         super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement);
-        this.productId = productId;
         this.xp = xp;
         this.level = level;
         this.heroType = heroType;
@@ -45,26 +37,6 @@ public class Hero extends Unit implements InAppProduct {
         // add some healing potions
         addItem(PotionFactory.buildHealingPotion());
         addItem(PotionFactory.buildHealingPotion());
-    }
-
-    @Override
-    public String getProductId() {
-        return productId;
-    }
-
-    @Override
-    public void setHasBeenBought(boolean hasBeenBought) {
-        mHasBeenBought = hasBeenBought;
-    }
-
-    @Override
-    public boolean isAvailable() {
-        return isFree() || mHasBeenBought;
-    }
-
-    @Override
-    public boolean isFree() {
-        return productId == null;
     }
 
     public int getLevel() {

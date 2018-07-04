@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.glevel.dungeonhero.MyActivity;
+import com.glevel.dungeonhero.BaseActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.providers.MyContentProvider;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
-public class GameOverActivity extends MyActivity implements View.OnClickListener {
+public class GameOverActivity extends BaseActivity implements View.OnClickListener {
 
     private Game mGame;
 
@@ -40,7 +40,7 @@ public class GameOverActivity extends MyActivity implements View.OnClickListener
     }
 
     private void setupUI() {
-        mStormsBg = (ImageView) findViewById(R.id.storms);
+        mStormsBg = findViewById(R.id.storms);
 
         View retryButton = findViewById(R.id.retry_btn);
         retryButton.setOnClickListener(this);

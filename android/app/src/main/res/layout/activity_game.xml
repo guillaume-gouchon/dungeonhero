@@ -21,54 +21,62 @@
 
         <include
             android:id="@+id/map"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/bag"
+            layout="@layout/in_game_map_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            layout="@layout/in_game_map_button" />
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/bag"
+            android:layout_toStartOf="@+id/bag" />
 
         <include
             android:id="@+id/bag"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            layout="@layout/in_game_bag_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            layout="@layout/in_game_bag_button" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
 
         <LinearLayout
             android:id="@+id/skillButtonsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/bag"
-            android:gravity="left|center_vertical"></LinearLayout>
+            android:layout_toStartOf="@+id/bag"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal" />
 
         <include
             android:id="@+id/hero"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
+            layout="@layout/in_game_hero_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            layout="@layout/in_game_hero_button" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
 
         <include
             android:id="@+id/selectedElement"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
+            layout="@layout/in_game_selected_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            layout="@layout/in_game_selected_element" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
         <include
             android:id="@+id/queue"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
+            layout="@layout/in_game_queue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            layout="@layout/in_game_queue" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
     </RelativeLayout>
 
     <com.glevel.dungeonhero.views.CustomTextView
@@ -76,9 +84,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
         android:gravity="center"
         android:padding="30dp"
-        android:textSize="28sp" />
+        android:textSize="28sp"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -9,9 +9,6 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.Reward;
 import com.glevel.dungeonhero.models.items.equipments.Equipment;
 
-/**
- * Created by guillaume on 1/14/15.
- */
 public class RewardDialog extends Dialog {
 
     public RewardDialog(Context context, Reward reward) {
@@ -21,9 +18,9 @@ public class RewardDialog extends Dialog {
 
         findViewById(R.id.rootLayout).getBackground().setAlpha(70);
 
-        TextView itemTV = (TextView) findViewById(R.id.item);
-        TextView goldTV = (TextView) findViewById(R.id.gold);
-        TextView xpTV = (TextView) findViewById(R.id.xp);
+        TextView itemTV = findViewById(R.id.item);
+        TextView goldTV = findViewById(R.id.gold);
+        TextView xpTV = findViewById(R.id.xp);
 
         if (reward == null) {
             // found nothing
@@ -40,7 +37,7 @@ public class RewardDialog extends Dialog {
                 } else {
                     itemName = context.getString(reward.getItem().getName(context.getResources()));
                 }
-                boolean isAn = itemName.startsWith("a") || itemName.startsWith("e") || itemName.startsWith("i") || itemName.startsWith("o") || itemName.startsWith("u");
+                boolean isAn = itemName.startsWith("A") || itemName.startsWith("E") || itemName.startsWith("I") || itemName.startsWith("O") || itemName.startsWith("U");
                 itemTV.setText(context.getString(isAn ? R.string.found_item_an : R.string.found_item_a, itemName));
                 itemTV.setCompoundDrawablesWithIntrinsicBounds(0, reward.getItem().getImage(context.getResources()), 0, 0);
                 itemTV.setVisibility(View.VISIBLE);
@@ -65,12 +62,7 @@ public class RewardDialog extends Dialog {
             }
         }
 
-        findViewById(R.id.dismiss_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        findViewById(R.id.dismiss_button).setOnClickListener(view -> dismiss());
     }
 
 }

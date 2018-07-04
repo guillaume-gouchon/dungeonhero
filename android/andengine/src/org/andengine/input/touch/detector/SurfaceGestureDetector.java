@@ -32,11 +32,11 @@ public abstract class SurfaceGestureDetector extends BaseDetector {
 	// Constructors
 	// ===========================================================
 
-	public SurfaceGestureDetector(final Context pContext) {
+	SurfaceGestureDetector(final Context pContext) {
 		this(pContext, SurfaceGestureDetector.SWIPE_MIN_DISTANCE_DEFAULT);
 	}
 
-	public SurfaceGestureDetector(final Context pContext, final float pSwipeMinDistance) {
+	SurfaceGestureDetector(final Context pContext, final float pSwipeMinDistance) {
 		this.mGestureDetector = new GestureDetector(pContext, new InnerOnGestureDetectorListener(pSwipeMinDistance));
 	}
 
@@ -88,7 +88,7 @@ public abstract class SurfaceGestureDetector extends BaseDetector {
 		// Constructors
 		// ===========================================================
 
-		public InnerOnGestureDetectorListener(final float pSwipeMinDistance) {
+		InnerOnGestureDetectorListener(final float pSwipeMinDistance) {
 			this.mSwipeMinDistance = pSwipeMinDistance;
 		}
 

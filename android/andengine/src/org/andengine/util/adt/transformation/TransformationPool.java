@@ -9,7 +9,7 @@ import org.andengine.util.adt.pool.GenericPool;
  * @author Nicolas Gramlich
  * @since 23:07:53 - 23.02.2011
  */
-public class TransformationPool {
+class TransformationPool {
 	// ===========================================================
 	// Constants
 	// ===========================================================

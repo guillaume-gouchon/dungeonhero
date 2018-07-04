@@ -16,17 +16,17 @@ public abstract class BaseDoubleValueChangeModifier<T> extends BaseSingleValueCh
 	// Fields
 	// ===========================================================
 
-	private float mValueChangeBPerSecond;
+	private final float mValueChangeBPerSecond;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseDoubleValueChangeModifier(final float pDuration, final float pValueChangeA, final float pValueChangeB) {
+	protected BaseDoubleValueChangeModifier(final float pDuration, final float pValueChangeA, final float pValueChangeB) {
 		this(pDuration, pValueChangeA, pValueChangeB, null);
 	}
 
-	public BaseDoubleValueChangeModifier(final float pDuration, final float pValueChangeA, final float pValueChangeB, final IModifierListener<T> pModifierListener) {
+	protected BaseDoubleValueChangeModifier(final float pDuration, final float pValueChangeA, final float pValueChangeB, final IModifierListener<T> pModifierListener) {
 		super(pDuration, pValueChangeA, pModifierListener);
 
 		this.mValueChangeBPerSecond = pValueChangeB / pDuration;

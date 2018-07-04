@@ -37,13 +37,13 @@ public class Scene extends Entity {
 
 	private float mSecondsElapsedTotal;
 
-	protected Scene mParentScene;
-	protected Scene mChildScene;
+	private Scene mParentScene;
+	Scene mChildScene;
 	private boolean mChildSceneModalDraw;
 	private boolean mChildSceneModalUpdate;
 	private boolean mChildSceneModalTouch;
 
-	protected SmartList<ITouchArea> mTouchAreas = new SmartList<ITouchArea>(Scene.TOUCHAREAS_CAPACITY_DEFAULT);
+	private final SmartList<ITouchArea> mTouchAreas = new SmartList<>(Scene.TOUCHAREAS_CAPACITY_DEFAULT);
 
 	private final RunnableHandler mRunnableHandler = new RunnableHandler();
 
@@ -58,9 +58,9 @@ public class Scene extends Entity {
 
 	private boolean mTouchAreaBindingOnActionDownEnabled = false;
 	private boolean mTouchAreaBindingOnActionMoveEnabled = false;
-	private final SparseArray<ITouchArea> mTouchAreaBindings = new SparseArray<ITouchArea>();
+	private final SparseArray<ITouchArea> mTouchAreaBindings = new SparseArray<>();
 	private boolean mOnSceneTouchListenerBindingOnActionDownEnabled = false;
-	private final SparseArray<IOnSceneTouchListener> mOnSceneTouchListenerBindings = new SparseArray<IOnSceneTouchListener>();
+	private final SparseArray<IOnSceneTouchListener> mOnSceneTouchListenerBindings = new SparseArray<>();
 
 	// ===========================================================
 	// Constructors
@@ -268,7 +268,7 @@ public class Scene extends Entity {
 		}
 	}
 
-	protected void onApplyMatrix(final GLState pGLState, final Camera pCamera) {
+	void onApplyMatrix(final GLState pGLState, final Camera pCamera) {
 		pCamera.onApplySceneMatrix(pGLState);
 	}
 
@@ -416,7 +416,7 @@ public class Scene extends Entity {
 		}
 	}
 
-	protected boolean onChildSceneTouchEvent(final TouchEvent pSceneTouchEvent) {
+	boolean onChildSceneTouchEvent(final TouchEvent pSceneTouchEvent) {
 		return this.mChildScene.onSceneTouchEvent(pSceneTouchEvent);
 	}
 
@@ -444,8 +444,8 @@ public class Scene extends Entity {
 		this.mTouchAreas.add(pTouchArea);
 	}
 
-	public boolean unregisterTouchArea(final ITouchArea pTouchArea) {
-		return this.mTouchAreas.remove(pTouchArea);
+	public void unregisterTouchArea(final ITouchArea pTouchArea) {
+		this.mTouchAreas.remove(pTouchArea);
 	}
 
 	public boolean unregisterTouchAreas(final ITouchAreaMatcher pTouchAreaMatcher) {

@@ -11,7 +11,7 @@ import android.util.SparseArray;
  * @author Nicolas Gramlich
  * @since 11:52:26 - 20.08.2010
  */
-public class FontLibrary extends Library<Font> {
+class FontLibrary extends Library<Font> {
 	// ===========================================================
 	// Constants
 	// ===========================================================

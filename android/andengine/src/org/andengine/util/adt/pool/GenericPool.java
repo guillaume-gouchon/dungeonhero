@@ -38,15 +38,15 @@ public abstract class GenericPool<T> {
 		this(0);
 	}
 
-	public GenericPool(final int pInitialSize) {
+	GenericPool(final int pInitialSize) {
 		this(pInitialSize, 1);
 	}
 
-	public GenericPool(final int pInitialSize, final int pGrowth) {
+	GenericPool(final int pInitialSize, final int pGrowth) {
 		this(pInitialSize, pGrowth, Integer.MAX_VALUE);
 	}
 
-	public GenericPool(final int pInitialSize, final int pGrowth, final int pAvailableItemsMaximum) {
+	GenericPool(final int pInitialSize, final int pGrowth, final int pAvailableItemsMaximum) {
 		if(pGrowth <= 0) {
 			throw new IllegalArgumentException("pGrowth must be greater than 0!");
 		}
@@ -56,7 +56,7 @@ public abstract class GenericPool<T> {
 
 		this.mGrowth = pGrowth;
 		this.mAvailableItemCountMaximum = pAvailableItemsMaximum;
-		this.mAvailableItems = new ArrayList<T>(pInitialSize);
+		this.mAvailableItems = new ArrayList<>(pInitialSize);
 
 		if(pInitialSize > 0) {
 			this.batchAllocatePoolItems(pInitialSize);
@@ -96,18 +96,18 @@ public abstract class GenericPool<T> {
 
 	}
 
-	protected T onHandleAllocatePoolItem() {
+	T onHandleAllocatePoolItem() {
 		return this.onAllocatePoolItem();
 	}
 
 	/**
 	 * @param pItem every item that was just obtained from the pool, passes this method.
 	 */
-	protected void onHandleObtainItem(final T pItem) {
+	void onHandleObtainItem(final T pItem) {
 
 	}
 
-	public synchronized void batchAllocatePoolItems(final int pCount) {
+	synchronized void batchAllocatePoolItems(final int pCount) {
 		final ArrayList<T> availableItems = this.mAvailableItems;
 
 		int allocationCount = this.mAvailableItemCountMaximum - availableItems.size();

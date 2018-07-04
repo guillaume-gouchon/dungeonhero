@@ -38,15 +38,15 @@ public class ShaderProgram {
 	// Fields
 	// ===========================================================
 
-	protected final IShaderSource mVertexShaderSource;
-	protected final IShaderSource mFragmentShaderSource;
+	private final IShaderSource mVertexShaderSource;
+	private final IShaderSource mFragmentShaderSource;
 
-	protected int mProgramID = -1;
+	int mProgramID = -1;
 
-	protected boolean mCompiled;
+	private boolean mCompiled;
 
-	protected final HashMap<String, Integer> mUniformLocations = new HashMap<String, Integer>();
-	protected final HashMap<String, Integer> mAttributeLocations = new HashMap<String, Integer>();
+	private final HashMap<String, Integer> mUniformLocations = new HashMap<>();
+	private final HashMap<String, Integer> mAttributeLocations = new HashMap<>();
 
 	// ===========================================================
 	// Constructors
@@ -76,7 +76,7 @@ public class ShaderProgram {
 	public int getAttributeLocation(final String pAttributeName) {
 		final Integer location = this.mAttributeLocations.get(pAttributeName);
 		if(location != null) {
-			return location.intValue();
+			return location;
 		} else {
 			throw new ShaderProgramException("Unexpected attribute: '" + pAttributeName + "'. Existing attributes: " + this.mAttributeLocations.toString());
 		}
@@ -85,25 +85,25 @@ public class ShaderProgram {
 	public int getAttributeLocationOptional(final String pAttributeName) {
 		final Integer location = this.mAttributeLocations.get(pAttributeName);
 		if(location != null) {
-			return location.intValue();
+			return location;
 		} else {
 			return ShaderProgramConstants.LOCATION_INVALID;
 		}
 	}
 
-	public int getUniformLocation(final String pUniformName) {
+	int getUniformLocation(final String pUniformName) {
 		final Integer location = this.mUniformLocations.get(pUniformName);
 		if(location != null) {
-			return location.intValue();
+			return location;
 		} else {
 			throw new ShaderProgramException("Unexpected uniform: '" + pUniformName + "'. Existing uniforms: " + this.mUniformLocations.toString());
 		}
 	}
 
-	public int getUniformLocationOptional(final String pUniformName) {
+	private int getUniformLocationOptional(final String pUniformName) {
 		final Integer location = this.mUniformLocations.get(pUniformName);
 		if(location != null) {
-			return location.intValue();
+			return location;
 		} else {
 			return ShaderProgramConstants.LOCATION_INVALID;
 		}
@@ -138,7 +138,7 @@ public class ShaderProgram {
 		}
 	}
 
-	protected void compile(final GLState pGLState) throws ShaderProgramException {
+	private void compile(final GLState pGLState) throws ShaderProgramException {
 		final String vertexShaderSource = this.mVertexShaderSource.getShaderSource(pGLState);
 		final int vertexShaderID = ShaderProgram.compileShader(vertexShaderSource, GLES20.GL_VERTEX_SHADER);
 
@@ -159,7 +159,7 @@ public class ShaderProgram {
 		GLES20.glDeleteShader(fragmentShaderID);
 	}
 
-	protected void link(final GLState pGLState) throws ShaderProgramLinkException {
+	void link(final GLState pGLState) throws ShaderProgramLinkException {
 		GLES20.glLinkProgram(this.mProgramID);
 
 		GLES20.glGetProgramiv(this.mProgramID, GLES20.GL_LINK_STATUS, ShaderProgram.HARDWAREID_CONTAINER, 0);

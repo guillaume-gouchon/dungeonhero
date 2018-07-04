@@ -1,20 +1,19 @@
 package com.glevel.dungeonhero.utils;
 
+import android.annotation.SuppressLint;
+
 import com.glevel.dungeonhero.utils.pathfinding.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by guillaume on 12/2/14.
- */
 public class MazeAlgorithm {
 
     public static boolean[][] createMaze(int width, int height) {
         boolean[][] doors = new boolean[2 * height - 1][width];
         MazeNode[][] maze = new MazeNode[height][width];
-        HashMap<Integer, List<MazeNode>> mapIndexNode = new HashMap<>(height * width);
+        @SuppressLint("UseSparseArrays") HashMap<Integer, List<MazeNode>> mapIndexNode = new HashMap<>(height * width);
         int nbWallsOpen = 0;
 
         // initialize the maze and the indexes
@@ -95,11 +94,11 @@ public class MazeAlgorithm {
             return y;
         }
 
-        public int getIndex() {
+        int getIndex() {
             return index;
         }
 
-        public void setIndex(int index) {
+        void setIndex(int index) {
             this.index = index;
         }
 

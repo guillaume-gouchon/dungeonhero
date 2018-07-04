@@ -11,7 +11,7 @@ import org.andengine.util.modifier.ease.IEaseFunction;
  * @author Nicolas Gramlich
  * @since 23:29:22 - 19.03.2010
  */
-public abstract class SingleValueSpanEntityModifier extends BaseSingleValueSpanModifier<IEntity> implements IEntityModifier {
+abstract class SingleValueSpanEntityModifier extends BaseSingleValueSpanModifier<IEntity> implements IEntityModifier {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -36,11 +36,11 @@ public abstract class SingleValueSpanEntityModifier extends BaseSingleValueSpanM
 		super(pDuration, pFromValue, pToValue, pEntityModifierListener);
 	}
 
-	public SingleValueSpanEntityModifier(final float pDuration, final float pFromValue, final float pToValue, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	SingleValueSpanEntityModifier(final float pDuration, final float pFromValue, final float pToValue, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromValue, pToValue, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected SingleValueSpanEntityModifier(final SingleValueSpanEntityModifier pSingleValueSpanEntityModifier) {
+	SingleValueSpanEntityModifier(final SingleValueSpanEntityModifier pSingleValueSpanEntityModifier) {
 		super(pSingleValueSpanEntityModifier);
 	}
 

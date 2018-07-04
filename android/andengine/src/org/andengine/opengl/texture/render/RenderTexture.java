@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.IntBuffer;
 
 import org.andengine.opengl.exception.GLException;
-import org.andengine.opengl.exception.GLFrameBufferException;
 import org.andengine.opengl.exception.RenderTextureInitializationException;
 import org.andengine.opengl.texture.ITextureStateListener;
 import org.andengine.opengl.texture.PixelFormat;
@@ -49,11 +48,11 @@ public class RenderTexture extends Texture {
 	// Fields
 	// ===========================================================
 
-	protected final PixelFormat mPixelFormat;
-	protected final int mWidth;
-	protected final int mHeight;
+	private final PixelFormat mPixelFormat;
+	private final int mWidth;
+	private final int mHeight;
 
-	protected int mFramebufferObjectID;
+	private int mFramebufferObjectID;
 	private int mPreviousFramebufferObjectID;
 	private int mPreviousViewPortX;
 	private int mPreviousViewPortY;
@@ -78,11 +77,11 @@ public class RenderTexture extends Texture {
 		this(pTextureManager, pWidth, pHeight, PixelFormat.RGBA_8888, pTextureOptions);
 	}
 
-	public RenderTexture(final TextureManager pTextureManager, final int pWidth, final int pHeight, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions) {
+	private RenderTexture(final TextureManager pTextureManager, final int pWidth, final int pHeight, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions) {
 		this(pTextureManager, pWidth, pHeight, pPixelFormat, pTextureOptions, null);
 	}
 
-	public RenderTexture(final TextureManager pTextureManager, final int pWidth, final int pHeight, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) {
+	private RenderTexture(final TextureManager pTextureManager, final int pWidth, final int pHeight, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) {
 		super(pTextureManager, pPixelFormat, pTextureOptions, pTextureStateListener);
 
 		this.mWidth = pWidth;
@@ -126,7 +125,7 @@ public class RenderTexture extends Texture {
 	 * @param pGLState
 	 * @throws RenderTextureInitializationException when this {@link RenderTexture} could not be initialized. The {@link GLException} contains the error code. When this exception is throw, all cleanup will be automatically performed through {@link RenderTexture#destroy(GLState)}.
 	 */
-	public void init(final GLState pGLState) throws GLFrameBufferException, GLException {
+	public void init(final GLState pGLState) throws GLException {
 		this.savePreviousFramebufferObjectID(pGLState);
 
 		try {
@@ -162,7 +161,7 @@ public class RenderTexture extends Texture {
 	 * @see {@link RenderTexture#end(GLState)},
 	 * 		{@link RenderTexture#end(GLState, boolean, boolean}}.
 	 */
-	public void begin(final GLState pGLState) {
+    private void begin(final GLState pGLState) {
 		this.begin(pGLState, false, false);
 	}
 
@@ -185,7 +184,7 @@ public class RenderTexture extends Texture {
 	 * @param pBlue the blue portion of the color to clear this {@link RenderTexture}.
 	 * @param pAlpha the alpha portion of the color to clear this {@link RenderTexture}.
 	 */
-	public void begin(final GLState pGLState, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
+    private void begin(final GLState pGLState, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
 		this.begin(pGLState, false, false, pRed, pGreen, pBlue, pAlpha);
 	}
 
@@ -208,7 +207,7 @@ public class RenderTexture extends Texture {
 	 * @param pBlue the blue portion of the color to clear this {@link RenderTexture}.
 	 * @param pAlpha the alpha portion of the color to clear this {@link RenderTexture}.
 	 */
-	public void begin(final GLState pGLState, final boolean pFlipX, final boolean pFlipY, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
+    private void begin(final GLState pGLState, final boolean pFlipX, final boolean pFlipY, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
 		this.begin(pGLState, pFlipX, pFlipY);
 
 		/* Save clear color. */
@@ -225,7 +224,7 @@ public class RenderTexture extends Texture {
 	 * @see {@link RenderTexture#end(GLState)},
 	 * 		{@link RenderTexture#end(GLState, boolean, boolean}}.
 	 */
-	public void begin(final GLState pGLState, final boolean pFlipX, final boolean pFlipY) {
+    private void begin(final GLState pGLState, final boolean pFlipX, final boolean pFlipY) {
 		this.savePreviousViewport();
 		GLES20.glViewport(0, 0, this.mWidth, this.mHeight);
 
@@ -261,14 +260,14 @@ public class RenderTexture extends Texture {
 	/**
 	 * @see {@link GLState#flush()}.
 	 */
-	public void flush(final GLState pGLState) {
+    private void flush(final GLState pGLState) {
 		pGLState.flush();
 	}
 
 	/**
 	 * @see {@link GLState#finish()}.
 	 */
-	public void finish(final GLState pGLState) {
+    private void finish(final GLState pGLState) {
 		pGLState.finish();
 	}
 
@@ -280,7 +279,7 @@ public class RenderTexture extends Texture {
 	 * 		{@link RenderTexture#begin(GLState, boolean, boolean, Color)}.
 	 * 		{@link RenderTexture#begin(GLState, boolean, boolean, float, float, float, float)}.
 	 */
-	public void end(final GLState pGLState) {
+    private void end(final GLState pGLState) {
 		this.end(pGLState, false, false);
 	}
 
@@ -296,7 +295,7 @@ public class RenderTexture extends Texture {
 	 * 		{@link RenderTexture#begin(GLState, boolean, boolean, Color)}.
 	 * 		{@link RenderTexture#begin(GLState, boolean, boolean, float, float, float, float)}.
 	 */
-	public void end(final GLState pGLState, final boolean pFlush, final boolean pFinish) {
+    private void end(final GLState pGLState, final boolean pFlush, final boolean pFinish) {
 		if(pFinish) {
 			this.finish(pGLState);
 		} else if(pFlush) {
@@ -312,7 +311,7 @@ public class RenderTexture extends Texture {
 		this.resotorePreviousViewport();
 	}
 
-	public void destroy(final GLState pGLState) {
+	private void destroy(final GLState pGLState) {
 		this.unloadFromHardware(pGLState);
 
 		pGLState.deleteFramebuffer(this.mFramebufferObjectID);
@@ -320,15 +319,15 @@ public class RenderTexture extends Texture {
 		this.mInitialized = false;
 	}
 
-	protected void savePreviousFramebufferObjectID(final GLState pGLState) {
+	private void savePreviousFramebufferObjectID(final GLState pGLState) {
 		this.mPreviousFramebufferObjectID = pGLState.getActiveFramebuffer();
 	}
 
-	protected void restorePreviousFramebufferObjectID(final GLState pGLState) {
+	private void restorePreviousFramebufferObjectID(final GLState pGLState) {
 		pGLState.bindFramebuffer(this.mPreviousFramebufferObjectID);
 	}
 
-	protected void savePreviousViewport() {
+	private void savePreviousViewport() {
 		GLES20.glGetIntegerv(GLES20.GL_VIEWPORT, RenderTexture.VIEWPORT_CONTAINER, 0);
 
 		this.mPreviousViewPortX = RenderTexture.VIEWPORT_CONTAINER[RenderTexture.VIEWPORT_CONTAINER_X_INDEX];
@@ -337,7 +336,7 @@ public class RenderTexture extends Texture {
 		this.mPreviousViewPortHeight = RenderTexture.VIEWPORT_CONTAINER[RenderTexture.VIEWPORT_CONTAINER_HEIGHT_INDEX];
 	}
 
-	protected void resotorePreviousViewport() {
+	private void resotorePreviousViewport() {
 		GLES20.glViewport(this.mPreviousViewPortX, this.mPreviousViewPortY, this.mPreviousViewPortWidth, this.mPreviousViewPortHeight);
 	}
 
@@ -345,7 +344,7 @@ public class RenderTexture extends Texture {
 		return this.getPixelsARGB_8888(pGLState, 0, 0, this.mWidth, this.mHeight);
 	}
 
-	public int[] getPixelsARGB_8888(final GLState pGLState, final int pX, final int pY, final int pWidth, final int pHeight) {
+	private int[] getPixelsARGB_8888(final GLState pGLState, final int pX, final int pY, final int pWidth, final int pHeight) {
 		final int[] pixelsRGBA_8888 = new int[pWidth * pHeight];
 		final IntBuffer glPixelBuffer = IntBuffer.wrap(pixelsRGBA_8888);
 		glPixelBuffer.position(0);
@@ -361,7 +360,7 @@ public class RenderTexture extends Texture {
 		return this.getBitmap(pGLState, 0, 0, this.mWidth, this.mHeight);
 	}
 
-	public Bitmap getBitmap(final GLState pGLState, final int pX, final int pY, final int pWidth, final int pHeight) {
+	private Bitmap getBitmap(final GLState pGLState, final int pX, final int pY, final int pWidth, final int pHeight) {
 		if(this.mPixelFormat != PixelFormat.RGBA_8888) {
 			throw new IllegalStateException("Currently only 'PixelFormat." + PixelFormat.RGBA_8888 + "' is supported to be retrieved as a Bitmap.");
 		}

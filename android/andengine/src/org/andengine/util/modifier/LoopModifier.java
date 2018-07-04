@@ -16,7 +16,7 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 	// Constants
 	// ===========================================================
 
-	public static final int LOOP_CONTINUOUS = -1;
+	private static final int LOOP_CONTINUOUS = -1;
 
 	// ===========================================================
 	// Fields
@@ -39,23 +39,23 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 	// Constructors
 	// ===========================================================
 
-	public LoopModifier(final IModifier<T> pModifier) {
+	protected LoopModifier(final IModifier<T> pModifier) {
 		this(pModifier, LoopModifier.LOOP_CONTINUOUS);
 	}
 
-	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount) {
-		this(pModifier, pLoopCount, null, (IModifierListener<T>)null);
+	protected LoopModifier(final IModifier<T> pModifier, final int pLoopCount) {
+		this(pModifier, pLoopCount, null, null);
 	}
 
-	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final IModifierListener<T> pModifierListener) {
+	protected LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final IModifierListener<T> pModifierListener) {
 		this(pModifier, pLoopCount, null, pModifierListener);
 	}
 
-	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final ILoopModifierListener<T> pLoopModifierListener) {
-		this(pModifier, pLoopCount, pLoopModifierListener, (IModifierListener<T>)null);
+	protected LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final ILoopModifierListener<T> pLoopModifierListener) {
+		this(pModifier, pLoopCount, pLoopModifierListener, null);
 	}
 
-	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final ILoopModifierListener<T> pLoopModifierListener, final IModifierListener<T> pModifierListener) {
+	protected LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final ILoopModifierListener<T> pLoopModifierListener, final IModifierListener<T> pModifierListener) {
 		super(pModifierListener);
 
 		BaseModifier.assertNoNullModifier(pModifier);
@@ -76,7 +76,7 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 
 	@Override
 	public LoopModifier<T> deepCopy() throws DeepCopyNotSupportedException {
-		return new LoopModifier<T>(this);
+		return new LoopModifier<>(this);
 	}
 
 	// ===========================================================
@@ -176,7 +176,7 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 	// ===========================================================
 
 	public interface ILoopModifierListener<T> {
-		public void onLoopStarted(final LoopModifier<T> pLoopModifier, final int pLoop, final int pLoopCount);
-		public void onLoopFinished(final LoopModifier<T> pLoopModifier, final int pLoop, final int pLoopCount);
+		void onLoopStarted(final LoopModifier<T> pLoopModifier, final int pLoop, final int pLoopCount);
+		void onLoopFinished(final LoopModifier<T> pLoopModifier, final int pLoop, final int pLoopCount);
 	}
 }

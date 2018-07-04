@@ -10,7 +10,7 @@ import org.andengine.util.modifier.BaseDurationModifier;
  * @author Nicolas Gramlich
  * @since 16:10:42 - 19.03.2010
  */
-public abstract class DurationEntityModifier extends BaseDurationModifier<IEntity> implements IEntityModifier {
+abstract class DurationEntityModifier extends BaseDurationModifier<IEntity> implements IEntityModifier {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -23,15 +23,15 @@ public abstract class DurationEntityModifier extends BaseDurationModifier<IEntit
 	// Constructors
 	// ===========================================================
 
-	public DurationEntityModifier(final float pDuration) {
+	DurationEntityModifier(final float pDuration) {
 		super(pDuration);
 	}
 
-	public DurationEntityModifier(final float pDuration, final IEntityModifierListener pEntityModifierListener) {
+	DurationEntityModifier(final float pDuration, final IEntityModifierListener pEntityModifierListener) {
 		super(pDuration, pEntityModifierListener);
 	}
 
-	protected DurationEntityModifier(final DurationEntityModifier pDurationEntityModifier) {
+	DurationEntityModifier(final DurationEntityModifier pDurationEntityModifier) {
 		super(pDurationEntityModifier);
 	}
 

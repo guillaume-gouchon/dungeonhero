@@ -36,11 +36,11 @@ public class AlphaModifier extends SingleValueSpanEntityModifier {
 		super(pDuration, pFromAlpha, pToAlpha, pEntityModifierListener, EaseLinear.getInstance());
 	}
 
-	public AlphaModifier(final float pDuration, final float pFromAlpha, final float pToAlpha, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	AlphaModifier(final float pDuration, final float pFromAlpha, final float pToAlpha, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromAlpha, pToAlpha, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected AlphaModifier(final AlphaModifier pAlphaModifier) {
+	AlphaModifier(final AlphaModifier pAlphaModifier) {
 		super(pAlphaModifier);
 	}
 

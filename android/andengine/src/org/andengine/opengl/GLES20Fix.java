@@ -17,8 +17,6 @@ public class GLES20Fix {
 	// Constants
 	// ===========================================================
 
-	private static boolean NATIVE_LIB_LOADED;
-
 	/** Android issue 8931. */
 	private static final boolean WORKAROUND_MISSING_GLES20_METHODS;
 
@@ -30,7 +28,7 @@ public class GLES20Fix {
 		} catch (final UnsatisfiedLinkError e) {
 			loadLibrarySuccess = false;
 		}
-		NATIVE_LIB_LOADED = loadLibrarySuccess;
+		boolean NATIVE_LIB_LOADED = loadLibrarySuccess;
 
 		if(SystemUtils.isAndroidVersionOrLower(Build.VERSION_CODES.FROYO)) {
 			if(loadLibrarySuccess) {
@@ -70,7 +68,7 @@ public class GLES20Fix {
 	public static native void glVertexAttribPointer(final int pIndex, final int pSize, final int pType, final boolean pNormalized, final int pStride, final int pOffset);
 	public static native void glDrawElements(final int pMode, final int pCount, final int pType, final int pOffset);
 
-	public static void glVertexAttribPointerFix(final int pIndex, final int pSize, final int pType, final boolean pNormalized, final int pStride, final int pOffset) {
+	private static void glVertexAttribPointerFix(final int pIndex, final int pSize, final int pType, final boolean pNormalized, final int pStride, final int pOffset) {
 		if(GLES20Fix.WORKAROUND_MISSING_GLES20_METHODS) {
 			GLES20Fix.glVertexAttribPointerFix(pIndex, pSize, pType, pNormalized, pStride, pOffset);
 		} else {

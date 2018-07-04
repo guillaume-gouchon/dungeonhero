@@ -8,7 +8,7 @@ import org.andengine.util.exception.AndEngineRuntimeException;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 20:37:53 - 09.11.2011
  */
-public class MusicException extends AndEngineRuntimeException {
+class MusicException extends AndEngineRuntimeException {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -23,7 +23,7 @@ public class MusicException extends AndEngineRuntimeException {
 	// Constructors
 	// ===========================================================
 
-	public MusicException() {
+	MusicException() {
 		super();
 	}
 

@@ -10,7 +10,7 @@ import android.util.DisplayMetrics;
  * @author Nicolas Gramlich
  * @since 13:50:42 - 03.07.2010
  */
-public class CameraFactory {
+class CameraFactory {
 	// ===========================================================
 	// Constants
 	// ===========================================================

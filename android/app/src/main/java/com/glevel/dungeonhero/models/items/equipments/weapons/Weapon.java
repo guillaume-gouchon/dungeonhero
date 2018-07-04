@@ -2,11 +2,9 @@ package com.glevel.dungeonhero.models.items.equipments.weapons;
 
 import com.glevel.dungeonhero.models.items.equipments.Equipment;
 
-/**
- * Created by guillaume ON 10/6/14.
- */
 public class Weapon extends Equipment {
 
+    private static final long serialVersionUID = -6732185202456111203L;
     private final int minDamage;
     private final int deltaDamage;
 

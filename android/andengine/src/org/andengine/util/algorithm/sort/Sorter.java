@@ -34,9 +34,9 @@ public abstract class Sorter<T> {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	public abstract void sort(final T[] pArray, final int pStart, final int pEnd, final Comparator<T> pComparator);
-	public abstract void sort(final List<T> pList, final int pStart, final int pEnd, final Comparator<T> pComparator);
-	public abstract void sort(final IList<T> pList, final int pStart, final int pEnd, final Comparator<T> pComparator);
+	protected abstract void sort(final T[] pArray, final int pStart, final int pEnd, final Comparator<T> pComparator);
+	protected abstract void sort(final List<T> pList, final int pStart, final int pEnd, final Comparator<T> pComparator);
+	protected abstract void sort(final IList<T> pList, final int pStart, final int pEnd, final Comparator<T> pComparator);
 
 	// ===========================================================
 	// Methods

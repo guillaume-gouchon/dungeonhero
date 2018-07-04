@@ -8,7 +8,7 @@ import org.andengine.util.algorithm.path.Direction;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 22:40:53 - 10.11.2011
  */
-public class Spiral {
+class Spiral {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -35,7 +35,7 @@ public class Spiral {
 		this(pCenterX, pCenterY, 1);
 	}
 
-	public Spiral(final int pCenterX, final int pCenterY, final int pStepSize) {
+	private Spiral(final int pCenterX, final int pCenterY, final int pStepSize) {
 		this.mCenterX = pCenterX;
 		this.mCenterY = pCenterY;
 		this.mStepSize = pStepSize;

@@ -12,7 +12,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 21:00:23 - 04.12.2011
  */
-public class SpriteParticleSystem extends ParticleSystem<Sprite> {
+class SpriteParticleSystem extends ParticleSystem<Sprite> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -29,7 +29,7 @@ public class SpriteParticleSystem extends ParticleSystem<Sprite> {
 		this(0, 0, pParticleEmitter, pRateMinimum, pRateMaximum, pParticlesMaximum, pTextureRegion, pVertexBufferObjectManager);
 	}
 
-	public SpriteParticleSystem(final float pX, final float pY, final IParticleEmitter pParticleEmitter, final float pRateMinimum, final float pRateMaximum, final int pParticlesMaximum, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager) {
+	private SpriteParticleSystem(final float pX, final float pY, final IParticleEmitter pParticleEmitter, final float pRateMinimum, final float pRateMaximum, final int pParticlesMaximum, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, new IEntityFactory<Sprite>() {
 			@Override
 			public Sprite create(final float pX, final float pY) {

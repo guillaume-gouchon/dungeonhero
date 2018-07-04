@@ -56,7 +56,7 @@ public class QuadraticBezierCurveMoveModifier extends DurationEntityModifier {
 	 * @param pY3 y coordinate of the end point.
 	 * @param pEaseFunction
 	 */
-	public QuadraticBezierCurveMoveModifier(final float pDuration, final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final IEaseFunction pEaseFunction) {
+    private QuadraticBezierCurveMoveModifier(final float pDuration, final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final IEaseFunction pEaseFunction) {
 		this(pDuration, pX1, pY1, pX2, pY2, pX3, pY3, pEaseFunction, null);
 	}
 
@@ -85,7 +85,7 @@ public class QuadraticBezierCurveMoveModifier extends DurationEntityModifier {
 	 * @param pEaseFunction
 	 * @param pEntityModifierListener
 	 */
-	public QuadraticBezierCurveMoveModifier(final float pDuration, final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final IEaseFunction pEaseFunction, final IEntityModifierListener pEntityModifierListener) {
+    private QuadraticBezierCurveMoveModifier(final float pDuration, final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final IEaseFunction pEaseFunction, final IEntityModifierListener pEntityModifierListener) {
 		super(pDuration, pEntityModifierListener);
 
 		this.mX1 = pX1;

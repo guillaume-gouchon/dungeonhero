@@ -39,13 +39,13 @@ public abstract class BaseMenuItemDecorator implements IMenuItem {
 	// Fields
 	// ===========================================================
 
-	protected final IMenuItem mMenuItem;
+	private final IMenuItem mMenuItem;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseMenuItemDecorator(final IMenuItem pMenuItem) {
+	BaseMenuItemDecorator(final IMenuItem pMenuItem) {
 		this.mMenuItem = pMenuItem;
 	}
 

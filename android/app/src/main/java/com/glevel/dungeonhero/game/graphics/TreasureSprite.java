@@ -4,9 +4,6 @@ import com.glevel.dungeonhero.models.dungeons.decorations.TreasureChest;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by guillaume ON 10/8/14.
- */
 public class TreasureSprite extends GameElementSprite {
 
     public TreasureSprite(TreasureChest treasureChest, VertexBufferObjectManager vertexBufferObjectManager) {

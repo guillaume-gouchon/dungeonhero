@@ -31,11 +31,13 @@ public class ParallelModifier<T> extends BaseModifier<T> implements IModifierLis
 	// Constructors
 	// ===========================================================
 
-	public ParallelModifier(final IModifier<T> ... pModifiers) throws IllegalArgumentException {
+	@SafeVarargs
+	protected ParallelModifier(final IModifier<T>... pModifiers) throws IllegalArgumentException {
 		this(null, pModifiers);
 	}
 
-	public ParallelModifier(final IModifierListener<T> pModifierListener, final IModifier<T> ... pModifiers) throws IllegalArgumentException {
+	@SafeVarargs
+	protected ParallelModifier(final IModifierListener<T> pModifierListener, final IModifier<T>... pModifiers) throws IllegalArgumentException {
 		super(pModifierListener);
 
 		if(pModifiers.length == 0) {
@@ -69,7 +71,7 @@ public class ParallelModifier<T> extends BaseModifier<T> implements IModifierLis
 
 	@Override
 	public ParallelModifier<T> deepCopy() throws DeepCopyNotSupportedException{
-		return new ParallelModifier<T>(this);
+		return new ParallelModifier<>(this);
 	}
 
 	// ===========================================================

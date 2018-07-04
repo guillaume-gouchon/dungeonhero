@@ -53,11 +53,11 @@ public class HighPerformanceUniformColorSpriteVertexBufferObject extends HighPer
 		final float x2 = pSprite.getWidth(); // TODO Optimize with field access?
 		final float y2 = pSprite.getHeight(); // TODO Optimize with field access?
 
-		bufferData[0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X] = x;
-		bufferData[0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y] = y;
+		bufferData[UniformColorSprite.VERTEX_INDEX_X] = x;
+		bufferData[UniformColorSprite.VERTEX_INDEX_Y] = y;
 
-		bufferData[1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X] = x;
-		bufferData[1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y] = y2;
+		bufferData[UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X] = x;
+		bufferData[UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y] = y2;
 
 		bufferData[2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X] = x2;
 		bufferData[2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y] = y;
@@ -106,11 +106,11 @@ public class HighPerformanceUniformColorSpriteVertexBufferObject extends HighPer
 		}
 
 		if(textureRegion.isRotated()) {
-			bufferData[0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u2;
-			bufferData[0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v;
+			bufferData[UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u2;
+			bufferData[UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v;
 
-			bufferData[1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u;
-			bufferData[1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v;
+			bufferData[UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u;
+			bufferData[UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v;
 
 			bufferData[2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u2;
 			bufferData[2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v2;
@@ -118,11 +118,11 @@ public class HighPerformanceUniformColorSpriteVertexBufferObject extends HighPer
 			bufferData[3 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u;
 			bufferData[3 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v2;
 		} else {
-			bufferData[0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u;
-			bufferData[0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v;
+			bufferData[UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u;
+			bufferData[UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v;
 
-			bufferData[1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u;
-			bufferData[1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v2;
+			bufferData[UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u;
+			bufferData[UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v2;
 
 			bufferData[2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U] = u2;
 			bufferData[2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V] = v;

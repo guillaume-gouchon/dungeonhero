@@ -9,7 +9,7 @@ import org.xml.sax.Attributes;
  * @author Nicolas Gramlich
  * @since 19:48:01 - 12.10.2010
  */
-public class TMXObjectGroupProperty extends TMXProperty {
+class TMXObjectGroupProperty extends TMXProperty {
 	// ===========================================================
 	// Constants
 	// ===========================================================

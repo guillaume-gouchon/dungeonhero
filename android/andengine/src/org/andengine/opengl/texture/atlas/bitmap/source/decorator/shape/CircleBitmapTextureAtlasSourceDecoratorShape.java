@@ -27,7 +27,7 @@ public class CircleBitmapTextureAtlasSourceDecoratorShape implements IBitmapText
 	// Constructors
 	// ===========================================================
 
-	public CircleBitmapTextureAtlasSourceDecoratorShape() {
+	private CircleBitmapTextureAtlasSourceDecoratorShape() {
 
 	}
 

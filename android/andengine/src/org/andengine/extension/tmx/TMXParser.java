@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * @author Nicolas Gramlich
  * @since 19:11:29 - 20.07.2010
  */
-public class TMXParser extends DefaultHandler implements TMXConstants {
+class TMXParser extends DefaultHandler implements TMXConstants {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -169,46 +169,57 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 	}
 
 	@Override
-	public void characters(final char[] pCharacters, final int pStart, final int pLength) throws SAXException {
+	public void characters(final char[] pCharacters, final int pStart, final int pLength) {
 		this.mStringBuilder.append(pCharacters, pStart, pLength);
 	}
 
 	@Override
 	public void endElement(final String pUri, final String pLocalName, final String pQualifiedName) throws SAXException {
-		if(pLocalName.equals(TMXConstants.TAG_MAP)){
-			this.mInMap = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_TILESET)){
-			this.mInTileset = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_IMAGE)){
-			this.mInImage = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_TILE)) {
-			this.mInTile = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_PROPERTIES)) {
-			this.mInProperties = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_PROPERTY)) {
-			this.mInProperty = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_LAYER)){
-			this.mInLayer = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_DATA)){
-			final boolean binarySaved = this.mDataCompression != null && this.mDataEncoding != null;
-			if(binarySaved) {
-				final ArrayList<TMXLayer> tmxLayers = this.mTMXTiledMap.getTMXLayers();
-				try {
-					tmxLayers.get(tmxLayers.size() - 1).initializeTMXTilesFromDataString(this.mStringBuilder.toString().trim(), this.mDataEncoding, this.mDataCompression, this.mTMXTilePropertyListener);
-				} catch (final IOException e) {
-					Debug.e(e);
-				}
-				this.mDataCompression = null;
-				this.mDataEncoding = null;
-			}
-			this.mInData = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_OBJECTGROUP)){
-			this.mInObjectGroup = false;
-		} else if(pLocalName.equals(TMXConstants.TAG_OBJECT)){
-			this.mInObject = false;
-		} else {
-			throw new TMXParseException("Unexpected end tag: '" + pLocalName + "'.");
-		}
+        switch (pLocalName) {
+            case TMXConstants.TAG_MAP:
+                this.mInMap = false;
+                break;
+            case TMXConstants.TAG_TILESET:
+                this.mInTileset = false;
+                break;
+            case TMXConstants.TAG_IMAGE:
+                this.mInImage = false;
+                break;
+            case TMXConstants.TAG_TILE:
+                this.mInTile = false;
+                break;
+            case TMXConstants.TAG_PROPERTIES:
+                this.mInProperties = false;
+                break;
+            case TMXConstants.TAG_PROPERTY:
+                this.mInProperty = false;
+                break;
+            case TMXConstants.TAG_LAYER:
+                this.mInLayer = false;
+                break;
+            case TMXConstants.TAG_DATA:
+                final boolean binarySaved = this.mDataCompression != null && this.mDataEncoding != null;
+                if (binarySaved) {
+                    final ArrayList<TMXLayer> tmxLayers = this.mTMXTiledMap.getTMXLayers();
+                    try {
+                        tmxLayers.get(tmxLayers.size() - 1).initializeTMXTilesFromDataString(this.mStringBuilder.toString().trim(), this.mDataEncoding, this.mDataCompression, this.mTMXTilePropertyListener);
+                    } catch (final IOException e) {
+                        Debug.e(e);
+                    }
+                    this.mDataCompression = null;
+                    this.mDataEncoding = null;
+                }
+                this.mInData = false;
+                break;
+            case TMXConstants.TAG_OBJECTGROUP:
+                this.mInObjectGroup = false;
+                break;
+            case TMXConstants.TAG_OBJECT:
+                this.mInObject = false;
+                break;
+            default:
+                throw new TMXParseException("Unexpected end tag: '" + pLocalName + "'.");
+        }
 
 		/* Reset the StringBuilder. */
 		this.mStringBuilder.setLength(0);

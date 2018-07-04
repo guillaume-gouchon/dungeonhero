@@ -37,7 +37,7 @@ public enum WakeLockOptions {
 	// Constructors
 	// ===========================================================
 
-	private WakeLockOptions(final int pFlag) {
+	WakeLockOptions(final int pFlag) {
 		this.mFlag = pFlag;
 	}
 

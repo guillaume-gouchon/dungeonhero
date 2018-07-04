@@ -20,7 +20,7 @@ public class PositionTextureCoordinatesPositionInterpolationTextureSelectShaderP
 
 	private static PositionTextureCoordinatesPositionInterpolationTextureSelectShaderProgram INSTANCE;
 
-	public static final String VERTEXSHADER =
+	private static final String VERTEXSHADER =
 			"uniform mat4 " + ShaderProgramConstants.UNIFORM_MODELVIEWPROJECTIONMATRIX + ";\n" +
 			"uniform float " + ShaderProgramConstants.UNIFORM_POSITION_INTERPOLATION_MIX_0 + ";\n" +
 			"attribute vec4 " + ShaderProgramConstants.ATTRIBUTE_POSITION_0 + ";\n" +
@@ -34,17 +34,17 @@ public class PositionTextureCoordinatesPositionInterpolationTextureSelectShaderP
 			"	gl_Position = " + ShaderProgramConstants.UNIFORM_MODELVIEWPROJECTIONMATRIX + " * position;\n" +
 			"}";
 
-	public static final String FRAGMENTSHADER = PositionTextureCoordinatesTextureSelectShaderProgram.FRAGMENTSHADER;
+	private static final String FRAGMENTSHADER = PositionTextureCoordinatesTextureSelectShaderProgram.FRAGMENTSHADER;
 
 	// ===========================================================
 	// Fields
 	// ===========================================================
 
-	public static int sUniformModelViewPositionMatrixLocation = ShaderProgramConstants.LOCATION_INVALID;
-	public static int sUniformTexture0Location = ShaderProgramConstants.LOCATION_INVALID;
-	public static int sUniformTexture1Location = ShaderProgramConstants.LOCATION_INVALID;
-	public static int sUniformTextureSelectTexture0Location = ShaderProgramConstants.LOCATION_INVALID;
-	public static int sUniformPositionInterpolationMix0Location = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformModelViewPositionMatrixLocation = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformTexture0Location = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformTexture1Location = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformTextureSelectTexture0Location = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformPositionInterpolationMix0Location = ShaderProgramConstants.LOCATION_INVALID;
 
 	// ===========================================================
 	// Constructors

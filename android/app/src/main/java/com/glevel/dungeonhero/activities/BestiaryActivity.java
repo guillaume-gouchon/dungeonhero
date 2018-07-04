@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.glevel.dungeonhero.MyActivity;
+import com.glevel.dungeonhero.BaseActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.activities.adapters.MonsterAdapter;
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
@@ -22,7 +22,7 @@ import com.glevel.dungeonhero.utils.MusicManager;
 
 import java.util.List;
 
-public class BestiaryActivity extends MyActivity implements View.OnClickListener {
+public class BestiaryActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "BestiaryActivity";
 
@@ -50,14 +50,14 @@ public class BestiaryActivity extends MyActivity implements View.OnClickListener
     }
 
     private void setupUI() {
-        mStormsBg = (ImageView) findViewById(R.id.storms);
+        mStormsBg = findViewById(R.id.storms);
 
         findViewById(R.id.back_button).setOnClickListener(this);
 
         ((ImageView) findViewById(R.id.hero_image)).setImageResource(mGame.getHero().getImage(getResources()));
 
         // init list view
-        ListView monstersList = (ListView) findViewById(R.id.monsters);
+        ListView monstersList = findViewById(R.id.monsters);
         MonsterAdapter monstersAdapter = new MonsterAdapter(this, R.layout.monster_item, mLstMonsters, mGame.getHero());
 
         // add empty header view

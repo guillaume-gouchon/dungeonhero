@@ -1,37 +1,139 @@
-apply plugin: 'com.android.application'
+import com.android.build.OutputFile
 
-android {
-    signingConfigs {
-        debug {
-            keyAlias 'dungeon'
-            keyPassword 'putain'
-            storeFile file('/home/guillaume/dungeon_debug.jks')
-            storePassword 'putain'
-        }
+apply plugin: "com.android.application"
+apply plugin: "io.fabric"
+apply plugin: "com.getkeepsafe.dexcount"
+
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://maven.fabric.io/public" }
     }
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
-    defaultConfig {
-        applicationId "com.glevel.dungeonhero"
-        minSdkVersion 9
-        targetSdkVersion 21
-        versionCode 29
-        versionName "1.0.3"
-    }
-    buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
-        }
-    }
-    productFlavors {
+
+    dependencies {
+        classpath "io.fabric.tools:gradle:1.22.1"
+        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.2"
+        classpath "com.google.gms:google-services:3.3.1"
     }
 }
 
+repositories {
+    google()
+    maven { url "https://maven.fabric.io/public" }
+    maven { url "https://maven.google.com" }
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    lintOptions {
+        abortOnError false
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'dungeon'
+            keyPassword 'putain'
+            storeFile file('../dungeon.jks')
+            storePassword 'putain'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.glevel.dungeonhero"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 30
+        versionName "1.0.4"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    splits {
+        abi {
+            enable gradle.startParameter.taskNames.contains(":app:assembleProdRelease")
+            reset()
+            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a' // select ABIs to build APKs for
+            universalApk true // generate an additional APK that contains all the ABIs
+        }
+    }
+
+    // map for the version code
+    project.ext.versionCodes = ['armeabi-v7a': 2, 'arm64-v8a': 3, 'x86': 8, 'x86_64': 9]
+
+    android.applicationVariants.all { variant ->
+        // assign different version code for each output
+        variant.outputs.each { output ->
+            output.versionCodeOverride =
+                    project.ext.versionCodes.get(output.getFilter(OutputFile.ABI), 0) * 1000 + android.defaultConfig.versionCode
+        }
+    }
+
+    flavorDimensions "default"
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            jniDebuggable true
+            debuggable true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro", "proguard-rules-debug.pro"
+            testProguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro", "proguard-rules-debug.pro", "proguard-rules-test.pro"
+            useProguard true
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            useProguard true
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+ext {
+    supportLibraryVersion = "27.1.1"
+}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:gridlayout-v7:21.0.3'
-    compile 'com.google.android.gms:play-services:6.5.+'
-    compile project(':andengine')
+
+    // testing
+    testImplementation "junit:junit:4.12"
+    testImplementation "org.mockito:mockito-core:2.18.3"
+    testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+
+    // memory leak detector
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
+    // default
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // crashlytics
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
+        transitive = true
+    }
+
+    // UI
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:gridlayout-v7:$supportLibraryVersion"
+
+    // And engine
+    implementation project(':andengine')
+
 }

@@ -18,9 +18,9 @@ public enum ScreenOrientation {
 	/** The app will be fixed in its default Portrait mode. */
 	PORTRAIT_FIXED,
 	/** The app will automatically rotate between the Portrait modes, depending on the orientation of the device. */
-	PORTRAIT_SENSOR;
+	PORTRAIT_SENSOR
 
-	// ===========================================================
+    // ===========================================================
 	// Constants
 	// ===========================================================
 

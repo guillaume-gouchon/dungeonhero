@@ -28,7 +28,7 @@ public class LRUCache<K, V> {
 	private final GenericPool<LRUCacheValueHolder<K, V>> mLRUCacheValueHolderPool = new GenericPool<LRUCache.LRUCacheValueHolder<K, V>>() {
 		@Override
 		protected LRUCacheValueHolder<K, V> onAllocatePoolItem() {
-			return new LRUCacheValueHolder<K, V>();
+			return new LRUCacheValueHolder<>();
 		}
 
 		@Override
@@ -42,10 +42,10 @@ public class LRUCache<K, V> {
 	// Constructors
 	// ===========================================================
 
-	public LRUCache(final int pCapacity) {
+	protected LRUCache(final int pCapacity) {
 		this.mCapacity = pCapacity;
-		this.mMap = new HashMap<K, LRUCacheValueHolder<K, V>>(pCapacity);
-		this.mLRUCacheQueue = new LRUCacheQueue<K>();
+		this.mMap = new HashMap<>(pCapacity);
+		this.mLRUCacheQueue = new LRUCacheQueue<>();
 	}
 
 	// ===========================================================
@@ -208,7 +208,7 @@ public class LRUCache<K, V> {
 		private final GenericPool<LRUCacheQueueNode<K>> mLRUCacheQueueNodePool = new GenericPool<LRUCache.LRUCacheQueueNode<K>>() {
 			@Override
 			protected LRUCacheQueueNode<K> onAllocatePoolItem() {
-				return new LRUCacheQueueNode<K>();
+				return new LRUCacheQueueNode<>();
 			}
 
 			@Override
@@ -235,11 +235,11 @@ public class LRUCache<K, V> {
 		// Methods
 		// ===========================================================
 
-		public boolean isEmpty() {
+		boolean isEmpty() {
 			return this.mHead == null;
 		}
 
-		public LRUCacheQueueNode<K> add(final K pKey) {
+		LRUCacheQueueNode<K> add(final K pKey) {
 			final LRUCacheQueueNode<K> lruCacheQueueNode = this.mLRUCacheQueueNodePool.obtainPoolItem();
 //			final LRUCacheQueueNode<K> lruCacheQueueNode = new LRUCacheQueueNode<K>();
 			lruCacheQueueNode.mKey = pKey;
@@ -260,7 +260,7 @@ public class LRUCache<K, V> {
 			return this.mTail;
 		}
 
-		public K poll() {
+		K poll() {
 			final LRUCacheQueueNode<K> head = this.mHead;
 			final K key = this.mHead.mKey;
 
@@ -277,12 +277,11 @@ public class LRUCache<K, V> {
 			return key;
 		}
 
-		public void moveToTail(final LRUCacheQueueNode<K> pLRUCacheQueueNode) {
+		void moveToTail(final LRUCacheQueueNode<K> pLRUCacheQueueNode) {
 			final LRUCacheQueueNode<K> next = pLRUCacheQueueNode.mNext;
 
 			/* Check if the node already is the tail. */
 			if(next == null) {
-				return;
 			} else {
 				final LRUCacheQueueNode<K> previous = pLRUCacheQueueNode.mPrevious;
 				next.mPrevious = previous;

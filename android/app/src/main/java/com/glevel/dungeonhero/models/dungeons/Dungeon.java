@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.models.dungeons;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -12,9 +11,6 @@ import org.andengine.extension.tmx.TMXTiledMap;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by guillaume ON 10/2/14.
- */
 public class Dungeon implements Serializable {
 
     private static final String TAG = "Dungeon";
@@ -22,8 +18,7 @@ public class Dungeon implements Serializable {
 
     private final int width, height;
     private Room[][] rooms;
-    private int start;
-    private List<Event> events;
+    private final List<Event> events;
     private int nbRoomVisited;
     private int currentPosition;
     private Directions currentDirection;
@@ -37,7 +32,7 @@ public class Dungeon implements Serializable {
         createRandomDungeon();
     }
 
-    public void createRandomDungeon() {
+    private void createRandomDungeon() {
         rooms = new Room[height][width];
         boolean[][] doors = MazeAlgorithm.createMaze(width, height);
         for (int i = 0; i < height; i++) {
@@ -45,8 +40,8 @@ public class Dungeon implements Serializable {
                 rooms[i][j] = new Room(doors, i, j);
             }
         }
-        start = (int) (width * Math.random()) + 10 * (int) (height * Math.random());
-        currentPosition = start;
+
+        currentPosition = (int) (width * Math.random()) + 10 * (int) (height * Math.random());
     }
 
     public Room getCurrentRoom() {

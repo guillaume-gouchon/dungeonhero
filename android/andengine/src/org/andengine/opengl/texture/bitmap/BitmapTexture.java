@@ -44,11 +44,11 @@ public class BitmapTexture extends Texture {
 	// Constructors
 	// ===========================================================
 
-	public BitmapTexture(final TextureManager pTextureManager, final IInputStreamOpener pInputStreamOpener) throws IOException {
+	BitmapTexture(final TextureManager pTextureManager, final IInputStreamOpener pInputStreamOpener) throws IOException {
 		this(pTextureManager, pInputStreamOpener, BitmapTextureFormat.RGBA_8888, TextureOptions.DEFAULT, null);
 	}
 
-	public BitmapTexture(final TextureManager pTextureManager, final IInputStreamOpener pInputStreamOpener, final BitmapTextureFormat pBitmapTextureFormat) throws IOException {
+	BitmapTexture(final TextureManager pTextureManager, final IInputStreamOpener pInputStreamOpener, final BitmapTextureFormat pBitmapTextureFormat) throws IOException {
 		this(pTextureManager, pInputStreamOpener, pBitmapTextureFormat, TextureOptions.DEFAULT, null);
 	}
 
@@ -60,7 +60,7 @@ public class BitmapTexture extends Texture {
 		this(pTextureManager, pInputStreamOpener, pBitmapTextureFormat, pTextureOptions, null);
 	}
 
-	public BitmapTexture(final TextureManager pTextureManager, final IInputStreamOpener pInputStreamOpener, final BitmapTextureFormat pBitmapTextureFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IOException {
+	BitmapTexture(final TextureManager pTextureManager, final IInputStreamOpener pInputStreamOpener, final BitmapTextureFormat pBitmapTextureFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IOException {
 		super(pTextureManager, pBitmapTextureFormat.getPixelFormat(), pTextureOptions, pTextureStateListener);
 
 		this.mInputStreamOpener = pInputStreamOpener;
@@ -132,7 +132,7 @@ public class BitmapTexture extends Texture {
 	// Methods
 	// ===========================================================
 
-	protected Bitmap onGetBitmap(final Config pBitmapConfig) throws IOException {
+	private Bitmap onGetBitmap(final Config pBitmapConfig) throws IOException {
 		final BitmapFactory.Options decodeOptions = new BitmapFactory.Options();
 		decodeOptions.inPreferredConfig = pBitmapConfig;
 

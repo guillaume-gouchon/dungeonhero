@@ -42,7 +42,7 @@ public class FileBitmapTextureAtlasSource extends BaseTextureAtlasSource impleme
 		return FileBitmapTextureAtlasSource.create(pFile, 0, 0);
 	}
 
-	public static FileBitmapTextureAtlasSource create(final File pFile, final int pTextureX, final int pTextureY) {
+	private static FileBitmapTextureAtlasSource create(final File pFile, final int pTextureX, final int pTextureY) {
 		final BitmapFactory.Options decodeOptions = new BitmapFactory.Options();
 		decodeOptions.inJustDecodeBounds = true;
 
@@ -67,7 +67,7 @@ public class FileBitmapTextureAtlasSource extends BaseTextureAtlasSource impleme
 		return FileBitmapTextureAtlasSource.create(new File(FileUtils.getAbsolutePathOnExternalStorage(pContext, pFilePath)), pTextureX, pTextureY);
 	}
 
-	FileBitmapTextureAtlasSource(final File pFile, final int pTextureX, final int pTextureY, final int pTextureWidth, final int pTextureHeight) {
+	private FileBitmapTextureAtlasSource(final File pFile, final int pTextureX, final int pTextureY, final int pTextureWidth, final int pTextureHeight) {
 		super(pTextureX, pTextureY, pTextureWidth, pTextureHeight);
 
 		this.mFile = pFile;

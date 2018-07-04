@@ -2,9 +2,6 @@ package com.glevel.dungeonhero.models.skills;
 
 import com.glevel.dungeonhero.models.effects.Effect;
 
-/**
- * Created by guillaume ON 10/6/14.
- */
 public class ActiveSkill extends Skill {
 
     private static final long serialVersionUID = -3936496140028402150L;

@@ -18,13 +18,13 @@ public abstract class BaseTextureRegion implements ITextureRegion {
 	// Fields
 	// ===========================================================
 
-	protected final ITexture mTexture;
+	final ITexture mTexture;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseTextureRegion(final ITexture pTexture) {
+	BaseTextureRegion(final ITexture pTexture) {
 		this.mTexture = pTexture;
 	}
 	

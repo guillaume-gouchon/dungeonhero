@@ -9,7 +9,7 @@ import org.andengine.entity.sprite.Sprite;
  * @author Nicolas Gramlich
  * @since 14:01:43 - 19.07.2010
  */
-public class SpriteBackground extends EntityBackground {
+class SpriteBackground extends EntityBackground {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -22,7 +22,7 @@ public class SpriteBackground extends EntityBackground {
 	// Constructors
 	// ===========================================================
 
-	public SpriteBackground(final Sprite pSprite) {
+	SpriteBackground(final Sprite pSprite) {
 		super(pSprite);
 	}
 

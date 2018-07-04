@@ -17,8 +17,8 @@ public class TexturePackLibrary {
 	// Fields
 	// ===========================================================
 
-	private final HashMap<String, TexturePack> mTexturePackMapping = new HashMap<String, TexturePack>();
-	private final HashMap<String, TexturePackTextureRegion> mTexturePackTextureRegionSourceMapping = new HashMap<String, TexturePackTextureRegion>();
+	private final HashMap<String, TexturePack> mTexturePackMapping = new HashMap<>();
+	private final HashMap<String, TexturePackTextureRegion> mTexturePackTextureRegionSourceMapping = new HashMap<>();
 
 	// ===========================================================
 	// Constructors

@@ -19,5 +19,5 @@ public interface IParticleInitializer<T extends IEntity> {
 	// Methods
 	// ===========================================================
 
-	public void onInitializeParticle(final Particle<T> pParticle);
+	void onInitializeParticle(final Particle<T> pParticle);
 }

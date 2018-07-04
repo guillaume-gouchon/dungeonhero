@@ -2,15 +2,11 @@ package com.glevel.dungeonhero.game.gui;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.glevel.dungeonhero.R;
 
-/**
- * Created by guillaume on 1/14/15.
- */
 public class Loading extends Dialog {
 
     public Loading(Context context) {

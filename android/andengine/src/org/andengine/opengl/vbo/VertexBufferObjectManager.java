@@ -20,9 +20,9 @@ public class VertexBufferObjectManager {
 	// Fields
 	// ===========================================================
 
-	private final ArrayList<IVertexBufferObject> mVertexBufferObjectsLoaded = new ArrayList<IVertexBufferObject>();
+	private final ArrayList<IVertexBufferObject> mVertexBufferObjectsLoaded = new ArrayList<>();
 
-	private final ArrayList<IVertexBufferObject> mVertexBufferObjectsToBeUnloaded = new ArrayList<IVertexBufferObject>();
+	private final ArrayList<IVertexBufferObject> mVertexBufferObjectsToBeUnloaded = new ArrayList<>();
 
 	// ===========================================================
 	// Constructors
@@ -100,7 +100,6 @@ public class VertexBufferObjectManager {
 	}
 
 	public synchronized void updateVertexBufferObjects(final GLState pGLState) {
-		final ArrayList<IVertexBufferObject> vertexBufferObjectsLoaded = this.mVertexBufferObjectsLoaded;
 		final ArrayList<IVertexBufferObject> vertexBufferObjectsToBeUnloaded = this.mVertexBufferObjectsToBeUnloaded;
 
 		/* Unload pending VertexBufferObjects. */
@@ -109,7 +108,7 @@ public class VertexBufferObjectManager {
 			if(vertexBufferObjectToBeUnloaded.isLoadedToHardware()){
 				vertexBufferObjectToBeUnloaded.unloadFromHardware(pGLState);
 			}
-			vertexBufferObjectsLoaded.remove(vertexBufferObjectToBeUnloaded);
+			this.mVertexBufferObjectsLoaded.remove(vertexBufferObjectToBeUnloaded);
 		}
 	}
 

@@ -17,11 +17,11 @@ import java.util.List;
 public class GraphicsManager {
 
     public static final String ASSETS_PATH = "gfx/";
-    public static HashMap<String, TiledTextureRegion> sGfxMap = new HashMap<String, TiledTextureRegion>();
-    private Context mContext;
-    private TextureManager mTextureManager;
+    public static HashMap<String, TiledTextureRegion> sGfxMap = new HashMap<>();
+    private final Context mContext;
+    private final TextureManager mTextureManager;
 
-    public GraphicsManager(Context context, TextureManager textureManager) {
+    GraphicsManager(Context context, TextureManager textureManager) {
         mContext = context;
         mTextureManager = textureManager;
     }
@@ -50,7 +50,7 @@ public class GraphicsManager {
     }
 
     public void onPause() {
-        sGfxMap = new HashMap<String, TiledTextureRegion>();
+        sGfxMap = new HashMap<>();
     }
 
 }

@@ -29,7 +29,7 @@ public class RotationParticleModifier<T extends IEntity> extends BaseSingleValue
 		this(pFromTime, pToTime, pFromRotation, pToRotation, EaseLinear.getInstance());
 	}
 
-	public RotationParticleModifier(final float pFromTime, final float pToTime, final float pFromRotation, final float pToRotation, final IEaseFunction pEaseFunction) {
+	private RotationParticleModifier(final float pFromTime, final float pToTime, final float pFromRotation, final float pToRotation, final IEaseFunction pEaseFunction) {
 		super(pFromTime, pToTime, pFromRotation, pToRotation, pEaseFunction);
 	}
 

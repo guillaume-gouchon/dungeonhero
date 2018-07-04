@@ -39,7 +39,7 @@ public class SequenceEntityModifier extends SequenceModifier<IEntity> implements
 		super(pSubSequenceShapeModifierListener, pEntityModifierListener, pEntityModifiers);
 	}
 
-	protected SequenceEntityModifier(final SequenceEntityModifier pSequenceShapeModifier) throws DeepCopyNotSupportedException {
+	private SequenceEntityModifier(final SequenceEntityModifier pSequenceShapeModifier) throws DeepCopyNotSupportedException {
 		super(pSequenceShapeModifier);
 	}
 
@@ -64,7 +64,7 @@ public class SequenceEntityModifier extends SequenceModifier<IEntity> implements
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public interface ISubSequenceShapeModifierListener extends ISubSequenceModifierListener<IEntity> {
+	private interface ISubSequenceShapeModifierListener extends ISubSequenceModifierListener<IEntity> {
 		// ===========================================================
 		// Constants
 		// ===========================================================

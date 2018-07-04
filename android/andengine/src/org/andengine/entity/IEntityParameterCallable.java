@@ -18,5 +18,5 @@ public interface IEntityParameterCallable extends ParameterCallable<IEntity> {
 	// ===========================================================
 
 	@Override
-	public void call(final IEntity pEntity);
+    void call(final IEntity pEntity);
 }

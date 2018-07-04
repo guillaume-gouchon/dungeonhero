@@ -22,5 +22,5 @@ public interface Callable<T> {
 	 * @return the computed result.
 	 * @throws Exception if unable to compute a result.
 	 */
-	public T call() throws Exception;
+    T call();
 }

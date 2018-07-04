@@ -75,7 +75,7 @@ public class WeaponFactory {
         return item;
     }
 
-    public static Equipment buildBoomerang(int level) {
+    private static Equipment buildBoomerang(int level) {
         RangeWeapon item = new RangeWeapon("boomerang", 2, 3, level, 300);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_SPI));
@@ -108,7 +108,7 @@ public class WeaponFactory {
         return item;
     }
 
-    public static Equipment buildCrossbow(int level) {
+    private static Equipment buildCrossbow(int level) {
         RangeWeapon item = new RangeWeapon("crossbow", 2, 9, level, 400);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
@@ -171,7 +171,7 @@ public class WeaponFactory {
         return item;
     }
 
-    public static Equipment buildShuriken(int level) {
+    private static Equipment buildShuriken(int level) {
         RangeWeapon item = new RangeWeapon("shuriken", 2, 3, level, 160);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));
@@ -181,7 +181,7 @@ public class WeaponFactory {
         return item;
     }
 
-    public static Equipment buildSpear(int level) {
+    private static Equipment buildSpear(int level) {
         TwoHandedWeapon item = new TwoHandedWeapon("spear", 2, 7, level, 150);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.STR_DEX));
@@ -200,7 +200,7 @@ public class WeaponFactory {
         return item;
     }
 
-    public static Equipment buildThrowingDaggers(int level) {
+    private static Equipment buildThrowingDaggers(int level) {
         RangeWeapon item = new RangeWeapon("throwing_daggers", 2, 3, level, 120);
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX));
         item.addRequirement(new HeroRequirement(Hero.HeroTypes.DEX_SPI));

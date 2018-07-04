@@ -31,7 +31,7 @@ public class VelocityParticleInitializer<T extends IEntity> extends BaseDoubleVa
 		this(pVelocityX, pVelocityX, pVelocityY, pVelocityY);
 	}
 
-	public VelocityParticleInitializer(final float pMinVelocityX, final float pMaxVelocityX, final float pMinVelocityY, final float pMaxVelocityY) {
+	private VelocityParticleInitializer(final float pMinVelocityX, final float pMaxVelocityX, final float pMinVelocityY, final float pMaxVelocityY) {
 		super(pMinVelocityX, pMaxVelocityX, pMinVelocityY, pMaxVelocityY);
 	}
 

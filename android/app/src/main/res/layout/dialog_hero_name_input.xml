@@ -10,13 +10,13 @@
     <com.glevel.dungeonhero.views.CustomEditText
         android:id="@+id/heroNameInput"
         style="@style/PopupMessage"
-        android:gravity="left|center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:hint="@string/hero_name_input"
         android:background="@color/black"
-        android:inputType="textNoSuggestions" />
+        android:gravity="start|center_vertical"
+        android:hint="@string/hero_name_input"
+        android:inputType="textNoSuggestions"
+        android:padding="20dp" />
 
     <com.glevel.dungeonhero.views.CustomTextView
         android:id="@+id/ok_btn"

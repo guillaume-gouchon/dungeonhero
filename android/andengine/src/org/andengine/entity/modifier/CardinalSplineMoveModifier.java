@@ -34,19 +34,19 @@ public class CardinalSplineMoveModifier extends DurationEntityModifier {
 	// Constructors
 	// ===========================================================
 
-	public CardinalSplineMoveModifier(final float pDuration, final CardinalSplineMoveModifierConfig pCardinalSplineMoveModifierConfig) {
+	CardinalSplineMoveModifier(final float pDuration, final CardinalSplineMoveModifierConfig pCardinalSplineMoveModifierConfig) {
 		this(pDuration, pCardinalSplineMoveModifierConfig, null, EaseLinear.getInstance());
 	}
 
-	public CardinalSplineMoveModifier(final float pDuration, final CardinalSplineMoveModifierConfig pCardinalSplineMoveModifierConfig, final IEaseFunction pEaseFunction) {
+	CardinalSplineMoveModifier(final float pDuration, final CardinalSplineMoveModifierConfig pCardinalSplineMoveModifierConfig, final IEaseFunction pEaseFunction) {
 		this(pDuration, pCardinalSplineMoveModifierConfig, null, pEaseFunction);
 	}
 
-	public CardinalSplineMoveModifier(final float pDuration, final CardinalSplineMoveModifierConfig pCardinalSplineMoveModifierConfig, final IEntityModifierListener pEntityModifierListener) {
+	CardinalSplineMoveModifier(final float pDuration, final CardinalSplineMoveModifierConfig pCardinalSplineMoveModifierConfig, final IEntityModifierListener pEntityModifierListener) {
 		this(pDuration, pCardinalSplineMoveModifierConfig, pEntityModifierListener, EaseLinear.getInstance());
 	}
 
-	public CardinalSplineMoveModifier(final float pDuration, final CardinalSplineMoveModifierConfig pCardinalSplineMoveModifierConfig, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	CardinalSplineMoveModifier(final float pDuration, final CardinalSplineMoveModifierConfig pCardinalSplineMoveModifierConfig, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pEntityModifierListener);
 
 		this.mCardinalSplineMoveModifierConfig = pCardinalSplineMoveModifierConfig;
@@ -133,31 +133,29 @@ public class CardinalSplineMoveModifier extends DurationEntityModifier {
 	// Methods
 	// ===========================================================
 
-	public static final float cardinalSplineX(final float pX0, final float pX1, final float pX2, final float pX3, final float pT, final float pTension) {
-		final float t = pT;
-		final float tt = t * t;
-		final float ttt = tt * t;
+	public static float cardinalSplineX(final float pX0, final float pX1, final float pX2, final float pX3, final float pT, final float pTension) {
+		final float tt = pT * pT;
+		final float ttt = tt * pT;
 
 		final float s = (1 - pTension) / 2;
 
-		final float b1 = s * ((-ttt + (2 * tt)) - t); // (s * (-ttt + 2tt – t)) * P1
+		final float b1 = s * ((-ttt + (2 * tt)) - pT); // (s * (-ttt + 2tt – t)) * P1
 		final float b2 = (s * (-ttt + tt)) + (((2 * ttt) - (3 * tt)) + 1); // (s * (-ttt + tt) + (2ttt – 3tt + 1)) * P2
-		final float b3 = (s * ((ttt - (2 * tt)) + t)) + ((-2 * ttt) + (3 * tt)); // (s * (ttt – 2tt + t) + (-2ttt + 3tt)) * P3
+		final float b3 = (s * ((ttt - (2 * tt)) + pT)) + ((-2 * ttt) + (3 * tt)); // (s * (ttt – 2tt + t) + (-2ttt + 3tt)) * P3
 		final float b4 = s * (ttt - tt); // (s * (ttt – tt)) * P4
 
 		return ((pX0 * b1) + (pX1 * b2) + (pX2 * b3) + (pX3 * b4));
 	}
 
-	public static final float cardinalSplineY(final float pY0, final float pY1, final float pY2, final float pY3, final float pT, final float pTension) {
-		final float t = pT;
-		final float tt = t * t;
-		final float ttt = tt * t;
+	public static float cardinalSplineY(final float pY0, final float pY1, final float pY2, final float pY3, final float pT, final float pTension) {
+		final float tt = pT * pT;
+		final float ttt = tt * pT;
 
 		final float s = (1 - pTension) / 2;
 
-		final float b1 = s * ((-ttt + (2 * tt)) - t); // (s * (-ttt + 2tt – t)) * P1
+		final float b1 = s * ((-ttt + (2 * tt)) - pT); // (s * (-ttt + 2tt – t)) * P1
 		final float b2 = (s * (-ttt + tt)) + (((2 * ttt) - (3 * tt)) + 1); // (s * (-ttt + tt) + (2ttt – 3tt + 1)) * P2
-		final float b3 = (s * ((ttt - (2 * tt)) + t)) + ((-2 * ttt) + (3 * tt)); // (s * (ttt – 2tt + t) + (-2ttt + 3tt)) * P3
+		final float b3 = (s * ((ttt - (2 * tt)) + pT)) + ((-2 * ttt) + (3 * tt)); // (s * (ttt – 2tt + t) + (-2ttt + 3tt)) * P3
 		final float b4 = s * (ttt - tt); // (s * (ttt – tt)) * P4
 
 		return ((pY0 * b1) + (pY1 * b2) + (pY2 * b3) + (pY3 * b4));
@@ -202,7 +200,7 @@ public class CardinalSplineMoveModifier extends DurationEntityModifier {
 			this.mControlPointYs = new float[pControlPointCount];
 		}
 
-		public CardinalSplineMoveModifierConfig deepCopy() {
+		CardinalSplineMoveModifierConfig deepCopy() {
 			final int controlPointCount = this.getControlPointCount();
 
 			final CardinalSplineMoveModifierConfig copy = new CardinalSplineMoveModifierConfig(controlPointCount, this.mTension);
@@ -213,7 +211,7 @@ public class CardinalSplineMoveModifier extends DurationEntityModifier {
 			return copy;
 		}
 
-		public CardinalSplineMoveModifierConfig deepCopyReverse() {
+		CardinalSplineMoveModifierConfig deepCopyReverse() {
 			final CardinalSplineMoveModifierConfig copy = this.deepCopy();
 
 			ArrayUtils.reverse(copy.mControlPointXs);
@@ -226,7 +224,7 @@ public class CardinalSplineMoveModifier extends DurationEntityModifier {
 		// Getter & Setter
 		// ===========================================================
 
-		public int getControlPointCount() {
+		int getControlPointCount() {
 			return this.mControlPointXs.length;
 		}
 

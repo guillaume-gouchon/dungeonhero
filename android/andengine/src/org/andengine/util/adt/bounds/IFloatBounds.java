@@ -15,8 +15,8 @@ public interface IFloatBounds extends IBounds {
 	// Methods
 	// ===========================================================
 
-	public float getXMin();
-	public float getYMin();
-	public float getXMax();
-	public float getYMax();
+	float getXMin();
+	float getYMin();
+	float getXMax();
+	float getYMax();
 }

@@ -3,21 +3,21 @@
     android:id="@id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="left"
     android:background="@drawable/bg_conversation"
+    android:gravity="start"
     android:orientation="vertical">
 
     <com.glevel.dungeonhero.views.CustomTextView
         android:id="@+id/name"
+        style="@style/DiscussionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
-        style="@style/DiscussionName" />
+        android:text="@string/placeholder" />
 
     <LinearLayout
-        android:background="@drawable/bg_gui"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg_gui"
         android:orientation="vertical">
 
         <ScrollView
@@ -28,52 +28,52 @@
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/message"
-                android:layout_height="match_parent"
+                style="@style/DiscussionMessage"
                 android:layout_width="match_parent"
-                android:text="@string/placeholder"
-                style="@style/DiscussionMessage" />
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder" />
         </ScrollView>
 
         <ProgressBar
-            android:visibility="gone"
             android:id="@+id/timer"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="5dp"
             android:max="100"
             android:progress="100"
-            android:layout_marginRight="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:progressDrawable="@drawable/custom_progress_bar" />
+            android:progressDrawable="@drawable/custom_progress_bar"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/reactions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:orientation="vertical"
-            android:visibility="gone"></LinearLayout>
+            android:padding="10dp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/riddle_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_margin="10dp">
+            android:visibility="gone">
 
             <com.glevel.dungeonhero.views.CustomEditText
                 android:id="@+id/riddle_input"
                 style="@style/PopupMessage"
-                android:gravity="left|center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:hint="@string/riddle_answer_input"
                 android:background="@android:color/transparent"
-                android:inputType="textNoSuggestions" />
+                android:gravity="start|center_vertical"
+                android:hint="@string/riddle_answer_input"
+                android:inputType="textNoSuggestions"
+                android:padding="20dp" />
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/ok_btn"

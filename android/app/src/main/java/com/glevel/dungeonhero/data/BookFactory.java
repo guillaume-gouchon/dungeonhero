@@ -45,7 +45,7 @@ public class BookFactory {
         return book;
     }
 
-    public static Book buildInitiationBook() {
+    private static Book buildInitiationBook() {
         Book book = new Book.Builder(1, "initiation_quest", 0).setIntro("initiation_intro").setOutro("initiation_outro").setActivityClass(IntroductionQuest.class).build();
 
         // chapter 1
@@ -81,7 +81,7 @@ public class BookFactory {
         return book;
     }
 
-    public static Book buildBalrogQuest() {
+    private static Book buildBalrogQuest() {
         Book book = new Book.Builder(3, "balrog_quest", 1).setIntro("balrog_intro").setOutro("balrog_outro").build();
 
         // chapter 1
@@ -101,7 +101,7 @@ public class BookFactory {
         return book;
     }
 
-    public static Book buildWizardQuest() {
+    private static Book buildWizardQuest() {
         Book book = new Book.Builder(4, "wizard_quest", 2).setIntro("wizard_intro").build();
 
         // chapter 1
@@ -120,7 +120,7 @@ public class BookFactory {
         return book;
     }
 
-    public static Book buildPartnershipQuest() {
+    private static Book buildPartnershipQuest() {
         Book book = new Book.Builder(5, "partnership_quest", 2).setIntro("partnership_intro").build();
 
         // chapter 1
@@ -142,7 +142,7 @@ public class BookFactory {
         return book;
     }
 
-    public static Book buildDreamQuest() {
+    private static Book buildDreamQuest() {
         Book book = new Book.Builder(6, "dreamer_quest", 3).setIntro("dreamer_intro").setOutro("dreamer_outro").build();
 
         // chapter 1

@@ -9,12 +9,12 @@ import org.andengine.util.adt.transformation.Transformation;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:47:42 - 30.08.2011
  */
-public class TriangleCollisionChecker {
+class TriangleCollisionChecker {
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	public static final int TRIANGLE_VERTEX_COUNT = 3;
+	private static final int TRIANGLE_VERTEX_COUNT = 3;
 
 	private static final float[] VERTICES_CONTAINS_TMP = new float[2 * TriangleCollisionChecker.TRIANGLE_VERTEX_COUNT];
 
@@ -38,7 +38,7 @@ public class TriangleCollisionChecker {
 	// Methods
 	// ===========================================================
 
-	public static boolean checkContains(final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final float pX, final float pY) {
+	private static boolean checkContains(final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final float pX, final float pY) {
 		final float v0x = pX3 - pX1;
 		final float v0y = pY3 - pY1;
 		final float v1x = pX2 - pX1;
@@ -63,8 +63,8 @@ public class TriangleCollisionChecker {
 	}
 
 	public static boolean checkContains(final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final Transformation pTransformation, final float pX, final float pY) {
-		TriangleCollisionChecker.VERTICES_CONTAINS_TMP[0 + Constants.VERTEX_INDEX_X] = pX1;
-		TriangleCollisionChecker.VERTICES_CONTAINS_TMP[0 + Constants.VERTEX_INDEX_Y] = pY1;
+		TriangleCollisionChecker.VERTICES_CONTAINS_TMP[Constants.VERTEX_INDEX_X] = pX1;
+		TriangleCollisionChecker.VERTICES_CONTAINS_TMP[Constants.VERTEX_INDEX_Y] = pY1;
 
 		TriangleCollisionChecker.VERTICES_CONTAINS_TMP[2 + Constants.VERTEX_INDEX_X] = pX2;
 		TriangleCollisionChecker.VERTICES_CONTAINS_TMP[2 + Constants.VERTEX_INDEX_Y] = pY2;
@@ -74,8 +74,8 @@ public class TriangleCollisionChecker {
 
 		pTransformation.transform(TriangleCollisionChecker.VERTICES_CONTAINS_TMP);
 
-		final float x1 = TriangleCollisionChecker.VERTICES_CONTAINS_TMP[0 + Constants.VERTEX_INDEX_X];
-		final float y1 = TriangleCollisionChecker.VERTICES_CONTAINS_TMP[0 + Constants.VERTEX_INDEX_Y];
+		final float x1 = TriangleCollisionChecker.VERTICES_CONTAINS_TMP[Constants.VERTEX_INDEX_X];
+		final float y1 = TriangleCollisionChecker.VERTICES_CONTAINS_TMP[Constants.VERTEX_INDEX_Y];
 		final float x2 = TriangleCollisionChecker.VERTICES_CONTAINS_TMP[2 + Constants.VERTEX_INDEX_X];
 		final float y2 = TriangleCollisionChecker.VERTICES_CONTAINS_TMP[2 + Constants.VERTEX_INDEX_Y];
 		final float x3 = TriangleCollisionChecker.VERTICES_CONTAINS_TMP[4 + Constants.VERTEX_INDEX_X];

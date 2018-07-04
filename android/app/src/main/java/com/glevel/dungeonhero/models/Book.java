@@ -7,15 +7,11 @@ import com.glevel.dungeonhero.activities.games.GameActivity;
 import com.glevel.dungeonhero.game.GameConstants;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.models.dungeons.Event;
-import com.glevel.dungeonhero.utils.billing.InAppProduct;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by guillaume ON 10/3/14.
- */
-public class Book extends StorableResource implements InAppProduct {
+public class Book extends StorableResource {
 
     private static final long serialVersionUID = -4662020495531736056L;
 
@@ -26,10 +22,8 @@ public class Book extends StorableResource implements InAppProduct {
     private final String outroText;
     private final List<Chapter> chapters = new ArrayList<>();
     private final List<GraphicHolder> resourcesToLoad = new ArrayList<>();
-    private final String productId;
     private final Class activityClass;
     private String introText;
-    private boolean hasBeenBought;
     private int bestScore;
     private int currentScore;
 
@@ -38,7 +32,6 @@ public class Book extends StorableResource implements InAppProduct {
         this.id = builder.id;
         this.introText = builder.intro;
         this.outroText = builder.outro;
-        this.productId = builder.productId;
         this.level = builder.level;
         this.activityClass = builder.activityClass;
         this.bestScore = 0;
@@ -48,26 +41,6 @@ public class Book extends StorableResource implements InAppProduct {
     @Override
     public int getImage(Resources resources) {
         return StorableResource.getResource(resources, "bg_book", true);
-    }
-
-    @Override
-    public String getProductId() {
-        return productId;
-    }
-
-    @Override
-    public void setHasBeenBought(boolean hasBeenBought) {
-        this.hasBeenBought = hasBeenBought;
-    }
-
-    @Override
-    public boolean isAvailable() {
-        return isFree() || hasBeenBought;
-    }
-
-    @Override
-    public boolean isFree() {
-        return productId == null;
     }
 
     public int getIntroText(Resources resources) {
@@ -152,13 +125,11 @@ public class Book extends StorableResource implements InAppProduct {
         private Class activityClass;
         private String intro;
         private String outro;
-        private String productId;
 
         public Builder(int id, String identifier, int level) {
             this.id = id;
             this.identifier = identifier;
             this.level = level;
-            this.productId = null;
             this.intro = "";
             this.outro = "";
             this.activityClass = GameActivity.class;
@@ -171,11 +142,6 @@ public class Book extends StorableResource implements InAppProduct {
 
         public Builder setOutro(String outro) {
             this.outro = outro;
-            return this;
-        }
-
-        public Builder setProductId(String productId) {
-            this.productId = productId;
             return this;
         }
 

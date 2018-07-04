@@ -8,7 +8,7 @@ package org.andengine.entity.particle.emitter;
  * @author Nicolas Gramlich
  * @since 18:53:18 - 01.10.2010
  */
-public abstract class BaseRectangleParticleEmitter extends BaseParticleEmitter {
+abstract class BaseRectangleParticleEmitter extends BaseParticleEmitter {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -17,10 +17,10 @@ public abstract class BaseRectangleParticleEmitter extends BaseParticleEmitter {
 	// Fields
 	// ===========================================================
 
-	protected float mWidth;
-	protected float mHeight;
-	protected float mWidthHalf;
-	protected float mHeightHalf;
+	float mWidth;
+	float mHeight;
+	float mWidthHalf;
+	float mHeightHalf;
 
 	// ===========================================================
 	// Constructors
@@ -30,7 +30,7 @@ public abstract class BaseRectangleParticleEmitter extends BaseParticleEmitter {
 		this(pCenterX, pCenterY, pSize, pSize);
 	}
 
-	public BaseRectangleParticleEmitter(final float pCenterX, final float pCenterY, final float pWidth, final float pHeight) {
+	BaseRectangleParticleEmitter(final float pCenterX, final float pCenterY, final float pWidth, final float pHeight) {
 		super(pCenterX, pCenterY);
 		this.setWidth(pWidth);
 		this.setHeight(pHeight);
@@ -44,7 +44,7 @@ public abstract class BaseRectangleParticleEmitter extends BaseParticleEmitter {
 		return this.mWidth;
 	}
 
-	public void setWidth(final float pWidth) {
+	private void setWidth(final float pWidth) {
 		this.mWidth = pWidth;
 		this.mWidthHalf = pWidth * 0.5f;
 	}
@@ -53,7 +53,7 @@ public abstract class BaseRectangleParticleEmitter extends BaseParticleEmitter {
 		return this.mHeight;
 	}
 
-	public void setHeight(final float pHeight) {
+	private void setHeight(final float pHeight) {
 		this.mHeight = pHeight;
 		this.mHeightHalf = pHeight * 0.5f;
 	}

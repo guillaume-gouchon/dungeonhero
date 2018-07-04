@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.andengine.entity.IEntity;
 import org.andengine.util.adt.list.SmartList;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -15,7 +14,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Nicolas Gramlich
  * @since 14:35:32 - 11.10.2010
  */
-public class LevelParser extends DefaultHandler {
+class LevelParser extends DefaultHandler {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -27,7 +26,7 @@ public class LevelParser extends DefaultHandler {
 	private final IEntityLoader mDefaultEntityLoader;
 	private final HashMap<String, IEntityLoader> mEntityLoaders;
 
-	private SmartList<IEntity> mParentEntityStack = new SmartList<IEntity>();
+	private final SmartList<IEntity> mParentEntityStack = new SmartList<>();
 
 	// ===========================================================
 	// Constructors
@@ -47,20 +46,19 @@ public class LevelParser extends DefaultHandler {
 	// ===========================================================
 
 	@Override
-	public void startElement(final String pUri, final String pLocalName, final String pQualifiedName, final Attributes pAttributes) throws SAXException {
-		final String entityName = pLocalName;
+	public void startElement(final String pUri, final String pLocalName, final String pQualifiedName, final Attributes pAttributes) {
 
 		final IEntity parent = (this.mParentEntityStack.isEmpty()) ? null : this.mParentEntityStack.getLast();
 
-		final IEntityLoader entityLoader = this.mEntityLoaders.get(entityName);
+		final IEntityLoader entityLoader = this.mEntityLoaders.get(pLocalName);
 
 		final IEntity entity;
 		if(entityLoader != null) {
-			entity = entityLoader.onLoadEntity(entityName, pAttributes);
+			entity = entityLoader.onLoadEntity(pLocalName, pAttributes);
 		} else if(this.mDefaultEntityLoader != null) {
-			entity = this.mDefaultEntityLoader.onLoadEntity(entityName, pAttributes);
+			entity = this.mDefaultEntityLoader.onLoadEntity(pLocalName, pAttributes);
 		} else {
-			throw new IllegalArgumentException("Unexpected tag: '" + entityName + "'.");
+			throw new IllegalArgumentException("Unexpected tag: '" + pLocalName + "'.");
 		}
 
 		if(parent != null && entity != null) {
@@ -71,7 +69,7 @@ public class LevelParser extends DefaultHandler {
 	}
 
 	@Override
-	public void endElement(final String pUri, final String pLocalName, final String pQualifiedName) throws SAXException {
+	public void endElement(final String pUri, final String pLocalName, final String pQualifiedName) {
 		this.mParentEntityStack.removeLast();
 	}
 

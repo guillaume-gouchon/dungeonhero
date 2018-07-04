@@ -23,9 +23,9 @@ public class LinearGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 	// Fields
 	// ===========================================================
 
-	protected final LinearGradientDirection mLinearGradientDirection;
-	protected final int[] mColors;
-	protected final float[] mPositions;
+	private final LinearGradientDirection mLinearGradientDirection;
+	private final int[] mColors;
+	private final float[] mPositions;
 
 	// ===========================================================
 	// Constructors
@@ -35,7 +35,7 @@ public class LinearGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 		this(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, pFromColor, pToColor, pLinearGradientDirection, null);
 	}
 
-	public LinearGradientFillBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int pFromColor, final int pToColor, final LinearGradientDirection pLinearGradientDirection, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
+	private LinearGradientFillBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int pFromColor, final int pToColor, final LinearGradientDirection pLinearGradientDirection, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
 		this(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, new int[] { pFromColor, pToColor }, null, pLinearGradientDirection, pTextureAtlasSourceDecoratorOptions);
 	}
 
@@ -43,7 +43,7 @@ public class LinearGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 		this(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, pColors, pPositions, pLinearGradientDirection, null);
 	}
 
-	public LinearGradientFillBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int[] pColors, final float[] pPositions, final LinearGradientDirection pLinearGradientDirection, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
+	private LinearGradientFillBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int[] pColors, final float[] pPositions, final LinearGradientDirection pLinearGradientDirection, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
 		super(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, pTextureAtlasSourceDecoratorOptions);
 		this.mColors = pColors;
 		this.mPositions = pPositions;
@@ -83,7 +83,7 @@ public class LinearGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static enum LinearGradientDirection {
+	public enum LinearGradientDirection {
 		// ===========================================================
 		// Elements
 		// ===========================================================
@@ -114,7 +114,7 @@ public class LinearGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 		// Constructors
 		// ===========================================================
 
-		private LinearGradientDirection(final int pFromX, final int pFromY, final int pToX, final int pToY) {
+		LinearGradientDirection(final int pFromX, final int pFromY, final int pToX, final int pToY) {
 			this.mFromX = pFromX;
 			this.mFromY = pFromY;
 			this.mToX = pToX;

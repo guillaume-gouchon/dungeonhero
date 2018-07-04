@@ -23,12 +23,12 @@ public class TMXTile implements Serializable {
     // Fields
     // ===========================================================
 
-    transient int mGlobalTileID;
+    private transient int mGlobalTileID;
     private transient final int mTileRow;
     private transient final int mTileColumn;
     private transient final int mTileWidth;
     private transient final int mTileHeight;
-    transient ITextureRegion mTextureRegion;
+    private transient ITextureRegion mTextureRegion;
 
     // ===========================================================
     // Constructors

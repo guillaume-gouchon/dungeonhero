@@ -17,7 +17,7 @@ public interface IGLCriteria {
 	// Fields
 	// ===========================================================
 
-	public boolean isMet(final GLState pGLState);
+	boolean isMet(final GLState pGLState);
 
 	// ===========================================================
 	// Inner and Anonymous Classes

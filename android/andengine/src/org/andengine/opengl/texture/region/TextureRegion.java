@@ -9,6 +9,7 @@ import org.andengine.opengl.texture.ITexture;
  * @author Nicolas Gramlich
  * @since 14:29:59 - 08.03.2010
  */
+@SuppressWarnings("SuspiciousNameCombination")
 public class TextureRegion extends BaseTextureRegion {
 	// ===========================================================
 	// Constants
@@ -20,18 +21,18 @@ public class TextureRegion extends BaseTextureRegion {
 	// Fields
 	// ===========================================================
 
-	protected float mTextureX;
-	protected float mTextureY;
-	protected float mTextureWidth;
-	protected float mTextureHeight;
+	private float mTextureX;
+	private float mTextureY;
+	private float mTextureWidth;
+	private float mTextureHeight;
 
-	protected float mU;
-	protected float mU2;
-	protected float mV;
-	protected float mV2;
+	private float mU;
+	private float mU2;
+	private float mV;
+	private float mV2;
 
-	protected final float mScale;
-	protected final boolean mRotated;
+	private final float mScale;
+	private final boolean mRotated;
 
 	// ===========================================================
 	// Constructors
@@ -49,7 +50,7 @@ public class TextureRegion extends BaseTextureRegion {
 		this(pTexture, pTextureX, pTextureY, pTextureWidth, pTextureHeight, pScale, false);
 	}
 
-	public TextureRegion(final ITexture pTexture, final float pTextureX, final float pTextureY, final float pTextureWidth, final float pTextureHeight, final float pScale, final boolean pRotated) {
+	private TextureRegion(final ITexture pTexture, final float pTextureX, final float pTextureY, final float pTextureWidth, final float pTextureHeight, final float pScale, final boolean pRotated) {
 		super(pTexture);
 
 		this.mTextureX = pTextureX;
@@ -210,7 +211,7 @@ public class TextureRegion extends BaseTextureRegion {
 	// Methods
 	// ===========================================================
 
-	public void updateUV() {
+	private void updateUV() {
 		final ITexture texture = this.mTexture;
 		final float textureWidth = texture.getWidth();
 		final float textureHeight = texture.getHeight();

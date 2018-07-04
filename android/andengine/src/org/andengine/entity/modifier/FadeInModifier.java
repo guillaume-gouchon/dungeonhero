@@ -40,7 +40,7 @@ public class FadeInModifier extends AlphaModifier {
 		super(pDuration, 0.0f, 1.0f, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected FadeInModifier(final FadeInModifier pFadeInModifier) {
+	private FadeInModifier(final FadeInModifier pFadeInModifier) {
 		super(pFadeInModifier);
 	}
 

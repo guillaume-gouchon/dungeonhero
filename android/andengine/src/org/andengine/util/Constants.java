@@ -12,10 +12,10 @@ public interface Constants {
 	// Constants
 	// ===========================================================
 
-	public static final String DEBUGTAG = "AndEngine";
+	String DEBUGTAG = "AndEngine";
 
-	public static final int VERTEX_INDEX_X = 0;
-	public static final int VERTEX_INDEX_Y = 1;
+	int VERTEX_INDEX_X = 0;
+	int VERTEX_INDEX_Y = 1;
 
 	// ===========================================================
 	// Methods

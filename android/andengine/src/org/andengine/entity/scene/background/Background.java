@@ -36,7 +36,7 @@ public class Background implements IBackground {
 	// Constructors
 	// ===========================================================
 
-	protected Background() {
+	Background() {
 
 	}
 
@@ -108,12 +108,8 @@ public class Background implements IBackground {
 
 	@Override
 	public boolean unregisterBackgroundModifier(final IModifier<IBackground> pBackgroundModifier) {
-		if(this.mBackgroundModifiers != null) {
-			return this.mBackgroundModifiers.remove(pBackgroundModifier);
-		} else {
-			return false;
-		}
-	}
+        return this.mBackgroundModifiers != null && this.mBackgroundModifiers.remove(pBackgroundModifier);
+    }
 
 	@Override
 	public void clearBackgroundModifiers() {

@@ -10,7 +10,7 @@ import org.andengine.util.modifier.BaseModifier;
  * @author Nicolas Gramlich
  * @since 10:53:16 - 03.09.2010
  */
-public abstract class EntityModifier extends BaseModifier<IEntity> implements IEntityModifier {
+abstract class EntityModifier extends BaseModifier<IEntity> implements IEntityModifier {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -23,11 +23,11 @@ public abstract class EntityModifier extends BaseModifier<IEntity> implements IE
 	// Constructors
 	// ===========================================================
 
-	public EntityModifier() {
+	EntityModifier() {
 		super();
 	}
 
-	public EntityModifier(final IEntityModifierListener pEntityModifierListener) {
+	EntityModifier(final IEntityModifierListener pEntityModifierListener) {
 		super(pEntityModifierListener);
 	}
 

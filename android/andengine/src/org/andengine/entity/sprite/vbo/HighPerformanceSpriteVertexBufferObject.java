@@ -44,8 +44,8 @@ public class HighPerformanceSpriteVertexBufferObject extends HighPerformanceVert
 
 		final float packedColor = pSprite.getColor().getABGRPackedFloat();
 
-		bufferData[0 * Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX] = packedColor;
-		bufferData[1 * Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX] = packedColor;
+		bufferData[Sprite.COLOR_INDEX] = packedColor;
+		bufferData[Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX] = packedColor;
 		bufferData[2 * Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX] = packedColor;
 		bufferData[3 * Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX] = packedColor;
 
@@ -61,11 +61,11 @@ public class HighPerformanceSpriteVertexBufferObject extends HighPerformanceVert
 		final float x2 = pSprite.getWidth(); // TODO Optimize with field access?
 		final float y2 = pSprite.getHeight(); // TODO Optimize with field access?
 
-		bufferData[0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x;
-		bufferData[0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y;
+		bufferData[Sprite.VERTEX_INDEX_X] = x;
+		bufferData[Sprite.VERTEX_INDEX_Y] = y;
 
-		bufferData[1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x;
-		bufferData[1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y2;
+		bufferData[Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x;
+		bufferData[Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y2;
 
 		bufferData[2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x2;
 		bufferData[2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y;
@@ -114,11 +114,11 @@ public class HighPerformanceSpriteVertexBufferObject extends HighPerformanceVert
 		}
 
 		if(textureRegion.isRotated()) {
-			bufferData[0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
-			bufferData[0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
+			bufferData[Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
+			bufferData[Sprite.TEXTURECOORDINATES_INDEX_V] = v;
 
-			bufferData[1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
-			bufferData[1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
+			bufferData[Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
+			bufferData[Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
 
 			bufferData[2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
 			bufferData[2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
@@ -126,11 +126,11 @@ public class HighPerformanceSpriteVertexBufferObject extends HighPerformanceVert
 			bufferData[3 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
 			bufferData[3 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
 		} else {
-			bufferData[0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
-			bufferData[0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
+			bufferData[Sprite.TEXTURECOORDINATES_INDEX_U] = u;
+			bufferData[Sprite.TEXTURECOORDINATES_INDEX_V] = v;
 
-			bufferData[1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
-			bufferData[1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
+			bufferData[Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
+			bufferData[Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
 
 			bufferData[2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
 			bufferData[2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;

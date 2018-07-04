@@ -53,7 +53,7 @@ public abstract class ETC1Texture extends Texture {
 		this(pTextureManager, pTextureOptions, null);
 	}
 
-	public ETC1Texture(final TextureManager pTextureManager, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IOException {
+	private ETC1Texture(final TextureManager pTextureManager, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IOException {
 		super(pTextureManager, PixelFormat.RGB_565, pTextureOptions, pTextureStateListener);
 
 		InputStream inputStream = null;
@@ -84,7 +84,7 @@ public abstract class ETC1Texture extends Texture {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected abstract InputStream getInputStream() throws IOException;
+	protected abstract InputStream getInputStream();
 
 	@Override
 	protected void writeTextureToHardware(final GLState pGLState) throws IOException {
@@ -100,7 +100,7 @@ public abstract class ETC1Texture extends Texture {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static class ETC1TextureHeader {
+	static class ETC1TextureHeader {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -118,7 +118,7 @@ public abstract class ETC1Texture extends Texture {
 		// Constructors
 		// ===========================================================
 
-		public ETC1TextureHeader(final byte[] pData) {
+		ETC1TextureHeader(final byte[] pData) {
 			if(pData.length != ETC1.ETC_PKM_HEADER_SIZE) {
 				throw new IllegalArgumentException("Invalid " + this.getClass().getSimpleName() + "!");
 			}
@@ -139,11 +139,11 @@ public abstract class ETC1Texture extends Texture {
 		// Getter & Setter
 		// ===========================================================
 
-		public int getWidth() {
+		int getWidth() {
 			return this.mWidth;
 		}
 
-		public int getHeight() {
+		int getHeight() {
 			return this.mHeight;
 		}
 

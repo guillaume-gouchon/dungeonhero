@@ -1,6 +1,5 @@
 package com.glevel.dungeonhero.game;
 
-import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -57,9 +56,6 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by guillaume on 10/14/14.
- */
 public class ActionsDispatcher implements UserActionListener {
 
     private static final String TAG = "ActionDispatcher";
@@ -67,7 +63,7 @@ public class ActionsDispatcher implements UserActionListener {
     private final GameActivity mGameActivity;
     private final GUIManager mGUIManager;
     private final InputManager mInputManager;
-    private Scene mScene;
+    private final Scene mScene;
     private GameElement mSelectedElement;
     private Tile mSelectedTile = null;
     private boolean isMoving = false;
@@ -118,14 +114,11 @@ public class ActionsDispatcher implements UserActionListener {
                     if (mGameActivity.getActiveCharacter().canMoveIn(tile)) {
                         if (isMoving) {
                             mNextTile = tile;
-                            mGameActivity.runOnUpdateThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    hideActionTiles();
-                                    showSpecialActions();
-                                    selectTile(mNextTile);
-                                    addActionToTile(Actions.NONE, mNextTile);
-                                }
+                            mGameActivity.runOnUpdateThread(() -> {
+                                hideActionTiles();
+                                showSpecialActions();
+                                selectTile(mNextTile);
+                                addActionToTile(Actions.NONE, mNextTile);
                             });
                         } else {
                             selectTile(tile);
@@ -153,15 +146,19 @@ public class ActionsDispatcher implements UserActionListener {
             case MOVE:
                 move(tile);
                 break;
+
             case ATTACK:
                 attack(tile);
                 break;
+
             case TALK:
                 talk(tile);
                 break;
+
             case SEARCH:
                 search(tile);
                 break;
+
             case LIGHT:
                 switchLight(tile);
                 break;
@@ -169,17 +166,14 @@ public class ActionsDispatcher implements UserActionListener {
     }
 
     private void switchLight(final Tile tile) {
-        goCloserTo(tile, new OnActionExecuted() {
-            @Override
-            public void onActionDone(boolean success) {
-                if (success) {
-                    Light light = (Light) tile.getContent();
-                    light.switchLight();
-                    mGameActivity.updateLightAtmoshphere();
-                }
-                isMoving = false;
-                mGameActivity.nextTurn();
+        goCloserTo(tile, success -> {
+            if (success) {
+                Light light = (Light) tile.getContent();
+                light.switchLight();
+                mGameActivity.updateLightAtmoshphere();
             }
+            isMoving = false;
+            mGameActivity.nextTurn();
         });
     }
 
@@ -227,14 +221,11 @@ public class ActionsDispatcher implements UserActionListener {
         hideActionTiles();
         showSpecialActions();
 
-        mGameActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
-                    mGUIManager.showFinishQuestConfirmDialog();
-                } else {
-                    mGUIManager.showLeaveQuestConfirmDialog();
-                }
+        mGameActivity.runOnUiThread(() -> {
+            if (((Stairs) mGameActivity.getActiveCharacter().getTilePosition().getSubContent().get(0)).isDownStairs()) {
+                mGUIManager.showFinishQuestConfirmDialog();
+            } else {
+                mGUIManager.showLeaveQuestConfirmDialog();
             }
         });
     }
@@ -243,34 +234,25 @@ public class ActionsDispatcher implements UserActionListener {
         Log.d(TAG, "attack");
         setInputEnabled(false);
 
-        OnActionExecuted callback = new OnActionExecuted() {
-            @Override
-            public void onActionDone(boolean success) {
-                isMoving = false;
-                if (success && (mGameActivity.getActiveCharacter().isRangeAttack() || mGameActivity.getActiveCharacter().isNextTo(tile))) {
-                    final Unit target = (Unit) tile.getContent();
-                    FightResult fightResult = mGameActivity.getActiveCharacter().attack(target);
-                    animateFight(mGameActivity.getActiveCharacter(), target, fightResult, new OnActionExecuted() {
-                        @Override
-                        public void onActionDone(boolean success) {
-                            if (target.isDead()) {
-                                animateDeath(target, new OnActionExecuted() {
-                                    @Override
-                                    public void onActionDone(boolean success) {
-                                        if (target.getRank() != Ranks.ME) {
-                                            mGameActivity.removeElement(target);
-                                        }
-                                        mGameActivity.nextTurn();
-                                    }
-                                });
-                            } else {
-                                mGameActivity.nextTurn();
+        OnActionExecuted callback = success -> {
+            isMoving = false;
+            if (success && (mGameActivity.getActiveCharacter().isRangeAttack() || mGameActivity.getActiveCharacter().isNextTo(tile))) {
+                final Unit target = (Unit) tile.getContent();
+                FightResult fightResult = mGameActivity.getActiveCharacter().attack(target);
+                animateFight(mGameActivity.getActiveCharacter(), target, fightResult, success12 -> {
+                    if (target.isDead()) {
+                        animateDeath(target, success1 -> {
+                            if (target.getRank() != Ranks.ME) {
+                                mGameActivity.removeElement(target);
                             }
-                        }
-                    });
-                } else {
-                    mGameActivity.nextTurn();
-                }
+                            mGameActivity.nextTurn();
+                        });
+                    } else {
+                        mGameActivity.nextTurn();
+                    }
+                });
+            } else {
+                mGameActivity.nextTurn();
             }
         };
 
@@ -287,61 +269,50 @@ public class ActionsDispatcher implements UserActionListener {
             setInputEnabled(false);
         }
 
-        goCloserTo(tile, new OnActionExecuted() {
-            @Override
-            public void onActionDone(boolean success) {
-                if (success && mGameActivity.getActiveCharacter().isNextTo(tile)) {
-                    mGameActivity.playSound("search", false);
+        goCloserTo(tile, success -> {
+            if (success && mGameActivity.getActiveCharacter().isNextTo(tile)) {
+                mGameActivity.playSound("search", false);
 
-                    Searchable searchable;
-                    if (tile.getContent() != null && tile.getContent() instanceof Searchable) {
-                        searchable = (Searchable) tile.getContent();
-                    } else {
-                        if (tile.getSubContent().get(0) instanceof Stairs) {
-                            searchable = (Searchable) tile.getSubContent().get(1);
-                        } else {
-                            searchable = (Searchable) tile.getSubContent().get(0);
-                        }
-                    }
-                    final Reward reward = searchable.search();
-                    if (searchable instanceof ItemOnGround) {
-                        mGameActivity.removeElement(searchable);
-                    }
-
-                    // show reward popup
-                    mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            if (reward != null) {
-                                animateReward(reward);
-                            }
-                            mGameActivity.nextTurn();
-                        }
-                    });
-
-                    if (reward != null) {
-                        if (reward.getItem() != null) {
-                            getItemOrDropIt(reward.getItem());
-                        }
-                        mGameActivity.getHero().addGold(reward.getGold());
-                    }
+                Searchable searchable;
+                if (tile.getContent() != null && tile.getContent() instanceof Searchable) {
+                    searchable = (Searchable) tile.getContent();
                 } else {
-                    mGameActivity.nextTurn();
+                    if (tile.getSubContent().get(0) instanceof Stairs) {
+                        searchable = (Searchable) tile.getSubContent().get(1);
+                    } else {
+                        searchable = (Searchable) tile.getSubContent().get(0);
+                    }
                 }
-                isMoving = false;
+                final Reward reward = searchable.search();
+                if (searchable instanceof ItemOnGround) {
+                    mGameActivity.removeElement(searchable);
+                }
+
+                // show reward popup
+                mGUIManager.showReward(reward, dialogInterface -> {
+                    if (reward != null) {
+                        animateReward(reward);
+                    }
+                    mGameActivity.nextTurn();
+                });
+
+                if (reward != null) {
+                    if (reward.getItem() != null) {
+                        getItemOrDropIt(reward.getItem());
+                    }
+                    mGameActivity.getHero().addGold(reward.getGold());
+                }
+            } else {
+                mGameActivity.nextTurn();
             }
+            isMoving = false;
         });
     }
 
     public void getItemOrDropIt(final Item item) {
         boolean success = mGameActivity.getHero().addItem(item);
         if (!success) {
-            mGameActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ApplicationUtils.showToast(mGameActivity, mGameActivity.getString(R.string.bag_full, mGameActivity.getString(item.getName(mGameActivity.getResources()))), Toast.LENGTH_LONG);
-                }
-            });
+            mGameActivity.runOnUiThread(() -> ApplicationUtils.showToast(mGameActivity, mGameActivity.getString(R.string.bag_full, mGameActivity.getString(item.getName(mGameActivity.getResources()))), Toast.LENGTH_LONG));
             dropItem(item);
         }
     }
@@ -355,57 +326,51 @@ public class ActionsDispatcher implements UserActionListener {
         mScene.sortChildren(true);
     }
 
-    public void talk(final Tile tile) {
+    private void talk(final Tile tile) {
         Log.d(TAG, "talk");
         if (!mGameActivity.getRoom().isSafe()) {
             setInputEnabled(false);
         }
-        goCloserTo(tile, new OnActionExecuted() {
-            @Override
-            public void onActionDone(boolean success) {
-                isMoving = false;
-                if (success && mGameActivity.getActiveCharacter().isNextTo(tile)) {
-                    talkTo((Pnj) tile.getContent());
-                } else {
-                    mGameActivity.nextTurn();
-                }
+        goCloserTo(tile, success -> {
+            isMoving = false;
+            if (success && mGameActivity.getActiveCharacter().isNextTo(tile)) {
+                talkTo((Pnj) tile.getContent());
+            } else {
+                mGameActivity.nextTurn();
             }
         });
     }
 
     public void talkTo(Pnj pnj) {
-        OnDiscussionReplySelected onDiscussionSelected = new OnDiscussionReplySelected() {
-            @Override
-            public void onReplySelected(Pnj pnj, int next, Reward instantReward) {
-                if (instantReward != null) {
-                    Log.d(TAG, "got reward from discussion = " + instantReward.getItem() + "," + instantReward.getGold() + "," + instantReward.getXp());
-                    if (instantReward.getItem() != null) {
-                        getItemOrDropIt(instantReward.getItem());
-                        mGUIManager.showReward(instantReward, null);
-                    }
-
-                    mGameActivity.getHero().addGold(instantReward.getGold());
-                    boolean newLevel = mGameActivity.getHero().addXP(instantReward.getXp());
-                    animateReward(instantReward);
-
-                    if (newLevel) {
-                        mGUIManager.showNewLevelDialog(null);
-                    }
+        OnDiscussionReplySelected onDiscussionSelected = (pnj1, next, instantReward) -> {
+            if (instantReward != null) {
+                Log.d(TAG, "got reward from discussion = " + instantReward.getItem() + "," + instantReward.getGold() + "," + instantReward.getXp());
+                if (instantReward.getItem() != null) {
+                    getItemOrDropIt(instantReward.getItem());
+                    mGUIManager.showReward(instantReward, null);
                 }
 
-                if (pnj.getDiscussions().size() > 0) {
-                    for (int n = 0; n < next; n++) {
-                        pnj.getDiscussions().remove(0);
-                    }
-                    if (next >= 0 && pnj.getDiscussions().size() > 0 && !(pnj.getDiscussionCallback() instanceof StopDiscussionCallback)) {
-                        // go to next discussion
-                        talkTo(pnj);
-                    } else {
-                        finishDiscussion(pnj);
-                    }
+                mGameActivity.getHero().addGold(instantReward.getGold());
+                boolean newLevel = mGameActivity.getHero().addXP(instantReward.getXp());
+                animateReward(instantReward);
+
+                if (newLevel) {
+                    mGUIManager.showNewLevelDialog(null);
+                }
+            }
+
+            if (pnj1.getDiscussions().size() > 0) {
+                for (int n = 0; n < next; n++) {
+                    pnj1.getDiscussions().remove(0);
+                }
+                if (next >= 0 && pnj1.getDiscussions().size() > 0 && !(pnj1.getDiscussionCallback() instanceof StopDiscussionCallback)) {
+                    // go to next discussion
+                    talkTo(pnj1);
                 } else {
-                    finishDiscussion(pnj);
+                    finishDiscussion(pnj1);
                 }
+            } else {
+                finishDiscussion(pnj1);
             }
         };
 
@@ -429,13 +394,10 @@ public class ActionsDispatcher implements UserActionListener {
             for (final GameElement gameElement : mGameActivity.getRoom().getObjects()) {
                 if (gameElement instanceof Unit && ((Unit) gameElement).isDead()) {
                     Log.d(TAG, "one unit is dead");
-                    animateDeath((Unit) gameElement, new OnActionExecuted() {
-                        @Override
-                        public void onActionDone(boolean success) {
-                            mGameActivity.removeElement(gameElement);
-                            mGameActivity.nextTurn();
+                    animateDeath((Unit) gameElement, success -> {
+                        mGameActivity.removeElement(gameElement);
+                        mGameActivity.nextTurn();
 
-                        }
                     });
                     return;
                 }
@@ -618,36 +580,33 @@ public class ActionsDispatcher implements UserActionListener {
             final Directions direction = Directions.from(nextTile.getX() - mGameActivity.getActiveCharacter().getTilePosition().getX(), mGameActivity.getActiveCharacter().getTilePosition().getY() - nextTile.getY());
             sprite.walk(direction);
             final List<Tile> p = new ArrayList<>(path);
-            animationHandler = new TimerHandler(1.0f / 60, true, new ITimerCallback() {
-                @Override
-                public void onTimePassed(TimerHandler pTimerHandler) {
-                    if (direction == Directions.EAST && sprite.getX() >= nextTile.getTileX()
-                            || direction == Directions.WEST && sprite.getX() <= nextTile.getTileX()
-                            || direction == Directions.SOUTH && sprite.getY() >= nextTile.getTileY()
-                            || direction == Directions.NORTH && sprite.getY() <= nextTile.getTileY()) {
+            animationHandler = new TimerHandler(1.0f / 60, true, pTimerHandler -> {
+                if (direction == Directions.EAST && sprite.getX() >= nextTile.getTileX()
+                        || direction == Directions.WEST && sprite.getX() <= nextTile.getTileX()
+                        || direction == Directions.SOUTH && sprite.getY() >= nextTile.getTileY()
+                        || direction == Directions.NORTH && sprite.getY() <= nextTile.getTileY()) {
 
-                        Log.d(TAG, "unregister movement animation handler");
-                        animationHandler.reset();
-                        mScene.unregisterUpdateHandler(animationHandler);
+                    Log.d(TAG, "unregister movement animation handler");
+                    animationHandler.reset();
+                    mScene.unregisterUpdateHandler(animationHandler);
 
-                        mGameActivity.getActiveCharacter().setTilePosition(nextTile);
-                        sprite.setPosition(nextTile.getTileX(), nextTile.getTileY());
-                        Log.d(TAG, "character is z-index = " + sprite.getZIndex());
+                    mGameActivity.getActiveCharacter().setTilePosition(nextTile);
+                    sprite.setPosition(nextTile.getTileX(), nextTile.getTileY());
+                    Log.d(TAG, "character is z-index = " + sprite.getZIndex());
 
-                        if (mNextTile == null) {
-                            mScene.sortChildren();
-                            animateMove(p, callback);
-                        } else {
-                            Log.d(TAG, "go to next tile");
-                            mScene.sortChildren();
-                            sprite.stand();
-                            move(mNextTile);
-                            mNextTile = null;
-                        }
+                    if (mNextTile == null) {
+                        mScene.sortChildren();
+                        animateMove(p, callback);
                     } else {
-                        sprite.setPosition(sprite.getX() + 2 * direction.getDx(), sprite.getY() - 2 * direction.getDy());
-                        mInputManager.checkAutoScrolling(sprite.getX(), sprite.getY());
+                        Log.d(TAG, "go to next tile");
+                        mScene.sortChildren();
+                        sprite.stand();
+                        move(mNextTile);
+                        mNextTile = null;
                     }
+                } else {
+                    sprite.setPosition(sprite.getX() + 2 * direction.getDx(), sprite.getY() - 2 * direction.getDy());
+                    mInputManager.checkAutoScrolling(sprite.getX(), sprite.getY());
                 }
             });
             mScene.registerUpdateHandler(animationHandler);
@@ -734,17 +693,14 @@ public class ActionsDispatcher implements UserActionListener {
         mGameActivity.drawAnimatedText(target.getSprite().getX() - 2 * GameConstants.PIXEL_BY_TILE / 3, target.getSprite().getY() - GameConstants.PIXEL_BY_TILE, message, message.startsWith("-") ? FightResult.States.DAMAGE.getColor() : FightResult.States.DODGE.getColor(), 0.4f, 40, -0.15f);
     }
 
-    public void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
+    private void animateDeath(final Unit target, final OnActionExecuted onActionExecuted) {
         Log.d(TAG, "animating death");
         Sprite sprite = target.getSprite();
-        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, GameConstants.ANIMATED_SPRITE_ALPHA, 1.0f, 0, true, 10, new OnActionExecuted() {
-            @Override
-            public void onActionDone(boolean success) {
-                if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && (target instanceof Monster || target instanceof Pnj)) {
-                    animateFightReward(target, onActionExecuted);
-                } else {
-                    onActionExecuted.onActionDone(true);
-                }
+        mGameActivity.drawAnimatedSprite(sprite.getX(), sprite.getY(), "blood.png", 65, GameConstants.ANIMATED_SPRITE_ALPHA, 1.0f, 0, true, 10, success -> {
+            if (mGameActivity.getActiveCharacter().getRank() == Ranks.ME && (target instanceof Monster || target instanceof Pnj)) {
+                animateFightReward(target, onActionExecuted);
+            } else {
+                onActionExecuted.onActionDone(true);
             }
         });
         mGameActivity.playSound("death", false);
@@ -780,36 +736,18 @@ public class ActionsDispatcher implements UserActionListener {
         animateReward(reward);
 
         if (reward.getItem() != null) {
-            mGameActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mGUIManager.showReward(reward, new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            Log.d(TAG, "animating fight reward is over");
-                            if (newLevel) {
-                                mGameActivity.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mGUIManager.showNewLevelDialog(onActionExecuted);
-                                    }
-                                });
-                            } else {
-                                onActionExecuted.onActionDone(true);
-                            }
-                        }
-                    });
+            mGameActivity.runOnUiThread(() -> mGUIManager.showReward(reward, dialogInterface -> {
+                Log.d(TAG, "animating fight reward is over");
+                if (newLevel) {
+                    mGameActivity.runOnUiThread(() -> mGUIManager.showNewLevelDialog(onActionExecuted));
+                } else {
+                    onActionExecuted.onActionDone(true);
                 }
-            });
+            }));
         } else {
             Log.d(TAG, "animating fight reward is over");
             if (newLevel) {
-                mGameActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mGUIManager.showNewLevelDialog(onActionExecuted);
-                    }
-                });
+                mGameActivity.runOnUiThread(() -> mGUIManager.showNewLevelDialog(onActionExecuted));
             } else {
                 onActionExecuted.onActionDone(true);
             }
@@ -839,39 +777,31 @@ public class ActionsDispatcher implements UserActionListener {
         mGUIManager.displayBigLabel(mGameActivity.getString(R.string.use_skill_personal, mGameActivity.getString(activatedSkill.getName(mGameActivity.getResources()))), R.color.green);
         mGameActivity.playSound("magic", false);
 
-        animateSkill(new OnActionExecuted() {
-            @Override
-            public void onActionDone(boolean success) {
-                Effect effect = activatedSkill.getEffect();
-                if (!activatedSkill.isPersonal() || activatedSkill.getRadius() == 0) {
-                    applyEffect(effect, tile, true);
-                }
-                if (activatedSkill.getRadius() > 0) {
-                    Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, activatedSkill.getRadius(), true, null);
-                    for (Tile targetTile : targetTiles) {
-                        if (targetTile != mGameActivity.getActiveCharacter().getTilePosition()) {
-                            applyEffect(effect, targetTile, true);
-                        }
-                    }
-                }
-
-                activatedSkill.use();
-                activatedSkill = null;
-                mGUIManager.updateSkillButtons();
-
-                // go to next turn when everyone is dead
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        mGameActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mGameActivity.nextTurn();
-                            }
-                        });
-                    }
-                }, 700);
+        animateSkill(success -> {
+            Effect effect = activatedSkill.getEffect();
+            if (!activatedSkill.isPersonal() || activatedSkill.getRadius() == 0) {
+                applyEffect(effect, tile, true);
             }
+            if (activatedSkill.getRadius() > 0) {
+                Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), tile, activatedSkill.getRadius(), true, null);
+                for (Tile targetTile : targetTiles) {
+                    if (targetTile != mGameActivity.getActiveCharacter().getTilePosition()) {
+                        applyEffect(effect, targetTile, true);
+                    }
+                }
+            }
+
+            activatedSkill.use();
+            activatedSkill = null;
+            mGUIManager.updateSkillButtons();
+
+            // go to next turn when everyone is dead
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mGameActivity.runOnUiThread(mGameActivity::nextTurn);
+                }
+            }, 700);
         });
     }
 
@@ -890,6 +820,7 @@ public class ActionsDispatcher implements UserActionListener {
                 mGUIManager.updateSkillButtons();
             } else if (effect.getTarget() == Characteristics.HP) {
                 // damage or heal
+                //noinspection StatementWithEmptyBody
                 if (effect instanceof PoisonEffect && effect.getValue() > 0 && target.getHp() - target.getCurrentHP() == 0) {
                     // do not show useless regeneration
                 } else {
@@ -911,10 +842,7 @@ public class ActionsDispatcher implements UserActionListener {
 
             if (target.isDead()) {
                 // animate deaths and remove dead units
-                animateDeath(target, new OnActionExecuted() {
-                    @Override
-                    public void onActionDone(boolean success) {
-                    }
+                animateDeath(target, success -> {
                 });
                 mGameActivity.removeElement(target);
             }
@@ -938,158 +866,176 @@ public class ActionsDispatcher implements UserActionListener {
 
     private void animateSkill(final OnActionExecuted callback) {
         final UnitSprite sprite = (UnitSprite) mGameActivity.getActiveCharacter().getSprite();
-        if (activatedSkill.getIdentifier().equals("swirl_swords")) {
-            Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), activatedSkill.getRadius(), true, null);
-            final Iterator<Tile> tileIterator = targetTiles.iterator();
-            new Timer().schedule(new TimerTask() {
-                private int n = 7;
-                private Tile tile;
+        switch (activatedSkill.getIdentifier()) {
+            case "swirl_swords":
+                Set<Tile> targetTiles = MathUtils.getAdjacentNodes(mGameActivity.getRoom().getTiles(), mGameActivity.getActiveCharacter().getTilePosition(), activatedSkill.getRadius(), true, null);
+                final Iterator<Tile> tileIterator = targetTiles.iterator();
+                new Timer().schedule(new TimerTask() {
+                    private int n = 7;
+                    private Tile tile;
 
-                @Override
-                public void run() {
-                    sprite.walk(Directions.values()[n % 4]);
-                    tile = tileIterator.next();
-                    mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), "slash.png", 70, GameConstants.ANIMATED_SPRITE_ALPHA, 0.7f, 0, true, 100, null);
-                    n--;
-                    if (n < 0) {
-                        sprite.stand();
-                        cancel();
-                        callback.onActionDone(true);
+                    @Override
+                    public void run() {
+                        sprite.walk(Directions.values()[n % 4]);
+                        tile = tileIterator.next();
+                        mGameActivity.drawAnimatedSprite(tile.getTileX(), tile.getTileY(), "slash.png", 70, GameConstants.ANIMATED_SPRITE_ALPHA, 0.7f, 0, true, 100, null);
+                        n--;
+                        if (n < 0) {
+                            sprite.stand();
+                            cancel();
+                            callback.onActionDone(true);
+                        }
                     }
-                }
-            }, 0, 80);
-        } else if (activatedSkill.getIdentifier().equals("berserker_rage")) {
-            sprite.stand();
-            sprite.setColor(((BuffEffect) activatedSkill.getEffect()).getBuffColor());
-            new Timer().schedule(new TimerTask() {
-                private int n = 7;
+                }, 0, 80);
+                break;
 
-                @Override
-                public void run() {
-                    sprite.setScale((float) (0.5 + 0.03 * (n % 3)));
-                    n--;
-                    if (n < 0) {
-                        sprite.setScale(0.5f);
-                        cancel();
-                        callback.onActionDone(true);
+            case "berserker_rage":
+                sprite.stand();
+                sprite.setColor(((BuffEffect) activatedSkill.getEffect()).getBuffColor());
+                new Timer().schedule(new TimerTask() {
+                    private int n = 7;
+
+                    @Override
+                    public void run() {
+                        sprite.setScale((float) (0.5 + 0.03 * (n % 3)));
+                        n--;
+                        if (n < 0) {
+                            sprite.setScale(0.5f);
+                            cancel();
+                            callback.onActionDone(true);
+                        }
                     }
-                }
-            }, 0, 80);
-        } else if (activatedSkill.getIdentifier().equals("camouflage")) {
-            sprite.stand();
-            new Timer().schedule(new TimerTask() {
-                private int n = 7;
+                }, 0, 80);
+                break;
 
-                @Override
-                public void run() {
-                    sprite.setAlpha((float) (0.3 + 0.1 * n));
-                    n--;
-                    if (n < 0) {
-                        cancel();
-                        callback.onActionDone(true);
+            case "camouflage":
+                sprite.stand();
+                new Timer().schedule(new TimerTask() {
+                    private int n = 7;
+
+                    @Override
+                    public void run() {
+                        sprite.setAlpha((float) (0.3 + 0.1 * n));
+                        n--;
+                        if (n < 0) {
+                            cancel();
+                            callback.onActionDone(true);
+                        }
                     }
-                }
-            }, 0, 80);
-        } else if (activatedSkill.getIdentifier().equals("ground_slam")) {
-            sprite.stand();
-            new Timer().schedule(new TimerTask() {
-                private int n = 12;
-                private final float initialY = sprite.getY();
-                private final float initialCameraX = mGameActivity.getCamera().getCenterX();
+                }, 0, 80);
+                break;
 
-                @Override
-                public void run() {
-                    if (n >= 5) {
-                        sprite.setPosition(sprite.getX(), (float) (initialY - 10 * Math.sin((n - 5) * Math.PI / 7)));
-                    } else {
-                        mGameActivity.getCamera().offsetCenter((float) (-3 * Math.cos(n * 2 * Math.PI / 5)), mGameActivity.getCamera().getCenterY());
+            case "ground_slam":
+                sprite.stand();
+                new Timer().schedule(new TimerTask() {
+                    private int n = 12;
+                    private final float initialY = sprite.getY();
+                    private final float initialCameraX = mGameActivity.getCamera().getCenterX();
+
+                    @Override
+                    public void run() {
+                        if (n >= 5) {
+                            sprite.setPosition(sprite.getX(), (float) (initialY - 10 * Math.sin((n - 5) * Math.PI / 7)));
+                        } else {
+                            mGameActivity.getCamera().offsetCenter((float) (-3 * Math.cos(n * 2 * Math.PI / 5)), mGameActivity.getCamera().getCenterY());
+                        }
+
+                        n--;
+                        if (n < 0) {
+                            sprite.setPosition(sprite.getX(), initialY);
+                            mGameActivity.getCamera().setCenter(initialCameraX, mGameActivity.getCamera().getCenterY());
+                            cancel();
+                            callback.onActionDone(true);
+                        }
                     }
+                }, 0, 50);
+                break;
 
-                    n--;
-                    if (n < 0) {
-                        sprite.setPosition(sprite.getX(), initialY);
-                        mGameActivity.getCamera().setCenter(initialCameraX, mGameActivity.getCamera().getCenterY());
-                        cancel();
-                        callback.onActionDone(true);
+            case "drunken_master":
+                sprite.stand();
+                new Timer().schedule(new TimerTask() {
+                    private int n = 7;
+                    private final float initialX = sprite.getX();
+
+                    @Override
+                    public void run() {
+                        sprite.setColor(Color.GREEN);
+                        sprite.setPosition((float) (initialX - 3 * Math.cos(n * 2 * Math.PI / 7)), sprite.getY());
+
+                        n--;
+                        if (n < 0) {
+                            sprite.setColor(Color.WHITE);
+                            sprite.setPosition(initialX, sprite.getY());
+                            cancel();
+                            callback.onActionDone(true);
+                        }
                     }
-                }
-            }, 0, 50);
-        } else if (activatedSkill.getIdentifier().equals("drunken_master")) {
-            sprite.stand();
-            new Timer().schedule(new TimerTask() {
-                private int n = 7;
-                private final float initialX = sprite.getX();
+                }, 0, 60);
+                break;
 
-                @Override
-                public void run() {
-                    sprite.setColor(Color.GREEN);
-                    sprite.setPosition((float) (initialX - 3 * Math.cos(n * 2 * Math.PI / 7)), sprite.getY());
+            case "war_cry":
+                sprite.stand();
+                new Timer().schedule(new TimerTask() {
+                    private int n = 8;
+                    private final float initialCameraX = mGameActivity.getCamera().getCenterX();
 
-                    n--;
-                    if (n < 0) {
-                        sprite.setColor(Color.WHITE);
-                        sprite.setPosition(initialX, sprite.getY());
-                        cancel();
-                        callback.onActionDone(true);
+                    @Override
+                    public void run() {
+                        mGameActivity.getCamera().offsetCenter((float) (3 * Math.cos(n * 2 * Math.PI / 8)), mGameActivity.getCamera().getCenterY());
+
+                        n--;
+                        if (n < 0) {
+                            mGameActivity.getCamera().setCenter(initialCameraX, mGameActivity.getCamera().getCenterY());
+                            cancel();
+                            callback.onActionDone(true);
+                        }
                     }
-                }
-            }, 0, 60);
-        } else if (activatedSkill.getIdentifier().equals("war_cry")) {
-            sprite.stand();
-            new Timer().schedule(new TimerTask() {
-                private int n = 8;
-                private final float initialCameraX = mGameActivity.getCamera().getCenterX();
+                }, 0, 50);
+                break;
 
-                @Override
-                public void run() {
-                    mGameActivity.getCamera().offsetCenter((float) (3 * Math.cos(n * 2 * Math.PI / 8)), mGameActivity.getCamera().getCenterY());
+            case "healing_plants":
+                sprite.stand();
+                new Timer().schedule(new TimerTask() {
+                    private int n = 7;
 
-                    n--;
-                    if (n < 0) {
-                        mGameActivity.getCamera().setCenter(initialCameraX, mGameActivity.getCamera().getCenterY());
-                        cancel();
-                        callback.onActionDone(true);
+                    @Override
+                    public void run() {
+                        sprite.setColor(n % 4 == 0 ? Color.WHITE : new Color(0.0f, 0.6f, 0.0f));
+
+                        n--;
+                        if (n < 0) {
+                            sprite.setColor(Color.WHITE);
+                            cancel();
+                            callback.onActionDone(true);
+                        }
                     }
-                }
-            }, 0, 50);
-        } else if (activatedSkill.getIdentifier().equals("healing_plants")) {
-            sprite.stand();
-            new Timer().schedule(new TimerTask() {
-                private int n = 7;
+                }, 0, 60);
+                break;
 
-                @Override
-                public void run() {
-                    sprite.setColor(n % 4 == 0 ? Color.WHITE : new Color(0.0f, 0.6f, 0.0f));
+            case "stone_skin":
+                sprite.stand();
+                sprite.setColor(((BuffEffect) activatedSkill.getEffect()).getBuffColor());
 
-                    n--;
-                    if (n < 0) {
-                        sprite.setColor(Color.WHITE);
-                        cancel();
-                        callback.onActionDone(true);
+                new Timer().schedule(new TimerTask() {
+                    private int n = 7;
+
+                    @Override
+                    public void run() {
+                        sprite.setScale((float) (0.5 + 0.07 * Math.sin(n * Math.PI / 7)));
+
+                        n--;
+                        if (n < 0) {
+                            sprite.setScale(0.5f);
+                            cancel();
+                            callback.onActionDone(true);
+                        }
                     }
-                }
-            }, 0, 60);
-        } else if (activatedSkill.getIdentifier().equals("stone_skin")) {
-            sprite.stand();
-            sprite.setColor(((BuffEffect) activatedSkill.getEffect()).getBuffColor());
+                }, 0, 60);
+                break;
 
-            new Timer().schedule(new TimerTask() {
-                private int n = 7;
-
-                @Override
-                public void run() {
-                    sprite.setScale((float) (0.5 + 0.07 * Math.sin(n * Math.PI / 7)));
-
-                    n--;
-                    if (n < 0) {
-                        sprite.setScale(0.5f);
-                        cancel();
-                        callback.onActionDone(true);
-                    }
-                }
-            }, 0, 60);
-        } else {
-            callback.onActionDone(true);
+            default:
+                callback.onActionDone(true);
+                break;
         }
     }
 

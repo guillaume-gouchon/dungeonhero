@@ -12,11 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:childDivider="@color/link_pressed"
-        android:dividerHeight="0dp"
         android:choiceMode="singleChoice"
-        android:drawSelectorOnTop="false"
-        android:scrollbars="none"
         android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:drawSelectorOnTop="false"
         android:listSelector="@android:color/transparent"
-        android:overScrollMode="never"></ListView>
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 </LinearLayout>

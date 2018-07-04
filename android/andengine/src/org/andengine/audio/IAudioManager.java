@@ -16,11 +16,11 @@ public interface IAudioManager<T extends IAudioEntity> {
 	// Methods
 	// ===========================================================
 
-	public float getMasterVolume();
-	public void setMasterVolume(final float pMasterVolume);
+	float getMasterVolume();
+	void setMasterVolume(final float pMasterVolume);
 
-	public void add(final T pAudioEntity);
-	public boolean remove(final T pAudioEntity);
+	void add(final T pAudioEntity);
+	boolean remove(final T pAudioEntity);
 
-	public void releaseAll();
+	void releaseAll();
 }

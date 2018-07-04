@@ -17,7 +17,7 @@ public interface ITiledSpriteVertexBufferObject extends ISpriteVertexBufferObjec
 	// Methods
 	// ===========================================================
 
-	public void onUpdateColor(final TiledSprite pTiledSprite);
-	public void onUpdateVertices(final TiledSprite pTiledSprite);
-	public void onUpdateTextureCoordinates(final TiledSprite pTiledSprite);
+	void onUpdateColor(final TiledSprite pTiledSprite);
+	void onUpdateVertices(final TiledSprite pTiledSprite);
+	void onUpdateTextureCoordinates(final TiledSprite pTiledSprite);
 }

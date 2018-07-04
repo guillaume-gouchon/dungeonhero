@@ -18,10 +18,10 @@ public class Color implements Serializable {
     public static final int ABGR_PACKED_BLUE_SHIFT = 16;
     public static final int ABGR_PACKED_ALPHA_SHIFT = 24;
 
-    public static final int ABGR_PACKED_RED_CLEAR = 0XFFFFFF00;
-    public static final int ABGR_PACKED_GREEN_CLEAR = 0XFFFF00FF;
-    public static final int ABGR_PACKED_BLUE_CLEAR = 0XFF00FFFF;
-    public static final int ABGR_PACKED_ALPHA_CLEAR = 0X00FFFFFF;
+    private static final int ABGR_PACKED_RED_CLEAR = 0XFFFFFF00;
+    private static final int ABGR_PACKED_GREEN_CLEAR = 0XFFFF00FF;
+    private static final int ABGR_PACKED_BLUE_CLEAR = 0XFF00FFFF;
+    private static final int ABGR_PACKED_ALPHA_CLEAR = 0X00FFFFFF;
 
     public static final int ARGB_PACKED_BLUE_SHIFT = 0;
     public static final int ARGB_PACKED_GREEN_SHIFT = 8;
@@ -38,9 +38,9 @@ public class Color implements Serializable {
     public static final Color RED = new Color(1, 0, 0, 1);
     public static final Color YELLOW = new Color(1, 1, 0, 1);
     public static final Color GREEN = new Color(0, 1, 0, 1);
-    public static final Color CYAN = new Color(0, 1, 1, 1);
+    private static final Color CYAN = new Color(0, 1, 1, 1);
     public static final Color BLUE = new Color(0, 0, 1, 1);
-    public static final Color PINK = new Color(1, 0, 1, 1);
+    private static final Color PINK = new Color(1, 0, 1, 1);
     public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 
     public static final int WHITE_ABGR_PACKED_INT = Color.WHITE.getABGRPackedInt();
@@ -238,7 +238,7 @@ public class Color implements Serializable {
         this.mABGRPackedFloat = pColor.mABGRPackedFloat;
     }
 
-    public final boolean setChecking(final Color pColor) {
+    public final void setChecking(final Color pColor) {
         if (this.mABGRPackedInt != pColor.mABGRPackedInt) {
             this.mRed = pColor.mRed;
             this.mGreen = pColor.mGreen;
@@ -247,12 +247,10 @@ public class Color implements Serializable {
 
             this.mABGRPackedInt = pColor.mABGRPackedInt;
             this.mABGRPackedFloat = pColor.mABGRPackedFloat;
-            return true;
         }
-        return false;
     }
 
-    public final int getABGRPackedInt() {
+    private int getABGRPackedInt() {
         return this.mABGRPackedInt;
     }
 
@@ -295,48 +293,46 @@ public class Color implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("[Red: ")
-                .append(this.mRed)
-                .append(", Green: ")
-                .append(this.mGreen)
-                .append(", Blue: ")
-                .append(this.mBlue)
-                .append(", Alpha: ")
-                .append(this.mAlpha)
-                .append("]")
-                .toString();
+        return "[Red: " +
+                this.mRed +
+                ", Green: " +
+                this.mGreen +
+                ", Blue: " +
+                this.mBlue +
+                ", Alpha: " +
+                this.mAlpha +
+                "]";
     }
 
     // ===========================================================
     // Methods
     // ===========================================================
 
-    public boolean equals(final Color pColor) {
+    private boolean equals(final Color pColor) {
         return this.mABGRPackedInt == pColor.mABGRPackedInt;
     }
 
-    private final void packABGRRed() {
-        this.mABGRPackedInt = (this.mABGRPackedInt & Color.ABGR_PACKED_RED_CLEAR) | ((int) (255 * this.mRed) << Color.ABGR_PACKED_RED_CLEAR);
+    private void packABGRRed() {
+        this.mABGRPackedInt = (this.mABGRPackedInt & Color.ABGR_PACKED_RED_CLEAR) | ((int) (255 * this.mRed) << 0);
         this.mABGRPackedFloat = ColorUtils.convertPackedIntToPackedFloat(this.mABGRPackedInt);
     }
 
-    private final void packABGRGreen() {
-        this.mABGRPackedInt = (this.mABGRPackedInt & Color.ABGR_PACKED_GREEN_CLEAR) | ((int) (255 * this.mGreen) << Color.ABGR_PACKED_GREEN_CLEAR);
+    private void packABGRGreen() {
+        this.mABGRPackedInt = (this.mABGRPackedInt & Color.ABGR_PACKED_GREEN_CLEAR) | ((int) (255 * this.mGreen) << 31);
         this.mABGRPackedFloat = ColorUtils.convertPackedIntToPackedFloat(this.mABGRPackedInt);
     }
 
-    private final void packABGRBlue() {
-        this.mABGRPackedInt = (this.mABGRPackedInt & Color.ABGR_PACKED_BLUE_CLEAR) | ((int) (255 * this.mBlue) << Color.ABGR_PACKED_BLUE_CLEAR);
+    private void packABGRBlue() {
+        this.mABGRPackedInt = (this.mABGRPackedInt & Color.ABGR_PACKED_BLUE_CLEAR) | ((int) (255 * this.mBlue) << 31);
         this.mABGRPackedFloat = ColorUtils.convertPackedIntToPackedFloat(this.mABGRPackedInt);
     }
 
-    private final void packABGRAlpha() {
+    private void packABGRAlpha() {
         this.mABGRPackedInt = (this.mABGRPackedInt & Color.ABGR_PACKED_ALPHA_CLEAR) | ((int) (255 * this.mAlpha) << Color.ABGR_PACKED_ALPHA_SHIFT);
         this.mABGRPackedFloat = ColorUtils.convertPackedIntToPackedFloat(this.mABGRPackedInt);
     }
 
-    private final void packABGR() {
+    private void packABGR() {
         this.mABGRPackedInt = ColorUtils.convertRGBAToABGRPackedInt(this.mRed, this.mGreen, this.mBlue, this.mAlpha);
         this.mABGRPackedFloat = ColorUtils.convertPackedIntToPackedFloat(this.mABGRPackedInt);
     }

@@ -10,9 +10,6 @@ import android.widget.LinearLayout;
 
 import com.glevel.dungeonhero.R;
 
-/**
- * Created by guillaume ON 10/3/14.
- */
 public class StarRatingView extends LinearLayout {
 
     private ImageView mStar1, mStar2, mStar3;
@@ -20,21 +17,20 @@ public class StarRatingView extends LinearLayout {
 
     public StarRatingView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(context);
     }
 
     public StarRatingView(Context context, AttributeSet attrs, int style) {
         super(context, attrs, style);
-        init(context, attrs);
+        init(context);
     }
 
-    private void init(Context context, AttributeSet attrs) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.star_rating, this, true);
+    private void init(Context context) {
+        LayoutInflater.from(context).inflate(R.layout.star_rating, this, true);
 
-        mStar1 = (ImageView) findViewById(R.id.star1);
-        mStar2 = (ImageView) findViewById(R.id.star2);
-        mStar3 = (ImageView) findViewById(R.id.star3);
+        mStar1 = findViewById(R.id.star1);
+        mStar2 = findViewById(R.id.star2);
+        mStar3 = findViewById(R.id.star3);
 
         mBounceAnimation = AnimationUtils.loadAnimation(context, R.anim.bounce_star_rating);
     }

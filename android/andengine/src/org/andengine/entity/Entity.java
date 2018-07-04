@@ -48,17 +48,17 @@ public class Entity implements IEntity {
 	// Fields
 	// ===========================================================
 
-	protected boolean mDisposed;
-	protected boolean mVisible = true;
-	protected boolean mCullingEnabled;
-	protected boolean mIgnoreUpdate;
-	protected boolean mChildrenVisible = true;
-	protected boolean mChildrenIgnoreUpdate;
-	protected boolean mChildrenSortPending;
+	private boolean mDisposed;
+	private boolean mVisible = true;
+	private boolean mCullingEnabled;
+	private boolean mIgnoreUpdate;
+	private boolean mChildrenVisible = true;
+	private boolean mChildrenIgnoreUpdate;
+	private boolean mChildrenSortPending;
 
-	protected int mTag = IEntity.TAG_INVALID;
+	private int mTag = IEntity.TAG_INVALID;
 
-	protected int mZIndex = 0;
+	private int mZIndex = 0;
 
 	private IEntity mParent;
 
@@ -66,12 +66,12 @@ public class Entity implements IEntity {
 	private EntityModifierList mEntityModifiers;
 	private UpdateHandlerList mUpdateHandlers;
 
-	protected Color mColor = new Color(1, 1, 1, 1);
+	protected final Color mColor = new Color(1, 1, 1, 1);
 
 	protected float mX;
 	protected float mY;
 
-	protected float mRotation = 0;
+	private float mRotation = 0;
 
 	protected float mRotationCenterX = 0;
 	protected float mRotationCenterY = 0;
@@ -82,8 +82,8 @@ public class Entity implements IEntity {
 	protected float mScaleCenterX = 0;
 	protected float mScaleCenterY = 0;
 
-	protected float mSkewX = 0;
-	protected float mSkewY = 0;
+	private float mSkewX = 0;
+	private float mSkewY = 0;
 
 	protected float mSkewCenterX = 0;
 	protected float mSkewCenterY = 0;
@@ -704,11 +704,7 @@ public class Entity implements IEntity {
 	@Override
 	public boolean detachSelf() {
 		final IEntity parent = this.mParent;
-		if(parent != null) {
-			return parent.detachChild(this);
-		} else {
-			return false;
-		}
+		return parent != null && parent.detachChild(this);
 	}
 
 	@Override
@@ -758,10 +754,7 @@ public class Entity implements IEntity {
 
 	@Override
 	public boolean detachChild(final IEntity pEntity) {
-		if(this.mChildren == null) {
-			return false;
-		}
-		return this.mChildren.remove(pEntity, Entity.PARAMETERCALLABLE_DETACHCHILD);
+		return this.mChildren != null && this.mChildren.remove(pEntity, Entity.PARAMETERCALLABLE_DETACHCHILD);
 	}
 
 	@Override
@@ -789,10 +782,7 @@ public class Entity implements IEntity {
 
 	@Override
 	public boolean detachChildren(final IEntityMatcher pEntityMatcher) {
-		if(this.mChildren == null) {
-			return false;
-		}
-		return this.mChildren.removeAll(pEntityMatcher, Entity.PARAMETERCALLABLE_DETACHCHILD);
+		return this.mChildren != null && this.mChildren.removeAll(pEntityMatcher, Entity.PARAMETERCALLABLE_DETACHCHILD);
 	}
 
 	@Override
@@ -821,18 +811,12 @@ public class Entity implements IEntity {
 
 	@Override
 	public boolean unregisterUpdateHandler(final IUpdateHandler pUpdateHandler) {
-		if(this.mUpdateHandlers == null) {
-			return false;
-		}
-		return this.mUpdateHandlers.remove(pUpdateHandler);
+		return this.mUpdateHandlers != null && this.mUpdateHandlers.remove(pUpdateHandler);
 	}
 
 	@Override
 	public boolean unregisterUpdateHandlers(final IUpdateHandlerMatcher pUpdateHandlerMatcher) {
-		if(this.mUpdateHandlers == null) {
-			return false;
-		}
-		return this.mUpdateHandlers.removeAll(pUpdateHandlerMatcher);
+		return this.mUpdateHandlers != null && this.mUpdateHandlers.removeAll(pUpdateHandlerMatcher);
 	}
 	
 	@Override
@@ -861,18 +845,12 @@ public class Entity implements IEntity {
 
 	@Override
 	public boolean unregisterEntityModifier(final IEntityModifier pEntityModifier) {
-		if(this.mEntityModifiers == null) {
-			return false;
-		}
-		return this.mEntityModifiers.remove(pEntityModifier);
+		return this.mEntityModifiers != null && this.mEntityModifiers.remove(pEntityModifier);
 	}
 
 	@Override
 	public boolean unregisterEntityModifiers(final IEntityModifierMatcher pEntityModifierMatcher) {
-		if(this.mEntityModifiers == null) {
-			return false;
-		}
-		return this.mEntityModifiers.removeAll(pEntityModifierMatcher);
+		return this.mEntityModifiers != null && this.mEntityModifiers.removeAll(pEntityModifierMatcher);
 	}
 	
 	@Override
@@ -1271,14 +1249,14 @@ public class Entity implements IEntity {
 	}
 
 	private void allocateChildren() {
-		this.mChildren = new SmartList<IEntity>(Entity.CHILDREN_CAPACITY_DEFAULT);
+		this.mChildren = new SmartList<>(Entity.CHILDREN_CAPACITY_DEFAULT);
 	}
 
 	private void allocateUpdateHandlers() {
 		this.mUpdateHandlers = new UpdateHandlerList(Entity.UPDATEHANDLERS_CAPACITY_DEFAULT);
 	}
 
-	protected void onApplyTransformations(final GLState pGLState) {
+	private void onApplyTransformations(final GLState pGLState) {
 		/* Translation. */
 		this.applyTranslation(pGLState);
 
@@ -1292,11 +1270,11 @@ public class Entity implements IEntity {
 		this.applyScale(pGLState);
 	}
 
-	protected void applyTranslation(final GLState pGLState) {
+	private void applyTranslation(final GLState pGLState) {
 		pGLState.translateModelViewGLMatrixf(this.mX, this.mY, 0);
 	}
 
-	protected void applyRotation(final GLState pGLState) {
+	private void applyRotation(final GLState pGLState) {
 		final float rotation = this.mRotation;
 
 		if(rotation != 0) {
@@ -1313,7 +1291,7 @@ public class Entity implements IEntity {
 		}
 	}
 
-	protected void applySkew(final GLState pGLState) {
+	private void applySkew(final GLState pGLState) {
 		final float skewX = this.mSkewX;
 		final float skewY = this.mSkewY;
 
@@ -1327,7 +1305,7 @@ public class Entity implements IEntity {
 		}
 	}
 
-	protected void applyScale(final GLState pGLState) {
+	private void applyScale(final GLState pGLState) {
 		final float scaleX = this.mScaleX;
 		final float scaleY = this.mScaleY;
 

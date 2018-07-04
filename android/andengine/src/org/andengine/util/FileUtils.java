@@ -73,7 +73,7 @@ public class FileUtils {
 		}
 	}
 
-	public static void copyToExternalStorage(final Context pContext, final InputStream pInputStream, final String pFilePath) throws FileNotFoundException {
+	private static void copyToExternalStorage(final Context pContext, final InputStream pInputStream, final String pFilePath) throws FileNotFoundException {
 		if (FileUtils.isExternalStorageWriteable()) {
 			final String absoluteFilePath = FileUtils.getAbsolutePathOnExternalStorage(pContext, pFilePath);
 			StreamUtils.copyAndClose(pInputStream, new FileOutputStream(absoluteFilePath));
@@ -102,7 +102,7 @@ public class FileUtils {
 		}
 	}
 
-	public static boolean isDirectoryExistingOnExternalStorage(final Context pContext, final String pDirectory) {
+	private static boolean isDirectoryExistingOnExternalStorage(final Context pContext, final String pDirectory) {
 		if (FileUtils.isExternalStorageReadable()) {
 			final String absoluteFilePath = FileUtils.getAbsolutePathOnExternalStorage(pContext, pDirectory);
 			final File file = new File(absoluteFilePath);
@@ -149,7 +149,7 @@ public class FileUtils {
 		return pContext.getFilesDir().getAbsolutePath() + pFilePath;
 	}
 
-	public static String getAbsolutePathOnExternalStorage(final String pFilePath) {
+	private static String getAbsolutePathOnExternalStorage(final String pFilePath) {
 		return Environment.getExternalStorageDirectory() + "/" + pFilePath;
 	}
 
@@ -157,11 +157,11 @@ public class FileUtils {
 		return Environment.getExternalStorageDirectory() + "/Android/data/" + pContext.getApplicationInfo().packageName + "/files/" + pFilePath;
 	}
 
-	public static boolean isExternalStorageWriteable() {
+	private static boolean isExternalStorageWriteable() {
 		return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
 	}
 
-	public static boolean isExternalStorageReadable() {
+	private static boolean isExternalStorageReadable() {
 		final String state = Environment.getExternalStorageState();
 		return state.equals(Environment.MEDIA_MOUNTED) || state.equals(Environment.MEDIA_MOUNTED_READ_ONLY);
 	}
@@ -187,16 +187,16 @@ public class FileUtils {
 	 * @param pFileOrDirectory
 	 * @return
 	 */
-	public static boolean deleteDirectory(final File pFileOrDirectory) {
+	private static boolean deleteDirectory(final File pFileOrDirectory) {
 		if(pFileOrDirectory.isDirectory()) {
 			final String[] children = pFileOrDirectory.list();
 			final int childrenCount = children.length;
-			for(int i = 0; i < childrenCount; i++) {
-				final boolean success = FileUtils.deleteDirectory(new File(pFileOrDirectory, children[i]));
-				if(!success) {
-					return false;
-				}
-			}
+            for (String aChildren : children) {
+                final boolean success = FileUtils.deleteDirectory(new File(pFileOrDirectory, aChildren));
+                if (!success) {
+                    return false;
+                }
+            }
 		}
 
 		// The directory is now empty so delete it

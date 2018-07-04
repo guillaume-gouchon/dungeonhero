@@ -18,6 +18,6 @@ public interface IRectangleVertexBufferObject extends IVertexBufferObject {
 	// Methods
 	// ===========================================================
 
-	public void onUpdateColor(final Rectangle pRectangle);
-	public void onUpdateVertices(final Rectangle pRectangle);
+	void onUpdateColor(final Rectangle pRectangle);
+	void onUpdateVertices(final Rectangle pRectangle);
 }

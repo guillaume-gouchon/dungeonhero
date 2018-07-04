@@ -248,7 +248,7 @@ public class GLState {
 	/**
 	 * @return the previous state.
 	 */
-	public boolean enableCulling() {
+	private boolean enableCulling() {
 		if(this.mCullingEnabled) {
 			return true;
 		}
@@ -260,7 +260,7 @@ public class GLState {
 	/**
 	 * @return the previous state.
 	 */
-	public boolean disableCulling() {
+	private boolean disableCulling() {
 		if(!this.mCullingEnabled) {
 			return false;
 		}
@@ -286,7 +286,7 @@ public class GLState {
 	/**
 	 * @return the previous state.
 	 */
-	public boolean enableDither() {
+	private boolean enableDither() {
 		if(this.mDitherEnabled) {
 			return true;
 		}
@@ -298,7 +298,7 @@ public class GLState {
 	/**
 	 * @return the previous state.
 	 */
-	public boolean disableDither() {
+	private boolean disableDither() {
 		if(!this.mDitherEnabled) {
 			return false;
 		}
@@ -310,11 +310,11 @@ public class GLState {
 	/**
 	 * @return the previous state.
 	 */
-	public boolean setDitherEnabled(final boolean pEnabled) {
+	public void setDitherEnabled(final boolean pEnabled) {
 		if(pEnabled) {
-			return this.enableDither();
+			this.enableDither();
 		} else {
-			return this.disableDither();
+			this.disableDither();
 		}
 	}
 
@@ -324,7 +324,7 @@ public class GLState {
 	/**
 	 * @return the previous state.
 	 */
-	public boolean enableDepthTest() {
+	private boolean enableDepthTest() {
 		if(this.mDepthTestEnabled) {
 			return true;
 		}
@@ -398,7 +398,7 @@ public class GLState {
 		return hardwareBufferID;
 	}
 
-	public void bindIndexBuffer(final int pHardwareBufferID) {
+	private void bindIndexBuffer(final int pHardwareBufferID) {
 		if(this.mCurrentIndexBufferID != pHardwareBufferID) {
 			this.mCurrentIndexBufferID = pHardwareBufferID;
 			GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, pHardwareBufferID);
@@ -422,11 +422,11 @@ public class GLState {
 		GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, pFramebufferID);
 	}
 
-	public int getFramebufferStatus() {
+	private int getFramebufferStatus() {
 		return GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER);
 	}
 
-	public void checkFramebufferStatus() throws GLFrameBufferException, GLException {
+	public void checkFramebufferStatus() throws GLException {
 		final int framebufferStatus = this.getFramebufferStatus();
 		switch(framebufferStatus) {
 			case GLES20.GL_FRAMEBUFFER_COMPLETE:
@@ -500,9 +500,8 @@ public class GLState {
 	}
 
 	/**
-	 * @see {@link GLState#forceBindTexture(GLES20, int)}
-	 * @param GLES20
-	 * @param pHardwareTextureID
+	 * @see
+     * @param pHardwareTextureID
 	 */
 	public void bindTexture(final int pHardwareTextureID) {
 		if(this.mCurrentBoundTextureIDs[this.mCurrentActiveTextureIndex] != pHardwareTextureID) {
@@ -673,7 +672,7 @@ public class GLState {
 		GLES20.glFinish();
 	}
 
-	public int getInteger(final int pAttribute) {
+	private int getInteger(final int pAttribute) {
 		GLES20.glGetIntegerv(pAttribute, this.mHardwareIDContainer, 0);
 		return this.mHardwareIDContainer[0];
 	}
@@ -682,7 +681,7 @@ public class GLState {
 		return GLES20.glGetError();
 	}
 
-	public void checkError() throws GLException {
+	private void checkError() throws GLException {
 		final int error = GLES20.glGetError();
 		if(error != GLES20.GL_NO_ERROR) {
 			throw new GLException(error);

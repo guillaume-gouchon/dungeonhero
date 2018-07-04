@@ -4,16 +4,16 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.glevel.dungeonhero.MyApplication.FONTS;
+import com.glevel.dungeonhero.BaseApplication.FONTS;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
-public class HintTextView extends TextView implements View.OnClickListener {
+public class HintTextView extends AppCompatTextView implements View.OnClickListener {
 
     private static final Typeface font = FONTS.text;
 
@@ -54,4 +54,5 @@ public class HintTextView extends TextView implements View.OnClickListener {
     public void onClick(View view) {
         ApplicationUtils.showToast(getContext(), mTextHint, Toast.LENGTH_SHORT);
     }
+
 }

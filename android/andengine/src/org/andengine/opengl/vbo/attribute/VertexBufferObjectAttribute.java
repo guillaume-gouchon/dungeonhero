@@ -18,7 +18,7 @@ public class VertexBufferObjectAttribute {
 	// ===========================================================
 
 	/* package */ final int mLocation;
-	/* package */ final String mName;
+	/* package */ private final String mName;
 	/* package */ final int mSize;
 	/* package */ final int mType;
 	/* package */ final boolean mNormalized;

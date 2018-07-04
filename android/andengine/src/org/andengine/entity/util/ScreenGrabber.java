@@ -121,7 +121,7 @@ public class ScreenGrabber extends Entity {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IScreenGrabberCallback {
+	public interface IScreenGrabberCallback {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -130,7 +130,7 @@ public class ScreenGrabber extends Entity {
 		// Methods
 		// ===========================================================
 
-		public void onScreenGrabbed(final Bitmap pBitmap);
-		public void onScreenGrabFailed(final Exception pException);
+		void onScreenGrabbed(final Bitmap pBitmap);
+		void onScreenGrabFailed(final Exception pException);
 	}
 }

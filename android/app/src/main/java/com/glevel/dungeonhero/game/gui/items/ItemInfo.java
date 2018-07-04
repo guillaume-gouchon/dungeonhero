@@ -19,20 +19,17 @@ import com.glevel.dungeonhero.models.items.requirements.Requirement;
 import com.glevel.dungeonhero.models.items.requirements.StatRequirement;
 import com.glevel.dungeonhero.views.HintTextView;
 
-/**
- * Created by guillaume on 1/14/15.
- */
-public class ItemInfo extends ElementDetails {
+class ItemInfo extends ElementDetails {
 
-    public ItemInfo(Context context, Item item, Hero hero) {
+    ItemInfo(Context context, Item item, Hero hero) {
         super(context, item);
 
         if (item instanceof Equipment) {
             mNameTV.setText(((Equipment) item).getNameWithLevel(context));
         }
 
-        ViewGroup statsLayout = (ViewGroup) findViewById(R.id.stats);
-        ViewGroup requirementsLayout = (ViewGroup) findViewById(R.id.requirements);
+        ViewGroup statsLayout = findViewById(R.id.stats);
+        ViewGroup requirementsLayout = findViewById(R.id.requirements);
         int indexStats = 0, indexRequirements = 0;
 
         if (item instanceof Equipment) {

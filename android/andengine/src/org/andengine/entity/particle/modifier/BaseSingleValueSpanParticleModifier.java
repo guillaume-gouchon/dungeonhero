@@ -38,7 +38,7 @@ public abstract class BaseSingleValueSpanParticleModifier<T extends IEntity> imp
 		this(pFromTime, pToTime, pFromValue, pToValue, EaseLinear.getInstance());
 	}
 
-	public BaseSingleValueSpanParticleModifier(final float pFromTime, final float pToTime, final float pFromValue, final float pToValue, final IEaseFunction pEaseFunction) {
+	BaseSingleValueSpanParticleModifier(final float pFromTime, final float pToTime, final float pFromValue, final float pToValue, final IEaseFunction pEaseFunction) {
 		this.mFromTime = pFromTime;
 		this.mToTime = pToTime;
 		this.mDuration = pToTime - pFromTime;
@@ -78,7 +78,7 @@ public abstract class BaseSingleValueSpanParticleModifier<T extends IEntity> imp
 	// Methods
 	// ===========================================================
 
-	public void reset(final float pFromValue, final float pToValue, final float pFromTime, final float pToTime) {
+	void reset(final float pFromValue, final float pToValue, final float pFromTime, final float pToTime) {
 		this.mFromValue = pFromValue;
 		this.mFromTime = pFromTime;
 		this.mToTime = pToTime;

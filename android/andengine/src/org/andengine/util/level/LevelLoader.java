@@ -25,7 +25,7 @@ import android.content.res.Resources;
  * @author Nicolas Gramlich
  * @since 14:16:19 - 11.10.2010
  */
-public class LevelLoader {
+class LevelLoader {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -37,7 +37,7 @@ public class LevelLoader {
 	private String mAssetBasePath;
 
 	private IEntityLoader mDefaultEntityLoader;
-	private final HashMap<String, IEntityLoader> mEntityLoaders = new HashMap<String, IEntityLoader>();
+	private final HashMap<String, IEntityLoader> mEntityLoaders = new HashMap<>();
 
 	// ===========================================================
 	// Constructors
@@ -47,7 +47,7 @@ public class LevelLoader {
 		this("");
 	}
 
-	public LevelLoader(final String pAssetBasePath) {
+	private LevelLoader(final String pAssetBasePath) {
 		this.setAssetBasePath(pAssetBasePath);
 	}
 
@@ -66,7 +66,7 @@ public class LevelLoader {
 	/**
 	 * @param pAssetBasePath must end with '<code>/</code>' or have <code>.length() == 0</code>.
 	 */
-	public void setAssetBasePath(final String pAssetBasePath) {
+	private void setAssetBasePath(final String pAssetBasePath) {
 		if(pAssetBasePath.endsWith("/") || (pAssetBasePath.length() == 0)) {
 			this.mAssetBasePath = pAssetBasePath;
 		} else {
@@ -82,11 +82,11 @@ public class LevelLoader {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected void onAfterLoadLevel() {
+	private void onAfterLoadLevel() {
 
 	}
 
-	protected void onBeforeLoadLevel() {
+	private void onBeforeLoadLevel() {
 
 	}
 
@@ -99,10 +99,9 @@ public class LevelLoader {
 	}
 
 	public void registerEntityLoader(final String[] pEntityNames, final IEntityLoader pEntityLoader) {
-		final HashMap<String, IEntityLoader> entityLoaders = this.mEntityLoaders;
 
 		for(int i = pEntityNames.length - 1; i >= 0; i--) {
-			entityLoaders.put(pEntityNames[i], pEntityLoader);
+			this.mEntityLoaders.put(pEntityNames[i], pEntityLoader);
 		}
 	}
 
@@ -114,7 +113,7 @@ public class LevelLoader {
 		this.loadLevelFromStream(pResources.openRawResource(pRawResourceID));
 	}
 
-	public void loadLevelFromStream(final InputStream pInputStream) throws IOException {
+	private void loadLevelFromStream(final InputStream pInputStream) throws IOException {
 		try{
 			final SAXParserFactory spf = SAXParserFactory.newInstance();
 			final SAXParser sp = spf.newSAXParser();

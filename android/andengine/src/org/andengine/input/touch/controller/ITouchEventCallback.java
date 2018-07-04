@@ -17,5 +17,5 @@ public interface ITouchEventCallback {
 	// Methods
 	// ===========================================================
 
-	public boolean onTouchEvent(final TouchEvent pTouchEvent);
+	void onTouchEvent(final TouchEvent pTouchEvent);
 }

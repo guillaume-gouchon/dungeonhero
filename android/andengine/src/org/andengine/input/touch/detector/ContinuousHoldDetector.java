@@ -40,7 +40,7 @@ public class ContinuousHoldDetector extends HoldDetector implements IUpdateHandl
 		this(HoldDetector.TRIGGER_HOLD_MINIMUM_MILLISECONDS_DEFAULT, HoldDetector.TRIGGER_HOLD_MAXIMUM_DISTANCE_DEFAULT, ContinuousHoldDetector.TIME_BETWEEN_UPDATES_DEFAULT, pHoldDetectorListener);
 	}
 
-	public ContinuousHoldDetector(final long pTriggerHoldMinimumMilliseconds, final float pTriggerHoldMaximumDistance, final float pTimeBetweenUpdates, final IHoldDetectorListener pHoldDetectorListener) {
+	private ContinuousHoldDetector(final long pTriggerHoldMinimumMilliseconds, final float pTriggerHoldMaximumDistance, final float pTimeBetweenUpdates, final IHoldDetectorListener pHoldDetectorListener) {
 		super(pTriggerHoldMinimumMilliseconds, pTriggerHoldMaximumDistance, pHoldDetectorListener);
 
 		this.mTimerHandler = new TimerHandler(pTimeBetweenUpdates, true, new ITimerCallback() {
@@ -129,7 +129,7 @@ public class ContinuousHoldDetector extends HoldDetector implements IUpdateHandl
 	// Methods
 	// ===========================================================
 
-	void fireListener() {
+	private void fireListener() {
 		if(this.mPointerID != TouchEvent.INVALID_POINTER_ID) {
 			final long holdTimeMilliseconds = System.currentTimeMillis() - this.mDownTimeMilliseconds;
 			if(holdTimeMilliseconds >= this.mTriggerHoldMinimumMilliseconds) {

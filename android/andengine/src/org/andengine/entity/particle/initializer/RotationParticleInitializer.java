@@ -27,7 +27,7 @@ public class RotationParticleInitializer<T extends IEntity> extends BaseSingleVa
 		this(pRotation, pRotation);
 	}
 
-	public RotationParticleInitializer(final float pMinRotation, final float pMaxRotation) {
+	private RotationParticleInitializer(final float pMinRotation, final float pMaxRotation) {
 		super(pMinRotation, pMaxRotation);
 	}
 

@@ -25,12 +25,12 @@ public class Library<T> {
 	// Constructors
 	// ===========================================================
 
-	public Library() {
-		this.mItems = new SparseArray<T>();
+	protected Library() {
+		this.mItems = new SparseArray<>();
 	}
 
-	public Library(final int pInitialCapacity) {
-		this.mItems = new SparseArray<T>(pInitialCapacity);
+	protected Library(final int pInitialCapacity) {
+		this.mItems = new SparseArray<>(pInitialCapacity);
 	}
 
 	// ===========================================================

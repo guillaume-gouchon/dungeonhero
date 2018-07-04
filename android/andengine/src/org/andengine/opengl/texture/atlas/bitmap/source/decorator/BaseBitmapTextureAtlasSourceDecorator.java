@@ -25,9 +25,9 @@ public abstract class BaseBitmapTextureAtlasSourceDecorator extends BaseTextureA
 	// Fields
 	// ===========================================================
 
-	protected final IBitmapTextureAtlasSource mBitmapTextureAtlasSource;
-	protected TextureAtlasSourceDecoratorOptions mTextureAtlasSourceDecoratorOptions;
-	protected Paint mPaint = new Paint();
+	final IBitmapTextureAtlasSource mBitmapTextureAtlasSource;
+	TextureAtlasSourceDecoratorOptions mTextureAtlasSourceDecoratorOptions;
+	Paint mPaint = new Paint();
 
 	// ===========================================================
 	// Constructors
@@ -37,7 +37,7 @@ public abstract class BaseBitmapTextureAtlasSourceDecorator extends BaseTextureA
 		this(pBitmapTextureAtlasSource, new TextureAtlasSourceDecoratorOptions());
 	}
 
-	public BaseBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
+	BaseBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
 		super(pBitmapTextureAtlasSource.getTextureX(), pBitmapTextureAtlasSource.getTextureY(), pBitmapTextureAtlasSource.getTextureWidth(), pBitmapTextureAtlasSource.getTextureHeight());
 
 		this.mBitmapTextureAtlasSource = pBitmapTextureAtlasSource;
@@ -72,7 +72,7 @@ public abstract class BaseBitmapTextureAtlasSourceDecorator extends BaseTextureA
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected abstract void onDecorateBitmap(final Canvas pCanvas) throws Exception;
+	protected abstract void onDecorateBitmap(final Canvas pCanvas);
 
 	@Override
 	public int getTextureWidth() {
@@ -120,7 +120,7 @@ public abstract class BaseBitmapTextureAtlasSourceDecorator extends BaseTextureA
 		// Constants
 		// ===========================================================
 
-		public static final TextureAtlasSourceDecoratorOptions DEFAULT = new TextureAtlasSourceDecoratorOptions();
+		static final TextureAtlasSourceDecoratorOptions DEFAULT = new TextureAtlasSourceDecoratorOptions();
 
 		// ===========================================================
 		// Fields
@@ -148,7 +148,7 @@ public abstract class BaseBitmapTextureAtlasSourceDecorator extends BaseTextureA
 		// Getter & Setter
 		// ===========================================================
 
-		public boolean getAntiAliasing() {
+		boolean getAntiAliasing() {
 			return this.mAntiAliasing;
 		}
 
@@ -168,9 +168,8 @@ public abstract class BaseBitmapTextureAtlasSourceDecorator extends BaseTextureA
 			return this.mInsetBottom;
 		}
 
-		public TextureAtlasSourceDecoratorOptions setAntiAliasing(final boolean pAntiAliasing) {
+		void setAntiAliasing(final boolean pAntiAliasing) {
 			this.mAntiAliasing = pAntiAliasing;
-			return this;
 		}
 
 		public TextureAtlasSourceDecoratorOptions setInsetLeft(final float pInsetLeft) {
@@ -197,7 +196,7 @@ public abstract class BaseBitmapTextureAtlasSourceDecorator extends BaseTextureA
 			return this.setInsets(pInsets, pInsets, pInsets, pInsets);
 		}
 
-		public TextureAtlasSourceDecoratorOptions setInsets(final float pInsetLeft, final float pInsetTop, final float pInsetRight, final float pInsetBottom) {
+		TextureAtlasSourceDecoratorOptions setInsets(final float pInsetLeft, final float pInsetTop, final float pInsetRight, final float pInsetBottom) {
 			this.mInsetLeft = pInsetLeft;
 			this.mInsetTop = pInsetTop;
 			this.mInsetRight = pInsetRight;

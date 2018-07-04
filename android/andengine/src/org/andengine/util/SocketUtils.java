@@ -14,7 +14,7 @@ import org.andengine.util.debug.Debug;
  * @author Nicolas Gramlich
  * @since 14:42:15 - 18.09.2009
  */
-public final class SocketUtils {
+final class SocketUtils {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -39,13 +39,13 @@ public final class SocketUtils {
 	// Methods
 	// ===========================================================
 
-	public static final void closeSocket(final DatagramSocket pDatagramSocket) {
+	public static void closeSocket(final DatagramSocket pDatagramSocket) {
 		if(pDatagramSocket != null && !pDatagramSocket.isClosed()) {
 			pDatagramSocket.close();
 		}
 	}
 
-	public static final void closeSocket(final Socket pSocket) {
+	public static void closeSocket(final Socket pSocket) {
 		if(pSocket != null && !pSocket.isClosed()) {
 			try {
 				pSocket.close();
@@ -55,7 +55,7 @@ public final class SocketUtils {
 		}
 	}
 
-	public static final void closeSocket(final ServerSocket pServerSocket) {
+	public static void closeSocket(final ServerSocket pServerSocket) {
 		if(pServerSocket != null && !pServerSocket.isClosed()) {
 			try {
 				pServerSocket.close();

@@ -20,17 +20,17 @@ public abstract class AverageFPSCounter extends FPSCounter {
 	// Fields
 	// ===========================================================
 
-	protected final float mAverageDuration;
+	private final float mAverageDuration;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public AverageFPSCounter() {
+	AverageFPSCounter() {
 		this(AVERAGE_DURATION_DEFAULT);
 	}
 
-	public AverageFPSCounter(final float pAverageDuration) {
+	AverageFPSCounter(final float pAverageDuration) {
 		this.mAverageDuration = pAverageDuration;
 	}
 

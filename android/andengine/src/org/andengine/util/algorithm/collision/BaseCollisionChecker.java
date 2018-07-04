@@ -7,7 +7,7 @@ package org.andengine.util.algorithm.collision;
  * @author Nicolas Gramlich
  * @since 11:50:19 - 11.03.2010
  */
-public class BaseCollisionChecker {
+class BaseCollisionChecker {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -83,7 +83,7 @@ public class BaseCollisionChecker {
 	 *         coordinates with respect to the line segment formed by the first
 	 *         two specified coordinates.
 	 */
-	public static int relativeCCW(final float pX1, final float pY1, float pX2, float pY2, float pPX, float pPY) {
+	static int relativeCCW(final float pX1, final float pY1, float pX2, float pY2, float pPX, float pPY) {
 		pX2 -= pX1;
 		pY2 -= pY1;
 		pPX -= pX1;
@@ -113,7 +113,7 @@ public class BaseCollisionChecker {
 				}
 			}
 		}
-		return (ccw < 0.0f) ? -1 : ((ccw > 0.0f) ? 1 : 0);
+		return Float.compare(ccw, 0.0f);
 	}
 
 	// ===========================================================

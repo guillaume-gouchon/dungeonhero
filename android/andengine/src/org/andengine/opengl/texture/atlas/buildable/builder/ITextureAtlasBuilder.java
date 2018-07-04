@@ -22,13 +22,13 @@ public interface ITextureAtlasBuilder<T extends ITextureAtlasSource, A extends I
 	// Methods
 	// ===========================================================
 
-	public void build(final A pTextureAtlas, final ArrayList<TextureAtlasSourceWithWithLocationCallback<T>> pTextureAtlasSourcesWithLocationCallback) throws TextureAtlasBuilderException;
+	void build(final A pTextureAtlas, final ArrayList<TextureAtlasSourceWithWithLocationCallback<T>> pTextureAtlasSourcesWithLocationCallback) throws TextureAtlasBuilderException;
 
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static class TextureAtlasBuilderException extends Exception {
+	class TextureAtlasBuilderException extends Exception {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -43,7 +43,7 @@ public interface ITextureAtlasBuilder<T extends ITextureAtlasSource, A extends I
 		// Constructors
 		// ===========================================================
 
-		public TextureAtlasBuilderException(final String pMessage) {
+		TextureAtlasBuilderException(final String pMessage) {
 			super(pMessage);
 		}
 

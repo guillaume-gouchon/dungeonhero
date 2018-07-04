@@ -38,17 +38,9 @@ public class BufferUtils {
 		NATIVE_LIB_LOADED = loadLibrarySuccess;
 
 		if(BufferUtils.NATIVE_LIB_LOADED) {
-			if(SystemUtils.isAndroidVersion(Build.VERSION_CODES.HONEYCOMB, Build.VERSION_CODES.HONEYCOMB_MR2)) {
-				WORKAROUND_BYTEBUFFER_ALLOCATE_DIRECT = true;
-			} else {
-				WORKAROUND_BYTEBUFFER_ALLOCATE_DIRECT = false;
-			}
+            WORKAROUND_BYTEBUFFER_ALLOCATE_DIRECT = SystemUtils.isAndroidVersion(Build.VERSION_CODES.HONEYCOMB, Build.VERSION_CODES.HONEYCOMB_MR2);
 
-			if(SystemUtils.isAndroidVersionOrLower(Build.VERSION_CODES.FROYO)) {
-				WORKAROUND_BYTEBUFFER_PUT_FLOATARRAY = true;
-			} else {
-				WORKAROUND_BYTEBUFFER_PUT_FLOATARRAY = false;
-			}
+            WORKAROUND_BYTEBUFFER_PUT_FLOATARRAY = SystemUtils.isAndroidVersionOrLower(Build.VERSION_CODES.FROYO);
 		} else {
 			WORKAROUND_BYTEBUFFER_ALLOCATE_DIRECT = false;
 			if(SystemUtils.isAndroidVersion(Build.VERSION_CODES.HONEYCOMB, Build.VERSION_CODES.HONEYCOMB_MR2)) {

@@ -17,8 +17,8 @@ public interface IQueue<T> extends IList<T> {
 	// Methods
 	// ===========================================================
 
-	public T peek();
-	public T poll();
-	public void enter(final T pItem);
-	public void enter(final int pIndex, final T pItem) throws IndexOutOfBoundsException;
+	T peek();
+	T poll();
+	void enter(final T pItem);
+	void enter(final int pIndex, final T pItem) throws IndexOutOfBoundsException;
 }

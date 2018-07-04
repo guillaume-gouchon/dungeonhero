@@ -29,7 +29,7 @@ public class MoveByModifier extends DoubleValueChangeEntityModifier {
 		super(pDuration, pX, pY, pEntityModifierListener);
 	}
 
-	protected MoveByModifier(final DoubleValueChangeEntityModifier pDoubleValueChangeEntityModifier) {
+	private MoveByModifier(final DoubleValueChangeEntityModifier pDoubleValueChangeEntityModifier) {
 		super(pDoubleValueChangeEntityModifier);
 	}
 

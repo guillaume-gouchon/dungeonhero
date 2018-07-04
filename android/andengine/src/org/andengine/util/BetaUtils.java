@@ -20,7 +20,7 @@ import android.content.SharedPreferences;
  * @author Nicolas Gramlich
  * @since 22:43:32 - 02.11.2010
  */
-public class BetaUtils {
+class BetaUtils {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -51,7 +51,7 @@ public class BetaUtils {
 		return BetaUtils.finishWhenExpired(pActivity, pExpirationDate, pTitleResourceID, pMessageResourceID, null, null);
 	}
 
-	public static boolean finishWhenExpired(final Activity pActivity, final GregorianCalendar pExpirationDate, final int pTitleResourceID, final int pMessageResourceID, final Intent pOkIntent, final Intent pCancelIntent) {
+	private static boolean finishWhenExpired(final Activity pActivity, final GregorianCalendar pExpirationDate, final int pTitleResourceID, final int pMessageResourceID, final Intent pOkIntent, final Intent pCancelIntent) {
 		final SharedPreferences spref = SimplePreferences.getInstance(pActivity);
 
 		final long now = System.currentTimeMillis();

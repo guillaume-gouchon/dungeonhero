@@ -12,7 +12,7 @@ import org.andengine.util.math.MathUtils;
  * @author Nicolas Gramlich
  * @since 16:54:24 - 07.11.2010
  */
-public class ProbabilityGenerator<T> {
+class ProbabilityGenerator<T> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -22,7 +22,7 @@ public class ProbabilityGenerator<T> {
 	// ===========================================================
 
 	private float mProbabilitySum;
-	private final ArrayList<Entry<T>> mEntries = new ArrayList<Entry<T>>();
+	private final ArrayList<Entry<T>> mEntries = new ArrayList<>();
 
 	// ===========================================================
 	// Constructors
@@ -40,9 +40,10 @@ public class ProbabilityGenerator<T> {
 	// Methods
 	// ===========================================================
 
-	public void add(final float pFactor, final T ... pElements){
+	@SafeVarargs
+	public final void add(final float pFactor, final T... pElements){
 		this.mProbabilitySum += pFactor;
-		this.mEntries.add(new Entry<T>(pFactor, pElements));
+		this.mEntries.add(new Entry<>(pFactor, pElements));
 	}
 
 	public T next() {
@@ -80,14 +81,15 @@ public class ProbabilityGenerator<T> {
 		// Fields
 		// ===========================================================
 
-		public final float mFactor;
-		public final T[] mData;
+		final float mFactor;
+		final T[] mData;
 
 		// ===========================================================
 		// Constructors
 		// ===========================================================
 
-		public Entry(final float pFactor, final T ... pData){
+		@SafeVarargs
+		Entry(final float pFactor, final T... pData){
 			this.mFactor = pFactor;
 			this.mData = pData;
 		}
@@ -96,7 +98,7 @@ public class ProbabilityGenerator<T> {
 		// Getter & Setter
 		// ===========================================================
 
-		public T getReturnValue() {
+		T getReturnValue() {
 			if(this.mData.length == 1){
 				return this.mData[0];
 			}else{

@@ -32,7 +32,7 @@ public class LoopBackgroundModifier extends LoopModifier<IBackground> implements
 	}
 
 	public LoopBackgroundModifier(final IBackgroundModifier pBackgroundModifier, final int pLoopCount, final ILoopBackgroundModifierListener pLoopModifierListener) {
-		super(pBackgroundModifier, pLoopCount, pLoopModifierListener, (IBackgroundModifierListener)null);
+		super(pBackgroundModifier, pLoopCount, pLoopModifierListener, null);
 	}
 
 	public LoopBackgroundModifier(final IBackgroundModifier pBackgroundModifier, final int pLoopCount, final IBackgroundModifierListener pBackgroundModifierListener) {
@@ -43,7 +43,7 @@ public class LoopBackgroundModifier extends LoopModifier<IBackground> implements
 		super(pBackgroundModifier, pLoopCount, pLoopModifierListener, pBackgroundModifierListener);
 	}
 
-	protected LoopBackgroundModifier(final LoopBackgroundModifier pLoopBackgroundModifier) throws DeepCopyNotSupportedException {
+	private LoopBackgroundModifier(final LoopBackgroundModifier pLoopBackgroundModifier) throws DeepCopyNotSupportedException {
 		super(pLoopBackgroundModifier);
 	}
 
@@ -68,7 +68,7 @@ public class LoopBackgroundModifier extends LoopModifier<IBackground> implements
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public interface ILoopBackgroundModifierListener extends ILoopModifierListener<IBackground> {
+	private interface ILoopBackgroundModifierListener extends ILoopModifierListener<IBackground> {
 		// ===========================================================
 		// Constants
 		// ===========================================================

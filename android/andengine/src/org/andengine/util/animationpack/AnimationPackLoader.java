@@ -23,7 +23,7 @@ import android.content.res.AssetManager;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:05:15 - 29.07.2011
  */
-public class AnimationPackLoader {
+class AnimationPackLoader {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -64,7 +64,7 @@ public class AnimationPackLoader {
 		}
 	}
 
-	public AnimationPack load(final InputStream pInputStream, final String pAssetBasePath) throws AnimationPackParseException {
+	private AnimationPack load(final InputStream pInputStream, final String pAssetBasePath) throws AnimationPackParseException {
 		try{
 			final SAXParserFactory spf = SAXParserFactory.newInstance();
 			final SAXParser sp = spf.newSAXParser();

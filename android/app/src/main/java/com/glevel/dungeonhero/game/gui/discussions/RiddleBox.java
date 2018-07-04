@@ -1,7 +1,6 @@
 package com.glevel.dungeonhero.game.gui.discussions;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,9 +20,6 @@ import com.glevel.dungeonhero.utils.ApplicationUtils;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by guillaume on 1/14/15.
- */
 public class RiddleBox extends DiscussionBox {
 
     public RiddleBox(final Activity activity, Discussion discussion, final Pnj pnj, final OnDiscussionReplySelected callback) {
@@ -35,7 +31,7 @@ public class RiddleBox extends DiscussionBox {
         ((TextView) findViewById(R.id.message)).setText(riddle.getQuestion(mResources));
 
         // start timer
-        final ProgressBar mTimerView = (ProgressBar) findViewById(R.id.timer);
+        final ProgressBar mTimerView = findViewById(R.id.timer);
         mTimerView.setVisibility(View.VISIBLE);
         final Timer mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
@@ -44,27 +40,19 @@ public class RiddleBox extends DiscussionBox {
 
             @Override
             public void run() {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        currentTime -= 0.5f;
-                        mTimerView.setProgress((int) (100.0f * currentTime / timer));
-                        if (currentTime <= 0) {
-                            mTimer.cancel();
-                            dismiss();
-                            callback.onReplySelected(pnj, 0, null);
-                        }
+                activity.runOnUiThread(() -> {
+                    currentTime -= 0.5f;
+                    mTimerView.setProgress((int) (100.0f * currentTime / timer));
+                    if (currentTime <= 0) {
+                        mTimer.cancel();
+                        dismiss();
+                        callback.onReplySelected(pnj, 0, null);
                     }
                 });
             }
         }, 0, 500);
 
-        setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mTimer.cancel();
-            }
-        });
+        setOnDismissListener(dialog -> mTimer.cancel());
 
         if (riddle instanceof OpenRiddle) {
             final OpenRiddle openRiddle = (OpenRiddle) riddle;
@@ -72,28 +60,22 @@ public class RiddleBox extends DiscussionBox {
             answerRiddleLayout.setVisibility(View.VISIBLE);
 
             // setup text input
-            final EditText answerRiddleInput = (EditText) answerRiddleLayout.findViewById(R.id.riddle_input);
+            final EditText answerRiddleInput = answerRiddleLayout.findViewById(R.id.riddle_input);
             ApplicationUtils.showKeyboard(activity, answerRiddleInput);
             answerRiddleInput.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-            answerRiddleInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    String answer = v.getEditableText().toString();
-                    if (!answer.isEmpty() && actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE || event != null
-                            && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        answerRiddle(pnj, openRiddle, answer, callback);
-                        return true;
-                    }
-                    return false;
+            answerRiddleInput.setOnEditorActionListener((v, actionId, event) -> {
+                String answer = v.getEditableText().toString();
+                if (!answer.isEmpty() && actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE || event != null
+                        && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    answerRiddle(pnj, openRiddle, answer, callback);
+                    return true;
                 }
+                return false;
             });
 
-            findViewById(R.id.ok_btn).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String answer = answerRiddleInput.getEditableText().toString();
-                    answerRiddle(pnj, openRiddle, answer, callback);
-                }
+            findViewById(R.id.ok_btn).setOnClickListener(v -> {
+                String answer = answerRiddleInput.getEditableText().toString();
+                answerRiddle(pnj, openRiddle, answer, callback);
             });
         }
     }

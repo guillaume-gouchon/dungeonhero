@@ -47,11 +47,11 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 		return super.mCamera;
 	}
 
-	public Camera getFirstCamera() {
+	private Camera getFirstCamera() {
 		return super.mCamera;
 	}
 
-	public Camera getSecondCamera() {
+	private Camera getSecondCamera() {
 		return this.mSecondCamera;
 	}
 
@@ -61,11 +61,11 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 		return super.getScene();
 	}
 
-	public Scene getFirstScene() {
+	private Scene getFirstScene() {
 		return super.getScene();
 	}
 
-	public Scene getSecondScene() {
+	private Scene getSecondScene() {
 		return this.mSecondScene;
 	}
 
@@ -75,7 +75,7 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 		this.setFirstScene(pScene);
 	}
 
-	public void setFirstScene(final Scene pScene) {
+	private void setFirstScene(final Scene pScene) {
 		super.setScene(pScene);
 	}
 

@@ -42,7 +42,7 @@ public class TextOptions {
 		this(pAutoWrap, pAutoWrapWidth, pHorizontalAlign, Text.LEADING_DEFAULT);
 	}
 
-	public TextOptions(final AutoWrap pAutoWrap, final float pAutoWrapWidth, final HorizontalAlign pHorizontalAlign, final float pLeading) {
+	TextOptions(final AutoWrap pAutoWrap, final float pAutoWrapWidth, final HorizontalAlign pHorizontalAlign, final float pLeading) {
 		this.mAutoWrap = pAutoWrap;
 		this.mAutoWrapWidth = pAutoWrapWidth;
 		this.mHorizontalAlign = pHorizontalAlign;

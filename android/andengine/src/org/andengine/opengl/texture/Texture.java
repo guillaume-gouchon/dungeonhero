@@ -17,20 +17,20 @@ public abstract class Texture implements ITexture {
 	// Constants
 	// ===========================================================
 
-	public static final int HARDWARE_TEXTURE_ID_INVALID = -1;
+	private static final int HARDWARE_TEXTURE_ID_INVALID = -1;
 
 	// ===========================================================
 	// Fields
 	// ===========================================================
 
-	protected final TextureManager mTextureManager;
+	private final TextureManager mTextureManager;
 	protected final PixelFormat mPixelFormat;
 	protected final TextureOptions mTextureOptions;
 
 	protected int mHardwareTextureID = Texture.HARDWARE_TEXTURE_ID_INVALID;
 	protected boolean mUpdateOnHardwareNeeded = false;
 
-	protected ITextureStateListener mTextureStateListener;
+	private ITextureStateListener mTextureStateListener;
 
 	// ===========================================================
 	// Constructors
@@ -41,7 +41,7 @@ public abstract class Texture implements ITexture {
 	 * @param pTextureOptions the (quality) settings of the Texture.
 	 * @param pTextureStateListener to be informed when this {@link Texture} is loaded, unloaded or a {@link ITextureAtlasSource} failed to load.
 	 */
-	public Texture(final TextureManager pTextureManager, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException {
+    protected Texture(final TextureManager pTextureManager, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException {
 		this.mTextureManager = pTextureManager;
 		this.mPixelFormat = pPixelFormat;
 		this.mTextureOptions = pTextureOptions;

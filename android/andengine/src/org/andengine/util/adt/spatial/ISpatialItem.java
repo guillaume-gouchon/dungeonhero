@@ -18,5 +18,5 @@ public interface ISpatialItem<B extends IBounds> {
 	// Methods
 	// ===========================================================
 
-	public B getBounds();
+	B getBounds();
 }

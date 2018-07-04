@@ -20,13 +20,13 @@ public interface IBackgroundModifier extends IModifier<IBackground> {
 	// ===========================================================
 
 	@Override
-	public IBackgroundModifier deepCopy() throws DeepCopyNotSupportedException;
+    IBackgroundModifier deepCopy() throws DeepCopyNotSupportedException;
 
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IBackgroundModifierListener extends IModifierListener<IBackground>{
+	interface IBackgroundModifierListener extends IModifierListener<IBackground>{
 		// ===========================================================
 		// Constants
 		// ===========================================================

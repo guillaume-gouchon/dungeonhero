@@ -7,22 +7,25 @@
 
     <ImageView
         android:id="@+id/star1"
-        android:scaleType="fitCenter"
         android:layout_width="@dimen/star_rating_size"
         android:layout_height="@dimen/star_rating_size"
-        android:padding="@dimen/star_rating_padding" />
+        android:contentDescription="Star"
+        android:padding="@dimen/star_rating_padding"
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/star2"
-        android:scaleType="fitCenter"
         android:layout_width="@dimen/star_rating_size"
         android:layout_height="@dimen/star_rating_size"
-        android:padding="@dimen/star_rating_padding" />
+        android:contentDescription="Star"
+        android:padding="@dimen/star_rating_padding"
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/star3"
-        android:scaleType="fitCenter"
         android:layout_width="@dimen/star_rating_size"
         android:layout_height="@dimen/star_rating_size"
-        android:padding="@dimen/star_rating_padding" />
+        android:contentDescription="Star"
+        android:padding="@dimen/star_rating_padding"
+        android:scaleType="fitCenter" />
 </LinearLayout>

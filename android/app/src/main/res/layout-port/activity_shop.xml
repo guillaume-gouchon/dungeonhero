@@ -9,6 +9,7 @@
         android:id="@+id/storms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="Storms"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_village"
         android:tint="#cc000000" />
@@ -20,55 +21,60 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:padding="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <com.glevel.dungeonhero.views.CustomTextView
+                    style="@style/DiscussionName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="@string/merchant"
+                    android:layout_gravity="start"
                     android:drawableLeft="@drawable/merchant"
-                    style="@style/DiscussionName" />
+                    android:drawableStart="@drawable/merchant"
+                    android:text="@string/merchant" />
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="1dp" />
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
                 <com.glevel.dungeonhero.views.CustomTextView
                     android:id="@+id/back_button"
                     style="@style/Button"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/exit"
                     android:padding="5dp"
+                    android:text="@string/exit"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/discussion_shop"
+                style="@style/DiscussionName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bg_btn_edge_pressed"
                 android:minHeight="75dp"
-                android:text="@string/shop_intro_port"
-                style="@style/DiscussionName"
-                android:background="@color/bg_btn_edge_pressed" />
+                android:text="@string/shop_intro_port" />
 
             <android.support.v7.widget.GridLayout
                 android:id="@+id/shop_offers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                custom:columnCount="4">
+                custom:columnCount="5">
+
+                <include layout="@layout/in_game_item" />
+
+                <include layout="@layout/in_game_item" />
 
                 <include layout="@layout/in_game_item" />
 
@@ -90,36 +96,38 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="25dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="25dp">
+                android:orientation="horizontal">
 
                 <com.glevel.dungeonhero.views.CustomTextView
                     android:id="@+id/hero_name"
                     style="@style/HeroTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/your_bag"
+                    android:drawableLeft="@drawable/ic_bag"
                     android:drawablePadding="10dp"
-                    android:textSize="14sp"
+                    android:drawableStart="@drawable/ic_bag"
+                    android:text="@string/your_bag"
                     android:textColor="@color/white"
-                    android:drawableLeft="@drawable/ic_bag" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="1dp" />
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
                 <com.glevel.dungeonhero.views.CustomTextView
-                    style="@style/HeroTitle"
                     android:id="@+id/gold_amount"
+                    style="@style/HeroTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/placeholder"
+                    android:drawableLeft="@drawable/ic_coin"
                     android:drawablePadding="10dp"
-                    android:textSize="18sp"
+                    android:drawableStart="@drawable/ic_coin"
+                    android:text="@string/placeholder"
                     android:textColor="@color/white"
-                    android:drawableLeft="@drawable/ic_coin" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <android.support.v7.widget.GridLayout

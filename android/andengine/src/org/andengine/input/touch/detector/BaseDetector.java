@@ -52,12 +52,8 @@ public abstract class BaseDetector implements IOnSceneTouchListener {
 	}
 
 	public final boolean onTouchEvent(final TouchEvent pSceneTouchEvent) {
-		if(this.mEnabled) {
-			return this.onManagedTouchEvent(pSceneTouchEvent);
-		} else {
-			return false;
-		}
-	}
+        return this.mEnabled && this.onManagedTouchEvent(pSceneTouchEvent);
+    }
 
 	// ===========================================================
 	// Methods

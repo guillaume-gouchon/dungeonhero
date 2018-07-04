@@ -125,7 +125,7 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 		// Constructors
 		// ===========================================================
 
-		public Rect(final int pLeft, final int pTop, final int pWidth, final int pHeight) {
+		Rect(final int pLeft, final int pTop, final int pWidth, final int pHeight) {
 			this.mLeft = pLeft;
 			this.mTop = pTop;
 			this.mWidth = pWidth;
@@ -136,19 +136,19 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 		// Getter & Setter
 		// ===========================================================
 
-		public int getWidth() {
+		int getWidth() {
 			return this.mWidth;
 		}
 
-		public int getHeight() {
+		int getHeight() {
 			return this.mHeight;
 		}
 
-		public int getLeft() {
+		int getLeft() {
 			return this.mLeft;
 		}
 
-		public int getTop() {
+		int getTop() {
 			return this.mTop;
 		}
 
@@ -196,11 +196,11 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 		// Constructors
 		// ===========================================================
 
-		public Node(final int pLeft, final int pTop, final int pWidth, final int pHeight) {
+		Node(final int pLeft, final int pTop, final int pWidth, final int pHeight) {
 			this(new Rect(pLeft, pTop, pWidth, pHeight));
 		}
 
-		public Node(final Rect pRect) {
+		Node(final Rect pRect) {
 			this.mRect = pRect;
 		}
 
@@ -228,7 +228,7 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 		// Methods
 		// ===========================================================
 
-		public Node insert(final ITextureAtlasSource pTextureAtlasSource, final int pTextureWidth, final int pTextureHeight, final int pTextureAtlasSourceSpacing, final int pTextureAtlasSourcePadding) throws IllegalArgumentException {
+		Node insert(final ITextureAtlasSource pTextureAtlasSource, final int pTextureWidth, final int pTextureHeight, final int pTextureAtlasSourceSpacing, final int pTextureAtlasSourcePadding) throws IllegalArgumentException {
 			if(this.mChildA != null && this.mChildB != null) {
 				final Node newNode = this.mChildA.insert(pTextureAtlasSource, pTextureWidth, pTextureHeight, pTextureAtlasSourceSpacing, pTextureAtlasSourcePadding);
 				if(newNode != null){

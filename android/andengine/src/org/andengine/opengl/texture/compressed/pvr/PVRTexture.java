@@ -57,23 +57,23 @@ public abstract class PVRTexture extends Texture {
 	// Constructors
 	// ===========================================================
 
-	public PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat) throws IllegalArgumentException, IOException {
+	PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat) throws IllegalArgumentException, IOException {
 		this(pTextureManager, pPVRTextureFormat, new GreedyPVRTexturePixelBufferStrategy(), TextureOptions.DEFAULT, null);
 	}
 
-	public PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final IPVRTexturePixelBufferStrategy pPVRTexturePixelBufferStrategy) throws IllegalArgumentException, IOException {
+	PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final IPVRTexturePixelBufferStrategy pPVRTexturePixelBufferStrategy) throws IllegalArgumentException, IOException {
 		this(pTextureManager, pPVRTextureFormat, pPVRTexturePixelBufferStrategy, TextureOptions.DEFAULT, null);
 	}
 
-	public PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException, IOException {
+	PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException, IOException {
 		this(pTextureManager, pPVRTextureFormat, new GreedyPVRTexturePixelBufferStrategy(), TextureOptions.DEFAULT, pTextureStateListener);
 	}
 
-	public PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final IPVRTexturePixelBufferStrategy pPVRTexturePixelBufferStrategy, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException, IOException {
+	PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final IPVRTexturePixelBufferStrategy pPVRTexturePixelBufferStrategy, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException, IOException {
 		this(pTextureManager, pPVRTextureFormat, pPVRTexturePixelBufferStrategy, TextureOptions.DEFAULT, pTextureStateListener);
 	}
 
-	public PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final TextureOptions pTextureOptions) throws IllegalArgumentException, IOException {
+	PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final TextureOptions pTextureOptions) throws IllegalArgumentException, IOException {
 		this(pTextureManager, pPVRTextureFormat, new GreedyPVRTexturePixelBufferStrategy(), pTextureOptions, null);
 	}
 
@@ -81,11 +81,11 @@ public abstract class PVRTexture extends Texture {
 		this(pTextureManager, pPVRTextureFormat, pPVRTexturePixelBufferStrategy, pTextureOptions, null);
 	}
 
-	public PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException, IOException {
+	PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException, IOException {
 		this(pTextureManager, pPVRTextureFormat, new GreedyPVRTexturePixelBufferStrategy(), pTextureOptions, pTextureStateListener);
 	}
 
-	public PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final IPVRTexturePixelBufferStrategy pPVRTexturePixelBufferStrategy, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException, IOException {
+	PVRTexture(final TextureManager pTextureManager, final PVRTextureFormat pPVRTextureFormat, final IPVRTexturePixelBufferStrategy pPVRTexturePixelBufferStrategy, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) throws IllegalArgumentException, IOException {
 		super(pTextureManager, pPVRTextureFormat.getPixelFormat(), pTextureOptions, pTextureStateListener);
 		this.mPVRTexturePixelBufferStrategy = pPVRTexturePixelBufferStrategy;
 
@@ -136,7 +136,7 @@ public abstract class PVRTexture extends Texture {
 		return this.mPVRTextureHeader.getHeight();
 	}
 
-	public boolean hasMipMaps() {
+	private boolean hasMipMaps() {
 		return this.mPVRTextureHeader.getNumMipmaps() > 0;
 	}
 
@@ -238,7 +238,7 @@ public abstract class PVRTexture extends Texture {
 		// Constructors
 		// ===========================================================
 
-		public PVRTextureHeader(final byte[] pData) {
+		PVRTextureHeader(final byte[] pData) {
 			this.mDataByteBuffer = ByteBuffer.wrap(pData);
 			this.mDataByteBuffer.rewind();
 			this.mDataByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -255,35 +255,35 @@ public abstract class PVRTexture extends Texture {
 		// Getter & Setter
 		// ===========================================================
 
-		public PVRTextureFormat getPVRTextureFormat() {
+		PVRTextureFormat getPVRTextureFormat() {
 			return this.mPVRTextureFormat;
 		}
 
 		public int headerLength() {
-			return this.mDataByteBuffer.getInt(0 * DataConstants.BYTES_PER_INT); // TODO Constants
+			return this.mDataByteBuffer.getInt(0); // TODO Constants
 		}
 
-		public int getHeight() {
-			return this.mDataByteBuffer.getInt(1 * DataConstants.BYTES_PER_INT);
+		int getHeight() {
+			return this.mDataByteBuffer.getInt(DataConstants.BYTES_PER_INT);
 		}
 
-		public int getWidth() {
+		int getWidth() {
 			return this.mDataByteBuffer.getInt(2 * DataConstants.BYTES_PER_INT);
 		}
 
-		public int getNumMipmaps() {
+		int getNumMipmaps() {
 			return this.mDataByteBuffer.getInt(3 * DataConstants.BYTES_PER_INT);
 		}
 
-		public int getFlags() {
+		int getFlags() {
 			return this.mDataByteBuffer.getInt(4 * DataConstants.BYTES_PER_INT);
 		}
 
-		public int getDataLength() {
+		int getDataLength() {
 			return this.mDataByteBuffer.getInt(5 * DataConstants.BYTES_PER_INT);
 		}
 
-		public int getBitsPerPixel() {
+		int getBitsPerPixel() {
 			return this.mDataByteBuffer.getInt(6 * DataConstants.BYTES_PER_INT);
 		}
 
@@ -299,7 +299,7 @@ public abstract class PVRTexture extends Texture {
 			return this.mDataByteBuffer.getInt(9 * DataConstants.BYTES_PER_INT);
 		}
 
-		public int getBitmaskAlpha() {
+		int getBitmaskAlpha() {
 			return this.mDataByteBuffer.getInt(10 * DataConstants.BYTES_PER_INT);
 		}
 
@@ -328,7 +328,7 @@ public abstract class PVRTexture extends Texture {
 		// ===========================================================
 	}
 
-	public static enum PVRTextureFormat {
+	public enum PVRTextureFormat {
 		// ===========================================================
 		// Elements
 		// ===========================================================
@@ -362,21 +362,20 @@ public abstract class PVRTexture extends Texture {
 		// Constructors
 		// ===========================================================
 
-		private PVRTextureFormat(final int pID, final boolean pCompressed, final PixelFormat pPixelFormat) {
+		PVRTextureFormat(final int pID, final boolean pCompressed, final PixelFormat pPixelFormat) {
 			this.mID = pID;
 			this.mCompressed = pCompressed;
 			this.mPixelFormat = pPixelFormat;
 		}
 
-		public static PVRTextureFormat fromID(final int pID) {
+		static PVRTextureFormat fromID(final int pID) {
 			final PVRTextureFormat[] pvrTextureFormats = PVRTextureFormat.values();
 			final int pvrTextureFormatCount = pvrTextureFormats.length;
-			for(int i = 0; i < pvrTextureFormatCount; i++) {
-				final PVRTextureFormat pvrTextureFormat = pvrTextureFormats[i];
-				if(pvrTextureFormat.mID == pID) {
-					return pvrTextureFormat;
-				}
-			}
+            for (final PVRTextureFormat pvrTextureFormat : pvrTextureFormats) {
+                if (pvrTextureFormat.mID == pID) {
+                    return pvrTextureFormat;
+                }
+            }
 			throw new IllegalArgumentException("Unexpected " + PVRTextureFormat.class.getSimpleName() + "-ID: '" + pID + "'.");
 		}
 
@@ -401,11 +400,11 @@ public abstract class PVRTexture extends Texture {
 			return this.mID;
 		}
 
-		public boolean isCompressed() {
+		boolean isCompressed() {
 			return this.mCompressed;
 		}
 
-		public PixelFormat getPixelFormat() {
+		PixelFormat getPixelFormat() {
 			return this.mPixelFormat;
 		}
 

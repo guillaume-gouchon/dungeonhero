@@ -16,5 +16,5 @@ public interface IEntityFactory<T extends IEntity> {
 	// Methods
 	// ===========================================================
 
-	public T create(final float pX, final float pY);
+	T create(final float pX, final float pY);
 }

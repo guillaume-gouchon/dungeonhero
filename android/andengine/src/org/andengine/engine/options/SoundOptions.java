@@ -32,10 +32,9 @@ public class SoundOptions {
 		return this.mNeedsSound;
 	}
 
-	public SoundOptions setNeedsSound(final boolean pNeedsSound) {
+	public void setNeedsSound(final boolean pNeedsSound) {
 		this.mNeedsSound = pNeedsSound;
-		return this;
-	}
+    }
 
 	public int getMaxSimultaneousStreams() {
 		return this.mMaxSimultaneousStreams;

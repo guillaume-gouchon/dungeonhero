@@ -20,19 +20,19 @@ public abstract class BaseModifier<T> implements IModifier<T> {
 	// Fields
 	// ===========================================================
 
-	protected boolean mFinished;
+	boolean mFinished;
 	private boolean mAutoUnregisterWhenFinished = true;
-	private final SmartList<IModifierListener<T>> mModifierListeners = new SmartList<IModifierListener<T>>(2);
+	private final SmartList<IModifierListener<T>> mModifierListeners = new SmartList<>(2);
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseModifier() {
+	protected BaseModifier() {
 
 	}
 
-	public BaseModifier(final IModifierListener<T> pModifierListener) {
+	protected BaseModifier(final IModifierListener<T> pModifierListener) {
 		this.addModifierListener(pModifierListener);
 	}
 
@@ -67,11 +67,9 @@ public abstract class BaseModifier<T> implements IModifier<T> {
 	}
 
 	@Override
-	public boolean removeModifierListener(final IModifierListener<T> pModifierListener) {
-		if(pModifierListener == null) {
-			return false;
-		} else {
-			return this.mModifierListeners.remove(pModifierListener);
+	public void removeModifierListener(final IModifierListener<T> pModifierListener) {
+		if (pModifierListener != null) {
+			this.mModifierListeners.remove(pModifierListener);
 		}
 	}
 
@@ -98,13 +96,14 @@ public abstract class BaseModifier<T> implements IModifier<T> {
 		}
 	}
 
-	protected static final <T> void assertNoNullModifier(final IModifier<T> pModifier) {
+	static <T> void assertNoNullModifier(final IModifier<T> pModifier) {
 		if(pModifier == null) {
 			throw new IllegalArgumentException("Illegal 'null' " + IModifier.class.getSimpleName() + " detected!");
 		}
 	}
 
-	protected static final <T> void assertNoNullModifier(final IModifier<T> ... pModifiers) {
+	@SafeVarargs
+	static <T> void assertNoNullModifier(final IModifier<T>... pModifiers) {
 		final int modifierCount = pModifiers.length;
 		for(int i = 0; i < modifierCount; i++) {
 			if(pModifiers[i] == null) {

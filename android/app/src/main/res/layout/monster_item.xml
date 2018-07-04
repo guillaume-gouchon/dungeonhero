@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <!-- Margin in ViewPager caused the view to be too large. This manual margin fixes it. -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_margin="5dp"
+        android:background="@drawable/bg_carousel_item"
+        android:orientation="vertical"
         android:padding="12dp"
-        android:background="@drawable/bg_carousel_item">
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <com.glevel.dungeonhero.views.CustomTextView
-                style="@style/HeroTitle"
-                android:textSize="30sp"
                 android:id="@+id/name"
+                style="@style/HeroTitle"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder" />
+                android:layout_weight="1"
+                android:text="@string/placeholder"
+                android:textSize="30sp" />
 
             <com.glevel.dungeonhero.views.CustomTextView
-                style="@style/HeroTitle"
-                android:textSize="20sp"
                 android:id="@+id/frags"
+                style="@style/HeroTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder"
+                android:drawableLeft="@drawable/ic_frags"
                 android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/ic_frags" />
+                android:drawableStart="@drawable/ic_frags"
+                android:text="@string/placeholder"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
-                android:scaleType="fitXY"
-                android:layout_marginRight="20dp" />
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:contentDescription="Monster"
+                android:scaleType="fitXY" />
 
             <View
                 android:layout_width="0dp"

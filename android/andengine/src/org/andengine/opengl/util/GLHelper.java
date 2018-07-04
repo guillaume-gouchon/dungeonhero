@@ -60,7 +60,7 @@ public class GLHelper {
 		return GLHelper.convertARGB_8888toRGBA_8888(pPixelsARGB_8888, ByteOrder.nativeOrder());
 	}
 
-	public static int[] convertARGB_8888toRGBA_8888(final int[] pPixelsARGB_8888, final ByteOrder pByteOrder) {
+	private static int[] convertARGB_8888toRGBA_8888(final int[] pPixelsARGB_8888, final ByteOrder pByteOrder) {
 		if(pByteOrder == ByteOrder.LITTLE_ENDIAN) {
 			for(int i = pPixelsARGB_8888.length - 1; i >= 0; i--) {
 				final int pixel = pPixelsARGB_8888[i];
@@ -87,7 +87,7 @@ public class GLHelper {
 		return GLHelper.convertARGB_8888toRGB_565(pPixelsARGB_8888, ByteOrder.nativeOrder());
 	}
 
-	public static short[] convertARGB_8888toRGB_565(final int[] pPixelsARGB_8888, final ByteOrder pByteOrder) {
+	private static short[] convertARGB_8888toRGB_565(final int[] pPixelsARGB_8888, final ByteOrder pByteOrder) {
 		final short[] pixelsRGB_565 = new short[pPixelsARGB_8888.length];
 		if(pByteOrder == ByteOrder.LITTLE_ENDIAN) {
 			for(int i = pPixelsARGB_8888.length - 1; i >= 0; i--) {
@@ -119,7 +119,7 @@ public class GLHelper {
 		return GLHelper.convertARGB_8888toRGBA_4444(pPixelsARGB_8888, ByteOrder.nativeOrder());
 	}
 
-	public static short[] convertARGB_8888toRGBA_4444(final int[] pPixelsARGB_8888, final ByteOrder pByteOrder) {
+	private static short[] convertARGB_8888toRGBA_4444(final int[] pPixelsARGB_8888, final ByteOrder pByteOrder) {
 		final short[] pixelsRGBA_4444 = new short[pPixelsARGB_8888.length];
 		if(pByteOrder == ByteOrder.LITTLE_ENDIAN) {
 			for(int i = pPixelsARGB_8888.length - 1; i >= 0; i--) {
@@ -147,7 +147,7 @@ public class GLHelper {
 		return pixelsRGBA_4444;
 	}
 
-	public static byte[] convertARGB_8888toA_8(final int[] pPixelsARGB_8888) {
+	private static byte[] convertARGB_8888toA_8(final int[] pPixelsARGB_8888) {
 		final byte[] pixelsA_8 = new byte[pPixelsARGB_8888.length];
 		for(int i = pPixelsARGB_8888.length - 1; i >= 0; i--) {
 			/* [A][R][G][B] to [A] */
@@ -158,7 +158,7 @@ public class GLHelper {
 		return pixelsA_8;
 	}
 
-	public static int[] getPixelsARGB_8888(final Bitmap pBitmap) {
+	private static int[] getPixelsARGB_8888(final Bitmap pBitmap) {
 		final int w = pBitmap.getWidth();
 		final int h = pBitmap.getHeight();
 
@@ -172,7 +172,7 @@ public class GLHelper {
 		return GLHelper.convertRGBA_8888toARGB_8888(pPixelsRGBA_8888, ByteOrder.nativeOrder());
 	}
 
-	public static int[] convertRGBA_8888toARGB_8888(final int[] pPixelsRGBA_8888, final ByteOrder pByteOrder) {
+	private static int[] convertRGBA_8888toARGB_8888(final int[] pPixelsRGBA_8888, final ByteOrder pByteOrder) {
 		if(pByteOrder == ByteOrder.LITTLE_ENDIAN) {
 			for(int i = pPixelsRGBA_8888.length - 1; i >= 0; i--) {
 				final int pixel = pPixelsRGBA_8888[i];
@@ -197,7 +197,7 @@ public class GLHelper {
 		return GLHelper.convertRGBA_8888toARGB_8888_FlippedVertical(pPixelsRGBA_8888, pWidth, pHeight, ByteOrder.nativeOrder());
 	}
 
-	public static int[] convertRGBA_8888toARGB_8888_FlippedVertical(final int[] pPixelsRGBA_8888, final int pWidth, final int pHeight, final ByteOrder pByteOrder) {
+	private static int[] convertRGBA_8888toARGB_8888_FlippedVertical(final int[] pPixelsRGBA_8888, final int pWidth, final int pHeight, final ByteOrder pByteOrder) {
 		final int[] pixelsARGB_8888 = new int[pWidth * pHeight];
 
 		if(pByteOrder == ByteOrder.LITTLE_ENDIAN) {

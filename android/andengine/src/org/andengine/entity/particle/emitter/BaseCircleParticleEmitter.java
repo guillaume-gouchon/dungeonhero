@@ -8,7 +8,7 @@ package org.andengine.entity.particle.emitter;
  * @author Nicolas Gramlich
  * @since 20:14:43 - 01.10.2010
  */
-public abstract class BaseCircleParticleEmitter extends BaseParticleEmitter {
+abstract class BaseCircleParticleEmitter extends BaseParticleEmitter {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -17,18 +17,18 @@ public abstract class BaseCircleParticleEmitter extends BaseParticleEmitter {
 	// Fields
 	// ===========================================================
 
-	protected float mRadiusX;
-	protected float mRadiusY;
+	float mRadiusX;
+	float mRadiusY;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseCircleParticleEmitter(final float pCenterX, final float pCenterY, final float pRadius) {
+	BaseCircleParticleEmitter(final float pCenterX, final float pCenterY, final float pRadius) {
 		this(pCenterX, pCenterY, pRadius, pRadius);
 	}
 
-	public BaseCircleParticleEmitter(final float pCenterX, final float pCenterY, final float pRadiusX, final float pRadiusY) {
+	BaseCircleParticleEmitter(final float pCenterX, final float pCenterY, final float pRadiusX, final float pRadiusY) {
 		super(pCenterX, pCenterY);
 		this.setRadiusX(pRadiusX);
 		this.setRadiusY(pRadiusY);
@@ -42,7 +42,7 @@ public abstract class BaseCircleParticleEmitter extends BaseParticleEmitter {
 		return this.mRadiusX;
 	}
 
-	public void setRadiusX(final float pRadiusX) {
+	private void setRadiusX(final float pRadiusX) {
 		this.mRadiusX = pRadiusX;
 	}
 
@@ -50,7 +50,7 @@ public abstract class BaseCircleParticleEmitter extends BaseParticleEmitter {
 		return this.mRadiusY;
 	}
 
-	public void setRadiusY(final float pRadiusY) {
+	private void setRadiusY(final float pRadiusY) {
 		this.mRadiusY = pRadiusY;
 	}
 

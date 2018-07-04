@@ -6,7 +6,7 @@ package org.andengine.util.exception;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 02:40:26 - 07.08.2011
  */
-public class AndEngineException extends Exception {
+class AndEngineException extends Exception {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -21,7 +21,7 @@ public class AndEngineException extends Exception {
 	// Constructors
 	// ===========================================================
 
-	public AndEngineException() {
+	AndEngineException() {
 		super();
 	}
 
@@ -29,7 +29,7 @@ public class AndEngineException extends Exception {
 		super(pMessage);
 	}
 
-	public AndEngineException(final Throwable pThrowable) {
+	AndEngineException(final Throwable pThrowable) {
 		super(pThrowable);
 	}
 

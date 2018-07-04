@@ -1,22 +1,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--
-        Base application theme, dependent ON API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml ON newer devices.
-    -->
-    <style name="AppBaseTheme" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
+    <style name="AppBaseTheme" parent="android:style/Theme.Black.NoTitleBar.Fullscreen" />
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
+    <style name="AppTheme" parent="AppBaseTheme" />
 
     <!-- SPLASHSCREEN -->
     <style name="SplashScreenTitle">
@@ -77,7 +64,6 @@
     <!-- ABOUT -->
     <style name="AboutDialogText" parent="@style/SettingsLabel">
         <item name="android:textSize">14sp</item>
-        <item name="android:gravity">center</item>
         <item name="android:padding">5dp</item>
         <item name="android:textColorHighlight">@color/link_pressed</item>
         <item name="android:textColorLink">@color/link</item>
@@ -86,13 +72,12 @@
     <!-- DIALOGS -->
     <style name="FullScreenDialog" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
-        <item name="@android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="Dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowNoTitle">true</item>
+    <style name="Dialog" parent="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth">
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
-        <item name="@android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="DialogNoAnimation" parent="@style/Dialog">
@@ -105,6 +90,7 @@
     </style>
 
     <style name="AlertDialogButton">
+        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/bg_alert_dialog_btn</item>
         <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">12sp</item>

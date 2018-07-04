@@ -22,16 +22,16 @@ public class ParallaxBackground extends Background {
 	// Fields
 	// ===========================================================
 
-	private final ArrayList<ParallaxEntity> mParallaxEntities = new ArrayList<ParallaxEntity>();
+	private final ArrayList<ParallaxEntity> mParallaxEntities = new ArrayList<>();
 	private int mParallaxEntityCount;
 
-	protected float mParallaxValue;
+	float mParallaxValue;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public ParallaxBackground(final float pRed, final float pGreen, final float pBlue) {
+	ParallaxBackground(final float pRed, final float pGreen, final float pBlue) {
 		super(pRed, pGreen, pBlue);
 	}
 
@@ -52,10 +52,9 @@ public class ParallaxBackground extends Background {
 		super.onDraw(pGLState, pCamera);
 
 		final float parallaxValue = this.mParallaxValue;
-		final ArrayList<ParallaxEntity> parallaxEntities = this.mParallaxEntities;
 
 		for(int i = 0; i < this.mParallaxEntityCount; i++) {
-			parallaxEntities.get(i).onDraw(pGLState, pCamera, parallaxValue);
+			this.mParallaxEntities.get(i).onDraw(pGLState, pCamera, parallaxValue);
 		}
 	}
 
@@ -81,7 +80,7 @@ public class ParallaxBackground extends Background {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static class ParallaxEntity {
+	static class ParallaxEntity {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -114,7 +113,7 @@ public class ParallaxBackground extends Background {
 		// Methods
 		// ===========================================================
 
-		public void onDraw(final GLState pGLState, final Camera pCamera, final float pParallaxValue) {
+		void onDraw(final GLState pGLState, final Camera pCamera, final float pParallaxValue) {
 			pGLState.pushModelViewGLMatrix();
 			{
 				final float cameraWidth = pCamera.getWidth();

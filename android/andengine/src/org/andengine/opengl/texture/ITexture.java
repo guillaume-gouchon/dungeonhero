@@ -22,50 +22,50 @@ public interface ITexture {
 	// Methods
 	// ===========================================================
 
-	public int getWidth();
-	public int getHeight();
+	int getWidth();
+	int getHeight();
 
-	public int getHardwareTextureID();
+	int getHardwareTextureID();
 
-	public boolean isLoadedToHardware();
-	public void setNotLoadedToHardware();
+	boolean isLoadedToHardware();
+	void setNotLoadedToHardware();
 
-	public boolean isUpdateOnHardwareNeeded();
-	public void setUpdateOnHardwareNeeded(final boolean pUpdateOnHardwareNeeded);
+	boolean isUpdateOnHardwareNeeded();
+	void setUpdateOnHardwareNeeded(final boolean pUpdateOnHardwareNeeded);
 
 	/**
 	 * @see {@link TextureManager#loadTexture(ITexture)}.
 	 */
-	public void load();
+    void load();
 	/**
 	 * @see {@link TextureManager#loadTexture(GLState, ITexture)}.
 	 */
-	public void load(final GLState pGLState) throws IOException;
+    void load(final GLState pGLState) throws IOException;
 	/**
 	 * @see {@link TextureManager#unloadTexture(ITexture)}.
 	 */
-	public void unload();
+    void unload();
 	/**
 	 * @see {@link TextureManager#unloadTexture(GLState, ITexture)}.
 	 */
-	public void unload(final GLState pGLState);
+    void unload(final GLState pGLState);
 
-	public void loadToHardware(final GLState pGLState) throws IOException;
-	public void unloadFromHardware(final GLState pGLState);
-	public void reloadToHardware(final GLState pGLState) throws IOException;
+	void loadToHardware(final GLState pGLState) throws IOException;
+	void unloadFromHardware(final GLState pGLState);
+	void reloadToHardware(final GLState pGLState) throws IOException;
 
-	public void bind(final GLState pGLState);
+	void bind(final GLState pGLState);
 	/**
 	 * @param pGLActiveTexture from {@link GLES20#GL_TEXTURE0} to {@link GLES20#GL_TEXTURE31}. 
 	 */
-	public void bind(final GLState pGLState, final int pGLActiveTexture);
+    void bind(final GLState pGLState, final int pGLActiveTexture);
 
-	public PixelFormat getPixelFormat();
-	public TextureOptions getTextureOptions();
+	PixelFormat getPixelFormat();
+	TextureOptions getTextureOptions();
 
-	public boolean hasTextureStateListener();
-	public ITextureStateListener getTextureStateListener();
-	public void setTextureStateListener(final ITextureStateListener pTextureStateListener);
+	boolean hasTextureStateListener();
+	ITextureStateListener getTextureStateListener();
+	void setTextureStateListener(final ITextureStateListener pTextureStateListener);
 
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces

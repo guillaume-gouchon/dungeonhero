@@ -1,12 +1,22 @@
 package com.glevel.dungeonhero.game.andengine.custom;
 
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.media.AudioManager;
+import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
+import android.view.Gravity;
+import android.widget.FrameLayout.LayoutParams;
+
+import com.glevel.dungeonhero.BuildConfig;
+
 import org.andengine.audio.music.MusicManager;
 import org.andengine.audio.sound.SoundManager;
 import org.andengine.engine.Engine;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
-import org.andengine.entity.scene.Scene;
 import org.andengine.input.sensor.acceleration.AccelerationSensorOptions;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.sensor.location.ILocationListener;
@@ -26,20 +36,9 @@ import org.andengine.util.Constants;
 import org.andengine.util.debug.Debug;
 import org.andengine.util.system.SystemUtils;
 
-import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.media.AudioManager;
-import android.os.Bundle;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
-import android.view.Gravity;
-import android.widget.FrameLayout.LayoutParams;
-
-import com.glevel.dungeonhero.BuildConfig;
-
 /**
  * (c) 2010 Nicolas Gramlich (c) 2011 Zynga Inc.
- * 
+ *
  * @author Nicolas Gramlich
  * @since 11:27:06 - 08.03.2010
  */
@@ -56,7 +55,7 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
 
     private WakeLock mWakeLock;
 
-    protected RenderSurfaceView mRenderSurfaceView;
+    RenderSurfaceView mRenderSurfaceView;
 
     private boolean mGamePaused;
     private boolean mGameCreated;
@@ -122,64 +121,55 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
         }
     }
 
-    protected synchronized void onCreateGame() {
+    private synchronized void onCreateGame() {
         if (BuildConfig.DEBUG) {
             Debug.d(this.getClass().getSimpleName() + ".onCreateGame" + " @(Thread: '"
                     + Thread.currentThread().getName() + "')");
         }
 
-        final OnPopulateSceneCallback onPopulateSceneCallback = new OnPopulateSceneCallback() {
-            @Override
-            public void onPopulateSceneFinished() {
-                try {
-                    if (BuildConfig.DEBUG) {
-                        Debug.d(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onGameCreated"
-                                + " @(Thread: '" + Thread.currentThread().getName() + "')");
-                    }
-
-                    CustomBaseGameActivity.this.onGameCreated();
-                } catch (final Throwable pThrowable) {
-                    Debug.e(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onGameCreated failed."
-                            + " @(Thread: '" + Thread.currentThread().getName() + "')", pThrowable);
+        final OnPopulateSceneCallback onPopulateSceneCallback = () -> {
+            try {
+                if (BuildConfig.DEBUG) {
+                    Debug.d(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onGameCreated"
+                            + " @(Thread: '" + Thread.currentThread().getName() + "')");
                 }
 
-                CustomBaseGameActivity.this.callGameResumedOnUIThread();
+                CustomBaseGameActivity.this.onGameCreated();
+            } catch (final Throwable pThrowable) {
+                Debug.e(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onGameCreated failed."
+                        + " @(Thread: '" + Thread.currentThread().getName() + "')", pThrowable);
+            }
+
+            CustomBaseGameActivity.this.callGameResumedOnUIThread();
+        };
+
+        final OnCreateSceneCallback onCreateSceneCallback = pScene -> {
+            CustomBaseGameActivity.this.mEngine.setScene(pScene);
+
+            try {
+                if (BuildConfig.DEBUG) {
+                    Debug.d(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onPopulateScene"
+                            + " @(Thread: '" + Thread.currentThread().getName() + "')");
+                }
+
+                CustomBaseGameActivity.this.onPopulateScene(pScene, onPopulateSceneCallback);
+            } catch (final Throwable pThrowable) {
+                Debug.e(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onPopulateScene failed."
+                        + " @(Thread: '" + Thread.currentThread().getName() + "')", pThrowable);
             }
         };
 
-        final OnCreateSceneCallback onCreateSceneCallback = new OnCreateSceneCallback() {
-            @Override
-            public void onCreateSceneFinished(final Scene pScene) {
-                CustomBaseGameActivity.this.mEngine.setScene(pScene);
-
-                try {
-                    if (BuildConfig.DEBUG) {
-                        Debug.d(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onPopulateScene"
-                                + " @(Thread: '" + Thread.currentThread().getName() + "')");
-                    }
-
-                    CustomBaseGameActivity.this.onPopulateScene(pScene, onPopulateSceneCallback);
-                } catch (final Throwable pThrowable) {
-                    Debug.e(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onPopulateScene failed."
-                            + " @(Thread: '" + Thread.currentThread().getName() + "')", pThrowable);
+        final OnCreateResourcesCallback onCreateResourcesCallback = () -> {
+            try {
+                if (BuildConfig.DEBUG) {
+                    Debug.d(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onCreateScene"
+                            + " @(Thread: '" + Thread.currentThread().getName() + "')");
                 }
-            }
-        };
 
-        final OnCreateResourcesCallback onCreateResourcesCallback = new OnCreateResourcesCallback() {
-            @Override
-            public void onCreateResourcesFinished() {
-                try {
-                    if (BuildConfig.DEBUG) {
-                        Debug.d(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onCreateScene"
-                                + " @(Thread: '" + Thread.currentThread().getName() + "')");
-                    }
-
-                    CustomBaseGameActivity.this.onCreateScene(onCreateSceneCallback);
-                } catch (final Throwable pThrowable) {
-                    Debug.e(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onCreateScene failed."
-                            + " @(Thread: '" + Thread.currentThread().getName() + "')", pThrowable);
-                }
+                CustomBaseGameActivity.this.onCreateScene(onCreateSceneCallback);
+            } catch (final Throwable pThrowable) {
+                Debug.e(CustomBaseGameActivity.this.getClass().getSimpleName() + ".onCreateScene failed."
+                        + " @(Thread: '" + Thread.currentThread().getName() + "')", pThrowable);
             }
         };
 
@@ -314,7 +304,7 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
     }
 
     @Override
-    public void onDestroyResources() throws Exception {
+    public void onDestroyResources() {
         if (BuildConfig.DEBUG) {
             Debug.d(this.getClass().getSimpleName() + ".onDestroyResources" + " @(Thread: '"
                     + Thread.currentThread().getName() + "')");
@@ -363,11 +353,11 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
         return this.mEngine.getVertexBufferObjectManager();
     }
 
-    public TextureManager getTextureManager() {
+    protected TextureManager getTextureManager() {
         return this.mEngine.getTextureManager();
     }
 
-    public FontManager getFontManager() {
+    protected FontManager getFontManager() {
         return this.mEngine.getFontManager();
     }
 
@@ -375,11 +365,11 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
         return this.mEngine.getShaderProgramManager();
     }
 
-    public SoundManager getSoundManager() {
+    private SoundManager getSoundManager() {
         return this.mEngine.getSoundManager();
     }
 
-    public MusicManager getMusicManager() {
+    private MusicManager getMusicManager() {
         return this.mEngine.getMusicManager();
     }
 
@@ -392,15 +382,10 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
     // ===========================================================
 
     private void callGameResumedOnUIThread() {
-        CustomBaseGameActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                CustomBaseGameActivity.this.onResumeGame();
-            }
-        });
+        CustomBaseGameActivity.this.runOnUiThread(CustomBaseGameActivity.this::onResumeGame);
     }
 
-    protected void onSetContentView() {
+    void onSetContentView() {
         this.mRenderSurfaceView = new RenderSurfaceView(this);
         this.mRenderSurfaceView.setRenderer(this.mEngine, this);
 
@@ -459,36 +444,36 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
         }
 
         switch (engineOptions.getScreenOrientation()) {
-        case LANDSCAPE_FIXED:
-            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            break;
-        case LANDSCAPE_SENSOR:
-            if (SystemUtils.SDK_VERSION_GINGERBREAD_OR_LATER) {
-                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-            } else {
-                Debug.w(ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.LANDSCAPE_SENSOR
-                        + " is not supported ON this device. Falling back to "
-                        + ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.LANDSCAPE_FIXED);
+            case LANDSCAPE_FIXED:
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            }
-            break;
-        case PORTRAIT_FIXED:
-            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            break;
-        case PORTRAIT_SENSOR:
-            if (SystemUtils.SDK_VERSION_GINGERBREAD_OR_LATER) {
-                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-            } else {
-                Debug.w(ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.PORTRAIT_SENSOR
-                        + " is not supported ON this device. Falling back to "
-                        + ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.PORTRAIT_FIXED);
+                break;
+            case LANDSCAPE_SENSOR:
+                if (SystemUtils.SDK_VERSION_GINGERBREAD_OR_LATER) {
+                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                } else {
+                    Debug.w(ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.LANDSCAPE_SENSOR
+                            + " is not supported ON this device. Falling back to "
+                            + ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.LANDSCAPE_FIXED);
+                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                }
+                break;
+            case PORTRAIT_FIXED:
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-            break;
+                break;
+            case PORTRAIT_SENSOR:
+                if (SystemUtils.SDK_VERSION_GINGERBREAD_OR_LATER) {
+                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+                } else {
+                    Debug.w(ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.PORTRAIT_SENSOR
+                            + " is not supported ON this device. Falling back to "
+                            + ScreenOrientation.class.getSimpleName() + "." + ScreenOrientation.PORTRAIT_FIXED);
+                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                }
+                break;
         }
     }
 
-    protected static LayoutParams createSurfaceViewLayoutParams() {
+    private static LayoutParams createSurfaceViewLayoutParams() {
         final LayoutParams layoutParams = new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.gravity = Gravity.CENTER;
@@ -503,7 +488,7 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
      * @see {@link Engine#enableLocationSensor(Context, ILocationListener, LocationSensorOptions)}
      */
     protected void enableLocationSensor(final ILocationListener pLocationListener,
-            final LocationSensorOptions pLocationSensorOptions) {
+                                        final LocationSensorOptions pLocationSensorOptions) {
         this.mEngine.enableLocationSensor(this, pLocationListener, pLocationSensorOptions);
     }
 
@@ -525,7 +510,7 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
      * @see {@link Engine#enableAccelerationSensor(Context, IAccelerationListener, AccelerationSensorOptions)}
      */
     protected boolean enableAccelerationSensor(final IAccelerationListener pAccelerationListener,
-            final AccelerationSensorOptions pAccelerationSensorOptions) {
+                                               final AccelerationSensorOptions pAccelerationSensorOptions) {
         return this.mEngine.enableAccelerationSensor(this, pAccelerationListener, pAccelerationSensorOptions);
     }
 
@@ -547,7 +532,7 @@ public abstract class CustomBaseGameActivity extends CustomBaseActivity implemen
      * @see {@link Engine#enableOrientationSensor(Context, IOrientationListener, OrientationSensorOptions)}
      */
     protected boolean enableOrientationSensor(final IOrientationListener pOrientationListener,
-            final OrientationSensorOptions pLocationSensorOptions) {
+                                              final OrientationSensorOptions pLocationSensorOptions) {
         return this.mEngine.enableOrientationSensor(this, pOrientationListener, pLocationSensorOptions);
     }
 

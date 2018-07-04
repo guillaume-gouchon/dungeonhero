@@ -20,7 +20,7 @@ public class PositionTextureCoordinatesTextureSelectShaderProgram extends Shader
 
 	private static PositionTextureCoordinatesTextureSelectShaderProgram INSTANCE;
 
-	public static final String VERTEXSHADER = PositionTextureCoordinatesShaderProgram.VERTEXSHADER;
+	private static final String VERTEXSHADER = PositionTextureCoordinatesShaderProgram.VERTEXSHADER;
 
 	public static final String FRAGMENTSHADER =
 			"precision lowp float;\n" +
@@ -40,10 +40,10 @@ public class PositionTextureCoordinatesTextureSelectShaderProgram extends Shader
 	// Fields
 	// ===========================================================
 
-	public static int sUniformModelViewPositionMatrixLocation = ShaderProgramConstants.LOCATION_INVALID;
-	public static int sUniformTexture0Location = ShaderProgramConstants.LOCATION_INVALID;
-	public static int sUniformTexture1Location = ShaderProgramConstants.LOCATION_INVALID;
-	public static int sUniformTextureSelectTexture0Location = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformModelViewPositionMatrixLocation = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformTexture0Location = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformTexture1Location = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformTextureSelectTexture0Location = ShaderProgramConstants.LOCATION_INVALID;
 
 	// ===========================================================
 	// Constructors

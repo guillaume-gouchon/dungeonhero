@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Nicolas Gramlich
  * @since 11:20:49 - 29.07.2010
  */
-public class TMXObjectGroup implements TMXConstants {
+class TMXObjectGroup implements TMXConstants {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -25,8 +25,8 @@ public class TMXObjectGroup implements TMXConstants {
 	private final String mName;
 	private final int mWidth;
 	private final int mHeight;
-	private final ArrayList<TMXObject> mTMXObjects = new ArrayList<TMXObject>();
-	private final TMXProperties<TMXObjectGroupProperty> mTMXObjectGroupProperties = new TMXProperties<TMXObjectGroupProperty>();
+	private final ArrayList<TMXObject> mTMXObjects = new ArrayList<>();
+	private final TMXProperties<TMXObjectGroupProperty> mTMXObjectGroupProperties = new TMXProperties<>();
 
 	// ===========================================================
 	// Constructors

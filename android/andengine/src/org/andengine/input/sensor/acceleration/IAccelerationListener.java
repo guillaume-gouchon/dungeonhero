@@ -16,6 +16,6 @@ public interface IAccelerationListener {
 	// Methods
 	// ===========================================================
 
-	public void onAccelerationAccuracyChanged(final AccelerationData pAccelerationData);
-	public void onAccelerationChanged(final AccelerationData pAccelerationData);
+	void onAccelerationAccuracyChanged(final AccelerationData pAccelerationData);
+	void onAccelerationChanged(final AccelerationData pAccelerationData);
 }

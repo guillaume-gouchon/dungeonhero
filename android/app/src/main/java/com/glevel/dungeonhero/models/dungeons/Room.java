@@ -22,14 +22,10 @@ import org.andengine.extension.tmx.TMXTiledMap;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by guillaume ON 10/8/14.
- */
 public class Room implements Serializable {
 
     private static final long serialVersionUID = 4746018928851456729L;
@@ -40,11 +36,11 @@ public class Room implements Serializable {
     private Tile[][] tiles = null;
     private transient Map<Directions, Tile> doors;
     private transient List<GameElement> objects;
-    private List<Unit> queue = new ArrayList<>();
+    private final List<Unit> queue = new ArrayList<>();
     private transient boolean isSafe;
     private transient boolean reorder;
 
-    public Room(boolean[][] doors, int yPosition, int xPosition) {
+    Room(boolean[][] doors, int yPosition, int xPosition) {
         tmxName = RoomFactory.getRoomDependingOnDoorPositions(doors, yPosition, xPosition);
     }
 
@@ -184,6 +180,7 @@ public class Room implements Serializable {
         return freeTile;
     }
 
+    @SuppressWarnings("SuspiciousMethodCalls")
     public void addGameElement(GameElement gameElement, Tile tile) {
         gameElement.setTilePosition(tile);
         if (!queue.contains(gameElement) && gameElement instanceof Unit && !(gameElement instanceof Pnj)) {
@@ -228,7 +225,7 @@ public class Room implements Serializable {
         return tmxName;
     }
 
-    public int getWidth() {
+    private int getWidth() {
         return tiles[0].length;
     }
 
@@ -261,12 +258,7 @@ public class Room implements Serializable {
 
         // sort queue by initiative
         if (reorder) {
-            Collections.sort(queue, new Comparator<Unit>() {
-                @Override
-                public int compare(Unit u1, Unit u2) {
-                    return -u1.calculateInitiative() + u2.calculateInitiative();
-                }
-            });
+            Collections.sort(queue, (u1, u2) -> -u1.calculateInitiative() + u2.calculateInitiative());
         }
     }
 

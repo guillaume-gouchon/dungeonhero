@@ -9,7 +9,8 @@
 
     <ImageView
         android:id="@+id/life_bar"
-        android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:contentDescription="Life"
+        android:scaleType="fitXY" />
 </LinearLayout>

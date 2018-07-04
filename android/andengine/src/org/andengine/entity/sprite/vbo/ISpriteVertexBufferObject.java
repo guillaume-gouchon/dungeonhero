@@ -18,7 +18,7 @@ public interface ISpriteVertexBufferObject extends IVertexBufferObject {
 	// Methods
 	// ===========================================================
 
-	public void onUpdateColor(final Sprite pSprite);
-	public void onUpdateVertices(final Sprite pSprite);
-	public void onUpdateTextureCoordinates(final Sprite pSprite);
+	void onUpdateColor(final Sprite pSprite);
+	void onUpdateVertices(final Sprite pSprite);
+	void onUpdateTextureCoordinates(final Sprite pSprite);
 }

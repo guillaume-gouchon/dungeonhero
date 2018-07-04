@@ -25,7 +25,7 @@ public abstract class IntGLCriteria implements IGLCriteria {
 	// Constructors
 	// ===========================================================
 
-	public IntGLCriteria(final IntOperator pIntOperator, final int pCriteria) {
+	IntGLCriteria(final IntOperator pIntOperator, final int pCriteria) {
 		this.mCriteria = pCriteria;
 		this.mIntOperator = pIntOperator;
 	}

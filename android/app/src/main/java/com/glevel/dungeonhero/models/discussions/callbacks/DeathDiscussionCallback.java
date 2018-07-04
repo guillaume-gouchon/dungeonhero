@@ -14,5 +14,5 @@ public class DeathDiscussionCallback extends DiscussionCallback {
     public void onDiscussionOver() {
         pnj.setCurrentHP(0);
     }
-    
+
 }

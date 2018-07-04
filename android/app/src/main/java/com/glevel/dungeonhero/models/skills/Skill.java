@@ -5,9 +5,6 @@ import com.glevel.dungeonhero.models.Levelable;
 import com.glevel.dungeonhero.models.StorableResource;
 import com.glevel.dungeonhero.models.effects.Effect;
 
-/**
- * Created by guillaume ON 10/6/14.
- */
 public abstract class Skill extends StorableResource implements Levelable {
 
     private static final long serialVersionUID = -5459063916950986709L;
@@ -15,7 +12,7 @@ public abstract class Skill extends StorableResource implements Levelable {
     private int level;
     private final Effect effect;
 
-    public Skill(String identifier, Effect effect, int level) {
+    Skill(String identifier, Effect effect, int level) {
         super(identifier);
         this.level = level;
         this.effect = effect;

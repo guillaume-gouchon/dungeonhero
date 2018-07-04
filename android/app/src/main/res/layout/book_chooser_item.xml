@@ -4,32 +4,31 @@
     android:layout_height="match_parent">
 
     <!-- Margin in ViewPager caused the view to be too large. This manual margin fixes it. -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_margin="10dp"
-        android:paddingTop="10dp"
+        android:background="@drawable/bg_carousel_item"
+        android:gravity="top|center"
+        android:orientation="vertical"
         android:paddingBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:background="@drawable/bg_carousel_item"
-        android:gravity="top|center">
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
             android:gravity="center_vertical"
-            android:layout_marginTop="5dp">
+            android:orientation="horizontal">
 
             <com.glevel.dungeonhero.views.CustomTextView
-                style="@style/BookTitle"
                 android:id="@+id/name"
+                style="@style/BookTitle"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/placeholder"
                 android:textSize="22sp" />
 
@@ -41,46 +40,37 @@
         </LinearLayout>
 
         <View
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/white"
-            android:alpha="0.7" />
+            android:layout_marginTop="10dp"
+            android:alpha="0.7"
+            android:background="@color/white" />
 
         <com.glevel.dungeonhero.views.CustomTextView
-            style="@style/BookSummary"
             android:id="@+id/summary"
+            style="@style/BookSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/placeholder"
             android:layout_marginTop="15dp"
+            android:text="@string/placeholder"
             android:textSize="16sp" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/lock"
-        android:tint="@color/red"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_lock"
-        android:layout_margin="25dp"
-        android:layout_alignParentRight="true"
-        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/enter_quest_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:visibility="gone"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <com.glevel.dungeonhero.views.SpriteView
             android:id="@+id/monster1"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp" />
 
         <com.glevel.dungeonhero.views.CustomButton
@@ -88,8 +78,9 @@
             style="@style/Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_quest"
-            android:layout_marginRight="8dp" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/enter_quest" />
 
         <com.glevel.dungeonhero.views.SpriteView
             android:id="@+id/monster2"

@@ -19,7 +19,7 @@ import android.widget.Toast;
  * @author Nicolas Gramlich
  * @since 09:35:55 - 14.12.2009
  */
-public abstract class GenericInputDialogBuilder<T> {
+abstract class GenericInputDialogBuilder<T> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -28,12 +28,12 @@ public abstract class GenericInputDialogBuilder<T> {
 	// Fields
 	// ===========================================================
 
-	protected final Callback<T> mSuccessCallback;
-	protected final OnCancelListener mOnCancelListener;
-	protected final int mTitleResID;
-	protected final int mMessageResID;
-	protected final int mIconResID;
-	protected final Context mContext;
+	private final Callback<T> mSuccessCallback;
+	private final OnCancelListener mOnCancelListener;
+	private final int mTitleResID;
+	private final int mMessageResID;
+	private final int mIconResID;
+	private final Context mContext;
 	private final int mErrorResID;
 	private final String mDefaultText;
 
@@ -41,11 +41,11 @@ public abstract class GenericInputDialogBuilder<T> {
 	// Constructors
 	// ===========================================================
 
-	public GenericInputDialogBuilder(final Context pContext, final int pTitleResID, final int pMessageResID, final int pErrorResID, final int pIconResID, final Callback<T> pSuccessCallback, final OnCancelListener pOnCancelListener){
+	GenericInputDialogBuilder(final Context pContext, final int pTitleResID, final int pMessageResID, final int pErrorResID, final int pIconResID, final Callback<T> pSuccessCallback, final OnCancelListener pOnCancelListener){
 		this(pContext, pTitleResID, pMessageResID, pErrorResID, pIconResID, "", pSuccessCallback, pOnCancelListener);
 	}
 
-	public GenericInputDialogBuilder(final Context pContext, final int pTitleResID, final int pMessageResID, final int pErrorResID, final int pIconResID, final String pDefaultText, final Callback<T> pSuccessCallback, final OnCancelListener pOnCancelListener){
+	GenericInputDialogBuilder(final Context pContext, final int pTitleResID, final int pMessageResID, final int pErrorResID, final int pIconResID, final String pDefaultText, final Callback<T> pSuccessCallback, final OnCancelListener pOnCancelListener){
 		this.mContext = pContext;
 		this.mTitleResID = pTitleResID;
 		this.mMessageResID = pMessageResID;
@@ -113,7 +113,7 @@ public abstract class GenericInputDialogBuilder<T> {
 		return ab.create();
 	}
 
-	protected void setView(final AlertDialog.Builder pBuilder, final EditText pInputEditText) {
+	void setView(final AlertDialog.Builder pBuilder, final EditText pInputEditText) {
 		pBuilder.setView(pInputEditText);
 	}
 

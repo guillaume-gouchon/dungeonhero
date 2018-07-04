@@ -12,7 +12,6 @@ import com.glevel.dungeonhero.data.characters.MonsterFactory;
 import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
 import com.glevel.dungeonhero.data.items.RingFactory;
 import com.glevel.dungeonhero.game.base.GameElement;
-import com.glevel.dungeonhero.game.base.interfaces.OnActionExecuted;
 import com.glevel.dungeonhero.models.Chapter;
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.models.Reward;
@@ -52,7 +51,7 @@ public class TutorialQuest extends GameActivity {
             mGame.setBook(BookFactory.buildTutorial());
         }
 
-        mTutorialHintTV = (TextView) findViewById(R.id.tutorial_hint);
+        mTutorialHintTV = findViewById(R.id.tutorial_hint);
         mTutorialHints = getResources().getStringArray(R.array.tutorial_hints);
 
         // new dungeon
@@ -166,17 +165,7 @@ public class TutorialQuest extends GameActivity {
 
     private void tutorialFailed() {
         Log.d(TAG, "tutorial failed");
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mGUIManager.showIntrospection(R.string.tutorial_failed, R.string.ok, new OnActionExecuted() {
-                    @Override
-                    public void onActionDone(boolean success) {
-                        gameover();
-                    }
-                });
-            }
-        });
+        runOnUiThread(() -> mGUIManager.showIntrospection(R.string.tutorial_failed, R.string.ok, success -> gameover()));
     }
 
     @Override
@@ -194,12 +183,7 @@ public class TutorialQuest extends GameActivity {
         if (mTutorialStep < mTutorialHints.length - 1) {
             mTutorialStep++;
 
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mTutorialHintTV.setText(mTutorialHints[mTutorialStep]);
-                }
-            });
+            runOnUiThread(() -> mTutorialHintTV.setText(mTutorialHints[mTutorialStep]));
         }
     }
 

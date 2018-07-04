@@ -18,16 +18,13 @@ public class Tile extends TMXTile implements Node, Serializable {
     private static final long serialVersionUID = 3793350205301888410L;
 
     private GameElement content = null;
-    private List<GameElement> subContent = new ArrayList<GameElement>();
+    private List<GameElement> subContent = new ArrayList<>();
     private GroundTypes ground = null;
     private transient Actions action;
     private transient boolean isSelected = false;
 
     /**
      * Constructor from a .tmx tile map
-     *
-     * @param tmxTile
-     * @param tiledMap
      */
     public Tile(TMXTile tmxTile, TMXTiledMap tiledMap) {
         super(tmxTile.getGlobalTileID(), tmxTile.getTileColumn(), tmxTile.getTileRow(), tmxTile.getTileWidth(), tmxTile.getTileHeight(), tmxTile.getTextureRegion());

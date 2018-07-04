@@ -18,5 +18,5 @@ public interface IEntityMatcher extends IMatcher<IEntity> {
 	// ===========================================================
 
 	@Override
-	public boolean matches(final IEntity pEntity);
+    boolean matches(final IEntity pEntity);
 }

@@ -2,15 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="3dp"
-    android:background="@drawable/bg_clickable_gui">
+    android:background="@drawable/bg_clickable_gui"
+    android:padding="3dp">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="@dimen/in_game_button_size"
         android:layout_height="@dimen/in_game_button_size"
-        android:scaleType="centerInside"
-        android:src="@drawable/bg_map"
         android:alpha="0.5"
-        android:padding="3dp" />
+        android:contentDescription="Map"
+        android:padding="3dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/bg_map" />
 </RelativeLayout>

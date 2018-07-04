@@ -15,7 +15,7 @@ import android.content.res.AssetManager;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 10:45:48 - 02.03.2012
  */
-public class AssetBitmapTexture extends BitmapTexture {
+class AssetBitmapTexture extends BitmapTexture {
 	// ===========================================================
 	// Constants
 	// ===========================================================

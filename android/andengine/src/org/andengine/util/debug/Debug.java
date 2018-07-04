@@ -84,8 +84,7 @@ public class Debug {
 				return;
 			case ERROR:
 				Debug.e(pMessage);
-				return;
-		}
+        }
 	}
 
 	public static void log(final DebugLevel pDebugLevel, final String pMessage, final Throwable pThrowable) {
@@ -106,8 +105,7 @@ public class Debug {
 				return;
 			case ERROR:
 				Debug.e(pMessage, pThrowable);
-				return;
-		}
+        }
 	}
 
 	public static void log(final DebugLevel pDebugLevel, final String pTag, final String pMessage) {
@@ -128,8 +126,7 @@ public class Debug {
 				return;
 			case ERROR:
 				Debug.e(pTag, pMessage);
-				return;
-		}
+        }
 	}
 
 	public static void log(final DebugLevel pDebugLevel, final String pTag, final String pMessage, final Throwable pThrowable) {
@@ -150,23 +147,22 @@ public class Debug {
 				return;
 			case ERROR:
 				Debug.e(pTag, pMessage, pThrowable);
-				return;
-		}
+        }
 	}
 
 	public static void v(final String pMessage) {
 		Debug.v(Debug.sTag, pMessage, null);
 	}
 
-	public static void v(final String pMessage, final Throwable pThrowable) {
+	private static void v(final String pMessage, final Throwable pThrowable) {
 		Debug.v(Debug.sTag, pMessage, pThrowable);
 	}
 
-	public static void v(final String pTag, final String pMessage) {
+	private static void v(final String pTag, final String pMessage) {
 		Debug.v(pTag, pMessage, null);
 	}
 
-	public static void v(final String pTag, final String pMessage, final Throwable pThrowable) {
+	private static void v(final String pTag, final String pMessage, final Throwable pThrowable) {
 		if(Debug.sDebugLevel.isSameOrLessThan(DebugLevel.VERBOSE)) {
 			if(pThrowable == null) {
 				Log.v(pTag, pMessage);
@@ -208,11 +204,11 @@ public class Debug {
 		Debug.d(Debug.sTag, pMessage, pThrowable);
 	}
 
-	public static void d(final String pTag, final String pMessage) {
+	private static void d(final String pTag, final String pMessage) {
 		Debug.d(pTag, pMessage, null);
 	}
 
-	public static void d(final String pTag, final String pMessage, final Throwable pThrowable) {
+	private static void d(final String pTag, final String pMessage, final Throwable pThrowable) {
 		if(Debug.sDebugLevel.isSameOrLessThan(DebugLevel.DEBUG)) {
 			if(pThrowable == null) {
 				Log.d(pTag, pMessage);
@@ -246,19 +242,19 @@ public class Debug {
 		}
 	}
 
-	public static void i(final String pMessage) {
+	private static void i(final String pMessage) {
 		Debug.i(Debug.sTag, pMessage, null);
 	}
 
-	public static void i(final String pMessage, final Throwable pThrowable) {
+	private static void i(final String pMessage, final Throwable pThrowable) {
 		Debug.i(Debug.sTag, pMessage, pThrowable);
 	}
 
-	public static void i(final String pTag, final String pMessage) {
+	private static void i(final String pTag, final String pMessage) {
 		Debug.i(pTag, pMessage, null);
 	}
 
-	public static void i(final String pTag, final String pMessage, final Throwable pThrowable) {
+	private static void i(final String pTag, final String pMessage, final Throwable pThrowable) {
 		if(Debug.sDebugLevel.isSameOrLessThan(DebugLevel.INFO)) {
 			if(pThrowable == null) {
 				Log.i(pTag, pMessage);
@@ -296,19 +292,19 @@ public class Debug {
 		Debug.w(Debug.sTag, pMessage, null);
 	}
 
-	public static void w(final Throwable pThrowable) {
+	private static void w(final Throwable pThrowable) {
 		Debug.w("", pThrowable);
 	}
 
-	public static void w(final String pMessage, final Throwable pThrowable) {
+	private static void w(final String pMessage, final Throwable pThrowable) {
 		Debug.w(Debug.sTag, pMessage, pThrowable);
 	}
 
-	public static void w(final String pTag, final String pMessage) {
+	private static void w(final String pTag, final String pMessage) {
 		Debug.w(pTag, pMessage, null);
 	}
 
-	public static void w(final String pTag, final String pMessage, final Throwable pThrowable) {
+	private static void w(final String pTag, final String pMessage, final Throwable pThrowable) {
 		if(Debug.sDebugLevel.isSameOrLessThan(DebugLevel.WARNING)) {
 			if(pThrowable == null) {
 				Log.w(pTag, pMessage);
@@ -360,11 +356,11 @@ public class Debug {
 		Debug.e(Debug.sTag, pMessage, pThrowable);
 	}
 
-	public static void e(final String pTag, final String pMessage) {
+	private static void e(final String pTag, final String pMessage) {
 		Debug.e(pTag, pMessage, null);
 	}
 
-	public static void e(final String pTag, final String pMessage, final Throwable pThrowable) {
+	private static void e(final String pTag, final String pMessage, final Throwable pThrowable) {
 		if(Debug.sDebugLevel.isSameOrLessThan(DebugLevel.ERROR)) {
 			if(pThrowable == null) {
 				Log.e(pTag, pMessage);
@@ -408,12 +404,12 @@ public class Debug {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static enum DebugLevel {
+	public enum DebugLevel {
 		NONE, ERROR, WARNING, INFO, DEBUG, VERBOSE;
 
 		public static DebugLevel ALL = DebugLevel.VERBOSE;
 
-		public boolean isSameOrLessThan(final DebugLevel pDebugLevel) {
+		boolean isSameOrLessThan(final DebugLevel pDebugLevel) {
 			return this.compareTo(pDebugLevel) >= 0;
 		}
 	}

@@ -20,14 +20,14 @@ public abstract class BaseSingleValueParticleInitializer<T extends IEntity> impl
 	// Fields
 	// ===========================================================
 
-	protected float mMinValue;
-	protected float mMaxValue;
+	float mMinValue;
+	float mMaxValue;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseSingleValueParticleInitializer(final float pMinValue, final float pMaxValue) {
+	BaseSingleValueParticleInitializer(final float pMinValue, final float pMaxValue) {
 		this.mMinValue = pMinValue;
 		this.mMaxValue = pMaxValue;
 	}
@@ -51,7 +51,7 @@ public abstract class BaseSingleValueParticleInitializer<T extends IEntity> impl
 	// Methods
 	// ===========================================================
 
-	protected float getRandomValue() {
+	float getRandomValue() {
 		if(this.mMinValue == this.mMaxValue) {
 			return this.mMaxValue;
 		} else {

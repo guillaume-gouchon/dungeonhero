@@ -7,7 +7,7 @@ package org.andengine.util.algorithm.hull;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:52:48 - 08.02.2012
  */
-public class HullUtils {
+class HullUtils {
 	// ===========================================================
 	// Constants
 	// ===========================================================

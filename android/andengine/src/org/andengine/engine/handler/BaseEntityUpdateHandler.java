@@ -24,7 +24,7 @@ public abstract class BaseEntityUpdateHandler implements IUpdateHandler {
 	// Constructors
 	// ===========================================================
 
-	public BaseEntityUpdateHandler(final IEntity pEntity) {
+	protected BaseEntityUpdateHandler(final IEntity pEntity) {
 		this.mEntity = pEntity;
 	}
 

@@ -10,9 +10,6 @@ import com.glevel.dungeonhero.utils.ApplicationUtils;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by guillaume ON 10/3/14.
- */
 public class Chapter implements Serializable {
 
     private static final long serialVersionUID = 1484748281734643544L;
@@ -23,7 +20,8 @@ public class Chapter implements Serializable {
     private final int mDungeonWidth, mDungeonHeight;
     private List<Event> events;
     private int index;
-    private String introText, outroText;
+    private String introText;
+    private final String outroText;
     private transient Dungeon dungeon;
 
     public Chapter(String introText, String outroText, List<Event> events, int dungeonWidth, int dungeonHeight) {
@@ -60,8 +58,11 @@ public class Chapter implements Serializable {
     }
 
     public void resetChapter() {
+        //noinspection unchecked
         this.events = (List<Event>) ApplicationUtils.deepCopy(initialEvents);
-        Log.d(TAG, "reset chapter = " + events.size() + " events");
+        if (events != null) {
+            Log.d(TAG, "reset chapter = " + events.size() + " events");
+        }
     }
 
     public boolean isFirst() {

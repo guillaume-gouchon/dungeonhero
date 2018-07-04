@@ -29,5 +29,5 @@ public interface IOnSceneTouchListener {
 	 * 
 	 * @return <code>true</code> if this {@link IOnSceneTouchListener} has consumed the {@link TouchEvent}, <code>false</code> otherwise.
 	 */
-	public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent);
+    boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent);
 }

@@ -22,7 +22,7 @@ public class AndEngineRuntimeException extends RuntimeException {
 	// ===========================================================
 
 
-	public AndEngineRuntimeException() {
+	protected AndEngineRuntimeException() {
 		super();
 	}
 
@@ -30,7 +30,7 @@ public class AndEngineRuntimeException extends RuntimeException {
 		super(pMessage);
 	}
 
-	public AndEngineRuntimeException(final Throwable pThrowable) {
+	protected AndEngineRuntimeException(final Throwable pThrowable) {
 		super(pThrowable);
 	}
 

@@ -20,5 +20,5 @@ public interface IParticleModifier<T extends IEntity> extends IParticleInitializ
 	// Methods
 	// ===========================================================
 
-	public void onUpdateParticle(final Particle<T> pParticle);
+	void onUpdateParticle(final Particle<T> pParticle);
 }

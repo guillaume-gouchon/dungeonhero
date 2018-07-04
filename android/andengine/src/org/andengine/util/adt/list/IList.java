@@ -15,16 +15,16 @@ public interface IList<T> {
 	// Methods
 	// ===========================================================
 
-	public boolean isEmpty();
-	public T get(final int pIndex) throws IndexOutOfBoundsException;
-	public void set(final int pIndex, final T pItem) throws IndexOutOfBoundsException;
-	public int indexOf(final T pItem);
-	public void add(final T pItem);
-	public void add(final int pIndex, final T pItem) throws IndexOutOfBoundsException;
-	public boolean remove(final T pItem);
-	public T removeFirst();
-	public T removeLast();
-	public T remove(final int pIndex) throws IndexOutOfBoundsException;
-	public int size();
-	public void clear();
+	boolean isEmpty();
+	T get(final int pIndex) throws IndexOutOfBoundsException;
+	void set(final int pIndex, final T pItem) throws IndexOutOfBoundsException;
+	int indexOf(final T pItem);
+	void add(final T pItem);
+	void add(final int pIndex, final T pItem) throws IndexOutOfBoundsException;
+	boolean remove(final T pItem);
+	T removeFirst();
+	T removeLast();
+	T remove(final int pIndex) throws IndexOutOfBoundsException;
+	int size();
+	void clear();
 }

@@ -18,7 +18,7 @@ public class OrientationSensorOptions {
 	// Fields
 	// ===========================================================
 
-	final SensorDelay mSensorDelay;
+	private final SensorDelay mSensorDelay;
 
 	// ===========================================================
 	// Constructors

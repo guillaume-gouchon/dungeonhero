@@ -18,7 +18,7 @@ public class AccelerationSensorOptions {
 	// Fields
 	// ===========================================================
 
-	final SensorDelay mSensorDelay;
+	private final SensorDelay mSensorDelay;
 
 	// ===========================================================
 	// Constructors

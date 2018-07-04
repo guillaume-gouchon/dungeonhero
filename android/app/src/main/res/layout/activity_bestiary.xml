@@ -8,6 +8,7 @@
         android:id="@+id/storms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="Storms"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_village"
         android:tint="#cc000000" />
@@ -17,51 +18,53 @@
         android:layout_height="match_parent">
 
         <ListView
-            android:layout_alignParentTop="true"
             android:id="@+id/monsters"
-            android:divider="@null"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:choiceMode="none"
+            android:layout_alignParentTop="true"
             android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="none"
+            android:divider="@null"
             android:listSelector="@android:color/transparent"
             android:overScrollMode="never"
             android:scrollbars="none" />
 
         <LinearLayout
-            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:padding="8dp">
 
             <ImageView
                 android:id="@+id/hero_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp" />
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:contentDescription="Hero" />
 
             <com.glevel.dungeonhero.views.CustomTextView
+                style="@style/DiscussionName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                style="@style/DiscussionName"
-                android:text="@string/bestiary_header"
-                android:background="@color/bg_btn_edge_pressed" />
+                android:layout_gravity="start"
+                android:background="@color/bg_btn_edge_pressed"
+                android:text="@string/bestiary_header" />
 
             <View
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_weight="1" />
 
             <com.glevel.dungeonhero.views.CustomTextView
                 android:id="@+id/back_button"
                 style="@style/Button"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="@string/exit"
                 android:padding="5dp"
+                android:text="@string/exit"
                 android:textSize="18sp" />
         </LinearLayout>
     </RelativeLayout>

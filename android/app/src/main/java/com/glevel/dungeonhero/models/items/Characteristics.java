@@ -2,10 +2,6 @@ package com.glevel.dungeonhero.models.items;
 
 import com.glevel.dungeonhero.R;
 
-/**
- * s
- * Created by guillaume on 19/10/14.
- */
 public enum Characteristics {
     HP(R.string.hp, R.drawable.ic_health), STRENGTH(R.string.strength, R.drawable.ic_strength),
     DEXTERITY(R.string.dexterity, R.drawable.ic_dexterity), SPIRIT(R.string.spirit, R.drawable.ic_spirit),
@@ -17,7 +13,7 @@ public enum Characteristics {
     private final int name;
     private final int image;
 
-    private Characteristics(int name, int image) {
+    Characteristics(int name, int image) {
         this.name = name;
         this.image = image;
     }

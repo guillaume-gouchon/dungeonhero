@@ -10,7 +10,7 @@ import org.andengine.util.modifier.BaseSingleValueChangeModifier;
  * @author Nicolas Gramlich
  * @since 15:34:35 - 17.06.2010
  */
-public abstract class SingleValueChangeEntityModifier extends BaseSingleValueChangeModifier<IEntity> implements IEntityModifier {
+abstract class SingleValueChangeEntityModifier extends BaseSingleValueChangeModifier<IEntity> implements IEntityModifier {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -23,15 +23,15 @@ public abstract class SingleValueChangeEntityModifier extends BaseSingleValueCha
 	// Constructors
 	// ===========================================================
 
-	public SingleValueChangeEntityModifier(final float pDuration, final float pValueChange) {
+	SingleValueChangeEntityModifier(final float pDuration, final float pValueChange) {
 		super(pDuration, pValueChange);
 	}
 
-	public SingleValueChangeEntityModifier(final float pDuration, final float pValueChange, final IEntityModifierListener pEntityModifierListener) {
+	SingleValueChangeEntityModifier(final float pDuration, final float pValueChange, final IEntityModifierListener pEntityModifierListener) {
 		super(pDuration, pValueChange, pEntityModifierListener);
 	}
 
-	protected SingleValueChangeEntityModifier(final SingleValueChangeEntityModifier pSingleValueChangeEntityModifier) {
+	SingleValueChangeEntityModifier(final SingleValueChangeEntityModifier pSingleValueChangeEntityModifier) {
 		super(pSingleValueChangeEntityModifier);
 	}
 

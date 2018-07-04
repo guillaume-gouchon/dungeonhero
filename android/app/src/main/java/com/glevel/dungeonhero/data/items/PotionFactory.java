@@ -46,51 +46,42 @@ public class PotionFactory {
     }
 
     public static Potion buildForcePotion() {
-        Potion item = new Potion("force_potion", new BuffEffect(null, Characteristics.DAMAGE, 10, 6, null, 0, Color.RED), 70);
-        return item;
+        return new Potion("force_potion", new BuffEffect(null, Characteristics.DAMAGE, 10, 6, null, 0, Color.RED), 70);
     }
 
-    public static Potion buildGreaterHealingPotion() {
-        Potion item = new Potion("greater_healing_potion", new DamageEffect(null, 30, 0), 150);
-        return item;
+    private static Potion buildGreaterHealingPotion() {
+        return new Potion("greater_healing_potion", new DamageEffect(null, 30, 0), 150);
     }
 
     public static Potion buildHealingPotion() {
-        Potion item = new Potion("healing_potion", new DamageEffect(null, 15, 0), 50);
-        return item;
+        return new Potion("healing_potion", new DamageEffect(null, 15, 0), 50);
     }
 
-    public static Potion buildHeroicPotion() {
-        Potion item = new Potion("heroic_potion", new HeroicEffect("curse.png"), 100);
-        return item;
+    private static Potion buildHeroicPotion() {
+        return new Potion("heroic_potion", new HeroicEffect("curse.png"), 100);
     }
 
-    public static Potion buildInvisibilityPotion() {
-        Potion item = new Potion("invisibility_potion", new CamouflageEffect(null, 0, 0), 80);
-        return item;
+    private static Potion buildInvisibilityPotion() {
+        return new Potion("invisibility_potion", new CamouflageEffect(null, 0, 0), 80);
     }
 
-    public static Potion buildLuckPotion() {
-        Potion item = new Potion("luck_potion", new BuffEffect(null, Characteristics.DODGE, 50, 6, null, 0, Color.GREEN), 70);
-        return item;
+    private static Potion buildLuckPotion() {
+        return new Potion("luck_potion", new BuffEffect(null, Characteristics.DODGE, 50, 6, null, 0, Color.GREEN), 70);
     }
 
-    public static Potion buildMagicShieldPotion() {
-        Potion item = new Potion("magic_shield_potion", new BuffEffect(null, Characteristics.BLOCK, 40, 6, null, 0, Color.YELLOW), 60);
-        return item;
+    private static Potion buildMagicShieldPotion() {
+        return new Potion("magic_shield_potion", new BuffEffect(null, Characteristics.BLOCK, 40, 6, null, 0, Color.YELLOW), 60);
     }
 
-    public static Potion buildRecoveryPotion() {
-        Potion item = new Potion("recovery_potion", new RecoveryEffect("curse.png"), 120);
-        return item;
+    private static Potion buildRecoveryPotion() {
+        return new Potion("recovery_potion", new RecoveryEffect("curse.png"), 120);
     }
 
-    public static Potion buildSpeedPotion() {
-        Potion item = new Potion("speed_potion", new BuffEffect(null, Characteristics.MOVEMENT, 6, 6, null, 0, Color.BLUE), 40);
-        return item;
+    private static Potion buildSpeedPotion() {
+        return new Potion("speed_potion", new BuffEffect(null, Characteristics.MOVEMENT, 6, 6, null, 0, Color.BLUE), 40);
     }
 
-    public static Potion buildUnknownLiquid() {
+    private static Potion buildUnknownLiquid() {
         Effect effect;
         int random = (int) (Math.random() * 6);
         switch (random) {
@@ -117,8 +108,7 @@ public class PotionFactory {
                 break;
         }
 
-        Potion item = new Potion("unknown_liquid", effect, 50);
-        return item;
+        return new Potion("unknown_liquid", effect, 50);
     }
 
 }

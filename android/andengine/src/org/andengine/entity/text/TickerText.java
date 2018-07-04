@@ -150,7 +150,7 @@ public class TickerText extends Text {
 			this(pCharactersPerSecond, false);
 		}
 
-		public TickerTextOptions(final float pCharactersPerSecond, final boolean pReverse) {
+		TickerTextOptions(final float pCharactersPerSecond, final boolean pReverse) {
 			this(HorizontalAlign.LEFT, pCharactersPerSecond, pReverse);
 		}
 
@@ -158,7 +158,7 @@ public class TickerText extends Text {
 			this(AutoWrap.NONE, 0, pHorizontalAlign, Text.LEADING_DEFAULT, pCharactersPerSecond, false);
 		}
 
-		public TickerTextOptions(final HorizontalAlign pHorizontalAlign, final float pCharactersPerSecond, final boolean pReverse) {
+		TickerTextOptions(final HorizontalAlign pHorizontalAlign, final float pCharactersPerSecond, final boolean pReverse) {
 			this(AutoWrap.NONE, 0, pHorizontalAlign, Text.LEADING_DEFAULT, pCharactersPerSecond, pReverse);
 		}
 
@@ -170,7 +170,7 @@ public class TickerText extends Text {
 			this(pAutoWrap, pAutoWrapWidth, pHorizontalAlign, pLeading, pCharactersPerSecond, false);
 		}
 
-		public TickerTextOptions(final AutoWrap pAutoWrap, final float pAutoWrapWidth, final HorizontalAlign pHorizontalAlign, final float pLeading, final float pCharactersPerSecond, final boolean pReverse) {
+		TickerTextOptions(final AutoWrap pAutoWrap, final float pAutoWrapWidth, final HorizontalAlign pHorizontalAlign, final float pLeading, final float pCharactersPerSecond, final boolean pReverse) {
 			super(pAutoWrap, pAutoWrapWidth, pHorizontalAlign, pLeading);
 
 			this.mCharactersPerSecond = pCharactersPerSecond;

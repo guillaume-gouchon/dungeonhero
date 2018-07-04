@@ -12,7 +12,7 @@ public class GameConstants {
     public static final String GAME_PREFS_METAL_MUSIC = "metal_music";
     public static final String TUTORIAL_DONE = "tutorial_done";
 
-    public static enum MusicStates {
+    public enum MusicStates {
         OFF, ON
     }
 

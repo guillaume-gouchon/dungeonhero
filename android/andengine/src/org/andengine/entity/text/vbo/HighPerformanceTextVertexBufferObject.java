@@ -51,8 +51,8 @@ public class HighPerformanceTextVertexBufferObject extends HighPerformanceVertex
 		int bufferDataOffset = 0;
 		final int charactersMaximum = pText.getCharactersMaximum();
 		for(int i = 0; i < charactersMaximum; i++) {
-			bufferData[bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.COLOR_INDEX] = packedColor;
-			bufferData[bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.COLOR_INDEX] = packedColor;
+			bufferData[bufferDataOffset + Text.COLOR_INDEX] = packedColor;
+			bufferData[bufferDataOffset + Text.VERTEX_SIZE + Text.COLOR_INDEX] = packedColor;
 			bufferData[bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.COLOR_INDEX] = packedColor;
 			bufferData[bufferDataOffset + 3 * Text.VERTEX_SIZE + Text.COLOR_INDEX] = packedColor;
 			bufferData[bufferDataOffset + 4 * Text.VERTEX_SIZE + Text.COLOR_INDEX] = packedColor;
@@ -118,15 +118,15 @@ public class HighPerformanceTextVertexBufferObject extends HighPerformanceVertex
 					final float u2 = letter.mU2;
 					final float v2 = letter.mV2;
 
-					bufferData[bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X] = x;
-					bufferData[bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y] = y;
-					bufferData[bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U] = u;
-					bufferData[bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V] = v;
+					bufferData[bufferDataOffset + Text.VERTEX_INDEX_X] = x;
+					bufferData[bufferDataOffset + Text.VERTEX_INDEX_Y] = y;
+					bufferData[bufferDataOffset + Text.TEXTURECOORDINATES_INDEX_U] = u;
+					bufferData[bufferDataOffset + Text.TEXTURECOORDINATES_INDEX_V] = v;
 
-					bufferData[bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X] = x;
-					bufferData[bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y] = y2;
-					bufferData[bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U] = u;
-					bufferData[bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V] = v2;
+					bufferData[bufferDataOffset + Text.VERTEX_SIZE + Text.VERTEX_INDEX_X] = x;
+					bufferData[bufferDataOffset + Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y] = y2;
+					bufferData[bufferDataOffset + Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U] = u;
+					bufferData[bufferDataOffset + Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V] = v2;
 
 					bufferData[bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X] = x2;
 					bufferData[bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y] = y2;

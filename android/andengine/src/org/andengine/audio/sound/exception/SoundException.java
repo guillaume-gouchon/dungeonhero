@@ -23,7 +23,7 @@ public class SoundException extends AndEngineRuntimeException {
 	// Constructors
 	// ===========================================================
 
-	public SoundException() {
+	SoundException() {
 		super();
 	}
 

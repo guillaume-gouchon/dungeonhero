@@ -16,14 +16,14 @@ public abstract class BaseParticleEmitter implements IParticleEmitter {
 	// Fields
 	// ===========================================================
 
-	protected float mCenterX;
-	protected float mCenterY;
+	float mCenterX;
+	float mCenterY;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseParticleEmitter(final float pCenterX, final float pCenterY) {
+	BaseParticleEmitter(final float pCenterX, final float pCenterY) {
 		this.mCenterX = pCenterX;
 		this.mCenterY = pCenterY;
 	}

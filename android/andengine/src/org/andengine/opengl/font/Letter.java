@@ -103,11 +103,8 @@ public class Letter {
 			return false;
 		}
 		final Letter other = (Letter) pObject;
-		if(this.mCharacter != other.mCharacter) {
-			return false;
-		}
-		return true;
-	}
+        return this.mCharacter == other.mCharacter;
+    }
 
 
 

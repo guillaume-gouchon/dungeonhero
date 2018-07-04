@@ -36,7 +36,7 @@ public enum Direction {
 	// Constructors
 	// ===========================================================
 
-	private Direction(final int pDeltaX, final int pDeltaY) {
+	Direction(final int pDeltaX, final int pDeltaY) {
 		this.mDeltaX = pDeltaX;
 		this.mDeltaY = pDeltaY;
 	}

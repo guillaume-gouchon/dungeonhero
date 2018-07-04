@@ -17,4 +17,5 @@
     <declare-styleable name="SpriteView">
         <attr name="spriteName" format="string" />
     </declare-styleable>
+
 </resources> 

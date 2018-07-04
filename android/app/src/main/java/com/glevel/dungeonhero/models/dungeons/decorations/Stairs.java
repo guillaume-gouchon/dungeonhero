@@ -5,9 +5,6 @@ import com.glevel.dungeonhero.models.dungeons.Tile;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by guillaume on 10/16/14.
- */
 public class Stairs extends Decoration {
 
     private static final long serialVersionUID = 7188693630132735199L;

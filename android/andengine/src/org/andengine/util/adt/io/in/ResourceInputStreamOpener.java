@@ -1,6 +1,5 @@
 package org.andengine.util.adt.io.in;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import android.content.res.Resources;
@@ -41,7 +40,7 @@ public class ResourceInputStreamOpener implements IInputStreamOpener {
 	// ===========================================================
 
 	@Override
-	public InputStream open() throws IOException {
+	public InputStream open() {
 		return this.mResources.openRawResource(this.mResourceID);
 	}
 

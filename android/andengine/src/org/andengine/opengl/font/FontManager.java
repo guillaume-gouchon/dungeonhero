@@ -21,7 +21,7 @@ public class FontManager {
 	// Fields
 	// ===========================================================
 
-	private final ArrayList<Font> mFontsManaged = new ArrayList<Font>();
+	private final ArrayList<Font> mFontsManaged = new ArrayList<>();
 
 	// ===========================================================
 	// Constructors
@@ -60,9 +60,9 @@ public class FontManager {
 	}
 
 	public synchronized void loadFonts(final Font ...pFonts) {
-		for(int i = 0; i < pFonts.length; i++) {
-			this.loadFont(pFonts[i]);
-		}
+        for (Font pFont : pFonts) {
+            this.loadFont(pFont);
+        }
 	}
 
 	public synchronized void unloadFont(final Font pFont) {
@@ -73,9 +73,9 @@ public class FontManager {
 	}
 
 	public synchronized void unloadFonts(final Font ...pFonts) {
-		for(int i = 0; i < pFonts.length; i++) {
-			this.unloadFont(pFonts[i]);
-		}
+        for (Font pFont : pFonts) {
+            this.unloadFont(pFont);
+        }
 	}
 
 	public synchronized void updateFonts(final GLState pGLState) {

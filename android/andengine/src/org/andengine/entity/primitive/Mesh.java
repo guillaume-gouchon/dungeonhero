@@ -29,13 +29,13 @@ public class Mesh extends Shape {
 	// Constants
 	// ===========================================================
 
-	public static final int VERTEX_INDEX_X = 0;
-	public static final int VERTEX_INDEX_Y = Mesh.VERTEX_INDEX_X + 1;
+	private static final int VERTEX_INDEX_X = 0;
+	private static final int VERTEX_INDEX_Y = Mesh.VERTEX_INDEX_X + 1;
 	public static final int COLOR_INDEX = Mesh.VERTEX_INDEX_Y + 1;
 
 	public static final int VERTEX_SIZE = 2 + 1;
 
-	public static final VertexBufferObjectAttributes VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT = new VertexBufferObjectAttributesBuilder(2)
+	private static final VertexBufferObjectAttributes VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT = new VertexBufferObjectAttributesBuilder(2)
 		.add(ShaderProgramConstants.ATTRIBUTE_POSITION_LOCATION, ShaderProgramConstants.ATTRIBUTE_POSITION, 2, GLES20.GL_FLOAT, false)
 		.add(ShaderProgramConstants.ATTRIBUTE_COLOR_LOCATION, ShaderProgramConstants.ATTRIBUTE_COLOR, 4, GLES20.GL_UNSIGNED_BYTE, true)
 		.build();
@@ -44,7 +44,7 @@ public class Mesh extends Shape {
 	// Fields
 	// ===========================================================
 
-	protected final IMeshVertexBufferObject mMeshVertexBufferObject;
+	private final IMeshVertexBufferObject mMeshVertexBufferObject;
 	private int mVertexCountToDraw;
 	private int mDrawMode;
 
@@ -62,11 +62,11 @@ public class Mesh extends Shape {
 	/**
 	 * Uses a default {@link HighPerformanceMeshVertexBufferObject} with the {@link VertexBufferObjectAttribute}s: {@link Mesh#VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
 	 */
-	public Mesh(final float pX, final float pY, final float[] pBufferData, final int pVertexCount, final DrawMode pDrawMode, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
+    private Mesh(final float pX, final float pY, final float[] pBufferData, final int pVertexCount, final DrawMode pDrawMode, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
 		this(pX, pY, pVertexCount, pDrawMode, new HighPerformanceMeshVertexBufferObject(pVertexBufferObjectManager, pBufferData, pVertexCount, pDrawType, true, Mesh.VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT));
 	}
 
-	public Mesh(final float pX, final float pY, final int pVertexCount, final DrawMode pDrawMode, final IMeshVertexBufferObject pMeshVertexBufferObject) {
+	private Mesh(final float pX, final float pY, final int pVertexCount, final DrawMode pDrawMode, final IMeshVertexBufferObject pMeshVertexBufferObject) {
 		super(pX, pY, PositionColorShaderProgram.getInstance());
 
 		this.mDrawMode = pDrawMode.getDrawMode();

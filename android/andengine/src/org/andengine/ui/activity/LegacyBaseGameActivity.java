@@ -41,7 +41,7 @@ public abstract class LegacyBaseGameActivity extends BaseGameActivity {
 	protected abstract void onLoadResources();
 	protected abstract void onUnloadResources();
 	protected abstract Scene onLoadScene();
-	protected abstract Scene onLoadComplete();
+	protected abstract void onLoadComplete();
 
 	@Override
 	public final EngineOptions onCreateEngineOptions() {
@@ -54,21 +54,21 @@ public abstract class LegacyBaseGameActivity extends BaseGameActivity {
 	}
 
 	@Override
-	public final void onCreateResources(final OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
+	public final void onCreateResources(final OnCreateResourcesCallback pOnCreateResourcesCallback) {
 		this.onLoadResources();
 
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
 	@Override
-	public final void onCreateScene(final OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
+	public final void onCreateScene(final OnCreateSceneCallback pOnCreateSceneCallback) {
 		final Scene scene = this.onLoadScene();
 
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
 
 	@Override
-	public final void onPopulateScene(final Scene pScene, final OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
+	public final void onPopulateScene(final Scene pScene, final OnPopulateSceneCallback pOnPopulateSceneCallback) {
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 

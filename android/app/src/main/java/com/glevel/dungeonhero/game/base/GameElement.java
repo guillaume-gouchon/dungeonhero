@@ -22,7 +22,7 @@ public abstract class GameElement extends StorableResource implements GraphicHol
     protected transient Tile tilePosition;
     private Ranks rank;
 
-    public GameElement(String identifier, Ranks rank, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
+    protected GameElement(String identifier, Ranks rank, int spriteWidth, int spriteHeight, int nbSpritesX, int nbSpritesY) {
         super(identifier);
         this.rank = rank;
         this.spriteWidth = spriteWidth;
@@ -42,11 +42,13 @@ public abstract class GameElement extends StorableResource implements GraphicHol
     }
 
     public void setTilePosition(Tile tilePosition) {
-        Log.d(TAG, "new tile for " + identifier + " = " + (tilePosition != null ? tilePosition.getX() + ", " + tilePosition.getY() : tilePosition));
+        Log.d(TAG, "new tile for " + identifier + " = " + (tilePosition != null ? tilePosition.getX() + ", " + tilePosition.getY() : ""));
         if (this.tilePosition != null) {
             this.tilePosition.setContent(null);
         }
+
         this.tilePosition = tilePosition;
+
         if (tilePosition != null) {
             tilePosition.setContent(this);
             if (sprite != null) {
@@ -59,6 +61,7 @@ public abstract class GameElement extends StorableResource implements GraphicHol
         switch (rank) {
             case ENEMY:
                 return new Color(1.0f, 0.0f, 0.0f, 0.7f);
+
             default:
                 return new Color(1.0f, 1.0f, 1.0f, 0.7f);
         }

@@ -19,7 +19,7 @@ public interface ITextVertexBufferObject extends IVertexBufferObject {
 	// Methods
 	// ===========================================================
 
-	public void onUpdateColor(final Text pText);
-	public void onUpdateVertices(final Text pText);
+	void onUpdateColor(final Text pText);
+	void onUpdateVertices(final Text pText);
 }
 

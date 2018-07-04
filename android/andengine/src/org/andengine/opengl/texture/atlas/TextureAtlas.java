@@ -28,13 +28,13 @@ public abstract class TextureAtlas<T extends ITextureAtlasSource> extends Textur
 	protected final int mWidth;
 	protected final int mHeight;
 
-	protected final ArrayList<T> mTextureAtlasSources = new ArrayList<T>();
+	protected final ArrayList<T> mTextureAtlasSources = new ArrayList<>();
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public TextureAtlas(final TextureManager pTextureManager, final int pWidth, final int pHeight, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions, final ITextureAtlasStateListener<T> pTextureAtlasStateListener) {
+	protected TextureAtlas(final TextureManager pTextureManager, final int pWidth, final int pHeight, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions, final ITextureAtlasStateListener<T> pTextureAtlasStateListener) {
 		super(pTextureManager, pPixelFormat, pTextureOptions, pTextureAtlasStateListener);
 
 		this.mWidth = pWidth;
@@ -67,7 +67,7 @@ public abstract class TextureAtlas<T extends ITextureAtlasSource> extends Textur
 	}
 
 	/**
-	 * @see {@link ITextureAtlas#setTextureStateListener(ITextureAtlasStateListener)}
+	 * @see
 	 */
 	@Deprecated
 	@Override
@@ -82,7 +82,7 @@ public abstract class TextureAtlas<T extends ITextureAtlasSource> extends Textur
 	}
 
 	/**
-	 * @see {@link ITextureAtlas#setTextureStateListener(ITextureAtlasStateListener)}
+	 * @see
 	 */
 	@Deprecated
 	@Override

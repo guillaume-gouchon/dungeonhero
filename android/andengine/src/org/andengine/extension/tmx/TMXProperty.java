@@ -26,7 +26,7 @@ public class TMXProperty implements TMXConstants {
 	// Constructors
 	// ===========================================================
 
-	public TMXProperty(final Attributes pAttributes) {
+	TMXProperty(final Attributes pAttributes) {
 		this.mName = pAttributes.getValue("", TAG_PROPERTY_ATTRIBUTE_NAME);
 		this.mValue = pAttributes.getValue("", TAG_PROPERTY_ATTRIBUTE_VALUE);
 	}

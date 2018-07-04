@@ -59,7 +59,7 @@ public class Sound extends BaseAudioEntity {
 		this.mLoaded = pLoaded;
 	}
 
-	public void setLoopCount(final int pLoopCount) throws SoundReleasedException {
+	private void setLoopCount(final int pLoopCount) throws SoundReleasedException {
 		this.assertNotReleased();
 
 		this.mLoopCount = pLoopCount;

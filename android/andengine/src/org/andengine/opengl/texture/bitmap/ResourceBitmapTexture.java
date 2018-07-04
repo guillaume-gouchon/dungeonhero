@@ -15,7 +15,7 @@ import android.content.res.Resources;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 12:10:08 - 02.03.2012
  */
-public class ResourceBitmapTexture extends BitmapTexture {
+class ResourceBitmapTexture extends BitmapTexture {
 	// ===========================================================
 	// Constants
 	// ===========================================================

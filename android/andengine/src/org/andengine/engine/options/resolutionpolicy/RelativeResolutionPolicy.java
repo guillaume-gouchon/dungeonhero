@@ -31,7 +31,7 @@ public class RelativeResolutionPolicy extends BaseResolutionPolicy {
 		this(pScale, pScale);
 	}
 
-	public RelativeResolutionPolicy(final float pWidthScale, final float pHeightScale) {
+	private RelativeResolutionPolicy(final float pWidthScale, final float pHeightScale) {
 		this.mWidthScale = pWidthScale;
 		this.mHeightScale = pHeightScale;
 	}

@@ -31,7 +31,7 @@ public class ParallelBackgroundModifier extends ParallelModifier<IBackground> im
 		super(pBackgroundModifierListener, pBackgroundModifiers);
 	}
 
-	protected ParallelBackgroundModifier(final ParallelBackgroundModifier pParallelBackgroundModifier) throws DeepCopyNotSupportedException {
+	private ParallelBackgroundModifier(final ParallelBackgroundModifier pParallelBackgroundModifier) throws DeepCopyNotSupportedException {
 		super(pParallelBackgroundModifier);
 	}
 

@@ -129,7 +129,7 @@ public class PinchZoomDetector extends BaseDetector {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IPinchZoomDetectorListener {
+	public interface IPinchZoomDetectorListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -138,8 +138,8 @@ public class PinchZoomDetector extends BaseDetector {
 		// Methods
 		// ===========================================================
 
-		public void onPinchZoomStarted(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pSceneTouchEvent);
-		public void onPinchZoom(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent, final float pZoomFactor);
-		public void onPinchZoomFinished(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent, final float pZoomFactor);
+		void onPinchZoomStarted(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pSceneTouchEvent);
+		void onPinchZoom(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent, final float pZoomFactor);
+		void onPinchZoomFinished(final PinchZoomDetector pPinchZoomDetector, final TouchEvent pTouchEvent, final float pZoomFactor);
 	}
 }

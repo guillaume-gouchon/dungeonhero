@@ -28,7 +28,7 @@ public class IntLRUCache<V> {
 	private final GenericPool<IntLRUCacheValueHolder<V>> mIntLRUCacheValueHolderPool = new GenericPool<IntLRUCache.IntLRUCacheValueHolder<V>>() {
 		@Override
 		protected IntLRUCacheValueHolder<V> onAllocatePoolItem() {
-			return new IntLRUCacheValueHolder<V>();
+			return new IntLRUCacheValueHolder<>();
 		}
 
 		@Override
@@ -42,9 +42,9 @@ public class IntLRUCache<V> {
 	// Constructors
 	// ===========================================================
 
-	public IntLRUCache(final int pCapacity) {
+	protected IntLRUCache(final int pCapacity) {
 		this.mCapacity = pCapacity;
-		this.mSparseArray = new SparseArray<IntLRUCacheValueHolder<V>>(pCapacity);
+		this.mSparseArray = new SparseArray<>(pCapacity);
 		this.mIntLRUCacheQueue = new IntLRUCacheQueue();
 	}
 
@@ -238,11 +238,11 @@ public class IntLRUCache<V> {
 		// Methods
 		// ===========================================================
 
-		public boolean isEmpty() {
+		boolean isEmpty() {
 			return this.mHead == null;
 		}
 
-		public IntLRUCacheQueueNode add(final int pKey) {
+		IntLRUCacheQueueNode add(final int pKey) {
 			final IntLRUCacheQueueNode IntLRUCacheQueueNode = this.mIntLRUCacheQueueNodePool.obtainPoolItem();
 //			final IntLRUCacheQueueNode IntLRUCacheQueueNode = new IntLRUCacheQueueNode();
 			IntLRUCacheQueueNode.mKey = pKey;
@@ -263,7 +263,7 @@ public class IntLRUCache<V> {
 			return this.mTail;
 		}
 
-		public int poll() {
+		int poll() {
 			final IntLRUCacheQueueNode head = this.mHead;
 			final int key = this.mHead.mKey;
 			if(key == 0) {
@@ -283,12 +283,11 @@ public class IntLRUCache<V> {
 			return key;
 		}
 
-		public void moveToTail(final IntLRUCacheQueueNode pIntLRUCacheQueueNode) {
+		void moveToTail(final IntLRUCacheQueueNode pIntLRUCacheQueueNode) {
 			final IntLRUCacheQueueNode next = pIntLRUCacheQueueNode.mNext;
 
 			/* Check if the node already is the tail. */
 			if(next == null) {
-				return;
 			} else {
 				final IntLRUCacheQueueNode previous = pIntLRUCacheQueueNode.mPrevious;
 				next.mPrevious = previous;

@@ -22,25 +22,25 @@ public abstract class BaseSingleValueSpanModifier<T> extends BaseDurationModifie
 	private float mFromValue;
 	private float mValueSpan;
 
-	protected final IEaseFunction mEaseFunction;
+	private final IEaseFunction mEaseFunction;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseSingleValueSpanModifier(final float pDuration, final float pFromValue, final float pToValue) {
+	protected BaseSingleValueSpanModifier(final float pDuration, final float pFromValue, final float pToValue) {
 		this(pDuration, pFromValue, pToValue, null, EaseLinear.getInstance());
 	}
 
-	public BaseSingleValueSpanModifier(final float pDuration, final float pFromValue, final float pToValue, final IEaseFunction pEaseFunction) {
+	protected BaseSingleValueSpanModifier(final float pDuration, final float pFromValue, final float pToValue, final IEaseFunction pEaseFunction) {
 		this(pDuration, pFromValue, pToValue, null, pEaseFunction);
 	}
 
-	public BaseSingleValueSpanModifier(final float pDuration, final float pFromValue, final float pToValue, final IModifierListener<T> pModifierListener) {
+	protected BaseSingleValueSpanModifier(final float pDuration, final float pFromValue, final float pToValue, final IModifierListener<T> pModifierListener) {
 		this(pDuration, pFromValue, pToValue, pModifierListener, EaseLinear.getInstance());
 	}
 
-	public BaseSingleValueSpanModifier(final float pDuration, final float pFromValue, final float pToValue, final IModifierListener<T> pModifierListener, final IEaseFunction pEaseFunction) {
+	protected BaseSingleValueSpanModifier(final float pDuration, final float pFromValue, final float pToValue, final IModifierListener<T> pModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pModifierListener);
 
 		this.mFromValue = pFromValue;
@@ -60,11 +60,11 @@ public abstract class BaseSingleValueSpanModifier<T> extends BaseDurationModifie
 	// Getter & Setter
 	// ===========================================================
 
-	public float getFromValue() {
+	float getFromValue() {
 		return this.mFromValue;
 	}
 
-	public float getToValue() {
+	float getToValue() {
 		return this.mFromValue + this.mValueSpan;
 	}
 
@@ -91,7 +91,7 @@ public abstract class BaseSingleValueSpanModifier<T> extends BaseDurationModifie
 	// Methods
 	// ===========================================================
 	
-	public void reset(final float pDuration, final float pFromValue, final float pToValue) {
+	void reset(final float pDuration, final float pFromValue, final float pToValue) {
 		super.reset();
 		
 		this.mDuration = pDuration;

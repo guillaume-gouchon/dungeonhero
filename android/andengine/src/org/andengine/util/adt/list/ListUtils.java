@@ -1,6 +1,7 @@
 package org.andengine.util.adt.list;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.andengine.util.adt.queue.IQueue;
@@ -39,26 +40,25 @@ public final class ListUtils {
 	// Methods
 	// ===========================================================
 
-	public static final <T> IQueue<T> synchronizedQueue(final IQueue<T> pQueue) {
-		return new SynchronizedQueue<T>(pQueue);
+	public static <T> IQueue<T> synchronizedQueue(final IQueue<T> pQueue) {
+		return new SynchronizedQueue<>(pQueue);
 	}
 
-	public static final <T> T random(final List<T> pList) {
+	public static <T> T random(final List<T> pList) {
 		return pList.get(MathUtils.random(0, pList.size() - 1));
 	}
 
-	public static final <T> ArrayList<? extends T> toList(final T pItem) {
-		final ArrayList<T> out = new ArrayList<T>();
+	public static <T> ArrayList<? extends T> toList(final T pItem) {
+		final ArrayList<T> out = new ArrayList<>();
 		out.add(pItem);
 		return out;
 	}
 
-	public static final <T> ArrayList<? extends T> toList(final T ... pItems) {
-		final ArrayList<T> out = new ArrayList<T>();
+	@SafeVarargs
+	public static <T> ArrayList<? extends T> toList(final T ... pItems) {
+		final ArrayList<T> out = new ArrayList<>();
 		final int itemCount = pItems.length;
-		for(int i = 0; i < itemCount; i++) {
-			out.add(pItems[i]);
-		}
+		Collections.addAll(out, pItems);
 		return out;
 	}
 
@@ -74,7 +74,7 @@ public final class ListUtils {
 		pItems.set(pIndexB, tmp);
 	}
 
-	public static final int encodeInsertionIndex(final int pIndex) {
+	public static int encodeInsertionIndex(final int pIndex) {
 		return (-pIndex) - 1;
 	}
 

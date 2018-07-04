@@ -9,7 +9,7 @@ import org.andengine.util.adt.DataConstants;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 15:56:32 - 30.10.2011
  */
-public final class BitVector {
+final class BitVector {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -58,14 +58,14 @@ public final class BitVector {
 		for(int i = lastCompleteDataIndex; i >= 0; i--) {
 			final int bytesOffset = i * DataConstants.BYTES_PER_LONG;
 
-			data[i] = ((((long)pBytes[bytesOffset + 0]) << 56) & 0xFF00000000000000L)
+			data[i] = ((((long)pBytes[bytesOffset]) << 56) & 0xFF00000000000000L)
 					| ((((long)pBytes[bytesOffset + 1]) << 48) & 0xFF000000000000L)
 					| ((((long)pBytes[bytesOffset + 2]) << 40) & 0xFF0000000000L)
 					| ((((long)pBytes[bytesOffset + 3]) << 32) & 0xFF00000000L)
 					| ((((long)pBytes[bytesOffset + 4]) << 24) & 0xFF000000L)
 					| ((((long)pBytes[bytesOffset + 5]) << 16) & 0xFF0000L)
 					| ((((long)pBytes[bytesOffset + 6]) <<  8) & 0xFF00L)
-					| ((((long)pBytes[bytesOffset + 7]) <<  0) & 0xFFL);
+					| ((((long) pBytes[bytesOffset + 7])) & 0xFFL);
 		}
 
 		/* Put overflow bytes into last data field. */
@@ -90,7 +90,7 @@ public final class BitVector {
 				case 2:
 					overflowData = overflowData | ((((long)pBytes[overflowBytesOffset + 1]) << 48) & 0xFF000000000000L);
 				case 1:
-					overflowData = overflowData | ((((long)pBytes[overflowBytesOffset + 0]) << 56) & 0xFF00000000000000L);
+					overflowData = overflowData | ((((long)pBytes[overflowBytesOffset]) << 56) & 0xFF00000000000000L);
 			}
 
 			data[overflowDataIndex] = overflowData;
@@ -105,7 +105,7 @@ public final class BitVector {
 		return this.mCapacity;
 	}
 
-	public boolean getBit(final int pPosition) {
+	private boolean getBit(final int pPosition) {
 		if(pPosition < 0) {
 			throw new IllegalArgumentException("pPosition must be >= 0.");
 		}
@@ -140,7 +140,7 @@ public final class BitVector {
 		return this.getBits(pPosition, DataConstants.BITS_PER_LONG);
 	}
 
-	public long getBits(final int pPosition, final int pLength) {
+	private long getBits(final int pPosition, final int pLength) {
 		/* Sanity checks. */
 		if(pPosition < 0) {
 			throw new IllegalArgumentException("pPosition must be >= 0.");
@@ -222,7 +222,7 @@ public final class BitVector {
 		for(int i = lastCompleteDataIndex; i >= 0; i--) {
 			final long dataField = data[i];
 
-			bytes[bytesOffset--] = (byte) ((dataField >> 0) & 0xFF);
+			bytes[bytesOffset--] = (byte) ((dataField) & 0xFF);
 			bytes[bytesOffset--] = (byte) ((dataField >> 8) & 0xFF);
 			bytes[bytesOffset--] = (byte) ((dataField >> 16) & 0xFF);
 			bytes[bytesOffset--] = (byte) ((dataField >> 24) & 0xFF);
@@ -254,7 +254,7 @@ public final class BitVector {
 				case 2:
 					bytes[overflowBytesOffset + 1] = (byte) ((overflowDataField >> 48) & 0xFF);
 				case 1:
-					bytes[overflowBytesOffset + 0] = (byte) ((overflowDataField >> 56) & 0xFF);
+					bytes[overflowBytesOffset] = (byte) ((overflowDataField >> 56) & 0xFF);
 			}
 		}
 

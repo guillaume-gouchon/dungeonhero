@@ -9,16 +9,16 @@
         android:id="@+id/storms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="Storms"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_village"
-        android:tint="#cc000000"
-        android:layout_centerInParent="true" />
+        android:tint="#cc000000" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,37 +35,42 @@
                     style="@style/HeroTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:text="@string/placeholder"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textSize="15sp"
-                    android:layout_marginLeft="10dp" />
+                    android:text="@string/placeholder"
+                    android:textSize="15sp" />
 
                 <com.glevel.dungeonhero.views.CustomTextView
                     android:id="@+id/bestiary_button"
                     style="@style/Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/bestiary"
-                    android:padding="10dp"
-                    android:drawablePadding="10dp"
-                    android:textSize="18sp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:drawableLeft="@drawable/ic_bestiary"
-                    android:layout_marginRight="8dp" />
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_bestiary"
+                    android:padding="10dp"
+                    android:text="@string/bestiary"
+                    android:textSize="18sp" />
 
                 <com.glevel.dungeonhero.views.CustomTextView
                     android:id="@+id/shop_button"
                     style="@style/Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/shop"
-                    android:padding="10dp"
-                    android:drawablePadding="10dp"
-                    android:textSize="18sp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:drawableLeft="@drawable/ic_coin"
-                    android:layout_marginRight="10dp" />
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_coin"
+                    android:padding="10dp"
+                    android:text="@string/shop"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <com.glevel.dungeonhero.views.CustomCarousel
@@ -79,9 +84,9 @@
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/chooseBookMessage"
             style="@style/AnimatedMessage"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="@string/choose_book_message" />
     </RelativeLayout>
 </FrameLayout>

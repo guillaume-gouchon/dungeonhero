@@ -34,11 +34,11 @@ public class ScrollDetector extends BaseDetector {
 	// Constructors
 	// ===========================================================
 
-	public ScrollDetector(final IScrollDetectorListener pScrollDetectorListener) {
+	ScrollDetector(final IScrollDetectorListener pScrollDetectorListener) {
 		this(ScrollDetector.TRIGGER_SCROLL_MINIMUM_DISTANCE_DEFAULT, pScrollDetectorListener);
 	}
 
-	public ScrollDetector(final float pTriggerScrollMinimumDistance, final IScrollDetectorListener pScrollDetectorListener) {
+	ScrollDetector(final float pTriggerScrollMinimumDistance, final IScrollDetectorListener pScrollDetectorListener) {
 		this.mTriggerScrollMinimumDistance = pTriggerScrollMinimumDistance;
 		this.mScrollDetectorListener = pScrollDetectorListener;
 	}
@@ -153,11 +153,11 @@ public class ScrollDetector extends BaseDetector {
 		}
 	}
 
-	protected float getX(final TouchEvent pTouchEvent) {
+	float getX(final TouchEvent pTouchEvent) {
 		return pTouchEvent.getX();
 	}
 
-	protected float getY(final TouchEvent pTouchEvent) {
+	float getY(final TouchEvent pTouchEvent) {
 		return pTouchEvent.getY();
 	}
 
@@ -165,7 +165,7 @@ public class ScrollDetector extends BaseDetector {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IScrollDetectorListener {
+	public interface IScrollDetectorListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -174,8 +174,8 @@ public class ScrollDetector extends BaseDetector {
 		// Methods
 		// ===========================================================
 
-		public void onScrollStarted(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
-		public void onScroll(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
-		public void onScrollFinished(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
+		void onScrollStarted(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
+		void onScroll(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
+		void onScrollFinished(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
 	}
 }

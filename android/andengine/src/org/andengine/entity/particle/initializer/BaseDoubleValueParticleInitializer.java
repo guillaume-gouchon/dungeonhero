@@ -20,14 +20,14 @@ public abstract class BaseDoubleValueParticleInitializer<T extends IEntity> exte
 	// Fields
 	// ===========================================================
 
-	protected float mMinValueB;
-	protected float mMaxValueB;
+	float mMinValueB;
+	float mMaxValueB;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseDoubleValueParticleInitializer(final float pMinValueA, final float pMaxValueA, final float pMinValueB, final float pMaxValueB) {
+	BaseDoubleValueParticleInitializer(final float pMinValueA, final float pMaxValueA, final float pMinValueB, final float pMaxValueB) {
 		super(pMinValueA, pMaxValueA);
 		this.mMinValueB = pMinValueB;
 		this.mMaxValueB = pMaxValueB;
@@ -52,7 +52,7 @@ public abstract class BaseDoubleValueParticleInitializer<T extends IEntity> exte
 	// Methods
 	// ===========================================================
 
-	protected float getRandomValueB() {
+	float getRandomValueB() {
 		if(this.mMinValueB == this.mMaxValueB) {
 			return this.mMaxValueB;
 		} else {

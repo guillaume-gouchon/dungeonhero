@@ -2,20 +2,17 @@ package com.glevel.dungeonhero.models;
 
 import android.content.res.Resources;
 
-import com.glevel.dungeonhero.MyApplication;
+import com.glevel.dungeonhero.BaseApplication;
 
 import java.io.Serializable;
 
-/**
- * Created by guillaume on 12/12/14.
- */
 public abstract class StorableResource implements Serializable {
 
     private static final long serialVersionUID = 484509051608106005L;
-    
+
     protected final String identifier;
 
-    public StorableResource(String identifier) {
+    protected StorableResource(String identifier) {
         this.identifier = identifier;
     }
 
@@ -32,7 +29,7 @@ public abstract class StorableResource implements Serializable {
     }
 
     public static int getResource(Resources resources, String identifier, boolean isImage) {
-        return resources.getIdentifier(identifier, isImage ? "drawable" : "string", MyApplication.sPackageName);
+        return resources.getIdentifier(identifier, isImage ? "drawable" : "string", BaseApplication.sPackageName);
     }
 
     public String getIdentifier() {

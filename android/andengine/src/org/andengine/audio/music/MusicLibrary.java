@@ -8,7 +8,7 @@ import org.andengine.util.adt.map.Library;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 20:30:34 - 09.11.2011
  */
-public class MusicLibrary extends Library<Music> {
+class MusicLibrary extends Library<Music> {
 	// ===========================================================
 	// Constants
 	// ===========================================================

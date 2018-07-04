@@ -89,7 +89,7 @@ public class AnimationData implements IAnimationData {
 		this.set(pFrameDurations, pFirstFrameIndex, pLastFrameIndex, pLoopCount);
 	}
 
-	public AnimationData(final IAnimationData pAnimationData) {
+	private AnimationData(final IAnimationData pAnimationData) {
 		this.set(pAnimationData);
 	}
 
@@ -266,8 +266,7 @@ public class AnimationData implements IAnimationData {
 		final long[] frameEndsInNanoseconds = this.mFrameEndsInNanoseconds;
 		MathUtils.arraySumInto(this.mFrameDurations, frameEndsInNanoseconds, TimeConstants.NANOSECONDS_PER_MILLISECOND);
 
-		final long lastFrameEnd = frameEndsInNanoseconds[this.mFrameCount - 1];
-		this.mAnimationDuration = lastFrameEnd;
+		this.mAnimationDuration = frameEndsInNanoseconds[this.mFrameCount - 1];
 	}
 
 	// ===========================================================

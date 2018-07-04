@@ -29,7 +29,7 @@ public abstract class BaseAudioEntity implements IAudioEntity {
 	// Constructors
 	// ===========================================================
 
-	public BaseAudioEntity(final IAudioManager<? extends IAudioEntity> pAudioManager) {
+	protected BaseAudioEntity(final IAudioManager<? extends IAudioEntity> pAudioManager) {
 		this.mAudioManager = pAudioManager;
 	}
 

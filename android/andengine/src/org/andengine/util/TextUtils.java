@@ -40,7 +40,7 @@ public final class TextUtils {
 	// Methods
 	// ===========================================================
 
-	public static final CharSequence padFront(final CharSequence pText, final char pPadChar, final int pLength) {
+	public static CharSequence padFront(final CharSequence pText, final char pPadChar, final int pLength) {
 		final int padCount = pLength - pText.length();
 		if(padCount <= 0) {
 			return pText;
@@ -56,7 +56,7 @@ public final class TextUtils {
 		}
 	}
 
-	public static final int countOccurrences(final CharSequence pText, final char pCharacter) {
+	private static int countOccurrences(final CharSequence pText, final char pCharacter) {
 		int count = 0;
 
 		int lastOccurrence = android.text.TextUtils.indexOf(pText, pCharacter, 0);
@@ -73,7 +73,7 @@ public final class TextUtils {
 	 * Split a {@link CharSequence} by a Character, i.e. Split lines by using '\n'.<br/>
 	 * Same behavior as <code>String.split("" + pCharacter);</code> .
 	 */
-	public static final ArrayList<CharSequence> split(final CharSequence pText, final char pCharacter) {
+	public static ArrayList<CharSequence> split(final CharSequence pText, final char pCharacter) {
 		return TextUtils.split(pText, pCharacter, new ArrayList<CharSequence>());
 	}
 
@@ -81,7 +81,7 @@ public final class TextUtils {
 	 * Split a {@link CharSequence} by a Character, i.e. Split lines by using '\n'.<br/>
 	 * Same behavior as <code>String.split("" + pCharacter);</code> .
 	 */
-	public static final <L extends List<CharSequence>> L split(final CharSequence pText, final char pCharacter, final L pResult) {
+	public static <L extends List<CharSequence>> L split(final CharSequence pText, final char pCharacter, final L pResult) {
 		final int partCount = TextUtils.countOccurrences(pText, pCharacter) + 1;
 
 		if(partCount == 0) {
@@ -102,20 +102,18 @@ public final class TextUtils {
 		return pResult;
 	}
 
-	public static final String formatStackTrace(final StackTraceElement pStackTraceElement) {
-		return new StringBuilder()
-		.append(pStackTraceElement.getClassName())
-		.append('.')
-		.append(pStackTraceElement.getMethodName())
-		.append('(')
-		.append(pStackTraceElement.getFileName())
-		.append(':')
-		.append(pStackTraceElement.getLineNumber())
-		.append(')')
-		.toString();
+	public static String formatStackTrace(final StackTraceElement pStackTraceElement) {
+		return pStackTraceElement.getClassName() +
+				'.' +
+				pStackTraceElement.getMethodName() +
+				'(' +
+				pStackTraceElement.getFileName() +
+				':' +
+				pStackTraceElement.getLineNumber() +
+				')';
 	}
 
-	public static final String formatStackTrace(final StackTraceElement[] pStackTraceElements) {
+	public static String formatStackTrace(final StackTraceElement[] pStackTraceElements) {
 		final StringBuilder sb = new StringBuilder();
 		final int stackTraceElementCount = pStackTraceElements.length;
 		for(int i = 0; i < stackTraceElementCount; i++) {
@@ -131,7 +129,7 @@ public final class TextUtils {
 		return TextUtils.countCharacters(pTexts, false);
 	}
 
-	public static int countCharacters(final List<CharSequence> pTexts, final boolean pIgnoreWhitespaces) {
+	private static int countCharacters(final List<CharSequence> pTexts, final boolean pIgnoreWhitespaces) {
 		int characters = 0;
 		if(pIgnoreWhitespaces) {
 			for(int i = pTexts.size() - 1; i >= 0; i--) {

@@ -75,8 +75,8 @@ public class SmartList<T> extends ArrayList<T> {
 		return this.remove(0);
 	}
 
-	public T removeLast() throws IndexOutOfBoundsException {
-		return this.remove(this.size() - 1);
+	public void removeLast() throws IndexOutOfBoundsException {
+		this.remove(this.size() - 1);
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class SmartList<T> extends ArrayList<T> {
 		return this.query(pMatcher, new ArrayList<T>());
 	}
 
-	public <L extends List<T>> L query(final IMatcher<T> pMatcher, final L pResult) {
+	<L extends List<T>> L query(final IMatcher<T> pMatcher, final L pResult) {
 		final int size = this.size();
 		for(int i = 0; i < size; i++) {
 			final T item = this.get(i);
@@ -187,7 +187,7 @@ public class SmartList<T> extends ArrayList<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <L extends List<S>, S extends T> L queryForSubclass(final IMatcher<T> pMatcher, final L pResult) {
+    <L extends List<S>, S extends T> L queryForSubclass(final IMatcher<T> pMatcher, final L pResult) {
 		final int size = this.size();
 		for(int i = 0; i < size; i++) {
 			final T item = this.get(i);

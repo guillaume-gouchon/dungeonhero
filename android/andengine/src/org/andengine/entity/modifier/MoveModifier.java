@@ -40,7 +40,7 @@ public class MoveModifier extends DoubleValueSpanEntityModifier {
 		super(pDuration, pFromX, pToX, pFromY, pToY, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected MoveModifier(final MoveModifier pMoveModifier) {
+	MoveModifier(final MoveModifier pMoveModifier) {
 		super(pMoveModifier);
 	}
 

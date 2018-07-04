@@ -18,22 +18,22 @@ public class BoundCamera extends Camera {
 
 	protected boolean mBoundsEnabled;
 
-	protected float mBoundsXMin;
-	protected float mBoundsXMax;
-	protected float mBoundsYMin;
-	protected float mBoundsYMax;
+	private float mBoundsXMin;
+	private float mBoundsXMax;
+	private float mBoundsYMin;
+	private float mBoundsYMax;
 
-	protected float mBoundsCenterX;
-	protected float mBoundsCenterY;
+	private float mBoundsCenterX;
+	private float mBoundsCenterY;
 
-	protected float mBoundsWidth;
-	protected float mBoundsHeight;
+	private float mBoundsWidth;
+	private float mBoundsHeight;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BoundCamera(final float pX, final float pY, final float pWidth, final float pHeight) {
+	BoundCamera(final float pX, final float pY, final float pWidth, final float pHeight) {
 		super(pX, pY, pWidth, pHeight);
 	}
 
@@ -125,7 +125,7 @@ public class BoundCamera extends Camera {
 		super.setCenter(centerX, centerY);
 	}
 
-	protected float getBoundedX(final float pX) {
+	private float getBoundedX(final float pX) {
 		final float minXBoundExceededAmount = this.mBoundsXMin - this.getXMin();
 		final boolean minXBoundExceeded = minXBoundExceededAmount > 0;
 
@@ -151,7 +151,7 @@ public class BoundCamera extends Camera {
 		}
 	}
 
-	protected float getBoundedY(final float pY) {
+	private float getBoundedY(final float pY) {
 		final float minYBoundExceededAmount = this.mBoundsYMin - this.getYMin();
 		final boolean minYBoundExceeded = minYBoundExceededAmount > 0;
 

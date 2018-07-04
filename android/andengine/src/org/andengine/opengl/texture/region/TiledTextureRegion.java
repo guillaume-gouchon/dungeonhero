@@ -19,9 +19,9 @@ public class TiledTextureRegion extends BaseTextureRegion implements ITiledTextu
 	// Fields
 	// ===========================================================
 
-	protected int mCurrentTileIndex;
-	protected final int mTileCount;
-	protected final ITextureRegion[] mTextureRegions;
+	private int mCurrentTileIndex;
+	private final int mTileCount;
+	private final ITextureRegion[] mTextureRegions;
 
 	// ===========================================================
 	// Constructors
@@ -36,7 +36,7 @@ public class TiledTextureRegion extends BaseTextureRegion implements ITiledTextu
 	 * @param pPerformSameTextureSanityCheck checks whether all supplied {@link ITextureRegion} are on the same {@link Texture}
 	 * @param pTextureRegions
 	 */
-	public TiledTextureRegion(final ITexture pTexture, final boolean pPerformSameTextureSanityCheck, final ITextureRegion ... pTextureRegions) {
+    private TiledTextureRegion(final ITexture pTexture, final boolean pPerformSameTextureSanityCheck, final ITextureRegion... pTextureRegions) {
 		super(pTexture);
 
 		this.mTextureRegions = pTextureRegions;

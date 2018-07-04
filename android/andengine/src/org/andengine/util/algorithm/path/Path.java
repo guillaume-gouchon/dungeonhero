@@ -33,7 +33,7 @@ public class Path {
 	// Getter & Setter
 	// ===========================================================
 
-	public int getLength() {
+	private int getLength() {
 		return this.mXs.length;
 	}
 
@@ -53,11 +53,11 @@ public class Path {
 		return this.getY(this.getLength() - 1);
 	}
 
-	public int getX(final int pIndex) {
+	private int getX(final int pIndex) {
 		return this.mXs[pIndex];
 	}
 
-	public int getY(final int pIndex) {
+	private int getY(final int pIndex) {
 		return this.mYs[pIndex];
 	}
 
@@ -75,10 +75,8 @@ public class Path {
 	}
 
 	public boolean contains(final int pX, final int pY) {
-		final int[] xs = this.mXs;
-		final int[] ys = this.mYs;
 		for(int i = this.getLength() - 1; i >= 0; i--) {
-			if(xs[i] == pX && ys[i] == pY) {
+			if(this.mXs[i] == pX && this.mYs[i] == pY) {
 				return true;
 			}
 		}

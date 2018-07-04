@@ -36,16 +36,15 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
 
     protected SharedPreferences mSharedPrefs;
 
-    protected boolean mDoSaveGame = true;
     protected Game mGame;
 
     protected Scene mScene;
     protected ZoomCamera mCamera;
-    protected GraphicsManager mGraphicsManager;
+    private GraphicsManager mGraphicsManager;
     protected InputManager mInputManager;
     protected GUIManager mGUIManager;
-    protected SoundEffectManager mSoundEffectManager;
-    protected Font mDefaultFont;
+    private SoundEffectManager mSoundEffectManager;
+    private Font mDefaultFont;
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -81,7 +80,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
     }
 
     @Override
-    public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
+    public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) {
         // init game element factory
         mGraphicsManager = new GraphicsManager(this, getTextureManager());
         mGraphicsManager.initGraphics(mGame);
@@ -105,7 +104,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         prepareNewScene();
     }
 
-    protected void prepareNewScene() {
+    private void prepareNewScene() {
         mScene = new Scene();
         mScene.setOnAreaTouchTraversalFrontToBack();
         mScene.setBackground(new Background(0, 0, 0));
@@ -144,9 +143,8 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         if (mSoundEffectManager != null) {
             mSoundEffectManager.onPause();
         }
-        if (mDoSaveGame) {
-            getContentResolver().insert(MyContentProvider.URI_GAMES, mGame.toContentValues());
-        }
+
+        getContentResolver().insert(MyContentProvider.URI_GAMES, mGame.toContentValues());
     }
 
     private void pauseGame() {
@@ -169,12 +167,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
         if (isClickable) {
             mScene.unregisterTouchArea(shape);
         }
-        runOnUpdateThread(new Runnable() {
-            @Override
-            public void run() {
-                mScene.detachChild(shape);
-            }
-        });
+        runOnUpdateThread(() -> mScene.detachChild(shape));
     }
 
     public void endGame() {
@@ -194,12 +187,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
                 public void onUpdate(float pSecondsElapsed) {
                     if (--timeLeft <= 0) {
                         // remove sprite
-                        runOnUpdateThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mScene.detachChild(sprite);
-                            }
-                        });
+                        runOnUpdateThread(() -> mScene.detachChild(sprite));
                     }
                 }
 
@@ -230,12 +218,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
 
                     if (--timeLeft <= 0) {
                         // remove sprite
-                        runOnUpdateThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mScene.detachChild(animatedText);
-                            }
-                        });
+                        runOnUpdateThread(() -> mScene.detachChild(animatedText));
                     }
                 }
 
@@ -277,12 +260,7 @@ public abstract class MyBaseGameActivity extends CustomLayoutGameActivity implem
                 public void onAnimationFinished(AnimatedSprite pAnimatedSprite) {
                     if (removeAfter) {
                         // remove sprite
-                        runOnUpdateThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mScene.detachChild(sprite);
-                            }
-                        });
+                        runOnUpdateThread(() -> mScene.detachChild(sprite));
                     } else {
                         pAnimatedSprite.setCurrentTileIndex(1);
                     }

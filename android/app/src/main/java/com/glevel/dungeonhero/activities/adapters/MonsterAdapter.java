@@ -2,8 +2,8 @@ package com.glevel.dungeonhero.activities.adapters;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +40,10 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
         mBounceAnimation = AnimationUtils.loadAnimation(activity.getApplicationContext(), R.anim.bounce_monster);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.monster_item, null);
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        View layout = LayoutInflater.from(mActivity).inflate(R.layout.monster_item, null);
         bindMonsterToView(getItem(position), layout);
         return layout;
     }
@@ -55,19 +55,16 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
         addMonsterInfo(layout, monster);
 
         int nbFrags = Collections.frequency(mHero.getFrags(), monster.getIdentifier());
-        ((TextView) layout.findViewById(R.id.frags)).setText("" + nbFrags);
+        ((TextView) layout.findViewById(R.id.frags)).setText(String.valueOf(nbFrags));
 
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicManager.playSound(getContext(), R.raw.monster);
-                layout.findViewById(R.id.image).startAnimation(mBounceAnimation);
-            }
+        layout.setOnClickListener(v -> {
+            MusicManager.playSound(getContext(), R.raw.monster);
+            layout.findViewById(R.id.image).startAnimation(mBounceAnimation);
         });
     }
 
     private void addMonsterInfo(View rootLayout, Monster monster) {
-        ViewGroup skillLayout = (ViewGroup) rootLayout.findViewById(R.id.skills);
+        ViewGroup skillLayout = rootLayout.findViewById(R.id.skills);
 
         int index = 0;
 
@@ -90,16 +87,11 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
     }
 
     private void bindElementToView(View itemView, StorableResource element) {
-        ImageView image = (ImageView) itemView.findViewById(R.id.image);
+        ImageView image = itemView.findViewById(R.id.image);
         image.setImageResource(element.getImage(mResources));
         ApplicationUtils.setAlpha(image, 0.6f);
         itemView.setTag(R.string.item, element);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showElementInfo((StorableResource) v.getTag(R.string.item));
-            }
-        });
+        itemView.setOnClickListener(v -> showElementInfo((StorableResource) v.getTag(R.string.item)));
     }
 
     private void showElementInfo(StorableResource element) {

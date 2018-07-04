@@ -24,11 +24,11 @@ public abstract class BaseDurationModifier<T> extends BaseModifier<T> {
 	// Constructors
 	// ===========================================================
 
-	public BaseDurationModifier(final float pDuration) {
+	protected BaseDurationModifier(final float pDuration) {
 		this.mDuration = pDuration;
 	}
 
-	public BaseDurationModifier(final float pDuration, final IModifierListener<T> pModifierListener) {
+	protected BaseDurationModifier(final float pDuration, final IModifierListener<T> pModifierListener) {
 		super(pModifierListener);
 
 		this.mDuration = pDuration;

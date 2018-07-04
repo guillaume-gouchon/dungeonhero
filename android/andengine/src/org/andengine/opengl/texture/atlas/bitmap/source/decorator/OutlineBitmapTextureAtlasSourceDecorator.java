@@ -21,7 +21,7 @@ public class OutlineBitmapTextureAtlasSourceDecorator extends BaseShapeBitmapTex
 	// Fields
 	// ===========================================================
 
-	protected final int mOutlineColor;
+	private final int mOutlineColor;
 
 	// ===========================================================
 	// Constructors
@@ -31,7 +31,7 @@ public class OutlineBitmapTextureAtlasSourceDecorator extends BaseShapeBitmapTex
 		this(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, pOutlineColor, null);
 	}
 
-	public OutlineBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int pOutlineColor, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
+	private OutlineBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int pOutlineColor, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
 		super(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, pTextureAtlasSourceDecoratorOptions);
 		this.mOutlineColor = pOutlineColor;
 

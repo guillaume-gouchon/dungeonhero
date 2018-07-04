@@ -106,7 +106,7 @@ public abstract class PVRCCZTexture extends PVRTexture {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static class CCZHeader {
+	static class CCZHeader {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -118,7 +118,7 @@ public abstract class PVRCCZTexture extends PVRTexture {
 			(byte)'!'
 		};
 
-		public static final int SIZE = 16;
+		static final int SIZE = 16;
 
 		// ===========================================================
 		// Fields
@@ -131,7 +131,7 @@ public abstract class PVRCCZTexture extends PVRTexture {
 		// Constructors
 		// ===========================================================
 
-		public CCZHeader(final byte[] pData) {
+		CCZHeader(final byte[] pData) {
 			this.mDataByteBuffer = ByteBuffer.wrap(pData);
 			this.mDataByteBuffer.rewind();
 			this.mDataByteBuffer.order(ByteOrder.BIG_ENDIAN);
@@ -154,7 +154,7 @@ public abstract class PVRCCZTexture extends PVRTexture {
 			return this.mDataByteBuffer.getShort(4);
 		}
 
-		public CCZCompressionFormat getCCZCompressionFormat() {
+		CCZCompressionFormat getCCZCompressionFormat() {
 			return this.mCCZCompressionFormat;
 		}
 
@@ -166,7 +166,7 @@ public abstract class PVRCCZTexture extends PVRTexture {
 			return this.mDataByteBuffer.getInt(8);
 		}
 
-		public int getUncompressedSize() {
+		int getUncompressedSize() {
 			return this.mDataByteBuffer.getInt(12);
 		}
 
@@ -183,7 +183,7 @@ public abstract class PVRCCZTexture extends PVRTexture {
 		// ===========================================================
 	}
 
-	public static enum CCZCompressionFormat {
+	public enum CCZCompressionFormat {
 		// ===========================================================
 		// Elements
 		// ===========================================================
@@ -207,11 +207,11 @@ public abstract class PVRCCZTexture extends PVRTexture {
 		// Constructors
 		// ===========================================================
 
-		private CCZCompressionFormat(final short pID) {
+		CCZCompressionFormat(final short pID) {
 			this.mID = pID;
 		}
 
-		public InflaterInputStream wrap(final InputStream pInputStream) throws IOException {
+		InflaterInputStream wrap(final InputStream pInputStream) throws IOException {
 			switch(this) {
 				case GZIP:
 					return new GZIPInputStream(pInputStream);
@@ -224,15 +224,14 @@ public abstract class PVRCCZTexture extends PVRTexture {
 			}
 		}
 
-		public static CCZCompressionFormat fromID(final short pID) {
+		static CCZCompressionFormat fromID(final short pID) {
 			final CCZCompressionFormat[] cczCompressionFormats = CCZCompressionFormat.values();
 			final int cczCompressionFormatCount = cczCompressionFormats.length;
-			for(int i = 0; i < cczCompressionFormatCount; i++) {
-				final CCZCompressionFormat cczCompressionFormat = cczCompressionFormats[i];
-				if(cczCompressionFormat.mID == pID) {
-					return cczCompressionFormat;
-				}
-			}
+            for (final CCZCompressionFormat cczCompressionFormat : cczCompressionFormats) {
+                if (cczCompressionFormat.mID == pID) {
+                    return cczCompressionFormat;
+                }
+            }
 			throw new IllegalArgumentException("Unexpected " + CCZCompressionFormat.class.getSimpleName() + "-ID: '" + pID + "'.");
 		}
 

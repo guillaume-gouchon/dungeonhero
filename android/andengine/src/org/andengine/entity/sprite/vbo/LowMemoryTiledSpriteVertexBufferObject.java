@@ -50,8 +50,8 @@ public class LowMemoryTiledSpriteVertexBufferObject extends LowMemorySpriteVerte
 		final int tileCount = pTiledSprite.getTileCount();
 		int bufferDataOffset = 0;
 		for(int i = 0; i < tileCount; i++) {
-			bufferData.put(bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
-			bufferData.put(bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
+			bufferData.put(bufferDataOffset + Sprite.COLOR_INDEX, packedColor);
+			bufferData.put(bufferDataOffset + TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
 			bufferData.put(bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
 			bufferData.put(bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
 			bufferData.put(bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
@@ -75,11 +75,11 @@ public class LowMemoryTiledSpriteVertexBufferObject extends LowMemorySpriteVerte
 		final int tileCount = pTiledSprite.getTileCount();
 		int bufferDataOffset = 0;
 		for(int i = 0; i < tileCount; i++) {
-			bufferData.put(bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x);
-			bufferData.put(bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y);
+			bufferData.put(bufferDataOffset + Sprite.VERTEX_INDEX_X, x);
+			bufferData.put(bufferDataOffset + Sprite.VERTEX_INDEX_Y, y);
 
-			bufferData.put(bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x);
-			bufferData.put(bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y2);
+			bufferData.put(bufferDataOffset + TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x);
+			bufferData.put(bufferDataOffset + TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y2);
 
 			bufferData.put(bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x2);
 			bufferData.put(bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y);
@@ -142,11 +142,11 @@ public class LowMemoryTiledSpriteVertexBufferObject extends LowMemorySpriteVerte
 			}
 
 			if(textureRegion.isRotated()) {
-				bufferData.put(bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u2);
-				bufferData.put(bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
+				bufferData.put(bufferDataOffset + Sprite.TEXTURECOORDINATES_INDEX_U, u2);
+				bufferData.put(bufferDataOffset + Sprite.TEXTURECOORDINATES_INDEX_V, v);
 
-				bufferData.put(bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
-				bufferData.put(bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
+				bufferData.put(bufferDataOffset + TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
+				bufferData.put(bufferDataOffset + TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
 
 				bufferData.put(bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u2);
 				bufferData.put(bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
@@ -160,11 +160,11 @@ public class LowMemoryTiledSpriteVertexBufferObject extends LowMemorySpriteVerte
 				bufferData.put(bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
 				bufferData.put(bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
 			} else {
-				bufferData.put(bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
-				bufferData.put(bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
+				bufferData.put(bufferDataOffset + Sprite.TEXTURECOORDINATES_INDEX_U, u);
+				bufferData.put(bufferDataOffset + Sprite.TEXTURECOORDINATES_INDEX_V, v);
 
-				bufferData.put(bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
-				bufferData.put(bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
+				bufferData.put(bufferDataOffset + TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
+				bufferData.put(bufferDataOffset + TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
 
 				bufferData.put(bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u2);
 				bufferData.put(bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);

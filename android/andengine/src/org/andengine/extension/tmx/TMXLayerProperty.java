@@ -9,7 +9,7 @@ import org.xml.sax.Attributes;
  * @author Nicolas Gramlich
  * @since 18:48:46 - 12.10.2010
  */
-public class TMXLayerProperty extends TMXProperty {
+class TMXLayerProperty extends TMXProperty {
 	// ===========================================================
 	// Constants
 	// ===========================================================

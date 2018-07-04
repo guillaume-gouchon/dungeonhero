@@ -52,8 +52,8 @@ public class LowMemoryTextVertexBufferObject extends LowMemoryVertexBufferObject
 		int bufferDataOffset = 0;
 		final int charactersMaximum = pText.getCharactersMaximum();
 		for(int i = 0; i < charactersMaximum; i++) {
-			bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
-			bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
+			bufferData.put(bufferDataOffset + Text.COLOR_INDEX, packedColor);
+			bufferData.put(bufferDataOffset + Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
 			bufferData.put(bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
 			bufferData.put(bufferDataOffset + 3 * Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
 			bufferData.put(bufferDataOffset + 4 * Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
@@ -120,15 +120,15 @@ public class LowMemoryTextVertexBufferObject extends LowMemoryVertexBufferObject
 					final float u2 = letter.mU2;
 					final float v2 = letter.mV2;
 
-					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x);
-					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y);
-					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u);
-					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v);
+					bufferData.put(bufferDataOffset + Text.VERTEX_INDEX_X, x);
+					bufferData.put(bufferDataOffset + Text.VERTEX_INDEX_Y, y);
+					bufferData.put(bufferDataOffset + Text.TEXTURECOORDINATES_INDEX_U, u);
+					bufferData.put(bufferDataOffset + Text.TEXTURECOORDINATES_INDEX_V, v);
 
-					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x);
-					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y2);
-					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u);
-					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v2);
+					bufferData.put(bufferDataOffset + Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x);
+					bufferData.put(bufferDataOffset + Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y2);
+					bufferData.put(bufferDataOffset + Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u);
+					bufferData.put(bufferDataOffset + Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v2);
 
 					bufferData.put(bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x2);
 					bufferData.put(bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y2);

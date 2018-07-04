@@ -30,7 +30,7 @@ public enum MIMEType {
 	// Constructors
 	// ===========================================================
 
-	private MIMEType(final String pTypeString) {
+	MIMEType(final String pTypeString) {
 		this.mTypeString = pTypeString;
 	}
 

@@ -40,7 +40,7 @@ public enum PixelFormat {
 	// Constructors
 	// ===========================================================
 
-	private PixelFormat(final int pGLInternalFormat, final int pGLFormat, final int pGLType, final int pBitsPerPixel) {
+	PixelFormat(final int pGLInternalFormat, final int pGLFormat, final int pGLType, final int pBitsPerPixel) {
 		this.mGLInternalFormat = pGLInternalFormat;
 		this.mGLFormat= pGLFormat;
 		this.mGLType = pGLType;

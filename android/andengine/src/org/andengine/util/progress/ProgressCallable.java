@@ -23,5 +23,5 @@ public interface ProgressCallable<T> {
 	 * @return computed result
 	 * @throws Exception if unable to compute a result
 	 */
-	public T call(final IProgressListener pProgressListener) throws Exception;
+    T call(final IProgressListener pProgressListener) throws Exception;
 }

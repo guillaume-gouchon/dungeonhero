@@ -33,31 +33,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by guillaume ON 10/2/14.
- */
 public abstract class Unit extends GameElement implements MovingElement<Tile> {
 
+    private static final String TAG = Unit.class.getName();
+
     private static final long serialVersionUID = 9185541600463971808L;
-    private static final String TAG = "Unit";
 
     // Skills
-    protected final List<Skill> skills = new ArrayList<>();
-    protected final List<Item> items = new ArrayList<>();
-    protected final Equipment[] equipments = new Equipment[5];
-    protected List<Effect> buffs = new ArrayList<>();
-    // Possessions
-    protected int gold;
-    // Characteristics
-    protected int hp;
-    protected int currentHP;
-    protected int strength;
-    protected int dexterity;
-    protected int spirit;
-    protected int movement;
-    protected Reward reward;
+    final List<Skill> skills = new ArrayList<>();
+    final List<Item> items = new ArrayList<>();
+    final Equipment[] equipments = new Equipment[5];
+    List<Effect> buffs = new ArrayList<>();
 
-    public Unit(String identifier, Ranks rank, int hp, int currentHP, int strength, int dexterity, int spirit, int movement) {
+    // Possessions
+    int gold;
+
+    // Characteristics
+    int hp;
+    int currentHP;
+    int strength;
+    int dexterity;
+    int spirit;
+    private final int movement;
+    Reward reward;
+
+    Unit(String identifier, Ranks rank, int hp, int currentHP, int strength, int dexterity, int spirit, int movement) {
         super(identifier, rank, 210, 400, UnitSprite.SPRITE_ANIM_X, UnitSprite.SPRITE_ANIM_Y);
         this.hp = hp;
         this.currentHP = currentHP;
@@ -210,7 +210,7 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         return (minDamage + " - " + maxDamage);
     }
 
-    public void takeDamage(int damage) {
+    private void takeDamage(int damage) {
         currentHP -= damage;
     }
 
@@ -226,11 +226,11 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         return buffs;
     }
 
-    public int calculateDamage(Weapon weapon) {
+    private int calculateDamage(Weapon weapon) {
         return weapon.getMinDamage() + (int) (Math.random() * (weapon.getDeltaDamage() + 1));
     }
 
-    public int calculateCriticalDamage(Weapon weapon) {
+    private int calculateCriticalDamage(Weapon weapon) {
         return weapon.getMinDamage() + weapon.getDeltaDamage();
     }
 
@@ -267,16 +267,14 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
         }
 
         for (Skill skill : skills) {
-            if (skill.getLevel() > 0 && skill instanceof PassiveSkill && ((PassiveSkill) skill).getEffect().getTarget() == characteristic) {
-                Effect effect = ((PassiveSkill) skill).getEffect();
+            if (skill.getLevel() > 0 && skill instanceof PassiveSkill && skill.getEffect().getTarget() == characteristic) {
+                Effect effect = skill.getEffect();
                 bonus += effect.getValue();
             }
         }
 
-        Equipment equipment;
-        for (int n = 0; n < equipments.length; n++) {
-            if (equipments[n] != null) {
-                equipment = equipments[n];
+        for (Equipment equipment : equipments) {
+            if (equipment != null) {
                 if (characteristic == Characteristics.PROTECTION && equipment instanceof Armor) {
                     bonus += ((Armor) equipment).getProtection();
                 }
@@ -324,7 +322,6 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
     }
 
     /**
-     * @param equipment
      * @return item to drop
      */
     public Item equip(Equipment equipment) {
@@ -372,8 +369,8 @@ public abstract class Unit extends GameElement implements MovingElement<Tile> {
 
     public boolean isEquipped(Equipment equipment) {
         Equipment e;
-        for (int n = 0; n < equipments.length; n++) {
-            e = equipments[n];
+        for (Equipment equipment1 : equipments) {
+            e = equipment1;
             if (e == equipment) {
                 return true;
             }

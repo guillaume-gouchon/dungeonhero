@@ -30,7 +30,7 @@ public class EmptyBitmapTextureAtlasSource extends BaseTextureAtlasSource implem
 		this(0, 0, pTextureWidth, pTextureHeight);
 	}
 
-	public EmptyBitmapTextureAtlasSource(final int pTextureX, final int pTextureY, final int pTextureWidth, final int pTextureHeight) {
+	private EmptyBitmapTextureAtlasSource(final int pTextureX, final int pTextureY, final int pTextureWidth, final int pTextureHeight) {
 		super(pTextureX, pTextureY, pTextureWidth, pTextureHeight);
 	}
 

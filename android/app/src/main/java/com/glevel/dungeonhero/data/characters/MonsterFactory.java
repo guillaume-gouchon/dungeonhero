@@ -69,7 +69,7 @@ public class MonsterFactory {
         return monster;
     }
 
-    public static Monster buildOgreKing() {
+    private static Monster buildOgreKing() {
         Monster monster = new Monster("ogre_king", 28, 28, 15, 9, 9, 4);
         monster.equip(WeaponFactory.buildBattleAxe(0));
         monster.equip(ArmorFactory.buildChainmail(0));
@@ -92,7 +92,7 @@ public class MonsterFactory {
         return monster;
     }
 
-    public static Monster buildChaosWizard() {
+    private static Monster buildChaosWizard() {
         Monster monster = new Monster("chaos_wizard", 19, 19, 9, 11, 17, 4);
         monster.equip(WeaponFactory.buildWizardStaff(2));
         monster.equip(ArmorFactory.buildRobe(2));
@@ -102,7 +102,7 @@ public class MonsterFactory {
         return monster;
     }
 
-    public static Monster buildDemon() {
+    private static Monster buildDemon() {
         Monster monster = new Monster("demon", 28, 28, 20, 15, 15, 5);
         monster.equip(new Weapon("claws", 4, 15, 1, 0));
         monster.equip(ArmorFactory.buildLamellar(3));
@@ -139,7 +139,7 @@ public class MonsterFactory {
         return l;
     }
 
-    public static Monster getRandomMonster(int threatLevel) {
+    private static Monster getRandomMonster(int threatLevel) {
         Random r = new Random();
         int diceRoll = 2 + r.nextInt(11);
         switch (threatLevel) {

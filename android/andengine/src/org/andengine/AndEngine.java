@@ -17,7 +17,7 @@ import android.os.Build;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:03:59 - 19.03.2012
  */
-public class AndEngine {
+class AndEngine {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -51,7 +51,7 @@ public class AndEngine {
 		}
 	}
 
-	public static void checkDeviceSupported() throws DeviceNotSupportedException {
+	private static void checkDeviceSupported() throws DeviceNotSupportedException {
 		AndEngine.checkCodePathSupport();
 
 		AndEngine.checkOpenGLSupport();

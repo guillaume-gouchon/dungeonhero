@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @author Nicolas Gramlich
  * @since 16:54:24 - 07.11.2010
  */
-public class MultiKey<K> {
+class MultiKey<K> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -25,7 +25,8 @@ public class MultiKey<K> {
 	// Constructors
 	// ===========================================================
 
-	public MultiKey(final K... pKeys) {
+	@SafeVarargs
+    public MultiKey(final K... pKeys) {
 		this.mKeys = pKeys;
 
 		this.mCachedHashCode = MultiKey.hash(pKeys);

@@ -4,26 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_gui"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:gravity="center">
+    android:padding="10dp">
 
     <com.glevel.dungeonhero.views.CustomTextView
-        style="@style/PopupMessage"
         android:id="@+id/name"
+        style="@style/PopupMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:text="@string/placeholder" />
 
     <View
-        android:background="@color/grey"
+        android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_width="match_parent" />
+        android:background="@color/grey" />
 
     <com.glevel.dungeonhero.views.CustomTextView
-        style="@style/PopupDescription"
         android:id="@+id/description"
+        style="@style/PopupDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/placeholder" />
@@ -32,62 +32,62 @@
         android:id="@+id/stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        custom:columnCount="3"
+        android:layout_gravity="start"
         android:padding="5dp"
-        android:layout_gravity="left">
+        custom:columnCount="3">
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
     </android.support.v7.widget.GridLayout>
 
     <android.support.v7.widget.GridLayout
         android:id="@+id/requirements"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        custom:columnCount="2"
+        android:layout_gravity="start"
         android:padding="5dp"
-        android:layout_gravity="left">
+        custom:columnCount="2">
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
 
         <com.glevel.dungeonhero.views.HintTextView
-            android:visibility="gone"
-            style="@style/HeroStat" />
+            style="@style/HeroStat"
+            android:visibility="gone" />
     </android.support.v7.widget.GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:layout_marginTop="10dp">
+        android:orientation="horizontal">
 
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/main_action_btn"
@@ -102,8 +102,9 @@
             style="@style/PopupButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/placeholder"
             android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:text="@string/placeholder"
             android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

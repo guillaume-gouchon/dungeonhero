@@ -30,7 +30,7 @@ public class DelayModifier extends DurationEntityModifier {
 		super(pDuration);
 	}
 
-	protected DelayModifier(final DelayModifier pDelayModifier) {
+	private DelayModifier(final DelayModifier pDelayModifier) {
 		super(pDelayModifier);
 	}
 

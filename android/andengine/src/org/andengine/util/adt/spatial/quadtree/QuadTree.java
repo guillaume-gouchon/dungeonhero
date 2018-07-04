@@ -27,26 +27,26 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 	// Constants
 	// ===========================================================
 
-	protected static final int LEVEL_ROOT = 0;
-	protected static final int LEVEL_MAX_DEFAULT = 8;
+	static final int LEVEL_ROOT = 0;
+	private static final int LEVEL_MAX_DEFAULT = 8;
 
 	// ===========================================================
 	// Fields
 	// ===========================================================
 
-	protected final B mBounds;
-	protected final QuadTreeNode mRoot;
-	protected final int mMaxLevel;
+	private final B mBounds;
+	final QuadTreeNode mRoot;
+	private final int mMaxLevel;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public QuadTree(final B pBounds) {
+	QuadTree(final B pBounds) {
 		this(pBounds, QuadTree.LEVEL_MAX_DEFAULT);
 	}
 
-	protected QuadTree(final B pBounds, final int pMaxLevel) {
+	QuadTree(final B pBounds, final int pMaxLevel) {
 		this.mBounds = pBounds;
 		this.mMaxLevel = pMaxLevel;
 		this.mRoot = this.initRoot(pBounds);
@@ -105,7 +105,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 	// Methods
 	// ===========================================================
 
-	public synchronized int getItemCount() {
+	synchronized int getItemCount() {
 		// TODO Items could be counted along the add/remove calls.
 		return this.mRoot.getItemCount();
 	}
@@ -115,11 +115,12 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 	}
 
 	@SuppressWarnings("deprecation")
-	public synchronized void add(final T pItem) {
+	synchronized void add(final T pItem) {
 		this.add(pItem, pItem.getBounds());
 	}
 
-	public synchronized void addAll(final T ... pItems) {
+	@SafeVarargs
+	public final synchronized void addAll(final T... pItems) {
 		for(final T item : pItems) {
 			this.add(item);
 		}
@@ -182,42 +183,42 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 		return this.remove(pItem, pItem.getBounds());
 	}
 
-	public synchronized boolean remove(final T pItem, final B pBounds) {
+	synchronized boolean remove(final T pItem, final B pBounds) {
 		return this.mRoot.remove(pItem, pBounds);
 	}
 
-	public synchronized ArrayList<T> query(final B pBounds) {
+	synchronized ArrayList<T> query(final B pBounds) {
 		return this.query(pBounds, new ArrayList<T>());
 	}
 
-	public synchronized <L extends List<T>> L query(final B pBounds, final L pResult) {
+	synchronized <L extends List<T>> L query(final B pBounds, final L pResult) {
 		return this.mRoot.query(pBounds, pResult);
 	}
 
-	public synchronized ArrayList<T> query(final B pBounds, final IMatcher<T> pMatcher) {
+	synchronized ArrayList<T> query(final B pBounds, final IMatcher<T> pMatcher) {
 		return this.query(pBounds, pMatcher, new ArrayList<T>());
 	}
 
-	public synchronized <L extends List<T>> L query(final B pBounds, final IMatcher<T> pMatcher, final L pResult) {
+	synchronized <L extends List<T>> L query(final B pBounds, final IMatcher<T> pMatcher, final L pResult) {
 		return this.mRoot.query(pBounds, pMatcher, pResult);
 	}
 
 	/**
 	 * @param pBounds
-	 * @param pMatcher must only {@link IMatcher#matches(T)} when the item is <code>instanceof</code> S, otherwise it will an {@link ClassCastException}.
+	 * @param pMatcher must only  when the item is <code>instanceof</code> S, otherwise it will an {@link ClassCastException}.
 	 * @param pResult
 	 * @return
 	 * @throws ClassCastException when pMatcher matched an item that was not <code>instanceof</code> S.
 	 */
-	public synchronized <L extends List<S>, S extends T> L queryForSubclass(final B pBounds, final IMatcher<T> pMatcher, final L pResult) throws ClassCastException {
+	synchronized <L extends List<S>, S extends T> L queryForSubclass(final B pBounds, final IMatcher<T> pMatcher, final L pResult) throws ClassCastException {
 		return this.mRoot.queryForSubclass(pBounds, pMatcher, pResult);
 	}
 
-	public synchronized boolean containsAny(final B pBounds) {
+	synchronized boolean containsAny(final B pBounds) {
 		return this.mRoot.containsAny(pBounds);
 	}
 
-	public synchronized boolean containsAny(final B pBounds, final IMatcher<T> pMatcher) {
+	synchronized boolean containsAny(final B pBounds, final IMatcher<T> pMatcher) {
 		return this.mRoot.containsAny(pBounds, pMatcher);
 	}
 
@@ -246,19 +247,19 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 		// Fields
 		// ===========================================================
 
-		protected final int mLevel;
-		protected List<T> mItems;
+		final int mLevel;
+		List<T> mItems;
 
-		protected QuadTreeNode mTopLeftChild;
-		protected QuadTreeNode mTopRightChild;
-		protected QuadTreeNode mBottomLeftChild;
-		protected QuadTreeNode mBottomRightChild;
+		QuadTreeNode mTopLeftChild;
+		QuadTreeNode mTopRightChild;
+		QuadTreeNode mBottomLeftChild;
+		QuadTreeNode mBottomRightChild;
 
 		// ===========================================================
 		// Constructors
 		// ===========================================================
 
-		protected QuadTreeNode(final int pLevel) {
+		QuadTreeNode(final int pLevel) {
 			this.mLevel = pLevel;
 		}
 
@@ -294,7 +295,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			return this.toString(0);
 		}
 
-		public String toString(final int pIndent) {
+		String toString(final int pIndent) {
 			final char[] indents = new char[pIndent];
 			Arrays.fill(indents, '\t');
 
@@ -378,7 +379,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 		// Methods
 		// ===========================================================
 
-		public int getItemCount() {
+		int getItemCount() {
 			int count;
 			if(this.mItems == null) {
 				count = 0;
@@ -402,7 +403,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			return count;
 		}
 
-		public void callItems(final ParameterCallable<T> pParameterCallable) {
+		void callItems(final ParameterCallable<T> pParameterCallable) {
 			if(this.mItems != null) {
 				final int itemCount = this.mItems.size();
 				for(int i = 0; i < itemCount; i++) {
@@ -425,7 +426,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			}
 		}
 
-		public void callNodes(final ParameterCallable<QuadTreeNode> pParameterCallable) {
+		void callNodes(final ParameterCallable<QuadTreeNode> pParameterCallable) {
 			pParameterCallable.call(this);
 
 			if(this.mTopLeftChild != null) {
@@ -449,7 +450,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 		/**
 		 * @return the items of this {@link QuadTreeNode} and all children (recursively).
 		 */
-		public <L extends List<T>> L getItemsAndItemsBelow(final L pResult) {
+		<L extends List<T>> L getItemsAndItemsBelow(final L pResult) {
 			if(this.mItems != null) {
 				pResult.addAll(this.mItems); // TODO Does addAll use an iterator internally?
 			}
@@ -474,7 +475,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			return this.getItemsAndItemsBelow(pMatcher, new ArrayList<T>());
 		}
 
-		public <L extends List<T>> L getItemsAndItemsBelow(final IMatcher<T> pMatcher, final L pResult) {
+		<L extends List<T>> L getItemsAndItemsBelow(final IMatcher<T> pMatcher, final L pResult) {
 			if(this.mItems != null) {
 				for(final T item : this.mItems) { // TODO Check if iteration is allocation free.
 					if(pMatcher.matches(item)) {
@@ -500,7 +501,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 		}
 
 		@SuppressWarnings("unchecked")
-		public <L extends List<S>, S extends T> L getItemsAndItemsBelowForSubclass(final IMatcher<T> pMatcher, final L pResult) throws ClassCastException {
+		<L extends List<S>, S extends T> void getItemsAndItemsBelowForSubclass(final IMatcher<T> pMatcher, final L pResult) throws ClassCastException {
 			if(this.mItems != null) {
 				final int itemCount = this.mItems.size();
 				for(int i = 0; i < itemCount; i++) {
@@ -524,14 +525,13 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 				this.mBottomRightChild.getItemsAndItemsBelowForSubclass(pMatcher, pResult);
 			}
 
-			return pResult;
 		}
 
 		public ArrayList<T> query(final B pBounds) {
 			return this.query(pBounds, new ArrayList<T>());
 		}
 
-		public <L extends List<T>> L query(final B pBounds, final L pResult) {
+		<L extends List<T>> L query(final B pBounds, final L pResult) {
 			/* Test against all items in this node. */
 			if(this.mItems != null) {
 				final int itemCount = this.mItems.size();
@@ -557,7 +557,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			}
 		}
 
-		public <L extends List<T>> L query(final B pBounds, final IMatcher<T> pMatcher, final L pResult) {
+		<L extends List<T>> L query(final B pBounds, final IMatcher<T> pMatcher, final L pResult) {
 			/* Test against all items in this node. */
 			if(this.mItems != null) {
 				for(final T item : this.mItems) {
@@ -582,7 +582,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 		}
 
 		@SuppressWarnings("unchecked")
-		public <L extends List<S>, S extends T> L queryForSubclass(final B pBounds, final IMatcher<T> pMatcher, final L pResult) throws ClassCastException {
+		<L extends List<S>, S extends T> L queryForSubclass(final B pBounds, final IMatcher<T> pMatcher, final L pResult) throws ClassCastException {
 			/* Test against all items in this node. */
 			if(this.mItems != null) {
 				for(final T item : this.mItems) {
@@ -683,7 +683,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			return false;
 		}
 
-		public boolean containsAny(final B pBounds, final IMatcher<T> pMatcher) {
+		boolean containsAny(final B pBounds, final IMatcher<T> pMatcher) {
 			/* Test against all items in this node. */
 			if(this.mItems != null) {
 				final int itemCount = this.mItems.size();
@@ -698,18 +698,13 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			/* Check children. */
 			if(this.containsAnyChild(pBounds, pMatcher, this.mTopLeftChild)) {
 				return true;
-			} else if(this.containsAnyChild(pBounds, pMatcher, this.mTopRightChild)) {
-				return true;
-			} else if(this.containsAnyChild(pBounds, pMatcher, this.mBottomLeftChild)) {
-				return true;
-			} else if(this.containsAnyChild(pBounds, pMatcher, this.mBottomRightChild)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+			} else if (this.containsAnyChild(pBounds, pMatcher, this.mTopRightChild)) {
+                return true;
+            } else
+                return this.containsAnyChild(pBounds, pMatcher, this.mBottomLeftChild) || this.containsAnyChild(pBounds, pMatcher, this.mBottomRightChild);
+        }
 
-		public boolean containsAny(final B pBounds) {
+		boolean containsAny(final B pBounds) {
 			/* Test against all items in this node. */
 			if(this.mItems != null) {
 				final int itemCount = this.mItems.size();
@@ -724,42 +719,23 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			/* Check children. */
 			if(this.containsAnyChild(pBounds, this.mTopLeftChild)) {
 				return true;
-			} else if(this.containsAnyChild(pBounds, this.mTopRightChild)) {
-				return true;
-			} else if(this.containsAnyChild(pBounds, this.mBottomLeftChild)) {
-				return true;
-			} else if(this.containsAnyChild(pBounds, this.mBottomRightChild)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+			} else if (this.containsAnyChild(pBounds, this.mTopRightChild)) {
+                return true;
+            } else
+                return this.containsAnyChild(pBounds, this.mBottomLeftChild) || this.containsAnyChild(pBounds, this.mBottomRightChild);
+        }
 
 		private boolean containsAnyChild(final B pBounds, final IMatcher<T> pMatcher, final QuadTreeNode pChild) {
-			if(pChild == null) {
-				return false;
-			}
+            return pChild != null && pChild.intersects(pBounds) && pChild.containsAny(pBounds, pMatcher);
 
-			if(pChild.intersects(pBounds) && pChild.containsAny(pBounds, pMatcher)) {
-				return true;
-			}
-
-			return false;
-		}
+        }
 
 		private boolean containsAnyChild(final B pBounds, final QuadTreeNode pChild) {
-			if(pChild == null) {
-				return false;
-			}
+            return pChild != null && pChild.intersects(pBounds) && pChild.containsAny(pBounds);
 
-			if(pChild.intersects(pBounds) && pChild.containsAny(pBounds)) {
-				return true;
-			}
+        }
 
-			return false;
-		}
-
-		public void add(final T pItem, final B pBounds) throws IllegalArgumentException {
+		void add(final T pItem, final B pBounds) throws IllegalArgumentException {
 			/* Check if this node is in the maximum level. */
 			if(this.mLevel >= QuadTree.this.mMaxLevel) {
 				/* No more levels allowed, so this node has to take the item. */
@@ -836,7 +812,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 			return this.remove(pItem, pItem.getBounds());
 		}
 
-		public boolean remove(final T pItem, final B pBounds) throws IllegalArgumentException {
+		boolean remove(final T pItem, final B pBounds) throws IllegalArgumentException {
 			if(!this.contains(pBounds)) { // TODO Perform this check only for the root?
 				throw new IllegalArgumentException("pItem (" + pItem.toString() + ") is out of the bounds of this " + this.getClass().getSimpleName() + ".");
 			}
@@ -852,23 +828,19 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 				return this.mBottomRightChild.remove(pItem, pBounds);
 			} else {
 				/* None of the children completely contained the item. */
-				if(this.mItems == null) {
-					return false;
-				} else {
-					// TODO Potentially mItems could be set to null when its size is 0.
-					return this.mItems.remove(pItem);
-				}
+				return this.mItems != null && this.mItems.remove(pItem);
+// TODO Potentially mItems could be set to null when its size is 0.
 			}
 		}
 
 		private void addItemSafe(final T pItem) {
 			if(this.mItems == null) {
-				this.mItems = new ArrayList<T>(1);
+				this.mItems = new ArrayList<>(1);
 			}
 			this.mItems.add(pItem);
 		}
 
-		protected void clear() {
+		void clear() {
 			if(this.mBottomLeftChild != null) {
 				this.mBottomLeftChild.clear();
 				this.mBottomLeftChild = null;

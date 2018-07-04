@@ -138,19 +138,19 @@ public class ConfigChooser implements GLSurfaceView.EGLConfigChooser {
 	public EGLConfig chooseConfig(final EGL10 pEGL, final EGLDisplay pEGLDisplay) {
 		try {
 			return this.chooseConfig(pEGL, pEGLDisplay, ConfigChooserMatcher.STRICT);
-		} catch (final IllegalArgumentException e) {
+		} catch (final IllegalArgumentException ignored) {
 
 		}
 
 		try {
 			return this.chooseConfig(pEGL, pEGLDisplay, ConfigChooserMatcher.LOOSE_STENCIL);
-		} catch (final IllegalArgumentException e) {
+		} catch (final IllegalArgumentException ignored) {
 
 		}
 
 		try {
 			return this.chooseConfig(pEGL, pEGLDisplay, ConfigChooserMatcher.LOOSE_DEPTH_AND_STENCIL);
-		} catch (final IllegalArgumentException e) {
+		} catch (final IllegalArgumentException ignored) {
 
 		}
 
@@ -189,7 +189,7 @@ public class ConfigChooser implements GLSurfaceView.EGLConfigChooser {
 	// ===========================================================
 
 	private static int getEGLConfigCount(final EGL10 pEGL, final EGLDisplay pEGLDisplay, final int[] pEGLConfigAttributes) {
-		if(pEGL.eglChooseConfig(pEGLDisplay, pEGLConfigAttributes, null, 0, ConfigChooser.BUFFER) == false) {
+		if(!pEGL.eglChooseConfig(pEGLDisplay, pEGLConfigAttributes, null, 0, ConfigChooser.BUFFER)) {
 			throw new IllegalArgumentException("EGLCONFIG_FALLBACK failed!");
 		}
 		return ConfigChooser.BUFFER[0];
@@ -205,27 +205,26 @@ public class ConfigChooser implements GLSurfaceView.EGLConfigChooser {
 	}
 
 	private EGLConfig findEGLConfig(final EGL10 pEGL, final EGLDisplay pEGLDisplay, final EGLConfig[] pEGLConfigs, final ConfigChooserMatcher pConfigChooserMatcher) {
-		for(int i = 0; i < pEGLConfigs.length; ++i) {
-			final EGLConfig config = pEGLConfigs[i];
-			if(config != null) {
-				final int redSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_RED_SIZE, 0);
-				final int greenSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_GREEN_SIZE, 0);
-				final int blueSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_BLUE_SIZE, 0);
-				final int alphaSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_ALPHA_SIZE, 0);
-				final int depthSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_DEPTH_SIZE, 0);
-				final int stencilSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_STENCIL_SIZE, 0);
+        for (final EGLConfig config : pEGLConfigs) {
+            if (config != null) {
+                final int redSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_RED_SIZE, 0);
+                final int greenSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_GREEN_SIZE, 0);
+                final int blueSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_BLUE_SIZE, 0);
+                final int alphaSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_ALPHA_SIZE, 0);
+                final int depthSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_DEPTH_SIZE, 0);
+                final int stencilSize = ConfigChooser.getConfigAttrib(pEGL, pEGLDisplay, config, EGL10.EGL_STENCIL_SIZE, 0);
 
-				if(pConfigChooserMatcher.matches(redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize)) {
-					this.mRedSize = redSize;
-					this.mGreenSize = greenSize;
-					this.mBlueSize = blueSize;
-					this.mAlphaSize = alphaSize;
-					this.mDepthSize = depthSize;
-					this.mStencilSize = stencilSize;
-					return config;
-				}
-			}
-		}
+                if (pConfigChooserMatcher.matches(redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize)) {
+                    this.mRedSize = redSize;
+                    this.mGreenSize = greenSize;
+                    this.mBlueSize = blueSize;
+                    this.mAlphaSize = alphaSize;
+                    this.mDepthSize = depthSize;
+                    this.mStencilSize = stencilSize;
+                    return config;
+                }
+            }
+        }
 		throw new IllegalArgumentException("No EGLConfig found!");
 	}
 
@@ -249,35 +248,20 @@ public class ConfigChooser implements GLSurfaceView.EGLConfigChooser {
 		STRICT() {
 			@Override
 			public boolean matches(final int pRedSize, final int pGreenSize, final int pBlueSize, final int pAlphaSize, final int pDepthSize, final int pStencilSize) {
-				if(pDepthSize == ConfigChooser.DEPTH_SIZE && pStencilSize == ConfigChooser.STENCIL_SIZE) {
-					if(pRedSize == ConfigChooser.RED_SIZE && pGreenSize == ConfigChooser.GREEN_SIZE && pBlueSize == ConfigChooser.BLUE_SIZE && pAlphaSize == ConfigChooser.ALPHA_SIZE) {
-						return true;
-					}
-				}
-				return false;
-			}
+                return pDepthSize == ConfigChooser.DEPTH_SIZE && pStencilSize == ConfigChooser.STENCIL_SIZE && pRedSize == ConfigChooser.RED_SIZE && pGreenSize == ConfigChooser.GREEN_SIZE && pBlueSize == ConfigChooser.BLUE_SIZE && pAlphaSize == ConfigChooser.ALPHA_SIZE;
+            }
 		},
 		LOOSE_STENCIL() {
 			@Override
 			public boolean matches(final int pRedSize, final int pGreenSize, final int pBlueSize, final int pAlphaSize, final int pDepthSize, final int pStencilSize) {
-				if(pDepthSize == ConfigChooser.DEPTH_SIZE && pStencilSize >= ConfigChooser.STENCIL_SIZE) {
-					if(pRedSize == ConfigChooser.RED_SIZE && pGreenSize == ConfigChooser.GREEN_SIZE && pBlueSize == ConfigChooser.BLUE_SIZE && pAlphaSize == ConfigChooser.ALPHA_SIZE) {
-						return true;
-					}
-				}
-				return false;
-			}
+                return pDepthSize == ConfigChooser.DEPTH_SIZE && pStencilSize >= ConfigChooser.STENCIL_SIZE && pRedSize == ConfigChooser.RED_SIZE && pGreenSize == ConfigChooser.GREEN_SIZE && pBlueSize == ConfigChooser.BLUE_SIZE && pAlphaSize == ConfigChooser.ALPHA_SIZE;
+            }
 		},
 		LOOSE_DEPTH_AND_STENCIL() {
 			@Override
 			public boolean matches(final int pRedSize, final int pGreenSize, final int pBlueSize, final int pAlphaSize, final int pDepthSize, final int pStencilSize) {
-				if(pDepthSize >= ConfigChooser.DEPTH_SIZE && pStencilSize >= ConfigChooser.STENCIL_SIZE) {
-					if(pRedSize == ConfigChooser.RED_SIZE && pGreenSize == ConfigChooser.GREEN_SIZE && pBlueSize == ConfigChooser.BLUE_SIZE && pAlphaSize == ConfigChooser.ALPHA_SIZE) {
-						return true;
-					}
-				}
-				return false;
-			}
+                return pDepthSize >= ConfigChooser.DEPTH_SIZE && pStencilSize >= ConfigChooser.STENCIL_SIZE && pRedSize == ConfigChooser.RED_SIZE && pGreenSize == ConfigChooser.GREEN_SIZE && pBlueSize == ConfigChooser.BLUE_SIZE && pAlphaSize == ConfigChooser.ALPHA_SIZE;
+            }
 		},
 		ANY() {
 			@Override
@@ -306,7 +290,7 @@ public class ConfigChooser implements GLSurfaceView.EGLConfigChooser {
 		// Methods for/from SuperClass/Interfaces
 		// ===========================================================
 
-		public abstract boolean matches(final int pRedSize, final int pGreenSize, final int pBlueSize, final int pAlphaSize, final int pDepthSize, final int pStencilSize);
+		protected abstract boolean matches(final int pRedSize, final int pGreenSize, final int pBlueSize, final int pAlphaSize, final int pDepthSize, final int pStencilSize);
 
 		// ===========================================================
 		// Methods

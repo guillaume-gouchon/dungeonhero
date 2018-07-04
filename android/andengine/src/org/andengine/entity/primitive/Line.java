@@ -32,17 +32,17 @@ public class Line extends Shape {
 	// Constants
 	// ===========================================================
 
-	public static final float LINE_WIDTH_DEFAULT = 1.0f;
+	private static final float LINE_WIDTH_DEFAULT = 1.0f;
 
 	public static final int VERTEX_INDEX_X = 0;
 	public static final int VERTEX_INDEX_Y = Line.VERTEX_INDEX_X + 1;
 	public static final int COLOR_INDEX = Line.VERTEX_INDEX_Y + 1;
 
 	public static final int VERTEX_SIZE = 2 + 1;
-	public static final int VERTICES_PER_LINE = 2;
-	public static final int LINE_SIZE = Line.VERTEX_SIZE * Line.VERTICES_PER_LINE;
+	private static final int VERTICES_PER_LINE = 2;
+	private static final int LINE_SIZE = Line.VERTEX_SIZE * Line.VERTICES_PER_LINE;
 
-	public static final VertexBufferObjectAttributes VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT = new VertexBufferObjectAttributesBuilder(2)
+	private static final VertexBufferObjectAttributes VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT = new VertexBufferObjectAttributesBuilder(2)
 		.add(ShaderProgramConstants.ATTRIBUTE_POSITION_LOCATION, ShaderProgramConstants.ATTRIBUTE_POSITION, 2, GLES20.GL_FLOAT, false)
 		.add(ShaderProgramConstants.ATTRIBUTE_COLOR_LOCATION, ShaderProgramConstants.ATTRIBUTE_COLOR, 4, GLES20.GL_UNSIGNED_BYTE, true)
 		.build();
@@ -51,12 +51,12 @@ public class Line extends Shape {
 	// Fields
 	// ===========================================================
 
-	protected float mX2;
-	protected float mY2;
+	private float mX2;
+	private float mY2;
 
-	protected float mLineWidth;
+	private float mLineWidth;
 
-	protected final ILineVertexBufferObject mLineVertexBufferObject;
+	private final ILineVertexBufferObject mLineVertexBufferObject;
 
 	// ===========================================================
 	// Constructors
@@ -83,11 +83,11 @@ public class Line extends Shape {
 		this(pX1, pY1, pX2, pY2, pLineWidth, pVertexBufferObjectManager, DrawType.STATIC);
 	}
 
-	public Line(final float pX1, final float pY1, final float pX2, final float pY2, final float pLineWidth, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
+	private Line(final float pX1, final float pY1, final float pX2, final float pY2, final float pLineWidth, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
 		this(pX1, pY1, pX2, pY2, pLineWidth, new HighPerformanceLineVertexBufferObject(pVertexBufferObjectManager, Line.LINE_SIZE, pDrawType, true, Line.VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT));
 	}
 
-	public Line(final float pX1, final float pY1, final float pX2, final float pY2, final float pLineWidth, final ILineVertexBufferObject pLineVertexBufferObject) {
+	private Line(final float pX1, final float pY1, final float pX2, final float pY2, final float pLineWidth, final ILineVertexBufferObject pLineVertexBufferObject) {
 		super(pX1, pY1, PositionColorShaderProgram.getInstance());
 
 		this.mX2 = pX2;
@@ -271,14 +271,11 @@ public class Line extends Shape {
 
 	@Override
 	public boolean collidesWith(final IShape pOtherShape) {
-		if(pOtherShape instanceof Line) {
+		if (pOtherShape instanceof Line) {
 			final Line otherLine = (Line) pOtherShape;
 			return LineCollisionChecker.checkLineCollision(this.mX, this.mY, this.mX2, this.mY2, otherLine.mX, otherLine.mY, otherLine.mX2, otherLine.mY2);
-		} else if(pOtherShape instanceof RectangularShape) {
-			return RectangularShapeCollisionChecker.checkCollision((RectangularShape) pOtherShape, this);
-		} else {
-			return false;
-		}
+		} else
+			return pOtherShape instanceof RectangularShape && RectangularShapeCollisionChecker.checkCollision((RectangularShape) pOtherShape, this);
 	}
 
 	// ===========================================================

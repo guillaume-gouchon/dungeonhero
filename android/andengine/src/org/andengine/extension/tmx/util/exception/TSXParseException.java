@@ -9,7 +9,7 @@ import org.xml.sax.SAXException;
  * @author Nicolas Gramlich
  * @since 18:37:46 - 08.08.2010
  */
-public class TSXParseException extends SAXException {
+class TSXParseException extends SAXException {
 	// ===========================================================
 	// Constants
 	// ===========================================================

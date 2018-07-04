@@ -64,7 +64,7 @@ public class TexturePackLoader {
 		}
 	}
 
-	public TexturePack load(final InputStream pInputStream, final String pAssetBasePath) throws TexturePackParseException {
+	private TexturePack load(final InputStream pInputStream, final String pAssetBasePath) throws TexturePackParseException {
 		try{
 			final SAXParserFactory spf = SAXParserFactory.newInstance();
 			final SAXParser sp = spf.newSAXParser();

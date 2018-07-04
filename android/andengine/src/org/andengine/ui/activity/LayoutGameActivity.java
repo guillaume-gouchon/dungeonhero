@@ -1,7 +1,5 @@
 package org.andengine.ui.activity;
 
-import org.andengine.opengl.view.RenderSurfaceView;
-
 /**
  * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
@@ -37,7 +35,7 @@ public abstract class LayoutGameActivity extends BaseGameActivity {
 	protected void onSetContentView() {
 		super.setContentView(this.getLayoutID());
 
-		this.mRenderSurfaceView = (RenderSurfaceView) this.findViewById(this.getRenderSurfaceViewID());
+		this.mRenderSurfaceView = this.findViewById(this.getRenderSurfaceViewID());
 
 		this.mRenderSurfaceView.setRenderer(this.mEngine, this);
 	}

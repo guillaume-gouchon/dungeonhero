@@ -18,5 +18,5 @@ public interface IParticleEmitter extends IUpdateHandler {
 	// Methods
 	// ===========================================================
 
-	public void getPositionOffset(final float[] pOffset);
+	void getPositionOffset(final float[] pOffset);
 }

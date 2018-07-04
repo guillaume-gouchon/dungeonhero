@@ -1,9 +1,8 @@
 package com.glevel.dungeonhero.models.items.consumables;
 
-/**
- * Created by guillaume ON 10/6/14.
- */
-public class Scroll extends Consumable {
+class Scroll extends Consumable {
+
+    private static final long serialVersionUID = -5127829780588842664L;
 
     public Scroll(String identifier, int price) {
         super(identifier, price);

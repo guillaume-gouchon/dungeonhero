@@ -34,7 +34,7 @@ public enum SensorDelay {
 	// Constructors
 	// ===========================================================
 
-	private SensorDelay(final int pDelay) {
+	SensorDelay(final int pDelay) {
 		this.mDelay = pDelay;
 	}
 

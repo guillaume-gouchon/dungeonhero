@@ -1,7 +1,6 @@
 package org.andengine.util.adt.io.in;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -31,7 +30,7 @@ public class ByteArrayInputStreamOpener implements IInputStreamOpener {
 		this(pBytes, 0, pBytes.length);
 	}
 
-	public ByteArrayInputStreamOpener(final byte[] pBytes, final int pOffset, final int pLength) {
+	private ByteArrayInputStreamOpener(final byte[] pBytes, final int pOffset, final int pLength) {
 		this.mBytes = pBytes;
 		this.mOffset = pOffset;
 		this.mLength = pLength;
@@ -46,7 +45,7 @@ public class ByteArrayInputStreamOpener implements IInputStreamOpener {
 	// ===========================================================
 
 	@Override
-	public InputStream open() throws IOException {
+	public InputStream open() {
 		return new ByteArrayInputStream(this.mBytes, this.mOffset, this.mLength);
 	}
 

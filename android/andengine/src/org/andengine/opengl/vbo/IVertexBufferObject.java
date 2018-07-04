@@ -17,56 +17,56 @@ public interface IVertexBufferObject extends IDisposable {
 	// Constants
 	// ===========================================================
 
-	public static final int HARDWARE_BUFFER_ID_INVALID = -1;
+	int HARDWARE_BUFFER_ID_INVALID = -1;
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
 
-	public boolean isAutoDispose();
+	boolean isAutoDispose();
 
-	public int getHardwareBufferID();
+	int getHardwareBufferID();
 
-	public boolean isLoadedToHardware();
+	boolean isLoadedToHardware();
 	/**
 	 * Mark this {@link VertexBufferObject} as not not loaded to hardware.
 	 * It will reload itself to hardware when it gets used again.
 	 */
-	public void setNotLoadedToHardware();
-	public void unloadFromHardware(final GLState pGLState);
+    void setNotLoadedToHardware();
+	void unloadFromHardware(final GLState pGLState);
 
-	public boolean isDirtyOnHardware();
+	boolean isDirtyOnHardware();
 	/** Mark this {@link VertexBufferObject} dirty so it gets updated on the hardware. */
-	public void setDirtyOnHardware();
+    void setDirtyOnHardware();
 
 	/**
 	 * @return the number of <code>float</code>s that fit into this {@link IVertexBufferObject}.
 	 */
-	public int getCapacity();
+    int getCapacity();
 	/**
 	 * @return the number of <code>byte</code>s that fit into this {@link IVertexBufferObject}.
 	 */
-	public int getByteCapacity();
+    int getByteCapacity();
 
 	/**
 	 * @return the number of <code>byte</code>s that are allocated on the heap.
 	 */
-	public int getHeapMemoryByteSize();
+    int getHeapMemoryByteSize();
 	/**
 	 * @return the number of <code>byte</code>s that are allocated on the native heap (through direct {@link ByteBuffer}s).
 	 */
-	public int getNativeHeapMemoryByteSize();
+    int getNativeHeapMemoryByteSize();
 	/**
 	 * @return the number of <code>byte</code>s that are allocated on the GPU.
 	 */
-	public int getGPUMemoryByteSize();
+    int getGPUMemoryByteSize();
 
-	public void bind(final GLState pGLState);
-	public void bind(final GLState pGLState, final ShaderProgram pShaderProgram);
-	public void unbind(final GLState pGLState, final ShaderProgram pShaderProgram);
+	void bind(final GLState pGLState);
+	void bind(final GLState pGLState, final ShaderProgram pShaderProgram);
+	void unbind(final GLState pGLState, final ShaderProgram pShaderProgram);
 
-	public VertexBufferObjectManager getVertexBufferObjectManager();
+	VertexBufferObjectManager getVertexBufferObjectManager();
 
-	public void draw(final int pPrimitiveType, final int pCount);
-	public void draw(final int pPrimitiveType, final int pOffset, final int pCount);
+	void draw(final int pPrimitiveType, final int pCount);
+	void draw(final int pPrimitiveType, final int pOffset, final int pCount);
 }

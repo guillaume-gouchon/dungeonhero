@@ -18,5 +18,5 @@ public interface IEntityLoader {
 	// Methods
 	// ===========================================================
 
-	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes);
+	IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes);
 }

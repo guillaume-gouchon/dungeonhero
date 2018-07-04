@@ -43,8 +43,8 @@ public class HighPerformanceRectangleVertexBufferObject extends HighPerformanceV
 
 		final float packedColor = pRectangle.getColor().getABGRPackedFloat();
 
-		bufferData[0 * Rectangle.VERTEX_SIZE + Rectangle.COLOR_INDEX] = packedColor;
-		bufferData[1 * Rectangle.VERTEX_SIZE + Rectangle.COLOR_INDEX] = packedColor;
+		bufferData[Rectangle.COLOR_INDEX] = packedColor;
+		bufferData[Rectangle.VERTEX_SIZE + Rectangle.COLOR_INDEX] = packedColor;
 		bufferData[2 * Rectangle.VERTEX_SIZE + Rectangle.COLOR_INDEX] = packedColor;
 		bufferData[3 * Rectangle.VERTEX_SIZE + Rectangle.COLOR_INDEX] = packedColor;
 
@@ -60,11 +60,11 @@ public class HighPerformanceRectangleVertexBufferObject extends HighPerformanceV
 		final float x2 = pRectangle.getWidth(); // TODO Optimize with field access?
 		final float y2 = pRectangle.getHeight(); // TODO Optimize with field access?
 
-		bufferData[0 * Rectangle.VERTEX_SIZE + Rectangle.VERTEX_INDEX_X] = x;
-		bufferData[0 * Rectangle.VERTEX_SIZE + Rectangle.VERTEX_INDEX_Y] = y;
+		bufferData[Rectangle.VERTEX_INDEX_X] = x;
+		bufferData[Rectangle.VERTEX_INDEX_Y] = y;
 
-		bufferData[1 * Rectangle.VERTEX_SIZE + Rectangle.VERTEX_INDEX_X] = x;
-		bufferData[1 * Rectangle.VERTEX_SIZE + Rectangle.VERTEX_INDEX_Y] = y2;
+		bufferData[Rectangle.VERTEX_SIZE + Rectangle.VERTEX_INDEX_X] = x;
+		bufferData[Rectangle.VERTEX_SIZE + Rectangle.VERTEX_INDEX_Y] = y2;
 
 		bufferData[2 * Rectangle.VERTEX_SIZE + Rectangle.VERTEX_INDEX_X] = x2;
 		bufferData[2 * Rectangle.VERTEX_SIZE + Rectangle.VERTEX_INDEX_Y] = y;

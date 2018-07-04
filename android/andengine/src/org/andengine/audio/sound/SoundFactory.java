@@ -60,7 +60,7 @@ public class SoundFactory {
 	// Methods
 	// ===========================================================
 
-	public static Sound createSoundFromPath(final SoundManager pSoundManager, final String pPath) {
+	private static Sound createSoundFromPath(final SoundManager pSoundManager, final String pPath) {
 		synchronized(pSoundManager) {
 			final int soundID = pSoundManager.getSoundPool().load(pPath, 1);
 			final Sound sound = new Sound(pSoundManager, soundID);

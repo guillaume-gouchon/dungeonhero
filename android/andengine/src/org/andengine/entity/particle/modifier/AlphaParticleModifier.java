@@ -29,7 +29,7 @@ public class AlphaParticleModifier<T extends IEntity> extends BaseSingleValueSpa
 		this(pFromTime, pToTime, pFromAlpha, pToAlpha, EaseLinear.getInstance());
 	}
 
-	public AlphaParticleModifier(final float pFromTime, final float pToTime, final float pFromAlpha, final float pToAlpha, final IEaseFunction pEaseFunction) {
+	private AlphaParticleModifier(final float pFromTime, final float pToTime, final float pFromAlpha, final float pToAlpha, final IEaseFunction pEaseFunction) {
 		super(pFromTime, pToTime, pFromAlpha, pToAlpha, pEaseFunction);
 	}
 

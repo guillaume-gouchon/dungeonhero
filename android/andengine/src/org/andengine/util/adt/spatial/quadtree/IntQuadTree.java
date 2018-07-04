@@ -184,11 +184,11 @@ public class IntQuadTree<T extends ISpatialItem<IIntBounds>> extends QuadTree<II
 		// Constructors
 		// ===========================================================
 
-		public IntQuadTreeNode(final int pLevel, final IIntBounds pIntBounds) {
+		IntQuadTreeNode(final int pLevel, final IIntBounds pIntBounds) {
 			this(pLevel, pIntBounds.getXMin(), pIntBounds.getYMin(), pIntBounds.getXMax(), pIntBounds.getYMax());
 		}
 
-		public IntQuadTreeNode(final int pLevel, final int pXMin, final int pYMin, final int pXMax, final int pYMax) {
+		IntQuadTreeNode(final int pLevel, final int pXMin, final int pYMin, final int pXMax, final int pYMax) {
 			super(pLevel);
 
 			this.mXMin = pXMin;
@@ -228,11 +228,11 @@ public class IntQuadTree<T extends ISpatialItem<IIntBounds>> extends QuadTree<II
 			return this.mYMax;
 		}
 
-		public int getWidth() {
+		int getWidth() {
 			return this.mXMax - this.mXMin + 1;
 		}
 
-		public int getHeight() {
+		int getHeight() {
 			return this.mYMax - this.mYMin + 1;
 		}
 
@@ -428,7 +428,7 @@ public class IntQuadTree<T extends ISpatialItem<IIntBounds>> extends QuadTree<II
 			return IntBoundsUtils.intersects(this.mXMin, this.mYMin, this.mXMax, this.mYMax, pXMin, pYMin, pXMax, pYMax);
 		}
 
-		public boolean contains(final int pXMin, final int pYMin, final int pXMax, final int pYMax) {
+		boolean contains(final int pXMin, final int pYMin, final int pXMax, final int pYMax) {
 			return IntBoundsUtils.contains(this.mXMin, this.mYMin, this.mXMax, this.mYMax, pXMin, pYMin, pXMax, pYMax);
 		}
 

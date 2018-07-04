@@ -9,7 +9,7 @@ import org.andengine.entity.shape.IShape;
  * @author Nicolas Gramlich
  * @since 12:05:39 - 11.03.2010
  */
-public interface ICollisionCallback {
+interface ICollisionCallback {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -23,5 +23,5 @@ public interface ICollisionCallback {
 	 * @param pTargetShape
 	 * @return <code>true</code> to proceed, <code>false</code> to stop further collosion-checks.
 	 */
-	public boolean onCollision(final IShape pCheckShape, final IShape pTargetShape);
+	boolean onCollision(final IShape pCheckShape, final IShape pTargetShape);
 }

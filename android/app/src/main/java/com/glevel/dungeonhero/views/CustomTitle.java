@@ -2,12 +2,12 @@ package com.glevel.dungeonhero.views;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
-import com.glevel.dungeonhero.MyApplication.FONTS;
+import com.glevel.dungeonhero.BaseApplication.FONTS;
 
-public class CustomTitle extends TextView {
+public class CustomTitle extends AppCompatTextView {
 
     private static final Typeface font = FONTS.main;
 

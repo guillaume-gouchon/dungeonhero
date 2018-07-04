@@ -18,5 +18,5 @@ public interface IResolutionPolicy {
 	// Methods
 	// ===========================================================
 
-	public void onMeasure(final RenderSurfaceView pRenderSurfaceView, final int pWidthMeasureSpec, final int pHeightMeasureSpec);
+	void onMeasure(final RenderSurfaceView pRenderSurfaceView, final int pWidthMeasureSpec, final int pHeightMeasureSpec);
 }

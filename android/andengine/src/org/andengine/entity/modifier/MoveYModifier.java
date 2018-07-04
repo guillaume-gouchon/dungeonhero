@@ -36,11 +36,11 @@ public class MoveYModifier extends SingleValueSpanEntityModifier {
 		super(pDuration, pFromY, pToY, pEntityModifierListener, EaseLinear.getInstance());
 	}
 
-	public MoveYModifier(final float pDuration, final float pFromY, final float pToY, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	private MoveYModifier(final float pDuration, final float pFromY, final float pToY, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromY, pToY, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected MoveYModifier(final MoveYModifier pMoveYModifier) {
+	private MoveYModifier(final MoveYModifier pMoveYModifier) {
 		super(pMoveYModifier);
 	}
 

@@ -63,11 +63,9 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		final long fromNodeID = fromNode.mID;
 		final long toNodeID = Node.calculateID(pToX, pToY);
 
-		final LongSparseArray<Node> visitedNodes = new LongSparseArray<Node>();
-		final LongSparseArray<Node> openNodes = new LongSparseArray<Node>();
-		final IQueue<Node> sortedOpenNodes = new SortedQueue<Node>(new ShiftList<Node>());
-
-		final boolean allowDiagonalMovement = pAllowDiagonal;
+		final LongSparseArray<Node> visitedNodes = new LongSparseArray<>();
+		final LongSparseArray<Node> openNodes = new LongSparseArray<>();
+		final IQueue<Node> sortedOpenNodes = new SortedQueue<>(new ShiftList<Node>());
 
 		/* Initialize algorithm. */
 		openNodes.put(fromNodeID, fromNode);
@@ -91,7 +89,7 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 						continue;
 					}
 
-					if(!allowDiagonalMovement && (dX != 0) && (dY != 0)) {
+					if(!pAllowDiagonal && (dX != 0) && (dY != 0)) {
 						continue;
 					}
 
@@ -208,7 +206,7 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		// Constructors
 		// ===========================================================
 
-		public Node(final int pX, final int pY, final float pExpectedRestCost) {
+		Node(final int pX, final int pY, final float pExpectedRestCost) {
 			this.mX = pX;
 			this.mY = pY;
 			this.mExpectedRestCost = pExpectedRestCost;
@@ -220,7 +218,7 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		// Getter & Setter
 		// ===========================================================
 
-		public void setParent(final Node pParent, final float pCost) {
+		void setParent(final Node pParent, final float pCost) {
 			this.mParent = pParent;
 			this.mCost = pCost;
 			this.mTotalCost = pCost + this.mExpectedRestCost;
@@ -263,11 +261,11 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		// Methods
 		// ===========================================================
 
-		public static long calculateID(final int pX, final int pY) {
+		static long calculateID(final int pX, final int pY) {
 			return (((long)pX) << 32) | pY;
 		}
 
-		public boolean equals(final Node pNode) {
+		boolean equals(final Node pNode) {
 			return this.mID == pNode.mID;
 		}
 

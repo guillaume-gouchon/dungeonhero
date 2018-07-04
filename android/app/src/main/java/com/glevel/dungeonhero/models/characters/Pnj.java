@@ -6,9 +6,6 @@ import com.glevel.dungeonhero.models.discussions.callbacks.DiscussionCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by guillaume ON 10/8/14.
- */
 public class Pnj extends Hero {
 
     private static final long serialVersionUID = -5010552880846621793L;
@@ -20,7 +17,7 @@ public class Pnj extends Hero {
     private boolean isAutoTalk;
 
     public Pnj(String identifier, Ranks ranks, int hp, int currentHP, int strength, int dexterity, int spirit, int movement, int xp, int level, HeroTypes heroType, boolean isAutoTalk) {
-        super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement, null, xp, level, heroType);
+        super(identifier, ranks, hp, currentHP, strength, dexterity, spirit, movement, xp, level, heroType);
         this.isAutoTalk = isAutoTalk;
     }
 

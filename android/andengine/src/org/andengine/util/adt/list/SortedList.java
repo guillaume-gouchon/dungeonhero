@@ -30,7 +30,7 @@ public class SortedList<T extends Comparable<T>> implements ISortedList<T> {
 	// Constructors
 	// ===========================================================
 
-	public SortedList(final IList<T> pList) {
+	protected SortedList(final IList<T> pList) {
 		this.mList = pList;
 	}
 

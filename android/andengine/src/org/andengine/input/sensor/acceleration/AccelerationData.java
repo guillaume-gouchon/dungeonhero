@@ -127,7 +127,7 @@ public class AccelerationData extends BaseSensorData {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	private static interface IAxisSwap {
+	private interface IAxisSwap {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -136,6 +136,6 @@ public class AccelerationData extends BaseSensorData {
 		// Methods
 		// ===========================================================
 
-		public void swapAxis(final float[] pValues);
+		void swapAxis(final float[] pValues);
 	}
 }

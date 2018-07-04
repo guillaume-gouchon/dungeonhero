@@ -30,18 +30,18 @@ public abstract class VertexBufferObject implements IVertexBufferObject {
 	// Fields
 	// ===========================================================
 
-	protected final int mCapacity;
-	protected final boolean mAutoDispose;
+	private final int mCapacity;
+	private final boolean mAutoDispose;
 	protected final int mUsage;
 	protected final ByteBuffer mByteBuffer;
 
-	protected int mHardwareBufferID = IVertexBufferObject.HARDWARE_BUFFER_ID_INVALID;
-	protected boolean mDirtyOnHardware = true;
+	private int mHardwareBufferID = IVertexBufferObject.HARDWARE_BUFFER_ID_INVALID;
+	private boolean mDirtyOnHardware = true;
 
-	protected boolean mDisposed;
+	private boolean mDisposed;
 
-	protected final VertexBufferObjectManager mVertexBufferObjectManager;
-	protected final VertexBufferObjectAttributes mVertexBufferObjectAttributes;
+	private final VertexBufferObjectManager mVertexBufferObjectManager;
+	private final VertexBufferObjectAttributes mVertexBufferObjectAttributes;
 
 	// ===========================================================
 	// Constructors
@@ -52,9 +52,9 @@ public abstract class VertexBufferObject implements IVertexBufferObject {
 	 * @param pCapacity
 	 * @param pDrawType
 	 * @param pAutoDispose when passing <code>true</code> this {@link VertexBufferObject} loads itself to the active {@link VertexBufferObjectManager}. <b><u>WARNING:</u></b> When passing <code>false</code> one needs to take care of that by oneself!
-	 * @param pVertexBufferObjectAttributes to be automatically enabled on the {@link ShaderProgram} used in {@link VertexBufferObject#bind(ShaderProgram)}.
+	 * @param pVertexBufferObjectAttributes to be automatically enabled on the {@link ShaderProgram} used in .
 	 */
-	public VertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
+	protected VertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
 		this.mVertexBufferObjectManager = pVertexBufferObjectManager;
 		this.mCapacity = pCapacity;
 		this.mUsage = pDrawType.getUsage();

@@ -4,9 +4,6 @@ import com.glevel.dungeonhero.models.items.Characteristics;
 
 import org.andengine.util.color.Color;
 
-/**
- * Created by guillaume on 19/10/14.
- */
 public class BuffEffect extends Effect {
 
     private static final long serialVersionUID = -2502520164928739832L;

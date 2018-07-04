@@ -1,6 +1,7 @@
 package com.glevel.dungeonhero.providers;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import com.glevel.dungeonhero.models.Game;
 import com.glevel.dungeonhero.utils.providers.AbstractContentProvider;
@@ -26,7 +27,7 @@ public class MyContentProvider extends AbstractContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
             case TYPE_GAMES:

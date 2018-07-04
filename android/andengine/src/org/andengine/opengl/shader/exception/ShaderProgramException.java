@@ -27,7 +27,7 @@ public class ShaderProgramException extends AndEngineRuntimeException {
 		super(pMessage);
 	}
 
-	public ShaderProgramException(final String pMessage, final ShaderProgramException pShaderProgramException) {
+	ShaderProgramException(final String pMessage, final ShaderProgramException pShaderProgramException) {
 		super(pMessage, pShaderProgramException);
 	}
 

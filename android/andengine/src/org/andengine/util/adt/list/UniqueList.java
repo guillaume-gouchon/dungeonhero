@@ -28,7 +28,7 @@ public class UniqueList<T extends Comparable<T>> implements ISortedList<T> {
 	// Constructors
 	// ===========================================================
 
-	public UniqueList(final IList<T> pList) {
+	protected UniqueList(final IList<T> pList) {
 		this.mList = pList;
 	}
 

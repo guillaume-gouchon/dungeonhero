@@ -7,9 +7,6 @@ import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.views.Minimap;
 
-/**
- * Created by guillaume on 1/14/15.
- */
 public class DungeonMap extends Dialog {
 
     public DungeonMap(Context context, Dungeon dungeon) {

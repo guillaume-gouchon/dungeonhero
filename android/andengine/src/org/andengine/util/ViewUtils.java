@@ -12,7 +12,7 @@ import android.view.ViewGroup;
  * @author Nicolas Gramlich
  * @since 20:55:35 - 08.09.2009
  */
-public final class ViewUtils {
+final class ViewUtils {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -37,11 +37,11 @@ public final class ViewUtils {
 	// Methods
 	// ===========================================================
 
-	public static final View inflate(final Context pContext, final int pLayoutID){
+	public static View inflate(final Context pContext, final int pLayoutID){
 		return LayoutInflater.from(pContext).inflate(pLayoutID, null);
 	}
 
-	public static final View inflate(final Context pContext, final int pLayoutID, final ViewGroup pViewGroup){
+	public static View inflate(final Context pContext, final int pLayoutID, final ViewGroup pViewGroup){
 		return LayoutInflater.from(pContext).inflate(pLayoutID, pViewGroup, true);
 	}
 

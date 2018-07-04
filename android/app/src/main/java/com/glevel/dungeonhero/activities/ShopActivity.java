@@ -2,7 +2,6 @@ package com.glevel.dungeonhero.activities;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.glevel.dungeonhero.MyActivity;
+import com.glevel.dungeonhero.BaseActivity;
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.data.items.ItemFactory;
 import com.glevel.dungeonhero.data.items.PotionFactory;
@@ -33,14 +32,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ShopActivity extends MyActivity implements OnClickListener {
+public class ShopActivity extends BaseActivity implements OnClickListener {
 
     private static final String TAG = "ShopActivity";
 
     private static final String LAST_TIME_SHOP_VISITED_PREFS = "LAST_TIME_SHOP_VISITED_PREFS";
     private static final String FILENAME_SHOP_ITEMS = "shop_items";
-    private static final int NUMBER_OFFERS = 8;
-    private static final int REFRESH_SHOP_PERIOD = 10 * 3600 * 1000;
+    private static final int NUMBER_OFFERS = 10;
+    private static final int REFRESH_SHOP_PERIOD = 3600 * 1000;
 
     private Game mGame;
     private List<Item> mItemsOffered = new ArrayList<>(8);
@@ -88,12 +87,12 @@ public class ShopActivity extends MyActivity implements OnClickListener {
     }
 
     private void setupUI() {
-        mStormsBg = (ImageView) findViewById(R.id.storms);
+        mStormsBg = findViewById(R.id.storms);
 
-        mOffers = (ViewGroup) findViewById(R.id.shop_offers);
-        mBag = (ViewGroup) findViewById(R.id.bag);
-        mDiscussionShop = (TextView) findViewById(R.id.discussion_shop);
-        mGoldAmount = (TextView) findViewById(R.id.gold_amount);
+        mOffers = findViewById(R.id.shop_offers);
+        mBag = findViewById(R.id.bag);
+        mDiscussionShop = findViewById(R.id.discussion_shop);
+        mGoldAmount = findViewById(R.id.gold_amount);
 
         findViewById(R.id.back_button).setOnClickListener(this);
 
@@ -179,13 +178,15 @@ public class ShopActivity extends MyActivity implements OnClickListener {
         } else {
             // get items list from the file
             Log.d(TAG, "Getting existing offers from local file");
+            //noinspection unchecked
             mItemsOffered = (List<Item>) ApplicationUtils.readFromLocalFile(getApplicationContext(), FILENAME_SHOP_ITEMS);
+            mItemsOffered.set(0, PotionFactory.buildHealingPotion());
             Log.d(TAG, "Found " + mItemsOffered.size() + " existing offers");
         }
     }
 
     private void updateGoldAmount() {
-        mGoldAmount.setText("" + mGame.getHero().getGold());
+        mGoldAmount.setText(String.valueOf(mGame.getHero().getGold()));
     }
 
     private void updateOffers() {
@@ -212,7 +213,7 @@ public class ShopActivity extends MyActivity implements OnClickListener {
 
     private void updateItemLayout(View itemView, Item item, boolean isSellingItem) {
         View background = itemView.findViewById(R.id.background);
-        ImageView image = (ImageView) itemView.findViewById(R.id.image);
+        ImageView image = itemView.findViewById(R.id.image);
 
         itemView.setTag(isSellingItem ? R.string.sell_item : R.string.buy_item, item);
 
@@ -229,29 +230,23 @@ public class ShopActivity extends MyActivity implements OnClickListener {
         }
     }
 
-    public void showItemInfo(final Item item, final boolean isSelling) {
+    private void showItemInfo(final Item item, final boolean isSelling) {
         if (mItemInfoDialog == null || !mItemInfoDialog.isShowing()) {
-            mItemInfoDialog = new ItemInfoInShop(this, item, mGame.getHero(), isSelling, new ItemInfoInShop.OnItemActionSelected() {
-                @Override
-                public void onActionExecuted(ItemInfoInShop.ItemActionsInShop action) {
-                    Dialog confirmationDialog = new CustomAlertDialog(ShopActivity.this, R.style.Dialog,
-                            getString(R.string.transaction_confirmation, getString(isSelling ? R.string.sell : R.string.buy), getString(item.getName(getResources()))),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    if (which == R.id.ok_btn) {
-                                        if (isSelling) {
-                                            sellItem(item);
-                                        } else {
-                                            buyItem(item);
-                                        }
-                                        mItemInfoDialog.dismiss();
-                                    }
+            mItemInfoDialog = new ItemInfoInShop(this, item, mGame.getHero(), isSelling, action -> {
+                Dialog confirmationDialog = new CustomAlertDialog(ShopActivity.this, R.style.Dialog,
+                        getString(R.string.transaction_confirmation, getString(isSelling ? R.string.sell : R.string.buy), getString(item.getName(getResources()))),
+                        (dialog, which) -> {
+                            dialog.dismiss();
+                            if (which == R.id.ok_btn) {
+                                if (isSelling) {
+                                    sellItem(item);
+                                } else {
+                                    buyItem(item);
                                 }
-                            });
-                    confirmationDialog.show();
-                }
+                                mItemInfoDialog.dismiss();
+                            }
+                        });
+                confirmationDialog.show();
             });
 
             mItemInfoDialog.show();

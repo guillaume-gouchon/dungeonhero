@@ -17,14 +17,14 @@ public class SmoothCamera extends ZoomCamera {
 	// Fields
 	// ===========================================================
 
-	protected float mMaxVelocityX;
-	protected float mMaxVelocityY;
-	protected float mMaxZoomFactorChange;
+	private float mMaxVelocityX;
+	private float mMaxVelocityY;
+	private float mMaxZoomFactorChange;
 
-	protected float mTargetCenterX;
-	protected float mTargetCenterY;
+	private float mTargetCenterX;
+	private float mTargetCenterY;
 
-	protected float mTargetZoomFactor;
+	private float mTargetZoomFactor;
 
 	// ===========================================================
 	// Constructors
@@ -128,11 +128,11 @@ public class SmoothCamera extends ZoomCamera {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected void onSmoothZoomStarted() {
+	private void onSmoothZoomStarted() {
 
 	}
 
-	protected void onSmoothZoomFinished() {
+	private void onSmoothZoomFinished() {
 
 	}
 

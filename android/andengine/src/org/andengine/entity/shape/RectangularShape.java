@@ -28,7 +28,7 @@ public abstract class RectangularShape extends Shape implements IAreaShape {
 	// Constructors
 	// ===========================================================
 
-	public RectangularShape(final float pX, final float pY, final float pWidth, final float pHeight, final ShaderProgram pShaderProgram) {
+	protected RectangularShape(final float pX, final float pY, final float pWidth, final float pHeight, final ShaderProgram pShaderProgram) {
 		super(pX, pY, pShaderProgram);
 
 		this.mWidth = pWidth;
@@ -117,30 +117,27 @@ public abstract class RectangularShape extends Shape implements IAreaShape {
 
 	@Override
 	public boolean collidesWith(final IShape pOtherShape) {
-		if(pOtherShape instanceof RectangularShape) {
-			return RectangularShapeCollisionChecker.checkCollision(this, (RectangularShape) pOtherShape);
-		} else if(pOtherShape instanceof Line) {
-			return RectangularShapeCollisionChecker.checkCollision(this, (Line) pOtherShape);
-		} else {
-			return false;
-		}
-	}
+        if (pOtherShape instanceof RectangularShape) {
+            return RectangularShapeCollisionChecker.checkCollision(this, (RectangularShape) pOtherShape);
+        } else
+            return pOtherShape instanceof Line && RectangularShapeCollisionChecker.checkCollision(this, (Line) pOtherShape);
+    }
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
 
-	public void resetRotationCenter() {
+	private void resetRotationCenter() {
 		this.mRotationCenterX = this.mWidth * 0.5f;
 		this.mRotationCenterY = this.mHeight * 0.5f;
 	}
 
-	public void resetScaleCenter() {
+	private void resetScaleCenter() {
 		this.mScaleCenterX = this.mWidth * 0.5f;
 		this.mScaleCenterY = this.mHeight * 0.5f;
 	}
 
-	public void resetSkewCenter() {
+	private void resetSkewCenter() {
 		this.mSkewCenterX = this.mWidth * 0.5f;
 		this.mSkewCenterY = this.mHeight * 0.5f;
 	}

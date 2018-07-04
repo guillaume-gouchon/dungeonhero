@@ -13,12 +13,12 @@ import android.opengl.Matrix;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:49:23 - 04.08.2011
  */
-public class GLMatrixStack {
+class GLMatrixStack {
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	public static final int GLMATRIXSTACK_DEPTH_MAX = 32;
+	private static final int GLMATRIXSTACK_DEPTH_MAX = 32;
 	public static final int GLMATRIX_SIZE = 16;
 
 	private static final int GLMATRIXSTACKOFFSET_UNDERFLOW = -1 * GLMatrixStack.GLMATRIX_SIZE;
@@ -112,7 +112,7 @@ public class GLMatrixStack {
 	}
 
 	private static void setSkewM(final float[] pMatrixStack, final int pOffset, final float pSkewX, final float pSkewY) {
-		pMatrixStack[pOffset + 0] = 1.0f;
+		pMatrixStack[pOffset] = 1.0f;
 		pMatrixStack[pOffset + 1] = (float) Math.tan(-MathConstants.DEG_TO_RAD * pSkewY);
 		pMatrixStack[pOffset + 2] = 0.0f;
 		pMatrixStack[pOffset + 3] = 0.0f;
@@ -137,7 +137,7 @@ public class GLMatrixStack {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static class GLMatrixStackOverflowException extends AndEngineRuntimeException {
+	static class GLMatrixStackOverflowException extends AndEngineRuntimeException {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -152,7 +152,7 @@ public class GLMatrixStack {
 		// Constructors
 		// ===========================================================
 
-		public GLMatrixStackOverflowException() {
+		GLMatrixStackOverflowException() {
 
 		}
 
@@ -173,7 +173,7 @@ public class GLMatrixStack {
 		// ===========================================================
 	}
 
-	public static class GLMatrixStackUnderflowException extends AndEngineRuntimeException {
+	static class GLMatrixStackUnderflowException extends AndEngineRuntimeException {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -188,7 +188,7 @@ public class GLMatrixStack {
 		// Constructors
 		// ===========================================================
 
-		public GLMatrixStackUnderflowException() {
+		GLMatrixStackUnderflowException() {
 
 		}
 

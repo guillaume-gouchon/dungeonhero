@@ -11,7 +11,7 @@ import org.xml.sax.Attributes;
  * @author Nicolas Gramlich
  * @since 11:21:01 - 29.07.2010
  */
-public class TMXObject implements TMXConstants {
+class TMXObject implements TMXConstants {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -26,7 +26,7 @@ public class TMXObject implements TMXConstants {
 	private final int mY;
 	private final int mWidth;
 	private final int mHeight;
-	private final TMXProperties<TMXObjectProperty> mTMXObjectProperties = new TMXProperties<TMXObjectProperty>();
+	private final TMXProperties<TMXObjectProperty> mTMXObjectProperties = new TMXProperties<>();
 
 	// ===========================================================
 	// Constructors

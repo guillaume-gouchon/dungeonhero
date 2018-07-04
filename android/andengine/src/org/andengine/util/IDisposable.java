@@ -17,14 +17,14 @@ public interface IDisposable {
 	// Methods
 	// ===========================================================
 
-	public boolean isDisposed();
-	public void dispose() throws AlreadyDisposedException;
+	boolean isDisposed();
+	void dispose() throws AlreadyDisposedException;
 
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public class AlreadyDisposedException extends AndEngineRuntimeException {
+	class AlreadyDisposedException extends AndEngineRuntimeException {
 		// ===========================================================
 		// Constants
 		// ===========================================================

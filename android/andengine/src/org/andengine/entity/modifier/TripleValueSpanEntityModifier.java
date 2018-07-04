@@ -11,7 +11,7 @@ import org.andengine.util.modifier.ease.IEaseFunction;
  * @author Nicolas Gramlich
  * @since 15:35:18 - 29.06.2010
  */
-public abstract class TripleValueSpanEntityModifier extends BaseTripleValueSpanModifier<IEntity> implements IEntityModifier {
+abstract class TripleValueSpanEntityModifier extends BaseTripleValueSpanModifier<IEntity> implements IEntityModifier {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -28,11 +28,11 @@ public abstract class TripleValueSpanEntityModifier extends BaseTripleValueSpanM
 		super(pDuration, pFromValueA, pToValueA, pFromValueB, pToValueB, pFromValueC, pToValueC, pEaseFunction);
 	}
 
-	public TripleValueSpanEntityModifier(final float pDuration, final float pFromValueA, final float pToValueA, final float pFromValueB, final float pToValueB, final float pFromValueC, final float pToValueC, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	TripleValueSpanEntityModifier(final float pDuration, final float pFromValueA, final float pToValueA, final float pFromValueB, final float pToValueB, final float pFromValueC, final float pToValueC, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromValueA, pToValueA, pFromValueB, pToValueB, pFromValueC, pToValueC, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected TripleValueSpanEntityModifier(final TripleValueSpanEntityModifier pTripleValueSpanEntityModifier) {
+	TripleValueSpanEntityModifier(final TripleValueSpanEntityModifier pTripleValueSpanEntityModifier) {
 		super(pTripleValueSpanEntityModifier);
 	}
 

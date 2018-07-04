@@ -27,8 +27,8 @@ public class TexturePackTextureRegionLibrary {
 	// ===========================================================
 
 	public TexturePackTextureRegionLibrary(final int pInitialCapacity) {
-		this.mIDMapping = new SparseArray<TexturePackTextureRegion>(pInitialCapacity);
-		this.mSourceMapping = new HashMap<String, TexturePackTextureRegion>(pInitialCapacity);
+		this.mIDMapping = new SparseArray<>(pInitialCapacity);
+		this.mSourceMapping = new HashMap<>(pInitialCapacity);
 	}
 
 	// ===========================================================
@@ -66,7 +66,7 @@ public class TexturePackTextureRegionLibrary {
 		return this.mIDMapping.get(pID);
 	}
 
-	public TexturePackTextureRegion get(final String pSource) {
+	private TexturePackTextureRegion get(final String pSource) {
 		return this.mSourceMapping.get(pSource);
 	}
 

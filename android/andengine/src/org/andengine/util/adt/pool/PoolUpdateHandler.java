@@ -24,13 +24,13 @@ public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHa
 	// ===========================================================
 
 	private final Pool<T> mPool;
-	private final IQueue<T> mScheduledPoolItemQueue = new SynchronizedQueue<T>(new ShiftList<T>());
+	private final IQueue<T> mScheduledPoolItemQueue = new SynchronizedQueue<>(new ShiftList<T>());
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public PoolUpdateHandler() {
+	PoolUpdateHandler() {
 		this.mPool = new Pool<T>() {
 			@Override
 			protected T onAllocatePoolItem() {
@@ -39,7 +39,7 @@ public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHa
 		};
 	}
 
-	public PoolUpdateHandler(final int pInitialPoolSize) {
+	PoolUpdateHandler(final int pInitialPoolSize) {
 		this.mPool = new Pool<T>(pInitialPoolSize) {
 			@Override
 			protected T onAllocatePoolItem() {
@@ -48,7 +48,7 @@ public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHa
 		};
 	}
 
-	public PoolUpdateHandler(final int pInitialPoolSize, final int pGrowth) {
+	PoolUpdateHandler(final int pInitialPoolSize, final int pGrowth) {
 		this.mPool = new Pool<T>(pInitialPoolSize, pGrowth) {
 			@Override
 			protected T onAllocatePoolItem() {
@@ -57,7 +57,7 @@ public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHa
 		};
 	}
 
-	public PoolUpdateHandler(final int pInitialPoolSize, final int pGrowth, final int pAvailableItemCountMaximum) {
+	PoolUpdateHandler(final int pInitialPoolSize, final int pGrowth, final int pAvailableItemCountMaximum) {
 		this.mPool = new Pool<T>(pInitialPoolSize, pGrowth, pAvailableItemCountMaximum) {
 			@Override
 			protected T onAllocatePoolItem() {
@@ -80,24 +80,20 @@ public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHa
 
 	@Override
 	public void onUpdate(final float pSecondsElapsed) {
-		final IQueue<T> scheduledPoolItemQueue = this.mScheduledPoolItemQueue;
-		final Pool<T> pool = this.mPool;
 
 		T item;
-		while((item = scheduledPoolItemQueue.poll()) != null) {
+		while((item = this.mScheduledPoolItemQueue.poll()) != null) {
 			this.onHandlePoolItem(item);
-			pool.recyclePoolItem(item);
+			this.mPool.recyclePoolItem(item);
 		}
 	}
 
 	@Override
 	public void reset() {
-		final IQueue<T> scheduledPoolItemQueue = this.mScheduledPoolItemQueue;
-		final Pool<T> pool = this.mPool;
 
 		T item;
-		while((item = scheduledPoolItemQueue.poll()) != null) {
-			pool.recyclePoolItem(item);
+		while((item = this.mScheduledPoolItemQueue.poll()) != null) {
+			this.mPool.recyclePoolItem(item);
 		}
 	}
 

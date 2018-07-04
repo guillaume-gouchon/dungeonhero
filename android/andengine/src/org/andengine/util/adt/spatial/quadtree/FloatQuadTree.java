@@ -183,11 +183,11 @@ public class FloatQuadTree<T extends ISpatialItem<IFloatBounds>> extends QuadTre
 		// Constructors
 		// ===========================================================
 
-		public FloatQuadTreeNode(final int pLevel, final IFloatBounds pFloatBounds) {
+		FloatQuadTreeNode(final int pLevel, final IFloatBounds pFloatBounds) {
 			this(pLevel, pFloatBounds.getXMin(), pFloatBounds.getYMin(), pFloatBounds.getXMax(), pFloatBounds.getYMax());
 		}
 
-		public FloatQuadTreeNode(final int pLevel, final float pXMin, final float pYMin, final float pXMax, final float pYMax) {
+		FloatQuadTreeNode(final int pLevel, final float pXMin, final float pYMin, final float pXMax, final float pYMax) {
 			super(pLevel);
 
 			this.mXMin = pXMin;
@@ -227,11 +227,11 @@ public class FloatQuadTree<T extends ISpatialItem<IFloatBounds>> extends QuadTre
 			return this.mYMax;
 		}
 
-		public float getWidth() {
+		float getWidth() {
 			return this.mXMax - this.mXMin;
 		}
 
-		public float getHeight() {
+		float getHeight() {
 			return this.mYMax - this.mYMin;
 		}
 
@@ -364,7 +364,7 @@ public class FloatQuadTree<T extends ISpatialItem<IFloatBounds>> extends QuadTre
 			return FloatBoundsUtils.intersects(this.mXMin, this.mYMin, this.mXMax, this.mYMax, pXMin, pYMin, pXMax, pYMax);
 		}
 
-		public boolean contains(final float pXMin, final float pYMin, final float pXMax, final float pYMax) {
+		boolean contains(final float pXMin, final float pYMin, final float pXMax, final float pYMax) {
 			return FloatBoundsUtils.contains(this.mXMin, this.mYMin, this.mXMax, this.mYMax, pXMin, pYMin, pXMax, pYMax);
 		}
 

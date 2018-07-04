@@ -6,21 +6,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.AsyncTask;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.glevel.dungeonhero.R;
 import com.glevel.dungeonhero.game.graphics.UnitSprite;
 import com.glevel.dungeonhero.utils.ApplicationUtils;
 
-public class SpriteView extends ImageView {
+public class SpriteView extends AppCompatImageView {
 
     private static final String TAG = "SpriteView";
     private static final int SPRITE_PERIOD = 250;// in ms
 
-    private Rect src = new Rect();
-    private Rect dst = new Rect();
+    private final Rect src = new Rect();
+    private final Rect dst = new Rect();
     private boolean go;
     private SpriteThread spriteThread;
     private int frameWidth;
@@ -34,12 +34,12 @@ public class SpriteView extends ImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SpriteView);
-        String spriteName = a.getString(R.styleable.SpriteView_spriteName);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SpriteView);
+        String spriteName = typedArray.getString(R.styleable.SpriteView_spriteName);
         if (spriteName != null) {
             setSpriteName(spriteName);
         }
-        a.recycle();
+        typedArray.recycle();
     }
 
     public void setSpriteName(final String spriteName) {
@@ -68,14 +68,14 @@ public class SpriteView extends ImageView {
         }
     }
 
-    public void startAnimation() {
+    private void startAnimation() {
         Log.d(TAG, "start animation");
         go = true;
         spriteThread = new SpriteThread();
         spriteThread.start();
     }
 
-    public void stopAnimation() {
+    private void stopAnimation() {
         Log.d(TAG, "Stop animation");
         go = false;
         if (spriteThread != null) {
@@ -109,7 +109,7 @@ public class SpriteView extends ImageView {
         }
     }
 
-    public class SpriteThread extends Thread {
+    class SpriteThread extends Thread {
 
         int screenWidth, screenHeight;
 

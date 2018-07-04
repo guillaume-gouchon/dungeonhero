@@ -43,7 +43,7 @@ public class LongSparseArray<E> {
      * require any additional memory allocation to store the specified
      * number of mappings.
      */
-    public LongSparseArray(int initialCapacity) {
+    private LongSparseArray(int initialCapacity) {
         initialCapacity = ArrayUtils.idealIntArraySize(initialCapacity);
 
         mKeys = new long[initialCapacity];
@@ -68,8 +68,8 @@ public class LongSparseArray<E> {
      */
     public void setValues(long[] keys, E uniqueValue) {
         int length = keys.length;
-        for (int i = 0; i < length; i++) {
-            put(keys[i], uniqueValue);
+        for (long key : keys) {
+            put(key, uniqueValue);
         }
     }
 
@@ -86,7 +86,7 @@ public class LongSparseArray<E> {
      * if no such mapping has been made.
      */
     @SuppressWarnings("unchecked")
-	public E get(long key, E valueIfKeyNotFound) {
+    private E get(long key, E valueIfKeyNotFound) {
         int i = binarySearch(mKeys, 0, mSize, key);
 
         if (i < 0 || mValues[i] == DELETED) {
@@ -99,7 +99,7 @@ public class LongSparseArray<E> {
     /**
      * Removes the mapping from the specified key, if there was any.
      */
-    public void delete(long key) {
+    private void delete(long key) {
         int i = binarySearch(mKeys, 0, mSize, key);
 
         if (i >= 0) {

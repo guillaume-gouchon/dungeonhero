@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -21,9 +22,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by guillaume ON 10/3/14.
- */
 public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "CustomCarousel";
@@ -39,25 +37,24 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
     private static final float ALPHA_PASSIVE_DOT = 0.15f;
     private static final int DOTS_SIZE = 10, DOTS_MARGIN = 7;
 
-    private int mNbColumns;
+    private final int mNbColumns;
 
-    private Context mContext;
+    private final Context mContext;
     private Adapter mAdapter;
 
     /**
      * UI
      */
-    private ViewPager mViewPager;
-    private ViewGroup mPagination;
+    private final ViewPager mViewPager;
+    private final ViewGroup mPagination;
     private View[] mPaginationDots;
-    private View mHint;
+    private final View mHint;
 
     public CustomCarousel(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.custom_carousel, this, true);
+        LayoutInflater.from(context).inflate(R.layout.custom_carousel, this, true);
 
         // show or not the hint
         mHint = findViewById(R.id.hint);
@@ -75,7 +72,7 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
             mHint.setVisibility(View.VISIBLE);
         }
 
-        mViewPager = (ViewPager) findViewById(R.id.carousel);
+        mViewPager = findViewById(R.id.carousel);
         mViewPager.setOnPageChangeListener(this);
 
         mPagination = (LinearLayout) findViewById(R.id.pagination);
@@ -137,14 +134,14 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
     public static abstract class Adapter<T> extends PagerAdapter {
 
         private final LayoutInflater mInflater;
-        protected List<T> mDataList;
-        private int mLayoutResource;
+        protected final List<T> mDataList;
+        private final int mLayoutResource;
         private int mNbColumns;
-        private OnClickListener mItemClickedListener;
+        private final OnClickListener mItemClickedListener;
 
         private boolean isElementSelected = false;// avoid view pager's multiple selections
 
-        private OnClickListener mOnClickListener = new OnClickListener() {
+        private final OnClickListener mOnClickListener = new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isElementSelected) {
@@ -163,15 +160,16 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
             }
         };
 
-        public Adapter(Context context, int layoutResource, List<T> dataList, OnClickListener itemClickedListener) {
+        protected Adapter(Context context, int layoutResource, List<T> dataList, OnClickListener itemClickedListener) {
             mItemClickedListener = itemClickedListener;
             mLayoutResource = layoutResource;
             mDataList = dataList;
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
+        @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
             View layout = mInflater.inflate(mLayoutResource, null);
             layout.setOnClickListener(mOnClickListener);
 
@@ -184,7 +182,7 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object object) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view == object;
         }
 
@@ -198,12 +196,12 @@ public class CustomCarousel extends LinearLayout implements ViewPager.OnPageChan
             return mDataList.size();
         }
 
-        public void setNbColumns(int nbColumns) {
+        void setNbColumns(int nbColumns) {
             mNbColumns = nbColumns;
         }
 
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             container.removeView((View) object);
         }
 

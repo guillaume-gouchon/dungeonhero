@@ -11,9 +11,6 @@ import android.widget.LinearLayout;
 
 import com.glevel.dungeonhero.R;
 
-/**
- * Created by guillaume ON 10/3/14.
- */
 public class LifeBar extends LinearLayout {
 
     private View mContainer, mLifeBar;
@@ -32,8 +29,7 @@ public class LifeBar extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.in_game_life_bar, this, true);
+        LayoutInflater.from(context).inflate(R.layout.in_game_life_bar, this, true);
 
         mContainer = findViewById(R.id.container);
         mLifeBar = findViewById(R.id.life_bar);

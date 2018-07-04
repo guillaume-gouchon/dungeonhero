@@ -2,9 +2,6 @@ package com.glevel.dungeonhero.models.effects;
 
 import com.glevel.dungeonhero.models.items.Characteristics;
 
-/**
- * Created by guillaume on 19/10/14.
- */
 public class PermanentEffect extends Effect {
 
     private static final long serialVersionUID = -8169401976568099446L;

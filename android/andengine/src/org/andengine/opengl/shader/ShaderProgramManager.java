@@ -20,7 +20,7 @@ public class ShaderProgramManager {
 	// Fields
 	// ===========================================================
 
-	private final ArrayList<ShaderProgram> mShaderProgramsManaged = new ArrayList<ShaderProgram>();
+	private final ArrayList<ShaderProgram> mShaderProgramsManaged = new ArrayList<>();
 
 	// ===========================================================
 	// Constructors
@@ -56,7 +56,7 @@ public class ShaderProgramManager {
 		this.mShaderProgramsManaged.clear();
 	}
 
-	public synchronized void loadShaderProgram(final ShaderProgram pShaderProgram) {
+	private synchronized void loadShaderProgram(final ShaderProgram pShaderProgram) {
 		if(pShaderProgram == null) {
 			throw new IllegalArgumentException("pShaderProgram must not be null!");
 		}

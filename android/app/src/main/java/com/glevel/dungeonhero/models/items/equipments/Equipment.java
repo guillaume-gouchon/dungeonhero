@@ -11,18 +11,15 @@ import com.glevel.dungeonhero.models.items.requirements.Requirement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by guillaume ON 10/6/14.
- */
 public abstract class Equipment extends Item implements Levelable {
 
     private static final long serialVersionUID = 662104930156421984L;
 
-    private final List<Effect> effects = new ArrayList<Effect>();
-    private final List<Requirement> requirements = new ArrayList<Requirement>();
+    private final List<Effect> effects = new ArrayList<>();
+    private final List<Requirement> requirements = new ArrayList<>();
     protected final int level;
 
-    public Equipment(String identifier, int level, int price) {
+    protected Equipment(String identifier, int level, int price) {
         super(identifier, true, price);
         this.level = level;
     }

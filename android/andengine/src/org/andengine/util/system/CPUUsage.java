@@ -15,7 +15,7 @@ import org.andengine.util.debug.Debug;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 21:48:14 - 22.10.2011
  */
-public class CPUUsage {
+class CPUUsage {
 	// ===========================================================
 	// Constants
 	// ===========================================================

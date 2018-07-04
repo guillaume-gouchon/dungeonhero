@@ -28,7 +28,7 @@ public class LowMemorySpriteVertexBufferObject extends LowMemoryVertexBufferObje
 	// Constructors
 	// ===========================================================
 
-	public LowMemorySpriteVertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
+	LowMemorySpriteVertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
 		super(pVertexBufferObjectManager, pCapacity, pDrawType, pAutoDispose, pVertexBufferObjectAttributes);
 	}
 
@@ -46,8 +46,8 @@ public class LowMemorySpriteVertexBufferObject extends LowMemoryVertexBufferObje
 
 		final float packedColor = pSprite.getColor().getABGRPackedFloat();
 
-		bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
-		bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
+		bufferData.put(Sprite.COLOR_INDEX, packedColor);
+		bufferData.put(Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
 		bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
 		bufferData.put(3 * Sprite.VERTEX_SIZE + Sprite.COLOR_INDEX, packedColor);
 
@@ -63,11 +63,11 @@ public class LowMemorySpriteVertexBufferObject extends LowMemoryVertexBufferObje
 		final float x2 = pSprite.getWidth(); // TODO Optimize with field access?
 		final float y2 = pSprite.getHeight(); // TODO Optimize with field access?
 
-		bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x);
-		bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y);
+		bufferData.put(Sprite.VERTEX_INDEX_X, x);
+		bufferData.put(Sprite.VERTEX_INDEX_Y, y);
 
-		bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x);
-		bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y2);
+		bufferData.put(Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x);
+		bufferData.put(Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y2);
 
 		bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x2);
 		bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y);
@@ -116,11 +116,11 @@ public class LowMemorySpriteVertexBufferObject extends LowMemoryVertexBufferObje
 		}
 
 		if(textureRegion.isRotated()) {
-			bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u2);
-			bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
+			bufferData.put(Sprite.TEXTURECOORDINATES_INDEX_U, u2);
+			bufferData.put(Sprite.TEXTURECOORDINATES_INDEX_V, v);
 
-			bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
-			bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
+			bufferData.put(Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
+			bufferData.put(Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
 
 			bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u2);
 			bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
@@ -128,11 +128,11 @@ public class LowMemorySpriteVertexBufferObject extends LowMemoryVertexBufferObje
 			bufferData.put(3 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
 			bufferData.put(3 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
 		} else {
-			bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
-			bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
+			bufferData.put(Sprite.TEXTURECOORDINATES_INDEX_U, u);
+			bufferData.put(Sprite.TEXTURECOORDINATES_INDEX_V, v);
 
-			bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
-			bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
+			bufferData.put(Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
+			bufferData.put(Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
 
 			bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u2);
 			bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);

@@ -7,7 +7,7 @@ package org.andengine.extension.tmx.util.exception;
  * @author Nicolas Gramlich
  * @since 17:20:25 - 08.08.2010
  */
-public abstract class TMXException extends Exception {
+abstract class TMXException extends Exception {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -22,19 +22,19 @@ public abstract class TMXException extends Exception {
 	// Constructors
 	// ===========================================================
 
-	public TMXException() {
+	TMXException() {
 		super();
 	}
 
-	public TMXException(final String pDetailMessage, final Throwable pThrowable) {
+	TMXException(final String pDetailMessage, final Throwable pThrowable) {
 		super(pDetailMessage, pThrowable);
 	}
 
-	public TMXException(final String pDetailMessage) {
+	TMXException(final String pDetailMessage) {
 		super(pDetailMessage);
 	}
 
-	public TMXException(final Throwable pThrowable) {
+	TMXException(final Throwable pThrowable) {
 		super(pThrowable);
 	}
 

@@ -23,22 +23,22 @@ public interface ILocationListener {
 	/**
 	 * @see {@link LocationListener#onProviderEnabled(String)}
 	 */
-	public void onLocationProviderEnabled();
+    void onLocationProviderEnabled();
 
 	/**
 	 * @see {@link LocationListener#onLocationChanged(Location)}
 	 */
-	public void onLocationChanged(final Location pLocation);
+    void onLocationChanged(final Location pLocation);
 
-	public void onLocationLost();
+	void onLocationLost();
 
 	/**
 	 * @see {@link LocationListener#onProviderDisabled(String)}
 	 */
-	public void onLocationProviderDisabled();
+    void onLocationProviderDisabled();
 
 	/**
 	 * @see {@link LocationListener#onStatusChanged(String, int, android.os.Bundle)}
 	 */
-	public void onLocationProviderStatusChanged(final LocationProviderStatus pLocationProviderStatus, final Bundle pBundle);
+    void onLocationProviderStatusChanged(final LocationProviderStatus pLocationProviderStatus, final Bundle pBundle);
 }

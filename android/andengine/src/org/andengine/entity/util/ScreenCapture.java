@@ -85,7 +85,7 @@ public class ScreenCapture extends Entity implements IScreenGrabberCallback {
 		this.capture(0, 0, pCaptureWidth, pCaptureHeight, pFilePath, pScreenCaptureCallback);
 	}
 
-	public void capture(final int pCaptureX, final int pCaptureY, final int pCaptureWidth, final int pCaptureHeight, final String pFilePath, final IScreenCaptureCallback pScreencaptureCallback) {
+	private void capture(final int pCaptureX, final int pCaptureY, final int pCaptureWidth, final int pCaptureHeight, final String pFilePath, final IScreenCaptureCallback pScreencaptureCallback) {
 		this.mFilePath = pFilePath;
 		this.mScreenCaptureCallback = pScreencaptureCallback;
 		this.mScreenGrabber.grab(pCaptureX, pCaptureY, pCaptureWidth, pCaptureHeight, this);
@@ -107,7 +107,7 @@ public class ScreenCapture extends Entity implements IScreenGrabberCallback {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IScreenCaptureCallback {
+	interface IScreenCaptureCallback {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -116,7 +116,7 @@ public class ScreenCapture extends Entity implements IScreenGrabberCallback {
 		// Methods
 		// ===========================================================
 
-		public void onScreenCaptured(final String pFilePath);
-		public void onScreenCaptureFailed(final String pFilePath, final Exception pException);
+		void onScreenCaptured(final String pFilePath);
+		void onScreenCaptureFailed(final String pFilePath, final Exception pException);
 	}
 }

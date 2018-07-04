@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.glevel.dungeonhero.MyActivity;
+import com.glevel.dungeonhero.BaseActivity;
 
 import org.andengine.util.ActivityUtils;
 import org.andengine.util.call.AsyncCallable;
@@ -18,7 +18,7 @@ import org.andengine.util.progress.ProgressCallable;
  * @author Nicolas Gramlich
  * @since 18:35:28 - 29.08.2009
  */
-public abstract class CustomBaseActivity extends MyActivity {
+public abstract class CustomBaseActivity extends BaseActivity {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -47,16 +47,11 @@ public abstract class CustomBaseActivity extends MyActivity {
         this.toastOnUIThread(pText, Toast.LENGTH_LONG);
     }
 
-    public void toastOnUIThread(final CharSequence pText, final int pDuration) {
+    private void toastOnUIThread(final CharSequence pText, final int pDuration) {
         if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
             Toast.makeText(CustomBaseActivity.this, pText, pDuration).show();
         } else {
-            this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(CustomBaseActivity.this, pText, pDuration).show();
-                }
-            });
+            this.runOnUiThread(() -> Toast.makeText(CustomBaseActivity.this, pText, pDuration).show());
         }
     }
 
@@ -67,7 +62,6 @@ public abstract class CustomBaseActivity extends MyActivity {
      * @param <T>
      * @param pTitleResourceID
      * @param pMessageResourceID
-     * @param pErrorMessageResourceID
      * @param pCallable
      * @param pCallback
      */
@@ -83,13 +77,12 @@ public abstract class CustomBaseActivity extends MyActivity {
      * @param <T>
      * @param pTitleResourceID
      * @param pMessageResourceID
-     * @param pErrorMessageResourceID
      * @param pCallable
      * @param pCallback
      * @param pExceptionCallback
      */
-    protected <T> void doAsync(final int pTitleResourceID, final int pMessageResourceID, final Callable<T> pCallable,
-                               final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
+    private <T> void doAsync(final int pTitleResourceID, final int pMessageResourceID, final Callable<T> pCallable,
+                             final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
         ActivityUtils.doAsync(this, pTitleResourceID, pMessageResourceID, pCallable, pCallback, pExceptionCallback);
     }
 
@@ -99,9 +92,6 @@ public abstract class CustomBaseActivity extends MyActivity {
      *
      * @param <T>
      * @param pTitleResourceID
-     * @param pMessageResourceID
-     * @param pErrorMessageResourceID
-     * @param pAsyncCallable
      * @param pCallback
      */
     protected <T> void doProgressAsync(final int pTitleResourceID, final int pIconResourceID,
@@ -115,15 +105,12 @@ public abstract class CustomBaseActivity extends MyActivity {
      *
      * @param <T>
      * @param pTitleResourceID
-     * @param pMessageResourceID
-     * @param pErrorMessageResourceID
-     * @param pAsyncCallable
      * @param pCallback
      * @param pExceptionCallback
      */
-    protected <T> void doProgressAsync(final int pTitleResourceID, final int pIconResourceID,
-                                       final ProgressCallable<T> pCallable, final Callback<T> pCallback,
-                                       final Callback<Exception> pExceptionCallback) {
+    private <T> void doProgressAsync(final int pTitleResourceID, final int pIconResourceID,
+                                     final ProgressCallable<T> pCallable, final Callback<T> pCallback,
+                                     final Callback<Exception> pExceptionCallback) {
         ActivityUtils
                 .doProgressAsync(this, pTitleResourceID, pIconResourceID, pCallable, pCallback, pExceptionCallback);
     }
@@ -136,7 +123,6 @@ public abstract class CustomBaseActivity extends MyActivity {
      * @param <T>
      * @param pTitleResourceID
      * @param pMessageResourceID
-     * @param pErrorMessageResourceID
      * @param pAsyncCallable
      * @param pCallback
      * @param pExceptionCallback

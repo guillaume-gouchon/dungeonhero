@@ -22,8 +22,8 @@ public class BlendFunctionParticleInitializer<T extends IShape> implements IPart
 	// Fields
 	// ===========================================================
 
-	protected int mBlendFunctionSource;
-	protected int mBlendFunctionDestination;
+	private final int mBlendFunctionSource;
+	private final int mBlendFunctionDestination;
 
 	// ===========================================================
 	// Constructors

@@ -50,7 +50,7 @@ public class TMXLoader {
 		this(pContext.getAssets(), pTextureManager, pVertexBufferObjectManager);
 	}
 
-	public TMXLoader(final AssetManager pAssetManager, final TextureManager pTextureManager, final VertexBufferObjectManager pVertexBufferObjectManager) {
+	private TMXLoader(final AssetManager pAssetManager, final TextureManager pTextureManager, final VertexBufferObjectManager pVertexBufferObjectManager) {
 		this(pAssetManager, pTextureManager, TextureOptions.DEFAULT, pVertexBufferObjectManager);
 	}
 
@@ -59,7 +59,7 @@ public class TMXLoader {
 		this(pContext.getAssets(), pTextureManager, pTextureOptions, pVertexBufferObjectManager);
 	}
 
-	public TMXLoader(final AssetManager pAssetManager, final TextureManager pTextureManager, final TextureOptions pTextureOptions, final VertexBufferObjectManager pVertexBufferObjectManager) {
+	private TMXLoader(final AssetManager pAssetManager, final TextureManager pTextureManager, final TextureOptions pTextureOptions, final VertexBufferObjectManager pVertexBufferObjectManager) {
 		this(pAssetManager, pTextureManager, pTextureOptions, pVertexBufferObjectManager, null);
 	}
 
@@ -68,7 +68,7 @@ public class TMXLoader {
 		this(pContext.getAssets(), pTextureManager, pVertexBufferObjectManager, pTMXTilePropertyListener);
 	}
 
-	public TMXLoader(final AssetManager pAssetManager, final TextureManager pTextureManager, final VertexBufferObjectManager pVertexBufferObjectManager, final ITMXTilePropertiesListener pTMXTilePropertyListener) {
+	private TMXLoader(final AssetManager pAssetManager, final TextureManager pTextureManager, final VertexBufferObjectManager pVertexBufferObjectManager, final ITMXTilePropertiesListener pTMXTilePropertyListener) {
 		this(pAssetManager, pTextureManager, TextureOptions.DEFAULT, pVertexBufferObjectManager, pTMXTilePropertyListener);
 	}
 
@@ -105,7 +105,7 @@ public class TMXLoader {
 		}
 	}
 
-	public TMXTiledMap load(final InputStream pInputStream) throws TMXLoadException {
+	private TMXTiledMap load(final InputStream pInputStream) throws TMXLoadException {
 		try {
 			final SAXParserFactory spf = SAXParserFactory.newInstance();
 			final SAXParser sp = spf.newSAXParser();
@@ -140,6 +140,6 @@ public class TMXLoader {
 		// Methods
 		// ===========================================================
 
-		public void onTMXTileWithPropertiesCreated(final TMXTiledMap pTMXTiledMap, final TMXLayer pTMXLayer, final TMXTile pTMXTile, final TMXProperties<TMXTileProperty> pTMXTileProperties);
+		void onTMXTileWithPropertiesCreated(final TMXTiledMap pTMXTiledMap, final TMXLayer pTMXLayer, final TMXTile pTMXTile, final TMXProperties<TMXTileProperty> pTMXTileProperties);
 	}
 }

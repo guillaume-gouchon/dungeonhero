@@ -20,7 +20,7 @@ public class RectangularShapeCollisionChecker extends ShapeCollisionChecker {
 	// Constants
 	// ===========================================================
 
-	public static final int RECTANGULARSHAPE_VERTEX_COUNT = 4;
+	private static final int RECTANGULARSHAPE_VERTEX_COUNT = 4;
 
 	private static final float[] VERTICES_CONTAINS_TMP = new float[2 * RectangularShapeCollisionChecker.RECTANGULARSHAPE_VERTEX_COUNT];
 	private static final float[] VERTICES_COLLISION_TMP_A = new float[2 * RectangularShapeCollisionChecker.RECTANGULARSHAPE_VERTEX_COUNT];
@@ -96,34 +96,32 @@ public class RectangularShapeCollisionChecker extends ShapeCollisionChecker {
 		return ShapeCollisionChecker.checkCollision(RectangularShapeCollisionChecker.VERTICES_COLLISION_TMP_A, RectangularShapeCollisionChecker.RECTANGULARSHAPE_VERTEX_COUNT, RectangularShapeCollisionChecker.VERTICES_COLLISION_TMP_B, LineCollisionChecker.LINE_VERTEX_COUNT);
 	}
 
-	public static void fillVertices(final RectangularShape pRectangularShape, final float[] pVertices) {
+	private static void fillVertices(final RectangularShape pRectangularShape, final float[] pVertices) {
 		RectangularShapeCollisionChecker.fillVertices(0, 0, pRectangularShape.getWidth(), pRectangularShape.getHeight(), pRectangularShape.getLocalToSceneTransformation(), pVertices);
 	}
 
 	public static void fillVertices(final float pLocalX, final float pLocalY, final float pLocalWidth, final float pLocalHeight, final Transformation pLocalToSceneTransformation, final float[] pVertices) {
-		final float localXMin = pLocalX;
 		final float localXMax = pLocalX + pLocalWidth;
-		final float localYMin = pLocalY;
 		final float localYMax = pLocalY + pLocalHeight;
 
-		pVertices[0 + Constants.VERTEX_INDEX_X] = localXMin;
-		pVertices[0 + Constants.VERTEX_INDEX_Y] = localYMin;
+		pVertices[Constants.VERTEX_INDEX_X] = pLocalX;
+		pVertices[Constants.VERTEX_INDEX_Y] = pLocalY;
 
 		pVertices[2 + Constants.VERTEX_INDEX_X] = localXMax;
-		pVertices[2 + Constants.VERTEX_INDEX_Y] = localYMin;
+		pVertices[2 + Constants.VERTEX_INDEX_Y] = pLocalY;
 
 		pVertices[4 + Constants.VERTEX_INDEX_X] = localXMax;
 		pVertices[4 + Constants.VERTEX_INDEX_Y] = localYMax;
 
-		pVertices[6 + Constants.VERTEX_INDEX_X] = localXMin;
+		pVertices[6 + Constants.VERTEX_INDEX_X] = pLocalX;
 		pVertices[6 + Constants.VERTEX_INDEX_Y] = localYMax;
 
 		pLocalToSceneTransformation.transform(pVertices);
 	}
 
 	private static void fillVertices(final Camera pCamera, final float[] pVertices) {
-		pVertices[0 + Constants.VERTEX_INDEX_X] = pCamera.getXMin();
-		pVertices[0 + Constants.VERTEX_INDEX_Y] = pCamera.getYMin();
+		pVertices[Constants.VERTEX_INDEX_X] = pCamera.getXMin();
+		pVertices[Constants.VERTEX_INDEX_Y] = pCamera.getYMin();
 
 		pVertices[2 + Constants.VERTEX_INDEX_X] = pCamera.getXMax();
 		pVertices[2 + Constants.VERTEX_INDEX_Y] = pCamera.getYMin();

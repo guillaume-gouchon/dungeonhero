@@ -25,7 +25,7 @@ public abstract class BaseTextureAtlasSource implements ITextureAtlasSource {
 	// Constructors
 	// ===========================================================
 
-	public BaseTextureAtlasSource(final int pTextureX, final int pTextureY, final int pTextureWidth, final int pTextureHeight) {
+	protected BaseTextureAtlasSource(final int pTextureX, final int pTextureY, final int pTextureWidth, final int pTextureHeight) {
 		this.mTextureX = pTextureX;
 		this.mTextureY = pTextureY;
 		this.mTextureWidth = pTextureWidth;

@@ -2,17 +2,12 @@ package com.glevel.dungeonhero.game.gui;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.glevel.dungeonhero.R;
-import com.glevel.dungeonhero.utils.MusicManager;
 
-/**
- * Created by guillaume on 1/14/15.
- */
 public class GameMenu extends Dialog implements View.OnClickListener {
 
     public GameMenu(Context context, View.OnClickListener leaveQuestCallback, View.OnClickListener exitCallback) {
@@ -42,12 +37,7 @@ public class GameMenu extends Dialog implements View.OnClickListener {
         exitButton.setAnimation(menuButtonAnimation);
         exitButton.setOnClickListener(exitCallback);
 
-        setOnShowListener(new OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                menuButtonAnimation.start();
-            }
-        });
+        setOnShowListener(dialog -> menuButtonAnimation.start());
     }
 
     @Override

@@ -43,7 +43,7 @@ public class LoopEntityModifier extends LoopModifier<IEntity> implements IEntity
 		super(pEntityModifier, pLoopCount, pLoopModifierListener, pEntityModifierListener);
 	}
 
-	protected LoopEntityModifier(final LoopEntityModifier pLoopEntityModifier) throws DeepCopyNotSupportedException {
+	private LoopEntityModifier(final LoopEntityModifier pLoopEntityModifier) throws DeepCopyNotSupportedException {
 		super(pLoopEntityModifier);
 	}
 
@@ -68,7 +68,7 @@ public class LoopEntityModifier extends LoopModifier<IEntity> implements IEntity
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public interface ILoopEntityModifierListener extends ILoopModifierListener<IEntity> {
+	private interface ILoopEntityModifierListener extends ILoopModifierListener<IEntity> {
 		// ===========================================================
 		// Constants
 		// ===========================================================

@@ -30,7 +30,7 @@ public class IntArrayList implements IIntList {
 		this(IntArrayList.CAPACITY_INITIAL_DEFAULT);
 	}
 
-	public IntArrayList(final int pInitialCapacity) {
+	private IntArrayList(final int pInitialCapacity) {
 		this.mItems = new int[pInitialCapacity];
 	}
 

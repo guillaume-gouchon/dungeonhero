@@ -38,7 +38,7 @@ public abstract class Shape extends Entity implements IShape {
 	// Constructors
 	// ===========================================================
 
-	public Shape(final float pX, final float pY, final ShaderProgram pShaderProgram) {
+	protected Shape(final float pX, final float pY, final ShaderProgram pShaderProgram) {
 		super(pX, pY);
 
 		this.mShaderProgram = pShaderProgram;
@@ -155,7 +155,7 @@ public abstract class Shape extends Entity implements IShape {
 		this.initBlendFunction(pTexture.getTextureOptions());
 	}
 
-	protected void initBlendFunction(final TextureOptions pTextureOptions) {
+	private void initBlendFunction(final TextureOptions pTextureOptions) {
 		if(pTextureOptions.mPreMultiplyAlpha) {
 			this.setBlendFunction(IShape.BLENDFUNCTION_SOURCE_PREMULTIPLYALPHA_DEFAULT, IShape.BLENDFUNCTION_DESTINATION_PREMULTIPLYALPHA_DEFAULT);
 		}

@@ -27,7 +27,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 20:26:32 - 24.10.2011
  */
-public class DiamondSprite extends Sprite {
+class DiamondSprite extends Sprite {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -72,19 +72,19 @@ public class DiamondSprite extends Sprite {
 		this(pX, pY, pWidth, pHeight, pTextureRegion, pVertexBufferObjectManager, DrawType.STATIC, pShaderProgram);
 	}
 
-	public DiamondSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
+	private DiamondSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
 		this(pX, pY, pWidth, pHeight, pTextureRegion, new HighPerformanceDiamondSpriteVertexBufferObject(pVertexBufferObjectManager, Sprite.SPRITE_SIZE, pDrawType, true, Sprite.VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT));
 	}
 
-	public DiamondSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType, final ShaderProgram pShaderProgram) {
+	private DiamondSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType, final ShaderProgram pShaderProgram) {
 		this(pX, pY, pWidth, pHeight, pTextureRegion, new HighPerformanceDiamondSpriteVertexBufferObject(pVertexBufferObjectManager, Sprite.SPRITE_SIZE, pDrawType, true, Sprite.VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT), pShaderProgram);
 	}
 
-	public DiamondSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final IDiamondSpriteVertexBufferObject pDiamondSpriteVertexBufferObject) {
+	private DiamondSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final IDiamondSpriteVertexBufferObject pDiamondSpriteVertexBufferObject) {
 		super(pX, pY, pWidth, pHeight, pTextureRegion, pDiamondSpriteVertexBufferObject);
 	}
 
-	public DiamondSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final IDiamondSpriteVertexBufferObject pDiamondSpriteVertexBufferObject, final ShaderProgram pShaderProgram) {
+	private DiamondSprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final IDiamondSpriteVertexBufferObject pDiamondSpriteVertexBufferObject, final ShaderProgram pShaderProgram) {
 		super(pX, pY, pWidth, pHeight, pTextureRegion, pDiamondSpriteVertexBufferObject, pShaderProgram);
 	}
 

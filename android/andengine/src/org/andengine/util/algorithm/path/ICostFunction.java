@@ -16,5 +16,5 @@ public interface ICostFunction<T> {
 	// Fields
 	// ===========================================================
 
-	public float getCost(final IPathFinderMap<T> pPathFinderMap, final int pFromX, final int pFromY, final int pToX, final int pToY, final T pEntity);
+	float getCost(final IPathFinderMap<T> pPathFinderMap, final int pFromX, final int pFromY, final int pToX, final int pToY, final T pEntity);
 }

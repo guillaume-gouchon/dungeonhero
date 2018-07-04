@@ -36,11 +36,11 @@ public class RotationModifier extends SingleValueSpanEntityModifier {
 		super(pDuration, pFromRotation, pToRotation, pEntityModifierListener, EaseLinear.getInstance());
 	}
 
-	public RotationModifier(final float pDuration, final float pFromRotation, final float pToRotation, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+	RotationModifier(final float pDuration, final float pFromRotation, final float pToRotation, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromRotation, pToRotation, pEntityModifierListener, pEaseFunction);
 	}
 
-	protected RotationModifier(final RotationModifier pRotationModifier) {
+	RotationModifier(final RotationModifier pRotationModifier) {
 		super(pRotationModifier);
 	}
 

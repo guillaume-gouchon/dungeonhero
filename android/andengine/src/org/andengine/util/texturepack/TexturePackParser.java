@@ -32,7 +32,7 @@ import android.content.res.AssetManager;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:19:26 - 29.07.2011
  */
-public class TexturePackParser extends DefaultHandler {
+class TexturePackParser extends DefaultHandler {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -116,40 +116,43 @@ public class TexturePackParser extends DefaultHandler {
 
 	@Override
 	public void startElement(final String pUri, final String pLocalName, final String pQualifiedName, final Attributes pAttributes) throws SAXException {
-		if(pLocalName.equals(TexturePackParser.TAG_TEXTURE)) {
-			this.mVersion = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTURE_ATTRIBUTE_VERSION);
-			this.mTexture = this.parseTexture(pAttributes);
-			this.mTextureRegionLibrary = new TexturePackTextureRegionLibrary(10);
+        switch (pLocalName) {
+            case TexturePackParser.TAG_TEXTURE:
+                this.mVersion = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTURE_ATTRIBUTE_VERSION);
+                this.mTexture = this.parseTexture(pAttributes);
+                this.mTextureRegionLibrary = new TexturePackTextureRegionLibrary(10);
 
-			this.mTexturePack = new TexturePack(this.mTexture, this.mTextureRegionLibrary);
-		} else if(pLocalName.equals(TexturePackParser.TAG_TEXTUREREGION)) {
-			final int id = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_ID);
-			final int x = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_X);
-			final int y = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_Y);
-			final int width = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_WIDTH);
-			final int height = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_HEIGHT);
-			
-			final String source = SAXUtils.getAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE);
+                this.mTexturePack = new TexturePack(this.mTexture, this.mTextureRegionLibrary);
+                break;
+            case TexturePackParser.TAG_TEXTUREREGION:
+                final int id = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_ID);
+                final int x = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_X);
+                final int y = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_Y);
+                final int width = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_WIDTH);
+                final int height = SAXUtils.getIntAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_HEIGHT);
 
-			// TODO Not sure how trimming could be transparently supported...
-			final boolean trimmed = SAXUtils.getBooleanAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_TRIMMED);
-			final boolean rotated = SAXUtils.getBooleanAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_ROTATED);
-			final int sourceX = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE_X);
-			final int sourceY = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE_Y);
-			final int sourceWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE_WIDTH);
-			final int sourceHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE_HEIGHT);
+                final String source = SAXUtils.getAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE);
 
-			this.mTextureRegionLibrary.put(new TexturePackTextureRegion(this.mTexture, x, y, width, height, id, source, rotated, trimmed, sourceX, sourceY, sourceWidth, sourceHeight));
-		} else {
-			throw new TexturePackParseException("Unexpected tag: '" + pLocalName + "'.");
-		}
+                // TODO Not sure how trimming could be transparently supported...
+                final boolean trimmed = SAXUtils.getBooleanAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_TRIMMED);
+                final boolean rotated = SAXUtils.getBooleanAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTUREREGION_ATTRIBUTE_ROTATED);
+                final int sourceX = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE_X);
+                final int sourceY = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE_Y);
+                final int sourceWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE_WIDTH);
+                final int sourceHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TEXTUREREGION_ATTRIBUTE_SOURCE_HEIGHT);
+
+                this.mTextureRegionLibrary.put(new TexturePackTextureRegion(this.mTexture, x, y, width, height, id, source, rotated, trimmed, sourceX, sourceY, sourceWidth, sourceHeight));
+                break;
+            default:
+                throw new TexturePackParseException("Unexpected tag: '" + pLocalName + "'.");
+        }
 	}
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
 	
-	protected InputStream onGetInputStream(final String pFilename) throws IOException {
+	private InputStream onGetInputStream(final String pFilename) throws IOException {
 		return this.mAssetManager.open(this.mAssetBasePath + pFilename);
 	}
 
@@ -166,53 +169,58 @@ public class TexturePackParser extends DefaultHandler {
 		final TextureOptions textureOptions = this.parseTextureOptions(pAttributes);
 
 		final ITexture texture;
-		if(type.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_TYPE_VALUE_BITMAP)) {
-			try {
-				texture = new BitmapTexture(this.mTextureManager, new IInputStreamOpener() {
-					@Override
-					public InputStream open() throws IOException {
-						return TexturePackParser.this.onGetInputStream(file);
-					}
-				}, BitmapTextureFormat.fromPixelFormat(pixelFormat), textureOptions);
-			} catch (final IOException e) {
-				throw new TexturePackParseException(e);
-			}
-		} else if(type.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_TYPE_VALUE_PVR)) {
-			try {
-				texture = new PVRTexture(this.mTextureManager, PVRTextureFormat.fromPixelFormat(pixelFormat), new SmartPVRTexturePixelBufferStrategy(DataConstants.BYTES_PER_MEGABYTE / 8), textureOptions) {
-					@Override
-					protected InputStream onGetInputStream() throws IOException {
-						return TexturePackParser.this.onGetInputStream(file);
-					}
-				};
-			} catch (final IOException e) {
-				throw new TexturePackParseException(e);
-			}
-		} else if(type.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_TYPE_VALUE_PVRGZ)) {
-			try {
-				texture = new PVRGZTexture(this.mTextureManager, PVRTextureFormat.fromPixelFormat(pixelFormat), new SmartPVRTexturePixelBufferStrategy(DataConstants.BYTES_PER_MEGABYTE / 8), textureOptions) {
-					@Override
-					protected InputStream onGetInputStream() throws IOException {
-						return TexturePackParser.this.onGetInputStream(file);
-					}
-				};
-			} catch (final IOException e) {
-				throw new TexturePackParseException(e);
-			}
-		} else if(type.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_TYPE_VALUE_PVRCCZ)) {
-			try {
-				texture = new PVRCCZTexture(this.mTextureManager, PVRTextureFormat.fromPixelFormat(pixelFormat), new SmartPVRTexturePixelBufferStrategy(DataConstants.BYTES_PER_MEGABYTE / 8), textureOptions) {
-					@Override
-					protected InputStream onGetInputStream() throws IOException {
-						return TexturePackParser.this.onGetInputStream(file);
-					}
-				};
-			} catch (final IOException e) {
-				throw new TexturePackParseException(e);
-			}
-		} else {
-			throw new TexturePackParseException(new IllegalArgumentException("Unsupported pTextureFormat: '" + type + "'."));
-		}
+        switch (type) {
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_TYPE_VALUE_BITMAP:
+                try {
+                    texture = new BitmapTexture(this.mTextureManager, new IInputStreamOpener() {
+                        @Override
+                        public InputStream open() throws IOException {
+                            return TexturePackParser.this.onGetInputStream(file);
+                        }
+                    }, BitmapTextureFormat.fromPixelFormat(pixelFormat), textureOptions);
+                } catch (final IOException e) {
+                    throw new TexturePackParseException(e);
+                }
+                break;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_TYPE_VALUE_PVR:
+                try {
+                    texture = new PVRTexture(this.mTextureManager, PVRTextureFormat.fromPixelFormat(pixelFormat), new SmartPVRTexturePixelBufferStrategy(DataConstants.BYTES_PER_MEGABYTE / 8), textureOptions) {
+                        @Override
+                        protected InputStream onGetInputStream() throws IOException {
+                            return TexturePackParser.this.onGetInputStream(file);
+                        }
+                    };
+                } catch (final IOException e) {
+                    throw new TexturePackParseException(e);
+                }
+                break;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_TYPE_VALUE_PVRGZ:
+                try {
+                    texture = new PVRGZTexture(this.mTextureManager, PVRTextureFormat.fromPixelFormat(pixelFormat), new SmartPVRTexturePixelBufferStrategy(DataConstants.BYTES_PER_MEGABYTE / 8), textureOptions) {
+                        @Override
+                        protected InputStream onGetInputStream() throws IOException {
+                            return TexturePackParser.this.onGetInputStream(file);
+                        }
+                    };
+                } catch (final IOException e) {
+                    throw new TexturePackParseException(e);
+                }
+                break;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_TYPE_VALUE_PVRCCZ:
+                try {
+                    texture = new PVRCCZTexture(this.mTextureManager, PVRTextureFormat.fromPixelFormat(pixelFormat), new SmartPVRTexturePixelBufferStrategy(DataConstants.BYTES_PER_MEGABYTE / 8), textureOptions) {
+                        @Override
+                        protected InputStream onGetInputStream() throws IOException {
+                            return TexturePackParser.this.onGetInputStream(file);
+                        }
+                    };
+                } catch (final IOException e) {
+                    throw new TexturePackParseException(e);
+                }
+                break;
+            default:
+                throw new TexturePackParseException(new IllegalArgumentException("Unsupported pTextureFormat: '" + type + "'."));
+        }
 
 		this.mTextureManager.addMappedTexture(file, texture);
 
@@ -235,32 +243,34 @@ public class TexturePackParser extends DefaultHandler {
 
 	private static int parseMinFilter(final Attributes pAttributes) {
 		final String minFilter = SAXUtils.getAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER);
-		if(minFilter.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_NEAREST)) {
-			return GL10.GL_NEAREST;
-		} else if(minFilter.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_LINEAR)) {
-			return GL10.GL_LINEAR;
-		} else if(minFilter.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_LINEAR_MIPMAP_LINEAR)) {
-			return GL10.GL_LINEAR_MIPMAP_LINEAR;
-		} else if(minFilter.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_LINEAR_MIPMAP_NEAREST)) {
-			return GL10.GL_LINEAR_MIPMAP_NEAREST;
-		} else if(minFilter.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_NEAREST_MIPMAP_LINEAR)) {
-			return GL10.GL_NEAREST_MIPMAP_LINEAR;
-		} else if(minFilter.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_NEAREST_MIPMAP_NEAREST)) {
-			return GL10.GL_NEAREST_MIPMAP_NEAREST;
-		} else {
-			throw new IllegalArgumentException("Unexpected " + TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER + " attribute: '" + minFilter + "'.");
-		}
+        switch (minFilter) {
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_NEAREST:
+                return GL10.GL_NEAREST;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_LINEAR:
+                return GL10.GL_LINEAR;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_LINEAR_MIPMAP_LINEAR:
+                return GL10.GL_LINEAR_MIPMAP_LINEAR;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_LINEAR_MIPMAP_NEAREST:
+                return GL10.GL_LINEAR_MIPMAP_NEAREST;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_NEAREST_MIPMAP_LINEAR:
+                return GL10.GL_NEAREST_MIPMAP_LINEAR;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER_VALUE_NEAREST_MIPMAP_NEAREST:
+                return GL10.GL_NEAREST_MIPMAP_NEAREST;
+            default:
+                throw new IllegalArgumentException("Unexpected " + TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MINFILTER + " attribute: '" + minFilter + "'.");
+        }
 	}
 
 	private static int parseMagFilter(final Attributes pAttributes) {
 		final String magFilter = SAXUtils.getAttributeOrThrow(pAttributes, TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MAGFILTER);
-		if(magFilter.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MAGFILTER_VALUE_NEAREST)) {
-			return GL10.GL_NEAREST;
-		} else if(magFilter.equals(TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MAGFILTER_VALUE_LINEAR)) {
-			return GL10.GL_LINEAR;
-		} else {
-			throw new IllegalArgumentException("Unexpected " + TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MAGFILTER + " attribute: '" + magFilter + "'.");
-		}
+        switch (magFilter) {
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MAGFILTER_VALUE_NEAREST:
+                return GL10.GL_NEAREST;
+            case TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MAGFILTER_VALUE_LINEAR:
+                return GL10.GL_LINEAR;
+            default:
+                throw new IllegalArgumentException("Unexpected " + TexturePackParser.TAG_TEXTURE_ATTRIBUTE_MAGFILTER + " attribute: '" + magFilter + "'.");
+        }
 	}
 
 	private int parseWrapT(final Attributes pAttributes) {

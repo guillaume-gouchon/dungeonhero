@@ -31,13 +31,13 @@ public class BuildableTextureAtlas<S extends ITextureAtlasSource, T extends ITex
 	// ===========================================================
 
 	private final T mTextureAtlas;
-	private final ArrayList<TextureAtlasSourceWithWithLocationCallback<S>> mTextureAtlasSourcesToPlace = new ArrayList<TextureAtlasSourceWithWithLocationCallback<S>>();
+	private final ArrayList<TextureAtlasSourceWithWithLocationCallback<S>> mTextureAtlasSourcesToPlace = new ArrayList<>();
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BuildableTextureAtlas(final T pTextureAtlas) {
+	protected BuildableTextureAtlas(final T pTextureAtlas) {
 		this.mTextureAtlas = pTextureAtlas;
 	}
 
@@ -177,7 +177,7 @@ public class BuildableTextureAtlas<S extends ITextureAtlasSource, T extends ITex
 	}
 
 	/**
-	 * @see {@link BuildableBitmapTextureAtlas#setTextureStateListener(ITextureAtlasStateListener)}
+	 * @see
 	 */
 	@Deprecated
 	@Override
@@ -191,7 +191,7 @@ public class BuildableTextureAtlas<S extends ITextureAtlasSource, T extends ITex
 	}
 
 	/**
-	 * @see {@link BuildableBitmapTextureAtlas#setTextureStateListener(ITextureAtlasStateListener)}
+	 * @see
 	 */
 	@Deprecated
 	@Override
@@ -215,7 +215,7 @@ public class BuildableTextureAtlas<S extends ITextureAtlasSource, T extends ITex
 
 	@Override
 	public void addTextureAtlasSource(final S pTextureAtlasSource, final Callback<S> pCallback) {
-		this.mTextureAtlasSourcesToPlace.add(new TextureAtlasSourceWithWithLocationCallback<S>(pTextureAtlasSource, pCallback));
+		this.mTextureAtlasSourcesToPlace.add(new TextureAtlasSourceWithWithLocationCallback<>(pTextureAtlasSource, pCallback));
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class BuildableTextureAtlas<S extends ITextureAtlasSource, T extends ITex
 		// Constructors
 		// ===========================================================
 
-		public TextureAtlasSourceWithWithLocationCallback(final T pTextureAtlasSource, final Callback<T> pCallback) {
+		TextureAtlasSourceWithWithLocationCallback(final T pTextureAtlasSource, final Callback<T> pCallback) {
 			this.mTextureAtlasSource = pTextureAtlasSource;
 			this.mCallback = pCallback;
 		}

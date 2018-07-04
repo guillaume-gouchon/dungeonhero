@@ -9,7 +9,7 @@ import android.util.SparseArray;
  * @author Nicolas Gramlich
  * @since 10:13:26 - 02.03.2011
  */
-public class MultiPool<T> {
+class MultiPool<T> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -18,7 +18,7 @@ public class MultiPool<T> {
 	// Fields
 	// ===========================================================
 
-	private final SparseArray<GenericPool<T>> mPools = new SparseArray<GenericPool<T>>();
+	private final SparseArray<GenericPool<T>> mPools = new SparseArray<>();
 
 	// ===========================================================
 	// Constructors

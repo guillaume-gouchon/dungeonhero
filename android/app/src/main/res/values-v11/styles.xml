@@ -1,8 +1,0 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <style name="Dialog" parent="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth">
-        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
-        <item name="@android:windowBackground">@android:color/transparent</item>
-    </style>
-
-</resources>

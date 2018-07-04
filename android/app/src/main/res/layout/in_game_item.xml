@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/rootLayout"
     android:layout_width="56dp"
     android:layout_height="56dp"
@@ -9,7 +10,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/bg_clickable_gui"
-        android:padding="3dp">
+        android:padding="3dp"
+        tools:ignore="UselessParent">
 
         <View
             android:id="@+id/background"
@@ -21,7 +23,8 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:padding="5dp" />
+            android:contentDescription="Item"
+            android:padding="5dp"
+            android:scaleType="centerInside" />
     </RelativeLayout>
 </RelativeLayout>

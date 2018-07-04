@@ -23,7 +23,7 @@ public class FontException extends AndEngineRuntimeException {
 	// Constructors
 	// ===========================================================
 
-	public FontException() {
+	FontException() {
 		super();
 	}
 
@@ -31,7 +31,7 @@ public class FontException extends AndEngineRuntimeException {
 		super(pMessage);
 	}
 
-	public FontException(final Throwable pThrowable) {
+	FontException(final Throwable pThrowable) {
 		super(pThrowable);
 	}
 

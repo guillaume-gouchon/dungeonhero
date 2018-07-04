@@ -14,8 +14,8 @@ public interface IRendererListener {
 	// Constants
 	// ===========================================================
 
-	public void onSurfaceCreated(final GLState pGlState);
-	public void onSurfaceChanged(final GLState pGlState, final int pWidth, final int pHeight);
+	void onSurfaceCreated(final GLState pGlState);
+	void onSurfaceChanged(final GLState pGlState, final int pWidth, final int pHeight);
 
 	// ===========================================================
 	// Methods

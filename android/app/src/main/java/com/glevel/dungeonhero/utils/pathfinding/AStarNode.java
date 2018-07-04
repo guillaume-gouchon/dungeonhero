@@ -13,7 +13,7 @@ public class AStarNode<N extends Node> {
     // Heuristic estimate of distance from the current node to the target node
     private double h;
 
-    public AStarNode(N node, double g, double h) {
+    AStarNode(N node, double g, double h) {
         this.node = node;
         this.g = g;
         this.h = h;

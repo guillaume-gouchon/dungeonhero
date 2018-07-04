@@ -27,7 +27,7 @@ public abstract class SharedMemoryVertexBufferObject extends ZeroMemoryVertexBuf
 	// Constants
 	// ===========================================================
 
-	private static ReentrantLock sSharedByteBufferLock = new ReentrantLock(true);
+	private static final ReentrantLock sSharedByteBufferLock = new ReentrantLock(true);
 	private static ByteBuffer sSharedByteBuffer;
 
 	public static int getSharedByteBufferByteCapacity() {

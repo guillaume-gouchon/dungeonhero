@@ -24,7 +24,7 @@ import javax.xml.parsers.SAXParserFactory;
  * @author Nicolas Gramlich
  * @since 17:18:37 - 08.08.2010
  */
-public class TSXLoader {
+class TSXLoader {
 	// ===========================================================
 	// Constants
 	// ===========================================================

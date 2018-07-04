@@ -9,6 +9,7 @@
         android:id="@+id/storms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="Storms"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_village"
         android:tint="#cc000000" />
@@ -16,8 +17,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
         <com.glevel.dungeonhero.views.CustomCarousel
             android:id="@+id/heroes"
@@ -28,9 +29,9 @@
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/chooseHeroMessage"
             style="@style/AnimatedMessage"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="@string/choose_hero_message" />
     </RelativeLayout>
 </FrameLayout>

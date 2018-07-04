@@ -32,7 +32,7 @@ public abstract class BaseDoubleValueSpanParticleModifier<T extends IEntity> ext
 		this(pFromTime, pToTime, pFromValueA, pToValueA, pFromValueB, pToValueB, EaseLinear.getInstance());
 	}
 
-	public BaseDoubleValueSpanParticleModifier(final float pFromTime, final float pToTime, final float pFromValueA, final float pToValueA, final float pFromValueB, final float pToValueB, final IEaseFunction pEaseFunction) {
+	BaseDoubleValueSpanParticleModifier(final float pFromTime, final float pToTime, final float pFromValueA, final float pToValueA, final float pFromValueB, final float pToValueB, final IEaseFunction pEaseFunction) {
 		super(pFromTime, pToTime, pFromValueA, pToValueA, pEaseFunction);
 
 		this.mFromValueB = pFromValueB;
@@ -70,7 +70,7 @@ public abstract class BaseDoubleValueSpanParticleModifier<T extends IEntity> ext
 	// Methods
 	// ===========================================================
 
-	public void reset(final float pFromValueA, final float pToValueA, final float pFromValueB, final float pToValueB, final float pFromTime, final float pToTime) {
+	void reset(final float pFromValueA, final float pToValueA, final float pFromValueB, final float pToValueB, final float pFromTime, final float pToTime) {
 		super.reset(pFromValueA, pToValueA, pFromTime, pToTime);
 
 		this.mFromValueB = pFromValueB;

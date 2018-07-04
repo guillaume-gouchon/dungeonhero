@@ -2,9 +2,6 @@ package com.glevel.dungeonhero.models.characters;
 
 import com.glevel.dungeonhero.models.Reward;
 
-/**
- * Created by guillaume ON 10/8/14.
- */
 public class Monster extends Unit {
 
     private static final long serialVersionUID = 3641820414751057694L;

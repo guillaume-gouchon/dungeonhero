@@ -21,13 +21,13 @@ public interface IEntityModifier extends IModifier<IEntity> {
 	// ===========================================================
 	
 	@Override
-	public IEntityModifier deepCopy() throws DeepCopyNotSupportedException;
+    IEntityModifier deepCopy() throws DeepCopyNotSupportedException;
 
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IEntityModifierListener extends IModifierListener<IEntity>{
+	interface IEntityModifierListener extends IModifierListener<IEntity>{
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -37,7 +37,7 @@ public interface IEntityModifier extends IModifier<IEntity> {
 		// ===========================================================
 	}
 	
-	public interface IEntityModifierMatcher extends IMatcher<IModifier<IEntity>> {
+	interface IEntityModifierMatcher extends IMatcher<IModifier<IEntity>> {
 		// ===========================================================
 		// Constants
 		// ===========================================================

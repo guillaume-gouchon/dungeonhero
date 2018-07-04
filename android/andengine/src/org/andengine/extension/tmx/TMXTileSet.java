@@ -51,7 +51,7 @@ public class TMXTileSet implements TMXConstants {
 	private final int mSpacing;
 	private final int mMargin;
 
-	private final SparseArray<TMXProperties<TMXTileProperty>> mTMXTileProperties = new SparseArray<TMXProperties<TMXTileProperty>>();
+	private final SparseArray<TMXProperties<TMXTileProperty>> mTMXTileProperties = new SparseArray<>();
 
 	// ===========================================================
 	// Constructors
@@ -153,7 +153,7 @@ public class TMXTileSet implements TMXConstants {
 		if(existingProperties != null) {
 			existingProperties.add(pTMXTileProperty);
 		} else {
-			final TMXProperties<TMXTileProperty> newProperties = new TMXProperties<TMXTileProperty>();
+			final TMXProperties<TMXTileProperty> newProperties = new TMXProperties<>();
 			newProperties.add(pTMXTileProperty);
 			this.mTMXTileProperties.put(pLocalTileID, newProperties);
 		}

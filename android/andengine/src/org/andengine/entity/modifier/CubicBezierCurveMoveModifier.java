@@ -63,7 +63,7 @@ public class CubicBezierCurveMoveModifier extends DurationEntityModifier {
 	 * @param pY4 y coordinate of the end point.
 	 * @param pEaseFunction
 	 */
-	public CubicBezierCurveMoveModifier(final float pDuration, final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final float pX4, final float pY4, final IEaseFunction pEaseFunction) {
+    private CubicBezierCurveMoveModifier(final float pDuration, final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final float pX4, final float pY4, final IEaseFunction pEaseFunction) {
 		this(pDuration, pX1, pY1, pX2, pY2, pX3, pY3, pX4, pY4, null, pEaseFunction);
 	}
 
@@ -96,7 +96,7 @@ public class CubicBezierCurveMoveModifier extends DurationEntityModifier {
 	 * @param pEntityModifierListener
 	 * @param pEaseFunction
 	 */
-	public CubicBezierCurveMoveModifier(final float pDuration, final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final float pX4, final float pY4, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
+    private CubicBezierCurveMoveModifier(final float pDuration, final float pX1, final float pY1, final float pX2, final float pY2, final float pX3, final float pY3, final float pX4, final float pY4, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pEntityModifierListener);
 
 		this.mX1 = pX1;

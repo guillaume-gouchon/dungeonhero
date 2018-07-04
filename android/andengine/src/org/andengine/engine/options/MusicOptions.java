@@ -30,10 +30,9 @@ public class MusicOptions {
 		return this.mNeedsMusic;
 	}
 
-	public MusicOptions setNeedsMusic(final boolean pNeedsMusic) {
+	public void setNeedsMusic(final boolean pNeedsMusic) {
 		this.mNeedsMusic = pNeedsMusic;
-		return this;
-	}
+    }
 
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces

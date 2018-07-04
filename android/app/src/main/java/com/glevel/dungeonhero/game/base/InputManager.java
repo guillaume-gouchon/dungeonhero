@@ -31,12 +31,9 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
     private float mPinchZoomStartedCameraZoomFactor;
     private boolean mIsDragged = false;
 
-    private float mLastX;
-    private float mLastY;
-
     private boolean mIsEnabled = true;
 
-    public InputManager(ZoomCamera camera, UserActionListener userActionListener) {
+    InputManager(ZoomCamera camera, UserActionListener userActionListener) {
         mCamera = camera;
         mScrollDetector = new SurfaceScrollDetector(this);
         mPinchZoomDetector = new PinchZoomDetector(this);
@@ -104,8 +101,6 @@ public class InputManager implements IOnSceneTouchListener, IScrollDetectorListe
                 switch (pSceneTouchEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         mIsDragged = false;
-                        mLastX = pSceneTouchEvent.getX();
-                        mLastY = pSceneTouchEvent.getY();
                         mUserActionListener.onMove(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
                         break;
                     case MotionEvent.ACTION_MOVE:

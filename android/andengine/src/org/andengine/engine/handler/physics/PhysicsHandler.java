@@ -21,13 +21,13 @@ public class PhysicsHandler extends BaseEntityUpdateHandler {
 
 	private boolean mEnabled = true;
 
-	protected float mAccelerationX = 0;
-	protected float mAccelerationY = 0;
+	private float mAccelerationX = 0;
+	private float mAccelerationY = 0;
 
-	protected float mVelocityX = 0;
-	protected float mVelocityY = 0;
+	private float mVelocityX = 0;
+	private float mVelocityY = 0;
 
-	protected float mAngularVelocity = 0;
+	private float mAngularVelocity = 0;
 
 	// ===========================================================
 	// Constructors

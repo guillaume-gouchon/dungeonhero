@@ -33,9 +33,9 @@ public abstract class SimpleAsyncGameActivity extends BaseGameActivity {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	public abstract void onCreateResourcesAsync(final IProgressListener pProgressListener) throws Exception; // TODO Rename
-	public abstract Scene onCreateSceneAsync(final IProgressListener pProgressListener) throws Exception; // TODO Rename
-	public abstract void onPopulateSceneAsync(final Scene pScene, IProgressListener pProgressListener) throws Exception; // TODO Rename
+	public abstract void onCreateResourcesAsync(final IProgressListener pProgressListener); // TODO Rename
+	public abstract Scene onCreateSceneAsync(final IProgressListener pProgressListener); // TODO Rename
+	public abstract void onPopulateSceneAsync(final Scene pScene, IProgressListener pProgressListener); // TODO Rename
 
 	@Override
 	public void onCreateResources(final OnCreateResourcesCallback pOnCreateResourcesCallback) {

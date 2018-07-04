@@ -20,8 +20,8 @@ public class FPSLogger extends AverageFPSCounter {
 	// Fields
 	// ===========================================================
 
-	protected float mShortestFrame = Float.MAX_VALUE;
-	protected float mLongestFrame = Float.MIN_VALUE;
+	private float mShortestFrame = Float.MAX_VALUE;
+	private float mLongestFrame = Float.MIN_VALUE;
 
 	// ===========================================================
 	// Constructors
@@ -71,7 +71,7 @@ public class FPSLogger extends AverageFPSCounter {
 	// Methods
 	// ===========================================================
 
-	protected void onLogFPS() {
+	private void onLogFPS() {
 		if(BuildConfig.DEBUG) {
 			Debug.d(String.format("FPS: %.2f (MIN: %.0f ms | MAX: %.0f ms)",
 				this.mFrames / this.mSecondsElapsed,

@@ -15,12 +15,12 @@ public interface IFloatList {
 	// Methods
 	// ===========================================================
 
-	public boolean isEmpty();
-	public float get(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public void add(final float pItem);
-	public void add(final int pIndex, final float pItem) throws ArrayIndexOutOfBoundsException;
-	public float remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public int size();
-	public void clear();
-	public float[] toArray();
+	boolean isEmpty();
+	float get(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	void add(final float pItem);
+	void add(final int pIndex, final float pItem) throws ArrayIndexOutOfBoundsException;
+	float remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	int size();
+	void clear();
+	float[] toArray();
 }

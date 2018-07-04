@@ -18,7 +18,7 @@ import android.opengl.GLSurfaceView;
  * @author Nicolas Gramlich
  * @since 11:57:29 - 08.03.2010
  */
-public class EngineRenderer implements GLSurfaceView.Renderer {
+class EngineRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -28,10 +28,10 @@ public class EngineRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================
 
 	final Engine mEngine;
-	final ConfigChooser mConfigChooser;
-	final boolean mMultiSampling;
-	final IRendererListener mRendererListener;
-	final GLState mGLState;
+	private final ConfigChooser mConfigChooser;
+	private final boolean mMultiSampling;
+	private final IRendererListener mRendererListener;
+	private final GLState mGLState;
 
 	// ===========================================================
 	// Constructors

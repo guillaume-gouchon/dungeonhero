@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_bag"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:background="@drawable/bg_gui"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -20,8 +20,8 @@
             android:id="@+id/equipment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <include
                 android:id="@+id/weapon1"
@@ -85,10 +85,11 @@
         <com.glevel.dungeonhero.views.CustomTextView
             android:id="@+id/gold_amount"
             style="@style/PopupMessage"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:drawableLeft="@drawable/ic_coin" />
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_coin"
+            android:drawableStart="@drawable/ic_coin"
+            android:gravity="start|center_vertical" />
     </LinearLayout>
 </LinearLayout>

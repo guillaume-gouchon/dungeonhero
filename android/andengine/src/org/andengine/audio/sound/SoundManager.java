@@ -29,7 +29,7 @@ public class SoundManager extends BaseAudioManager<Sound> implements OnLoadCompl
 	// ===========================================================
 
 	private final SoundPool mSoundPool;
-	private final SparseArray<Sound> mSoundMap = new SparseArray<Sound>();
+	private final SparseArray<Sound> mSoundMap = new SparseArray<>();
 
 	// ===========================================================
 	// Constructors

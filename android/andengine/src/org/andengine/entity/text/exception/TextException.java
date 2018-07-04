@@ -8,7 +8,7 @@ import org.andengine.util.exception.AndEngineRuntimeException;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:53:31 - 01.11.2011
  */
-public class TextException extends AndEngineRuntimeException {
+class TextException extends AndEngineRuntimeException {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -23,19 +23,19 @@ public class TextException extends AndEngineRuntimeException {
 	// Constructors
 	// ===========================================================
 
-	public TextException() {
+	TextException() {
 		super();
 	}
 
-	public TextException(final String pMessage) {
+	TextException(final String pMessage) {
 		super(pMessage);
 	}
 
-	public TextException(final Throwable pThrowable) {
+	TextException(final Throwable pThrowable) {
 		super(pThrowable);
 	}
 
-	public TextException(final String pMessage, final Throwable pThrowable) {
+	TextException(final String pMessage, final Throwable pThrowable) {
 		super(pMessage, pThrowable);
 	}
 

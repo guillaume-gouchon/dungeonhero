@@ -18,5 +18,5 @@ public interface IAStarHeuristic<T> {
 	// Fields
 	// ===========================================================
 
-	public float getExpectedRestCost(final IPathFinderMap<T> pPathFinderMap, final T pEntity, final int pFromX, final int pFromY, final int pToX, final int pToY);
+	float getExpectedRestCost(final IPathFinderMap<T> pPathFinderMap, final T pEntity, final int pFromX, final int pFromY, final int pToX, final int pToY);
 }

@@ -3,6 +3,7 @@ package com.glevel.dungeonhero.activities.fragments;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,17 +50,17 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.dialog_fragment_story, container, false);
 
-        mStormsBg = (ImageView) layout.findViewById(R.id.storms);
+        mStormsBg = layout.findViewById(R.id.storms);
 
         // retrieve story content
         Bundle args = getArguments();
         int storyResource = args.getInt(ARGUMENT_STORY);
         String story = getString(storyResource);
 
-        mStoryTV = (TextView) layout.findViewById(R.id.story);
+        mStoryTV = layout.findViewById(R.id.story);
         mStoryTV.setText(story);
 
         startAnimation();
@@ -110,7 +111,7 @@ public class StoryFragment extends DialogFragment implements View.OnClickListene
         }
     }
 
-    protected void startAnimation() {
+    private void startAnimation() {
         mStoryTV.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.story_text_animation));
     }
 

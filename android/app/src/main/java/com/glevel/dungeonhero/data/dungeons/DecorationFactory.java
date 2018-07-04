@@ -29,11 +29,11 @@ public class DecorationFactory {
         return new Light("light");
     }
 
-    public static Decoration buildPot(Reward reward) {
+    private static Decoration buildPot(Reward reward) {
         return new Searchable("pot", reward, 18, 16, 1, 1);
     }
 
-    public static Decoration buildTable(Reward reward) {
+    private static Decoration buildTable(Reward reward) {
         return new Searchable("table", reward, 85, 70, 1, 1);
     }
 
@@ -41,7 +41,7 @@ public class DecorationFactory {
         return new Searchable("small_chest", reward, 37, 34, 1, 1);
     }
 
-    public static Decoration buildStatue(Reward reward) {
+    private static Decoration buildStatue(Reward reward) {
         return new Searchable("statue", reward, 40, 82, 1, 1);
     }
 
@@ -60,7 +60,7 @@ public class DecorationFactory {
         int gold = 0;
         Item item = ItemFactory.getRandomItem(threatLevel);
         if (item == null) {
-            gold = (int) (threatLevel * 25 * (int) (Math.random() * 4));
+            gold = threatLevel * 25 * (int) (Math.random() * 4);
         }
         if (item != null || gold > 0) {
             reward = new Reward(item, gold, 0);

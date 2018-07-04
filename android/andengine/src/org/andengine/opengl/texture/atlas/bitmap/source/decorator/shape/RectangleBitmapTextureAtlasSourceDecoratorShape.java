@@ -20,7 +20,7 @@ public class RectangleBitmapTextureAtlasSourceDecoratorShape implements IBitmapT
 	// Constructors
 	// ===========================================================
 
-	public RectangleBitmapTextureAtlasSourceDecoratorShape() {
+	private RectangleBitmapTextureAtlasSourceDecoratorShape() {
 
 	}
 

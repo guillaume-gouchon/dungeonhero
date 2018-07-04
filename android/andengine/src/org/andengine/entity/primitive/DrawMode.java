@@ -35,7 +35,7 @@ public enum DrawMode {
 	// Constructors
 	// ===========================================================
 
-	private DrawMode(final int pDrawMode) {
+	DrawMode(final int pDrawMode) {
 		this.mDrawMode = pDrawMode;
 	}
 

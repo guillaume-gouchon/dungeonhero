@@ -22,9 +22,9 @@ public class BlendFunctionParticleSystem<T extends IEntity> extends ParticleSyst
 	// Fields
 	// ===========================================================
 
-	protected boolean mBlendingEnabled = true;
-	protected int mBlendFunctionSource = IShape.BLENDFUNCTION_SOURCE_DEFAULT;
-	protected int mBlendFunctionDestination = IShape.BLENDFUNCTION_DESTINATION_DEFAULT;
+	private boolean mBlendingEnabled = true;
+	private int mBlendFunctionSource = IShape.BLENDFUNCTION_SOURCE_DEFAULT;
+	private int mBlendFunctionDestination = IShape.BLENDFUNCTION_DESTINATION_DEFAULT;
 
 	// ===========================================================
 	// Constructors
@@ -34,7 +34,7 @@ public class BlendFunctionParticleSystem<T extends IEntity> extends ParticleSyst
 		super(pEntityFactory, pParticleEmitter, pRateMinimum, pRateMaximum, pParticlesMaximum);
 	}
 
-	public BlendFunctionParticleSystem(float pX, float pY, IEntityFactory<T> pEntityFactory, IParticleEmitter pParticleEmitter, float pRateMinimum, float pRateMaximum, int pParticlesMaximum) {
+	BlendFunctionParticleSystem(float pX, float pY, IEntityFactory<T> pEntityFactory, IParticleEmitter pParticleEmitter, float pRateMinimum, float pRateMaximum, int pParticlesMaximum) {
 		super(pX, pY, pEntityFactory, pParticleEmitter, pRateMinimum, pRateMaximum, pParticlesMaximum);
 	}
 

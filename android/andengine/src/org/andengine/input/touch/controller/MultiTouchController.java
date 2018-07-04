@@ -60,9 +60,8 @@ public class MultiTouchController extends BaseTouchController {
 
 	private void onHandleTouchMove(final MotionEvent pMotionEvent) {
 		for(int i = pMotionEvent.getPointerCount() - 1; i >= 0; i--) {
-			final int pointerIndex = i;
-			final int pointerID = pMotionEvent.getPointerId(pointerIndex);
-			this.fireTouchEvent(pMotionEvent.getX(pointerIndex), pMotionEvent.getY(pointerIndex), MotionEvent.ACTION_MOVE, pointerID, pMotionEvent);
+            final int pointerID = pMotionEvent.getPointerId(i);
+			this.fireTouchEvent(pMotionEvent.getX(i), pMotionEvent.getY(i), MotionEvent.ACTION_MOVE, pointerID, pMotionEvent);
 		}
 	}
 

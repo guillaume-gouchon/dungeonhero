@@ -11,32 +11,32 @@
 
         <include
             android:id="@+id/activeCharacter"
+            layout="@layout/in_game_queue_item"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            layout="@layout/in_game_queue_item" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
-        android:alpha="0.8"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:alpha="0.8">
 
         <include
             android:id="@+id/nextCharacter"
+            layout="@layout/in_game_queue_item"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            layout="@layout/in_game_queue_item" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
-        android:alpha="0.6"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:alpha="0.6">
 
         <include
             android:id="@+id/nextnextCharacter"
+            layout="@layout/in_game_queue_item"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            layout="@layout/in_game_queue_item" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

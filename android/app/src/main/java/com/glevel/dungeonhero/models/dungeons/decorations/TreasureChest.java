@@ -5,9 +5,6 @@ import com.glevel.dungeonhero.models.Reward;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by guillaume on 10/10/14.
- */
 public class TreasureChest extends Searchable {
 
     private static final long serialVersionUID = -8965387914362690452L;

@@ -14,12 +14,12 @@ import org.andengine.util.modifier.ease.IEaseFunction;
  * @author Nicolas Gramlich
  * @since 11:17:32 - 02.04.2010
  */
-public abstract class BaseMenuAnimator implements IMenuAnimator {
+abstract class BaseMenuAnimator implements IMenuAnimator {
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	protected static final float DURATION = 1.0f;
+	static final float DURATION = 1.0f;
 
 	private static final float MENUITEMSPACING_DEFAULT = 1.0f;
 
@@ -29,43 +29,43 @@ public abstract class BaseMenuAnimator implements IMenuAnimator {
 	// Fields
 	// ===========================================================
 
-	protected final float mMenuItemSpacing;
-	protected final HorizontalAlign mHorizontalAlign;
-	protected final IEaseFunction mEaseFunction;
+	final float mMenuItemSpacing;
+	final HorizontalAlign mHorizontalAlign;
+	final IEaseFunction mEaseFunction;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseMenuAnimator() {
+	BaseMenuAnimator() {
 		this(MENUITEMSPACING_DEFAULT);
 	}
 
-	public BaseMenuAnimator(final IEaseFunction pEaseFunction) {
+	BaseMenuAnimator(final IEaseFunction pEaseFunction) {
 		this(MENUITEMSPACING_DEFAULT, pEaseFunction);
 	}
 
-	public BaseMenuAnimator(final float pMenuItemSpacing) {
+	BaseMenuAnimator(final float pMenuItemSpacing) {
 		this(HORIZONTALALIGN_DEFAULT, pMenuItemSpacing);
 	}
 
-	public BaseMenuAnimator(final float pMenuItemSpacing, final IEaseFunction pEaseFunction) {
+	BaseMenuAnimator(final float pMenuItemSpacing, final IEaseFunction pEaseFunction) {
 		this(HORIZONTALALIGN_DEFAULT, pMenuItemSpacing, pEaseFunction);
 	}
 
-	public BaseMenuAnimator(final HorizontalAlign pHorizontalAlign) {
+	BaseMenuAnimator(final HorizontalAlign pHorizontalAlign) {
 		this(pHorizontalAlign, MENUITEMSPACING_DEFAULT);
 	}
 
-	public BaseMenuAnimator(final HorizontalAlign pHorizontalAlign, final IEaseFunction pEaseFunction) {
+	BaseMenuAnimator(final HorizontalAlign pHorizontalAlign, final IEaseFunction pEaseFunction) {
 		this(pHorizontalAlign, MENUITEMSPACING_DEFAULT, pEaseFunction);
 	}
 
-	public BaseMenuAnimator(final HorizontalAlign pHorizontalAlign, final float pMenuItemSpacing) {
+	BaseMenuAnimator(final HorizontalAlign pHorizontalAlign, final float pMenuItemSpacing) {
 		this(pHorizontalAlign, pMenuItemSpacing, EaseLinear.getInstance());
 	}
 
-	public BaseMenuAnimator(final HorizontalAlign pHorizontalAlign, final float pMenuItemSpacing, final IEaseFunction pEaseFunction) {
+	BaseMenuAnimator(final HorizontalAlign pHorizontalAlign, final float pMenuItemSpacing, final IEaseFunction pEaseFunction) {
 		this.mHorizontalAlign = pHorizontalAlign;
 		this.mMenuItemSpacing = pMenuItemSpacing;
 		this.mEaseFunction = pEaseFunction;
@@ -75,7 +75,7 @@ public abstract class BaseMenuAnimator implements IMenuAnimator {
 	// Getter & Setter
 	// ===========================================================
 
-	protected float getMaximumWidth(final ArrayList<IMenuItem> pMenuItems) {
+	float getMaximumWidth(final ArrayList<IMenuItem> pMenuItems) {
 		float maximumWidth = Float.MIN_VALUE;
 		for(int i = pMenuItems.size() - 1; i >= 0; i--) {
 			final IMenuItem menuItem = pMenuItems.get(i);
@@ -84,7 +84,7 @@ public abstract class BaseMenuAnimator implements IMenuAnimator {
 		return maximumWidth;
 	}
 
-	protected float getOverallHeight(final ArrayList<IMenuItem> pMenuItems) {
+	float getOverallHeight(final ArrayList<IMenuItem> pMenuItems) {
 		float overallHeight = 0;
 		for(int i = pMenuItems.size() - 1; i >= 0; i--) {
 			final IMenuItem menuItem = pMenuItems.get(i);

@@ -31,14 +31,14 @@ public class TMXTiledMap implements TMXConstants {
 	private final int mTileWidth;
 	private final int mTileHeight;
 
-	private final ArrayList<TMXTileSet> mTMXTileSets = new ArrayList<TMXTileSet>();
-	private final ArrayList<TMXLayer> mTMXLayers = new ArrayList<TMXLayer>();
-	private final ArrayList<TMXObjectGroup> mTMXObjectGroups = new ArrayList<TMXObjectGroup>();
+	private final ArrayList<TMXTileSet> mTMXTileSets = new ArrayList<>();
+	private final ArrayList<TMXLayer> mTMXLayers = new ArrayList<>();
+	private final ArrayList<TMXObjectGroup> mTMXObjectGroups = new ArrayList<>();
 
-	private final SparseArray<ITextureRegion> mGlobalTileIDToTextureRegionCache = new SparseArray<ITextureRegion>();
-	private final SparseArray<TMXProperties<TMXTileProperty>> mGlobalTileIDToTMXTilePropertiesCache = new SparseArray<TMXProperties<TMXTileProperty>>();
+	private final SparseArray<ITextureRegion> mGlobalTileIDToTextureRegionCache = new SparseArray<>();
+	private final SparseArray<TMXProperties<TMXTileProperty>> mGlobalTileIDToTMXTilePropertiesCache = new SparseArray<>();
 
-	private final TMXProperties<TMXTiledMapProperty> mTMXTiledMapProperties = new TMXProperties<TMXTiledMapProperty>();
+	private final TMXProperties<TMXTiledMapProperty> mTMXTiledMapProperties = new TMXProperties<>();
 
 	// ===========================================================
 	// Constructors
@@ -141,9 +141,8 @@ public class TMXTiledMap implements TMXConstants {
 	// ===========================================================
 
 	public TMXProperties<TMXTileProperty> getTMXTileProperties(final int pGlobalTileID) {
-		final SparseArray<TMXProperties<TMXTileProperty>> globalTileIDToTMXTilePropertiesCache = this.mGlobalTileIDToTMXTilePropertiesCache;
 
-		final TMXProperties<TMXTileProperty> cachedTMXTileProperties = globalTileIDToTMXTilePropertiesCache.get(pGlobalTileID);
+		final TMXProperties<TMXTileProperty> cachedTMXTileProperties = this.mGlobalTileIDToTMXTilePropertiesCache.get(pGlobalTileID);
 		if(cachedTMXTileProperties != null) {
 			return cachedTMXTileProperties;
 		} else {

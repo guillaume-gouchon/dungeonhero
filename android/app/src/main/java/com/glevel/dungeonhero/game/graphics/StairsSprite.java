@@ -4,9 +4,6 @@ import com.glevel.dungeonhero.models.dungeons.decorations.Stairs;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by guillaume on 12/5/14.
- */
 public class StairsSprite extends GameElementSprite {
 
     public StairsSprite(Stairs stairs, VertexBufferObjectManager vertexBufferObjectManager) {

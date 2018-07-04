@@ -21,13 +21,13 @@ public abstract class BaseShapeBitmapTextureAtlasSourceDecorator extends BaseBit
 	// Fields
 	// ===========================================================
 
-	protected final IBitmapTextureAtlasSourceDecoratorShape mBitmapTextureAtlasSourceDecoratorShape;
+	final IBitmapTextureAtlasSourceDecoratorShape mBitmapTextureAtlasSourceDecoratorShape;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public BaseShapeBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
+	BaseShapeBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
 		super(pBitmapTextureAtlasSource, pTextureAtlasSourceDecoratorOptions);
 
 		this.mBitmapTextureAtlasSourceDecoratorShape = pBitmapTextureAtlasSourceDecoratorShape;

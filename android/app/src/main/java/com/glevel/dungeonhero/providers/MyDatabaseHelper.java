@@ -13,7 +13,7 @@ public class MyDatabaseHelper extends AbstractDatabaseHelper {
     private static final String DATABASE_NAME = "dungeon_hero";
     private static final int DATABASE_VERSION = 4;
 
-    public MyDatabaseHelper(Context context) {
+    MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, DATABASE_VERSION);
     }
 
@@ -41,7 +41,7 @@ public class MyDatabaseHelper extends AbstractDatabaseHelper {
             checkDB.close();
         }
 
-        return checkDB != null ? true : false;
+        return checkDB != null;
     }
 
 }

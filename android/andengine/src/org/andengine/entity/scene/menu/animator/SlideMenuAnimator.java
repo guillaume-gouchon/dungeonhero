@@ -69,8 +69,7 @@ public class SlideMenuAnimator extends BaseMenuAnimator {
 
 	@Override
 	public void buildAnimations(final ArrayList<IMenuItem> pMenuItems, final float pCameraWidth, final float pCameraHeight) {
-		final IEaseFunction easeFunction = this.mEaseFunction;
-		final float maximumWidth = this.getMaximumWidth(pMenuItems);
+        final float maximumWidth = this.getMaximumWidth(pMenuItems);
 		final float overallHeight = this.getOverallHeight(pMenuItems);
 
 		final float baseX = (pCameraWidth - maximumWidth) * 0.5f;
@@ -95,7 +94,7 @@ public class SlideMenuAnimator extends BaseMenuAnimator {
 					break;
 			}
 
-			final MoveModifier moveModifier = new MoveModifier(DURATION, -maximumWidth, baseX + offsetX, baseY + offsetY, baseY + offsetY, easeFunction);
+			final MoveModifier moveModifier = new MoveModifier(DURATION, -maximumWidth, baseX + offsetX, baseY + offsetY, baseY + offsetY, this.mEaseFunction);
 			moveModifier.setAutoUnregisterWhenFinished(false);
 			menuItem.registerEntityModifier(moveModifier);
 
@@ -110,16 +109,14 @@ public class SlideMenuAnimator extends BaseMenuAnimator {
 
 		final float baseY = (pCameraHeight - overallHeight) * 0.5f;
 
-		final float menuItemSpacing = this.mMenuItemSpacing;
-
-		float offsetY = 0;
+        float offsetY = 0;
 		final int menuItemCount = pMenuItems.size();
 		for(int i = 0; i < menuItemCount; i++) {
 			final IMenuItem menuItem = pMenuItems.get(i);
 
 			menuItem.setPosition(-maximumWidth, baseY + offsetY);
 
-			offsetY += menuItem.getHeight() + menuItemSpacing;
+			offsetY += menuItem.getHeight() + this.mMenuItemSpacing;
 		}
 	}
 

@@ -18,8 +18,8 @@ public interface IUpdateHandler {
 	// Methods
 	// ===========================================================
 
-	public void onUpdate(final float pSecondsElapsed);
-	public void reset();
+	void onUpdate(final float pSecondsElapsed);
+	void reset();
 	
 	// TODO Maybe add onRegister and onUnregister. (Maybe add SimpleUpdateHandler that implements all methods, but onUpdate)
 
@@ -27,7 +27,7 @@ public interface IUpdateHandler {
 	// Inner and Anonymous Classes
 	// ===========================================================
 	
-	public interface IUpdateHandlerMatcher extends IMatcher<IUpdateHandler> {
+	interface IUpdateHandlerMatcher extends IMatcher<IUpdateHandler> {
 		// ===========================================================
 		// Constants
 		// ===========================================================

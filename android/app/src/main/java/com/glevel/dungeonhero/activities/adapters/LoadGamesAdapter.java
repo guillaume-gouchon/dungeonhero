@@ -1,5 +1,6 @@
 package com.glevel.dungeonhero.activities.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -23,6 +24,7 @@ public class LoadGamesAdapter extends CursorAdapter {
     private final LayoutInflater mInflater;
     private final Map<Long, Game> mCache;
 
+    @SuppressLint("UseSparseArrays")
     public LoadGamesAdapter(Context context) {
         super(context, null, 0);
         mContext = context;
@@ -81,10 +83,10 @@ public class LoadGamesAdapter extends CursorAdapter {
     }
 
     private static class ViewHolder {
-        public TextView title;
+        final TextView title;
 
-        public ViewHolder(View itemView) {
-            title = (TextView) itemView.findViewById(R.id.text);
+        ViewHolder(View itemView) {
+            title = itemView.findViewById(R.id.text);
         }
     }
 

@@ -12,12 +12,12 @@ public class AStar<N extends Node> {
 
     public List<N> search(N[][] nodes, N source, N target, boolean allowDiagonalMoves, MovingElement movingElement) {
         // prepare sets
-        Map<String, AStarNode<N>> openSet = new HashMap<String, AStarNode<N>>();
-        PriorityQueue<AStarNode<N>> pQueue = new PriorityQueue<AStarNode<N>>(20, new AStarNodeComparator<N>());
-        Map<String, AStarNode<N>> closeSet = new HashMap<String, AStarNode<N>>();
+        Map<String, AStarNode<N>> openSet = new HashMap<>();
+        PriorityQueue<AStarNode<N>> pQueue = new PriorityQueue<>(20, new AStarNodeComparator<>());
+        Map<String, AStarNode<N>> closeSet = new HashMap<>();
 
         // add source
-        AStarNode<N> start = new AStarNode<N>(source, 0, MathUtils.calcManhattanDistance(source, target));
+        AStarNode<N> start = new AStarNode<>(source, 0, MathUtils.calcManhattanDistance(source, target));
         openSet.put(source.getId(), start);
         pQueue.add(start);
 
@@ -30,7 +30,7 @@ public class AStar<N extends Node> {
                 break;
             } else {
                 closeSet.put(testedNode.getId(), testedNode);
-                Set<N> neighbors = (Set<N>) MathUtils.getAdjacentNodes(nodes, testedNode.getNode(), 1, allowDiagonalMoves, movingElement);
+                @SuppressWarnings("unchecked") Set<N> neighbors = MathUtils.getAdjacentNodes(nodes, testedNode.getNode(), 1, allowDiagonalMoves, movingElement);
                 for (N neighbor : neighbors) {
                     AStarNode<N> visited = closeSet.get(neighbor.getId());
                     if (visited == null) {
@@ -39,7 +39,7 @@ public class AStar<N extends Node> {
 
                         if (n == null) {
                             // not in the open set
-                            n = new AStarNode<N>(neighbor, g, MathUtils.calcManhattanDistance(neighbor, target));
+                            n = new AStarNode<>(neighbor, g, MathUtils.calcManhattanDistance(neighbor, target));
                             n.setCameFrom(testedNode);
                             openSet.put(neighbor.getId(), n);
                             pQueue.add(n);
@@ -56,9 +56,9 @@ public class AStar<N extends Node> {
 
         // after the target is reached, playMusic to populate the path
         if (goal != null) {
-            Stack<N> stack = new Stack<N>();
+            Stack<N> stack = new Stack<>();
             stack.push(goal.getNode());
-            List<N> list = new ArrayList<N>();
+            List<N> list = new ArrayList<>();
             AStarNode<N> parent = goal.getCameFrom();
 
             while (parent != null) {

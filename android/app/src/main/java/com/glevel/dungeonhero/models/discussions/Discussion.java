@@ -11,9 +11,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by guillaume on 10/13/14.
- */
 public class Discussion implements Serializable {
 
     private static final long serialVersionUID = 4434121243275987291L;

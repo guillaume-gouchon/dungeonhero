@@ -3,7 +3,6 @@ package com.glevel.dungeonhero.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -50,12 +49,9 @@ public class MusicManager {
             Log.e(TAG, "player was not created successfully");
         } else {
             try {
-                sMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        release();
-                        play(context, musicResources);
-                    }
+                sMediaPlayer.setOnCompletionListener(mp -> {
+                    release();
+                    play(context, musicResources);
                 });
                 sMediaPlayer.start();
             } catch (Exception e) {
@@ -86,12 +82,7 @@ public class MusicManager {
             Log.d(TAG, "play sound");
             MediaPlayer mp = MediaPlayer.create(context, sound);
             mp.start();
-            mp.setOnCompletionListener(new OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    mp.release();
-                }
-            });
+            mp.setOnCompletionListener(MediaPlayer::release);
         }
     }
 

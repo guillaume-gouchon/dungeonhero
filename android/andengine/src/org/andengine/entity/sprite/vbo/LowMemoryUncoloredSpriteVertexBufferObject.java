@@ -51,11 +51,11 @@ public class LowMemoryUncoloredSpriteVertexBufferObject extends LowMemorySpriteV
 		final float xCenter = (x + x2) * 0.5f;
 		final float yCenter = (y + y2) * 0.5f;
 
-		bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, x);
-		bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, yCenter);
+		bufferData.put(Sprite.VERTEX_INDEX_X, x);
+		bufferData.put(Sprite.VERTEX_INDEX_Y, yCenter);
 
-		bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, xCenter);
-		bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y2);
+		bufferData.put(Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, xCenter);
+		bufferData.put(Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y2);
 
 		bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, xCenter);
 		bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, y);
@@ -107,11 +107,11 @@ public class LowMemoryUncoloredSpriteVertexBufferObject extends LowMemorySpriteV
 		final float vCenter = (v + v2) * 0.5f;
 
 		if(textureRegion.isRotated()) {
-			bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, uCenter);
-			bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);
+			bufferData.put(Sprite.TEXTURECOORDINATES_INDEX_U, uCenter);
+			bufferData.put(Sprite.TEXTURECOORDINATES_INDEX_V, v);
 
-			bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
-			bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, vCenter);
+			bufferData.put(Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
+			bufferData.put(Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, vCenter);
 
 			bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u2);
 			bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, vCenter);
@@ -119,11 +119,11 @@ public class LowMemoryUncoloredSpriteVertexBufferObject extends LowMemorySpriteV
 			bufferData.put(3 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, uCenter);
 			bufferData.put(3 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
 		} else {
-			bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, u);
-			bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, vCenter);
+			bufferData.put(Sprite.TEXTURECOORDINATES_INDEX_U, u);
+			bufferData.put(Sprite.TEXTURECOORDINATES_INDEX_V, vCenter);
 
-			bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, uCenter);
-			bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
+			bufferData.put(Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, uCenter);
+			bufferData.put(Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v2);
 
 			bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U, uCenter);
 			bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V, v);

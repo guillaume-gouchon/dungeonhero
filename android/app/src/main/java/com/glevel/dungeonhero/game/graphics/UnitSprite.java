@@ -5,9 +5,6 @@ import com.glevel.dungeonhero.models.dungeons.Directions;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by guillaume ON 10/8/14.
- */
 public class UnitSprite extends GameElementSprite {
 
     public static final int SPRITE_ANIM_X = 3, SPRITE_ANIM_Y = 4;

@@ -62,9 +62,7 @@ public class DirectMenuAnimator extends BaseMenuAnimator {
 		final float baseX = (pCameraWidth - maximumWidth) * 0.5f;
 		final float baseY = (pCameraHeight - overallHeight) * 0.5f;
 
-		final float menuItemSpacing = this.mMenuItemSpacing;
-
-		float offsetY = 0;
+        float offsetY = 0;
 		final int menuItemCount = pMenuItems.size();
 		for(int i = 0; i < menuItemCount; i++) {
 			final IMenuItem menuItem = pMenuItems.get(i);
@@ -84,7 +82,7 @@ public class DirectMenuAnimator extends BaseMenuAnimator {
 			}
 			menuItem.setPosition(baseX + offsetX , baseY + offsetY);
 
-			offsetY += menuItem.getHeight() + menuItemSpacing;
+			offsetY += menuItem.getHeight() + this.mMenuItemSpacing;
 		}
 	}
 

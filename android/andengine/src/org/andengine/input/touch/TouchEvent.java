@@ -21,7 +21,7 @@ public class TouchEvent {
 	public static final int ACTION_CANCEL = MotionEvent.ACTION_CANCEL;
 	public static final int ACTION_DOWN = MotionEvent.ACTION_DOWN;
 	public static final int ACTION_MOVE = MotionEvent.ACTION_MOVE;
-	public static final int ACTION_OUTSIDE = MotionEvent.ACTION_OUTSIDE;
+	private static final int ACTION_OUTSIDE = MotionEvent.ACTION_OUTSIDE;
 	public static final int ACTION_UP = MotionEvent.ACTION_UP;
 
 	private static final TouchEventPool TOUCHEVENT_POOL = new TouchEventPool();
@@ -30,14 +30,14 @@ public class TouchEvent {
 	// Fields
 	// ===========================================================
 
-	protected int mPointerID;
+	private int mPointerID;
 
-	protected float mX;
-	protected float mY;
+	private float mX;
+	private float mY;
 
-	protected int mAction;
+	private int mAction;
 
-	protected MotionEvent mMotionEvent;
+	private MotionEvent mMotionEvent;
 
 	// ===========================================================
 	// Constructors

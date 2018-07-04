@@ -67,7 +67,7 @@ public class EntityDetachRunnablePoolUpdateHandler extends RunnablePoolUpdateHan
 	 * @param pEntity the @{link IEntity} to be detached safely.
 	 * @param pCallback will be called after the @{link IEntity} actually was detached.
 	 */
-	public void scheduleDetach(final IEntity pEntity, final Callback<IEntity> pCallback) {
+    private void scheduleDetach(final IEntity pEntity, final Callback<IEntity> pCallback) {
 		final EntityDetachRunnablePoolItem entityDetachRunnablePoolItem = this.obtainPoolItem();
 		entityDetachRunnablePoolItem.setEntity(pEntity);
 		entityDetachRunnablePoolItem.setCallback(pCallback);

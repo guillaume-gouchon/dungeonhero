@@ -30,7 +30,7 @@ public class LongArrayList implements ILongList {
 		this(LongArrayList.CAPACITY_INITIAL_DEFAULT);
 	}
 
-	public LongArrayList(final int pInitialCapacity) {
+	private LongArrayList(final int pInitialCapacity) {
 		this.mItems = new long[pInitialCapacity];
 	}
 

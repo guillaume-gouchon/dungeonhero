@@ -55,11 +55,11 @@ public class LowMemoryUniformColorSpriteVertexBufferObject extends LowMemoryVert
 		final float x2 = pSprite.getWidth(); // TODO Optimize with field access?
 		final float y2 = pSprite.getHeight(); // TODO Optimize with field access?
 
-		bufferData.put(0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X, x);
-		bufferData.put(0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y, y);
+		bufferData.put(UniformColorSprite.VERTEX_INDEX_X, x);
+		bufferData.put(UniformColorSprite.VERTEX_INDEX_Y, y);
 
-		bufferData.put(1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X, x);
-		bufferData.put(1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y, y2);
+		bufferData.put(UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X, x);
+		bufferData.put(UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y, y2);
 
 		bufferData.put(2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X, x2);
 		bufferData.put(2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y, y);
@@ -108,11 +108,11 @@ public class LowMemoryUniformColorSpriteVertexBufferObject extends LowMemoryVert
 		}
 
 		if(textureRegion.isRotated()) {
-			bufferData.put(0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u2);
-			bufferData.put(0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v);
+			bufferData.put(UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u2);
+			bufferData.put(UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v);
 
-			bufferData.put(1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u);
-			bufferData.put(1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v);
+			bufferData.put(UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u);
+			bufferData.put(UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v);
 
 			bufferData.put(2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u2);
 			bufferData.put(2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v2);
@@ -120,11 +120,11 @@ public class LowMemoryUniformColorSpriteVertexBufferObject extends LowMemoryVert
 			bufferData.put(3 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u);
 			bufferData.put(3 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v2);
 		} else {
-			bufferData.put(0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u);
-			bufferData.put(0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v);
+			bufferData.put(UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u);
+			bufferData.put(UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v);
 
-			bufferData.put(1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u);
-			bufferData.put(1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v2);
+			bufferData.put(UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u);
+			bufferData.put(UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v2);
 
 			bufferData.put(2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_U, u2);
 			bufferData.put(2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.TEXTURECOORDINATES_INDEX_V, v);

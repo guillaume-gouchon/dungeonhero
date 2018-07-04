@@ -78,11 +78,11 @@ public class Trie implements ITrie {
 		// Constructors
 		// ===========================================================
 
-		public TrieNode() {
+		TrieNode() {
 			this(false);
 		}
 
-		public TrieNode(final boolean pWordEndFlag) {
+		TrieNode(final boolean pWordEndFlag) {
 			this.mWordEndFlag = pWordEndFlag;
 		}
 
@@ -111,7 +111,7 @@ public class Trie implements ITrie {
 		@Override
 		public void add(final CharSequence pCharSequence, final int pStart, final int pEnd) {
 			if(this.mChildren == null) {
-				this.mChildren = new SparseArray<Trie.TrieNode>(Trie.CHILDREN_SIZE_DEFAULT);
+				this.mChildren = new SparseArray<>(Trie.CHILDREN_SIZE_DEFAULT);
 			}
 			final char character = pCharSequence.charAt(pStart);
 

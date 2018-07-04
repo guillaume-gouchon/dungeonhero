@@ -5,8 +5,6 @@ import com.glevel.dungeonhero.models.characters.Pnj;
 
 public class IntroductionQuest extends GameActivity {
 
-    private static final String TAG = "IntroductionQuest";
-
     @Override
     protected void addSpecialGameElements() {
         super.addSpecialGameElements();

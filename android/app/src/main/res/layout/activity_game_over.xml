@@ -8,36 +8,38 @@
         android:id="@+id/storms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="Storms"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_village"
         android:tint="#cc000000" />
 
     <ImageView
         android:id="@+id/grave"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:alpha="0.4"
+        android:contentDescription="Grave"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_death" />
 
     <com.glevel.dungeonhero.views.CustomTitle
         android:id="@+id/title"
         style="@style/GameOverTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:text="@string/game_over_title" />
 
     <LinearLayout
-        android:layout_below="@+id/title"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_below="@+id/title"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <com.glevel.dungeonhero.views.CustomButton
             android:id="@+id/retry_btn"
@@ -51,8 +53,7 @@
             style="@style/BackButton"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:text="@string/exit"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:text="@string/exit" />
     </LinearLayout>
 </RelativeLayout>

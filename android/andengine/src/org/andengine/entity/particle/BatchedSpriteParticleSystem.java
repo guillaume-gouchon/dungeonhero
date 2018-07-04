@@ -26,7 +26,7 @@ public class BatchedSpriteParticleSystem extends BlendFunctionParticleSystem<Unc
 	// Fields
 	// ===========================================================
 
-	protected final SpriteBatch mSpriteBatch;
+	private final SpriteBatch mSpriteBatch;
 
 	// ===========================================================
 	// Constructors
@@ -36,7 +36,7 @@ public class BatchedSpriteParticleSystem extends BlendFunctionParticleSystem<Unc
 		this(0, 0, pParticleEmitter, pRateMinimum, pRateMaximum, pParticlesMaximum, pTextureRegion, pVertexBufferObjectManager); 
 	}
 
-	public BatchedSpriteParticleSystem(final float pX, final float pY, final IParticleEmitter pParticleEmitter, final float pRateMinimum, final float pRateMaximum, final int pParticlesMaximum, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager) {
+	private BatchedSpriteParticleSystem(final float pX, final float pY, final IParticleEmitter pParticleEmitter, final float pRateMinimum, final float pRateMaximum, final int pParticlesMaximum, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, new IEntityFactory<UncoloredSprite>() {
 			@Override
 			public UncoloredSprite create(final float pX, final float pY) {
@@ -60,9 +60,8 @@ public class BatchedSpriteParticleSystem extends BlendFunctionParticleSystem<Unc
 	protected void onManagedDraw(final GLState pGLState, final Camera pCamera) {
 		this.mSpriteBatch.setIndex(0);
 
-		final Particle<UncoloredSprite>[] particles = this.mParticles;
 		for(int i = this.mParticlesAlive - 1; i >= 0; i--) {
-			final Sprite sprite = particles[i].getEntity();
+			final Sprite sprite = this.mParticles[i].getEntity();
 
 			/* In order to support alpha changes of the sprites inside the spritebatch,
 			 * we have to 'premultiply' the RGB channels of the sprite with its alpha channel. */

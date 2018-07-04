@@ -54,11 +54,11 @@ public class ColorBackgroundModifier extends BaseTripleValueSpanModifier<IBackgr
 		super(pDuration, pFromColor.getRed(), pToColor.getRed(), pFromColor.getGreen(), pToColor.getGreen(), pFromColor.getBlue(), pToColor.getBlue(), pBackgroundModifierListener, pEaseFunction);
 	}
 
-	public ColorBackgroundModifier(final float pDuration, final float pFromRed, final float pToRed, final float pFromGreen, final float pToGreen, final float pFromBlue, final float pToBlue, final IBackgroundModifierListener pBackgroundModifierListener, final IEaseFunction pEaseFunction) {
+	private ColorBackgroundModifier(final float pDuration, final float pFromRed, final float pToRed, final float pFromGreen, final float pToGreen, final float pFromBlue, final float pToBlue, final IBackgroundModifierListener pBackgroundModifierListener, final IEaseFunction pEaseFunction) {
 		super(pDuration, pFromRed, pToRed, pFromGreen, pToGreen, pFromBlue, pToBlue, pBackgroundModifierListener, pEaseFunction);
 	}
 
-	protected ColorBackgroundModifier(final ColorBackgroundModifier pColorBackgroundModifier) {
+	private ColorBackgroundModifier(final ColorBackgroundModifier pColorBackgroundModifier) {
 		super(pColorBackgroundModifier);
 	}
 

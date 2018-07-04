@@ -30,7 +30,7 @@ public class EllipseBitmapTextureAtlasSourceDecoratorShape implements IBitmapTex
 	// Constructors
 	// ===========================================================
 
-	public EllipseBitmapTextureAtlasSourceDecoratorShape() {
+	private EllipseBitmapTextureAtlasSourceDecoratorShape() {
 
 	}
 

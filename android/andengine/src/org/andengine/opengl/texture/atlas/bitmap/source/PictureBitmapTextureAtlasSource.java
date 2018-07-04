@@ -24,7 +24,7 @@ public abstract class PictureBitmapTextureAtlasSource extends BaseTextureAtlasSo
 	// Fields
 	// ===========================================================
 
-	protected final Picture mPicture;
+	private final Picture mPicture;
 
 	// ===========================================================
 	// Constructors
@@ -34,7 +34,7 @@ public abstract class PictureBitmapTextureAtlasSource extends BaseTextureAtlasSo
 		this(pPicture, 0, 0);
 	}
 	
-	public PictureBitmapTextureAtlasSource(final Picture pPicture, final int pTextureX, final int pTextureY) {
+	private PictureBitmapTextureAtlasSource(final Picture pPicture, final int pTextureX, final int pTextureY) {
 		this(pPicture, pTextureX, pTextureY, pPicture.getWidth(), pPicture.getHeight());
 	}
 
@@ -42,7 +42,7 @@ public abstract class PictureBitmapTextureAtlasSource extends BaseTextureAtlasSo
 		this(pPicture, pTextureX, pTextureY, Math.round(pPicture.getWidth() * pScale), Math.round(pPicture.getHeight() * pScale));
 	}
 
-	public PictureBitmapTextureAtlasSource(final Picture pPicture, final int pTextureX, final int pTextureY, final int pTextureWidth, final int pTextureHeight) {
+	private PictureBitmapTextureAtlasSource(final Picture pPicture, final int pTextureX, final int pTextureY, final int pTextureWidth, final int pTextureHeight) {
 		super(pTextureX, pTextureY, pTextureWidth, pTextureHeight);
 
 		this.mPicture = pPicture;

@@ -31,9 +31,9 @@ public class ShiftList<T> implements IQueue<T> {
 	// Fields
 	// ===========================================================
 
-	protected Object[] mItems;
-	protected int mHead;
-	protected int mTail;
+	private Object[] mItems;
+	private int mHead;
+	private int mTail;
 
 	// ===========================================================
 	// Constructors
@@ -43,7 +43,7 @@ public class ShiftList<T> implements IQueue<T> {
 		this(ShiftList.CAPACITY_INITIAL_DEFAULT);
 	}
 
-	public ShiftList(final int pInitialCapacity) {
+	protected ShiftList(final int pInitialCapacity) {
 		this.mItems = new Object[pInitialCapacity];
 	}
 
@@ -248,7 +248,7 @@ public class ShiftList<T> implements IQueue<T> {
 	// Methods
 	// ===========================================================
 
-	public void shift() {
+	void shift() {
 		final int size = this.mTail - this.mHead;
 		if(size == 0) {
 			this.mHead = 0;

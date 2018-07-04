@@ -1,12 +1,11 @@
 package com.glevel.dungeonhero.models;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.glevel.dungeonhero.data.BookFactory;
 import com.glevel.dungeonhero.data.characters.MonsterFactory;
 import com.glevel.dungeonhero.data.dungeons.DecorationFactory;
-import com.glevel.dungeonhero.game.base.GameElement;
 import com.glevel.dungeonhero.game.graphics.GraphicHolder;
 import com.glevel.dungeonhero.game.graphics.SpriteHolder;
 import com.glevel.dungeonhero.models.characters.Hero;
@@ -20,16 +19,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by guillaume ON 10/2/14.
- */
 public class Game extends DatabaseResource {
 
     public static final String TABLE_NAME = "game";
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY, " + Columns.HERO + " BLOB, " + Columns.BOOKS_DONE +
             " BLOB, " + Columns.BOOK + " BLOB, " + Columns.DUNGEON + " BLOB);";
+    private static final long serialVersionUID = 7372868327066510292L;
 
     private Book book;
+    @SuppressLint("UseSparseArrays")
     private Map<Integer, Integer> booksDone = new HashMap<>();
     private Hero hero;
     private Dungeon dungeon = null;
@@ -41,6 +39,7 @@ public class Game extends DatabaseResource {
         if (cursor.getColumnCount() > 1) {
             game.setHero((Hero) ByteSerializerHelper.getObjectFromByte(cursor.getBlob(1)));
             if (cursor.getColumnCount() > 2) {
+                //noinspection unchecked
                 game.setBooksDone((Map<Integer, Integer>) ByteSerializerHelper.getObjectFromByte(cursor.getBlob(2)));
                 if (cursor.getBlob(3) != null) {
                     game.setBook((Book) ByteSerializerHelper.getObjectFromByte(cursor.getBlob(3)));
@@ -105,19 +104,13 @@ public class Game extends DatabaseResource {
         toLoad.add(hero);
 
         // load monsters
-        for (GameElement element : MonsterFactory.getAll()) {
-            toLoad.add(element);
-        }
+        toLoad.addAll(MonsterFactory.getAll());
 
         // load decorations
-        for (GameElement element : DecorationFactory.getAll()) {
-            toLoad.add(element);
-        }
+        toLoad.addAll(DecorationFactory.getAll());
 
         // load PNJs
-        for (GraphicHolder element : book.getResourcesToLoad()) {
-            toLoad.add(element);
-        }
+        toLoad.addAll(book.getResourcesToLoad());
 
         toLoad.add(new SpriteHolder("stairs.png", 30, 30, 2, 1));
         toLoad.add(new SpriteHolder("selection.png", 64, 64, 1, 1));
@@ -156,7 +149,7 @@ public class Game extends DatabaseResource {
         return booksDone;
     }
 
-    public void setBooksDone(Map<Integer, Integer> booksDone) {
+    private void setBooksDone(Map<Integer, Integer> booksDone) {
         this.booksDone = booksDone;
     }
 
@@ -165,7 +158,7 @@ public class Game extends DatabaseResource {
 
         private final String columnName;
 
-        private Columns(String columnName) {
+        Columns(String columnName) {
             this.columnName = columnName;
         }
 

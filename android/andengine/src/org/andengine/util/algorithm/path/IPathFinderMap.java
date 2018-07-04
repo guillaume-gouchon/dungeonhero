@@ -17,5 +17,5 @@ public interface IPathFinderMap<T> {
 	// Fields
 	// ===========================================================
 
-	public boolean isBlocked(final int pX, final int pY, final T pEntity);
+	boolean isBlocked(final int pX, final int pY, final T pEntity);
 }

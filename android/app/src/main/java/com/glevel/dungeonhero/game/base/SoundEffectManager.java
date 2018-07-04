@@ -15,29 +15,30 @@ import org.andengine.engine.camera.Camera;
 import java.util.HashMap;
 import java.util.List;
 
-public class SoundEffectManager {
+class SoundEffectManager {
 
-    private static final String TAG = "SoundManager";
+    private static final String TAG = SoundEffectManager.class.getName();
+
     private static final String ASSETS_PATH = "sfx/";
     private static final String SOUNDS_EXTENSION = ".ogg";
     private static final int EARS_DISTANCE = 100;// in pixels
     private static final int SILENCE_DISTANCE = 3200;// in pixels
 
-    public static HashMap<String, Sound> sMfxMap = new HashMap<String, Sound>();
+    private static HashMap<String, Sound> sMfxMap = new HashMap<>();
 
-    private Context mContext;
-    private boolean mSoundEnabled;
+    private final Context mContext;
+    private final boolean mSoundEnabled;
     private Camera mCamera;
     private Engine mEngine;
 
-    public SoundEffectManager(Context context, int soundState) {
+    SoundEffectManager(Context context, int soundState) {
         mContext = context;
         mSoundEnabled = soundState == GameConstants.MusicStates.ON.ordinal();
     }
 
     public void init(Game game, Engine engine) {
         mEngine = engine;
-        sMfxMap = new HashMap<String, Sound>();
+        sMfxMap = new HashMap<>();
 
         SoundFactory.setAssetBasePath(ASSETS_PATH);
 
@@ -89,7 +90,7 @@ public class SoundEffectManager {
     }
 
     public void onPause() {
-        sMfxMap = new HashMap<String, Sound>();
+        sMfxMap = new HashMap<>();
     }
 
     public void setCamera(Camera camera) {

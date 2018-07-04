@@ -69,7 +69,7 @@ public class SystemUtils {
 		return SystemUtils.getPackageInfo(pContext).versionName;
 	}
 
-	public static String getPackageName(final Context pContext) {
+	private static String getPackageName(final Context pContext) {
 		return pContext.getPackageName();
 	}
 
@@ -89,7 +89,7 @@ public class SystemUtils {
 
 	public static boolean hasSystemFeature(final Context pContext, final String pFeature) {
 		try {
-			final Method PackageManager_hasSystemFeatures = PackageManager.class.getMethod("hasSystemFeature", new Class[] { String.class });
+			final Method PackageManager_hasSystemFeatures = PackageManager.class.getMethod("hasSystemFeature", String.class);
 			return (PackageManager_hasSystemFeatures == null) ? false : (Boolean) PackageManager_hasSystemFeatures.invoke(pContext.getPackageManager(), pFeature);
 		} catch (final Throwable t) {
 			return false;
@@ -211,7 +211,7 @@ public class SystemUtils {
 	private static MatchResult matchSystemFile(final String pSystemFile, final String pPattern, final int pHorizon) throws SystemUtilsException {
 		InputStream in = null;
 		try {
-			final Process process = new ProcessBuilder(new String[] { "/system/bin/cat", pSystemFile }).start();
+			final Process process = new ProcessBuilder("/system/bin/cat", pSystemFile).start();
 
 			in = process.getInputStream();
 			final Scanner scanner = new Scanner(in);
@@ -232,7 +232,7 @@ public class SystemUtils {
 	private static int readSystemFileAsInt(final String pSystemFile) throws SystemUtilsException {
 		InputStream in = null;
 		try {
-			final Process process = new ProcessBuilder(new String[] { "/system/bin/cat", pSystemFile }).start();
+			final Process process = new ProcessBuilder("/system/bin/cat", pSystemFile).start();
 
 			in = process.getInputStream();
 			final String content = StreamUtils.readFully(in);
@@ -250,7 +250,7 @@ public class SystemUtils {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static class SystemUtilsException extends Exception {
+	static class SystemUtilsException extends Exception {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -261,11 +261,11 @@ public class SystemUtils {
 		// Methods
 		// ===========================================================
 
-		public SystemUtilsException() {
+		SystemUtilsException() {
 
 		}
 
-		public SystemUtilsException(final Throwable pThrowable) {
+		SystemUtilsException(final Throwable pThrowable) {
 			super(pThrowable);
 		}
 	}

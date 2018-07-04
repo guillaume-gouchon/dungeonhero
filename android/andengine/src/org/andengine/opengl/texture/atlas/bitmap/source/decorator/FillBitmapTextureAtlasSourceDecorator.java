@@ -21,7 +21,7 @@ public class FillBitmapTextureAtlasSourceDecorator extends BaseShapeBitmapTextur
 	// Fields
 	// ===========================================================
 
-	protected final int mFillColor;
+	private final int mFillColor;
 
 	// ===========================================================
 	// Constructors
@@ -31,7 +31,7 @@ public class FillBitmapTextureAtlasSourceDecorator extends BaseShapeBitmapTextur
 		this(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, pFillColor, null);
 	}
 
-	public FillBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int pFillColor, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
+	private FillBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int pFillColor, final TextureAtlasSourceDecoratorOptions pTextureAtlasSourceDecoratorOptions) {
 		super(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, pTextureAtlasSourceDecoratorOptions);
 		this.mFillColor = pFillColor;
 

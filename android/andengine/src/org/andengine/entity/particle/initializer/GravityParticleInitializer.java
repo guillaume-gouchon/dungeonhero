@@ -11,7 +11,7 @@ import android.hardware.SensorManager;
  * @author Nicolas Gramlich
  * @since 12:04:00 - 15.03.2010
  */
-public class GravityParticleInitializer<T extends IEntity> extends AccelerationParticleInitializer<T> {
+class GravityParticleInitializer<T extends IEntity> extends AccelerationParticleInitializer<T> {
 	// ===========================================================
 	// Constants
 	// ===========================================================

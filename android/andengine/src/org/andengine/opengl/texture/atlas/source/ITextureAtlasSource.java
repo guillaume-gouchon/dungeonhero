@@ -17,15 +17,15 @@ public interface ITextureAtlasSource {
 	// Methods
 	// ===========================================================
 
-	public int getTextureX();
-	public int getTextureY();
-	public void setTextureX(final int pTextureX);
-	public void setTextureY(final int pTextureY);
+	int getTextureX();
+	int getTextureY();
+	void setTextureX(final int pTextureX);
+	void setTextureY(final int pTextureY);
 
-	public int getTextureWidth();
-	public int getTextureHeight();
-	public void setTextureWidth(final int pTextureWidth);
-	public void setTextureHeight(final int pTextureHeight);
+	int getTextureWidth();
+	int getTextureHeight();
+	void setTextureWidth(final int pTextureWidth);
+	void setTextureHeight(final int pTextureHeight);
 
-	public ITextureAtlasSource deepCopy();
+	ITextureAtlasSource deepCopy();
 }

@@ -35,11 +35,11 @@ public class CircularList<T> implements IList<T> {
 	// Constructors
 	// ===========================================================
 
-	public CircularList() {
+	protected CircularList() {
 		this(CircularList.CAPACITY_INITIAL_DEFAULT);
 	}
 
-	public CircularList(final int pInitialCapacity) {
+	protected CircularList(final int pInitialCapacity) {
 		this.mItems = new Object[pInitialCapacity];
 	}
 

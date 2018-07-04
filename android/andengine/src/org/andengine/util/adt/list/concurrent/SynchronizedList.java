@@ -17,7 +17,7 @@ public class SynchronizedList<T> implements IList<T> {
 	// Fields
 	// ===========================================================
 
-	protected final IList<T> mList;
+	private final IList<T> mList;
 
 	// ===========================================================
 	// Constructors

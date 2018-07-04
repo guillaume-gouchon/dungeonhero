@@ -18,9 +18,9 @@ public abstract class BaseAudioManager<T extends IAudioEntity> implements IAudio
 	// Fields
 	// ===========================================================
 
-	protected final ArrayList<T> mAudioEntities = new ArrayList<T>();
+	private final ArrayList<T> mAudioEntities = new ArrayList<>();
 
-	protected float mMasterVolume = 1.0f;
+	private float mMasterVolume = 1.0f;
 
 	// ===========================================================
 	// Constructors

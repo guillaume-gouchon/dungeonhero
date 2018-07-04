@@ -9,7 +9,7 @@ package org.andengine.util.adt.data;
  * @author Nicolas Gramlich
  * @since 15:01:49 - 20.03.2011
  */
-public final class DataUtils {
+final class DataUtils {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -30,7 +30,7 @@ public final class DataUtils {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	public static final int unsignedByteToInt(final byte pByte) {
+	public static int unsignedByteToInt(final byte pByte) {
 		return pByte & 0xFF;
 	}
 

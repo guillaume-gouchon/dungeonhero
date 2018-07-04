@@ -19,8 +19,8 @@ public class EntityDetachRunnablePoolItem extends RunnablePoolItem {
 	// Fields
 	// ===========================================================
 
-	protected IEntity mEntity;
-	protected Callback<IEntity> mCallback;
+	private IEntity mEntity;
+	private Callback<IEntity> mCallback;
 
 	// ===========================================================
 	// Constructors

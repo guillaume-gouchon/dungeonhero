@@ -12,7 +12,7 @@ import android.content.pm.PackageManager;
  * @author Nicolas Gramlich
  * @since 16:00:38 - 14.07.2010
  */
-public class MultiTouch {
+class MultiTouch {
 	// ===========================================================
 	// Constants
 	// ===========================================================

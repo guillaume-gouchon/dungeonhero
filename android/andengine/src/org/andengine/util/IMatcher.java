@@ -16,6 +16,6 @@ public interface IMatcher<T> {
 	// Methods
 	// ===========================================================
 
-	public boolean matches(final T pObject);
+	boolean matches(final T pObject);
 }
 

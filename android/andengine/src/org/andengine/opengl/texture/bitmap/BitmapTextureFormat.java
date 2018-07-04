@@ -35,7 +35,7 @@ public enum BitmapTextureFormat {
 	// Constructors
 	// ===========================================================
 
-	private BitmapTextureFormat(final Config pBitmapConfig, final PixelFormat pPixelFormat) {
+	BitmapTextureFormat(final Config pBitmapConfig, final PixelFormat pPixelFormat) {
 		this.mBitmapConfig = pBitmapConfig;
 		this.mPixelFormat = pPixelFormat;
 	}

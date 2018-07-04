@@ -31,7 +31,7 @@ public enum DrawType {
 	// Constructors
 	// ===========================================================
 
-	private DrawType(final int pUsage) {
+	DrawType(final int pUsage) {
 		this.mUsage = pUsage;
 	}
 

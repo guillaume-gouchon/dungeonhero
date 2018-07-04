@@ -20,7 +20,7 @@ public class PositionColorShaderProgram extends ShaderProgram {
 
 	private static PositionColorShaderProgram INSTANCE;
 
-	public static final String VERTEXSHADER =
+	private static final String VERTEXSHADER =
 			"uniform mat4 " + ShaderProgramConstants.UNIFORM_MODELVIEWPROJECTIONMATRIX + ";\n" +
 			"attribute vec4 " + ShaderProgramConstants.ATTRIBUTE_POSITION + ";\n" +
 			"attribute vec4 " + ShaderProgramConstants.ATTRIBUTE_COLOR + ";\n" +
@@ -30,7 +30,7 @@ public class PositionColorShaderProgram extends ShaderProgram {
 			"	" + ShaderProgramConstants.VARYING_COLOR + " = " + ShaderProgramConstants.ATTRIBUTE_COLOR + ";\n" +
 			"}";
 
-	public static final String FRAGMENTSHADER =
+	private static final String FRAGMENTSHADER =
 			"precision lowp float;\n" +
 			"varying vec4 " + ShaderProgramConstants.VARYING_COLOR + ";\n" +
 			"void main() {\n" +
@@ -41,7 +41,7 @@ public class PositionColorShaderProgram extends ShaderProgram {
 	// Fields
 	// ===========================================================
 
-	public static int sUniformModelViewPositionMatrixLocation = ShaderProgramConstants.LOCATION_INVALID;
+	private static int sUniformModelViewPositionMatrixLocation = ShaderProgramConstants.LOCATION_INVALID;
 
 	// ===========================================================
 	// Constructors

@@ -9,9 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by guillaume on 12/5/14.
- */
 public class Event implements Serializable {
 
     private static final long serialVersionUID = 5021907596161916969L;
@@ -21,7 +18,7 @@ public class Event implements Serializable {
     private final List<Unit> monsters;
     private final boolean isDungeonOver;
 
-    public Event(Builder builder) {
+    private Event(Builder builder) {
         pnjs = builder.pnjs;
         rewards = builder.rewards;
         monsters = builder.monsters;
@@ -46,10 +43,10 @@ public class Event implements Serializable {
 
     public static class Builder {
 
-        private List<Pnj> pnjs = new ArrayList<>();
-        private List<Reward> rewards = new ArrayList<>();
-        private List<Unit> monsters = new ArrayList<>();
-        private boolean isDungeonOver;
+        private final List<Pnj> pnjs = new ArrayList<>();
+        private final List<Reward> rewards = new ArrayList<>();
+        private final List<Unit> monsters = new ArrayList<>();
+        private final boolean isDungeonOver;
 
         public Builder(boolean isDungeonOver) {
             this.isDungeonOver = isDungeonOver;

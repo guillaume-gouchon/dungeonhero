@@ -15,8 +15,8 @@ public class AudioOptions {
 	// Fields
 	// ===========================================================
 
-	private SoundOptions mSoundOptions = new SoundOptions();
-	private MusicOptions mMusicOptions = new MusicOptions();
+	private final SoundOptions mSoundOptions = new SoundOptions();
+	private final MusicOptions mMusicOptions = new MusicOptions();
 
 	// ===========================================================
 	// Constructors
@@ -38,9 +38,8 @@ public class AudioOptions {
 		return this.mSoundOptions.needsSound();
 	}
 
-	public AudioOptions setNeedsSound(final boolean pNeedsSound) {
+	public void setNeedsSound(final boolean pNeedsSound) {
 		this.mSoundOptions.setNeedsSound(pNeedsSound);
-		return this;
 	}
 
 	public boolean needsMusic() {

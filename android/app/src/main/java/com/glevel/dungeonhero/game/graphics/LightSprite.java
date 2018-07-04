@@ -4,9 +4,6 @@ import com.glevel.dungeonhero.models.dungeons.decorations.Light;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by guillaume ON 10/8/14.
- */
 public class LightSprite extends GameElementSprite {
 
     private static final int ANIMATION_DURATION = 170;

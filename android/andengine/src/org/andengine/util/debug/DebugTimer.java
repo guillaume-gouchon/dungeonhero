@@ -12,7 +12,7 @@ import org.andengine.util.debug.Debug.DebugLevel;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 13:52:42 - 02.11.2011
  */
-public class DebugTimer {
+class DebugTimer {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -24,7 +24,7 @@ public class DebugTimer {
 	// Fields
 	// ===========================================================
 
-	private final Stack<DebugTime> mDebugTimes = new Stack<DebugTime>();
+	private final Stack<DebugTime> mDebugTimes = new Stack<>();
 	private final DebugLevel mDebugLevel;
 
 	// ===========================================================
@@ -35,7 +35,7 @@ public class DebugTimer {
 		this(DebugLevel.DEBUG, pLabel);
 	}
 
-	public DebugTimer(final DebugLevel pDebugLevel, final String pLabel) {
+	private DebugTimer(final DebugLevel pDebugLevel, final String pLabel) {
 		this.mDebugLevel = pDebugLevel;
 		this.init(pLabel);
 	}
@@ -82,7 +82,7 @@ public class DebugTimer {
 		this.dump(false);
 	}
 
-	public void dump(final boolean pClear) {
+	private void dump(final boolean pClear) {
 		final long now = System.currentTimeMillis();
 		if(this.mDebugTimes.size() > 1) {
 			Debug.w(this.getClass().getSimpleName() + " not all ended!");
@@ -97,7 +97,7 @@ public class DebugTimer {
 		}
 	}
 
-	public void clear() {
+	private void clear() {
 		final DebugTime root = this.mDebugTimes.firstElement();
 		this.mDebugTimes.clear();
 		this.init(root.mLabel);
@@ -107,7 +107,7 @@ public class DebugTimer {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public class DebugTime {
+	class DebugTime {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -128,11 +128,11 @@ public class DebugTimer {
 		// Constructors
 		// ===========================================================
 
-		public DebugTime(final long pStartTime, final String pLabel) {
+		DebugTime(final long pStartTime, final String pLabel) {
 			this(pStartTime, pLabel, false);
 		}
 
-		protected DebugTime(final long pStartTime, final String pLabel, final boolean pSplit) {
+		DebugTime(final long pStartTime, final String pLabel, final boolean pSplit) {
 			this.mStartTime = pStartTime;
 			this.mLabel = pLabel;
 			this.mSplit = pSplit;
@@ -150,12 +150,12 @@ public class DebugTimer {
 		// Methods
 		// ===========================================================
 
-		public void begin(final DebugTime pDebugTime) {
+		void begin(final DebugTime pDebugTime) {
 			this.ensureChildrenAllocated();
 			this.mChildren.add(pDebugTime);
 		}
 
-		public void split(final String pLabel) {
+		void split(final String pLabel) {
 			final long now = System.currentTimeMillis();
 
 			final DebugTime split;
@@ -172,15 +172,15 @@ public class DebugTimer {
 			this.mLastSplit = split;
 		}
 
-		public void end(final long pEndTime) {
+		void end(final long pEndTime) {
 			this.mEndTime = pEndTime;
 		}
 
-		public void dump(final int pIndent) {
+		void dump(final int pIndent) {
 			this.dump(pIndent, "");
 		}
 
-		public void dump(final int pIndent, final String pPostfix) {
+		void dump(final int pIndent, final String pPostfix) {
 			if(this.mSplit) {
 				final char[] indent = new char[(pIndent - 1) * INDENT_SPACES];
 				Arrays.fill(indent, ' ');
@@ -206,7 +206,7 @@ public class DebugTimer {
 
 		private void ensureChildrenAllocated() {
 			if(this.mChildren == null) {
-				this.mChildren = new ArrayList<DebugTime>();
+				this.mChildren = new ArrayList<>();
 			}
 		}
 

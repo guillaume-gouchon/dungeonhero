@@ -39,7 +39,7 @@ public class SequenceBackgroundModifier extends SequenceModifier<IBackground> im
 		super(pSubSequenceBackgroundModifierListener, pBackgroundModifierListener, pBackgroundModifiers);
 	}
 
-	protected SequenceBackgroundModifier(final SequenceBackgroundModifier pSequenceBackgroundModifier) throws DeepCopyNotSupportedException {
+	private SequenceBackgroundModifier(final SequenceBackgroundModifier pSequenceBackgroundModifier) throws DeepCopyNotSupportedException {
 		super(pSequenceBackgroundModifier);
 	}
 
@@ -64,7 +64,7 @@ public class SequenceBackgroundModifier extends SequenceModifier<IBackground> im
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public interface ISubSequenceBackgroundModifierListener extends ISubSequenceModifierListener<IBackground> {
+	private interface ISubSequenceBackgroundModifierListener extends ISubSequenceModifierListener<IBackground> {
 		// ===========================================================
 		// Constants
 		// ===========================================================

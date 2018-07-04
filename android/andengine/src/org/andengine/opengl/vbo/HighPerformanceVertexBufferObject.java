@@ -29,13 +29,13 @@ public class HighPerformanceVertexBufferObject extends VertexBufferObject {
 	// ===========================================================
 
 	protected final float[] mBufferData;
-	protected final FloatBuffer mFloatBuffer;
+	private final FloatBuffer mFloatBuffer;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public HighPerformanceVertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
+	protected HighPerformanceVertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
 		super(pVertexBufferObjectManager, pCapacity, pDrawType, pAutoDispose, pVertexBufferObjectAttributes);
 
 		this.mBufferData = new float[pCapacity];
@@ -46,7 +46,7 @@ public class HighPerformanceVertexBufferObject extends VertexBufferObject {
 		}
 	}
 
-	public HighPerformanceVertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final float[] pBufferData, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
+	protected HighPerformanceVertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final float[] pBufferData, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
 		super(pVertexBufferObjectManager, pBufferData.length, pDrawType, pAutoDispose, pVertexBufferObjectAttributes);
 		this.mBufferData = pBufferData;
 		

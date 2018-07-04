@@ -155,7 +155,7 @@ public class BitmapFont implements IFont {
 	private final BitmapTextureFormat mBitmapTextureFormat;
 	private final TextureOptions mTextureOptions;
 
-	private final SparseArray<Letter> mCharacterToLetterMap = new SparseArray<Letter>();
+	private final SparseArray<Letter> mCharacterToLetterMap = new SparseArray<>();
 
 	private final BitmapFontInfo mBitmapFontInfo;
 	private final BitmapFontPage[] mBitmapFontPages;
@@ -188,7 +188,7 @@ public class BitmapFont implements IFont {
 		this(pTextureManager, pAssetManager, pAssetPath, pBitmapTextureFormat, pTextureOptions, BitmapFontOptions.DEFAULT);
 	}
 
-	public BitmapFont(final TextureManager pTextureManager, final AssetManager pAssetManager, final String pAssetPath, final BitmapTextureFormat pBitmapTextureFormat, final TextureOptions pTextureOptions, final BitmapFontOptions pBitmapFontOptions) {
+	private BitmapFont(final TextureManager pTextureManager, final AssetManager pAssetManager, final String pAssetPath, final BitmapTextureFormat pBitmapTextureFormat, final TextureOptions pTextureOptions, final BitmapFontOptions pBitmapFontOptions) {
 		this.mTextureManager = pTextureManager;
 		this.mBitmapTextureFormat = pBitmapTextureFormat;
 		this.mTextureOptions = pTextureOptions;
@@ -364,20 +364,20 @@ public class BitmapFont implements IFont {
 	// Methods
 	// ===========================================================
 
-	public void loadTextures() {
+	private void loadTextures() {
 		final BitmapFontPage[] bitmapFontPages = this.mBitmapFontPages;
 		final int bitmapFontPageCount = bitmapFontPages.length;
-		for(int i = 0; i < bitmapFontPageCount; i++) {
-			bitmapFontPages[i].getTexture().load();
-		}
+        for (BitmapFontPage bitmapFontPage : bitmapFontPages) {
+            bitmapFontPage.getTexture().load();
+        }
 	}
 
-	public void unloadTextures() {
+	private void unloadTextures() {
 		final BitmapFontPage[] bitmapFontPages = this.mBitmapFontPages;
 		final int bitmapFontPageCount = bitmapFontPages.length;
-		for(int i = 0; i < bitmapFontPageCount; i++) {
-			bitmapFontPages[i].getTexture().unload();
-		}
+        for (BitmapFontPage bitmapFontPage : bitmapFontPages) {
+            bitmapFontPage.getTexture().unload();
+        }
 	}
 
 	private void parseCharacters(final int pCharacterCount, final BufferedReader pBufferedReader) throws IOException {
@@ -491,7 +491,7 @@ public class BitmapFont implements IFont {
 		// Constants
 		// ===========================================================
 
-		public static final BitmapFontOptions DEFAULT = new BitmapFontOptions(0, 0);
+		static final BitmapFontOptions DEFAULT = new BitmapFontOptions(0, 0);
 
 		// ===========================================================
 		// Fields
@@ -504,7 +504,7 @@ public class BitmapFont implements IFont {
 		// Constructors
 		// ===========================================================
 
-		public BitmapFontOptions(final int pTextureOffsetX, final int pTextureOffsetY) {
+		BitmapFontOptions(final int pTextureOffsetX, final int pTextureOffsetY) {
 			this.mTextureOffsetX = pTextureOffsetX;
 			this.mTextureOffsetY = pTextureOffsetY;
 		}
@@ -573,7 +573,7 @@ public class BitmapFont implements IFont {
 		// Constructors
 		// ===========================================================
 
-		public BitmapFontInfo(final String pData) throws FontException {
+		BitmapFontInfo(final String pData) throws FontException {
 			if(pData == null) {
 				throw new FontException("pData must not be null.");
 			}
@@ -703,7 +703,7 @@ public class BitmapFont implements IFont {
 		// Constructors
 		// ===========================================================
 
-		public BitmapFontPage(final AssetManager pAssetManager, final String pAssetBasePath, final String pData) throws IOException {
+		BitmapFontPage(final AssetManager pAssetManager, final String pAssetBasePath, final String pData) throws IOException {
 			final String[] pageAttributes = TextUtils.SPLITPATTERN_SPACE.split(pData, BitmapFont.TAG_PAGE_ATTRIBUTECOUNT + 1);
 
 			if((pageAttributes.length - 1) != BitmapFont.TAG_PAGE_ATTRIBUTECOUNT) {
@@ -728,7 +728,7 @@ public class BitmapFont implements IFont {
 			return this.mID;
 		}
 
-		public ITexture getTexture() {
+		ITexture getTexture() {
 			return this.mTexture;
 		}
 

@@ -29,7 +29,7 @@ public class GLException extends RuntimeException {
 		this(pError, GLException.getErrorString(pError));
 	}
 
-	public GLException(final int pError, final String pString) {
+	GLException(final int pError, final String pString) {
 		super(pString);
 
 		this.mError = pError;

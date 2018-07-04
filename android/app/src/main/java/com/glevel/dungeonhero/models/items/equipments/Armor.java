@@ -1,10 +1,8 @@
 package com.glevel.dungeonhero.models.items.equipments;
 
-/**
- * Created by guillaume ON 10/6/14.
- */
 public class Armor extends Equipment {
 
+    private static final long serialVersionUID = -2482472714192488344L;
     private final int protection;
 
     public Armor(String identifier, int protection, int level, int price) {

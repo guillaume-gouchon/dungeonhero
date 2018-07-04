@@ -25,7 +25,7 @@ public abstract class StringGLCriteria implements IGLCriteria {
 	// Constructors
 	// ===========================================================
 
-	public StringGLCriteria(final StringOperator pStringOperator, final String pCriteria) {
+	StringGLCriteria(final StringOperator pStringOperator, final String pCriteria) {
 		this.mCriteria = pCriteria;
 		this.mStringOperator = pStringOperator;
 	}

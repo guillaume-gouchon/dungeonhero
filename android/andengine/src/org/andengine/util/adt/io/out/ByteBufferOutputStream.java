@@ -1,6 +1,5 @@
 package org.andengine.util.adt.io.out;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
@@ -21,10 +20,10 @@ public class ByteBufferOutputStream extends OutputStream {
 	// Fields
 	// ===========================================================
 
-	protected final int mMaximumGrow;
+	private final int mMaximumGrow;
 
-	protected byte mData[];
-	protected int mCount;
+	private byte[] mData;
+	private int mCount;
 
 	// ===========================================================
 	// Constructors
@@ -58,7 +57,7 @@ public class ByteBufferOutputStream extends OutputStream {
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 
 	}
 

@@ -27,7 +27,7 @@ public class ModifierList<T> extends SmartList<IModifier<T>> implements IUpdateH
 	// Constructors
 	// ===========================================================
 
-	public ModifierList(final T pTarget) {
+	protected ModifierList(final T pTarget) {
 		this.mTarget = pTarget;
 	}
 

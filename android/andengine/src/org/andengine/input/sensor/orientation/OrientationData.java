@@ -15,6 +15,7 @@ import android.view.Surface;
  * @author Nicolas Gramlich
  * @since 11:30:33 - 25.05.2010
  */
+@SuppressWarnings("SuspiciousNameCombination")
 public class OrientationData extends BaseSensorData {
 	// ===========================================================
 	// Constants

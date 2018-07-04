@@ -21,8 +21,8 @@ public class ProgressMonitor implements IProgressListener {
 	// Fields
 	// ===========================================================
 
-	private final ArrayList<IProgressListener> mProgressListeners = new ArrayList<IProgressListener>();
-	private final HashMap<ProgressMonitor, IProgressListener> mChildProgressMonitorToProgressListenerMap = new HashMap<ProgressMonitor, IProgressListener>();
+	private final ArrayList<IProgressListener> mProgressListeners = new ArrayList<>();
+	private final HashMap<ProgressMonitor, IProgressListener> mChildProgressMonitorToProgressListenerMap = new HashMap<>();
 
 	// ===========================================================
 	// Constructors

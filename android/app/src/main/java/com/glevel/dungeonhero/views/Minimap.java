@@ -11,15 +11,11 @@ import com.glevel.dungeonhero.models.dungeons.Directions;
 import com.glevel.dungeonhero.models.dungeons.Dungeon;
 import com.glevel.dungeonhero.models.dungeons.Room;
 
-/**
- * Created by guillaume ON 10/3/14.
- */
 public class Minimap extends View {
 
     private static final int MINIMAP_RECTANGLE_ALPHA = 150;
 
     private Dungeon mDungeon;
-    private int mRectangleSize;
 
     private final Paint mCurrentRoomPaint = new Paint() {
         {
@@ -57,7 +53,7 @@ public class Minimap extends View {
         if (mDungeon != null) {
 
             // set size depending on the canvas size and the dungeon size
-            mRectangleSize = canvas.getWidth() * 3 / 5 / Math.max(mDungeon.getRooms().length, mDungeon.getRooms()[0].length);
+            int mRectangleSize = canvas.getWidth() * 3 / 5 / Math.max(mDungeon.getRooms().length, mDungeon.getRooms()[0].length);
 
             Room[][] rooms = mDungeon.getRooms();
             Room room;

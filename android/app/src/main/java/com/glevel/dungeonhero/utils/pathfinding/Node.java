@@ -2,10 +2,10 @@ package com.glevel.dungeonhero.utils.pathfinding;
 
 public interface Node {
 
-    public abstract String getId();
+    String getId();
 
-    public abstract int getX();
+    int getX();
 
-    public abstract int getY();
+    int getY();
 
 }

@@ -44,8 +44,7 @@ public class LimitedFPSEngine extends Engine {
 
 	@Override
 	public void onUpdate(final long pNanosecondsElapsed) throws InterruptedException {
-		final long preferredFrameLengthNanoseconds = this.mPreferredFrameLengthNanoseconds;
-		final long deltaFrameLengthNanoseconds = preferredFrameLengthNanoseconds - pNanosecondsElapsed;
+        final long deltaFrameLengthNanoseconds = this.mPreferredFrameLengthNanoseconds - pNanosecondsElapsed;
 
 		if(deltaFrameLengthNanoseconds <= 0) {
 			super.onUpdate(pNanosecondsElapsed);
